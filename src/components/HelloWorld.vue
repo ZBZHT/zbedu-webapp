@@ -17,15 +17,35 @@
       <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
       <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
     </ul>
+    <button @click="getHeaderData">获取数据</button>
+    <div class="data-show">{{dataShow}}</div>
   </div>
 </template>
 
 <script>
+  import axios from 'axios'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      dataShow: null
+    }
+  },
+  methods: {
+    getHeaderData() {
+      axios.get('http://api.zbedu.com:3000/menu/header',{
+          params: {
+              a:1,
+              b:2
+          }
+      }).then((result)=>{
+          let res = result.data;
+          console.log(res);
+          if(res.status===0) {
+            this.dataShow = res.result;
+          }
+      })
     }
   }
 }
