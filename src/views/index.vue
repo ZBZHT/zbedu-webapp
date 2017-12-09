@@ -92,7 +92,7 @@ export default {
   data () {
     return {
       msg: 'main',
-      leftData:'',
+      leftData:navs,
       bestClassData:[
           {
             url:'src/assets/img.png',
@@ -179,10 +179,10 @@ export default {
               }
           },
   mounted(){
-        this.total = this.all.length,
+        this.total = this.all.length;
         //this.leftData = navs;
-        this.$set(this.leftData,'key',['abc','def']);
-        this.leftData = ['123','456'];
+        //this.$set(this.leftData,'key',['abc','def']);
+        //this.leftData = ['123','456'];
         console.log('bbbb');
         console.log(this.leftData)
     },
