@@ -2,8 +2,22 @@
   <div>
     <div class="item-a" v-for="items in leftData">
                 <a>
-                    <span>{{items.title}}<b>></b></span>
+                    <span>
+                    
+                        <b>{{items.title}}</b>
+                        <b> > </b>
+                    </span>
                 </a>
+                <div class="hiddenbox">
+                    <b class="hd-title" v-for="items in leftData">
+                        <a>{{items.children.title}}</a>
+                    </b>
+                    <hr/>
+                    <ul class="hd-desc-ul">
+                        <li class="hd-desc"><a>安全操作与新车交接检查</a></li>
+                        <li class="hd-desc"><a>动力电池系统故障检修</a></li>
+                    </ul>
+                </div>
      </div>
    </div>
 </template>
@@ -11,12 +25,51 @@
 <script>
 export default {
   name: 'main',
-  props:[
-  'leftData'
-  ],
   data () {
     return {
-      msg: 'main'
+      msg: 'main',
+      leftData:[
+          {
+            title:"新能源汽车",
+            children:[
+                {
+                    title:"纯电动汽车"
+                }
+            ]
+          },
+          {
+              title:"汽车发动机",
+              children:[
+                {
+                    title:"纯电动汽车"
+                }
+            ]
+          },
+          {
+              title:"汽车底盘",
+              children:[
+                {
+                    title:"纯电动汽车"
+                }
+            ]
+          },
+          {
+              title:"汽车电气",
+              children:[
+                {
+                    title:"纯电动汽车"
+                }
+            ]
+          },
+          {
+              title:"车身结构",
+              children:[
+                {
+                    title:"纯电动汽车"
+                }
+            ]
+          }
+      ]
     }
   },
   mounted(){
@@ -69,8 +122,8 @@ a:focus {
     /*-webkit-box-flex: 3;*/
 }
 .item-a{
-    width:111%;
-    height:65px;
+    width:109%;
+    height:53px;
     line-height:46px;
     font-size:12px;
     cursor:pointer;
@@ -79,6 +132,12 @@ a:focus {
 }
 .item-a:hover{
     background:#fff;
+}
+.item-a a>b{
+    margin-left:25px;
+}
+.item-a a b{
+    margin-left:25px;
 }
 .hiddenbox{
     width:600px;
