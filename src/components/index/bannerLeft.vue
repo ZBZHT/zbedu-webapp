@@ -3,8 +3,7 @@
     <div class="item-a" v-for="items in leftData">
                 <a>
                     <span>
-                    
-                        <b>{{items.title}}</b>
+                        <b class="">{{items.title}}</b>
                         <b> > </b>
                     </span>
                 </a>
@@ -22,11 +21,13 @@
 </template>
 
 <script>
+      import axios from 'axios'
 export default {
   name: 'main',
   data () {
     return {
       msg: 'main',
+      axios:'',
       leftData:[
           {
             title:"新能源汽车",
@@ -72,8 +73,19 @@ export default {
     }
   },
   mounted(){
-  console.log("aaaaaaa");
-  console.log(this.leftData);
+    axios.get("http://192.168.2.57:3000/menu/index",{
+        params:{
+            userId:"123"
+        },
+        headers:{
+             token:"jack"
+        }
+    }).then((res)=>{
+        debugger;
+        this.axios = res.data;
+    }).catch(function(error){
+        console.log("error init." + error)
+    })
   }
 }
 </script>
