@@ -14,8 +14,7 @@
                     </b>
                     <hr/>
                     <ul class="hd-desc-ul">
-                        <li class="hd-desc"><a>安全操作与新车交接检查</a></li>
-                        <li class="hd-desc"><a>动力电池系统故障检修</a></li>
+                        <li class="hd-desc"><a>  </a></li>
                     </ul>
                 </div>
      </div>
