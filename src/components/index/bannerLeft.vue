@@ -1,15 +1,15 @@
 <template>
   <div>
-    <div class="item-a" v-for="items in leftData">
+    <div class="item-a" v-for="item in request.result.leftData">
                 <a>
                     <span>
-                        <b class="">{{items.title}}</b>
-                        <b> > </b>
+                        <b class="bleft">{{item.title}}</b>
+                        <b class="jiantou"> > </b>
                     </span>
                 </a>
                 <div class="hiddenbox">
-                    <b class="hd-title" v-for="items in leftData">
-                        <a>{{items.children.title}}</a>
+                    <b class="hd-title">
+                        <a></a>
                     </b>
                     <hr/>
                     <ul class="hd-desc-ul">
@@ -27,65 +27,19 @@ export default {
   data () {
     return {
       msg: 'main',
-      axios:'',
-      leftData:[
-          {
-            title:"新能源汽车",
-            children:[
-                {
-                    title:"纯电动汽车"
-                }
-            ]
-          },
-          {
-              title:"汽车发动机",
-              children:[
-                {
-                    title:"纯电动汽车"
-                }
-            ]
-          },
-          {
-              title:"汽车底盘",
-              children:[
-                {
-                    title:"纯电动汽车"
-                }
-            ]
-          },
-          {
-              title:"汽车电气",
-              children:[
-                {
-                    title:"纯电动汽车"
-                }
-            ]
-          },
-          {
-              title:"车身结构",
-              children:[
-                {
-                    title:"纯电动汽车"
-                }
-            ]
-          }
-      ]
+      request:'',
     }
   },
   mounted(){
     axios.get("http://192.168.2.57:3000/menu/index",{
         params:{
             userId:"123"
-        },
-        headers:{
-             token:"jack"
         }
     }).then((res)=>{
-        debugger;
-        this.axios = res.data;
+        this.request = res.data;
     }).catch(function(error){
         console.log("error init." + error)
-    })
+    });
   }
 }
 </script>
@@ -144,11 +98,14 @@ a:focus {
 .item-a:hover{
     background:#fff;
 }
-.item-a a>b{
-    margin-left:25px;
+.item-a span{
+    width:180px;
 }
-.item-a a b{
-    margin-left:25px;
+.item-a .bleft{
+    margin-left:-28px;
+}
+.item-a .jiantou{
+    margin-left:10px;
 }
 .hiddenbox{
     width:600px;
@@ -192,7 +149,7 @@ a:focus {
 }
 .left-menu .item-a a span{
     display: inline-block;
-    width:145px;
+    width:180px;
     font-size:22px;
     color:#f00;
     font-weight: bold;
