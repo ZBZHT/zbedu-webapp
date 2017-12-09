@@ -1,35 +1,27 @@
 <template>
-    <div class="item-a">
+  <div>
+    <div class="item-a" v-for="items in leftData">
                 <a>
-                    <span>新能源<b>></b></span>
-
+                    <span>{{items.title}}<b>></b></span>
                 </a>
-                <div class="hiddenbox">
-                    <b class="hd-title"><a href="纯电动汽车二级.html">纯电动汽车</a></b>
-                    <hr/>
-                    <ul class="hd-desc-ul">
-                        <li class="hd-desc"><a href="动力项目一.html" target="_blank">安全操作与新车交接检查</a></li>
-                        <li class="hd-desc"><a href="动力项目二.html" target="_blank">动力电池系统故障检修</a></li>
-                    </ul>
-                    <b class="hd-title"><a href="混合动力汽车二级.html">混合动力汽车</a></b>
-                    <hr/>
-                    <ul class="hd-desc-ul">
-                        <li class="hd-desc"><a href="混合项目一.html" target="_blank">总体结构</a></li>
-                        <li class="hd-desc"><a href="混合项目二.html" target="_blank">高压电池及管理系统故障检修</a></li>
-                    </ul>
-                </div>
-            </div>
+     </div>
+   </div>
 </template>
 
 <script>
-import navs from '@/assets/index-data.js'
 export default {
   name: 'main',
-  prop:['leftData'],
+  props:[
+  'leftData'
+  ],
   data () {
     return {
       msg: 'main'
     }
+  },
+  mounted(){
+  console.log("aaaaaaa");
+  console.log(this.leftData);
   }
 }
 </script>
