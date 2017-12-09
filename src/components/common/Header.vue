@@ -1,40 +1,15 @@
 <template>
   <div class="header-box">
     <a href="#" class="logo">
-      <img @mouseenter="enter" @mouseleave="leave" class="logoimage" alt="Brand" src="../assets/imgs/zb_logo.png">
+      <img class="logoimage" alt="Brand" src="../assets/imgs/zb_logo.png">
     </a>
-    <div class="nav-list">
+    <div class="nav-list" >
       <ul>
-        <li>
+        <li v-for="navTitle in menuData" v-on:mouseenter="enter">
           <div class="list-box">
-            <a>{{ list1 }}</a>
-            <div class="dropdown"></div>
-            <!--<ul class="dropdown"></ul>-->
+            <a>{{ navTitle.nanvName }}</a>
           </div>
-        </li>
-        <li>
-          <div class="list-box">
-            <a>{{ list2 }}</a>
-            <ul></ul>
-          </div>
-        </li>
-        <li>
-          <div class="list-box">
-            <a>{{ list3 }}</a>
-            <ul></ul>
-          </div>
-        </li>
-        <li>
-          <div class="list-box">
-            <a>{{ list4 }}</a>
-            <ul></ul>
-          </div>
-        </li>
-        <li>
-          <div class="list-box">
-            <a>{{ list5 }}</a>
-            <ul></ul>
-          </div>
+          <div class="drop-box" :class="{dispear : !dispear}"></div>
         </li>
       </ul>
     </div>
@@ -54,27 +29,47 @@
 </template>
 
 <script>
+//  import navData from '../HeaderData'
+  import axios from 'axios'
   export default {
     name: 'Header',
     data () {
       return {
-        msg: '你好',
-        list1: '教学中心',
-        list2: '实训中心',
-        list3: '考试中心',
-        list4: '评价中心',
-        list5: '资源管理',
         loginMsg: '登录',
-        enrolMsg: '注册'
+        enrolMsg: '注册' ,
+//        navTitleData: navData,
+        menuData: null
       }
+    },
+    methods: {
+      enter: function () {
+        this.dispear = true
+        return this.dispear
+      }
+    },
+    mounted: function () {
+      axios.get("http://192.168.2.57:3000/menu/header",{
+        params:{
+          userid: "123"
+        }
+      }).then((res)=>{
+        console.log(res);
+        let localData = res.data;
+        if(localData.status === 0) {
+          this.menuData = res.data.result;
+        }else {
+        }
+      }).catch(function (error) {
+        console.log("error init" + error)
+      })
     }
+
   }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
   @media screen and (min-width: 1183px) {
-
     .header-box {
       width: auto;
       min-width: 960px;
@@ -114,14 +109,16 @@
       font-weight: bold;
       /*background-color: cadetblue;*/
     }
+    .nav-list ul li .drop-box{
+      width: 100px;
+      height: 100px;
+      background-color: greenyellow;
+    }
+    .nav-list ul .dispear{
+      display: block;
+    }
 
-    /*.nav-list ul li .list-box .dropdown{*/
-    /*width: 100px;*/
-    /*height: 100px;*/
-    /*background-color: greenyellow;*/
-    /*!*display: block;*!*/
-    /*z-index: 1000;*/
-    /*}*/
+
     .list-box a:hover {
       color: red;
     }
