@@ -3,7 +3,7 @@
     <div class="banner">
         <div class="left-menu">
 
-            <banner-left v-bind:leftData="leftData"></banner-left>
+            <banner-left :leftData="leftData"></banner-left>
 
         </div>
         <div class="rightbox">
@@ -166,6 +166,9 @@ export default {
   computed:{
           all:function(){
               return this.pageData
+          },
+          testData() {
+            return this.leftData
           }
       },
   methods:{
@@ -177,7 +180,10 @@ export default {
           },
   mounted(){
         this.total = this.all.length,
-        this.leftData = navs,
+        //this.leftData = navs;
+        this.$set(this.leftData,'key',['abc','def']);
+        this.leftData = ['123','456'];
+        console.log('bbbb');
         console.log(this.leftData)
     },
   components:{bannerLeft,rightSwipe,bottomLeft,bottomRight,moPaging}
