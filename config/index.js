@@ -10,7 +10,20 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      "/api/*": 'http://localhost:3000'
+      /*
+      "/menu/header": {
+        target: "http://localhost:8080",
+        bypass: function(req,res,proxyOptions) {
+          console.log('Skipping proxy for brower request.');
+          res.sendFile('/mock/test.json');
+          return '/mock/test.json';
+        }
+
+      }
+    */
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

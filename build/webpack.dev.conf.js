@@ -6,6 +6,8 @@ const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+const MockWebpackPlugin = require('mock-webpack-plugin')
+const mockConfig = require('../mock/config')
 const portfinder = require('portfinder')
 
 const HOST = process.env.HOST
@@ -50,6 +52,12 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       template: 'index.html',
       inject: true
     }),
+    new MockWebpackPlugin({
+      //mock config content
+      config: mockConfig,
+      // the port of the mock server
+      port: 3000
+    })
   ]
 })
 
