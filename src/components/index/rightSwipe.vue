@@ -261,16 +261,16 @@
     cursor:pointer;
   }
   .verticalCenter span{
-    color:#f00;
-    font-size:50px;
-    font-weight:bolder;
-    position:relative;
+    color: rgba(0,0,0,0.7);
+    font-size: 50px;
+    font-weight: bolder;
+    position: relative;
     left: 0;
     top: 45%;
   }
   .verticalCenter span:hover{
     cursor:pointer;
-    color:#fff;
+    color:#f00;
   }
   .arrowRight{
     transition: all 0.4s ease;
