@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     getHeaderData() {
-      axios.get('http://api.zbedu.com:3000/menu/header',{
+      axios.get('http://api.zbedu.com:3000/api/menu/header',{
           params: {
               a:1,
               b:2
