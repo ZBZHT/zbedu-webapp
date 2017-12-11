@@ -6,7 +6,7 @@
 
     <div class="middlebox">
         <div class="information">
-            <p>鑰冭瘯閫氱煡</p>
+            <p>考试通知</p>
             <hr>
             <ul>
                 <li v-for="item in information">
@@ -25,7 +25,7 @@
 
     <div class="bottombox">
         <div class="hot-test">
-            <p>鐑棬鑰冭瘯</p>
+            <p>热门考试</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in hotTest">
@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="grade-test">
-            <p>绛夌骇鑰冭瘯</p>
+            <p>>等级考试</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in gradeTest">
@@ -49,7 +49,7 @@
             </ul>
         </div>
         <div class="content-test">
-            <p>璇剧▼鑰冭瘯</p>
+            <p>课程考试 </p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in contentTest">
@@ -76,45 +76,45 @@ export default {
         information:[
           {
             num:'1',
-            src:'鍚屽浠紝鎵嬫満鐧诲綍涔熻兘杩涜鑰冭瘯鍟︼紒'
+            src:'同学们，手机登录也能进行考试啦！'
           },
           {
             num:'2',
-            src:'鏈�鏂版秷鎭紒娉ㄦ剰鍟︼細鐩墠鏈叕鍙告帹鍑烘苯杞︾淮淇伐涓骇鍜屾苯杞︾淮淇數宸ヤ腑绾ц瘯棰樸��'
+            src:'最新消息！注意啦：目前本公司推出汽车维修工中级和汽车维修电工中级试题。'
           }
       ],
         winner:[
           {
-            title:'涓�鍛ㄨ�冭瘯鎺掕姒�',
+            title:'一周考试排行榜',
             stu:[
                 {
                     num:'1',
-                    name:'鐔婃案鍒�'
+                    name:'熊永刚'
                 },
                 {
                     num:'2',
-                    name:'鍗炴椇闃�'
+                    name:'卞旺阳'
                 },
                 {
                     num:'3',
-                    name:'灏逛笢闃�'
+                    name:'尹东阳'
                 }
             ]
           },
           {
-            title:'涓�鏈堣�冭瘯鎺掕姒�',
+            title:'一月考试排行榜',
             stu:[
                 {
                     num:'1',
-                    name:'寰愮憺'
+                    name:'徐瑞'
                 },
                 {
                     num:'2',
-                    name:'濮滆�佸笀'
+                    name:'姜老师'
                 },
                 {
                     num:'3',
-                    name:'璐烘灄'
+                    name:'贺林'
                 }
             ]
           }
@@ -122,67 +122,67 @@ export default {
        hotTest:[
           {
             url:'src/assets/img.png',
-            title:'姹借溅鐢垫皵'
+            title:'汽车电气'
           },
           {
             url:'src/assets/img.png',
-            title:'姹借溅搴曠洏'
+            title:'全国汽车维修工中级培训'
           },
           {
             url:'src/assets/img.png',
-            title:'鏂拌兘婧�'
+            title:'全国汽车维修电工中级'
           },
           {
             url:'src/assets/img.png',
-            title:'鍏ㄥ浗姹借溅缁翠慨宸ヤ腑绾у煿璁�'
+            title:'新能源'
           },
           {
             url:'src/assets/img.png',
-            title:'鍏ㄥ浗姹借溅缁翠慨鐢靛伐涓骇'
+            title:'汽车底盘'
           }
       ],
       gradeTest:[
           {
             url:'src/assets/img.png',
-            title:'鍏ㄥ浗姹借溅缁翠慨宸ヤ腑绾у煿璁�'
+            title:'全国汽车维修工中级培训'
           },
           {
             url:'src/assets/img.png',
-            title:'鍏ㄥ浗姹借溅缁翠慨鐢靛伐涓骇'
+            title:'全国汽车维修电工中级'
           }
       ],
       contentTest:[
           {
             url:'src/assets/img.png',
-            title:'姹借溅鐢垫皵'
+            title:'汽车发动机'
           },
           {
             url:'src/assets/img.png',
-            title:'姹借溅搴曠洏'
+            title:'汽车电气'
           },
           {
             url:'src/assets/img.png',
-            title:'鏂拌兘婧�'
+            title:'汽车变速器'
           },
           {
             url:'src/assets/img.png',
-            title:'姹借溅鍙戝姩鏈�'
+            title:'新能源'
           },
           {
             url:'src/assets/img.png',
-            title:'姹借溅鍙橀�熷櫒'
+            title:'汽车底盘'
           }
       ]
     }
   },
   computed:{
-          
+
       },
   methods:{
-             
+
           },
   mounted(){
-       
+
     },
   components:{swipe}
 }
@@ -246,7 +246,7 @@ p{
     width:585px;
     height:145px;
     margin-right:22px;
-    background-color:#ddd; 
+    background-color:#ddd;
     text-align:left;
 }
 .information ul li{
@@ -261,7 +261,7 @@ p{
     width:280px;
     height:145px;
     background-color:#ddd;
-    text-align:left; 
+    text-align:left;
 }
 .phWeekMargin{
     margin-right:23px;
@@ -284,19 +284,19 @@ p{
     margin-bottom:30px;
 }
 .bottombox .test{
-    margin-left:14px; 
+    margin-left:14px;
 }
 .bottombox .test .test-li{
     display: inline-block;
     width:169px;
     height:165px;
     /*border:1px solid #000;*/
-    margin-right:12px; 
+    margin-right:12px;
     margin-bottom:20px;
     text-align: center;
 }
 .bottombox .test .test-li .btn{
-    margin-top:10px; 
+    margin-top:10px;
 }
 .grade-test{
     width:920px;
