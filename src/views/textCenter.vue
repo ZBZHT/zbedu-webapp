@@ -6,7 +6,7 @@
 
     <div class="middlebox">
         <div class="information">
-            <p>考试通知</p>
+            <p>鑰冭瘯閫氱煡</p>
             <hr>
             <ul>
                 <li v-for="item in information">
@@ -25,7 +25,7 @@
 
     <div class="bottombox">
         <div class="hot-test">
-            <p>热门考试</p>
+            <p>鐑棬鑰冭瘯</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in hotTest">
@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="grade-test">
-            <p>等级考试</p>
+            <p>绛夌骇鑰冭瘯</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in gradeTest">
@@ -49,7 +49,7 @@
             </ul>
         </div>
         <div class="content-test">
-            <p>课程考试</p>
+            <p>璇剧▼鑰冭瘯</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in contentTest">
@@ -76,45 +76,45 @@ export default {
         information:[
           {
             num:'1',
-            src:'同学们，手机登录也能进行考试啦！'
+            src:'鍚屽浠紝鎵嬫満鐧诲綍涔熻兘杩涜鑰冭瘯鍟︼紒'
           },
           {
             num:'2',
-            src:'最新消息！注意啦：目前本公司推出汽车维修工中级和汽车维修电工中级试题。'
+            src:'鏈�鏂版秷鎭紒娉ㄦ剰鍟︼細鐩墠鏈叕鍙告帹鍑烘苯杞︾淮淇伐涓骇鍜屾苯杞︾淮淇數宸ヤ腑绾ц瘯棰樸��'
           }
       ],
         winner:[
           {
-            title:'一周考试排行榜',
+            title:'涓�鍛ㄨ�冭瘯鎺掕姒�',
             stu:[
                 {
                     num:'1',
-                    name:'熊永刚'
+                    name:'鐔婃案鍒�'
                 },
                 {
                     num:'2',
-                    name:'卞旺阳'
+                    name:'鍗炴椇闃�'
                 },
                 {
                     num:'3',
-                    name:'尹东阳'
+                    name:'灏逛笢闃�'
                 }
             ]
           },
           {
-            title:'一月考试排行榜',
+            title:'涓�鏈堣�冭瘯鎺掕姒�',
             stu:[
                 {
                     num:'1',
-                    name:'徐瑞'
+                    name:'寰愮憺'
                 },
                 {
                     num:'2',
-                    name:'姜老师'
+                    name:'濮滆�佸笀'
                 },
                 {
                     num:'3',
-                    name:'贺林'
+                    name:'璐烘灄'
                 }
             ]
           }
@@ -122,55 +122,55 @@ export default {
        hotTest:[
           {
             url:'src/assets/img.png',
-            title:'汽车电气'
+            title:'姹借溅鐢垫皵'
           },
           {
             url:'src/assets/img.png',
-            title:'汽车底盘'
+            title:'姹借溅搴曠洏'
           },
           {
             url:'src/assets/img.png',
-            title:'新能源'
+            title:'鏂拌兘婧�'
           },
           {
             url:'src/assets/img.png',
-            title:'全国汽车维修工中级培训'
+            title:'鍏ㄥ浗姹借溅缁翠慨宸ヤ腑绾у煿璁�'
           },
           {
             url:'src/assets/img.png',
-            title:'全国汽车维修电工中级'
+            title:'鍏ㄥ浗姹借溅缁翠慨鐢靛伐涓骇'
           }
       ],
       gradeTest:[
           {
             url:'src/assets/img.png',
-            title:'全国汽车维修工中级培训'
+            title:'鍏ㄥ浗姹借溅缁翠慨宸ヤ腑绾у煿璁�'
           },
           {
             url:'src/assets/img.png',
-            title:'全国汽车维修电工中级'
+            title:'鍏ㄥ浗姹借溅缁翠慨鐢靛伐涓骇'
           }
       ],
       contentTest:[
           {
             url:'src/assets/img.png',
-            title:'汽车电气'
+            title:'姹借溅鐢垫皵'
           },
           {
             url:'src/assets/img.png',
-            title:'汽车底盘'
+            title:'姹借溅搴曠洏'
           },
           {
             url:'src/assets/img.png',
-            title:'新能源'
+            title:'鏂拌兘婧�'
           },
           {
             url:'src/assets/img.png',
-            title:'汽车发动机'
+            title:'姹借溅鍙戝姩鏈�'
           },
           {
             url:'src/assets/img.png',
-            title:'汽车变速器'
+            title:'姹借溅鍙橀�熷櫒'
           }
       ]
     }
