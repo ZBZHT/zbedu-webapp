@@ -8,7 +8,7 @@
         </div>
         <div class="rightbox">
 
-            <right-swipe></right-swipe>
+            <right-swipe :imgArray = "imgArray"></right-swipe>
 
         </div>
     </div>
@@ -99,6 +99,7 @@ export default {
       bottomLeftData:'',
       bottomRightData:'',
       bannerLeftData:'',
+      imgArray:'',
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
@@ -135,6 +136,7 @@ export default {
                 this.bottomRightData = this.indexData.bottomRightData;
                 this.bannerLeftData = this.indexData.bannerLeftData;
                 console.log(this.indexData.bannerLeftData);
+                this.imgArray = this.indexData.imgArray;
             }).catch(function(error){
                 console.log("error init." + error)
             });
