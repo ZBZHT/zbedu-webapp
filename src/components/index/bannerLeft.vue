@@ -1,20 +1,24 @@
 <template>
   <div>
-    <div class="item-a" v-for="item in request.result.leftData">
+    <div class="item-a" v-for="item in bannerLeftData">
                 <a>
-                    <span>
-                        <b class="bleft">{{item.title}}</b>
+                    <span class="item-b">
+                        <span class="bleft">{{item.title}}</span>
                         <b class="jiantou"> > </b>
                     </span>
                 </a>
                 <div class="hiddenbox">
-                    <b class="hd-title">
-                        <a></a>
-                    </b>
-                    <hr/>
-                    <ul class="hd-desc-ul">
-                        <li class="hd-desc"><a>  </a></li>
-                    </ul>
+                    <div v-for="item2 in item.children">
+                        <b class="hd-title">
+                            <a>{{item2.title}}</a>
+                        </b>
+                        <hr/>
+                        <ul class="hd-desc-ul">
+                            <li class="hd-desc" v-for="item3 in item2.children">
+                                <a>{{item3.title}}</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
      </div>
    </div>
@@ -24,22 +28,14 @@
       import axios from 'axios'
 export default {
   name: 'main',
+  props:['bannerLeftData'],
   data () {
     return {
-      msg: 'main',
-      request:'',
+      msg: 'main'
     }
   },
   mounted(){
-    axios.get("http://192.168.2.57:3000/menu/index",{
-        params:{
-            userId:"123"
-        }
-    }).then((res)=>{
-        this.request = res.data;
-    }).catch(function(error){
-        console.log("error init." + error)
-    });
+    
   }
 }
 </script>
@@ -87,13 +83,16 @@ a:focus {
     /*-webkit-box-flex: 3;*/
 }
 .item-a{
-    width:109%;
-    height:53px;
+    width:110%;
+    height:50px;
     line-height:46px;
     font-size:12px;
     cursor:pointer;
     padding-left:4px;
     padding-top:20px;
+}
+.item-b{
+    position:relative;
 }
 .item-a:hover{
     background:#fff;
@@ -106,6 +105,9 @@ a:focus {
 }
 .item-a .jiantou{
     margin-left:10px;
+    position:absolute;
+    top:0;
+    right:11px;
 }
 .hiddenbox{
     width:600px;
@@ -136,7 +138,7 @@ a:focus {
 }
 .hiddenbox .hd-desc{
     display:inline-block;
-    margin-right:10px;
+    margin-right:26px;
     height:0;
 }
 .hiddenbox ul.noneli{
@@ -149,7 +151,7 @@ a:focus {
 }
 .left-menu .item-a a span{
     display: inline-block;
-    width:180px;
+    width:160px;
     font-size:22px;
     color:#f00;
     font-weight: bold;
