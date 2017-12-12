@@ -37,53 +37,12 @@
 import navs from '@/assets/index-data.js'
 export default {
   name: 'main',
+  props :['bottomRightData'],
   data () {
     return {
       msg: 'main',
       top3:true,
-      dispear:true,
-      bottomRightData:[
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'1'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'2'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'3'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'4'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'5'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'6'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'7'
-          },
-          {
-            couse:'DC-DC检测',
-            name:'熊永刚',
-            num:'8'
-          }
-        ]
+      dispear:true
     }
   },
   
