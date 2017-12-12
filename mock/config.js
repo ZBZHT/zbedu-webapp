@@ -7,9 +7,9 @@ const config = {
     method: 'get',
     data: './test.json'
   },
-  '/api/menu/header2': {
+  '/api/menu/index': {
     method: 'get',
-    data: './test2.json'
+    data: './index.json'
   }
 };
 
