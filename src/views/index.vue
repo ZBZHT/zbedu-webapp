@@ -78,7 +78,7 @@
 </template>
 
 <script>
-import navs from '@/assets/index-data.js'
+import axios from 'axios'
 import bannerLeft from '@/components/index/bannerLeft'
 import rightSwipe from '@/components/index/rightSwipe'
 import bottomLeft from '@/components/index/bottomLeft'
@@ -92,71 +92,10 @@ export default {
   data () {
     return {
       msg: 'main',
-      leftData:navs,
-      bestClassData:[
-          {
-            url:'src/assets/img.png',
-            title:'标题'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'标题'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'标题'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'标题'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'标题'
-          }
-      ],
-      pageData:[
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介1'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介2'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介3'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介4'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介5'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介'
-          },
-          {
-              url:'src/assets/img.png',
-              title:'检测',
-              intro:'简介'
-          },
-      ],
+      indexData:'',
+      leftData:'',
+      bestClassData:'',
+      pageData:'',
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
@@ -180,11 +119,17 @@ export default {
           },
   mounted(){
         this.total = this.all.length;
-        //this.leftData = navs;
-        //this.$set(this.leftData,'key',['abc','def']);
-        //this.leftData = ['123','456'];
-        console.log('bbbb');
-        console.log(this.leftData)
+        axios.get("/api/menu/index",{
+                params:{
+                     user:123
+                }
+            }).then((res)=>{
+                this.indexData = res.data;
+                this.bestClassData = this.indexData.bestClassData;
+                this.pageData = this.indexData.pageData;
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
     },
   components:{bannerLeft,rightSwipe,bottomLeft,bottomRight,moPaging}
 }
