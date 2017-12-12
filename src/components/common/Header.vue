@@ -33,7 +33,7 @@
 </template>
 
 <script>
-  import navData from '../HeaderData'
+  import navData from '/mock/HeaderData'
   import dropmenu from './DropMenu'
   export default {
     name: 'Header',
@@ -148,7 +148,7 @@
       width: 16px;
       height: 16px;
       color: #ccc;
-      background: url("../assets/imgs/search.png") no-repeat;
+      background: url("/src/assets/imgs/search.png") no-repeat;
     }
     .nav-right {
       float: right;
