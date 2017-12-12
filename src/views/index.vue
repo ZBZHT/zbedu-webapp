@@ -31,7 +31,7 @@
     <div class="bottom-box">
         <div class="bb-left">
             <span class="bb-span">猜你感兴趣</span>
-            <bottom-left></bottom-left>
+            <bottom-left :bottomLeftData = "bottomLeftData"></bottom-left>
         </div>
         <div class="bb-middle">
         <span class="title">实战推荐</span>
@@ -71,7 +71,7 @@
 
         </div>
         <div class="bb-right">
-            <bottom-right></bottom-right>
+            <bottom-right :bottomRightData = "bottomRightData"></bottom-right>
         </div>
     </div>
   </div>
@@ -96,6 +96,8 @@ export default {
       leftData:'',
       bestClassData:'',
       pageData:'',
+      bottomLeftData:'',
+      bottomRightData:'',
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
@@ -128,6 +130,8 @@ export default {
                 this.bestClassData = this.indexData.bestClassData;
                 this.pageData = this.indexData.pageData;
                 this.total = this.all.length;
+                this.bottomLeftData = this.indexData.bottomLeftData;
+                this.bottomRightData = this.indexData.bottomRightData;
             }).catch(function(error){
                 console.log("error init." + error)
             });
