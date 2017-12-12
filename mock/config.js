@@ -10,6 +10,10 @@ const config = {
   '/api/menu/index': {
     method: 'get',
     data: './index.json'
+  },
+  '/api/menu/text': {
+    method: 'get',
+    data: './text.json'
   }
 };
 
