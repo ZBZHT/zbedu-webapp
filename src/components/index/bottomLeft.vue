@@ -15,23 +15,10 @@
 import navs from '@/assets/index-data.js'
 export default {
   name: 'main',
+  props :['bottomLeftData'],
   data () {
     return {
-      msg: 'main',
-      bottomLeftData:[
-          {
-            url:'src/assets/left.png',
-            title:'DC-DC检测'
-          },
-          {
-            url:'src/assets/left.png',
-            title:'DC-DC检测'
-          },
-          {
-            url:'src/assets/left.png',
-            title:'DC-DC检测'
-          }
-        ]
+      msg: 'main'
     }
   }
 }
