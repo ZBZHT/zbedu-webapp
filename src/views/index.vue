@@ -3,7 +3,7 @@
     <div class="banner">
         <div class="left-menu">
 
-            <banner-left :leftData="leftData"></banner-left>
+            <banner-left :bannerLeftData = "bannerLeftData"></banner-left>
 
         </div>
         <div class="rightbox">
@@ -98,6 +98,7 @@ export default {
       pageData:'',
       bottomLeftData:'',
       bottomRightData:'',
+      bannerLeftData:'',
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
@@ -132,6 +133,8 @@ export default {
                 this.total = this.all.length;
                 this.bottomLeftData = this.indexData.bottomLeftData;
                 this.bottomRightData = this.indexData.bottomRightData;
+                this.bannerLeftData = this.indexData.bannerLeftData;
+                console.log(this.indexData.bannerLeftData);
             }).catch(function(error){
                 console.log("error init." + error)
             });
