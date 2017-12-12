@@ -37,7 +37,7 @@
             </ul>
         </div>
         <div class="grade-test">
-            <p>>等级考试</p>
+            <p>等级考试</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in gradeTest">
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import swipe from '@/components/textCenter/swipe'
 
 
@@ -73,116 +74,30 @@ export default {
   data () {
     return {
         phWeekMargin:true,
-        information:[
-          {
-            num:'1',
-            src:'同学们，手机登录也能进行考试啦！'
-          },
-          {
-            num:'2',
-            src:'最新消息！注意啦：目前本公司推出汽车维修工中级和汽车维修电工中级试题。'
-          }
-      ],
-        winner:[
-          {
-            title:'一周考试排行榜',
-            stu:[
-                {
-                    num:'1',
-                    name:'熊永刚'
-                },
-                {
-                    num:'2',
-                    name:'卞旺阳'
-                },
-                {
-                    num:'3',
-                    name:'尹东阳'
-                }
-            ]
-          },
-          {
-            title:'一月考试排行榜',
-            stu:[
-                {
-                    num:'1',
-                    name:'徐瑞'
-                },
-                {
-                    num:'2',
-                    name:'姜老师'
-                },
-                {
-                    num:'3',
-                    name:'贺林'
-                }
-            ]
-          }
-      ],
-       hotTest:[
-          {
-            url:'src/assets/img.png',
-            title:'汽车电气'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'全国汽车维修工中级培训'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'全国汽车维修电工中级'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'新能源'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'汽车底盘'
-          }
-      ],
-      gradeTest:[
-          {
-            url:'src/assets/img.png',
-            title:'全国汽车维修工中级培训'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'全国汽车维修电工中级'
-          }
-      ],
-      contentTest:[
-          {
-            url:'src/assets/img.png',
-            title:'汽车发动机'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'汽车电气'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'汽车变速器'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'新能源'
-          },
-          {
-            url:'src/assets/img.png',
-            title:'汽车底盘'
-          }
-      ]
+        textCenterData:'',
+        information:'',
+        winner:'',
+       hotTest:'',
+      gradeTest:'',
+      contentTest:''
     }
   },
-  computed:{
-
-      },
-  methods:{
-
-          },
   mounted(){
-
+      axios.get("/api/menu/index",{
+                params:{
+                     user:123
+                }
+            }).then((res)=>{
+                this.textCenterData = res.data;
+                console.log(this.textCenterData);
+                this.information = this.textCenterData.information;
+                this.winner = this.textCenterData.winner;
+                this.hotTest = this.textCenterData.hotTest;
+                this.gradeTest = this.textCenterData.gradeTest;
+                this.contentTest = this.textCenterData.contentTest;
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
     },
   components:{swipe}
 }
