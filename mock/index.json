@@ -1,4 +1,21 @@
 {
+  "bannerLeftData":[
+    {
+      "title":"新能源汽车"
+    },
+    {
+      "title":"汽车发动机"
+    },
+    {
+      "title":"汽车底盘"
+    },
+    {
+      "title":"汽车电气"
+    },
+    {
+      "title":"车身结构"
+    }
+  ],
   "bestClassData":[
     {
       "url":"src/assets/img.png",
@@ -60,23 +77,57 @@
   "bottomLeftData":[
     {
       "url":"src/assets/left.png",
-      "title":"标题"
+      "title":"DC-DC检测"
     },
     {
       "url":"src/assets/left.png",
-      "title":"标题"
+      "title":"DC-DC检测"
     },
     {
       "url":"src/assets/left.png",
-      "title":"标题"
+      "title":"DC-DC检测"
+    }
+  ],
+  "bottomRightData":[
+    {
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"1"
     },
     {
-      "url":"src/assets/left.png",
-      "title":"标题"
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"2"
     },
     {
-      "url":"src/assets/left.png",
-      "title":"标题"
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"3"
+    },
+    {
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"4"
+    },
+    {
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"5"
+    },
+    {
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"6"
+    },
+    {
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"7"
+    },
+    {
+      "couse":"DC-DC检测",
+      "name":"熊永刚",
+      "num":"8"
     }
   ]
 }
