@@ -118,7 +118,7 @@ export default {
               }
           },
   mounted(){
-        this.total = this.all.length;
+
         axios.get("/api/menu/index",{
                 params:{
                      user:123
@@ -127,6 +127,7 @@ export default {
                 this.indexData = res.data;
                 this.bestClassData = this.indexData.bestClassData;
                 this.pageData = this.indexData.pageData;
+                this.total = this.all.length;
             }).catch(function(error){
                 console.log("error init." + error)
             });
