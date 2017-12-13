@@ -13,9 +13,6 @@
 </template>
 
 <script>
-  import headerData from '../HeaderData.js'
-  console.log('headerData')
-  console.log(headerData)
   // var headerData = require('../HeaderData')
   export default {
     name: 'list',
@@ -64,7 +61,7 @@
     background: lightcyan;
     text-align: left;
     padding-left: 15px;
-    background: url("../assets/imgs/right.png") no-repeat 120px 8px;
+    background: url("../../assets/imgs/right.png") no-repeat 120px 8px;
   }
 
 </style>

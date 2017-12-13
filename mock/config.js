@@ -7,6 +7,10 @@ const config = {
     method: 'get',
     data: './test.json'
   },
+  '/menu/header/nav': {
+    method: 'get',
+    data: './HeaderData.json'
+  },
   '/api/menu/index': {
     method: 'get',
     data: './index.json'

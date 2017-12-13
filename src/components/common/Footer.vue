@@ -16,10 +16,8 @@
 </template>
 
 <script>
-  import navData from '../HeaderData'
   export default {
     name: 'Footer',
-    footerData: navData,
     data () {
       return {
         msg: '企业合作\n' + '<span>|</span>\n' + ' 联系我们\n' + '<span>|</span>\n' + '常见问题\n' + '<span>|</span>\n' + '意见反馈\n',

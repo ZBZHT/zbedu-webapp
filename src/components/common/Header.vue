@@ -1,7 +1,7 @@
 <template>
   <div class="header-box">
     <a href="#" class="logo">
-      <img class="logoimage" alt="Brand" src="../assets/imgs/zb_logo.png">
+      <img class="logoimage" alt="Brand" src="../../assets/imgs/zb_logo.png">
     </a>
     <div class="nav-list" v-for="items in navTitleData">
       <ul>
@@ -33,17 +33,26 @@
 </template>
 
 <script>
-  import navData from '/mock/HeaderData'
   import dropmenu from './DropMenu'
+  import axios from 'axios'
   export default {
     name: 'Header',
     data () {
       return {
         loginMsg: '登录',
         enrolMsg: '注册',
-        navTitleData: navData,
+        navTitleData: null,
         menu: ''
       }
+    },
+    mounted() {
+        axios.get('/menu/header/nav')
+          .then(function(res){
+              let result = res.data;
+              console.log(123);
+              console.log(result);
+              this.navTitleData = result;
+          });
     },
     components: {
       dropmenu

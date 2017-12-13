@@ -36,7 +36,7 @@ export default new Router({
     },
     {
       path: '/footer',
-      name: 'header',
+      name: 'footer',
       component: footer
     },
     {
@@ -46,7 +46,7 @@ export default new Router({
     },
     {
       path: '/login',
-      name: login,
+      name: 'login',
       component: login
     }
   ]
