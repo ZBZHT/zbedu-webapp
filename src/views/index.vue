@@ -1,5 +1,10 @@
 <template>
   <div id="app" class="container">
+    <div class="nav">
+    
+        <navgation-head></navgation-head>
+
+    </div>
     <div class="banner">
         <div class="left-menu">
 
@@ -79,6 +84,7 @@
 
 <script>
 import axios from 'axios'
+import navgationHead from '@/components/common/navgationHead'
 import bannerLeft from '@/components/index/bannerLeft'
 import rightSwipe from '@/components/index/rightSwipe'
 import bottomLeft from '@/components/index/bottomLeft'
@@ -141,7 +147,7 @@ export default {
                 console.log("error init." + error)
             });
     },
-  components:{bannerLeft,rightSwipe,bottomLeft,bottomRight,moPaging}
+  components:{navgationHead,bannerLeft,rightSwipe,bottomLeft,bottomRight,moPaging}
 }
 </script>
 
