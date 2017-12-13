@@ -1,27 +1,29 @@
 <template>
-  <div>
-    <div class="item-a" v-for="item in bannerLeftData">
+<div>
+  <div v-for="(item,index) in bannerLeftData" v-if="index <= 0">
+    <div class="item-a" v-for="item2 in item.children">
                 <a>
                     <span class="item-b">
-                        <span class="bleft">{{item.title}}</span>
+                        <span class="bleft">{{item2.title}}</span>
                         <b class="jiantou"> > </b>
                     </span>
                 </a>
                 <div class="hiddenbox">
-                    <div v-for="item2 in item.children">
+                    <div v-for="item3 in item2.children">
                         <b class="hd-title">
-                            <a>{{item2.title}}</a>
+                            <a>{{item3.title}}</a>
                         </b>
                         <hr/>
                         <ul class="hd-desc-ul">
-                            <li class="hd-desc" v-for="item3 in item2.children">
-                                <a>{{item3.title}}</a>
+                            <li class="hd-desc" v-for="item4 in item3.children">
+                                <a>{{item4.title}}</a>
                             </li>
                         </ul>
                     </div>
                 </div>
-     </div>
-   </div>
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
