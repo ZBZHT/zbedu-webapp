@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <div class="nav">
     
-        <navgation-head></navgation-head>
+        <navgation-head :bannerLeftData = "bannerLeftData"></navgation-head>
 
     </div>
     <div class="banner">
@@ -141,7 +141,7 @@ export default {
                 this.bottomLeftData = this.indexData.bottomLeftData;
                 this.bottomRightData = this.indexData.bottomRightData;
                 this.bannerLeftData = this.indexData.bannerLeftData;
-                console.log(this.indexData.bannerLeftData);
+                //console.log(this.indexData.bannerLeftData);
                 this.imgArray = this.indexData.imgArray;
             }).catch(function(error){
                 console.log("error init." + error)
@@ -158,7 +158,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 .container{
   min-width:960px;
