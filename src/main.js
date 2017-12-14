@@ -3,6 +3,10 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VRouter from 'vue-router'
+
+
+Vue.use(VRouter)
 
 Vue.config.productionTip = false
 
