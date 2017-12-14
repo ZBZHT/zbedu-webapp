@@ -2,9 +2,9 @@
 <div class="nav">
     <div class="navbar">
         <div class="navbar-header">
-            <a href="index.html" class="navbar-brand">
+            <router-link :to="{path:'index'}">
                 <img class="brand" alt="Brand" src="../../assets/imgs/zb_logo.png">
-            </a>
+            </router-link>
         </div>
         <div class="collapse">
             <div class="list">
