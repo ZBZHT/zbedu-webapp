@@ -15,9 +15,9 @@ const config = {
     method: 'get',
     data: './index.json'
   },
-  '/api/menu/text': {
+  '/api/menu/testQuestion': {
     method: 'get',
-    data: './text.json'
+    data: './testQuestion.json'
   }
 };
 
