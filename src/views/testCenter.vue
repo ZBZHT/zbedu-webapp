@@ -1,5 +1,10 @@
 <template>
 <div class="testCenter">
+    <div class="nav">
+    
+        <navgation-head :bannerLeftData = "bannerLeftData"></navgation-head>
+
+    </div>
     <div class="topbox">
         <swipe></swipe>
     </div>
@@ -66,6 +71,7 @@
 
 <script>
 import axios from 'axios'
+import navgationHead from '@/components/common/navgationHead'
 import swipe from '@/components/testCenter/swipe'
 
 
@@ -79,7 +85,8 @@ export default {
         winner:'',
        hotTest:'',
       gradeTest:'',
-      contentTest:''
+      contentTest:'',
+      bannerLeftData:''
     }
   },
   mounted(){
@@ -95,11 +102,13 @@ export default {
                 this.hotTest = this.textCenterData.hotTest;
                 this.gradeTest = this.textCenterData.gradeTest;
                 this.contentTest = this.textCenterData.contentTest;
+                this.bannerLeftData = this.textCenterData.bannerLeftData;
+
             }).catch(function(error){
                 console.log("error init." + error)
             });
     },
-  components:{swipe}
+  components:{swipe,navgationHead}
 }
 </script>
 
