@@ -2,7 +2,7 @@
 <div class="testCenter">
     <div class="nav">
     
-        <navgation-head :bannerLeftData = "bannerLeftData"></navgation-head>
+        <navgation-head></navgation-head>
 
     </div>
     <div class="topbox">
@@ -85,8 +85,7 @@ export default {
         winner:'',
        hotTest:'',
       gradeTest:'',
-      contentTest:'',
-      bannerLeftData:''
+      contentTest:''
     }
   },
   mounted(){
@@ -102,8 +101,6 @@ export default {
                 this.hotTest = this.textCenterData.hotTest;
                 this.gradeTest = this.textCenterData.gradeTest;
                 this.contentTest = this.textCenterData.contentTest;
-                this.bannerLeftData = this.textCenterData.bannerLeftData;
-
             }).catch(function(error){
                 console.log("error init." + error)
             });
