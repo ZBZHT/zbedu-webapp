@@ -8,7 +8,7 @@
         </div>
 
 
-    <div class="content" :class="{dispear : dispear}">    
+        <div class="content" :class="{dispear : dispear}">    
             <div class="title" v-for="item in nowPageData">
                 <p v-for="item2 in item.title">{{item2.title}}</p>
             </div>
@@ -25,13 +25,16 @@
                                     </label>
                                 </li>
                             </ul>
+                            <span class="answer">
+                                正确答案：{{item2.answer}}
+                            </span>
                         </div>
             </div>
             <div class="data1">
-                <button class="data2 btn">鎻愪氦</button>
+                <button class="data2">提交</button>
                 <div class="result"></div>
             </div>
-    </div>
+        </div>
 </div>
 </template>
 
@@ -169,6 +172,10 @@ ul li{
 .ans{
     display:flex;
     margin-top:5px;
+    margin-bottom:5px;
+}
+.answer{
+    display:none;
 }
 .ans li{
     margin-right:8px;
