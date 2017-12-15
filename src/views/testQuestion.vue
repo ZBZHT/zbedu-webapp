@@ -1,6 +1,14 @@
 <template>
-    <div class="question">
-        <div class="content">
+<div class="question">
+    
+
+        <div class="timeInterval">
+            <p>距离考试结束还有：<span class="time">{{minute}}</span>分钟<span class="time">{{second}}</span>秒</p>
+            <button @click='add' :class="{dispear : !dispear}">开始考试</button>
+        </div>
+
+
+    <div class="content" :class="{dispear : dispear}">    
             <div class="title" v-for="item in nowPageData">
                 <p v-for="item2 in item.title">{{item2.title}}</p>
             </div>
@@ -20,11 +28,11 @@
                         </div>
             </div>
             <div class="data1">
-                <button class="data2 btn">提交</button>
+                <button class="data2 btn">鎻愪氦</button>
                 <div class="result"></div>
             </div>
-        </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -36,7 +44,11 @@ export default {
   data () {
     return {
         textQuestionData:'',
-        nowPageData:''
+        nowPageData:'',
+        minutes:120,
+        seconds:0,
+        dispear:true
+        
     }
   },
   mounted(){
@@ -52,11 +64,55 @@ export default {
                 console.log("error init." + error)
             });
     },
-  components:{}
+  methods: {
+      num:function (n) {
+                return n<10 ? "0" + n : "" + n
+            },
+            add:function () {
+                var _this = this;
+                var time = window.setInterval(function () {
+
+                    if (_this.seconds == 0 && _this.minutes != 0) {
+                        _this.seconds = 59;
+                        _this.minutes -= 1; 
+                    }else if(_this.minutes == 0 && _this.seconds == 0){
+                        _this.seconds = 0;
+                        window.clearInterval(time);
+                        console.log("111");
+                    }else{
+                        _this.seconds -= 1 
+                    }
+
+                },1000);
+                _this.dispear = !_this.dispear;
+            }
+    },
+    watch:{
+            second:{
+                handler(newVal){
+                    this.num(newVal)
+                }
+            },
+            minute:{
+                handler(newVal){
+                    this.num(newVal)
+                }
+            }
+        },
+    computed:{
+            second:function () {
+                return this.num(this.seconds)
+            },
+            minute:function () {
+                return this.num(this.minutes)
+            }
+        },
+    components:{}
 }
 </script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -67,9 +123,29 @@ ul li{
 .question{
     min-width:960px;
 }
+.timeInterval{
+    position:relative;
+}
+.timeInterval p{
+    position:fixed;
+    top:0;
+    right:10px;
+}
+.timeInterval button{
+    background:#e4393c;
+    padding:20px;
+    border-radius:5px;
+    margin-top:100px;
+}
+.time{
+    font-weight:bolder;
+}
 .content{
     width:920px;
     margin:0 auto;
+}
+.dispear{
+    display:none;
 }
 .title{
         text-align:center;
