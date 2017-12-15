@@ -5,7 +5,7 @@
             <div class="dropdown-toggle">
 
                 <ul>
-                    <li class="dr-li" v-for="item in bannerLeftData">
+                    <li class="dr-li" v-for="item in navData">
                         <a class="title">{{item.title}}</a>
                         <div class="dropdown-menu" v-show="item.children">
                             
@@ -39,7 +39,7 @@
       import axios from 'axios'
 export default {
   name: 'main',
-  props:['bannerLeftData'],
+  props:['navData'],
   data () {
     return {
       msg: 'main'
@@ -63,6 +63,7 @@ ul li{
 a {
     color: #000;
     cursor: pointer;
+    font-weight:bolder;
 }
 a:hover{
     text-decoration: none;
