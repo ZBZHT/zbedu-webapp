@@ -2,7 +2,7 @@
   <div id="app" class="container">
     <div class="nav">
     
-        <navgation-head :bannerLeftData = "bannerLeftData"></navgation-head>
+        <navgation-head></navgation-head>
 
     </div>
     <div class="banner">
