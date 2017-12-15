@@ -8,7 +8,7 @@
         </div>
         <div class="collapse">
             <div class="list">
-                   <nav-ul :bannerLeftData = "bannerLeftData"></nav-ul>
+                   <nav-ul :navData = "navData"></nav-ul>
             </div>
 
             <form>
@@ -30,14 +30,25 @@ import axios from 'axios'
 import navUl from '@/components/common/navUl'
 export default {
   name: 'main',
-  props:['bannerLeftData'],
   data () {
     return {
-      msg: 'main'
+      msg: 'main',
+      indexData:'',
+      navData:''
     }
   },
   mounted(){
-      
+      axios.get("/api/menu/index",{
+                params:{
+                     user:1
+                }
+            }).then((res)=>{
+                this.indexData = res.data;
+                this.navData = this.indexData.bannerLeftData;
+
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
   },
   components:{navUl}
 
@@ -56,6 +67,7 @@ ul li{
 a {
     color: inherit;
     cursor: pointer;
+    font-weight:bolder;
 }
 a:hover{
     text-decoration: none;
