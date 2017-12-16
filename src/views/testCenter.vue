@@ -149,7 +149,7 @@ p{
     font-weight:bolder;
 }
 .topbox{
-    width:920px;
+    width:960px;
     height:295px;
     margin:0 auto;
     position:relative;
@@ -158,7 +158,7 @@ p{
     margin-bottom: 40px;
 }
 .middlebox{
-    width:920px;
+    width:960px;
     display: flex;
     margin:0 auto;
     margin-bottom: 40px;
@@ -193,26 +193,26 @@ p{
 
 }
 .bottombox{
-    width:920px;
+    width:960px;
     margin-top:40px;
     margin:0 auto;
     /*border:1px solid #000;*/
     text-align:left;
 }
 .hot-test{
-    width:920px;
+    width:960px;
     /*border:1px solid #000;*/
     margin-bottom:30px;
 }
 .bottombox .test{
-    margin-left:14px;
+    margin-left:15px;
 }
 .bottombox .test .test-li{
     display: inline-block;
     width:169px;
     height:165px;
     /*border:1px solid #000;*/
-    margin-right:12px;
+    margin-right:20px;
     margin-bottom:20px;
     text-align: center;
 }
@@ -220,12 +220,12 @@ p{
     margin-top:10px;
 }
 .grade-test{
-    width:920px;
+    width:960px;
     margin-bottom:30px;
     /*border:1px solid #000;*/
 }
 .content-test{
-    width:920px;
+    width:960px;
 }
 .tecono-title{
     text-align: center;
