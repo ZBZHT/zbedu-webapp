@@ -149,7 +149,7 @@ ul li{
     font-weight:bolder;
 }
 .content{
-    width:920px;
+    width:960px;
     margin:0 auto;
 }
 .dispear{
@@ -161,7 +161,7 @@ ul li{
         font-size:20px;
 }
 .data{
-    width:920px;
+    width:960px;
     text-align:left;
     margin:0 auto;
     padding:20px;
