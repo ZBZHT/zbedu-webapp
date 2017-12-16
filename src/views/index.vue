@@ -20,17 +20,9 @@
 
     <span class="title">精品课程</span>
     <div class="best-class">
-        <div class="five-box" v-for="item in bestClassData">
-                    <div class="mask-play zz mf">
-                        <img :src="item.url">
-                        <div class="mask">
-                            <img src="src/assets/play3.png">
-                            <p class="ppv"><span>PPT</span></p>
-                            <p class="ppv"><span>Video</span></p></a>
-                        </div>
-                    </div>
-                    <p class="p"><a>{{item.title}}</a></p>
-        </div>
+        
+        <bestClass :bestClassData = "bestClassData"></bestClass>
+
     </div>
 
     <div class="bottom-box">
@@ -87,6 +79,7 @@ import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
 import bannerLeft from '@/components/index/bannerLeft'
 import rightSwipe from '@/components/index/rightSwipe'
+import bestClass from '@/components/index/bestClass'
 import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
 import bottomRight from '@/components/index/bottomRight'
@@ -147,7 +140,7 @@ export default {
                 console.log("error init." + error)
             });
     },
-  components:{navgationHead,bannerLeft,rightSwipe,bottomLeft,bottomRight,moPaging}
+  components:{navgationHead,bannerLeft,rightSwipe,bestClass,bottomLeft,bottomRight,moPaging}
 }
 </script>
 
@@ -213,32 +206,9 @@ hr{
     width:795px;
     overflow:hidden;
 }
-.best-class{
-    display:flex;
-    width:960px;
-    height:200px;
-    margin:0 auto;
-}
-.five-box{
-    width:169px;
-    height:200px;
-    margin-right:29px;
-}
 .mask-play>img{
   width:169px;
   height:100px;
-}
-.best-class a{
-  color:#000;
-}
-.best-class a:hover{
-  color:#e4393c;
-}
-.best-class .five-box .p{
-    margin-top:-25px;
-    font-size: 18px;
-    text-align: center;
-    margin-left:-9%;
 }
 .zz{
     border-radius:10px;
