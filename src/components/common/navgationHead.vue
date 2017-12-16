@@ -29,10 +29,10 @@
 import axios from 'axios'
 import navUl from '@/components/common/navUl'
 export default {
-  name: 'main',
+  name: 'navgationHead',
   data () {
     return {
-      msg: 'main',
+      msg: 'navgationHead',
       indexData:'',
       navData:''
     }

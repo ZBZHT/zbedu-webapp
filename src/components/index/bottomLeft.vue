@@ -14,11 +14,11 @@
 <script>
 import navs from '@/assets/index-data.js'
 export default {
-  name: 'main',
+  name: 'bottomLeft',
   props :['bottomLeftData'],
   data () {
     return {
-      msg: 'main'
+      msg: 'bottomLeft'
     }
   }
 }

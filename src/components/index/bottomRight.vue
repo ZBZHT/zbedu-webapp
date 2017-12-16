@@ -36,11 +36,11 @@
 <script>
 import navs from '@/assets/index-data.js'
 export default {
-  name: 'main',
+  name: 'bottomRight',
   props :['bottomRightData'],
   data () {
     return {
-      msg: 'main',
+      msg: 'bottomRight',
       top3:true,
       dispear:true
     }

@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="nav">
-    
+
         <navgation-head></navgation-head>
 
     </div>
@@ -93,11 +93,11 @@ import bottomRight from '@/components/index/bottomRight'
 
 
 export default {
-  name: 'main',
+  name: 'index',
 
   data () {
     return {
-      msg: 'main',
+      msg: 'index',
       indexData:'',
       leftData:'',
       bestClassData:'',

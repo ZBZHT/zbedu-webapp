@@ -38,11 +38,11 @@
 <script>
       import axios from 'axios'
 export default {
-  name: 'main',
+  name: 'navUl',
   props:['navData'],
   data () {
     return {
-      msg: 'main'
+      msg: 'navUl'
     }
   },
   mounted(){

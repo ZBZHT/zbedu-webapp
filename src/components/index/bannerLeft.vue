@@ -29,11 +29,11 @@
 <script>
       import axios from 'axios'
 export default {
-  name: 'main',
+  name: 'bannerLeft',
   props:['bannerLeftData'],
   data () {
     return {
-      msg: 'main'
+      msg: 'bannerLeft'
     }
   },
   mounted(){
