@@ -19,19 +19,19 @@
                                 {{item2.num}}.{{item2.desc}}
                             </span>
                             <ul class="ans">
-                                <li v-for="item3 in item2.options">
-                                    <label for="">
+                                <li v-for="(item3,index3) in item2.options">
+                                    <label :for="index3">
                                         <input id="" type="radio" value="A" name="">{{item3}}
                                     </label>
                                 </li>
                             </ul>
-                            <span class="answer" :class="{ansDisp : !ansDisp}">
+                            <span :class="{answer : !answer}">
                                 正确答案：{{item2.answer}}
                             </span>
                         </div>
             </div>
             <div class="data1">
-                <button @click='appear' class="data2">提交</button>
+                <button @click='appear' class="btn" :class="{answer : answer}">提交</button>
                 <div class="result"></div>
             </div>
         </div>
@@ -51,7 +51,7 @@ export default {
         minutes:120,
         seconds:0,
         dispear:true,
-        ansDisp:true
+        answer:true
         
     }
   },
@@ -92,7 +92,7 @@ export default {
             },
             appear:function () {
                 var _this = this;
-                _this.ansDisp = !_this.ansDisp;
+                _this.answer = !_this.answer;
             }
     },
   watch:{
@@ -178,9 +178,6 @@ ul li{
     display:flex;
     margin-top:5px;
     margin-bottom:5px;
-}
-.ansDisp{
-    display:block;
 }
 .answer{
     display:none;
