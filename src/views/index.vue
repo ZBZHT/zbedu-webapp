@@ -222,8 +222,7 @@ hr{
 .five-box{
     width:169px;
     height:200px;
-    margin-right:4px;
-    margin-left:9px;
+    margin-right:29px;
 }
 .mask-play>img{
   width:169px;
@@ -281,6 +280,7 @@ div.mask-play:hover .mask{
     height: 490px;
     box-shadow: 10px 10px 30px #ccc;
     margin-top:20px;
+    margin-right:30px;
 }
 .bb-span{
     color:#222;
@@ -302,14 +302,14 @@ div.mask-play:hover .mask{
 .bb-middle{
     width:582px;
     height:630px;
-    margin-right:27px;
+    margin-right:33px;
     margin-top:15px;
 }
 .shizhan{
-    width:558px;
+    width:580px;
     height:422px;
     margin-top:18px;
-    margin-left:27px;
+    margin-left:15px;
 }
 .shizhan>ul{
     text-align:left;
@@ -326,7 +326,7 @@ div.mask-play:hover .mask{
     height:100px;
     margin-top:5px;
     display:inline-block;
-    margin-right:15px;
+    margin-right:20px;
     margin-bottom:88px;
 }
 .ppv{
