@@ -25,13 +25,13 @@
                                     </label>
                                 </li>
                             </ul>
-                            <span class="answer">
+                            <span class="answer" :class="{ansDisp : !ansDisp}">
                                 正确答案：{{item2.answer}}
                             </span>
                         </div>
             </div>
             <div class="data1">
-                <button class="data2">提交</button>
+                <button @click='appear' class="data2">提交</button>
                 <div class="result"></div>
             </div>
         </div>
@@ -50,7 +50,8 @@ export default {
         nowPageData:'',
         minutes:120,
         seconds:0,
-        dispear:true
+        dispear:true,
+        ansDisp:true
         
     }
   },
@@ -68,7 +69,7 @@ export default {
             });
     },
   methods: {
-      num:function (n) {
+            num:function (n) {
                 return n<10 ? "0" + n : "" + n
             },
             add:function () {
@@ -88,9 +89,13 @@ export default {
 
                 },1000);
                 _this.dispear = !_this.dispear;
+            },
+            appear:function () {
+                var _this = this;
+                _this.ansDisp = !_this.ansDisp;
             }
     },
-    watch:{
+  watch:{
             second:{
                 handler(newVal){
                     this.num(newVal)
@@ -102,7 +107,7 @@ export default {
                 }
             }
         },
-    computed:{
+  computed:{
             second:function () {
                 return this.num(this.seconds)
             },
@@ -110,7 +115,7 @@ export default {
                 return this.num(this.minutes)
             }
         },
-    components:{}
+  components:{}
 }
 </script>
 
@@ -173,6 +178,9 @@ ul li{
     display:flex;
     margin-top:5px;
     margin-bottom:5px;
+}
+.ansDisp{
+    display:block;
 }
 .answer{
     display:none;
