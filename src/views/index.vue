@@ -191,7 +191,7 @@ hr{
     font-weight:bolder;
 }
 .banner{
-  width:920px;
+  width:960px;
   height:384px;
   margin:0 auto;
   position:relative;
@@ -199,7 +199,7 @@ hr{
   margin-bottom:75px;
 }
 .left-menu{
-  width:161px;;
+  width:165px;;
   height:384px;
   padding:17px;
   padding-left:0;
@@ -210,12 +210,12 @@ hr{
   font-weight:200;
 }
 .rightbox {
-    width:759px;
+    width:795px;
     overflow:hidden;
 }
 .best-class{
     display:flex;
-    width:920px;
+    width:960px;
     height:200px;
     margin:0 auto;
 }
@@ -270,7 +270,7 @@ div.mask-play:hover .mask{
     cursor: pointer;
 }
 .bottom-box{
-  width:920px;
+  width:960px;
   height:550px;
   margin:0 auto;
   margin-bottom:20px;
