@@ -1,6 +1,6 @@
 <template>
 <div class="question">
-    
+
 
         <div class="timeInterval">
             <p>距离考试结束还有：<span class="time">{{minute}}</span>分钟<span class="time">{{second}}</span>秒</p>
@@ -8,7 +8,7 @@
         </div>
 
 
-        <div class="content" :class="{dispear : dispear}">    
+        <div class="content" :class="{dispear : dispear}">
             <div class="title" v-for="item in nowPageData">
                 <p v-for="item2 in item.title">{{item2.title}}</p>
             </div>
@@ -21,17 +21,17 @@
                             <ul class="ans">
                                 <li v-for="(item3,index3) in item2.options">
                                     <label :for="index3">
-                                        <input id="" type="radio" value="A" name="">{{item3}}
+                                        <input :id="index3" type="radio" :value="item3" name="">{{item3}}
                                     </label>
                                 </li>
                             </ul>
-                            <span :class="{answer : !answer}">
+                            <span :class="{answer : answer}">
                                 正确答案：{{item2.answer}}
                             </span>
                         </div>
             </div>
             <div class="data1">
-                <button @click='appear' class="btn" :class="{answer : answer}">提交</button>
+                <button @click='appear' class="btn" :class="{answer : !answer}">提交</button>
                 <div class="result"></div>
             </div>
         </div>
@@ -52,7 +52,7 @@ export default {
         seconds:0,
         dispear:true,
         answer:true
-        
+
     }
   },
   mounted(){
@@ -78,13 +78,13 @@ export default {
 
                     if (_this.seconds == 0 && _this.minutes != 0) {
                         _this.seconds = 59;
-                        _this.minutes -= 1; 
+                        _this.minutes -= 1;
                     }else if(_this.minutes == 0 && _this.seconds == 0){
                         _this.seconds = 0;
                         window.clearInterval(time);
                         console.log("111");
                     }else{
-                        _this.seconds -= 1 
+                        _this.seconds -= 1
                     }
 
                 },1000);
