@@ -14,12 +14,12 @@
             <form>
                     <input type="text" class="search" placeholder="Search">
             </form>
-
-            <ul class="user">
-                <li><a href="#" class="login">登录</a></li>
-                <li><p>/</p></li>
-                <li><a href="#" class="enrol">注册</a></li>
-            </ul>
+            <login></login>
+            <!--<ul class="user">-->
+                <!--<li><a href="#" class="login">登录</a></li>-->
+                <!--<li><p>/</p></li>-->
+                <!--<li><a href="#" class="enrol">注册</a></li>-->
+            <!--</ul>-->
         </div>
     </div>
 </div>
@@ -28,6 +28,7 @@
 <script>
 import axios from 'axios'
 import navUl from '@/components/common/navUl'
+import login from '@/components/common/Login'
 export default {
   name: 'navgationHead',
   data () {
@@ -50,7 +51,7 @@ export default {
                 console.log("error init." + error)
             });
   },
-  components:{navUl}
+  components:{navUl,login}
 
 }
 </script>
@@ -75,7 +76,6 @@ a:hover{
 .nav{
     min-width:1200px;
     margin-bottom: 40px;
-    position:fix;
 }
 .navbar{
     width:100%;
@@ -99,23 +99,23 @@ a:hover{
     margin-top:27px;
     margin-left:20px;
 }
-.user{
-    display:flex;
-    position:absolute;
-    top:59px;
-    right:20px;
-}
-.user li{
-    margin-right:10px;
-}
-.user a{
-    font-size:20px;
-    color:inherit;
-}
-.user a:hover{
-    color:#f00;
-}
-.user p{
-    margin-top:6px;
-}
+/*.user{*/
+    /*display:flex;*/
+    /*position:absolute;*/
+    /*top:59px;*/
+    /*right:20px;*/
+/*}*/
+/*.user li{*/
+    /*margin-right:10px;*/
+/*}*/
+/*.user a{*/
+    /*font-size:20px;*/
+    /*color:inherit;*/
+/*}*/
+/*.user a:hover{*/
+    /*color:#f00;*/
+/*}*/
+/*.user p{*/
+    /*margin-top:6px;*/
+/*}*/
 </style>
