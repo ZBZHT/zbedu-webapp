@@ -18,6 +18,10 @@ const config = {
   '/api/menu/testQuestion': {
     method: 'get',
     data: './testQuestion.json'
+  },
+  '/api/menu/login': {
+    method: 'login',
+    data: './login.json'
   }
 };
 
