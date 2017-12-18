@@ -1,9 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="nav">
-
         <navgation-head></navgation-head>
-
     </div>
     <div class="banner">
         <div class="left-menu">
@@ -20,7 +18,7 @@
 
     <span class="title">精品课程</span>
     <div class="best-class">
-        
+
         <bestClass :bestClassData = "bestClassData"></bestClass>
 
     </div>
@@ -84,7 +82,6 @@ import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
 import bottomRight from '@/components/index/bottomRight'
 
-
 export default {
   name: 'index',
 
@@ -140,7 +137,7 @@ export default {
                 console.log("error init." + error)
             });
     },
-  components:{navgationHead,bannerLeft,rightSwipe,bestClass,bottomLeft,bottomRight,moPaging}
+  components:{navgationHead,bannerLeft,rightSwipe,bestClass,bottomLeft,bottomRight,moPaging,}
 }
 </script>
 
