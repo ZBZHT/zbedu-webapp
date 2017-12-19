@@ -17,9 +17,9 @@
             
             <ul class="user">
                 <li>
-                    <span v-text="nickName" v-if="nickName"></span>
+                    <a v-text="nickName" v-if="nickName" class="username"></a>
                     <a class="login">
-                        <span v-if="!nickName">登录</span>
+                        <a v-if="!nickName">登录</a>
                         <div class="login-box" v-show="true">
                             <div class="user-box">
                                 <p>用户名:</p>
@@ -32,7 +32,7 @@
                             <button @click="login">确定</button>
                         </div>
                     </a>
-                    <a v-if="nickName">注销</a>
+                    <a v-if="nickName" class="logOut" @click="logOut">注销</a>
                 </li>
             </ul>
         </div>
@@ -43,7 +43,7 @@
 <script>
 import axios from 'axios'
 import navUl from '@/components/common/navUl'
-import {setCookie,getCookie} from '../../assets/js/cookie.js'
+import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 export default {
   name: 'navgationHead',
   data () {
@@ -109,7 +109,12 @@ export default {
               }
           })
       }
-    }
+    },
+      logOut(){
+          /*删除cookie*/
+           this.nickName = '';
+           delCookie('username');
+      }
   },
   components:{navUl}
 
@@ -163,7 +168,7 @@ a:hover{
 .login-box{
   width: 320px;
   height: 180px;
-  margin-top: 15px;
+  margin-top: -15px;
   right: 0px;
   position: absolute;
   background: #F8F8F8;
@@ -212,8 +217,15 @@ a:hover{
   top:59px;
   right:20px;
 }
-.user li{
-  margin-right:10px;
+.user span{
+    position:absolute;
+    top:0;
+    right:100px;
+}
+.username{
+    position:absolute;
+    top:5px;
+    right:110px;
 }
 .user a{
   font-size:20px;
@@ -232,5 +244,10 @@ a:hover{
 }
 .user p{
   margin-top:6px;
+}
+.logOut{
+    position:absolute;
+    top:0;
+    right:10px;
 }
 </style>
