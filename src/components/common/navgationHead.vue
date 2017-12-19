@@ -59,7 +59,8 @@ export default {
       password: '',
       newUsername: '',
       newPassword: '',
-      nickName:''
+      nickName:'',
+      result:-1
     }
   },
   mounted(){
@@ -87,15 +88,30 @@ export default {
             let data = {'username':this.username,'password':this.password}
             /*接口请求*/
             axios.post("/api/menu/login",data).then((res)=>{
-                console.log(res)
+                console.log(res);
+
+                for(var i = 0;i < res.data.users.length;i++){
+                    console.log("111221"+this.username);
+                    if(this.username == res.data.users[i].username){
+                        console.log("114411"+this.result);
+                        if(this.password == res.data.users[i].password){
+                            this.result = 1;
+                        }else{
+                            this.result = 0;
+                        }
+                    }
+                }
+
+
+
              /*接口的传值是(-1,该用户不存在),(0,密码错误)，同时还会检测管理员账号的值*/
-              if(res.data == -1){
-                  this.tishi = "该用户不存在"
+              if(this.result == -1){
+                  alert("该用户不存在")
                   this.showTishi = true
-              }else if(res.data == 0){
-                  this.tishi = "密码输入错误"
+              }else if(this.result == 0){
+                  alert("密码输入错误")
                   this.showTishi = true
-              }else if(res.data == 'admin'){
+              }else if(this.result == 'admin'){
               /*路由跳转this.$router.push*/
                   this.$router.push('/main')
               }else{
