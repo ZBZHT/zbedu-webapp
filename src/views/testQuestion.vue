@@ -19,11 +19,12 @@
                             <span class="desctitle">
                                 {{item2.num}}.{{item2.desc}}
                             </span>
+
                             <div v-for="(item3,index3) in item2.options">
                             <ul class="ans">
-                                <li v-for="(item4,index4) in item2.value"  v-if="index4 <= 0">
-                                    <label :for="item4">
-                                        <input :id="item4" :type="item2.type" :value="item4" :name="item2.name" >{{item3}}
+                                <li>
+                                    <label :for="item3">
+                                        <input :id="item3" :type="item2.type" :value="item2.value[index3]" :name="item2.name" :v-model="item2.name" @change="aaa(item2.name,item2.value[index3])">{{item3}}
                                     </label>
                                 </li>
                             </ul>
@@ -56,7 +57,6 @@ export default {
         seconds:0,
         dispear:true,
         answer:true
-
     }
   },
   mounted(){
@@ -97,6 +97,9 @@ export default {
             appear:function () {
                 var _this = this;
                 _this.answer = !_this.answer;
+            },
+            aaa:function(que,id){
+                console.log("11111"+que+id);
             }
     },
   watch:{
