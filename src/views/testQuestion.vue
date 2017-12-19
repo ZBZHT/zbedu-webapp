@@ -15,19 +15,23 @@
             <div class="data" v-for="item in nowPageData">
 
                         <div class="desc" v-for="item2 in item.question">
+                            
                             <span class="desctitle">
                                 {{item2.num}}.{{item2.desc}}
                             </span>
+                            <div v-for="(item3,index3) in item2.options">
                             <ul class="ans">
-                                <li v-for="(item3,index3) in item2.options">
-                                    <label :for="index3">
-                                        <input :id="index3" type="radio" :value="item3" name="">{{item3}}
+                                <li v-for="(item4,index4) in item2.value"  v-if="index4 <= 0">
+                                    <label :for="item4">
+                                        <input :id="item4" :type="item2.type" :value="item4" :name="item2.name" >{{item3}}
                                     </label>
                                 </li>
                             </ul>
+                            
                             <span :class="{answer : answer}">
                                 正确答案：{{item2.answer}}
                             </span>
+                            </div>
                         </div>
             </div>
             <div class="data1">
