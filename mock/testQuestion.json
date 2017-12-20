@@ -13,6 +13,7 @@
                     "options": ["A、1.0～1.2", "B、0.6～0.8", "C、1.2～1.5", "D、1.5～2.0"],
                     "value":["A","B","C","D"],
                     "name":"que1",
+                    "forId":["que1A","que1B","que1C","que1D"],
                     "answer": "A",
                     "type": "radio"
                 },
@@ -22,6 +23,7 @@
                     "options": ["A、提高发动机转速", "B、降低发动机负荷", "C、提高动力性", "D、提高经济性"],
                     "value":["A","B","C","D"],
                     "name":"que2",
+                    "forId":["que2A","que2B","que2C","que2D"],
                     "answer": "D",
                     "type": "radio"
                 },
@@ -31,6 +33,7 @@
                     "options": ["A、变矩器外壳", "B、泵轮", "C、变速器外壳", "D、导轮"],
                     "value":["A","B","C","D"],
                     "name":"que3",
+                    "forId":["que3A","que3B","que3C","que3D"],
                     "answer": "A",
                     "type": "radio"
                 },
@@ -40,6 +43,7 @@
                     "options":["A、太阳轮", "B、行星架", "C、齿圈", "D、行星轮"],
                     "value":["A","B","C","D"],
                     "name":"que4",
+                    "forId":["que4A","que4B","que4C","que4D"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -49,6 +53,7 @@
                     "options": ["A、等于1", "B、大于1", "C、小于等于1", "D、都正确"],
                     "value":["A","B","C","D"],
                     "name":"que5",
+                    "forId":["que5A","que5B","que5C","que5D"],
                     "answer": "C",
                     "type": "radio"
                 },
@@ -58,6 +63,7 @@
                     "options":["A、2000", "B、60000", "C、10000", "D、4000"],
                     "value":["A","B","C","D"],
                     "name":"que6",
+                    "forId":["que6A","que6B","que6C","que6D"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -67,6 +73,7 @@
                     "options":["A、P位置", "B、D位置", "C、强制低档位置", "D、N位"],
                     "value":["A","B","C","D"],
                     "name":"que7",
+                    "forId":["que7A","que7B","que7C","que7D"],
                     "answer": "C",
                     "type": "radio"
                 },
@@ -76,6 +83,7 @@
                     "options":["A、提高车辆的经济性", "B、提高车辆的动力性", "C、提高车辆的加速能力", "D、提高爬坡能力"],
                     "value":["A","B","C","D"],
                     "name":"que8",
+                    "forId":["que8A","que8B","que8C","que8D"],
                     "answer": "A",
                     "type": "radio"
                 },
@@ -85,6 +93,7 @@
                     "options":["A、车辆稳定性差", "B、换档执行元件和齿轮机构易磨损", "C、不能节油", "D、没有发动机制动功能"],
                     "value":["A","B","C","D"],
                     "name":"que9",
+                    "forId":["que9A","que9B","que9C","que9D"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -94,6 +103,7 @@
                     "options":["A、齿套", "B、固定套", "C、齿毂", "D、齿圈"],
                     "value":["A","B","C","D"],
                     "name":"que10",
+                    "forId":["que10A","que10B","que10C","que10D"],
                     "answer": "D",
                     "type": "radio"
                 },
@@ -103,6 +113,7 @@
                     "value":["A","B"],
                     "options":["A、对", "B、错"],
                     "name":"que11",
+                    "forId":["que11A","que11B"],
                     "answer": "A",
                     "type": "radio"
                 },
@@ -112,6 +123,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que12",
+                    "forId":["que12A","que12B"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -121,6 +133,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que13",
+                    "forId":["que13A","que13B"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -130,6 +143,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que14",
+                    "forId":["que14A","que14B"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -139,6 +153,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que15",
+                    "forId":["que15A","que15B"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -148,6 +163,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que16",
+                    "forId":["que16A","que16B"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -157,6 +173,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que17",
+                    "forId":["que17A","que17B"],
                     "answer": "A",
                     "type": "radio"
                 },
@@ -166,6 +183,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que18",
+                    "forId":["que18A","que18B"],
                     "answer": "A",
                     "type": "radio"
                 },
@@ -175,6 +193,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que19",
+                    "forId":["que19A","que19B"],
                     "answer": "B",
                     "type": "radio"
                 },
@@ -184,6 +203,7 @@
                     "options":["A、对", "B、错"],
                     "value":["A","B"],
                     "name":"que20",
+                    "forId":["que20A","que20B"],
                     "answer": "B",
                     "type": "radio"
                 }
