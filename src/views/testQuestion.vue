@@ -14,17 +14,22 @@
             </div>
             <div class="data" v-for="item in nowPageData">
 
-                        <div class="desc" v-for="item2 in item.question">
+                        <div class="desc" v-for="(item2,index2) in item.question">
                             
-                            <span class="desctitle">
+                            <span class="desctitle" :class="{err : index2 === errNum-1 && err === true}">
                                 {{item2.num}}.{{item2.desc}}
                             </span>
 
-                            <div v-for="(item3,index3) in item2.options">
                             <ul class="ans">
-                                <li>
-                                    <label :for="item3">
-                                        <input :id="item3" :type="item2.type" :value="item2.value[index3]" :name="item2.name" :v-model="item2.name" @change="aaa(item2.name,item2.value[index3])">{{item3}}
+                            
+                                <li v-for="(item3,index3) in item2.options">
+                                    <label :for="item2.forId[index3]">
+                                        <input :id="item2.forId[index3]" 
+                                        :type="item2.type" 
+                                        :value="item2.value[index3]" 
+                                        :name="item2.name" 
+                                        @change="myAnswer(item2.name,item2.value[index3])">
+                                            {{item3}}
                                     </label>
                                 </li>
                             </ul>
@@ -32,11 +37,10 @@
                             <span :class="{answer : answer}">
                                 正确答案：{{item2.answer}}
                             </span>
-                            </div>
                         </div>
             </div>
             <div class="data1">
-                <button @click='appear' class="btn" :class="{answer : !answer}">提交</button>
+                <button @click='submit' class="btn" :class="{answer : !answer}">提交</button>
                 <div class="result"></div>
             </div>
         </div>
@@ -56,7 +60,13 @@ export default {
         minutes:120,
         seconds:0,
         dispear:true,
-        answer:true
+        answer:true,
+        err:false,
+        myAns:'',
+        myId:'',
+        errNum:'',
+        sorce:0,
+        error:[]
     }
   },
   mounted(){
@@ -94,12 +104,36 @@ export default {
                 },1000);
                 _this.dispear = !_this.dispear;
             },
-            appear:function () {
+            submit:function () {
                 var _this = this;
                 _this.answer = !_this.answer;
+                
+                for(var i = 0;i < _this.nowPageData[0].question.length;i++){
+                    if(_this.myId == _this.nowPageData[0].question[i].name){
+                        if(_this.myAnswer == _this.nowPageData[0].question[i].answer){
+                        }else{
+                           _this.err = true;
+                        }
+                    }
+                }
+                alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
+
             },
-            aaa:function(que,id){
-                console.log("11111"+que+id);
+            myAnswer:function(id,answer){
+                this.myId = id;
+                this.myAns = answer;
+                console.log("11111"+id+answer);
+                for(var i = 0;i < this.nowPageData[0].question.length;i++){
+                    if(id == this.nowPageData[0].question[i].name){
+                        if(answer == this.nowPageData[0].question[i].answer){
+                            this.sorce += 5;
+                            console.log(this.sorce);
+                        }else{
+                            this.error.push(this.nowPageData[0].question[i].num);
+                            this.errNum = this.nowPageData[0].question[i].num;                            
+                        }
+                    }
+                }
             }
     },
   watch:{
@@ -181,6 +215,9 @@ ul li{
 .desctitle{
     font-weight:bolder;
 }
+.err{
+    color:#e4393c;
+}
 .ans{
     display:flex;
     margin-top:5px;
@@ -191,6 +228,9 @@ ul li{
 }
 .ans li{
     margin-right:8px;
+}
+.ans li :hover{
+    cursor:pointer;
 }
 .btn{
     width:100px;
