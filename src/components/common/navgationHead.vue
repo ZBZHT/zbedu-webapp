@@ -27,7 +27,7 @@
                             </div>
                             <div class="password-box">
                                 <p>密码:</p>
-                                <input type="text" placeholder="请输入密码" v-model="password">
+                                <input type="password" placeholder="请输入密码" v-model="password">
                             </div>
                             <button @click="login">确定</button>
                         </div>
@@ -51,16 +51,12 @@ export default {
       msg: 'navgationHead',
       indexData:'',
       navData:'',
-      showLogin: true,
-      showRegister: false,
-      showTishi: false,
-      tishi: '',
       username: '',
       password: '',
-      newUsername: '',
-      newPassword: '',
       nickName:'',
-      result:-1
+      result:-1,
+      phText:true,
+      phPassword:true
     }
   },
   mounted(){
@@ -75,7 +71,7 @@ export default {
             }).catch(function(error){
                 console.log("error init." + error)
             });
-      /*页面挂载获取cookie，如果存在username的cookie，则跳转到主页，不需登录*/
+      /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
         if(getCookie('username')){
             this.nickName = document.userName;
         }  
@@ -86,14 +82,11 @@ export default {
             alert("请输入用户名或密码")
         }else{
             let data = {'username':this.username,'password':this.password}
-            /*接口请求*/
+            /*请求存有用户账号的json文件*/
             axios.post("/api/menu/login",data).then((res)=>{
                 console.log(res);
-
                 for(var i = 0;i < res.data.users.length;i++){
-                    console.log("111221"+this.username);
                     if(this.username == res.data.users[i].username){
-                        console.log("114411"+this.result);
                         if(this.password == res.data.users[i].password){
                             this.result = 1;
                         }else{
@@ -101,25 +94,14 @@ export default {
                         }
                     }
                 }
-
-
-
-             /*接口的传值是(-1,该用户不存在),(0,密码错误)，同时还会检测管理员账号的值*/
+             /*判断后的值是(-1,该用户不存在),(0,密码错误),(1,可登录)*/
               if(this.result == -1){
                   alert("该用户不存在")
-                  this.showTishi = true
               }else if(this.result == 0){
                   alert("密码输入错误")
-                  this.showTishi = true
-              }else if(this.result == 'admin'){
-              /*路由跳转this.$router.push*/
-                  this.$router.push('/main')
               }else{
-                  this.tishi = "登录成功"
-                  this.showTishi = true
                   setCookie('username',this.username,1000*60*60)
                   setTimeout(function(){
-
                       this.nickName = document.userName;
                   }.bind(this),1000)
               }
@@ -130,6 +112,8 @@ export default {
           /*删除cookie*/
            this.nickName = '';
            delCookie('username');
+           this.username = '';
+           this.password = '';
       }
   },
   components:{navUl}
@@ -264,6 +248,6 @@ a:hover{
 .logOut{
     position:absolute;
     top:0;
-    right:10px;
+    right:0;
 }
 </style>
