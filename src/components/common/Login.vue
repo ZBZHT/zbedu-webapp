@@ -6,7 +6,7 @@
                     
                     <template v-if="type == 'prompt'">
                         <form class="v-modal-prompt-form">
-                            <p>用户名:</p><input type="text" ref="input" v-model="input" class="v-modal-input" placeholder="请输入用户名">
+                            <p>用户名:</p><input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="请输入用户名">
                             <p>密码:</p><input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="请输入密码">
                         </form>
                     </template>
@@ -70,36 +70,36 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 }, 0);
             },
             login(){
-        if(this.username == "" || this.password == ""){
-            alert("请输入用户名或密码")
-        }else{
-            let data = {'username':this.username,'password':this.password}
-            /*请求存有用户账号的json文件*/
-            axios.post("/api/menu/login",data).then((res)=>{
-                console.log(res);
-                for(var i = 0;i < res.data.users.length;i++){
-                    if(this.username == res.data.users[i].username){
-                        if(this.password == res.data.users[i].password){
-                            this.result = 1;
-                        }else{
-                            this.result = 0;
+                if(this.username == "" || this.password == ""){
+                    alert("请输入用户名或密码")
+                }else{
+                    let data = {'username':this.username,'password':this.password}
+                    /*请求存有用户账号的json文件*/
+                    axios.post("/api/menu/login",data).then((res)=>{
+                        console.log(res);
+                        for(var i = 0;i < res.data.users.length;i++){
+                            if(this.username == res.data.users[i].username){
+                                if(this.password == res.data.users[i].password){
+                                    this.result = 1;
+                                }else{
+                                    this.result = 0;
+                                }
+                            }
                         }
-                    }
-                }
-             /*判断后的值是(-1,该用户不存在),(0,密码错误),(1,可登录)*/
-              if(this.result == -1){
-                  alert("该用户不存在")
-              }else if(this.result == 0){
-                  alert("密码输入错误")
-              }else{
-                  setCookie('username',this.username,1000*60*60)
-                  setTimeout(function(){
-                      this.nickName = document.userName;
-                  }.bind(this),1000)
+                    /*判断后的值是(-1,该用户不存在),(0,密码错误),(1,可登录)*/
+                      if(this.result == -1){
+                          alert("该用户不存在")
+                      }else if(this.result == 0){
+                          alert("密码输入错误")
+                      }else{
+                          setCookie('username',this.username,1000*60*60)
+                          setTimeout(function(){
+                              this.nickName = document.userName;
+                          }.bind(this),1000)
+                      }
+                  })
               }
-          })
-      }
-    },
+            }
         }
     }
 </script>
