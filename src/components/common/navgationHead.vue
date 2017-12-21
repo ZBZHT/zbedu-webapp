@@ -19,14 +19,14 @@
                 <li>
                     <a v-text="nickName" v-if="nickName" class="username"></a>
                     <a class="login">
-                        <a v-if="!nickName">登录</a>
+                        <a v-if="!nickName" @click="simplePrompt">登录</a>
                         <div class="login-box" v-show="true">
                             <div class="user-box">
                                 <p>用户名:</p>
                                 <input type="text" placeholder="请输入用户名" v-model="username">
                             </div>
                             <div class="password-box">
-                                <p>密码:</p>
+                                <p>用户名:</p>
                                 <input type="password" placeholder="请输入密码" v-model="password">
                             </div>
                             <button @click="login">确定</button>
@@ -38,14 +38,25 @@
             
         </div>
     </div>
+
+    
+        
+
+        <modal ref="modal"></modal>
+
+
 </div>
 </template>
 
 <script>
 import axios from 'axios'
 import navUl from '@/components/common/navUl'
+import Modal from '@/components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
+import ModalApi from '../../assets/js/ModalApi';
+import modalEventBind from '../../assets/js/ModalEventBind';
 export default {
+  mixins: [ModalApi],
   name: 'navgationHead',
   data () {
     return {
@@ -75,7 +86,9 @@ export default {
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
         if(getCookie('username')){
             this.nickName = document.userName;
-        }  
+        };
+
+         modalEventBind(this.$refs.modal);  
   },
   methods: {
       login(){
@@ -115,9 +128,17 @@ export default {
            delCookie('username');
            this.username = '';
            this.password = '';
-      }
+      },
+
+      
+            simplePrompt() {
+                this.prompt((username) => {
+                    alert('你输入的数据为：' + username);
+                });
+            }
+
   },
-  components:{navUl}
+  components:{navUl,Modal}
 
 }
 </script>
