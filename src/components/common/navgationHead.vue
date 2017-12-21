@@ -35,6 +35,7 @@
                     <a v-if="nickName" class="logOut" @click="logOut">注销</a>
                 </li>
             </ul>
+            
         </div>
     </div>
 </div>
