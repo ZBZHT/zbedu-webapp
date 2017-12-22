@@ -8,13 +8,13 @@
         </div>
         <div class="collapse">
             <div class="list">
-                   <nav-ul :navData = "navData"></nav-ul>
+                   <nav-ul :navData = "navData" v-on:child="fromChild"></nav-ul>
             </div>
 
             <form>
                     <input type="text" class="search" placeholder="Search">
             </form>
-            
+
             <ul class="user">
                 <li>
                     <a v-text="nickName" v-if="nickName" class="username"></a>
@@ -68,7 +68,8 @@ export default {
       nickName:'',
       result:-1,
       phText:true,
-      phPassword:true
+      phPassword:true,
+      fromData:''
     }
   },
   mounted(){
@@ -86,9 +87,13 @@ export default {
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
         if(getCookie('username')){
             this.nickName = document.userName;
+<<<<<<< Updated upstream
         };
 
          modalEventBind(this.$refs.modal);  
+=======
+        }
+>>>>>>> Stashed changes
   },
   methods: {
       login(){
@@ -129,6 +134,7 @@ export default {
            this.username = '';
            this.password = '';
       },
+<<<<<<< Updated upstream
 
       
             simplePrompt() {
@@ -137,6 +143,12 @@ export default {
                 });
             }
 
+=======
+    fromChild (somedata) {
+        this.fromData = somedata
+      console.log(somedata)
+    }
+>>>>>>> Stashed changes
   },
   components:{navUl,Modal}
 
