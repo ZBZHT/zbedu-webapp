@@ -6,14 +6,16 @@
 
                 <ul>
                     <li class="dr-li" v-for="item in navData">
-                        <a class="title">{{item.title}}</a>
+                        <router-link :to="{path:'/testCenter'}" class="title">
+                            {{item.title}}
+                        </router-link>
                         <div class="dropdown-menu" v-show="item.children">
 
                             <ul>
                                 <li v-for="item2 in item.children">
                                     <div class="dr-a">
                                         <span>
-                                          <router-link :to="{path:'/course'}"><a @click="sendMsg(item2.title)">{{item2.title}}</a></router-link>
+                                          <router-link :to="{path:'/course'}" @click="sendMsg(item2.title)">{{item2.title}}</router-link>
                                         </span>
                                         <div class="drop-right" v-show="item2.children">
                                             <ul>
