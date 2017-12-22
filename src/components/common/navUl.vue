@@ -1,6 +1,6 @@
 <template>
 <ul class="navlist">
-    <li>                            
+    <li>
         <div class="dropdown">
             <div class="dropdown-toggle">
 
@@ -8,30 +8,34 @@
                     <li class="dr-li" v-for="item in navData">
                         <a class="title">{{item.title}}</a>
                         <div class="dropdown-menu" v-show="item.children">
-                            
+
                             <ul>
                                 <li v-for="item2 in item.children">
                                     <div class="dr-a">
-                                        <span><a>{{item2.title}}</a></span>
+                                        <span>
+                                          <router-link :to="{path:'/course'}"><a @click="sendMsg(item2.title)">{{item2.title}}</a></router-link>
+                                        </span>
                                         <div class="drop-right" v-show="item2.children">
                                             <ul>
                                                 <li v-for="item3 in item2.children">
-                                                    <a href="#">{{item3.title}}</a>
+                                                  <router-link :to="{path:'/course'}">
+                                                    <a @click="sendMsg(item3.title)" href="#">{{item3.title}}</a>
+                                                  </router-link>
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>    
+                                    </div>
                                 </li>
                             </ul>
 
                         </div>
                     </li>
-                </ul> 
+                </ul>
 
-            </div> 
+            </div>
         </div>
-    </li>                            
-</ul>                  
+    </li>
+</ul>
 
 </template>
 
@@ -46,7 +50,13 @@ export default {
     }
   },
   mounted(){
-    
+
+  },
+  methods: {
+    sendMsg: function (title) {
+      this.$emit('child', title)
+      alert(title)
+    }
   }
 }
 </script>
@@ -64,13 +74,14 @@ a {
     color: #000;
     cursor: pointer;
     font-weight:bolder;
+  text-decoration: none;
 }
 a:hover{
     text-decoration: none;
     color:#f00;
 }
 .dropdown{
-    
+
 }
 .dropdown-toggle>ul{
     display:flex;
@@ -118,7 +129,7 @@ a:hover{
 .dr-a a{
     font-size:18px;
     font-weight:bolder;
-    margin-left: -22px;
+    margin-left: 10px;
 }
 .dr-a a:hover{
     color:#000;
@@ -151,6 +162,6 @@ a:hover{
 .drop-right a{
     font-weight:normal;
     font-size:16px;
-    margin-left:15px;
+    margin-left:5px;
 }
 </style>
