@@ -1,108 +1,236 @@
 <template>
-  <ul class="user">
-    <li>
-      <a href="#" class="login">登录
-          <div class="login-box" v-show="true">
-            <div class="user-box">
-              <p>用户名:</p>
-              <input type="text">
+    <transition name="modal">
+        <div id="v-modal-wrap" v-show="show">
+            <div id="v-modal-dialog">
+                <div id="v-modal-body">
+                    
+                    <template v-if="type == 'prompt'">
+                        <form class="v-modal-prompt-form">
+                            <p>用户名:</p><input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="请输入用户名">
+                            <p>密码:</p><input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="请输入密码">
+                        </form>
+                    </template>
+                </div>
+                <div id="v-modal-footer">
+                    <button class="v-modal-btn primary" @click="login()">确定</button>
+                    <button class="v-modal-btn slave" @click="cancel()">取消</button>
+                </div>
             </div>
-            <div class="password-box">
-              <p>密码:</p>
-              <input type="text">
-            </div>
-            <button @click="login">确定</button>
-          </div>
-      </a>
-    </li>
-  </ul>
-
-
+        </div>
+    </transition>
 </template>
 
 <script>
-  export default {
-    name: 'login',
-    methods: {
-      login: function () {
-        this.$router.push('/user')
-      }
+import axios from 'axios'
+import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
+    export default {
+        name: 'v-modal',
+        data: function() {
+            return {
+                show: false,
+                type: '',
+                message: '',
+                slot: null,
+                title: '',
+                callback: null,
+                input: '',
+                inputType: 'text',
+                username: '',
+                password:''
+            }
+        },
+        methods: {
+            modal: function(message, title) {
+                if (typeof message === 'string') {
+                    this.message = message;
+                    this.slot = null;
+                } else if (typeof message === 'object' && message.slot) {
+                    this.slot = message.slot;
+                }
+                this.title = title;
+                this.callback = null;
+                this.input = '';
+                this.password = '';
+                this.show = true;
+            },
+            modalPrompt: function(params = {}) {
+                this.type = 'prompt';
+                this.modal(params.message, params.title || '输入');
+                this.callback = params.callback;
+                this.inputType = params.options.inputType || 'text';
+            },
+            
+            cancel: function() {
+                var self = this;
+                this.show = false;
+                setTimeout(function() {
+                    if (self.callback) {
+                        self.callback(self.type == 'prompt' ? undefined : false);
+                    }
+                }, 0);
+            },
+            login(){
+                if(this.username == "" || this.password == ""){
+                    alert("请输入用户名或密码")
+                }else{
+                    let data = {'username':this.username,'password':this.password}
+                    /*请求存有用户账号的json文件*/
+                    axios.post("/api/menu/login",data).then((res)=>{
+                        console.log(res);
+                        for(var i = 0;i < res.data.users.length;i++){
+                            if(this.username == res.data.users[i].username){
+                                if(this.password == res.data.users[i].password){
+                                    this.result = 1;
+                                }else{
+                                    this.result = 0;
+                                }
+                            }
+                        }
+                    /*判断后的值是(-1,该用户不存在),(0,密码错误),(1,可登录)*/
+                      if(this.result == -1){
+                          alert("该用户不存在")
+                      }else if(this.result == 0){
+                          alert("密码输入错误")
+                      }else{
+                          setCookie('username',this.username,1000*60*60)
+                          setTimeout(function(){
+                              this.nickName = document.userName;
+                          }.bind(this),1000)
+                      }
+                  })
+              }
+            }
+        }
     }
-  }
 </script>
 
-<style scoped>
-.login-box{
-  width: 320px;
-  height: 180px;
-  margin-top: 15px;
-  right: 0px;
-  position: absolute;
-  background: #F8F8F8;
-  padding: 10px;
-  box-shadow: 0px 0px 10px #666;
-  display: none;
-  z-index: 99;
+<style>
+   #v-modal-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(51, 51, 51, 0.5);
+  z-index: 50;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translate3d(0, 0, 0);
 }
-  .login-box div{
-    height: 50px;
-    margin: 10px 10px;
-    background: #eee;
-    position: relative;
-  }
-  .login-box div p{
-    position: absolute;
-    left: 10px;
-    width: 70px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: right;
-    color: #555;
-    /*background: deeppink;*/
-  }
-  .login-box div input{
-    position: absolute;
-    left: 90px;
-    top: 8px;
-    height: 30px;
-    width: 200px;
-  }
-  .login-box button{
-    width: 70px;
-    height: 40px;
-    margin-top: 5px;
-    background: #CD3936;
-    outline: none;
-    color: white;
-    font-size: 20px;
-  }
-.user{
-  display:flex;
-  position:absolute;
-  top:59px;
-  right:20px;
+
+#v-modal-dialog {
+  background-color: #fff;
+  width: 27%;
+  height: 218px;
+  padding-top: 20px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #333;
+  overflow: hidden;
+  -webkit-user-select: none;
 }
-.user li{
-  margin-right:10px;
+
+#v-modal-dialog * {
+  box-sizing: border-box;
 }
-.user a{
-  font-size:20px;
-  color:inherit;
-  /*background: pink;*/
-  display: inline-block;
+
+#v-modal-footer {
+  text-align: right;
+  display: flex;
   height: 50px;
-  width: 100px;
-  /*text-align: right;*/
+  position: relative;
 }
-.user a:hover .login-box{
+
+#v-modal-footer:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+  background: #dadada;
+  transform: scaleY(0.5);
+  transform-origin: top left;
+}
+
+.v-modal-btn {
+  flex: 1;
+  border: none;
+  background-color: #ffffff;
+  outline: none;
+  font-size: 16px;
+}
+
+.v-modal-btn.primary {
+  color: #e4393c;
+}
+
+.v-modal-btn.slave {
+  color: #666;
+  position: relative;
+}
+
+.v-modal-btn.slave:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 1px;
+  background: #dadada;
+  transform: scaleX(0.5);
+  transform-origin: top right;
+}
+
+.v-modal-btn:hover, .v-modal-btn:active {
+  background-color: #eeeeee;
+}
+
+#v-modal-title {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#v-modal-body {
+  font-size: 15px;
+  text-align: center;
+  line-height: 22px;
+  margin-bottom: 20px;
+  padding: 0 20px;
+  white-space: normal;
+}
+
+.v-modal-prompt-form {
+  margin-top: 10px;
+  text-align: left;
+}
+.v-modal-prompt-form p{
+  font-weight:bolder;
+  font-size:18px;
+  margin-top:7px;
+}
+.v-modal-input {
+  height: 35px;
+  border: 1px solid #eee;
+  border-radius: 2px;
+  padding: 0 5px;
+  outline: none;
+  background-color: #fff;
+  font-size: 15px;
   display: block;
+  width: 100%;
 }
-.user a:hover{
-  color:#f00;
+
+.v-modal-input:focus {
+  border-color: #e4393c;
 }
-.user p{
-  margin-top:6px;
+
+.modal-enter-active, .modal-leave-active {
+  transition: opacity .2s ease;
+}
+.modal-enter, .modal-leave-active {
+  opacity: 0
 }
 </style>

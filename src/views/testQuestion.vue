@@ -1,48 +1,46 @@
 <template>
 <div class="question">
 
-
         <div class="timeInterval">
-            <p>距离考试结束还有：<span class="time">{{minute}}</span>分钟<span class="time">{{second}}</span>秒</p>
+            <p>距离考试结束还有：<span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
             <button @click='add' :class="{dispear : !dispear}">开始考试</button>
-        </div>
-
+        </div>      
 
         <div class="content" :class="{dispear : dispear}">
-            <div class="title" v-for="item in nowPageData">
-                <p v-for="item2 in item.title">{{item2.title}}</p>
+            <div class="title">
+                <p>{{textQuestionData.title}}</p>
             </div>
-            <div class="data" v-for="item in nowPageData">
+            <div class="data">
 
-                        <div class="desc" v-for="(item2,index2) in item.question">
+                        <div class="desc" v-for="(item,index) in textQuestionData.question">
+                            <span class="desctitle"
                             
-                            <span class="desctitle" :class="{err : index2 === errNum-1 && err === true}">
-                                {{item2.num}}.{{item2.desc}}
+                            >
+                                {{item.num}}.{{item.desc}}
                             </span>
-
                             <ul class="ans">
-                            
-                                <li v-for="(item3,index3) in item2.options">
-                                    <label :for="item2.forId[index3]">
-                                        <input :id="item2.forId[index3]" 
-                                        :type="item2.type" 
-                                        :value="item2.value[index3]" 
-                                        :name="item2.name" 
-                                        @change="myAnswer(item2.name,item2.value[index3])">
-                                            {{item3}}
+
+                                <li v-for="(item2,index2) in item.options">
+                                    <label :for="item.forId[index2]">
+                                        <input :id="item.forId[index2]" 
+                                        :type="item.type" 
+                                        :value="item.value[index2]" 
+                                        :name="item.name"
+                                        @change="myAnswer(item.name,item.value[index2]),isError(item.name,index)"">
+                                            {{item2}}
                                     </label>
                                 </li>
+
                             </ul>
-                            
                             <span :class="{answer : answer}">
-                                正确答案：{{item2.answer}}
+                                正确答案：{{item.answer}}
                             </span>
                         </div>
             </div>
             <div class="data1">
                 <button @click='submit' class="btn" :class="{answer : !answer}">提交</button>
-                <div class="result"></div>
             </div>
+            
         </div>
 </div>
 </template>
@@ -56,15 +54,12 @@ export default {
   data () {
     return {
         textQuestionData:'',
-        nowPageData:'',
         minutes:120,
         seconds:0,
         dispear:true,
         answer:true,
-        err:false,
         myAns:'',
         myId:'',
-        errNum:'',
         sorce:0,
         error:[]
     }
@@ -72,12 +67,17 @@ export default {
   mounted(){
       axios.get("/api/menu/testQuestion",{
                 params:{
-                     user:22
+                     testId: 10001,
+                     num: 30,
+                     grade: 'hard'
                 }
             }).then((res)=>{
-                this.textQuestionData = res.data;
-                this.nowPageData = this.textQuestionData.biansuqi;
-                console.log(this.nowPageData);
+                if(res.data.status!==0) {
+                    return;
+                }
+                console.log("1111112");
+                console.log(res.data.result);
+                this.textQuestionData = res.data.result;
             }).catch(function(error){
                 console.log("error init." + error)
             });
@@ -108,14 +108,7 @@ export default {
                 var _this = this;
                 _this.answer = !_this.answer;
                 
-                for(var i = 0;i < _this.nowPageData[0].question.length;i++){
-                    if(_this.myId == _this.nowPageData[0].question[i].name){
-                        if(_this.myAnswer == _this.nowPageData[0].question[i].answer){
-                        }else{
-                           _this.err = true;
-                        }
-                    }
-                }
+                
                 alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
 
             },
@@ -123,17 +116,22 @@ export default {
                 this.myId = id;
                 this.myAns = answer;
                 console.log("11111"+id+answer);
-                for(var i = 0;i < this.nowPageData[0].question.length;i++){
-                    if(id == this.nowPageData[0].question[i].name){
-                        if(answer == this.nowPageData[0].question[i].answer){
+                console.log(this.textQuestionData.question.length);
+
+                for(var i = 0;i < this.textQuestionData.question.length;i++){
+                    if(id == this.textQuestionData.question[i].name){
+                        if(answer == this.textQuestionData.question[i].answer){
                             this.sorce += 5;
                             console.log(this.sorce);
                         }else{
-                            this.error.push(this.nowPageData[0].question[i].num);
-                            this.errNum = this.nowPageData[0].question[i].num;                            
+                            this.error.push(this.textQuestionData.question[i].num);
+                            this.errNum = this.textQuestionData.question[i].num;                            
                         }
                     }
                 }
+            },
+            isError:function(id,errorIndex){
+                console.log("222"+errorIndex);
             }
     },
   watch:{
@@ -149,12 +147,7 @@ export default {
             }
         },
   computed:{
-            second:function () {
-                return this.num(this.seconds)
-            },
-            minute:function () {
-                return this.num(this.minutes)
-            }
+            
         },
   components:{}
 }
