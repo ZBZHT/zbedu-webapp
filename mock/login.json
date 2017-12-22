@@ -1,24 +1,13 @@
 {
-    "users": [
-        {
-            "id" : 1,
-            "username": "aaa",
-            "password": "aaa"
-        },
-        {
-            "id" : 2,
-            "username": "bbb",
-            "password": "bbb"
-        },
-        {
-            "id": 3,
-            "username": "ccc",
-            "password": "ccc"
-        },
-        {
-            "id": 4,
-            "username": "xjx",
-            "password": "123123"
-        }
-    ]    
+    "status": 0,
+    "msg": "error parameter",
+    "result": {
+        "users": [
+            {
+                "id" : 1,
+                "username": "aaa",
+                "password": "aaa"
+            }
+        ]    
+    }
 }
