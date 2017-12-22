@@ -17,34 +17,15 @@
 
             <ul class="user">
                 <li>
-                    <a v-text="nickName" v-if="nickName" class="username"></a>
-                    <a class="login">
-                        <a v-if="!nickName" @click="simplePrompt">登录</a>
-                        <div class="login-box" v-show="true">
-                            <div class="user-box">
-                                <p>用户名:</p>
-                                <input type="text" placeholder="请输入用户名" v-model="username">
-                            </div>
-                            <div class="password-box">
-                                <p>用户名:</p>
-                                <input type="password" placeholder="请输入密码" v-model="password">
-                            </div>
-                            <button @click="login">确定</button>
-                        </div>
-                    </a>
-                    <a v-if="nickName" class="logOut" @click="logOut">注销</a>
+                    <a v-text="nickName" v-if="nickName" class="username" :value="nickName"></a>
+                        <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
+                            <modal ref="modal" @receive="modal"></modal>
+                        <a :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</a>
                 </li>
             </ul>
-            
+
         </div>
     </div>
-
-    
-        
-
-        <modal ref="modal"></modal>
-
-
 </div>
 </template>
 
@@ -53,10 +34,9 @@ import axios from 'axios'
 import navUl from '@/components/common/navUl'
 import Modal from '@/components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
-import ModalApi from '../../assets/js/ModalApi';
 import modalEventBind from '../../assets/js/ModalEventBind';
+import EventBus from '../../assets/js/EventBus';
 export default {
-  mixins: [ModalApi],
   name: 'navgationHead',
   data () {
     return {
@@ -65,11 +45,10 @@ export default {
       navData:'',
       username: '',
       password: '',
-      nickName:'',
       result:-1,
       phText:true,
       phPassword:true,
-      fromData:''
+      nickName:''
     }
   },
   mounted(){
@@ -84,71 +63,48 @@ export default {
             }).catch(function(error){
                 console.log("error init." + error)
             });
+
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
         if(getCookie('username')){
             this.nickName = document.userName;
-<<<<<<< Updated upstream
         };
 
-         modalEventBind(this.$refs.modal);  
-=======
-        }
->>>>>>> Stashed changes
+         modalEventBind(this.$refs.modal);
   },
   methods: {
-      login(){
-        if(this.username == "" || this.password == ""){
-            alert("请输入用户名或密码")
-        }else{
-            let data = {'username':this.username,'password':this.password}
-            /*请求存有用户账号的json文件*/
-            axios.post("/api/menu/login",data).then((res)=>{
-                console.log(res);
-                for(var i = 0;i < res.data.users.length;i++){
-                    if(this.username == res.data.users[i].username){
-                        if(this.password == res.data.users[i].password){
-                            this.result = 1;
-                        }else{
-                            this.result = 0;
-                        }
-                    }
-                }
-             /*判断后的值是(-1,该用户不存在),(0,密码错误),(1,可登录)*/
-              if(this.result == -1){
-                  alert("该用户不存在")
-              }else if(this.result == 0){
-                  alert("密码输入错误")
-              }else{
-                  setCookie('username',this.username,1000*60*60)
-                  setTimeout(function(){
-                      this.nickName = document.userName;
-                  }.bind(this),1000)
-              }
-          })
-      }
-    },
       logOut(){
           /*删除cookie*/
-           this.nickName = '';
            delCookie('username');
            this.username = '';
            this.password = '';
+           this.nickName = '';
+           axios.post("/api/menu/logOut").then((res)=>{
+                        console.log(res);
+                  })
       },
-<<<<<<< Updated upstream
+      prompt: function(message, title, callback, options) {
+            if (typeof title === 'function') {
+                options = callback;
+                callback = title;
+                title = undefined;
+            }
+            EventBus.$emit('prompt', {message: message, title: title, callback: callback, options: options || {}});
+        },
 
-      
-            simplePrompt() {
+
+      simplePrompt() {
                 this.prompt((username) => {
                     alert('你输入的数据为：' + username);
                 });
-            }
-
-=======
-    fromChild (somedata) {
+            },
+      modal:function(nickName){
+          this.nickName = nickName;
+      },
+      fromChild (somedata) {
         this.fromData = somedata
       console.log(somedata)
     }
->>>>>>> Stashed changes
+
   },
   components:{navUl,Modal}
 
@@ -199,52 +155,6 @@ a:hover{
     margin-left:20px;
 }
 
-.login-box{
-  width: 320px;
-  height: 180px;
-  margin-top: -15px;
-  right: 0px;
-  position: absolute;
-  background: #F8F8F8;
-  padding: 10px;
-  box-shadow: 0px 0px 10px #666;
-  display: none;
-  z-index: 99;
-}
-  .login-box div{
-    height: 50px;
-    margin: 10px 10px;
-    background: #eee;
-    position: relative;
-  }
-  .login-box div p{
-    position: absolute;
-    left: 10px;
-    width: 70px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: right;
-    color: #555;
-    /*background: deeppink;*/
-  }
-  .login-box div input{
-    position: absolute;
-    left: 90px;
-    top: 8px;
-    height: 30px;
-    width: 200px;
-  }
-  .login-box button{
-    width: 70px;
-    height: 40px;
-    margin-top: 5px;
-    background: #CD3936;
-    outline: none;
-    color: white;
-    font-size: 20px;
-  }
 .user{
   display:flex;
   position:absolute;
@@ -269,9 +179,6 @@ a:hover{
   height: 50px;
   width: 100px;
   /*text-align: right;*/
-}
-.user a:hover .login-box{
-  display: block;
 }
 .user a:hover{
   color:#f00;
