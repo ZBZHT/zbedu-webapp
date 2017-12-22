@@ -22,6 +22,10 @@ const config = {
   '/api/menu/login': {
     method: 'login',
     data: './login.json'
+  },
+  '/api/menu/logOut': {
+    method: 'logOut',
+    data: './logOut.json'
   }
 };
 
