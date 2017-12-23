@@ -15,7 +15,7 @@
         <p>子标题</p>
         <div class="detail-box">
           <ul class="nav-box">
-            <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{line:line}">
+            <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{line:line}">
               <a href="#">{{item.title }}</a>
             </li>
           </ul>
@@ -66,7 +66,7 @@
               },
               {
                 'menuName': '三级--5',
-                'menuCode': '124'
+                'menuCode': '125'
               }
             ]
           },
@@ -157,8 +157,6 @@
 
 <style scoped>
   *{
-    margin: 0;
-    padding: 0;
     list-style: none;
   }
   .nav{
@@ -173,20 +171,20 @@
     min-width: 960px;
     margin-top: 150px;
     height: 700px;
-    background: lightgoldenrodyellow;
+    /*background: lightgoldenrodyellow;*/
     position: relative;
   }
   .content-box .tree-box{
-    width: 200px;
-    height: 500px;
+    width: 250px;
+    height: 1000px;
     background: lightcyan;
     position: absolute;
-    left: 100px;
+    left: 60px;
   }
   .content-box .right-box{
     width: 800px;
     height: 700px;
-    background: aliceblue;
+    /*background: aliceblue;*/
     position: absolute;
     left: 350px;
   }
@@ -208,7 +206,7 @@
     display: flex;
     border-bottom: 1px solid #333;
   }
-  .right-box .nav-box li{
+  .right-box .nav-box .nav-item{
     /*height: 40px;*/
     line-height: 40px;
     width: 100px;
@@ -218,26 +216,26 @@
     margin-left: 10px;
     text-align: center;
   }
-  .right-box .nav-box li{
+  .right-box .nav-box .nav-item{
     border-bottom: none;
   }
   .right-box .nav-box .line{
     border-bottom: 1px solid red;
   }
-  .right-box .nav-box li a{
+  .right-box .nav-box .nav-item a{
     text-decoration: none;
     color: #000;
   }
-  .right-box .nav-box li a:hover{
+  .right-box .nav-box .nav-item a:hover{
     color: red;
   }
-  .right-box .nav-box li:first-child{
+  .right-box .nav-box .nav-item:first-child{
     margin-left: 190px;
   }
   .right-box .course-box{
     width: 600px;
     height: 400px;
-    margin-left: 100px;
+    margin-left: 9%;
     position: relative;
     /*background: lavender;*/
     background: url("../assets/bbb.png") no-repeat;
@@ -274,7 +272,13 @@
     overflow: hidden;
   }
   .tree-menu{
-    background: pink;
+    background: #D9DADB;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+  }
+  .tree-box ul{
+    margin-left: 10px;
   }
 
   /*.noneLine{*/
