@@ -94,15 +94,16 @@
     min-width: 960px;
     margin-top: 150px;
     height: 700px;
-    background: lightgoldenrodyellow;
+    /*background: lightgoldenrodyellow;*/
     position: relative;
     padding: 0 10%;
   }
 
   .content-box .right-box{
     width: 80%;
+    min-width: 1000px;
     height: 700px;
-    background: aliceblue;
+    /*background: aliceblue;*/
     /*margin: 0 150px;*/
 
   }
@@ -150,12 +151,12 @@
     color: red;
   }
   .right-box .nav-box li:first-child{
-    margin-left: 190px;
+    margin-left: 23%;
   }
   .right-box .course-box{
-    width: 600px;
+    width: 700px;
     height: 400px;
-    margin-left: 100px;
+    margin: 0 18%;
     position: relative;
     /*background: lavender;*/
     background: url("../assets/bbb.png") no-repeat;
@@ -170,8 +171,8 @@
     word-wrap: break-word;
   }
   .right-box .appraise-box{
-    width: 700px;
-    height: 400px;
+    width: 900px;
+    height: 500px;
     margin-left: 50px;
     position: relative;
     top: 20px;
@@ -182,11 +183,12 @@
     font-size: 16px;
     text-align: left;
     padding: 10px;
+    margin: 0 30px 50px;
     /*background: red;*/
     border-bottom: 1px solid #ccc;
   }
   .right-box .appraise-box textarea{
-    width: 500px;
+    width: 600px;
     height: 300px;
     autofocus: autofocus;
     overflow: hidden;
