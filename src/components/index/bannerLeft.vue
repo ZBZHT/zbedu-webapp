@@ -11,16 +11,20 @@
                 <div class="hiddenbox">
                     <div v-for="item3 in item2.children">
                         <b class="hd-title">
-                          <router-link :to="{path:'/course'}">
-                            <a @click="setMsg(item3.title)">{{item3.title}}</a>
+                          <router-link :to="{path:'/course'}" @click="setMsg(item3.title)">
+                            {{item3.title}}
                           </router-link>
+
                             <!--<a @click="qqq(item3.title)">{{item3.title}}</a>-->
                         </b>
                         <hr/>
                         <ul class="hd-desc-ul">
                             <li class="hd-desc" v-for="item4 in item3.children">
-                              <router-link :to="{path:'/courseNoTree'}">
-                                <a @click="setMsg(item4.title)">{{item4.title}}</a>
+                              <!--<router-link :to="{path:'/courseNoTree'}">-->
+                                <!--<a @click="setMsg(item4.title)">{{item4.title}}</a>-->
+                              <!--</router-link>-->
+                              <router-link :to="{path:'/courseNoTree'}" @click="setMsg(item4.title)">
+                                {{item4.title}}
                               </router-link>
                                 <!--<a @click="www(item4.title)">{{item4.title}}</a>-->
                             </li>
