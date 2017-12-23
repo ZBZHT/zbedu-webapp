@@ -3,7 +3,6 @@
     <li>
         <div class="dropdown">
             <div class="dropdown-toggle">
-
                 <ul>
                     <li class="dr-li" v-for="item in navData">
                         <router-link :to="{path:'/testCenter'}" class="title">
