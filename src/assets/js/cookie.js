@@ -6,7 +6,6 @@ export function setCookie(c_name,value,expire) {
     document.cookie=c_name+ "="+escape(value)+"; expires="+date.toGMTString()
     document.userName=escape(value)
     console.log(document.cookie)
-    console.log(document.cookie.escape)
 }
 
 /*获取cookie*/
