@@ -8,11 +8,11 @@ import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
+import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
 Vue.use(Router)
 
-export default new Router({
-  routes: [
+const routes = [
     {
       path: '/',
       name: 'HelloWorld',
@@ -26,6 +26,9 @@ export default new Router({
     {
       path:'/testCenter',
       name:'testCenter',
+      meta:{
+        requireAuth:true
+      },
       component:testCenter
     },
     {
@@ -36,6 +39,9 @@ export default new Router({
     {
       path: '/course',
       name: 'course',
+      meta:{
+        requireAuth:true
+      },
       component: course
     },
     {
@@ -53,5 +59,24 @@ export default new Router({
       name: 'playVideo',
       component: playVideo
     }
-  ]
-})
+];
+
+const router = new Router({
+    routes
+});
+
+router.beforeEach((to,from,next) => {
+  console.log("11");
+  if (to.matched.some(res => res.meta.requireAuth)) {
+    console.log("22");
+    if (getCookie('username')){
+      console.log("33");
+      next();
+    }else{
+      alert("请登录");
+    }
+  }else{
+    next();
+  }
+});
+export default router;
