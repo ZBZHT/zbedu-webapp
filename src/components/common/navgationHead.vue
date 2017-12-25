@@ -36,6 +36,7 @@ import Modal from '@/components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import modalEventBind from '../../assets/js/ModalEventBind';
 import EventBus from '../../assets/js/EventBus';
+
 export default {
   name: 'navgationHead',
   data () {
@@ -66,7 +67,7 @@ export default {
 
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
         if(getCookie('username')){
-            this.nickName = document.userName;
+            this.nickName = getCookie('username')
         };
 
          modalEventBind(this.$refs.modal);
