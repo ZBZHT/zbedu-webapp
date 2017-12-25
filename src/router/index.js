@@ -8,6 +8,7 @@ import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
+import loginPage from '@/views/loginPage'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
 Vue.use(Router)
@@ -58,6 +59,11 @@ const routes = [
       path: '/playVideo',
       name: 'playVideo',
       component: playVideo
+    },
+    {
+      path: '/loginPage',
+      name: 'loginPage',
+      component: loginPage
     }
 ];
 
