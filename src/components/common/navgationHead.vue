@@ -79,6 +79,7 @@ export default {
            this.username = '';
            this.password = '';
            this.nickName = '';
+           this.$router.push('/index');
            axios.post("/api/menu/logOut").then((res)=>{
                         console.log(res);
                   })
