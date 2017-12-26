@@ -1,18 +1,19 @@
 <template>
     <div class="user">
-            <a class="login">
-                <div class="login-box" v-show="true">
-                    <div class="user-box">
+                <div class="login" v-show="true">
+                    <div class="userBox">
                         <p>用户名:</p>
                         <input type="text" placeholder="请输入用户名" v-model="username">
                     </div>
-                    <div class="password-box">
+                    <div class="passwordBox">
                         <p>密码:</p>
                         <input type="password" placeholder="请输入密码" v-model="password">
                     </div>
-                    <button @click="login">确定</button>
+                    <div class="btn"> 
+                        <button class="btnOk" @click="login">确定</button>
+                        <button class="btnCancel" @click="cancel">返回</button>
+                    </div>
                 </div>
-            </a>
     </div>  
 </template>
 
@@ -48,10 +49,19 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                           setTimeout(function(){
                               this.nickName = document.userName;
                               this.$emit("receive",this.nickName);
-                          }.bind(this),1000)
+                              this.$router.go(0);
+                              this.$router.push('/index');
+                              this.$router.go(0);
+                          }.bind(this),0.1)
                       }
                   })
               };
+            },
+            cancel(){
+                setTimeout(function(){
+                              this.$router.push('/index');
+                              this.$router.go(0);
+                          }.bind(this),0.1)
             }
         }
     }
@@ -60,72 +70,54 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 <style>
 .user{
     min-width:960px;
-    width:960px;
     margin:0 auto;
-    border:1px solid #000;
-    
+    min-height:700px;
+    height:900px;
+    background:url("../../src/assets/loginPage.jpg") no-repeat;
+    background-size:100% 100%;
+    position:relative;
 }
-.user span{
+.login{
+    width:278px;
+    height:200px;
     position:absolute;
-    top:0;
-    right:100px;
+    top:300px;
+    right:117px;
+    text-align:left;
 }
-.user a{
+.passwordBox{
+    margin-top:30px;
+}
+p{
     font-size:20px;
-    color:inherit;
-    display: inline-block;
-    height: 50px;
-    width: 100px;
+    font-weight:bolder;
+    color:#000;
 }
-.user a:hover .login-box{
-    display: block;
+input{
+    width:270px;
+    height:30px;
+    border-radius:5px;
 }
-.user a:hover{
-    color:#f00;
+.btn{
+    display:flex;
 }
-.user p{
-    margin-top:6px;
+.btn :active{
+    background:transparents;
 }
-.login-box{
-    width: 320px;
-    height: 180px;
-    margin:0 auto;
-    position: absolute;
-    background: #F8F8F8;
-    padding: 10px;
-    box-shadow: 0px 0px 10px #666;
+.btnOk{
+    width:80px;
+    margin-top:30px;
+    margin-left:11%;
+    padding:8px;
+    border-radius:5px;
+    cursor:pointer;
 }
-.login-box div{
-    height: 50px;
-    margin: 10px 10px;
-    background: #eee;
-    position: relative;
-  }
-.login-box div p{
-    position: absolute;
-    left: 10px;
-    width: 70px;
-    height: 40px;
-    line-height: 40px;
-    font-size: 20px;
-    font-weight: bold;
-    text-align: right;
-    color: #555;
-  }
-.login-box div input{
-    position: absolute;
-    left: 90px;
-    top: 8px;
-    height: 30px;
-    width: 200px;
-  }
-.login-box button{
-    width: 70px;
-    height: 40px;
-    margin-top: 5px;
-    background: #CD3936;
-    outline: none;
-    color: white;
-    font-size: 20px;
-  }
+.btnCancel{
+    width:80px;
+    margin-top:30px;
+    margin-left:23%;
+    padding:8px;
+    border-radius:5px;
+    cursor:pointer;
+}
 </style>
