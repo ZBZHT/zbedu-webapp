@@ -75,12 +75,16 @@ router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
     console.log("22");
-    if (getCookie('username')){
-      console.log("33");
-      next();
-    }else{
-      alert("请登录");
-    }
+      if (!getCookie('username')){
+        alert("请登录");
+              next({
+                path:'/loginPage',
+                query:{redirect:to.fullPath}
+              })
+      }else{
+        console.log("33");
+        next();
+      }
   }else{
     next();
   }
