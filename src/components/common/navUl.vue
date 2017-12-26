@@ -5,7 +5,7 @@
             <div class="dropdown-toggle">
                 <ul>
                     <li class="dr-li" v-for="item in navData">
-                        <router-link :to="{path:'/testCenter'}" class="title">
+                        <router-link :to="'/' + item.name" class="title">
                             {{item.title}}
                         </router-link>
                         <div class="dropdown-menu" v-show="item.children">
