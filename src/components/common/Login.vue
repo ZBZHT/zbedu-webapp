@@ -6,8 +6,10 @@
                 <div id="v-modal-body">
                     <template v-if="type == 'prompt'">
                         <form class="v-modal-prompt-form">
-                            <p>用户名:</p><input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="请输入用户名">
-                            <p>密码:</p><input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="请输入密码">
+                            <p>用户名:</p>
+                                <input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="请输入用户名">
+                            <p>密码:</p>
+                                <input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="请输入密码">
                         </form>
                     </template>
                 </div>
@@ -89,6 +91,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                           setTimeout(function(){
                               this.nickName = document.userName;
                               this.$emit("receive",this.nickName);
+                              this.$router.push('/index');
                           }.bind(this),1000)
                       }
                   })
