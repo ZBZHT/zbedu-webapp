@@ -13,14 +13,14 @@
                             <ul>
                                 <li v-for="item2 in item.children">
                                     <div class="dr-a">
-                                        <span>
-                                          <router-link :to="{path:'/course'}" @click="sendMsg(item2.title)">{{item2.title}}</router-link>
+                                        <span @click="sendMsg(item2)">
+                                          <router-link :to="{path:'/course'}">{{item2.title}}</router-link>
                                         </span>
                                         <div class="drop-right" v-show="item2.children">
                                             <ul>
-                                                <li v-for="item3 in item2.children">
+                                                <li v-for="item3 in item2.children" @click="sendMsg(item3.title)">
                                                   <router-link :to="{path:'/course'}">
-                                                    <a @click="sendMsg(item3.title)" href="#">{{item3.title}}</a>
+                                                    <a  href="#">{{item3.title}}</a>
                                                   </router-link>
                                                 </li>
                                             </ul>
@@ -41,6 +41,7 @@
 
 <script>
       import axios from 'axios'
+      import bus from '../../assets/js/Bus'
 export default {
   name: 'navUl',
   props:['navData'],
@@ -53,9 +54,9 @@ export default {
 
   },
   methods: {
-    sendMsg: function (title) {
-      this.$emit('child', title)
-      alert(title)
+    sendMsg: function (item) {
+      bus.$emit('sendHeaderNavData',item)
+      // alert(title)
     }
   }
 }
