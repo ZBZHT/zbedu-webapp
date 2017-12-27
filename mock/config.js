@@ -15,9 +15,33 @@ const config = {
     method: 'get',
     data: './index.json'
   },
-  '/api/menu/testQuestion': {
+  '/api/menu/101': {
     method: 'get',
     data: './testQuestion.json'
+  },
+  '/api/menu/102': {
+    method: 'get',
+    data: './testQuestion02.json'
+  },
+  '/api/menu/103': {
+    method: 'get',
+    data: './testQuestion03.json'
+  },
+  '/api/menu/104': {
+    method: 'get',
+    data: './testQuestion04.json'
+  },
+  '/api/menu/105': {
+    method: 'get',
+    data: './testQuestion05.json'
+  },
+  '/api/menu/106': {
+    method: 'get',
+    data: './testQuestion06.json'
+  },
+  '/api/menu/107': {
+    method: 'get',
+    data: './testQuestion07.json'
   },
   '/api/menu/login': {
     method: 'login',
