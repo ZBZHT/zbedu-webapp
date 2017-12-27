@@ -4,18 +4,21 @@
         <div class="mask-play zz mf">
             <img :src="item.url">
             <div class="mask">
-                <img src="src/assets/play3.png">
-                <p class="ppv"><span>PPT</span></p>
-                <p class="ppv"><span>Video</span></p></a>
+                <img @click="playBestVideo" src="src/assets/play3.png">
+                <p class="ppv" @click="playBestPdf"><span>PPT</span></p>
+                <p class="ppv" @click="playBestVideo"><span>Video</span></p>
             </div>
         </div>
-        <p class="p"><a>{{item.title}}</a></p>
+        <p class="p" @click="sendBestTitle(item,item.title)">
+          <router-link :to="{path:'/courseNoTree'}">{{item.title}}</router-link>
+        </p>
     </div>
 </div>
 </template>
 
 <script>
       import axios from 'axios'
+      import bus from '../../assets/js/Bus'
 export default {
   name: 'bestClass',
   props:['bestClassData'],
@@ -24,8 +27,20 @@ export default {
       msg: 'bestClass'
     }
   },
+  methods: {
+    sendBestTitle(item,title){
+      bus.$emit('sendLeftData',item,title)
+      // alert(title)
+    },
+    playBestVideo () {
+      this.$router.push('/playVideo')
+    },
+    playBestPdf () {
+      this.$router.push('/playPdf')
+    }
+  },
   mounted(){
-    
+
   }
 }
 </script>
