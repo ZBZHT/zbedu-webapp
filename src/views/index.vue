@@ -39,9 +39,9 @@
                         <div class="mask-play">
                             <img :src="item.url">
                             <div class="mask">
-                                <img class="play" src="src/assets/play3.png">
-                                <p class="ppv"><span>PPT</span></p>
-                                <p class="ppv"><span>Video</span></p>
+                                <img @click="toPlayVideo" class="play" src="src/assets/play3.png">
+                                <p @click="toPlayPdf" class="ppv"><span>PPT</span></p>
+                                <p @click="toPlayVideo" class="ppv"><span>Video</span></p>
                             </div>
 
                         <div class="intro">
@@ -51,7 +51,7 @@
                             {{item.intro}}
                         </div>
                         </div>
-                    <p class="p"><a>{{item.title}}</a></p>
+                    <p class="p" @click="sendIndexTitle(item,item.title)"><router-link :to="{path:'/courseNoTree'}">{{item.title}}</router-link></p>
                     </a>
                 </li>
               </ul>
@@ -81,6 +81,7 @@ import bestClass from '@/components/index/bestClass'
 import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
 import bottomRight from '@/components/index/bottomRight'
+import bus from '../assets/js/Bus'
 
 export default {
   name: 'index',
@@ -115,7 +116,17 @@ export default {
               pageFn(val){
                   this.page=val;
                   console.log(val);
-              }
+              },
+    sendIndexTitle(item,title) {
+      bus.$emit('sendLeftData',item,title)
+      // alert(title)
+    },
+    toPlayVideo() {
+      this.router.push('/playVideo')
+    },
+    toPlayPdf() {
+      this.router.push('/playPdf')
+    }
           },
   mounted(){
 
