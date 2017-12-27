@@ -3,13 +3,13 @@
     "msg": "error parameter",
     "result": 
         {
-            "testId": 101,
-            "title": "电气考试",
+            "testId": 105,
+            "title": "变速器考试",
             "desc": "biansuqi test",
             "question": [
                     {
                         "num": 1,
-                        "desc": "大部分自动变速器N-D换挡延时时间小于(   )s。",
+                        "desc": "底盘大部分自动变速器N-D换挡延时时间小于(   )s。",
                         "options": ["A、1.0～1.2", "B、0.6～0.8", "C、1.2～1.5", "D、1.5～2.0"],
                         "value":["A","B","C","D"],
                         "name":"que1",
