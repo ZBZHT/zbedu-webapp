@@ -6,20 +6,22 @@
     <div class="content-box">
       <div class="tree-box">
         <div class="tree-menu">
-          <ul v-for="menuItem in theModel">
-            <my-tree :model="menuItem"></my-tree>
+          <ul>
+            <my-tree :model="theModel"></my-tree>
           </ul>
         </div>
       </div>
       <div class="right-box">
-        <p>子标题</p>
+        <p>{{ subtitle }}</p>
+        <p>{{ headings }}</p>
         <div class="detail-box">
           <ul class="nav-box">
             <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{line:line}">
-              <a href="#">{{item.title }}</a>
+              <a href="#">{{item }}</a>
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
+            <!--<p>{{ theModel.children }}</p>-->
             <p class="introduce">动力电池盖拆解的步骤以及电动车高压的安全操作注意事项。工具的使用选择以及注意力的大小，密封胶的清洁</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
@@ -106,7 +108,25 @@
     ]
   import navgationHead from '@/components/common/navgationHead'
   import myTree from '@/components/courseTree/tree'
+  import bus from '../assets/js/Bus'
 
+  var busData = {
+
+  };
+  bus.$on('sendHeaderNavData',value => {
+    busData.theModel = value
+  });
+  bus.$on('sendLeftData', (value,title) => {
+    busData.theModel = value
+    busData.subtitle = title
+    // console.log(busData.theModel)
+    // console.log(title)
+  });
+  bus.$on('sendTitle',(value) => {
+    busData.headings = value
+    // alert(busData.currentItem)
+    console.log(busData.headings)
+  })
   export default {
     name: 'user',
     data () {
@@ -115,22 +135,24 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        // detailNavData:["课程详情","教学课件","教学微课","课程评价"
-        detailNavData: [
-          {
-            "title": "课程详情"
-          },
-          {
-            "title": "教学课件"
-          },
-          {
-            "title": "教学微课"
-          },
-          {
-            "title": "课程评价"
-          }
-        ],
-        theModel: myData
+        detailNavData:["课程详情","教学课件","教学微课","课程评价"],
+        // detailNavData: [
+        //   {
+        //     "title": "课程详情"
+        //   },
+        //   {
+        //     "title": "教学课件"
+        //   },
+        //   {
+        //     "title": "教学微课"
+        //   },
+        //   {
+        //     "title": "课程评价"
+        //   }
+        // ],
+        theModel: busData.theModel,
+        subtitle:busData.subtitle,
+        headings: busData.headings,
       }
     },
     methods: {
@@ -175,9 +197,9 @@
     position: relative;
   }
   .content-box .tree-box{
-    width: 250px;
+    width: 280px;
     height: 1000px;
-    background: lightcyan;
+    /*background: lightcyan;*/
     position: absolute;
     left: 60px;
   }
@@ -198,6 +220,7 @@
     height: 500px;
     width: auto;
     text-align: center;
+     margin-left: 50px;
   }
   .right-box .nav-box{
     /*list-style: none;*/
@@ -235,7 +258,7 @@
   .right-box .course-box{
     width: 600px;
     height: 400px;
-    margin-left: 9%;
+    margin-left: 7%;
     position: relative;
     /*background: lavender;*/
     background: url("../assets/bbb.png") no-repeat;
@@ -252,7 +275,7 @@
   .right-box .appraise-box{
     width: 700px;
     height: 400px;
-    margin-left: 50px;
+    margin-left: 3%;
     position: relative;
     top: 20px;
     background: lightyellow;
@@ -272,7 +295,7 @@
     overflow: hidden;
   }
   .tree-menu{
-    background: #D9DADB;
+    background: #DDDDDD;
     font-size: 16px;
     font-weight: bold;
     border-radius: 5px;
