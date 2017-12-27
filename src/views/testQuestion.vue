@@ -4,7 +4,7 @@
         <div class="timeInterval">
         
             <p>距离考试结束还有：<span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
-            <button @click='add' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
+            <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
         </div>
 
         <div class="content" :class="{dispear : dispear}">
@@ -14,7 +14,7 @@
             <div class="data">
 
                         <div class="desc" v-for="(item,index) in textQuestionData.question">
-                            <span class="desctitle">
+                            <span class="desctitle" :class="{setRed : setRed}">
                                 {{item.num}}.{{item.desc}}
                             </span>
                             <ul class="ans">
@@ -60,26 +60,12 @@ export default {
         myAns:'',
         myId:'',
         sorce:0,
-        error:[]
+        error:[],
+        setRed:false
     }
   },
   mounted(){
-      axios.get("/api/menu/testQuestion",{
-                params:{
-                     testId: 101,
-                     num: 30,
-                     grade: 'hard'
-                }
-            }).then((res)=>{
-                if(res.data.status!==0) {
-                    return;
-                }
-                console.log("1111112");
-                console.log(res.data.result);
-                this.textQuestionData = res.data.result;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
+      
     },
   methods: {
             num:function (n) {
@@ -103,12 +89,31 @@ export default {
                 },1000);
                 _this.dispear = !_this.dispear;
             },
+            getTest(e){
+                axios.get("/api/menu/"+e,{
+                    params:{
+                        testId: e,
+                        num: 30,
+                        grade: 'hard'
+                    }
+                }).then((res)=>{
+                    if(res.data.status!==0) {
+                        return;
+                    }
+                    console.log("1111112");
+                    console.log(res.data.result);
+                    this.textQuestionData = res.data.result;
+                }).catch(function(error){
+                    console.log("error init." + error)
+                });
+            },
             submit:function () {
                 var _this = this;
                 _this.answer = !_this.answer;
 
 
                 alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
+                this.setRed = true;
 
             },
             myAnswer:function(id,answer){
@@ -125,6 +130,7 @@ export default {
                         }else{
                             this.error.push(this.textQuestionData.question[i].num);
                             this.errNum = this.textQuestionData.question[i].num;
+                           
                         }
                     }
                 }
@@ -229,5 +235,8 @@ ul li{
     margin-top:10px;
     background-color:#e4393c;
     padding:8px;
+}
+.setRed{
+    color:red;
 }
 </style>
