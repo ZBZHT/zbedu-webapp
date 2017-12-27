@@ -36,7 +36,7 @@
                 <li class="test-li" v-for="item in hotTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <a>{{item.title}}</a>
+                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">{{item.title}}</router-link>
                         </button>
                 </li>
             </ul>
@@ -105,6 +105,12 @@ export default {
                 console.log("error init." + error)
             });
     },
+  watch:{
+      '$route' (to,from) {
+          alert(to);
+          alert(from);
+      }
+  },  
   components:{swipe,navgationHead}
 }
 </script>
