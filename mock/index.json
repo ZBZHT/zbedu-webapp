@@ -553,54 +553,66 @@
   ],
   "hotTest":[
     {
+      "testId":"101",
       "url":"src/assets/img.png",
       "title":"汽车电气"
     },
     {
+      "testId":"106",
       "url":"src/assets/img.png",
       "title":"全国汽车维修工中级培训"
     },
     {
+      "testId":"107",
       "url":"src/assets/img.png",
       "title":"全国汽车维修电工中级"
     },
     {
+      "testId":"104",
       "url":"src/assets/img.png",
       "title":"新能源"
     },
     {
+      "testId":"105",
       "url":"src/assets/img.png",
       "title":"汽车底盘"
     }
   ],
   "gradeTest":[
     {
+      "testId":"106",
       "url":"src/assets/img.png",
       "title":"全国汽车维修工中级培训"
     },
     {
+      "testId":"107",
       "url":"src/assets/img.png",
       "title":"全国汽车维修电工中级"
     }
   ],
   "contentTest":[
     {
+      "testId":"101",
       "url":"src/assets/img.png",
       "title":"汽车电气"
     },
     {
+      "testId":"102",
       "url":"src/assets/img.png",
       "title":"汽车发动机"
     },
     {
+      "testId":"103",
       "url":"src/assets/img.png",
       "title":"汽车变速器"
     },
     {
+      "testId":"104",
       "url":"src/assets/img.png",
       "title":"新能源"
     },
     {
+      "testId":"105",
       "url":"src/assets/img.png",
       "title":"汽车底盘"
     }
