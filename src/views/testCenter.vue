@@ -36,7 +36,9 @@
                 <li class="test-li" v-for="item in hotTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">{{item.title}}</router-link>
+                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
+                                {{item.title}}
+                            </router-link>
                         </button>
                 </li>
             </ul>
@@ -48,7 +50,9 @@
                 <li class="test-li" v-for="item in gradeTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <a>{{item.title}}</a>
+                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
+                                {{item.title}}
+                            </router-link>
                         </button>
                 </li>
             </ul>
@@ -60,7 +64,9 @@
                 <li class="test-li" v-for="item in contentTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <a>{{item.title}}</a>
+                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
+                                {{item.title}}
+                            </router-link>
                         </button>
                 </li>
             </ul>
@@ -85,7 +91,7 @@ export default {
         winner:'',
        hotTest:'',
       gradeTest:'',
-      contentTest:''
+      contentTest:'',
     }
   },
   mounted(){
@@ -105,6 +111,9 @@ export default {
                 console.log("error init." + error)
             });
     },
+  methods:{
+      
+  },  
   watch:{
       '$route' (to,from) {
           alert(to);
