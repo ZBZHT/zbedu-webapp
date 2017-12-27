@@ -5,11 +5,11 @@
     </div>
     <div class="content-box">
       <div class="right-box">
-        <p>拆装操作流程---002</p>
+        <p>{{ subtitle }}</p>
         <div class="detail-box">
           <ul class="nav-box">
             <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{line:line}">
-              <a href="#">{{item.title }}</a>
+              <a href="#">{{ item.title}}</a>
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
@@ -29,7 +29,18 @@
 <script>
 
   import navgationHead from '@/components/common/navgationHead'
+  import bus from '../assets/js/Bus'
 
+  var busData = {
+
+  };
+  bus.$on('sendLeftData', (value,title) => {
+    busData.theModel = value
+    busData.subtitle = title
+    // alert(title)
+    console.log(busData.theModel)
+    console.log(title)
+  });
   export default {
     name: 'user',
     data () {
@@ -38,6 +49,7 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
+        subtitle:busData.subtitle,
         detailNavData: [
           {
             "title": "课程详情"
