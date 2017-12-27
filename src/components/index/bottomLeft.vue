@@ -1,24 +1,33 @@
 <template>
-            <div class="bb-left-case">  
-            
+            <div class="bb-left-case">
+
                 <div class="mask-play-right" v-for="item in bottomLeftData">
                     <img :src="item.url">
-                    <img class="play-right" src="src/assets/play3.png">
-                    <p class="p"><a>{{item.title}}</a></p>
+                    <img @click="playBottomLeftVideo" class="play-right" src="src/assets/play3.png">
+                    <p class="p" @click="sendButtomLeftTitle(item,item.title)"><router-link :to="{path:'/courseNoTree'}">{{item.title}}</router-link></p>
                 </div>
-           
-            
+
+
             </div>
 </template>
 
 <script>
 import navs from '@/assets/index-data.js'
+import bus from '../../assets/js/Bus'
 export default {
   name: 'bottomLeft',
   props :['bottomLeftData'],
   data () {
     return {
       msg: 'bottomLeft'
+    }
+  },
+  methods: {
+    playBottomLeftVideo() {
+      this.$router.push('/playVideo')
+    },
+    sendButtomLeftTitle(item,title) {
+      bus.$emit('sendLeftData',item,title)
     }
   }
 }
