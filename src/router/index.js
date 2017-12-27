@@ -33,7 +33,7 @@ const routes = [
       component:testCenter
     },
     {
-      path:'/testQuestion',
+      path:'/testQuestion/:testId/title/:title',
       name:'testQuestion',
       component:testQuestion
     },
