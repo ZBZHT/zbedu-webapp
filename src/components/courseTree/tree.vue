@@ -1,16 +1,17 @@
 <template>
   <li>
-    <span @click="toggle" :class="{'color': red}">
+    <span @click="toggle">
      <i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>
      <i v-if="!isInclude" class="icon"></i>
-     {{ model.menuName }}
+     <a href="#" @click="toFather(model.title)">{{ model.title }}</a>
     </span>
     <ul class="son-box" v-show="open" v-if="isInclude">
-      <tree v-for="item in model.children" :model="item" :key="item.menuCode"></tree>
+      <tree v-for="item in model.children" :model="item"></tree>
     </ul>
   </li>
 </template>
 <script>
+  import bus from '../../assets/js/Bus'
   export default {
     name: 'tree',
     props: ['model'],
@@ -30,7 +31,12 @@
         if (this.isInclude) {
           this.open = !this.open
         }
+      },
+      toFather (headings) {
+        bus.$emit('sendTitle',headings)
+        // alert(index)
       }
+
     }
   }
 </script>
@@ -62,8 +68,11 @@
     /*background-image: url(/src/assets/file.png);*/
   /*}*/
   .tree-menu li {
-    line-height: 20px;
+    line-height: 30px;
     margin-top: 8px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     /*background: red;*/
   }
 </style>
