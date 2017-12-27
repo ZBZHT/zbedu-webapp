@@ -2,29 +2,28 @@
 <div class="question">
 
         <div class="timeInterval">
+        
             <p>距离考试结束还有：<span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
-            <button @click='add' :class="{dispear : !dispear}">开始考试</button>
-        </div>      
+            <button @click='add' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
+        </div>
 
         <div class="content" :class="{dispear : dispear}">
             <div class="title">
-                <p>{{textQuestionData.title}}</p>
+                <p>{{$route.params.title}}</p>
             </div>
             <div class="data">
 
                         <div class="desc" v-for="(item,index) in textQuestionData.question">
-                            <span class="desctitle"
-                            
-                            >
+                            <span class="desctitle">
                                 {{item.num}}.{{item.desc}}
                             </span>
                             <ul class="ans">
 
                                 <li v-for="(item2,index2) in item.options">
                                     <label :for="item.forId[index2]">
-                                        <input :id="item.forId[index2]" 
-                                        :type="item.type" 
-                                        :value="item.value[index2]" 
+                                        <input :id="item.forId[index2]"
+                                        :type="item.type"
+                                        :value="item.value[index2]"
                                         :name="item.name"
                                         @change="myAnswer(item.name,item.value[index2]),isError(item.name,index)"">
                                             {{item2}}
@@ -40,7 +39,7 @@
             <div class="data1">
                 <button @click='submit' class="btn" :class="{answer : !answer}">提交</button>
             </div>
-            
+
         </div>
 </div>
 </template>
@@ -67,7 +66,7 @@ export default {
   mounted(){
       axios.get("/api/menu/testQuestion",{
                 params:{
-                     testId: 10001,
+                     testId: 101,
                      num: 30,
                      grade: 'hard'
                 }
@@ -107,8 +106,8 @@ export default {
             submit:function () {
                 var _this = this;
                 _this.answer = !_this.answer;
-                
-                
+
+
                 alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
 
             },
@@ -125,7 +124,7 @@ export default {
                             console.log(this.sorce);
                         }else{
                             this.error.push(this.textQuestionData.question[i].num);
-                            this.errNum = this.textQuestionData.question[i].num;                            
+                            this.errNum = this.textQuestionData.question[i].num;
                         }
                     }
                 }
@@ -147,7 +146,7 @@ export default {
             }
         },
   computed:{
-            
+
         },
   components:{}
 }
