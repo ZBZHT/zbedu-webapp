@@ -472,27 +472,21 @@
       ]
     }
   ],
-  "imgArray":[
+  "slides":[
     {
-      "url":"src/assets/手机app下载.jpg",
-      "selected":"false",
-      "x":0
+      "src":"src/assets/手机app下载.jpg"
     },
     {
-      "url":"src/assets/case.jpg",
-      "x":0
+      "src":"src/assets/case.jpg"
     },
     {
-      "url":"src/assets/Congratulate.jpg",
-      "x":0
+      "src":"src/assets/Congratulate.jpg"
     },
     {
-      "url":"src/assets/platform.jpg",
-      "x":0
+      "src":"src/assets/platform.jpg"
     },
     {
-      "url":"src/assets/platform2.jpg",
-      "x":0
+      "src":"src/assets/platform2.jpg"
     }
   ],
   "bestClassData":[
