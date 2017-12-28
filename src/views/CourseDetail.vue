@@ -36,76 +36,76 @@
 </template>
 
 <script>
-  var myData = [
-      {
-        'id': '1',
-        'menuName': '一级--1',
-        'menuCode': '10',
-        'children': [
-          {
-            'menuName': '二级--1',
-            'menuCode': '11'
-          },
-          {
-            'menuName': '二级--2',
-            'menuCode': '12',
-            'children': [
-              {
-                'menuName': '三级--1',
-                'menuCode': '121'
-              },
-              {
-                'menuName': '三级--2',
-                'menuCode': '122'
-              },
-              {
-                'menuName': '三级--3',
-                'menuCode': '123'
-              },
-              {
-                'menuName': '三级--4',
-                'menuCode': '124'
-              },
-              {
-                'menuName': '三级--5',
-                'menuCode': '125'
-              }
-            ]
-          },
-          {
-            'menuName': '二级--3',
-            'menuCode': '13'
-          }
-        ]
-      },
-      {
-        'id': '2',
-        'menuName': '一级--2',
-        'menuCode': ''
-      },
-      {
-        'id': '3',
-        'menuName': '一级--3',
-        'menuCode': '30',
-        'children': [
-          {
-            'menuName': '二级--1',
-            'menuCode': '31'
-          },
-          {
-            'menuName': '二级--2',
-            'menuCode': '32',
-            'children': []
-          }
-        ]
-      },
-      {
-        'id': '4',
-        'menuName': '一级--4',
-        'menuCode': '',
-        'children': []
-      },
-    ]
+  // var myData = [
+  //     {
+  //       'id': '1',
+  //       'menuName': '一级--1',
+  //       'menuCode': '10',
+  //       'children': [
+  //         {
+  //           'menuName': '二级--1',
+  //           'menuCode': '11'
+  //         },
+  //         {
+  //           'menuName': '二级--2',
+  //           'menuCode': '12',
+  //           'children': [
+  //             {
+  //               'menuName': '三级--1',
+  //               'menuCode': '121'
+  //             },
+  //             {
+  //               'menuName': '三级--2',
+  //               'menuCode': '122'
+  //             },
+  //             {
+  //               'menuName': '三级--3',
+  //               'menuCode': '123'
+  //             },
+  //             {
+  //               'menuName': '三级--4',
+  //               'menuCode': '124'
+  //             },
+  //             {
+  //               'menuName': '三级--5',
+  //               'menuCode': '125'
+  //             }
+  //           ]
+  //         },
+  //         {
+  //           'menuName': '二级--3',
+  //           'menuCode': '13'
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       'id': '2',
+  //       'menuName': '一级--2',
+  //       'menuCode': ''
+  //     },
+  //     {
+  //       'id': '3',
+  //       'menuName': '一级--3',
+  //       'menuCode': '30',
+  //       'children': [
+  //         {
+  //           'menuName': '二级--1',
+  //           'menuCode': '31'
+  //         },
+  //         {
+  //           'menuName': '二级--2',
+  //           'menuCode': '32',
+  //           'children': []
+  //         }
+  //       ]
+  //     },
+  //     {
+  //       'id': '4',
+  //       'menuName': '一级--4',
+  //       'menuCode': '',
+  //       'children': []
+  //     },
+  //   ]
   import navgationHead from '@/components/common/navgationHead'
   import myTree from '@/components/courseTree/tree'
   import bus from '../assets/js/Bus'
