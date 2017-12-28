@@ -11,7 +11,7 @@
         </div>
         <div class="rightbox">
 
-            <right-swipe :imgArray = "imgArray"></right-swipe>
+            <swipe :slides="slides" :inv="inv" :style="styleObject"></swipe>
 
         </div>
     </div>
@@ -76,7 +76,7 @@
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
 import bannerLeft from '@/components/index/bannerLeft'
-import rightSwipe from '@/components/index/rightSwipe'
+import swipe from '@/components/testCenter/swipe'
 import bestClass from '@/components/index/bestClass'
 import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
@@ -100,7 +100,13 @@ export default {
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
-      currentPages:''
+      currentPages:'',
+      slides: [],
+        inv: 3000,
+        styleObject: {
+          width: '795px',
+          height: '384px'
+        }
     }
   },
   computed:{
@@ -142,13 +148,12 @@ export default {
                 this.bottomLeftData = this.indexData.bottomLeftData;
                 this.bottomRightData = this.indexData.bottomRightData;
                 this.bannerLeftData = this.indexData.bannerLeftData;
-                //console.log(this.indexData.bannerLeftData);
-                this.imgArray = this.indexData.imgArray;
+                this.slides = this.indexData.slides;
             }).catch(function(error){
                 console.log("error init." + error)
             });
     },
-  components:{navgationHead,bannerLeft,rightSwipe,bestClass,bottomLeft,bottomRight,moPaging,}
+  components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,}
 }
 </script>
 
