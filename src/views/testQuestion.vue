@@ -46,8 +46,7 @@
 
 <script>
 import axios from 'axios'
-
-
+ 
 export default {
   name: 'textQuestion',
   data () {
@@ -61,11 +60,10 @@ export default {
         myId:'',
         sorce:0,
         error:[],
-        setRed:false
+        setRed:false,
     }
   },
-  mounted(){
-      
+  created(){
     },
   methods: {
             num:function (n) {

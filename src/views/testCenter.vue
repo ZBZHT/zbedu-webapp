@@ -81,6 +81,7 @@ import navgationHead from '@/components/common/navgationHead'
 import swipe from '@/components/testCenter/swipe'
 
 
+
 export default {
   name: 'textCenter',
   data () {

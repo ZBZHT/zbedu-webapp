@@ -96,7 +96,7 @@ export default {
 
       simplePrompt() {
                 this.prompt((username) => {
-                    alert('你输入的数据为：' + username);
+                    alert(username);
                 });
             },
       modal:function(nickName){
