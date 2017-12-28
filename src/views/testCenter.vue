@@ -6,7 +6,7 @@
 
     </div>
     <div class="topbox">
-        <swipe></swipe>
+        <swipe :slides="slides" :inv="inv" :style="styleObject"></swipe>
     </div>
 
     <div class="middlebox">
@@ -93,6 +93,12 @@ export default {
        hotTest:'',
       gradeTest:'',
       contentTest:'',
+      slides: [],
+        inv: 3000,
+        styleObject: {
+          width: '960px',
+          height: '295px'
+        }
     }
   },
   mounted(){
@@ -108,6 +114,7 @@ export default {
                 this.hotTest = this.textCenterData.hotTest;
                 this.gradeTest = this.textCenterData.gradeTest;
                 this.contentTest = this.textCenterData.contentTest;
+                this.slides = this.textCenterData.slides;
             }).catch(function(error){
                 console.log("error init." + error)
             });
