@@ -6,7 +6,7 @@
      <a href="#" @click="toFather(model.title)">{{ model.title }}</a>
     </span>
     <ul class="son-box" v-show="open" v-if="isInclude">
-      <tree v-for="item in model.children" :model="item"></tree>
+      <tree v-for="item in model.children" :model="item" :key="item.courseId"></tree>
     </ul>
   </li>
 </template>
