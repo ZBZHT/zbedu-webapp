@@ -34,7 +34,6 @@
       },
       toFather (headings) {
         bus.$emit('sendTitle',headings)
-        // alert(index)
       }
 
     }
