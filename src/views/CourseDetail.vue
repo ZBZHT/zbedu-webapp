@@ -13,16 +13,16 @@
       </div>
       <div class="right-box">
         <p>{{ subtitle }}</p>
-        <p>{{ headings }}</p>
+        <p>{{ theModel.children[0].title }}</p>
         <div class="detail-box">
           <ul class="nav-box">
-            <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{line:line}">
-              <a href="#">{{item }}</a>
+            <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
+              {{item }}
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
             <!--<p>{{ theModel.children }}</p>-->
-            <p class="introduce">动力电池盖拆解的步骤以及电动车高压的安全操作注意事项。工具的使用选择以及注意力的大小，密封胶的清洁</p>
+            <p class="introduce">{{ theModel.children[0].title }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p>{{ appraiseMsg }}</p>
@@ -36,76 +36,6 @@
 </template>
 
 <script>
-  // var myData = [
-  //     {
-  //       'id': '1',
-  //       'menuName': '一级--1',
-  //       'menuCode': '10',
-  //       'children': [
-  //         {
-  //           'menuName': '二级--1',
-  //           'menuCode': '11'
-  //         },
-  //         {
-  //           'menuName': '二级--2',
-  //           'menuCode': '12',
-  //           'children': [
-  //             {
-  //               'menuName': '三级--1',
-  //               'menuCode': '121'
-  //             },
-  //             {
-  //               'menuName': '三级--2',
-  //               'menuCode': '122'
-  //             },
-  //             {
-  //               'menuName': '三级--3',
-  //               'menuCode': '123'
-  //             },
-  //             {
-  //               'menuName': '三级--4',
-  //               'menuCode': '124'
-  //             },
-  //             {
-  //               'menuName': '三级--5',
-  //               'menuCode': '125'
-  //             }
-  //           ]
-  //         },
-  //         {
-  //           'menuName': '二级--3',
-  //           'menuCode': '13'
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       'id': '2',
-  //       'menuName': '一级--2',
-  //       'menuCode': ''
-  //     },
-  //     {
-  //       'id': '3',
-  //       'menuName': '一级--3',
-  //       'menuCode': '30',
-  //       'children': [
-  //         {
-  //           'menuName': '二级--1',
-  //           'menuCode': '31'
-  //         },
-  //         {
-  //           'menuName': '二级--2',
-  //           'menuCode': '32',
-  //           'children': []
-  //         }
-  //       ]
-  //     },
-  //     {
-  //       'id': '4',
-  //       'menuName': '一级--4',
-  //       'menuCode': '',
-  //       'children': []
-  //     },
-  //   ]
   import navgationHead from '@/components/common/navgationHead'
   import myTree from '@/components/courseTree/tree'
   import bus from '../assets/js/Bus'
@@ -124,8 +54,9 @@
   });
   bus.$on('sendTitle',(value) => {
     busData.headings = value
+    console.log()
     // alert(busData.currentItem)
-    console.log(busData.headings)
+    // console.log(busData.headings)
   })
   export default {
     name: 'user',
@@ -136,20 +67,6 @@
         line: true,
         msg: '',
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
-        // detailNavData: [
-        //   {
-        //     "title": "课程详情"
-        //   },
-        //   {
-        //     "title": "教学课件"
-        //   },
-        //   {
-        //     "title": "教学微课"
-        //   },
-        //   {
-        //     "title": "课程评价"
-        //   }
-        // ],
         theModel: busData.theModel,
         subtitle:busData.subtitle,
         headings: busData.headings,
@@ -228,6 +145,8 @@
     /*background: lightseagreen;*/
     display: flex;
     border-bottom: 1px solid #333;
+    box-sizing: content-box;
+    margin-bottom: -0px;
   }
   .right-box .nav-box .nav-item{
     /*height: 40px;*/
@@ -235,23 +154,26 @@
     width: 100px;
     background: linen;
     border: 1px solid #444;
+    color: red;
     border-radius: 5px 5px 0px 0;
     margin-left: 10px;
     text-align: center;
   }
   .right-box .nav-box .nav-item{
     border-bottom: none;
+    margin-bottom: -1px;
   }
   .right-box .nav-box .line{
-    border-bottom: 1px solid red;
-  }
-  .right-box .nav-box .nav-item a{
-    text-decoration: none;
+    border-bottom: 1px solid black;
     color: #000;
   }
-  .right-box .nav-box .nav-item a:hover{
-    color: red;
-  }
+  /*.right-box .nav-box .nav-item a{*/
+    /*text-decoration: none;*/
+    /*color: #000;*/
+  /*}*/
+  /*.right-box .nav-box .nav-item a:hover{*/
+    /*color: red;*/
+  /*}*/
   .right-box .nav-box .nav-item:first-child{
     margin-left: 190px;
   }
