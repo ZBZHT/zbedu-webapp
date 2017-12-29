@@ -8,8 +8,8 @@
         <p>{{ subtitle }}</p>
         <div class="detail-box">
           <ul class="nav-box">
-            <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{line:line}">
-              <a href="#">{{ item.title}}</a>
+            <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
+              {{ item.title}}
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
@@ -144,6 +144,7 @@
     line-height: 40px;
     width: 130px;
     background: linen;
+    color: red;
     border: 1px solid #444;
     border-radius: 5px 5px 0px 0;
     margin-left: 10px;
@@ -151,17 +152,24 @@
   }
   .right-box .nav-box li{
     border-bottom: none;
+    margin-bottom: -1px;
   }
   .right-box .nav-box .line{
-    /*border-bottom: 1px solid red;*/
-  }
-  .right-box .nav-box li a{
-    text-decoration: none;
+    border-bottom: 1px solid #000;
     color: #000;
+
   }
-  .right-box .nav-box li a:hover{
+  .right-box .nav-box .fontColor{
     color: red;
   }
+
+  /*.right-box .nav-box li a{*/
+    /*text-decoration: none;*/
+    /*color: #000;*/
+  /*}*/
+  /*.right-box .nav-box li a:hover{*/
+    /*color: red;*/
+  /*}*/
   .right-box .nav-box li:first-child{
     margin-left: 23%;
   }
