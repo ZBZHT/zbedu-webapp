@@ -57,6 +57,7 @@ a:focus {
 .bb-left-case{
     margin-bottom: 45px;
     margin-top:25px;
+    margin-left:-24px;
 }
 .bb-left img{
     margin-top:10px;
@@ -68,7 +69,7 @@ a:focus {
 .mask-play-right .play-right{
     position: relative;
     top:-10px;
-    left:47px;
+    left:61px;
     margin-top:-64px;
     display: none;
 }
