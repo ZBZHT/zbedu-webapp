@@ -3,7 +3,7 @@
 
         <div class="timeInterval">
         
-            <p>距离考试结束还有：<span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
+            <p :class="{answer : !answer}">距离考试结束还有：<span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
             <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
         </div>
 
@@ -14,7 +14,7 @@
             <div class="data">
 
                         <div class="desc" v-for="(item,index) in textQuestionData.question">
-                            <span class="desctitle" :class="{setRed : setRed}">
+                            <span class="desctitle" :class="{setRed : index === errorIndex - 1 && submits == true}">
                                 {{item.num}}.{{item.desc}}
                             </span>
                             <ul class="ans">
@@ -25,7 +25,7 @@
                                         :type="item.type"
                                         :value="item.value[index2]"
                                         :name="item.name"
-                                        @change="myAnswer(item.name,item.value[index2]),isError(item.name,index)"">
+                                        @change="myAnswer(item.name,item.value[index2],index)">
                                             {{item2}}
                                     </label>
                                 </li>
@@ -58,9 +58,12 @@ export default {
         answer:true,
         myAns:'',
         myId:'',
+        questionIndex:'',
+        errorIndex:'',
         sorce:0,
         error:[],
         setRed:false,
+        submits:false
     }
   },
   created(){
@@ -111,12 +114,13 @@ export default {
 
 
                 alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
-                this.setRed = true;
+                this.submits = true;
 
             },
-            myAnswer:function(id,answer){
+            myAnswer:function(id,answer,index){
                 this.myId = id;
                 this.myAns = answer;
+                this.questionIndex = index;
                 console.log("11111"+id+answer);
                 console.log(this.textQuestionData.question.length);
 
@@ -127,14 +131,11 @@ export default {
                             console.log(this.sorce);
                         }else{
                             this.error.push(this.textQuestionData.question[i].num);
-                            this.errNum = this.textQuestionData.question[i].num;
-                           
+                            this.errorIndex = this.textQuestionData.question[i].num;
+                                this.setRed = true;
                         }
                     }
                 }
-            },
-            isError:function(id,errorIndex){
-                console.log("222"+errorIndex);
             }
     },
   watch:{
@@ -150,7 +151,7 @@ export default {
             }
         },
   computed:{
-
+      
         },
   components:{}
 }
