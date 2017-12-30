@@ -101,14 +101,14 @@ ul.tab li a{
     height: 450px;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -24px;
 }
 #content2{
      width: 156px;
     height: 450px;
     position: absolute;
     top: 0;
-    left: -16px;
+    left: -41px;
 }
 .dispear{
     display:none;
