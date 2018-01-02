@@ -2,12 +2,12 @@
     <div class="user">
                 <div class="login" v-show="true">
                     <div class="userBox">
-                        <p>用户名:</p>
-                        <input type="text" placeholder="请输入用户名" v-model="username">
+                        <p> <img class="unm" src="../assets/unm.png"> </p>
+                        <input type="text" placeholder="昵称/ID/身份证号/手机号" v-model="username">
                     </div>
                     <div class="passwordBox">
-                        <p>密码:</p>
-                        <input type="password" placeholder="请输入密码" v-model="password">
+                        <p> <img class="psw" src="../assets/psw.png"> </p>
+                        <input type="password" placeholder="密码" v-model="password">
                     </div>
                     <div class="btn"> 
                         <button class="btnOk" @click="login">确定</button>
@@ -37,7 +37,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 }else{
                     let data = {'username':this.username,'password':this.password}
                     /*请求存有用户账号的json文件*/
-                    axios.post("/api/menu/login",data).then((res)=>{
+                    axios.post("/api/menu/login").then((res)=>{
                         console.log(res.data);
                     /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
                       if(res.data.status == -2){
@@ -85,8 +85,22 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     right:117px;
     text-align:left;
 }
+.userBox{
+    position:relative;
+}
 .passwordBox{
     margin-top:30px;
+    position:relative;
+}
+.unm{
+    position:absolute;
+    top:0;
+    left:-43px;
+}
+.psw{
+    position:absolute;
+    top:0;
+    left:-43px;
 }
 p{
     font-size:20px;
@@ -95,8 +109,7 @@ p{
 }
 input{
     width:270px;
-    height:30px;
-    border-radius:5px;
+    height:37px;
 }
 .btn{
     display:flex;
@@ -107,7 +120,6 @@ input{
 .btnOk{
     width:80px;
     margin-top:30px;
-    margin-left:11%;
     padding:8px;
     border-radius:5px;
     cursor:pointer;

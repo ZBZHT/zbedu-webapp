@@ -9,6 +9,7 @@ import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
 import loginPage from '@/views/loginPage'
+import testLogin from '@/views/testLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
 Vue.use(Router)
@@ -28,14 +29,17 @@ const routes = [
       path:'/testCenter',
       name:'testCenter',
       meta:{
-        requireAuth:true
+        requireTest:true
       },
       component:testCenter
     },
     {
       path:'/testQuestion/:testId/title/:title',
       name:'testQuestion',
-      component:testQuestion
+      component:testQuestion,
+      meta:{
+        requireTest:true
+      },
     },
     {
       path: '/course',
@@ -64,6 +68,11 @@ const routes = [
       path: '/loginPage',
       name: 'loginPage',
       component: loginPage
+    },
+    {
+      path: '/testLogin',
+      name: 'testLogin',
+      component: testLogin
     }
 ];
 
@@ -88,6 +97,21 @@ router.beforeEach((to,from,next) => {
       }
   }else{
     next();
-  }
+  };
+  if (to.matched.some(res => res.meta.requireTest)) {
+    console.log("22");
+      if (!getCookie('username')){
+        alert("请登录");
+              next({
+                path:'/testLogin',
+                query:{redirect:to.fullPath}
+              })
+      }else{
+        console.log("33");
+        next();
+      }
+  }else{
+    next();
+  };
 });
 export default router;
