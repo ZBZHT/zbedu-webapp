@@ -6,7 +6,7 @@
     <div class="banner">
         <div class="left-menu">
 
-            <banner-left :bannerLeftData = "bannerLeftData"></banner-left>
+            <banner-left :bannerLeftData = "bannerLeftData" @sendLeftData = 'receiveFromSonData' :currentBannerLeftData = currentBannerLeftData></banner-left>
 
         </div>
         <div class="rightbox">
@@ -97,6 +97,7 @@ export default {
       bottomRightData:'',
       bannerLeftData:'',
       imgArray:'',
+      currentBannerLeftData: '',
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
@@ -132,6 +133,11 @@ export default {
     },
     toPlayPdf() {
       this.router.push('/playPdf')
+    },
+    receiveFromSonData (receiveFromSonData){
+      this.receiveFromSonData = receiveFromSonData;
+      bus.$emit('passBannerLeftData', receiveFromSonData);
+      // console.log(receiveFromSonData);
     }
           },
   mounted(){
