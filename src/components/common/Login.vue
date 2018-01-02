@@ -6,10 +6,10 @@
                 <div id="v-modal-body">
                     <template v-if="type == 'prompt'">
                         <form class="v-modal-prompt-form">
-                            <p>用户名:</p>
-                                <input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="请输入用户名">
-                            <p>密码:</p>
-                                <input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="请输入密码">
+                            <p> <img class="unm" src="../../assets/unm.png"> </p>
+                                <input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号">
+                            <p> <img class="psw" src="../../assets/psw.png"> </p>
+                                <input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码">
                         </form>
                     </template>
                 </div>
@@ -112,10 +112,9 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 if(this.username == "" || this.password == ""){
                     alert("请输入用户名或密码")
                 }else{
-                    let data = {'username':this.username,'password':this.password}
                     /*请求存有用户账号的json文件*/
-                    axios.post("/api/menu/login",data).then((res)=>{
-                        console.log(res.data);
+                    axios.post("api/menu/login").then((res)=>{
+                        console.log("qqqq"+res.data.status);
                     /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
                       if(res.data.status == -2){
                           alert("该用户不存在")
@@ -238,14 +237,25 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 .v-modal-prompt-form {
   margin-top: 10px;
   text-align: left;
+  position:relative;
 }
 .v-modal-prompt-form p{
   font-weight:bolder;
   font-size:18px;
   margin-top:7px;
 }
+.v-modal-prompt-form .unm{
+  position:absolute;
+  top:0;
+  left:0;  
+}
+.v-modal-prompt-form .psw{
+  position:absolute;
+  top:63px;
+  left:0;
+}
 .v-modal-input {
-  height: 35px;
+  height: 43px;
   border: 1px solid #eee;
   border-radius: 2px;
   padding: 0 5px;
@@ -253,7 +263,9 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
   background-color: #fff;
   font-size: 15px;
   display: block;
-  width: 100%;
+  width: 85%;
+  margin-left:43px;
+  margin-top:20px;
 }
 
 .v-modal-input:focus {

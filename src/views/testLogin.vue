@@ -37,7 +37,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 }else{
                     let data = {'username':this.username,'password':this.password}
                     /*请求存有用户账号的json文件*/
-                    axios.post("/api/menu/login").then((res)=>{
+                    axios.post("/api/menu/login",data).then((res)=>{
                         console.log(res.data);
                     /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
                       if(res.data.status == -2){
@@ -73,7 +73,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     margin:0 auto;
     min-height:700px;
     height:900px;
-    background:url("../../src/assets/loginPage.jpg") no-repeat;
+    background:blue;
     background-size:100% 100%;
     position:relative;
 }

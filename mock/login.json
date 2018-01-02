@@ -2,7 +2,7 @@
     "status": 0,
     "msg": "error parameter",
     "result": {
-        "users": [
+        "userInfo": [
             {
                 "id" : 1,
                 "username": "aaa",
