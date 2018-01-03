@@ -11,7 +11,7 @@
                 <div class="hiddenbox">
                     <div v-for="item3 in item2.children">
                         <b class="hd-title" @click="setMsg(item3)">
-                          <router-link :to="{path:'/course'}">
+                          <router-link :to="{path:'/course',params:{text:'123'}}">
                             {{item3.title}}
                           </router-link>
 
@@ -21,7 +21,7 @@
                         <ul class="hd-desc-ul">
                             <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg(item4)">
 
-                              <router-link :to="{path:'/courseNoTree'}">
+                              <router-link :to="{path:'/courseNoTree',params:{text:'124'}}">
                                 {{item4.title}}
                               </router-link>
 
