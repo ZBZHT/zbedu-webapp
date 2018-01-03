@@ -3,9 +3,7 @@
     <span @click="toggle">
      <i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>
      <i v-if="!isInclude" class="icon"></i>
-
      <a href="#" @click="toFather(model.title)">{{ model.title }}</a>
-
     </span>
     <ul class="son-box" v-show="open">
       <li v-for="(item,index) in model.children" v-if="model.children&&model.children.length" class="sonListItem">
@@ -16,12 +14,11 @@
          <a href="#" @click="toFather(item,index)">{{ item.title }}</a>
 
         </span>
-        <ul class="son-box" v-show="open1" v-if="item.children && item.children.length">
-          <li v-for="(item1,index) in item.children">
+        <ul class="grandson-box" v-show="open1" v-if="item.children && item.children.length">
+          <li class="grandsonListItem" v-for="(item1,index) in item.children">
             <span>
              <i v-if="item1.children&&item.children.length"></i>
              <a href="#" @click="toFather(item1,index)">{{ item1.title }}</a>
-
             </span>
           </li>
         </ul>
@@ -34,6 +31,7 @@
 <script>
   import bus from '../../assets/js/Bus'
   import Vue from 'vue'
+
   export default {
     name: 'tree',
     props: ['model'],
@@ -42,7 +40,8 @@
         open: true,
         isFolder: true,
         open1: false,
-        i:''
+        model:''
+        // currentModel:''
       }
     },
     computed: {
@@ -65,58 +64,88 @@
         this.$emit('sendTitle',currentData)
       }
     },
-    watch : {
-      model(curVal,oldVal){
-        if(curVal){
-          this.update(curVal)
-        }
-      }
+    mounted () {
+      var self = this
+      bus.$on('passHeaderNavData',function (msg) {
+        self.model = msg
+        console.log(msg)
+      })
     }
   }
 </script>
 <style>
+  a{
+    color: #fff;
+    text-decoration: none;
+  }
   ul {
     list-style: none;
     text-align: left;
+    overflow: hidden;
+
   }
-  i.icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    margin-right: 15px;
-    background-repeat: no-repeat;
-    vertical-align: middle;
+  .listItem{
+    background: #000;
+    width: 250px;
+    line-height: 40px;
+    color: #fff;
   }
-  .listItem .sonListItem{
-    background: #999;
-  }
-  /*.listItem .sonListItem li{*/
-    /*background: hotpink;*/
-    /*display: none;*/
-  /*}*/
-  .icon.folder {
-    background: #A7A5AB;
-    background-image: url(/src/assets/add.png);
-  }
-  .icon.folder-open {
-    background: #A7A5AB;
-    background-image: url(/src/assets/mnus.png);
-  }
-  .son-box{
-    margin-left: 30px;
-  }
-  .ccc{
-    background: red;
-  }
-    .icon{
-    background-image: none;
-  }
-  .tree-menu li {
-    line-height: 30px;
-    margin-top: 8px;
+  .listItem li{
+    border-bottom: 1px solid #fff;
+    line-height: 40px;
+    margin-top: 0px;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    /*background: red;*/
   }
+  .listItem a:hover{
+    background: red;
+    color: #fff;
+  }
+  .listItem a{
+    display: inline-block;
+    width: 200px;
+    line-height: 40px;
+  }
+  i.icon {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin-left: 30px;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+  }
+  .icon.folder {
+    background: #fff;
+    background-image: url(/src/assets/add.png);
+  }
+  .icon.folder-open {
+    background: #fff;
+    background-image: url(/src/assets/mnus.png);
+  }
+  .son-box{
+    margin-left: 0px;
+    background: #999;
+    overflow: hidden;
+  }
+  .son-box .sonListItem{
+    /*border-bottom: 1px solid #fff;*/
+    /*line-height: 40px;*/
+  }
+  .grandson-box{
+    margin-left: 0px;
+    background: #ccc;
+    overflow: hidden;
+  }
+  .grandson-box .grandsonListItem{
+    border-bottom: 1px solid #fff;
+    margin-left: 30px;
+    line-height: 40px;
+    overflow: hidden;
+  }
+
+  .icon{
+    background-image: none;
+  }
+
 </style>
