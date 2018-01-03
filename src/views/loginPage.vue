@@ -50,7 +50,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                               this.nickName = document.userName;
                               this.$emit("receive",this.nickName);
                               this.$router.go(0);
-                              this.$router.push('/index');
+                              this.$router.push('/');
                               this.$router.go(0);
                           }.bind(this),0.1)
                       }
@@ -59,7 +59,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             },
             cancel(){
                 setTimeout(function(){
-                              this.$router.push('/index');
+                              this.$router.push('/');
                               this.$router.go(0);
                           }.bind(this),0.1)
             }
