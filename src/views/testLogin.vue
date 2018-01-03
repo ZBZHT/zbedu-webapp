@@ -1,9 +1,11 @@
 <template>
     <div class="user">
+        <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                 <div class="login" v-show="true">
+                    <p>考试系统登录</p>
                     <div class="userBox">
                         <p> <img class="unm" src="../assets/unm.png"> </p>
-                        <input type="text" placeholder="昵称/ID/身份证号/手机号" v-model="username">
+                        <input type="text" placeholder="学号/ID/身份证号/手机号" v-model="username">
                     </div>
                     <div class="passwordBox">
                         <p> <img class="psw" src="../assets/psw.png"> </p>
@@ -73,16 +75,18 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     margin:0 auto;
     min-height:700px;
     height:900px;
-    background:blue;
     background-size:100% 100%;
     position:relative;
+    box-shadow:0 300px 400px -100px #e4393c inset;
+    text-align:left;
+    padding:10px;
 }
 .login{
     width:278px;
     height:200px;
     position:absolute;
     top:300px;
-    right:117px;
+    right:39%;
     text-align:left;
 }
 .userBox{
