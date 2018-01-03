@@ -8,7 +8,9 @@
         </div>
         <div class="collapse">
             <div class="list">
-                   <nav-ul :navData = "navData" v-on:child="fromChild" @sendHeaderNavData="receiveFromNavData" :currentNavData="currentNavData"></nav-ul>
+                   <nav-ul :navData = "navData" v-on:child="fromChild"
+                           @sendHeaderNavData="receiveFromNavData"
+                           :currentNavData="currentNavData"></nav-ul>
             </div>
 
             <form>
@@ -94,8 +96,6 @@ export default {
             }
             EventBus.$emit('prompt', {message: message, title: title, callback: callback, options: options || {}});
         },
-
-
       simplePrompt() {
                 this.prompt((username) => {
                     alert(username);
@@ -110,9 +110,9 @@ export default {
     },
     receiveFromNavData (currentNavData){
       this.currentNavData = currentNavData
-      // this.$emit('fromNavData',currentNavData)
+      this.$emit('sendNavData',currentNavData)
       bus.$emit('passHeaderNavData',currentNavData)
-      // console.log(currentNavData.title)
+      // console.log(currentNavData)
     }
 
   },
