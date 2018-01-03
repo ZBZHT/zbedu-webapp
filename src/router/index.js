@@ -38,7 +38,8 @@ const routes = [
       name:'testQuestion',
       component:testQuestion,
       meta:{
-        requireTest:true
+        requireTest:true,
+        requireQues:true
       }
     },
     {
@@ -107,8 +108,16 @@ router.beforeEach((to,from,next) => {
                 query:{redirect:to.fullPath}
               })
       }else{
-        console.log("33");
-        next();
+        if (to.matched.some(res => res.meta.requireQues)) {
+          alert("确认用当前账号考试吗？");          
+          if(true){
+           
+          }else{
+
+          }
+        }else{
+          next();
+        };
       }
   }else{
     next();

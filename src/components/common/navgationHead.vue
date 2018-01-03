@@ -2,7 +2,7 @@
 <div class="nav">
     <div class="navbar">
         <div class="navbar-header">
-            <router-link :to="{path:'/index'}">
+            <router-link :to="{path:'/'}">
                 <img class="brand" alt="Brand" src="../../assets/imgs/zb_logo.png">
             </router-link>
         </div>
