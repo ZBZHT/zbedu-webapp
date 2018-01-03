@@ -10,7 +10,7 @@
                 </a>
                 <div class="hiddenbox">
                     <div v-for="item3 in item2.children">
-                        <b class="hd-title" @click="setMsg(item3,item3.title)">
+                        <b class="hd-title" @click="setMsg(item3)">
                           <router-link :to="{path:'/course'}">
                             {{item3.title}}
                           </router-link>
@@ -19,7 +19,7 @@
                         </b>
                         <hr/>
                         <ul class="hd-desc-ul">
-                            <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg(item4,item4.title)">
+                            <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg(item4)">
 
                               <router-link :to="{path:'/courseNoTree'}">
                                 {{item4.title}}
@@ -36,7 +36,7 @@
 
 <script>
       import axios from 'axios'
-      import bus from '../../assets/js/Bus'
+      // import bus from '../../assets/js/Bus'
 export default {
   name: 'bannerLeft',
   props:['bannerLeftData'],
@@ -49,8 +49,8 @@ export default {
 
   },
   methods: {
-    setMsg: function (item,title) {
-      bus.$emit('sendLeftData',item,title)
+    setMsg: function (item) {
+      this.$emit('sendLeftData',item)
       // alert(title)
     }
   }

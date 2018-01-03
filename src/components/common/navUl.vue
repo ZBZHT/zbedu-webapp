@@ -41,7 +41,7 @@
 
 <script>
       import axios from 'axios'
-      import bus from '../../assets/js/Bus'
+      // import bus from '../../assets/js/Bus'
 export default {
   name: 'navUl',
   props:['navData'],
@@ -55,7 +55,7 @@ export default {
   },
   methods: {
     sendMsg: function (item) {
-      bus.$emit('sendHeaderNavData',item)
+      this.$emit('sendHeaderNavData',item)
       // alert(title)
     }
   }

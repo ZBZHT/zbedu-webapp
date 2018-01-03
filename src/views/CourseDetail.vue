@@ -1,19 +1,23 @@
 <template>
   <div>
     <div class="header-box">
-      <navgation-head></navgation-head>
+      <navgation-head ></navgation-head>
     </div>
     <div class="content-box">
       <div class="tree-box">
         <div class="tree-menu">
           <ul>
-            <my-tree :model="theModel"></my-tree>
+            <keep-alive>
+            <my-tree :model="theModel" @sendTitle="receiveCurrentData"></my-tree>
+            </keep-alive>
           </ul>
         </div>
       </div>
+      <!--<p>{{theModel.title}}</p>-->
       <div class="right-box">
         <p>{{ subtitle }}</p>
-        <p>{{ theModel.children[0].title }}</p>
+        <p>{{ currentMsg.title }}</p>
+
         <div class="detail-box">
           <ul class="nav-box">
             <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -21,11 +25,11 @@
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
-            <!--<p>{{ theModel.children }}</p>-->
-            <p class="introduce">{{ theModel.children[0].title }}</p>
+            <p>{{ currentMsg.describe }}</p>
+            <!--<p class="introduce">{{ theModel.children[0].title }}</p>-->
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
-            <p>{{ appraiseMsg }}</p>
+            <p>{{ currentMsg.title }}</p>
             <textarea name="" id="" cols="30" rows="10">各种评价</textarea>
           </div>
         </div>
@@ -43,21 +47,16 @@
   var busData = {
 
   };
-  bus.$on('sendHeaderNavData',value => {
+  bus.$on('passHeaderNavData',value => {
     busData.theModel = value
+    console.log(value)
   });
-  bus.$on('sendLeftData', (value,title) => {
+  bus.$on('passBannerLeftData', (value) => {
     busData.theModel = value
-    busData.subtitle = title
-    // console.log(busData.theModel)
-    // console.log(title)
+    busData.subtitle = value.title
+
   });
-  bus.$on('sendTitle',(value) => {
-    busData.headings = value
-    console.log()
-    // alert(busData.currentItem)
-    // console.log(busData.headings)
-  })
+
   export default {
     name: 'user',
     data () {
@@ -69,8 +68,11 @@
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
         theModel: busData.theModel,
         subtitle:busData.subtitle,
-        headings: busData.headings,
+        currentMsg:''
       }
+    },
+    watch:{
+
     },
     methods: {
       onclick: function (index) {
@@ -81,6 +83,10 @@
         if (this.currentIndex === 2) {
           this.$router.push({path: '/playVideo'})
         }
+      },
+      receiveCurrentData (receiveCurrentData) {
+        this.currentMsg = receiveCurrentData
+        console.log(this.currentMsg)
       }
     },
     mounted(){

@@ -8,7 +8,7 @@
         </div>
         <div class="collapse">
             <div class="list">
-                   <nav-ul :navData = "navData" v-on:child="fromChild"></nav-ul>
+                   <nav-ul :navData = "navData" v-on:child="fromChild" @sendHeaderNavData="receiveFromNavData" :currentNavData="currentNavData"></nav-ul>
             </div>
 
             <form>
@@ -36,6 +36,7 @@ import Modal from '@/components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import modalEventBind from '../../assets/js/ModalEventBind';
 import EventBus from '../../assets/js/EventBus';
+import bus from '../../assets/js/Bus'
 
 export default {
   name: 'navgationHead',
@@ -49,7 +50,8 @@ export default {
       result:-1,
       phText:true,
       phPassword:true,
-      nickName:''
+      nickName:'',
+      currentNavData: ''
     }
   },
   mounted(){
@@ -105,6 +107,12 @@ export default {
       fromChild (somedata) {
         this.fromData = somedata
       console.log(somedata)
+    },
+    receiveFromNavData (currentNavData){
+      this.currentNavData = currentNavData
+      // this.$emit('fromNavData',currentNavData)
+      bus.$emit('passHeaderNavData',currentNavData)
+      // console.log(currentNavData.title)
     }
 
   },
