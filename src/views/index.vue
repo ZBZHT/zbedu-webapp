@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="nav">
-        <navgation-head></navgation-head>
+        <navgation-head @sendNavData="receiveFromNavData"></navgation-head>
     </div>
     <div class="banner">
         <div class="left-menu">
@@ -136,8 +136,14 @@ export default {
     },
     receiveFromSonData (receiveFromSonData){
       this.receiveFromSonData = receiveFromSonData;
+      //传值到课程页
       bus.$emit('passBannerLeftData', receiveFromSonData);
       // console.log(receiveFromSonData);
+    },
+    receiveFromNavData(msg){
+      //传值到课程页
+      bus.$emit('passHeaderNavData',msg)
+     // console.log(msg)
     }
           },
   mounted(){
