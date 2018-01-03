@@ -16,12 +16,12 @@ Vue.use(Router)
 
 const routes = [
     {
-      path: '/',
+      path: '/index',
       name: 'HelloWorld',
       component: HelloWorld
     },
     {
-      path:'/index',
+      path:'/',
       name:'index',
       component:index
     },
@@ -39,7 +39,7 @@ const routes = [
       component:testQuestion,
       meta:{
         requireTest:true
-      },
+      }
     },
     {
       path: '/course',
@@ -85,15 +85,15 @@ router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
     console.log("22");
-      if (!getCookie('username')){
+      if (getCookie('username')){
+        console.log("33");
+        next();        
+      }else{
         alert("请登录");
               next({
                 path:'/loginPage',
                 query:{redirect:to.fullPath}
               })
-      }else{
-        console.log("33");
-        next();
       }
   }else{
     next();

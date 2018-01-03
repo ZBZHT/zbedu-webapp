@@ -71,7 +71,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                                 this.username = '';
                                 this.password = '';
                                 this.nickName = '';
-                                this.$router.push('/index');
+                                this.$router.push('/');
                         }
                     }
                     return Promise.reject(error);
@@ -112,9 +112,10 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 if(this.username == "" || this.password == ""){
                     alert("请输入用户名或密码")
                 }else{
+                    let data = {'username':this.username,'password':this.password}
                     /*请求存有用户账号的json文件*/
-                    axios.post("api/menu/login").then((res)=>{
-                        console.log("qqqq"+res.data.status);
+                    axios.post("api/menu/login",data).then((res)=>{
+                        console.log("qqqq"+res.data);
                     /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
                       if(res.data.status == -2){
                           alert("该用户不存在")
@@ -125,7 +126,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                           setTimeout(function(){
                               this.nickName = document.userName;
                               this.$emit("receive",this.nickName);
-                              this.$router.push('/index');
+                              this.$router.push('/');
                           }.bind(this),1000)
                       }
                   })
