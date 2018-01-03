@@ -1,15 +1,13 @@
 <template>
   <div>
     <div class="header-box">
-      <navgation-head ></navgation-head>
+      <navgation-head></navgation-head>
     </div>
     <div class="content-box">
       <div class="tree-box">
-        <div class="tree-menu">
+        <div >
           <ul>
-            <keep-alive>
-            <my-tree :model="theModel" @sendTitle="receiveCurrentData"></my-tree>
-            </keep-alive>
+            <my-tree class="tree-menu" :model="theModel" @sendTitle="receiveCurrentData"></my-tree>
           </ul>
         </div>
       </div>
@@ -17,7 +15,6 @@
       <div class="right-box">
         <p>{{ subtitle }}</p>
         <p>{{ currentMsg.title }}</p>
-
         <div class="detail-box">
           <ul class="nav-box">
             <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -25,6 +22,7 @@
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
+
             <p>{{ currentMsg.describe }}</p>
             <!--<p class="introduce">{{ theModel.children[0].title }}</p>-->
           </div>
@@ -49,7 +47,7 @@
   };
   bus.$on('passHeaderNavData',value => {
     busData.theModel = value
-    console.log(value)
+    // console.log(value)
   });
   bus.$on('passBannerLeftData', (value) => {
     busData.theModel = value
@@ -86,7 +84,7 @@
       },
       receiveCurrentData (receiveCurrentData) {
         this.currentMsg = receiveCurrentData
-        console.log(this.currentMsg)
+        // console.log(this.currentMsg)
       }
     },
     mounted(){
@@ -222,16 +220,31 @@
     autofocus: autofocus;
     overflow: hidden;
   }
-  .tree-menu{
+  .tree-box{
     background: #DDDDDD;
-    font-size: 16px;
+    width: 300px;
+    margin-top: 80px;
     font-weight: bold;
     border-radius: 5px;
-  }
-  .tree-box ul{
-    margin-left: 10px;
-  }
+    font-size: 16px;
+    position: relative;
 
+   }
+  .tree-menu{
+    position: absolute;
+    left: 10px;
+    /*overflow: hidden;*/
+  }
+  /*.tree-menu li{*/
+    /*margin-left: 0px;*/
+  /*}*/
+
+  /*.tree-menu li {*/
+  /*text-overflow: ellipsis;*/
+  /*overflow: hidden;*/
+  /*white-space: nowrap;*/
+  /*!*background: red;*!*/
+  /*}*/
   /*.noneLine{*/
       /*border-bottom: 1px solid #fff;*/
     /*}*/
