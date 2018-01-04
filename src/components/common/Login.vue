@@ -2,7 +2,7 @@
     <transition name="modal">
         <div id="v-modal-wrap" v-show="show">
             <div id="v-modal-dialog">
-            
+
                 <div id="v-modal-body">
                     <template v-if="type == 'prompt'">
                         <form class="v-modal-prompt-form">
@@ -44,40 +44,40 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
             }
         },
         created(){
-            axios.interceptors.request.use(
-                config => {
-                    console.log('开始请求');
-                    console.log(`请求地址:${config.url}`);
-                    if(getCookie('username')){
-                        config.headers.Authorization = `getCookie('username')`;
-                    }
-                    return config;
-                },
-                err => {
-                    console.log('请求失败');
-                    return Promise.reject(error)
-                })
-            axios.interceptors.response.use(
-                response => {
-                    console.log('接收响应');
-                    return response;
-                },
-                error => {
-                    console.log('响应出错');
-                    if(error.response){
-                        switch(error.response.status){
-                            case 401:
-                                delCookie('username');
-                                this.username = '';
-                                this.password = '';
-                                this.nickName = '';
-                                this.$router.push('/');
+                    axios.interceptors.request.use(
+                        config => {
+                            console.log('开始请求');
+                            console.log(`请求地址:${config.url}`);
+                            if(getCookie('username')){
+                                config.headers.Authorization = `getCookie('username')`;
+                            }
+                            return config;
+                        },
+                        err => {
+                            console.log('请求失败');
+                            return Promise.reject(error)
+                        })
+                    axios.interceptors.response.use(
+                        response => {
+                            console.log('接收响应');
+                            return response;
+                        },
+                        error => {
+                            console.log('响应出错');
+                            if(error.response){
+                                switch(error.response.status){
+                                    case 401:
+                                        delCookie('username');
+                                        this.username = '';
+                                        this.password = '';
+                                        this.nickName = '';
+                                        this.$router.push('/');
+                                }
+                            }
+                            return Promise.reject(error);
                         }
-                    }
-                    return Promise.reject(error);
-                }
-            )
-        },
+                    )
+                },
         methods: {
             modal: function(message, title) {
                 if (typeof message === 'string') {
@@ -98,7 +98,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 this.callback = params.callback;
                 this.inputType = params.options.inputType || 'text';
             },
-            
+
             cancel: function() {
                 var self = this;
                 this.show = false;
@@ -112,23 +112,27 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 if(this.username == "" || this.password == ""){
                     alert("请输入用户名或密码")
                 }else{
-                    let data = {'username':this.username,'password':this.password}
                     /*请求存有用户账号的json文件*/
-                    axios.post("api/menu/login",data).then((res)=>{
-                        console.log("qqqq"+res.data);
-                    /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
-                      if(res.data.status == -2){
-                          alert("该用户不存在")
-                      }else if(res.data.status == 1){
-                          alert("密码输入错误")
-                      }else{
-                          setCookie('username',this.username,1000*60*60)
-                          setTimeout(function(){
-                              this.nickName = document.userName;
-                              this.$emit("receive",this.nickName);
-                              this.$router.push('/');
-                          }.bind(this),1000)
-                      }
+                    axios({
+                        method: 'post',
+                        url: 'http://192.168.2.251:3000/api/user/login',
+                        params: {
+                            username: this.username,
+                            password: this.password
+                        }
+                        }).then((res)=>{
+                            console.log(res.data);
+                        /*传值是(2,用户名或密码错误),(0,可登录)*/
+                        if(res.data.code == 2){
+                            alert("用户名或密码输入错误")
+                        }else{
+                            setCookie('username',this.username,1000*60*60)
+                                setTimeout(function(){
+                                    this.nickName = document.userName;
+                                    this.$emit("receive",this.nickName);
+                                    this.$router.push('/');
+                                }.bind(this),1000)
+                        }
                   })
               };
               this.show = false;
@@ -248,7 +252,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 .v-modal-prompt-form .unm{
   position:absolute;
   top:0;
-  left:0;  
+  left:0;
 }
 .v-modal-prompt-form .psw{
   position:absolute;
