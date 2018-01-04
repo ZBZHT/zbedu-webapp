@@ -86,15 +86,24 @@ router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
     console.log("22");
-      if (getCookie('username')){
-        console.log("33");
-        next();        
+      if (!getCookie('username')){
+            var con = confirm("请登录");
+              if(con == true){
+                  next({
+                    path:'/loginPage',
+                    query:{redirect:to.fullPath}
+                  })
+                  router.go(0);  
+                }else{
+                  next({
+                    path:'/',
+                    query:{redirect:to.fullPath}
+                  })
+                  router.go(0);  
+                }
       }else{
-        alert("请登录");
-              next({
-                path:'/loginPage',
-                query:{redirect:to.fullPath}
-              })
+        console.log("33");
+        next();    
       }
   }else{
     next();
@@ -102,18 +111,31 @@ router.beforeEach((to,from,next) => {
   if (to.matched.some(res => res.meta.requireTest)) {
     console.log("22");
       if (!getCookie('username')){
-        alert("请登录");
+        var con = confirm("请登录");
+          if(con == true){
               next({
                 path:'/testLogin',
                 query:{redirect:to.fullPath}
               })
+              router.go(0);  
+            }else{
+              next({
+                path:'/',
+                query:{redirect:to.fullPath}
+              })
+              router.go(0);  
+            }
       }else{
         if (to.matched.some(res => res.meta.requireQues)) {
-          alert("确认用当前账号考试吗？");          
-          if(true){
-           
+          var con = confirm("确认用当前账号考试吗？");          
+          if(con == true){
+            next();
           }else{
-
+            next({
+                path:'/testLogin',
+                query:{redirect:to.fullPath}
+              });
+            router.go(0);  
           }
         }else{
           next();
