@@ -138,7 +138,6 @@ export default {
       this.receiveFromSonData = receiveFromSonData;
       //传值到课程页
       bus.$emit('passBannerLeftData', receiveFromSonData);
-      // console.log(receiveFromSonData);
     },
     receiveFromNavData(msg){
       //传值到课程页
