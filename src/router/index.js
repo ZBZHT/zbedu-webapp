@@ -43,7 +43,7 @@ const routes = [
       }
     },
     {
-      path: '/course',
+      path: '/course/title/:title',
       name: 'course',
       meta:{
         requireAuth:true
@@ -51,7 +51,7 @@ const routes = [
       component: course
     },
     {
-      path: '/courseNoTree',
+      path: '/courseNoTree/:courseId/title/:title',
       name: 'courseNoTree',
       component: courseNoTree
     },
@@ -93,17 +93,17 @@ router.beforeEach((to,from,next) => {
                     path:'/loginPage',
                     query:{redirect:to.fullPath}
                   })
-                  router.go(0);  
+                  router.go(0);
                 }else{
                   next({
                     path:'/',
                     query:{redirect:to.fullPath}
                   })
-                  router.go(0);  
+                  router.go(0);
                 }
       }else{
         console.log("33");
-        next();    
+        next();
       }
   }else{
     next();
@@ -117,17 +117,17 @@ router.beforeEach((to,from,next) => {
                 path:'/testLogin',
                 query:{redirect:to.fullPath}
               })
-              router.go(0);  
+              router.go(0);
             }else{
               next({
                 path:'/',
                 query:{redirect:to.fullPath}
               })
-              router.go(0);  
+              router.go(0);
             }
       }else{
         if (to.matched.some(res => res.meta.requireQues)) {
-          var con = confirm("确认用当前账号考试吗？");          
+          var con = confirm("确认用当前账号考试吗？");
           if(con == true){
             next();
           }else{
@@ -135,7 +135,7 @@ router.beforeEach((to,from,next) => {
                 path:'/testLogin',
                 query:{redirect:to.fullPath}
               });
-            router.go(0);  
+            router.go(0);
           }
         }else{
           next();
