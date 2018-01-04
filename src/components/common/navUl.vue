@@ -14,12 +14,12 @@
                                 <li v-for="item2 in item.children">
                                     <div class="dr-a">
                                         <span @click="sendMsg(item2)">
-                                          <router-link :to="{path:'/course'}">{{item2.title}}</router-link>
+                                          <router-link :to="{path:'/course' + '/title/'+ item2.title}">{{item2.title}}</router-link>
                                         </span>
                                         <div class="drop-right" v-show="item2.children">
                                             <ul>
                                                 <li v-for="item3 in item2.children" @click="sendMsg(item3.title)">
-                                                  <router-link :to="{path:'/course'}">
+                                                  <router-link :to="{path:'/course' + '/title/'+ item3.title}">
                                                     <a  href="#">{{item3.title}}</a>
                                                   </router-link>
                                                 </li>
