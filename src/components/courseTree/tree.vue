@@ -89,6 +89,7 @@
     width: 250px;
     line-height: 40px;
     color: #fff;
+    margin-left: 10px;
   }
   .listItem li{
     border-bottom: 1px solid #fff;
@@ -97,6 +98,7 @@
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+
   }
   .listItem a:hover{
     background: red;
@@ -104,14 +106,15 @@
   }
   .listItem a{
     display: inline-block;
-    width: 200px;
+    width: 230px;
     line-height: 40px;
   }
   i.icon {
     display: inline-block;
     width: 15px;
     height: 15px;
-    margin-left: 30px;
+    /*margin-left: 30px;*/
+    margin-top: -2px;
     background-repeat: no-repeat;
     vertical-align: middle;
   }
@@ -139,9 +142,9 @@
   }
   .grandson-box .grandsonListItem{
     border-bottom: 1px solid #fff;
-    margin-left: 30px;
     line-height: 40px;
     overflow: hidden;
+    /*margin-left: 20px;*/
   }
 
   .icon{
