@@ -11,7 +11,6 @@
           </ul>
         </div>
       </div>
-      <!--<p>{{theModel.title}}</p>-->
       <div class="right-box">
         <p>{{ subtitle }}</p>
         <p>{{ currentMsg.title }}</p>
