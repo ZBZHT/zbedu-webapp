@@ -5,7 +5,7 @@
     </div>
     <div class="content-box">
       <div class="right-box">
-        <p>{{ subtitle }}</p>
+        <p>{{ currentCourseData.title }}</p>
         <div class="detail-box">
           <ul class="nav-box">
             <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -13,7 +13,7 @@
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
-            <p class="introduce">动力电池盖拆解的步骤以及电动车高压的安全操作注意事项。工具的使用选择以及注意力的大小，密封胶的清洁</p>
+            <p class="introduce">{{ currentCourseData.describe }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p>{{ appraiseMsg }}</p>
@@ -22,7 +22,6 @@
         </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -34,12 +33,9 @@
   var busData = {
 
   };
-  bus.$on('sendLeftData', (value,title) => {
-    busData.theModel = value
-    busData.subtitle = title
-    // alert(title)
-    console.log(busData.theModel)
-    console.log(title)
+  bus.$on('passBannerLeftData', (value) => {
+    busData.currentCourseData = value
+
   });
   export default {
     name: 'user',
@@ -49,7 +45,7 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        subtitle:busData.subtitle,
+        currentCourseData:busData.currentCourseData,
         detailNavData: [
           {
             "title": "课程详情"
@@ -163,13 +159,6 @@
     color: red;
   }
 
-  /*.right-box .nav-box li a{*/
-    /*text-decoration: none;*/
-    /*color: #000;*/
-  /*}*/
-  /*.right-box .nav-box li a:hover{*/
-    /*color: red;*/
-  /*}*/
   .right-box .nav-box li:first-child{
     margin-left: 23%;
   }
