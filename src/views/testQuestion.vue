@@ -5,17 +5,17 @@
         <div class="title">
             <div>
                 <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-                <p>{{$route.params.title}}考试</p>
+                <p class="titleP">{{$route.params.title}}考试</p>
             </div>
-            <div>
+            <div class="infor">
                 <p>开始时间</p>
                 <p>{{hours}}:{{minute}}</p>
             </div>
-            <div>
+            <div class="infor">
                 <p>状态</p>
                 <p>正在考试</p>
             </div>
-            <div>
+            <div class="infor">
                 <p>距离考试结束还有</p>
                 <span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
             </div>
@@ -48,10 +48,25 @@
             </div>
             <div class="number">
                 <ul>
-                    <li v-for=>
-                        <a></a>
+                    <li v-for="(item,index) in textQuestionData.question">
+                        <a>{{ index + 1 }}</a>
                     </li>
                 </ul>
+                <div class="status">
+                    <div>
+                        <p></p>
+                        <p>未答题</p>
+                    </div>
+                    <div>
+                        <p></p>
+                        <p>已答题</p>
+                    </div>
+                    <div>
+                        <p></p>
+                        <p>标记题</p>
+                    </div>
+                </div>
+                <button @click='submit' class="btn" :class="{answer : !answer}">提交</button>
             </div>
         </div>
     </div>
@@ -216,8 +231,12 @@ ul li{
     box-sizing:border-box;
     display:flex;
 }
-.title p{
+.titleP{
     margin-top:37px;
+}
+.infor{
+    margin-left:140px;
+    margin-top:65px;
 }
 .content{
     width:100%;
@@ -234,6 +253,23 @@ ul li{
     width:310px;
     height:650px;
     border:1px solid #000;
+    position:relative;
+}
+.number li{
+    display:inline-block;
+    margin-left:4px;
+}
+.number a{
+    display:block;
+    width:50px;
+    height:50px;
+    border:1px solid #000;
+    margin-top:16%;
+    padding-top:36%;
+    box-sizing:border-box;
+}
+.status{
+    display:flex;
 }
 .desc{
     margin-top:15px;
@@ -259,10 +295,13 @@ ul li{
     cursor:pointer;
 }
 .btn{
-    width:100px;
+    width:100%;
     margin-top:10px;
     background-color:#e4393c;
     padding:8px;
+    position:absolute;
+    bottom:0;
+    left:0;
 }
 .setRed{
     color:red;

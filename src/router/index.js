@@ -126,6 +126,7 @@ router.beforeEach((to,from,next) => {
               router.go(0);
             }
       }else{
+        
         if (to.matched.some(res => res.meta.requireQues)) {
           var con = confirm("确认用当前账号考试吗？");
           if(con == true){
