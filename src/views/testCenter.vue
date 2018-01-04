@@ -35,7 +35,7 @@
             <ul class="test">
                 <li class="test-li" v-for="item in hotTest">
                         <img :src="item.url">
-                        <button class="btn">
+                        <button class="btn" >
                             <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>

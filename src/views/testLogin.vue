@@ -1,6 +1,8 @@
 <template>
     <div class="user">
-        <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+        <router-link :to="{path:'/'}">
+                <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+            </router-link>
                 <div class="login" v-show="true">
                     <p>考试系统登录</p>
                     <div class="userBox">
@@ -41,21 +43,21 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                     /*请求存有用户账号的json文件*/
                     axios.post("/api/menu/login",data).then((res)=>{
                         console.log(res.data);
-                    /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
-                      if(res.data.status == -2){
-                          alert("该用户不存在")
-                      }else if(res.data.status == 1){
-                          alert("密码输入错误")
-                      }else{
-                          setCookie('username',this.username,1000*60*60)
-                          setTimeout(function(){
-                              this.nickName = document.userName;
-                              this.$emit("receive",this.nickName);
-                              this.$router.go(0);
-                              this.$router.push('/testCenter');
-                              this.$router.go(0);
-                          }.bind(this),0.1)
-                      }
+                        /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
+                        if(res.data.status == -2){
+                            alert("该用户不存在")
+                        }else if(res.data.status == 1){
+                            alert("密码输入错误")
+                        }else{
+                            setCookie('username',this.username,1000*60*60)
+                            setTimeout(function(){
+                                this.nickName = document.userName;
+                                this.$emit("receive",this.nickName);
+                                this.$router.go(0);
+                                this.$router.push('/testCenter');
+                                this.$router.go(0);
+                            }.bind(this),0.1)
+                        }
                   })
               };
             },

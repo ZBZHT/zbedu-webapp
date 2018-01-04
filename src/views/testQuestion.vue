@@ -1,46 +1,60 @@
 <template>
 <div class="question">
-
-        <div class="timeInterval">
-        
-            <p :class="{answer : !answer}">距离考试结束还有：<span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
-            <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
-        </div>
-
-        <div class="content" :class="{dispear : dispear}">
-            <div class="title">
-                <p>{{$route.params.title}}</p>
+    <div class="leftBox"></div>
+    <div class="rightBox">
+        <div class="title">
+            <div>
+                <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+                <p>{{$route.params.title}}考试</p>
             </div>
+            <div>
+                <p>开始时间</p>
+                <p>{{hours}}:{{minute}}</p>
+            </div>
+            <div>
+                <p>状态</p>
+                <p>正在考试</p>
+            </div>
+            <div>
+                <p>距离考试结束还有</p>
+                <span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
+            </div>
+        </div>
+        <div class="content">
             <div class="data">
+                <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
+                <div class="desc" v-for="(item,index) in textQuestionData.question">
+                    <span class="desctitle" :class="{setRed : index === errorIndex - 1 && submits == true}">
+                        {{item.num}}.{{item.desc}}
+                    </span>
+                    <ul class="ans">
 
-                        <div class="desc" v-for="(item,index) in textQuestionData.question">
-                            <span class="desctitle" :class="{setRed : index === errorIndex - 1 && submits == true}">
-                                {{item.num}}.{{item.desc}}
-                            </span>
-                            <ul class="ans">
+                        <li v-for="(item2,index2) in item.options">
+                            <label :for="item.forId[index2]">
+                                <input :id="item.forId[index2]"
+                                :type="item.type"
+                                :value="item.value[index2]"
+                                :name="item.name"
+                                @change="myAnswer(item.name,item.value[index2],index)">
+                                    {{item2}}
+                            </label>
+                        </li>
 
-                                <li v-for="(item2,index2) in item.options">
-                                    <label :for="item.forId[index2]">
-                                        <input :id="item.forId[index2]"
-                                        :type="item.type"
-                                        :value="item.value[index2]"
-                                        :name="item.name"
-                                        @change="myAnswer(item.name,item.value[index2],index)">
-                                            {{item2}}
-                                    </label>
-                                </li>
-
-                            </ul>
-                            <span :class="{answer : answer}">
-                                正确答案：{{item.answer}}
-                            </span>
-                        </div>
+                    </ul>
+                    <span :class="{answer : answer}">
+                        正确答案：{{item.answer}}
+                    </span>
+                </div>
             </div>
-            <div class="data1">
-                <button @click='submit' class="btn" :class="{answer : !answer}">提交</button>
+            <div class="number">
+                <ul>
+                    <li v-for=>
+                        <a></a>
+                    </li>
+                </ul>
             </div>
-
         </div>
+    </div>
 </div>
 </template>
 
@@ -63,7 +77,10 @@ export default {
         sorce:0,
         error:[],
         setRed:false,
-        submits:false
+        submits:false,
+        nowTime:'',
+        hours:'',
+        minute:''
     }
   },
   created(){
@@ -89,6 +106,9 @@ export default {
 
                 },1000);
                 _this.dispear = !_this.dispear;
+                _this.nowTime = new Date();
+                _this.hours = _this.nowTime.getHours();
+                _this.minute = _this.nowTime.getMinutes();
             },
             getTest(e){
                 axios.get("/api/menu/"+e,{
@@ -167,44 +187,53 @@ ul li{
     list-style: none;
 }
 .question{
-    min-width:960px;
-}
-.timeInterval{
-    position:relative;
-}
-.timeInterval p{
-    position:fixed;
-    top:0;
-    right:10px;
-}
-.timeInterval button{
-    background:#e4393c;
-    padding:20px;
-    border-radius:5px;
-    margin-top:100px;
-}
-.time{
-    font-weight:bolder;
-}
-.content{
-    width:960px;
+    min-width:1200px;
+    min-width:800px;
+    width:1200px;
+    height:800px;
     margin:0 auto;
+    border:1px solid #000;
+    display:flex;
 }
-.dispear{
-    display:none;
+.leftBox{
+    width:150px;
+    height:100%;
+    border:1px solid #000;
+}
+.rightBox{
+    width:1050px;
+    height:100%;
+    border:1px solid #000;
 }
 .title{
-        text-align:center;
-        font-weight: bolder;
-        font-size:20px;
+    width:100%;
+    height:150px;
+    border:1px solid #000;
+    text-align:left;
+    font-weight: bolder;
+    font-size:20px;
+    padding:10px;
+    box-sizing:border-box;
+    display:flex;
+}
+.title p{
+    margin-top:37px;
+}
+.content{
+    width:100%;
+    display:flex;
 }
 .data{
-    width:960px;
+    width:810px;
+    height:650px;
+    border:1px solid #000;
+    overflow:auto;
     text-align:left;
-    margin:0 auto;
-    padding:20px;
-    box-shadow:0 0 15px #e4393c;
-    margin-top:20px;
+}
+.number{
+    width:310px;
+    height:650px;
+    border:1px solid #000;
 }
 .desc{
     margin-top:15px;

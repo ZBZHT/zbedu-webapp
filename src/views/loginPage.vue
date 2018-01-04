@@ -30,6 +30,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 nickName:''
             }
         },
+        mounted(){
+            if(router.go(-1)){
+                this.$router.go(0);
+            }
+        },
         methods: {
             login(){
                 if(this.username == "" || this.password == ""){
