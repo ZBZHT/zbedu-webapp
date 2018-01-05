@@ -56,12 +56,12 @@ const routes = [
       component: courseNoTree
     },
     {
-      path: '/playPdf',
+      path: '/playPdf/:courseId/pdf/:title',
       name: 'playPdf',
       component: playPdf
     },
     {
-      path: '/playVideo',
+      path: '/playVideo/:courseId/video/:title',
       name: 'playVideo',
       component: playVideo
     },
@@ -126,7 +126,7 @@ router.beforeEach((to,from,next) => {
               router.go(0);
             }
       }else{
-        
+
         if (to.matched.some(res => res.meta.requireQues)) {
           var con = confirm("确认用当前账号考试吗？");
           if(con == true){
