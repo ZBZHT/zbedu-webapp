@@ -12,12 +12,12 @@
                 "children":[
                     {
                       "title":"安全操作与新车交接检查",
-                      "describe":"describe",
+                      "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
                       "courseId": 111
                     },
                     {
                       "title":"动力电池系统故障检修",
-                      "describe":"describe",
+                      "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
                       "courseId": 112
                     },
                     {
@@ -492,79 +492,97 @@
   "bestClassData":[
     {
       "url":"src/assets/img.png",
-      "title":"标题"
+      "title":"标题",
+      "courseId": 61
+
     },
     {
       "url":"src/assets/img.png",
-      "title":"标题"
+      "title":"标题",
+      "courseId": 62
     },
     {
       "url":"src/assets/img.png",
-      "title":"标题"
+      "title":"标题",
+      "courseId": 63
     },
     {
       "url":"src/assets/img.png",
-      "title":"标题"
+      "title":"标题",
+      "courseId": 64
     },
     {
       "url":"src/assets/img.png",
-      "title":"标题"
+      "title":"标题",
+      "courseId": 65
     }
   ],
   "pageData":[
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介1"
+      "intro":"简介1",
+      "courseId": 81
+
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介2"
+      "intro":"简介2",
+      "courseId": 82
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介3"
+      "intro":"简介3",
+      "courseId": 83
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介4"
+      "intro":"简介4",
+      "courseId": 84
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介5"
+      "intro":"简介5",
+      "courseId": 85
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介6"
+      "intro":"简介6",
+      "courseId": 86
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介7"
+      "intro":"简介7",
+      "courseId": 87
     },
     {
       "url":"src/assets/img.png",
       "title":"检测",
-      "intro":"简介1"
+      "intro":"简介1",
+      "courseId": 88
     }
   ],
   "bottomLeftData":[
     {
       "url":"src/assets/left.png",
-      "title":"DC-DC检测"
+      "title":"DC-DC检测",
+      "courseId": 71
     },
     {
       "url":"src/assets/left.png",
-      "title":"DC-DC检测"
+      "title":"DC-DC检测",
+      "courseId": 72
     },
     {
       "url":"src/assets/left.png",
-      "title":"DC-DC检测"
+      "title":"DC-DC检测",
+      "courseId": 73
     }
   ],
   "bottomRightData":[
