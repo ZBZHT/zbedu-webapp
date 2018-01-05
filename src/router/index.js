@@ -104,7 +104,7 @@ const router = new Router({
     routes,
     mode:'history'
 });
-
+var b = 0;
 router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
@@ -132,7 +132,6 @@ router.beforeEach((to,from,next) => {
     next();
   };
   if (to.matched.some(res => res.meta.requireTest)) {
-    console.log("22");
       if (!getCookie('username')){
         var con = confirm("请登录");
           if(con == true){
@@ -149,19 +148,20 @@ router.beforeEach((to,from,next) => {
               router.go(0);
             }
       }else{
-
         if (to.matched.some(res => res.meta.requireQues)) {
-          var con = confirm("确认用当前账号考试吗？");
-          if(con == true){
-            next();
-          }else{
-            next({
-                path:'/testLogin',
-                query:{redirect:to.fullPath}
-              });
-            router.go(0);
+          if(b == 0){
+            b = b + 1;
+            var con = confirm("确认用当前账号考试吗？");
+            if(con == true){
+              next();
+            }else{
+              next({
+                  path:'/testLogin',
+                  query:{redirect:to.fullPath}
+                });
+              router.go(0);
+            }
           }
-          // res.meta.requireQues = false;
         }else{
           next();
         };
