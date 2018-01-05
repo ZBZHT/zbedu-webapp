@@ -36,7 +36,7 @@
                 <li class="test-li" v-for="item in hotTest">
                         <img :src="item.url">
                         <button class="btn" >
-                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
+                            <router-link :to="'/test/testQuestion/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
                         </button>
@@ -50,7 +50,7 @@
                 <li class="test-li" v-for="item in gradeTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
+                            <router-link :to="'/test/testQuestion/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
                         </button>
@@ -64,7 +64,7 @@
                 <li class="test-li" v-for="item in contentTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <router-link :to="'/testQuestion/' + item.testId + '/title/' + item.title">
+                            <router-link :to="'/test/testQuestion/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
                         </button>
@@ -90,16 +90,19 @@ export default {
         textCenterData:'',
         information:'',
         winner:'',
-       hotTest:'',
-      gradeTest:'',
-      contentTest:'',
-      slides: [],
+        hotTest:'',
+        gradeTest:'',
+        contentTest:'',
+        slides: [],
         inv: 3000,
         styleObject: {
           width: '960px',
           height: '295px'
         }
     }
+  },
+  created(){
+     
   },
   mounted(){
       axios.get("/api/menu/index",{
