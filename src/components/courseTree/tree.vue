@@ -32,6 +32,12 @@
   import bus from '../../assets/js/Bus'
   import Vue from 'vue'
 
+  // var busData= {};
+  // bus.$on('passHeaderNavData',function (msg) {
+  //   busData.model = msg
+  //   console.log(8888)
+  // })
+
   export default {
     name: 'tree',
     props: ['model'],
@@ -39,8 +45,8 @@
       return {
         open: true,
         isFolder: true,
-        open1: false,
-        model:''
+        open1: false
+        // model:''
         // currentModel:''
       }
     },
@@ -68,7 +74,7 @@
       var self = this
       bus.$on('passHeaderNavData',function (msg) {
         self.model = msg
-        console.log(msg)
+        console.log(self.model)
       })
     }
   }
