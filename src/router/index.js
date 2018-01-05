@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index'
 import testCenter from '@/views/testCenter'
-import testQuestion from '@/views/testQuestion'
+import test from '@/views/test'
+import testQuestion from '@/components/testCenter/testQuestion'
+import testAnalysis from '@/components/testCenter/testAnalysis'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
@@ -34,14 +36,35 @@ const routes = [
       component:testCenter
     },
     {
-      path:'/testQuestion/:testId/title/:title',
-      name:'testQuestion',
-      component:testQuestion,
+      path:'/test',
+      name:'test',
+      component:test,
       meta:{
         requireTest:true,
         requireQues:true
-      }
+      },
+      children:[
+        {
+          path:'testQuestion/:testId/title/:title',
+          name:'testQuestion',
+          component:testQuestion
+        },
+        {
+          path:'testAnalysis',
+          name:'testAnalysis',
+          component:testAnalysis
+        }
+      ]
     },
+    // {
+    //   path:'/testQuestion/:testId/title/:title',
+    //   name:'testQuestion',
+    //   component:testQuestion,
+    //   meta:{
+    //     requireTest:true,
+    //     requireQues:true
+    //   }
+    // },
     {
       path: '/course/title/:title',
       name: 'course',
@@ -138,6 +161,7 @@ router.beforeEach((to,from,next) => {
               });
             router.go(0);
           }
+          // res.meta.requireQues = false;
         }else{
           next();
         };
