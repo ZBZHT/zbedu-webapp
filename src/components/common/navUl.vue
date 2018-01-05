@@ -18,7 +18,7 @@
                                         </span>
                                         <div class="drop-right" v-show="item2.children">
                                             <ul>
-                                                <li v-for="item3 in item2.children" @click="sendMsg(item3.title)">
+                                                <li v-for="item3 in item2.children" @click="sendMsg(item3)">
                                                   <router-link :to="{path:'/course' + '/title/'+ item3.title}">
                                                     <a  href="#">{{item3.title}}</a>
                                                   </router-link>
