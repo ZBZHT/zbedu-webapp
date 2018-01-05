@@ -19,14 +19,14 @@
     <span class="title">精品课程</span>
     <div class="best-class">
 
-        <bestClass :bestClassData = "bestClassData"></bestClass>
+        <bestClass :bestClassData = "bestClassData" @sendBestCourseData="receiveBestCourseData"></bestClass>
 
     </div>
 
     <div class="bottom-box">
         <div class="bb-left">
             <span class="bb-span">猜你感兴趣</span>
-            <bottom-left :bottomLeftData = "bottomLeftData"></bottom-left>
+            <bottom-left :bottomLeftData = "bottomLeftData" @sendLeftData="receiveLeftData"></bottom-left>
         </div>
         <div class="bb-middle">
         <span class="title">实战推荐</span>
@@ -40,8 +40,8 @@
                             <img :src="item.url">
                             <div class="mask">
                                 <img @click="toPlayVideo" class="play" src="src/assets/play3.png">
-                                <p @click="toPlayPdf" class="ppv"><span>PPT</span></p>
-                                <p @click="toPlayVideo" class="ppv"><span>Video</span></p>
+                                <p @click="toPlayPdf(item)" class="ppv"><span>PPT</span></p>
+                                <p @click="toPlayVideo(item)" class="ppv"><span>Video</span></p>
                             </div>
 
                         <div class="intro">
@@ -51,7 +51,7 @@
                             {{item.intro}}
                         </div>
                         </div>
-                    <p class="p" @click="sendIndexTitle(item,item.title)"><router-link :to="{path:'/courseNoTree'}">{{item.title}}</router-link></p>
+                    <p class="p" @click="sendIndexTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
                     </a>
                 </li>
               </ul>
@@ -62,8 +62,6 @@
             :page="page"
             :changge="pageFn">
             </mo-paging>
-
-
         </div>
         <div class="bb-right">
             <bottom-right :bottomRightData = "bottomRightData"></bottom-right>
@@ -124,15 +122,15 @@ export default {
                   this.page=val;
                   console.log(val);
               },
-    sendIndexTitle(item,title) {
-      bus.$emit('sendLeftData',item,title)
+    sendIndexTitle(item) {
+      bus.$emit('passBannerLeftData',item)
       // alert(title)
     },
-    toPlayVideo() {
-      this.router.push('/playVideo')
+    toPlayVideo(item) {
+      this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
     },
-    toPlayPdf() {
-      this.router.push('/playPdf')
+    toPlayPdf(item) {
+      this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
     },
     receiveFromSonData (receiveFromSonData){
       this.receiveFromSonData = receiveFromSonData;
@@ -142,7 +140,14 @@ export default {
     receiveFromNavData(msg){
       //传值到课程页
       bus.$emit('passHeaderNavData',msg)
+
      // console.log(msg)
+    },
+    receiveBestCourseData(msg){
+      bus.$emit('passBannerLeftData',msg)
+    },
+    receiveLeftData(msg){
+      bus.$emit('passBannerLeftData',msg)
     }
           },
   mounted(){
