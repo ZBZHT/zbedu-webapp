@@ -46,7 +46,8 @@
   };
   bus.$on('passHeaderNavData',value => {
     busData.theModel = value
-    // console.log(value)
+    // console.log(666)
+    // console.log(busData.theModel)
   });
   bus.$on('passBannerLeftData', (value) => {
     busData.theModel = value
