@@ -3,8 +3,8 @@
 
                 <div class="mask-play-right" v-for="item in bottomLeftData">
                     <img :src="item.url">
-                    <img @click="playBottomLeftVideo" class="play-right" src="src/assets/play3.png">
-                    <p class="p" @click="sendButtomLeftTitle(item,item.title)"><router-link :to="{path:'/courseNoTree'}">{{item.title}}</router-link></p>
+                    <img @click="playBottomLeftVideo(item)" class="play-right" src="src/assets/play3.png">
+                    <p class="p" @click="sendButtomLeftTitle(item)"><router-link :to="{path:'/courseNoTree/'+item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
                 </div>
 
 
@@ -13,7 +13,7 @@
 
 <script>
 import navs from '@/assets/index-data.js'
-import bus from '../../assets/js/Bus'
+
 export default {
   name: 'bottomLeft',
   props :['bottomLeftData'],
@@ -23,11 +23,11 @@ export default {
     }
   },
   methods: {
-    playBottomLeftVideo() {
-      this.$router.push('/playVideo')
+    playBottomLeftVideo(item) {
+      this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
     },
-    sendButtomLeftTitle(item,title) {
-      bus.$emit('sendLeftData',item,title)
+    sendButtomLeftTitle(item) {
+      this.$emit('sendLeftData',item)
     }
   }
 }
