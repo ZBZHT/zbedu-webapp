@@ -5,12 +5,12 @@
             <img :src="item.url">
             <div class="mask">
                 <img @click="playBestVideo" src="src/assets/play3.png">
-                <p class="ppv" @click="playBestPdf"><span>PPT</span></p>
-                <p class="ppv" @click="playBestVideo"><span>Video</span></p>
+                <p class="ppv" @click="playBestPdf(item)"><span>PPT</span></p>
+                <p class="ppv" @click="playBestVideo(item)"><span>Video</span></p>
             </div>
         </div>
         <p class="p" @click="sendBestTitle(item,item.title)">
-          <router-link :to="{path:'/courseNoTree'}">{{item.title}}</router-link>
+          <router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link>
         </p>
     </div>
 </div>
@@ -18,7 +18,7 @@
 
 <script>
       import axios from 'axios'
-      import bus from '../../assets/js/Bus'
+      // import bus from '../../assets/js/Bus'
 export default {
   name: 'bestClass',
   props:['bestClassData'],
@@ -28,15 +28,15 @@ export default {
     }
   },
   methods: {
-    sendBestTitle(item,title){
-      bus.$emit('sendLeftData',item,title)
+    sendBestTitle(item){
+      this.$emit('sendBestCourseData',item)
       // alert(title)
     },
-    playBestVideo () {
-      this.$router.push('/playVideo')
+    playBestVideo (item) {
+      this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
     },
-    playBestPdf () {
-      this.$router.push('/playPdf')
+    playBestPdf (item) {
+      this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
     }
   },
   mounted(){
