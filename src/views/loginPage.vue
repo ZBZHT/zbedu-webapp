@@ -31,9 +31,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             }
         },
         mounted(){
-            if(router.go(-1)){
-                this.$router.go(0);
-            }
+            
         },
         methods: {
             login(){
@@ -72,7 +70,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     }
 </script>
 
-<style>
+<style scoped>
 .user{
     min-width:960px;
     margin:0 auto;

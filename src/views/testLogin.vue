@@ -71,7 +71,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     }
 </script>
 
-<style>
+<style scoped>
 .user{
     min-width:960px;
     margin:0 auto;
