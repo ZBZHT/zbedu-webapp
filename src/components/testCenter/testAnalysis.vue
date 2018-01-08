@@ -1,12 +1,12 @@
 <template>
 <div class="rightBox">
-        考试分析
+        考试分析。。。。。
 </div>
 </template>
 
 <script>
 import axios from 'axios'
- 
+
 export default {
   name: 'textQuestion',
   data () {
