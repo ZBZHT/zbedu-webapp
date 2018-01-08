@@ -6,11 +6,11 @@
                 <p class="titleP">{{$route.params.title}}考试</p>
             </div>
             <div class="infor">
-                <p>开始时间</p>
+                <p>开始时间。。。。。。。。。。。。。</p>
                 <p>{{hours}}:{{minute}}</p>
             </div>
             <div class="infor">
-                <p>状态</p>
+                <p>状态。。。。</p>
                 <p>正在考试</p>
             </div>
             <div class="infor">
@@ -72,7 +72,7 @@
 
 <script>
 import axios from 'axios'
- 
+
 export default {
   name: 'textQuestion',
   data () {
@@ -183,7 +183,7 @@ export default {
             }
         },
   computed:{
-      
+
         },
   components:{}
 }
