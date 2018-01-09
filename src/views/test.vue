@@ -3,7 +3,7 @@
     <div class="leftBox">
         <p>{{user}}</p>
         <ul class="leftItem">
-            <li class="leftLi" v-for="(item,index) in leftBox" 
+            <li class="leftLi" v-for="(item,index) in leftBox"
                 @click="rightAppear(index)"
                 :class="currIndex === index ? 'active' : '' ">
                 {{item.li}}
@@ -32,9 +32,12 @@
             </div>
             <div class="content">
                 <div class="data">
-                    <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">{{$route.params.title}}开始考试</button>
+                    <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">
+                        {{$route.params.title}}开始考试
+                    </button>
                     <div class="desc" v-for="(item,index) in textQuestionData.question">
                         <span class="desctitle" :class="{setRed : index === errorIndex - 1 && submits == true}">
+                            <a @click="tip(index)">标记</a>
                             {{item.num}}.{{item.desc}}
                         </span>
                         <ul class="ans">
@@ -59,16 +62,12 @@
                 <div class="number">
                     <ul>
                         <li v-for="(item,index) in textQuestionData.question">
-                            <a>{{ index + 1 }}</a>
+                            <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                         </li>
                     </ul>
                     <div class="status">
-                        <div>
-                            <p></p>
-                            <p>未答题</p>
-                        </div>
-                        <div>
-                            <p></p>
+                        <div class="do">
+                            <p class="doP isCheck">{{isCheckNum}}</p>
                             <p>已答题</p>
                         </div>
                         <div>
@@ -81,7 +80,7 @@
             </div>
         </div>
         <div class="testAnalysis" v-show="currIndex === 1">aaa</div>
-        <div class="userMessage" v-show="currIndex === 2">bbb</div>    
+        <div class="userMessage" v-show="currIndex === 2">bbb</div>
     </div>
 </div>
 </template>
@@ -89,7 +88,7 @@
 <script>
 import axios from 'axios'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
- 
+
 export default {
   name: 'test',
   data () {
@@ -100,8 +99,8 @@ export default {
             {li:'用户管理'}
         ],
         textQuestionData:'',
-        minutes:0,
-        seconds:4,
+        minutes:120,
+        seconds:0,
         dispear:true,
         answer:true,
         myAns:'',
@@ -117,7 +116,12 @@ export default {
         minute:'',
         currIndex:0,
         user:'',
-        time:0
+        time:0,
+        isCheck:'',
+        isCheckNum:0,
+        isCheckArr:{},
+        length:20,
+        classItem:{}
     }
   },
   mounted(){
@@ -162,13 +166,12 @@ export default {
                     }else{
                         _this.seconds -= 1
                     };
-                    console.log(_this.seconds);
                     if(_this.minutes == 0 && _this.seconds == 0){
                         window.clearInterval(time);
                         alert("时间到，已帮您提交");
                         _this.submit();
                     };
-                    
+
 
                 },1000);
                 _this.dispear = !_this.dispear;
@@ -176,7 +179,7 @@ export default {
                 _this.hours = _this.nowTime.getHours();
                 _this.minute = _this.nowTime.getMinutes();
 
-                
+
             },
             getTest(e){
                 axios.get("/api/menu/"+e,{
@@ -201,8 +204,15 @@ export default {
                 this.myAns = answer;
                 this.questionIndex = index;
                 console.log("11111"+id+answer);
-                console.log(this.textQuestionData.question.length);
+                console.log("==="+this.myAns);
+                if(this.myAns !== ''){
+                    //  this.isCheck = index + 1;
+                    this.isCheckNum += 1;
+                    //  this.isCheckArr.push(this.isCheck);
+                    this.$set(this.isCheckArr,index,true);
 
+                }
+                this.length = this.textQuestionData.question.length;
                 for(var i = 0;i < this.textQuestionData.question.length;i++){
                     if(id == this.textQuestionData.question[i].name){
                         if(answer == this.textQuestionData.question[i].answer){
@@ -215,6 +225,9 @@ export default {
                         }
                     }
                 }
+            },
+            tip(index){
+                this.$set(this.classItem,index,true)
             },
             rightAppear (index) {
                 this.currIndex = index;
@@ -241,9 +254,9 @@ a:hover{
 }
 .question{
     min-width:1200px;
-    min-width:800px;
+    min-width:700px;
     width:1200px;
-    height:800px;
+    height:700px;
     margin:0 auto;
     border:1px solid #000;
     display:flex;
@@ -271,7 +284,7 @@ a:hover{
 }
 .active{
     color:#f00;
-} 
+}
 .rightBox{
     width:1050px;
     height:100%;
@@ -301,9 +314,6 @@ a:hover{
     top:0;
     left:0;
 }
-.testItem{
-
-}
 .title{
     width:100%;
     height:150px;
@@ -327,15 +337,23 @@ a:hover{
     display:flex;
 }
 .data{
-    width:810px;
-    height:650px;
+    width:990px;
+    height:550px;
     border:1px solid #000;
     overflow:auto;
     text-align:left;
+    padding:20px;
+    box-sizing:border-box;
+}
+.dispear{
+    display:none;
+}
+.tip{
+    background:yellow;
 }
 .number{
     width:310px;
-    height:650px;
+    height:550px;
     border:1px solid #000;
     position:relative;
 }
@@ -352,8 +370,19 @@ a:hover{
     padding-top:36%;
     box-sizing:border-box;
 }
+.isCheck{
+    background:#953033;
+    color:#fff;
+}
 .status{
     display:flex;
+    margin-top:30px;
+}
+.do{
+    margin-left:30px;
+}
+.doP{
+    border:1px solid #000;
 }
 .desc{
     margin-top:15px;
