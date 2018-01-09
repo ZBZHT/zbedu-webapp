@@ -36,7 +36,7 @@
                 <li class="test-li" v-for="item in hotTest">
                         <img :src="item.url">
                         <button class="btn" >
-                            <router-link :to="'/test/testQuestion/' + item.testId + '/title/' + item.title">
+                            <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
                         </button>
@@ -50,7 +50,7 @@
                 <li class="test-li" v-for="item in gradeTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <router-link :to="'/test/testQuestion/' + item.testId + '/title/' + item.title">
+                            <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
                         </button>
@@ -64,7 +64,7 @@
                 <li class="test-li" v-for="item in contentTest">
                         <img :src="item.url">
                         <button class="btn">
-                            <router-link :to="'/test/testQuestion/' + item.testId + '/title/' + item.title">
+                            <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
                         </button>
