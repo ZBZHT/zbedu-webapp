@@ -4,8 +4,6 @@ import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index'
 import testCenter from '@/views/testCenter'
 import test from '@/views/test'
-import testQuestion from '@/components/testCenter/testQuestion'
-import testAnalysis from '@/components/testCenter/testAnalysis'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
@@ -36,25 +34,13 @@ const routes = [
       component:testCenter
     },
     {
-      path:'/test',
+      path:'/test/:testId/title/:title',
       name:'test',
       component:test,
       meta:{
         requireTest:true,
         requireQues:true
-      },
-      children:[
-        {
-          path:'testQuestion/:testId/title/:title',
-          name:'testQuestion',
-          component:testQuestion
-        },
-        {
-          path:'testAnalysis',
-          name:'testAnalysis',
-          component:testAnalysis
-        }
-      ]
+      }
     },
     // {
     //   path:'/testQuestion/:testId/title/:title',

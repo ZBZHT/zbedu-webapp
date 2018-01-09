@@ -4,8 +4,8 @@
         <div class="dropdown">
             <div class="dropdown-toggle">
                 <ul>
-                    <li class="dr-li" v-for="item in navData">
-                        <router-link :to="'/' + item.name" class="title">
+                    <li class="dr-li" v-for="(item,index) in navData" @click="goto(item.title)">
+                        <router-link :to="'/' + item.name" class="title" :class="isSelect === item.title ? 'active' : '' ">
                             {{item.title}}
                         </router-link>
                         <div class="dropdown-menu" v-show="item.children">
@@ -47,16 +47,24 @@ export default {
   props:['navData'],
   data () {
     return {
-      msg: 'navUl'
+      msg: 'navUl',
+      isSelect:''
     }
   },
   mounted(){
-
+    this.isSelect = sessionStorage.getItem("isSelect");
+    if(this.$route.path == '/'){
+        this.isSelect = '';
+    }
   },
   methods: {
     sendMsg: function (item) {
       this.$emit('sendHeaderNavData',item)
       // alert(title)
+    },
+    goto(title){
+        this.isSelect = title;
+        sessionStorage.setItem('isSelect',this.isSelect);
     }
   }
 }
@@ -81,8 +89,8 @@ a:hover{
     text-decoration: none;
     color:#f00;
 }
-.dropdown{
-
+.active{
+    color:#f00;
 }
 .dropdown-toggle>ul{
     display:flex;
