@@ -37,7 +37,9 @@
                     </button>
                     <div class="desc" v-for="(item,index) in textQuestionData.question">
                         <span class="desctitle" :class="{setRed : index === errorIndex - 1 && submits == true}">
-                            <a @click="tip(index)">标记</a>
+                            <a @click="tip(index)">
+                                <img src="../assets/tip.png">
+                            </a>
                             {{item.num}}.{{item.desc}}
                         </span>
                         <ul class="ans">
@@ -70,8 +72,12 @@
                             <p class="doP isCheck">{{isCheckNum}}</p>
                             <p>已答题</p>
                         </div>
-                        <div>
-                            <p></p>
+                        <div class="do">
+                            <p class="doP">{{length - isCheckNum}}</p>
+                            <p>未答题</p>
+                        </div>
+                        <div class="do">
+                            <p class="doP tip"></p>
                             <p>标记题</p>
                         </div>
                     </div>
@@ -79,8 +85,8 @@
                 </div>
             </div>
         </div>
-        <div class="testAnalysis" v-show="currIndex === 1">aaa</div>
-        <div class="userMessage" v-show="currIndex === 2">bbb</div>
+        <div class="testAnalysis" v-show="currIndex === 1">考试分析</div>
+        <div class="userMessage" v-show="currIndex === 2">用户管理</div>
     </div>
 </div>
 </template>
@@ -121,7 +127,8 @@ export default {
         isCheckNum:0,
         isCheckArr:{},
         length:20,
-        classItem:{}
+        classItem:{},
+        answerArr:[]
     }
   },
   mounted(){
@@ -200,8 +207,19 @@ export default {
                 });
             },
             myAnswer:function(id,answer,index){
+                if(id == this.myId){
+                    this.answerArr.push(answer);
+                    console.log("--"+this.answerArr);
+                    console.log("---"+this.answerArr.length);
+                    this.myAns = this.$set(this.answerArr,this.answerArr.length - 1,answer);
+                    console.log("!!!!"+this.myAns);
+                    this.sorce -= 5 ;
+                }else{
+                    this.myAns = answer;
+                }
                 this.myId = id;
-                this.myAns = answer;
+                
+                
                 this.questionIndex = index;
                 console.log("11111"+id+answer);
                 console.log("==="+this.myAns);
@@ -214,14 +232,14 @@ export default {
                 }
                 this.length = this.textQuestionData.question.length;
                 for(var i = 0;i < this.textQuestionData.question.length;i++){
-                    if(id == this.textQuestionData.question[i].name){
-                        if(answer == this.textQuestionData.question[i].answer){
+                    if(this.myId == this.textQuestionData.question[i].name){
+                        if(this.myAns == this.textQuestionData.question[i].answer){
                             this.sorce += 5;
                             console.log(this.sorce);
                         }else{
                             this.error.push(this.textQuestionData.question[i].num);
                             this.errorIndex = this.textQuestionData.question[i].num;
-                                this.setRed = true;
+                            //    this.setRed = true;
                         }
                     }
                 }
@@ -350,6 +368,7 @@ a:hover{
 }
 .tip{
     background:yellow;
+    height:18px;
 }
 .number{
     width:310px;
@@ -402,7 +421,7 @@ a:hover{
     display:none;
 }
 .ans li{
-    margin-right:8px;
+    margin-left:27px;
 }
 .ans li :hover{
     cursor:pointer;
@@ -417,7 +436,7 @@ a:hover{
     left:0;
     cursor:pointer;
 }
-.setRed{
+/*.setRed{
     color:red;
-}
+}*/
 </style>
