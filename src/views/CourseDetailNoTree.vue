@@ -5,7 +5,7 @@
     </div>
     <div class="content-box">
       <div class="right-box">
-        <p>{{ currentCourseData.title }}</p>
+        <p class="courseTitle">{{ currentCourseData.title }}</p>
         <div class="detail-box">
           <ul class="nav-box">
             <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -17,55 +17,59 @@
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
-            <div class="text">
+            <div class="comment-box">
               <div v-for="(name,index) in arr" >
-                <p class="comment">{{name.text}}</p>
-                <p class="all">
+                  <div class="text-box">
+                    <p>用户名：aaaa</p>
+                    <p>{{name.text}}</p>
+                    <!--<span v-on:click="dele(index)">❎</span>-->
+                  </div>
+                  <div class="msg-box">
+                    <p class="time-box">时间：{{ currentdate }}</p>
+                    <p>源自：{{currentCourseData.title}}</p>
+                    <p class="all">
 
-                  <input
-                    type="radio"
-                    name="nameType"
-                    value="0" v-model="score" checked="" disabled="disabled"/>
-                  <span>★</span>
-                  <input
-                    type="radio"
-                    name="nameType"
-                    value="1" v-model="score" checked="" disabled="disabled"/>
-                  <span>★</span>
-                  <input
-                    type="radio"
-                    name="nameType"
-                    value="2" v-model="score" checked="" disabled="disabled"/>
-                  <span>★</span>
-                  <input
-                    type="radio"
-                    name="nameType"
-                    value="3" v-model="score" checked="" disabled="disabled"/>
-                  <span>★</span>
-                  <input
-                    type="radio"
-                    name="nameType"
-                    value="4" v-model="score" checked="" disabled="disabled"/>
-                  <span>★</span>
-                  <input
-                    type="radio"
-                    name="nameType"
-                    value="5" v-model="score" checked="" disabled="disabled"/>
-                  <span>★</span>
+                      <input
+                        type="radio"
+                        name="nameType"
+                        value="0" v-model="score" checked="" disabled="disabled"/>
+                      <span>★</span>
+                      <input
+                        type="radio"
+                        name="nameType"
+                        value="1" v-model="score" checked="" disabled="disabled"/>
+                      <span>★</span>
+                      <input
+                        type="radio"
+                        name="nameType"
+                        value="2" v-model="score" checked="" disabled="disabled"/>
+                      <span>★</span>
+                      <input
+                        type="radio"
+                        name="nameType"
+                        value="3" v-model="score" checked="" disabled="disabled"/>
+                      <span>★</span>
+                      <input
+                        type="radio"
+                        name="nameType"
+                        value="4" v-model="score" checked="" disabled="disabled"/>
+                      <span>★</span>
+                      <!--<input-->
+                      <!--type="radio"-->
+                      <!--name="nameType"-->
+                      <!--value="5" v-model="score" checked="" disabled="disabled"/>-->
+                      <!--<span>★</span>-->
 
-                </p>
-                <span>{{ arrData[score-1]}}</span>
-                <span v-on:click="dele(index)">❎</span>
-                <p class="time-box">时间：{{ currentdate }}</p>
-
+                    </p>
+                    <p>{{ arrData[score]}}</p>
+                  </div>
                 <hr>
               </div>
-
             </div>
             <textarea type="text" v-model="text"/>
-            <button @click="submitComments">提交评论</button>
-            <div id="shoplist">
-              <span>请评价：</span>
+
+            <div class="shopList">
+              <p>请评价：</p>
               <p class="all">
 
                 <input
@@ -93,16 +97,17 @@
                   name="b"
                   value="4" v-model="inputdata" />
                 <span>★</span>
-                <input
-                  type="radio"
-                  name="b"
-                  value="5" v-model="inputdata" />
-                <span>★</span>
+                <!--<input-->
+                  <!--type="radio"-->
+                  <!--name="b"-->
+                  <!--value="5" v-model="inputdata" />-->
+                <!--<span>★</span>-->
 
               </p>
-              <span>{{ arrData[inputdata-1]}}</span>
+              <p>{{ arrData[inputdata]}}</p>
+              <br>
+              <button class="commit-btn" @click="submitComments">提交评论</button>
             </div>
-            <!--<textarea name="" id="" cols="30" rows="10">各种评价</textarea>-->
           </div>
         </div>
       </div>
@@ -164,9 +169,9 @@
           this.$router.push({path: '/playVideo'})
         }
       },
-      dele: function (index) {
-        this.arr.splice(index, 1)
-      },
+      // dele: function (index) {
+      //   this.arr.splice(index, 1)
+      // },
       submitComments () {
         if (this.text === '') {
           alert('评论不能为空')
@@ -236,7 +241,7 @@
     /*margin: 0 150px;*/
 
   }
-  .right-box p{
+  .right-box .courseTitle{
     font-size: 20px;
     font-weight: bold;
     /*background: pink;*/
@@ -279,7 +284,6 @@
   .right-box .nav-box .fontColor{
     color: red;
   }
-
   .right-box .nav-box li:first-child{
     margin-left: 23%;
   }
@@ -293,17 +297,18 @@
     padding: 130px 100px;
   }
 
-  .right-box .course-box p{
+  .right-box .course-box .introduce{
     width: 500px;
     font-size: 16px;
     font-weight: normal;
     /*background: red;*/
     word-wrap: break-word;
   }
+
   .right-box .appraise-box{
     width: 900px;
-    height: 500px;
     margin-left: 50px;
+    margin-bottom: 100px;
     position: relative;
     top: 20px;
     background: lightyellow;
@@ -313,53 +318,74 @@
     font-size: 16px;
     text-align: left;
     padding: 10px;
-    margin: 0 30px 50px;
-    /*background: red;*/
+    margin: 0 30px;
+    /*background: pink;*/
     border-bottom: 1px solid #ccc;
   }
-  /*.right-box .appraise-box textarea{*/
-    /*width: 600px;*/
-    /*height: 300px;*/
-    /*autofocus: autofocus;*/
-    /*overflow: hidden;*/
-  /*}*/
-  .tree-menu{
-    background: pink;
-  }
 
-  .appraise-box textarea{
-    background: deeppink;
+  .right-box .appraise-box textarea{
+    margin-top: 20px;
     height: 60px;
-    width: 80%;
+    width: 60%;
     font-size: 20px;
+    outline: none;
   }
-  .appraise-box .text{
-    background: lightsalmon;
+  .right-box .detail-box .appraise-box .comment-box{
+    margin: 0 50px 0 50px;
+    /*background: hotpink;*/
   }
-  .appraise-box .text .comment{
-    font-size: 20px;
-    background: palegreen;
+  .right-box .appraise-box .comment-box .text-box{
+    padding-top: 10px;
+    /*background: red;*/
   }
-  .appraise-box .text .all{
-    height: 40px;
-    background: white;
+  .right-box .appraise-box .text-box p{
+    font-size: 14px;
+    font-weight: normal;
+    text-align: left;
+    margin-bottom: 10px;
+  }
+  .right-box .comment-box .msg-box{
+    /*background: pink;*/
+    height: 20px;
+  }
+  .right-box .appraise-box .comment-box .msg-box p{
+    display: inline-block;
+    float: left;
+    font-size: 12px;
+    font-weight: normal;
+    margin-left: 20px;
+    color: #93999F;
+  }
+  .right-box .appraise-box .comment-box .msg-box p:first-child{
+    margin-left: 0;
+  }
+  .right-box .appraise-box .shopList{
+    margin-top: 20px;
+    text-align: center;
+  }
+  .right-box .appraise-box .shopList p{
     display: inline-block;
   }
-  .appraise-box .text .time-box{
-    text-align: left;
-    font-size: 20px;
-    font-weight: normal;
-    margin-left: 50px;
-    background: lightseagreen;
+  .right-box .appraise-box .shopList p:last-child{
+    margin-left: 30px;
+  }
+  .right-box .appraise-box .shopList .commit-btn{
+    width: 60px;
+    height: 30px;
+    outline: none;
+    position: relative;
+    margin-top: 20px;
+    /*background: red;*/
+    cursor: pointer;
+  }
+  .right-box .appraise-box .shopList .commit-btn:active{
+    top: 2px;
   }
 
-  .appraise-box .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
+  .right-box .appraise-box .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
 
-  .appraise-box .all>input:nth-of-type(1),
 
-  .appraise-box .all>span:nth-of-type(1){display:none;}
-
-  .appraise-box .all>span{font-size:1em;color:gold;
+  .right-box .appraise-box .all>span{font-size:1em;color:gold;
 
     -webkit-transition:color
     .2s;
@@ -367,15 +393,8 @@
     transition:color
     .2s;
   }
-  .appraise-box .all>input:checked~span{color:#666;}
+  .right-box .appraise-box .all>input:checked~span{color:#666;}
 
-  .appraise-box .all>input:checked+span{color:gold;}
+  .right-box .appraise-box .all>input:checked+span{color:gold;}
 
-
-
-
-
-  /*.noneLine{*/
-  /*border-bottom: 1px solid #fff;*/
-  /*}*/
 </style>
