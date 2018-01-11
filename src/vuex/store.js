@@ -9,7 +9,12 @@ const state ={
 const actions ={
     
 }
-
+const mutations ={
+    
+}
+const getter ={
+    
+}
 export default new Vuex.Store({
     state,
     getter,
