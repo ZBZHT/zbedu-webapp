@@ -1,58 +1,50 @@
 <template>
+<div>
   <li class="listItem">
     <span @click="toggle">
      <i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>
      <i v-if="!isInclude" class="icon"></i>
-     <a href="#" @click="toFather(model.title)">{{ model.title }}</a>
+     <a href="#" >{{course.title}}</a>
     </span>
     <ul class="son-box" v-show="open">
-      <li v-for="(item,index) in model.children" v-if="model.children&&model.children.length" class="sonListItem">
+      <li v-for="item in course.children" v-if="item" class="sonListItem">
         <span @click="toggle1">
-         <i v-if="item.children&&item.children.length" class="icon" :class="[open1 ? 'folder-open': 'folder']"></i>
+         <i v-if="item" class="icon" :class="[open1 ? 'folder-open': 'folder']"></i>
          <i v-if="!isInclude" class="icon"></i>
 
-         <a href="#" @click="toFather(item,index)">{{ item.title }}</a>
+         <a href="#" >{{item.title}}</a>
 
         </span>
-        <ul class="grandson-box" v-show="open1" v-if="item.children && item.children.length">
-          <li class="grandsonListItem" v-for="(item1,index) in item.children">
+        <ul class="grandson-box" v-show="open1" v-if="item">
+          <li class="grandsonListItem" v-for="item2 in item.children">
             <span>
-             <i v-if="item1.children&&item.children.length"></i>
-             <a href="#" @click="toFather(item1,index)">{{ item1.title }}</a>
+             <i v-if="item && item2"></i>
+             <a href="#" @click="sendMsg(item2)">{{item2.title}}</a>
             </span>
           </li>
         </ul>
       </li>
-
-
     </ul>
   </li>
+</div>
 </template>
 <script>
-  import bus from '../../assets/js/Bus'
   import Vue from 'vue'
-
-  // var busData= {};
-  // bus.$on('passHeaderNavData',function (msg) {
-  //   busData.model = msg
-  //   console.log(8888)
-  // })
 
   export default {
     name: 'tree',
-    props: ['model'],
     data() {
       return {
         open: true,
         isFolder: true,
-        open1: false
-        // model:''
-        // currentModel:''
-      }
+        open1: false,
+        isInclude:true
+              }
     },
-    computed: {
-      isInclude: function() {
-        return this.model.children && this.model.children.length
+    computed:{
+      
+      course(){
+          return this.$store.state.course;
       }
     },
     methods: {
@@ -66,20 +58,17 @@
           this.open1 = !this.open1
         }
       },
-      toFather (currentData,index) {
-        this.$emit('sendTitle',currentData)
+      sendMsg(item){
+        this.$store.commit('noTreeTitle',item);
       }
+
     },
     mounted () {
-      var self = this
-      bus.$on('passHeaderNavData',function (msg) {
-        self.model = msg
-        console.log(self.model)
-      })
+
     }
   }
 </script>
-<style>
+<style scoped>
   a{
     color: #fff;
     text-decoration: none;
