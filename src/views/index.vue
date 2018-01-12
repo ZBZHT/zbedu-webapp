@@ -1,12 +1,12 @@
 <template>
   <div id="app" class="container">
     <div class="nav">
-        <navgation-head @sendNavData="receiveFromNavData"></navgation-head>
+        <navgation-head></navgation-head>
     </div>
     <div class="banner">
         <div class="left-menu">
 
-            <banner-left :bannerLeftData = "bannerLeftData" @sendLeftData = 'receiveFromSonData' :currentBannerLeftData = currentBannerLeftData></banner-left>
+            <banner-left :bannerLeftData = "bannerLeftData"></banner-left>
 
         </div>
         <div class="rightbox">
@@ -19,14 +19,14 @@
     <span class="title">精品课程</span>
     <div class="best-class">
 
-        <bestClass :bestClassData = "bestClassData" @sendBestCourseData="receiveBestCourseData"></bestClass>
+        <bestClass :bestClassData = "bestClassData"></bestClass>
 
     </div>
 
     <div class="bottom-box">
         <div class="bb-left">
             <span class="bb-span">猜你感兴趣</span>
-            <bottom-left :bottomLeftData = "bottomLeftData" @sendLeftData="receiveLeftData"></bottom-left>
+            <bottom-left :bottomLeftData = "bottomLeftData"></bottom-left>
         </div>
         <div class="bb-middle">
         <span class="title">实战推荐</span>
@@ -51,7 +51,7 @@
                             {{item.intro}}
                         </div>
                         </div>
-                    <p class="p" @click="sendIndexTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
+                    <p class="p"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
                     </a>
                 </li>
               </ul>
@@ -79,7 +79,6 @@ import bestClass from '@/components/index/bestClass'
 import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
 import bottomRight from '@/components/index/bottomRight'
-import bus from '../assets/js/Bus'
 
 export default {
   name: 'index',
@@ -95,7 +94,6 @@ export default {
       bottomRightData:'',
       bannerLeftData:'',
       imgArray:'',
-      currentBannerLeftData: '',
       total:'',//总信息数
       size:6,//每页显示信息个数不传默认6
       page:1,//当前页码
@@ -118,38 +116,17 @@ export default {
       },
   methods:{
               //页码切换执行方法
-              pageFn(val){
-                  this.page=val;
-                  console.log(val);
-              },
-    sendIndexTitle(item) {
-      bus.$emit('passBannerLeftData',item)
-      // alert(title)
-    },
-    toPlayVideo(item) {
-      this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
-    },
-    toPlayPdf(item) {
-      this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
-    },
-    receiveFromSonData (receiveFromSonData){
-      this.receiveFromSonData = receiveFromSonData;
-      //传值到课程页
-      bus.$emit('passBannerLeftData', receiveFromSonData);
-    },
-    receiveFromNavData(msg){
-      //传值到课程页
-      bus.$emit('passHeaderNavData',msg)
-
-     // console.log(msg)
-    },
-    receiveBestCourseData(msg){
-      bus.$emit('passBannerLeftData',msg)
-    },
-    receiveLeftData(msg){
-      bus.$emit('passBannerLeftData',msg)
-    }
-          },
+          pageFn(val){
+            this.page=val;
+            console.log(val);
+        },
+          toPlayVideo(item) {
+            this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
+        },
+          toPlayPdf(item) {
+            this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
+        },
+  },
   mounted(){
 
         axios.get("/api/menu/index",{
