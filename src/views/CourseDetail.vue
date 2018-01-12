@@ -27,41 +27,40 @@
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
             <div class="comment-box">
-              <div v-for="(name,index) in arr" >
+              <div v-for="(person,index) in personMsg" >
                 <div class="text-box">
-                  <p>用户名：aaaa</p>
-                  <p>{{name.text}}</p>
+                  <p>用户名：<a href="#">{{ person.user }}</a></p>
+                  <p>{{person.comment}}</p>
                   <!--<span v-on:click="dele(index)">❎</span>-->
                 </div>
                 <div class="msg-box">
-                  <p class="time-box">时间：{{ currentdate }}</p>
-                  <p>源自:</p>
+                  <p class="time-box">时间：{{ person.commentTime }}</p>
                   <p class="all">
-
+                    评分：
                     <input
                       type="radio"
                       name="nameType"
-                      value="0" v-model="score" checked="" disabled="disabled"/>
+                      value="0" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                     <span>★</span>
                     <input
                       type="radio"
                       name="nameType"
-                      value="1" v-model="score" checked="" disabled="disabled"/>
+                      value="1" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                     <span>★</span>
                     <input
                       type="radio"
                       name="nameType"
-                      value="2" v-model="score" checked="" disabled="disabled"/>
+                      value="2" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                     <span>★</span>
                     <input
                       type="radio"
                       name="nameType"
-                      value="3" v-model="score" checked="" disabled="disabled"/>
+                      value="3" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                     <span>★</span>
                     <input
                       type="radio"
                       name="nameType"
-                      value="4" v-model="score" checked="" disabled="disabled"/>
+                      value="4" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                     <span>★</span>
                     <!--<input-->
                     <!--type="radio"-->
@@ -70,7 +69,17 @@
                     <!--<span>★</span>-->
 
                   </p>
-                  <p>{{ arrData[score]}}</p>
+                  <p>{{ arrData[person.courseStarNum]}}</p>
+                  <p class="replyNum" @click="wantReply(index)"><a href="#">回复</a></p>
+                </div>
+                <div class="reply-box" v-show="isAppearCommentBox">
+                  <ul>
+                    <li v-for="(item,index) in replyArr">{{index + item.replyMsg }}
+                      <span v-on:click="dele(index)">❎</span>
+                    </li>
+                  </ul>
+                  <textarea type="text" v-model="replyText"></textarea>
+                  <button @click="submitReply(index)">提交回复</button>
                 </div>
                 <hr>
               </div>
@@ -129,6 +138,7 @@
   import navgationHead from '@/components/common/navgationHead'
   import myTree from '@/components/courseTree/tree'
   import bus from '../assets/js/Bus'
+  import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   var i=0;
   var busData = {
   };
@@ -146,6 +156,7 @@
     name: 'user',
     data () {
       return {
+        user:'',
         currentIndex: 0,
         appraiseMsg: '全部评价',
         line: true,
@@ -154,14 +165,17 @@
         theModel: busData.theModel,
         subtitle:busData.subtitle,
         currentMsg:'',
-        text: '',
-        arr: [],
-        timearr:[],
+        personMsg:[],
+        comment:'',
+        commentTime:'',
+        courseStarNum:'',
         inputdata: 0,
         arrData: ['一星', '两星', '三星', '四星', '五星'],
         currentdate: '',
         nanmeType: '',
-        score: 0
+        isAppearCommentBox: false,
+        replyArr:[],
+        replyMsg:''
       }
     },
     watch:{
@@ -181,40 +195,60 @@
         this.currentMsg = receiveCurrentData
         // console.log(this.currentMsg)
       },
+      dele: function (index) {
+        this.replyArr.splice(index, 1)
+      },
       submitComments () {
         if (this.text === '') {
           alert('评论不能为空')
         } else {
-          this.arr.push({text: this.text})
+          var date = new Date()
+          var seperator1 = '-'
+          var seperator2 = ':'
+          var month = date.getMonth() + 1
+          var strDate = date.getDate()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + ' ' + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds()
+          this.personMsg.push({
+            comment:this.text,
+            commentTime:this.currentdate,
+            courseStarNum:this.inputdata,
+            user:this.user
+          })
+
+          this.nameType = ++i
+          // this.score = this.inputdata
+
+
           this.text = ''
           console.log(this.arr)
         }
-        var date = new Date()
-        var seperator1 = '-'
-        var seperator2 = ':'
-        var month = date.getMonth() + 1
-        var strDate = date.getDate()
-        if (month >= 1 && month <= 9) {
-          month = '0' + month
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = '0' + strDate
-        }
-        this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-          + ' ' + date.getHours() + seperator2 + date.getMinutes()
-          + seperator2 + date.getSeconds()
-        // this.arr.push({time:this.currentdate})
-        this.nameType = ++i
-        this.score = this.inputdata
+
         // alert(this.currentdate)
+      },
+      wantReply(num){
+        // alert(num)
+        this.isAppearCommentBox = !this.isAppearCommentBox
+      },
+      submitReply(aa) {
+        // alert(222)
+        this.replyArr.push({replyMsg:this.replyText})
       }
     },
     mounted(){
+      this.user = getCookie('username');
     },
     watch: {
-      inputdata (value) {
-        console.log(value)
-      }
+      // inputdata (value) {
+      //   console.log(value)
+      // }
     },
     components: {
       navgationHead,myTree
@@ -371,6 +405,7 @@
   }
   .appraise-box .comment-box{
     margin: 0 50px 0 50px;
+    background: hotpink;
   }
   .appraise-box .text-box{
     padding-top: 10px;
@@ -383,8 +418,9 @@
     margin-bottom: 10px;
   }
   .comment-box .msg-box{
-    /*background: pink;*/
+    background: pink;
     height: 20px;
+    line-height: 20px;
   }
   .comment-box .msg-box p{
     display: inline-block;
@@ -397,6 +433,27 @@
   .comment-box .msg-box p:first-child{
     margin-left: 0;
   }
+
+  .comment-box .msg-box .replyNum a{
+    margin-left: 30px;
+    color: #93999F;
+  }
+  .comment-box .msg-box .replyNum a:hover{
+    color: green;
+  }
+  .comment-box .reply-box{
+    /*width: 500px;*/
+    /*height: 100px;*/
+    margin: 0 auto;
+    background: linen;
+    text-align: center;
+  }
+  .comment-box .reply-box textarea{
+    width: 300px;
+    height: 60px;
+    margin-top: 0;
+  }
+
   .appraise-box .shopList{
     margin-top: 20px;
     text-align: center;
