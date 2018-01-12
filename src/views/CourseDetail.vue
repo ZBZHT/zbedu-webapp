@@ -1,18 +1,16 @@
 <template>
   <div>
+
     <div class="header-box">
       <navgation-head></navgation-head>
     </div>
+
     <div class="content-box">
       <div class="tree-box">
-        <div >
-          <ul>
-            <my-tree class="tree-menu" :model="theModel" @sendTitle="receiveCurrentData"></my-tree>
-          </ul>
-        </div>
-      </div>
-      <div class="right-box">
-        <p>{{ subtitle }}</p>
+        <tree></tree>
+    </div>
+        <div class="right-box">
+        <p>111{{ noTree.title }}</p>
         <p>{{this.currentdate }}</p>
         <div class="detail-box">
           <ul class="nav-box">
@@ -22,10 +20,10 @@
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
 
-            <p class="courseTitle" >{{ currentMsg.describe }}</p>
+            <p class="courseTitle" >555{{ noTree.describe }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
-            <p class="appraiseTitle">{{ appraiseMsg }}</p>
+            <p class="appraiseTitle">444{{  }}</p>
             <div class="comment-box">
               <div v-for="(person,index) in personMsg" >
                 <div class="text-box">
@@ -126,44 +124,30 @@
               <br>
               <button class="commit-btn" @click="submitComments">提交评论</button>
             </div>
+
           </div>
         </div>
       </div>
+
     </div>
+
 
   </div>
 </template>
 
-<script>
-  import navgationHead from '@/components/common/navgationHead'
-  import myTree from '@/components/courseTree/tree'
-  import bus from '../assets/js/Bus'
-  import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
-  var i=0;
-  var busData = {
-  };
-  bus.$on('passHeaderNavData',value => {
-    busData.theModel = value
-    // console.log(666)
-    // console.log(busData.theModel)
-  });
-  bus.$on('passBannerLeftData', (value) => {
-    busData.theModel = value
-    busData.subtitle = value.title
-  });
+<script scoped>
+import navgationHead from '@/components/common/navgationHead'
+import tree from '@/components/courseTree/tree'
+import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
+
+
 
   export default {
     name: 'user',
     data () {
       return {
-        user:'',
         currentIndex: 0,
-        appraiseMsg: '全部评价',
-        line: true,
-        msg: '',
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
-        theModel: busData.theModel,
-        subtitle:busData.subtitle,
         currentMsg:'',
         personMsg:[],
         comment:'',
@@ -175,11 +159,14 @@
         nanmeType: '',
         isAppearCommentBox: false,
         replyArr:[],
-        replyMsg:''
+        replyMsg:'',
+        text:''
       }
     },
-    watch:{
-
+    computed:{
+      noTree(){
+        return this.$store.state.noTree;
+      }
     },
     methods: {
       onclick: function (index) {
@@ -190,10 +177,6 @@
         if (this.currentIndex === 2) {
           this.$router.push({path: '/playVideo'})
         }
-      },
-      receiveCurrentData (receiveCurrentData) {
-        this.currentMsg = receiveCurrentData
-        // console.log(this.currentMsg)
       },
       dele: function (index) {
         this.replyArr.splice(index, 1)
@@ -224,35 +207,23 @@
           })
 
           this.nameType = ++i
-          // this.score = this.inputdata
-
 
           this.text = ''
           console.log(this.arr)
         }
 
-        // alert(this.currentdate)
       },
       wantReply(num){
-        // alert(num)
         this.isAppearCommentBox = !this.isAppearCommentBox
       },
       submitReply(aa) {
-        // alert(222)
         this.replyArr.push({replyMsg:this.replyText})
       }
     },
     mounted(){
       this.user = getCookie('username');
     },
-    watch: {
-      // inputdata (value) {
-      //   console.log(value)
-      // }
-    },
-    components: {
-      navgationHead,myTree
-    }
+    components: {navgationHead,tree}
   }
 </script>
 
@@ -330,9 +301,7 @@
     color: #000;
   }
 
-  .right-box .nav-box .nav-item:first-child{
-    margin-left: 190px;
-  }
+
   .right-box .course-box{
     width: 600px;
     height: 400px;
@@ -405,7 +374,6 @@
   }
   .appraise-box .comment-box{
     margin: 0 50px 0 50px;
-    background: hotpink;
   }
   .appraise-box .text-box{
     padding-top: 10px;
@@ -418,9 +386,8 @@
     margin-bottom: 10px;
   }
   .comment-box .msg-box{
-    background: pink;
+    /*background: pink;*/
     height: 20px;
-    line-height: 20px;
   }
   .comment-box .msg-box p{
     display: inline-block;
@@ -430,29 +397,8 @@
     margin-left: 20px;
     color: #93999F;
   }
-  .comment-box .msg-box p:first-child{
-    margin-left: 0;
-  }
 
-  .comment-box .msg-box .replyNum a{
-    margin-left: 30px;
-    color: #93999F;
-  }
-  .comment-box .msg-box .replyNum a:hover{
-    color: green;
-  }
-  .comment-box .reply-box{
-    /*width: 500px;*/
-    /*height: 100px;*/
-    margin: 0 auto;
-    background: linen;
-    text-align: center;
-  }
-  .comment-box .reply-box textarea{
-    width: 300px;
-    height: 60px;
-    margin-top: 0;
-  }
+
 
   .appraise-box .shopList{
     margin-top: 20px;
@@ -461,9 +407,8 @@
   .appraise-box .shopList p{
     display: inline-block;
   }
-  .appraise-box .shopList p:last-child{
-    margin-left: 30px;
-  }
+
+
   .appraise-box .shopList .commit-btn{
     width: 60px;
     height: 30px;
@@ -491,7 +436,7 @@
     transition:color
     .2s;
   }
-  .appraise-box .all>input:checked~span{color:#666;}
+  .appraise-box .all>input:moecked~span{color:#666;}
 
   .appraise-box .all>input:checked+span{color:gold;}
 
