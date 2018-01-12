@@ -51,6 +51,9 @@ export default {
       isSelect:''
     }
   },
+  computed:{
+      
+  },
   mounted(){
     this.isSelect = sessionStorage.getItem("isSelect");
     if(this.$route.path == '/'){
@@ -59,8 +62,7 @@ export default {
   },
   methods: {
     sendMsg: function (item) {
-      this.$emit('sendHeaderNavData',item)
-      // alert(title)
+      this.$store.commit('newTitle',item);
     },
     goto(title){
         this.isSelect = title;
@@ -144,7 +146,7 @@ a:hover{
     color:#000;
 }
 .drop-right{
-    width:90%;
+    width:97%;
     height:100%;
     background:#ddd;
     position: absolute;
