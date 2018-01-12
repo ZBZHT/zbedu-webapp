@@ -207,13 +207,13 @@ export default {
                 });
             },
             myAnswer:function(id,answer,index){
+                
                 if(id == this.myId){
                     this.answerArr.push(answer);
                     console.log("--"+this.answerArr);
                     console.log("---"+this.answerArr.length);
                     this.myAns = this.$set(this.answerArr,this.answerArr.length - 1,answer);
                     console.log("!!!!"+this.myAns);
-                    this.sorce -= 5 ;
                 }else{
                     this.myAns = answer;
                 }
