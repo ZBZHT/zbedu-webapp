@@ -18,14 +18,24 @@
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
             <div class="comment-box">
-              <div v-for="(name,index) in arr" >
+
+
+              <div v-for="person in personMsg">
+                <p>{{person.comment}}</p>
+                <p>{{person.commentTime }}</p>
+                <p>{{person.score}}</p>
+              </div>
+
+
+
+              <div v-for="person in personMsg" >
                   <div class="text-box">
                     <p>用户名：aaaa</p>
-                    <p>{{name.text}}</p>
+                    <p>{{person.comment}}</p>
                     <!--<span v-on:click="dele(index)">❎</span>-->
                   </div>
                   <div class="msg-box">
-                    <p class="time-box">时间：{{ currentdate }}</p>
+                    <p class="time-box">时间：{{ person.commentTime }}</p>
                     <p>源自：{{currentCourseData.title}}</p>
                     <p class="all">
 
@@ -150,8 +160,9 @@
             "title": "课程评价"
           }
         ],
-        text: '',
-        arr: [],
+        personMsg:[],
+        comment:'',
+        commentTime:'',
         inputdata: 0,
         arrData: ['一星', '两星', '三星', '四星', '五星'],
         currentdate: '',
@@ -176,26 +187,34 @@
         if (this.text === '') {
           alert('评论不能为空')
         } else {
-          this.arr.push({text: this.text})
+          var date = new Date()
+          var seperator1 = '-'
+          var seperator2 = ':'
+          var month = date.getMonth() + 1
+          var strDate = date.getDate()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + ' ' + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds()
+          this.personMsg.push({
+            comment:this.text,
+            commentTime:this.currentdate,
+            score:this.inputdata +"1"
+          })
+
+          this.nameType = ++i
+          // this.score = this.inputdata
+
+
           this.text = ''
           console.log(this.arr)
         }
-        var date = new Date()
-        var seperator1 = '-'
-        var seperator2 = ':'
-        var month = date.getMonth() + 1
-        var strDate = date.getDate()
-        if (month >= 1 && month <= 9) {
-          month = '0' + month
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = '0' + strDate
-        }
-        this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-          + ' ' + date.getHours() + seperator2 + date.getMinutes()
-          + seperator2 + date.getSeconds()
-        this.nameType = ++i
-        this.score = this.inputdata
+
         // alert(this.currentdate)
     },
     },
@@ -322,7 +341,6 @@
     /*background: pink;*/
     border-bottom: 1px solid #ccc;
   }
-
   .right-box .appraise-box textarea{
     margin-top: 20px;
     height: 60px;
