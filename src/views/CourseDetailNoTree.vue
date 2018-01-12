@@ -19,50 +19,47 @@
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
             <div class="comment-box">
 
+              <!--<div v-for="person in personMsg">-->
+                <!--<p>{{person.comment}}</p>-->
+                <!--<p>{{person.commentTime }}</p>-->
+                <!--<p>{{person.courseStarNum}}</p>-->
+              <!--</div>-->
 
-              <div v-for="person in personMsg">
-                <p>{{person.comment}}</p>
-                <p>{{person.commentTime }}</p>
-                <p>{{person.score}}</p>
-              </div>
-
-
-
-              <div v-for="person in personMsg" >
+              <div v-for="(person,index) in personMsg" >
                   <div class="text-box">
-                    <p>用户名：aaaa</p>
+                    <p>用户名：<a href="">{{ person.user }}</a></p>
                     <p>{{person.comment}}</p>
                     <!--<span v-on:click="dele(index)">❎</span>-->
                   </div>
                   <div class="msg-box">
                     <p class="time-box">时间：{{ person.commentTime }}</p>
-                    <p>源自：{{currentCourseData.title}}</p>
+                    <!--<p>源自：{{currentCourseData.title}}</p>-->
                     <p class="all">
-
+                      评分：
                       <input
                         type="radio"
                         name="nameType"
-                        value="0" v-model="score" checked="" disabled="disabled"/>
+                        value="0" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
                         name="nameType"
-                        value="1" v-model="score" checked="" disabled="disabled"/>
+                        value="1" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
                         name="nameType"
-                        value="2" v-model="score" checked="" disabled="disabled"/>
+                        value="2" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
                         name="nameType"
-                        value="3" v-model="score" checked="" disabled="disabled"/>
+                        value="3" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
                         name="nameType"
-                        value="4" v-model="score" checked="" disabled="disabled"/>
+                        value="4" v-model="person.courseStarNum" checked="" disabled="disabled"/>
                       <span>★</span>
                       <!--<input-->
                       <!--type="radio"-->
@@ -71,7 +68,17 @@
                       <!--<span>★</span>-->
 
                     </p>
-                    <p>{{ arrData[score]}}</p>
+                    <p>{{ arrData[person.courseStarNum]}}</p>
+                    <p class="replyNum" @click="wantReply(index)"><a href="#">回复</a></p>
+                  </div>
+                  <div class="reply-box" v-show="isAppearCommentBox">
+                    <ul>
+                      <li v-for="(item,index) in replyArr">{{index + item.replyMsg }}
+                        <span v-on:click="dele(index)">❎</span>
+                      </li>
+                    </ul>
+                    <textarea type="text" v-model="replyText"></textarea>
+                    <button @click="submitReply(index)">提交回复</button>
                   </div>
                 <hr>
               </div>
@@ -129,6 +136,7 @@
 
   import navgationHead from '@/components/common/navgationHead'
   import bus from '../assets/js/Bus'
+  import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   var i=0;
   var busData = {
 
@@ -141,6 +149,7 @@
     name: 'user',
     data () {
       return {
+        user:'',
         currentIndex: 0,
         appraiseMsg: '全部评价',
         line: true,
@@ -163,11 +172,14 @@
         personMsg:[],
         comment:'',
         commentTime:'',
+        courseStarNum:'',
         inputdata: 0,
         arrData: ['一星', '两星', '三星', '四星', '五星'],
         currentdate: '',
         nanmeType: '',
-        score: 0
+        isAppearCommentBox: false,
+        replyArr:[],
+        replyMsg:''
       }
     },
     methods: {
@@ -180,9 +192,9 @@
           this.$router.push({path: '/playVideo'})
         }
       },
-      // dele: function (index) {
-      //   this.arr.splice(index, 1)
-      // },
+      dele: function (index) {
+        this.replyArr.splice(index, 1)
+      },
       submitComments () {
         if (this.text === '') {
           alert('评论不能为空')
@@ -204,7 +216,8 @@
           this.personMsg.push({
             comment:this.text,
             commentTime:this.currentdate,
-            score:this.inputdata +"1"
+            courseStarNum:this.inputdata,
+            user:this.user
           })
 
           this.nameType = ++i
@@ -217,11 +230,23 @@
 
         // alert(this.currentdate)
     },
+      wantReply(num){
+        // alert(num)
+        this.isAppearCommentBox = !this.isAppearCommentBox
+
+      },
+      submitReply(aa) {
+        // alert(aa)
+        this.replyArr.push({replyMsg:this.replyText})
+      }
+    },
+    mounted(){
+      this.user = getCookie('username');
     },
     watch: {
-      inputdata (value) {
-        console.log(value)
-      }
+      // inputdata (value) {
+      //   console.log(value)
+      // }
     },
     components: {
       navgationHead
@@ -341,32 +366,33 @@
     /*background: pink;*/
     border-bottom: 1px solid #ccc;
   }
-  .right-box .appraise-box textarea{
+  .appraise-box textarea{
     margin-top: 20px;
     height: 60px;
     width: 60%;
     font-size: 20px;
     outline: none;
   }
-  .right-box .detail-box .appraise-box .comment-box{
+  .detail-box .appraise-box .comment-box{
     margin: 0 50px 0 50px;
-    /*background: hotpink;*/
+    background: hotpink;
   }
-  .right-box .appraise-box .comment-box .text-box{
+  .appraise-box .comment-box .text-box{
     padding-top: 10px;
     /*background: red;*/
   }
-  .right-box .appraise-box .text-box p{
+  .appraise-box .text-box p{
     font-size: 14px;
     font-weight: normal;
     text-align: left;
     margin-bottom: 10px;
   }
-  .right-box .comment-box .msg-box{
-    /*background: pink;*/
+  .comment-box .msg-box{
+    background: pink;
     height: 20px;
+    line-height: 20px;
   }
-  .right-box .appraise-box .comment-box .msg-box p{
+  .appraise-box .comment-box .msg-box p{
     display: inline-block;
     float: left;
     font-size: 12px;
@@ -374,20 +400,40 @@
     margin-left: 20px;
     color: #93999F;
   }
-  .right-box .appraise-box .comment-box .msg-box p:first-child{
+  .appraise-box .comment-box .msg-box p:first-child{
     margin-left: 0;
   }
-  .right-box .appraise-box .shopList{
+
+  .appraise-box .comment-box .msg-box .replyNum a{
+    margin-left: 50px;
+    color: #93999F;
+  }
+  .appraise-box .comment-box .msg-box .replyNum a:hover{
+    color: green;
+  }
+  .comment-box .reply-box{
+    /*width: 500px;*/
+    /*height: 100px;*/
+    margin: 0 auto;
+    background: linen;
+    text-align: center;
+  }
+  .comment-box .reply-box textarea{
+    width: 400px;
+    height: 60px;
+    margin-top: 0;
+  }
+  .appraise-box .shopList{
     margin-top: 20px;
     text-align: center;
   }
-  .right-box .appraise-box .shopList p{
+  .shopList p{
     display: inline-block;
   }
-  .right-box .appraise-box .shopList p:last-child{
+  .appraise-box .shopList p:last-child{
     margin-left: 30px;
   }
-  .right-box .appraise-box .shopList .commit-btn{
+  .appraise-box .shopList .commit-btn{
     width: 60px;
     height: 30px;
     outline: none;
@@ -396,14 +442,14 @@
     /*background: red;*/
     cursor: pointer;
   }
-  .right-box .appraise-box .shopList .commit-btn:active{
+  .appraise-box .shopList .commit-btn:active{
     top: 2px;
   }
 
-  .right-box .appraise-box .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
+  .appraise-box .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
 
 
-  .right-box .appraise-box .all>span{font-size:1em;color:gold;
+  .appraise-box .all>span{font-size:1em;color:gold;
 
     -webkit-transition:color
     .2s;
@@ -411,8 +457,8 @@
     transition:color
     .2s;
   }
-  .right-box .appraise-box .all>input:checked~span{color:#666;}
+  .appraise-box .all>input:checked~span{color:#666;}
 
-  .right-box .appraise-box .all>input:checked+span{color:gold;}
+  .appraise-box .all>input:checked+span{color:gold;}
 
 </style>
