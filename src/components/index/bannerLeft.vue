@@ -2,11 +2,13 @@
 <div>
   <div v-for="(item,index) in bannerLeftData" v-if="index <= 0">
     <div class="item-a" v-for="item2 in item.children">
-                <a>
-                    <span class="item-b">
-                        <span class="bleft">{{item2.title}}</span>
-                        <b class="jiantou"> > </b>
-                    </span>
+                <a @click="setMsg(item2)">
+                    <router-link :to="{path:'/course' + '/title/'+ item2.title}">
+                        <span class="item-b">
+                            <span class="bleft">{{item2.title}}</span>
+                            <b class="jiantou"> > </b>
+                        </span>
+                    </router-link>
                 </a>
                 <div class="hiddenbox">
                     <div v-for="item3 in item2.children">
@@ -49,8 +51,7 @@ export default {
   },
   methods: {
     setMsg: function (item) {
-      this.$emit('sendLeftData',item)
-      // alert(title)
+      this.$store.commit('newTitle',item);
     }
   }
 }
