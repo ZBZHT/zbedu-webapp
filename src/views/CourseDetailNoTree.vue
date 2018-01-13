@@ -5,7 +5,7 @@
     </div>
     <div class="content-box">
       <div class="right-box">
-        <p class="courseTitle">{{ currentCourseData.title }}</p>
+        <p class="courseTitle">{{ noTree.title }}</p>
         <div class="detail-box">
           <ul class="nav-box">
             <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -13,7 +13,7 @@
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
-            <p class="introduce">{{ currentCourseData.describe }}</p>
+            <p class="introduce">{{ noTree.describe }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
@@ -33,7 +33,7 @@
                   </div>
                   <div class="msg-box">
                     <p class="time-box">时间：{{ person.commentTime }}</p>
-                    <!--<p>源自：{{currentCourseData.title}}</p>-->
+                    <!--<p>源自：444{{ }}</p>-->
                     <p class="all">
                       评分：
                       <input
@@ -135,16 +135,8 @@
 <script>
 
   import navgationHead from '@/components/common/navgationHead'
-  import bus from '../assets/js/Bus'
   import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
-  var i=0;
-  var busData = {
 
-  };
-  bus.$on('passBannerLeftData', (value) => {
-    busData.currentCourseData = value
-
-  });
   export default {
     name: 'user',
     data () {
@@ -154,7 +146,6 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        currentCourseData:busData.currentCourseData,
         detailNavData: [
           {
             "title": "课程详情"
@@ -179,7 +170,14 @@
         nanmeType: '',
         isAppearCommentBox: false,
         replyArr:[],
-        replyMsg:''
+        replyMsg:'',
+        text:'',
+        replyText:''
+      }
+    },
+    computed:{
+      noTree(){
+        return this.$store.state.noTree;
       }
     },
     methods: {
@@ -220,7 +218,7 @@
             user:this.user
           })
 
-          this.nameType = ++i
+//          this.nameType = ++i
           // this.score = this.inputdata
 
 

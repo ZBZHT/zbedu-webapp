@@ -12,7 +12,7 @@
          <i v-if="item" class="icon" :class="[open1 ? 'folder-open': 'folder']"></i>
          <i v-if="!isInclude" class="icon"></i>
 
-         <a href="#" >{{item.title}}</a>
+         <a href="#" @click="sendMsg(item)">{{item.title}}</a>
 
         </span>
         <ul class="grandson-box" v-show="open1" v-if="item">

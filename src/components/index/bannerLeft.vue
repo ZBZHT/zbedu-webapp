@@ -21,7 +21,7 @@
                         </b>
                         <hr/>
                         <ul class="hd-desc-ul">
-                            <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg(item4)">
+                            <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg1(item4)">
 
                               <router-link :to="{path:'/courseNoTree/'+ item4.courseId + '/title/' + item4.title}">
                                 {{item4.title}}
@@ -52,6 +52,9 @@ export default {
   methods: {
     setMsg: function (item) {
       this.$store.commit('newTitle',item);
+    },
+    setMsg1: function (item) {
+      this.$store.commit('noTreeTitle',item);
     }
   }
 }

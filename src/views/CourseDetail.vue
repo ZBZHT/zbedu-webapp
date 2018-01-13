@@ -20,7 +20,7 @@
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
 
-            <p class="courseTitle" >555{{ noTree.describe }}</p>
+            <p class="courseTitle" >{{ noTree.describe }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p class="appraiseTitle">444{{  }}</p>
