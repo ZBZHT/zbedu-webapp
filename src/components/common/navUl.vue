@@ -4,8 +4,8 @@
         <div class="dropdown">
             <div class="dropdown-toggle">
                 <ul>
-                    <li class="dr-li" v-for="(item,index) in navData" @click="goto(item.title)">
-                        <router-link :to="'/' + item.name" class="title" :class="isSelect === item.title ? 'active' : '' ">
+                    <li class="dr-li" v-for="(item,index) in navData" @click="goto(item.name)">
+                        <router-link :to="'/' + item.name" class="title" :class="isSelect === item.name ? 'active' : '' ">
                             {{item.title}}
                         </router-link>
                         <div class="dropdown-menu" v-show="item.children">
@@ -55,18 +55,17 @@ export default {
       
   },
   mounted(){
-    this.isSelect = sessionStorage.getItem("isSelect");
+    this.isSelect = this.$route.name;
     if(this.$route.path == '/'){
         this.isSelect = '';
     }
   },
   methods: {
     sendMsg: function (item) {
-      this.$store.commit('newTitle',item);
+      this.$store.commit('newTitle',item);      
     },
     goto(title){
-        this.isSelect = title;
-        sessionStorage.setItem('isSelect',this.isSelect);
+        this.isSelect = this.$route.name;
     }
   }
 }
