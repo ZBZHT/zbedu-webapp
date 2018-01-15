@@ -26,6 +26,7 @@
 </template>
 <script>
   import Vue from 'vue'
+
   export default {
     name: 'tree',
     data() {
@@ -57,9 +58,6 @@
           this.open1 = !this.open1
           this.currentOpenIndex = index
         }
-
-        // alert(index)
-        // alert(this.open1)
       },
       sendMsg(item){
         this.$store.commit('noTreeTitle',item);

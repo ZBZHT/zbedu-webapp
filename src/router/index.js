@@ -3,6 +3,9 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index'
 import testCenter from '@/views/testCenter'
+import exerciseCenter from '@/views/exerciseCenter'
+import appraiseCenter from '@/views/appraiseCenter'
+import sourceCenter from '@/views/sourceCenter'
 import test from '@/views/test'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
@@ -32,6 +35,30 @@ const routes = [
         requireTest:true
       },
       component:testCenter
+    },
+    {
+      path:'/exerciseCenter',
+      name:'exerciseCenter',
+      meta:{
+        requireTest:true
+      },
+      component:exerciseCenter
+    },
+    {
+      path:'/appraiseCenter',
+      name:'appraiseCenter',
+      meta:{
+        requireTest:true
+      },
+      component:appraiseCenter
+    },
+    {
+      path:'/sourceCenter',
+      name:'sourceCenter',
+      meta:{
+        requireTest:true
+      },
+      component:sourceCenter
     },
     {
       path:'/test/:testId/title/:title',

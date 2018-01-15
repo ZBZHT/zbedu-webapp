@@ -67,12 +67,17 @@
             <bottom-right :bottomRightData = "bottomRightData"></bottom-right>
         </div>
     </div>
+
+    <div class="footer">
+        <foot-footer></foot-footer>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
+import footFooter from '@/components/common/footFooter'
 import bannerLeft from '@/components/index/bannerLeft'
 import swipe from '@/components/testCenter/swipe'
 import bestClass from '@/components/index/bestClass'
@@ -146,7 +151,7 @@ export default {
                 console.log("error init." + error)
             });
     },
-  components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,}
+  components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,footFooter}
 }
 </script>
 
