@@ -71,7 +71,7 @@
                     <p>{{ arrData[person.courseStarNum]}}</p>
                     <p class="replyNum" @click="wantReply(index)"><a href="#">回复</a></p>
                   </div>
-                  <div class="reply-box" v-show="isAppearCommentBox">
+                  <div class="reply-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
                     <ul>
                       <li v-for="(item,index) in replyArr">{{index + item.replyMsg }}
                         <span v-on:click="dele(index)">❎</span>
@@ -172,7 +172,8 @@
         replyArr:[],
         replyMsg:'',
         text:'',
-        replyText:''
+        replyText:'',
+        currentReplyOpen:-1
       }
     },
     computed:{
@@ -229,7 +230,7 @@
         // alert(this.currentdate)
     },
       wantReply(num){
-        // alert(num)
+        this.currentReplyOpen = num
         this.isAppearCommentBox = !this.isAppearCommentBox
 
       },
@@ -373,7 +374,7 @@
   }
   .detail-box .appraise-box .comment-box{
     margin: 0 50px 0 50px;
-    background: hotpink;
+    /*background: hotpink;*/
   }
   .appraise-box .comment-box .text-box{
     padding-top: 10px;
@@ -386,7 +387,7 @@
     margin-bottom: 10px;
   }
   .comment-box .msg-box{
-    background: pink;
+    /*background: pink;*/
     height: 20px;
     line-height: 20px;
   }
