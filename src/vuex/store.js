@@ -1,25 +1,26 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex);
 
-const state ={
-    course:{},
-    noTree:{}
-}
-const mutations ={
+
+
+export default new Vuex.Store({
+ state : {
+    course:'',
+    noTree:{},
+    session:{}
+},
+ mutations : {
     newTitle(state,item){
         state.course = item;
     },
     noTreeTitle(state,item){
         state.noTree = item;
+    },
+    sessionTitle(state,item){
+        state.session = item;
     }
-}
-const getter ={
-    
-}
-export default new Vuex.Store({
-    state,
-    getter,
-    mutations,
+},
+plugins: [createPersistedState()]
 })
