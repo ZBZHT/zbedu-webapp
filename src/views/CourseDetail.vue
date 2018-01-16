@@ -10,8 +10,9 @@
         <tree></tree>
     </div>
         <div class="right-box">
-        <p>111{{ noTree.title }}</p>
-        <p>{{this.currentdate }}</p>
+
+        <p class="courseTitle">111{{ noTree.title }}</p>
+
         <div class="detail-box">
           <ul class="nav-box">
             <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -20,14 +21,15 @@
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
 
-            <p class="courseTitle" >{{ noTree.describe }}</p>
+            <p class="courseDescribe" >{{ noTree.describe }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
-            <p class="appraiseTitle">444{{  }}</p>
+            <p class="appraiseTitle">{{ appraiseMsg }}</p>
+            <p v-show="!personMsg.length">暂无评价</p>
             <div class="comment-box">
               <div v-for="(person,index) in personMsg" >
                 <div class="text-box">
-                  <p>用户名：<a href="#">{{ person.user }}</a></p>
+                  <p>用户名：<a href="#" title="用户名">{{ person.user }}</a></p>
                   <p>{{person.comment}}</p>
                   <!--<span v-on:click="dele(index)">❎</span>-->
                 </div>
@@ -70,7 +72,7 @@
                   <p>{{ arrData[person.courseStarNum]}}</p>
                   <p class="replyNum" @click="wantReply(index)"><a href="#">回复</a></p>
                 </div>
-                <div class="reply-box" v-show="isAppearCommentBox">
+                <div class="reply-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
                   <ul>
                     <li v-for="(item,index) in replyArr">{{index + item.replyMsg }}
                       <span v-on:click="dele(index)">❎</span>
@@ -82,6 +84,9 @@
                 <hr>
               </div>
             </div>
+
+            <p class="appraiseTitle">我要评价</p>
+
             <textarea type="text" v-model="text"/>
 
             <div class="shopList">
@@ -125,6 +130,10 @@
               <button class="commit-btn" @click="submitComments">提交评论</button>
             </div>
 
+
+
+
+
           </div>
         </div>
       </div>
@@ -150,6 +159,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
         currentMsg:'',
         personMsg:[],
+        appraiseMsg: '全部评价',
         comment:'',
         commentTime:'',
         courseStarNum:'',
@@ -160,7 +170,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         isAppearCommentBox: false,
         replyArr:[],
         replyMsg:'',
-        text:''
+        text:'',
+        replyText:'',
+        currentReplyOpen:-1
       }
     },
     computed:{
@@ -206,7 +218,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             user:this.user
           })
 
-          this.nameType = ++i
+          // this.nameType = ++i
 
           this.text = ''
           console.log(this.arr)
@@ -214,6 +226,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
       },
       wantReply(num){
+        this.currentReplyOpen = num
         this.isAppearCommentBox = !this.isAppearCommentBox
       },
       submitReply(aa) {
@@ -230,6 +243,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 <style scoped>
   *{
     list-style: none;
+    margin: 0;
+    padding: 0;
   }
   .nav{
     background: #ddd;
@@ -260,9 +275,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     position: absolute;
     left: 350px;
   }
-  .right-box .courseTitle{
-    font-size: 20px;
-    font-weight: bold;
+  .right-box .courseDescribe{
     /*background: pink;*/
     margin-bottom: 50px;
   }
@@ -273,9 +286,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
      margin-left: 50px;
   }
   .right-box .nav-box{
-    /*list-style: none;*/
+    margin-top: 20px;
     height: 40px;
     /*background: lightseagreen;*/
+    text-align: center;
     display: flex;
     border-bottom: 1px solid #333;
     box-sizing: content-box;
@@ -291,6 +305,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     border-radius: 5px 5px 0px 0;
     margin-left: 10px;
     text-align: center;
+  }
+  .right-box .nav-box .nav-item:first-child{
+    margin-left: 23%;
   }
   .right-box .nav-box .nav-item{
     border-bottom: none;
@@ -311,8 +328,13 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     background: url("../assets/bbb.png") no-repeat;
     padding: 130px 100px;
   }
-
-  .right-box .course-box .courseTitle{
+  .right-box .courseTitle{
+    font-size: 20px;
+    font-weight: bold;
+    /*background: red;*/
+    margin-top: 30px;
+  }
+  .right-box .course-box .appraiseTitle{
     width: 500px;
     font-size: 16px;
     font-weight: normal;
@@ -332,6 +354,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     font-size: 16px;
     text-align: left;
     padding: 10px;
+    margin: 0 30px;
     border-bottom: 1px solid #ccc;
   }
   .right-box .appraise-box textarea{
@@ -341,20 +364,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     width: 60%;
     font-size: 20px;
   }
-  .tree-box{
-    background: #DDDDDD;
-    width: 300px;
-    margin-top: 80px;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 16px;
-    position: relative;
 
-   }
-  .tree-menu{
-    position: absolute;
-    left: 10px;
-  }
   .right-box .appraise-box .appraiseTitle{
     font-weight: normal;
     font-size: 16px;
@@ -374,6 +384,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   }
   .appraise-box .comment-box{
     margin: 0 50px 0 50px;
+    /*background: red;*/
   }
   .appraise-box .text-box{
     padding-top: 10px;
@@ -385,9 +396,28 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     text-align: left;
     margin-bottom: 10px;
   }
+  .appraise-box .text-box a{
+    color: black;
+    text-decoration: none;
+  }
+  .appraise-box .text-box a:hover{
+    color: red;
+    text-decoration: none;
+  }
+  .tree-box{
+    background: #DDDDDD;
+    width: 300px;
+    margin-top: 80px;
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 16px;
+    position: relative;
+
+  }
   .comment-box .msg-box{
     /*background: pink;*/
     height: 20px;
+    line-height: 20px;
   }
   .comment-box .msg-box p{
     display: inline-block;
@@ -397,8 +427,13 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     margin-left: 20px;
     color: #93999F;
   }
-
-
+  .comment-box .msg-box .replyNum a{
+    color: #93999F;
+    text-decoration: none;
+  }
+  .comment-box .msg-box .replyNum a:hover{
+    color: green;
+  }
 
   .appraise-box .shopList{
     margin-top: 20px;
@@ -436,7 +471,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     transition:color
     .2s;
   }
-  .appraise-box .all>input:moecked~span{color:#666;}
+  .appraise-box .all>input:checked~span{color:#666;}
 
   .appraise-box .all>input:checked+span{color:gold;}
 
