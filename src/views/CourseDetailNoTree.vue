@@ -9,7 +9,7 @@
         <div class="detail-box">
           <ul class="nav-box">
             <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
-              {{ item.title}}
+              {{ item}}
             </li>
           </ul>
           <div class="course-box" v-show="this.currentIndex === 0">
@@ -17,14 +17,8 @@
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
+            <p v-show="!personMsg.length">暂无评价</p>
             <div class="comment-box">
-
-              <!--<div v-for="person in personMsg">-->
-                <!--<p>{{person.comment}}</p>-->
-                <!--<p>{{person.commentTime }}</p>-->
-                <!--<p>{{person.courseStarNum}}</p>-->
-              <!--</div>-->
-
               <div v-for="(person,index) in personMsg" >
                   <div class="text-box">
                     <p>用户名：<a href="">{{ person.user }}</a></p>
@@ -33,7 +27,6 @@
                   </div>
                   <div class="msg-box">
                     <p class="time-box">时间：{{ person.commentTime }}</p>
-                    <!--<p>源自：444{{ }}</p>-->
                     <p class="all">
                       评分：
                       <input
@@ -83,8 +76,8 @@
                 <hr>
               </div>
             </div>
+            <p class="appraiseTitle">我要评价</p>
             <textarea type="text" v-model="text"/>
-
             <div class="shopList">
               <p>请评价：</p>
               <p class="all">
@@ -146,20 +139,7 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        detailNavData: [
-          {
-            "title": "课程详情"
-          },
-          {
-            "title": "教学课件"
-          },
-          {
-            "title": "教学微课"
-          },
-          {
-            "title": "课程评价"
-          }
-        ],
+        detailNavData:["课程详情","教学课件","教学微课","课程评价"],
         personMsg:[],
         comment:'',
         commentTime:'',
@@ -227,7 +207,7 @@
           console.log(this.arr)
         }
 
-        // alert(this.currentdate)
+
     },
       wantReply(num){
         this.currentReplyOpen = num
@@ -363,6 +343,7 @@
     padding: 10px;
     margin: 0 30px;
     /*background: pink;*/
+    margin-bottom: 30px;
     border-bottom: 1px solid #ccc;
   }
   .appraise-box textarea{
@@ -386,6 +367,13 @@
     text-align: left;
     margin-bottom: 10px;
   }
+  .appraise-box .comment-box .text-box a{
+    color: black;
+    text-decoration: none;
+  }
+  .appraise-box .comment-box .text-box a:hover{
+    color: red;
+  }
   .comment-box .msg-box{
     /*background: pink;*/
     height: 20px;
@@ -406,6 +394,7 @@
   .appraise-box .comment-box .msg-box .replyNum a{
     margin-left: 50px;
     color: #93999F;
+    text-decoration: none;
   }
   .appraise-box .comment-box .msg-box .replyNum a:hover{
     color: green;
