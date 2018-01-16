@@ -2,7 +2,7 @@
 <div class="question">
     <div class="leftBox">
         <p>{{user}}</p>
-        <ul class="leftItem">
+        <ul class="leftItem" :class="{dispear : !dispear}">
             <li class="leftLi" v-for="(item,index) in leftBox"
                 @click="rightAppear(index)"
                 :class="currIndex === index ? 'active' : '' ">
@@ -17,17 +17,20 @@
                     <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     <p class="titleP">{{$route.params.title}}考试</p>
                 </div>
-                <div class="infor">
-                    <p>开始时间</p>
-                    <p>{{hours}}:{{minute}}:{{second}}</p>
-                </div>
-                <div class="infor">
-                    <p>状态</p>
-                    <p>正在考试</p>
-                </div>
-                <div class="infor">
-                    <p>距离考试结束还有</p>
-                    <span class="time">{{minutes}}</span>分钟<span class="time">{{seconds}}</span>秒</p>
+                <div class="inforItem">
+                    <div class="infor">
+                        <p>开始时间</p>
+                        <span>{{hours}}:{{minute}}:{{second}}</span>
+                    </div>
+                    <div class="infor notSt">
+                        <p>状态</p>
+                        <p class="notStart" :class="{dispear : !dispear}">未考</p>
+                        <p>正在考试</p>
+                    </div>
+                    <div class="infor">
+                        <p>倒计时</p>
+                        <span class="time">{{minutes}}</span>`<span class="time">{{seconds}}</span>``</p>
+                    </div>
                 </div>
             </div>
             <div class="content">
@@ -81,12 +84,33 @@
                             <p>标记题</p>
                         </div>
                     </div>
-                    <button @click='submit' class="btn" :class="{answer : !answer}">提交</button>
+                    <button @click='submit' class="btn" :class="{answer : !answer,dispear : dispear}">提交</button>
                 </div>
             </div>
         </div>
-        <div class="testAnalysis" v-show="currIndex === 1">考试分析</div>
-        <div class="userMessage" v-show="currIndex === 2">用户管理</div>
+        <div class="userMessage" v-show="currIndex === 1">
+            <ul class="testLine">
+                <li class="testNumber">NO.</li>
+                <li class="testTime">时间</li>
+                <li class="testTitle">项目</li>
+                <li class="testState">状态</li>
+                <li class="testGrade">分数</li>
+            </ul>
+            <ul class="testLine">
+                <li class="testNumber">1</li>
+                <li class="testTime">xx.xx</li>
+                <li class="testTitle">汽车电气</li>
+                <li class="testState">已结束</li>
+                <li class="testGrade">50</li>
+            </ul>
+            <ul class="testLine">
+                <li class="testNumber">2</li>
+                <li class="testTime">xx.xx</li>
+                <li class="testTitle">汽车电气</li>
+                <li class="testState">已结束</li>
+                <li class="testGrade">50</li>
+            </ul>
+        </div>
     </div>
 </div>
 </template>
@@ -101,8 +125,7 @@ export default {
     return {
         leftBox:[
             {li:'在线考试'},
-            {li:'考试分析'},
-            {li:'用户管理'}
+            {li:'考试管理'}
         ],
         textQuestionData:'',
         minutes:120,
@@ -179,9 +202,12 @@ export default {
                         alert("时间到，已帮您提交");
                         _this.submit();
                     };
-
+                    if(_this.seconds < 10){
+                    _this.seconds = "0" + _this.seconds;
+                    }
 
                 },1000);
+                
                 _this.dispear = !_this.dispear;
                 _this.nowTime = new Date();
                 _this.hours = _this.nowTime.getHours();
@@ -324,22 +350,6 @@ a:hover{
     top:0;
     left:0;
 }
-.testAnalysis{
-    width:1050px;
-    height:100%;
-    background:#fff;
-    position:absolute;
-    top:0;
-    left:0;
-}
-.userMessage{
-    width:1050px;
-    height:100%;
-    background:#fff;s
-    position:absolute;
-    top:0;
-    left:0;
-}
 .title{
     width:100%;
     height:150px;
@@ -354,9 +364,28 @@ a:hover{
 .titleP{
     margin-top:37px;
 }
+.inforItem{
+    margin-left: 430px;
+    display:flex;
+}
 .infor{
-    margin-left:140px;
+    margin-right:38px;
     margin-top:65px;
+}
+.infor p{
+    font-size:17px;
+    margin-top:-2px;
+}
+.notSt{
+    position:relative;
+}
+.notStart{
+    display:block;
+    width:70px;
+    background:#fff;
+    position:absolute;
+    top:21px;
+    left:0;
 }
 .content{
     width:100%;
@@ -435,16 +464,35 @@ a:hover{
     cursor:pointer;
 }
 .btn{
-    width:100%;
+    width:85%;
+    height: 78px;
     margin-top:10px;
     background-color:#e4393c;
     padding:8px;
     position:absolute;
-    bottom:0;
-    left:0;
+    bottom:48px;
+    left:18px;
     cursor:pointer;
 }
-/*.setRed{
-    color:red;
-}*/
+.userMessage{
+    width:1048px;
+    height:100%;
+    background:#fff;s
+    position:absolute;
+    top:0;
+    left:0;
+    padding:10px;
+    box-sizing:border-box;
+    text-align:left;
+}
+.testLine{
+    background:#ddd;
+    padding-left:5px;
+    margin-bottom:10px;
+}
+.testLine li{
+    display:inline-block;
+    width:120px;
+    margin-right:80px;
+}
 </style>
