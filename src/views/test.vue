@@ -19,7 +19,7 @@
                 </div>
                 <div class="infor">
                     <p>开始时间</p>
-                    <p>{{hours}}:{{minute}}</p>
+                    <p>{{hours}}:{{minute}}:{{second}}</p>
                 </div>
                 <div class="infor">
                     <p>状态</p>
@@ -120,6 +120,7 @@ export default {
         nowTime:'',
         hours:'',
         minute:'',
+        second:'',
         currIndex:0,
         user:'',
         time:0,
@@ -185,6 +186,13 @@ export default {
                 _this.nowTime = new Date();
                 _this.hours = _this.nowTime.getHours();
                 _this.minute = _this.nowTime.getMinutes();
+                if(_this.minute < 10){
+                    _this.minute = "0" + _this.minute;
+                }
+                _this.second = _this.nowTime.getSeconds();
+                if(_this.second < 10){
+                    _this.second = "0" + _this.second;
+                }
 
 
             },

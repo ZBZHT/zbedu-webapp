@@ -22,5 +22,5 @@ export default new Vuex.Store({
         state.session = item;
     }
 },
-plugins: [createPersistedState()]
+ plugins: [createPersistedState()]
 })
