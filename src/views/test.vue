@@ -99,16 +99,38 @@
             <ul class="testLine">
                 <li class="testNumber">1</li>
                 <li class="testTime">xx.xx</li>
-                <li class="testTitle">汽车电气</li>
+                <li class="testTitle">
+                    <a @click="simplePrompt();getStatic()">
+                        汽车电气
+                    </a>
+                    <modal ref="modal" @receive="modal"></modal>
+                </li>
                 <li class="testState">已结束</li>
                 <li class="testGrade">50</li>
+                <li class="errAnalysis">
+                    <a @click="simplePrompt();getStatic()">
+                        错题分析
+                    </a>
+                    <modal ref="modal" @receive="modal"></modal>
+                </li>
             </ul>
             <ul class="testLine">
                 <li class="testNumber">2</li>
                 <li class="testTime">xx.xx</li>
-                <li class="testTitle">汽车电气</li>
+                <li class="testTitle">
+                    <a @click="simplePrompt();getStatic()">
+                        汽车电气
+                    </a>
+                    <modal ref="modal" @receive="modal"></modal>
+                </li>
                 <li class="testState">已结束</li>
                 <li class="testGrade">50</li>
+                <li class="errAnalysis">
+                    <a @click="simplePrompt();getStatic()">
+                        错题分析
+                    </a>
+                    <modal ref="modal" @receive="modal"></modal>
+                </li>
             </ul>
         </div>
     </div>
@@ -118,6 +140,10 @@
 <script>
 import axios from 'axios'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
+import Modal from '@/components/testCenter/modal';
+import modalEventBind from '../assets/js/ModalEventBind';
+import EventBus from '../assets/js/EventBus';
+
 
 export default {
   name: 'test',
@@ -152,11 +178,13 @@ export default {
         isCheckArr:{},
         length:20,
         classItem:{},
-        answerArr:[]
+        answerArr:[],
+        userMessageData:''
     }
   },
   mounted(){
       this.user = getCookie('username');
+      modalEventBind(this.$refs.modal);
     },
   watch: {
     second:{
@@ -206,19 +234,19 @@ export default {
                     _this.seconds = "0" + _this.seconds;
                     }
 
-                },1000);
+                 },1000);
                 
-                _this.dispear = !_this.dispear;
-                _this.nowTime = new Date();
-                _this.hours = _this.nowTime.getHours();
-                _this.minute = _this.nowTime.getMinutes();
-                if(_this.minute < 10){
-                    _this.minute = "0" + _this.minute;
-                }
-                _this.second = _this.nowTime.getSeconds();
-                if(_this.second < 10){
-                    _this.second = "0" + _this.second;
-                }
+                 _this.dispear = !_this.dispear;
+                 _this.nowTime = new Date();
+                 _this.hours = _this.nowTime.getHours();
+                 _this.minute = _this.nowTime.getMinutes();
+                 if(_this.minute < 10){
+                     _this.minute = "0" + _this.minute;
+                 }
+                 _this.second = _this.nowTime.getSeconds();
+                 if(_this.second < 10){
+                     _this.second = "0" + _this.second;
+                 }
 
 
             },
@@ -233,9 +261,20 @@ export default {
                     if(res.data.status!==0) {
                         return;
                     }
-                    console.log("1111112");
-                    console.log(res.data.result);
                     this.textQuestionData = res.data.result;
+                }).catch(function(error){
+                    console.log("error init." + error)
+                });
+            },
+            getStatic(){
+                axios.get("/api/menu/101",{
+                    params:{
+                        user:178
+                    }
+                }).then((res)=>{
+                    this.userMessageData = res.data.result;
+                    console.log("xjx"+this.userMessageData);
+                    this.$store.commit('getUserMessage',this.userMessageData);
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
@@ -283,8 +322,25 @@ export default {
             },
             rightAppear (index) {
                 this.currIndex = index;
+            },
+            prompt: function(message, title, callback, options) {
+                if (typeof title === 'function') {
+                    options = callback;
+                    callback = title;
+                    title = undefined;
+                }
+                EventBus.$emit('prompt', {message: message, title: title, callback: callback, options: options || {}});
+            },
+            simplePrompt() {
+                this.prompt((username) => {
+                    alert(username);
+                });
+            },
+            modal:function(){
             }
-  }
+    },
+  components:{Modal}
+
 }
 </script>
 
@@ -299,10 +355,6 @@ ul li{
 a{
     color: inherit;
     cursor: pointer;
-    text-decoration:none;
-}
-a:hover{
-    text-decoration: none;
 }
 .question{
     min-width:1200px;
@@ -492,7 +544,19 @@ a:hover{
 }
 .testLine li{
     display:inline-block;
-    width:120px;
-    margin-right:80px;
+    width:145px;
+    margin-right:20px;
+}
+.testLine .testTitle a{
+    text-decoration:underline;
+}
+.testLine .testTitle a:hover{
+    color:#f00;
+}
+.errAnalysis a{
+    text-decoration:underline;
+}
+.errAnalysis a:hover{
+    color:#f00;
 }
 </style>
