@@ -19,40 +19,40 @@
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
             <p v-show="!personMsg.length">暂无评价</p>
             <div class="comment-box">
-              <div v-for="(person,index) in personMsg" >
+              <div v-for="(person,index) in personMsg" v-show="person.user">
                   <div class="text-box">
-                    <p>用户名：<a href="">{{ person.user }}</a></p>
-                    <p>{{person.comment}}</p>
+                    <p @click="enterUserManagement" >用户名：<a href="">{{ person.user  }}</a></p>
+                    <p >{{person.comment}}</p>
                     <!--<span v-on:click="dele(index)">❎</span>-->
                   </div>
                   <div class="msg-box">
                     <p class="time-box">时间：{{ person.commentTime }}</p>
-                    <p class="all">
+                    <p class="all-box">
                       评分：
                       <input
                         type="radio"
-                        name="nameType"
-                        value="0" v-model="person.courseStarNum" checked="" disabled="disabled"/>
+                        name="index"
+                        value="0" v-model="person.courseStarNum"  disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
-                        name="nameType"
-                        value="1" v-model="person.courseStarNum" checked="" disabled="disabled"/>
+                        name="index"
+                        value="1" v-model="person.courseStarNum"  disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
-                        name="nameType"
-                        value="2" v-model="person.courseStarNum" checked="" disabled="disabled"/>
+                        name="index"
+                        value="2" v-model="person.courseStarNum" disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
-                        name="nameType"
-                        value="3" v-model="person.courseStarNum" checked="" disabled="disabled"/>
+                        name="index"
+                        value="3" v-model="person.courseStarNum"  disabled="disabled"/>
                       <span>★</span>
                       <input
                         type="radio"
-                        name="nameType"
-                        value="4" v-model="person.courseStarNum" checked="" disabled="disabled"/>
+                        name="index"
+                        value="4" v-model="person.courseStarNum"  disabled="disabled"/>
                       <span>★</span>
                       <!--<input-->
                       <!--type="radio"-->
@@ -62,18 +62,30 @@
 
                     </p>
                     <p>{{ arrData[person.courseStarNum]}}</p>
-                    <p class="replyNum" @click="wantReply(index)"><a href="#">回复</a></p>
+
+                    <p class="replyNum" @click="wantReply(person,index)"><a href="#">回复</a></p>
+
                   </div>
-                  <div class="reply-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
-                    <ul>
-                      <li v-for="(item,index) in replyArr">{{index + item.replyMsg }}
-                        <span v-on:click="dele(index)">❎</span>
-                      </li>
-                    </ul>
+                  <div class="reply-msg-box">
+                  <ul v-show="person.replyArr">
+                    <li v-for="item in person.replyArr">
+                      <span>{{item.replyUser}}：</span>
+                      <span>{{item.replyText}}</span>
+                      <div class="replyTime-box">
+                        <span>{{item.replyTime}}</span>
+                        <span>回复</span>
+                      </div>
+
+                    </li>
+                  </ul>
+                </div>
+                  <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
+
                     <textarea type="text" v-model="replyText"></textarea>
-                    <button @click="submitReply(index)">提交回复</button>
+
+                    <button @click="submitReply(person,index)">提交回复</button>
                   </div>
-                <hr>
+                <hr >
               </div>
             </div>
             <p class="appraiseTitle">我要评价</p>
@@ -150,9 +162,9 @@
         nanmeType: '',
         isAppearCommentBox: false,
         replyArr:[],
-        replyMsg:'',
         text:'',
         replyText:'',
+        replyTime:'',
         currentReplyOpen:-1
       }
     },
@@ -196,36 +208,51 @@
             comment:this.text,
             commentTime:this.currentdate,
             courseStarNum:this.inputdata,
-            user:this.user
+            user:this.user,
+            replyArr:[]
           })
-
-//          this.nameType = ++i
-          // this.score = this.inputdata
-
 
           this.text = ''
           console.log(this.arr)
         }
-
-
     },
-      wantReply(num){
+      wantReply(item,num){
         this.currentReplyOpen = num
         this.isAppearCommentBox = !this.isAppearCommentBox
-
       },
-      submitReply(aa) {
-        // alert(aa)
-        this.replyArr.push({replyMsg:this.replyText})
+      submitReply(item,aa) {
+        var date = new Date()
+        var seperator1 = '-'
+        var seperator2 = ':'
+        var month = date.getMonth() + 1
+        var strDate = date.getDate()
+        if (month >= 1 && month <= 9) {
+          month = '0' + month
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = '0' + strDate
+        }
+        this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + ' ' + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds()
+        console.log(item.replyArr)
+        console.log(item)
+        item.replyArr.push({
+          replyText:this.replyText,
+          replyTime:this.replyTime,
+          replyUser:this.user})
+
+        this.replyText = ''
+      },
+      enterUserManagement () {
+        this.$router.push('/userManagement')
       }
     },
     mounted(){
       this.user = getCookie('username');
     },
     watch: {
-      // inputdata (value) {
-      //   console.log(value)
-      // }
+
     },
     components: {
       navgationHead
@@ -363,9 +390,13 @@
   }
   .appraise-box .text-box p{
     font-size: 14px;
-    font-weight: normal;
+    font-weight: bold;
     text-align: left;
     margin-bottom: 10px;
+  }
+  .appraise-box .text-box p:last-child{
+    font-size: 18px;
+    font-weight: normal;
   }
   .appraise-box .comment-box .text-box a{
     color: black;
@@ -399,14 +430,34 @@
   .appraise-box .comment-box .msg-box .replyNum a:hover{
     color: green;
   }
-  .comment-box .reply-box{
+  .comment-box .reply-msg-box{
+    background: #eee;
+  }
+  .comment-box .reply-msg-box li{
+    margin-left: 30px;
+    margin-top: 10px;
+    /*background: yellow;*/
+    text-align: left;
+  }
+  .comment-box .reply-msg-box li {
+    font-size: 16px;
+  }
+  .comment-box .reply-msg-box .replyTime-box{
+    margin-top: 10px;
+    font-size: 12px;
+    color: #93999F;
+  }
+  .comment-box .reply-msg-box .replyTime-box span:last-child{
+    margin-left: 100px;
+  }
+  .comment-box .reply-input-box{
     /*width: 500px;*/
     /*height: 100px;*/
     margin: 0 auto;
     background: linen;
     text-align: center;
   }
-  .comment-box .reply-box textarea{
+  .comment-box .reply-input-box textarea{
     width: 400px;
     height: 60px;
     margin-top: 0;
@@ -436,6 +487,7 @@
 
   .appraise-box .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
 
+  .appraise-box .all-box>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
 
   .appraise-box .all>span{font-size:1em;color:gold;
 
@@ -445,8 +497,27 @@
     transition:color
     .2s;
   }
+
+  .appraise-box .all-box~span{font-size:1em;color:gold;
+
+    -webkit-transition:color
+    .2s;
+
+    transition:color
+    .2s;
+  }
+
   .appraise-box .all>input:checked~span{color:#666;}
 
   .appraise-box .all>input:checked+span{color:gold;}
+
+  /*.appraise-box .all-box>input:checked~span{color:#666;}*/
+
+  /*.appraise-box .all-box>input:checked+span{color:gold;}*/
+
+
+
+
+
 
 </style>
