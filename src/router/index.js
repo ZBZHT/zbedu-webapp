@@ -12,6 +12,7 @@ import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
 import loginPage from '@/views/loginPage'
+// import userManagement from '@/views/UserManagement'
 import testLogin from '@/views/testLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
@@ -111,6 +112,12 @@ const routes = [
       name: 'testLogin',
       component: testLogin
     }
+    // ,
+    // {
+    //   path:'/userManagement',
+    //   name:'userManagement',
+    //   component: userManagement
+    // }
 ];
 
 const router = new Router({
