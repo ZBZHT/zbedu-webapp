@@ -70,16 +70,23 @@
 
                   </p>
                   <p>{{ arrData[person.courseStarNum]}}</p>
-                  <p class="replyNum" @click="wantReply(index)"><a href="#">回复</a></p>
+                  <p class="replyNum" @click="wantReply(person,index)"><a href="#">回复</a></p>
                 </div>
-                <div class="reply-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
-                  <ul>
-                    <li v-for="(item,index) in replyArr">{{index + item.replyMsg }}
-                      <span v-on:click="dele(index)">❎</span>
+                <div class="reply-msg-box">
+                  <ul v-show="person.replyArr">
+                    <li v-for="item in person.replyArr">
+                      <span>{{item.replyUser}}:</span>
+                      <span>{{item.replyText}}</span>
+                      <div class="replyTime-box">
+                        <span>{{item.replyTime}}</span>
+                        <span>回复</span>
+                      </div>
                     </li>
                   </ul>
+                </div>
+                <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
                   <textarea type="text" v-model="replyText"></textarea>
-                  <button @click="submitReply(index)">提交回复</button>
+                  <button @click="submitReply(person,index)">提交回复</button>
                 </div>
                 <hr>
               </div>
@@ -169,9 +176,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         nanmeType: '',
         isAppearCommentBox: false,
         replyArr:[],
-        replyMsg:'',
         text:'',
         replyText:'',
+        replyTime:'',
         currentReplyOpen:-1
       }
     },
@@ -215,22 +222,43 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             comment:this.text,
             commentTime:this.currentdate,
             courseStarNum:this.inputdata,
-            user:this.user
+            user:this.user,
+            replyArr:[]
           })
-
-          // this.nameType = ++i
 
           this.text = ''
           console.log(this.arr)
         }
-
       },
-      wantReply(num){
+      wantReply(item,num){
+
         this.currentReplyOpen = num
         this.isAppearCommentBox = !this.isAppearCommentBox
       },
-      submitReply(aa) {
-        this.replyArr.push({replyMsg:this.replyText})
+      submitReply(item,aa) {
+
+        var date = new Date()
+        var seperator1 = '-'
+        var seperator2 = ':'
+        var month = date.getMonth() + 1
+        var strDate = date.getDate()
+        if (month >= 1 && month <= 9) {
+          month = '0' + month
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = '0' + strDate
+        }
+        this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + ' ' + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds()
+        console.log(item.replyArr)
+        console.log(item)
+        item.replyArr.push({
+          replyText:this.replyText,
+          replyTime:this.replyTime,
+          replyUser:this.user})
+
+        this.replyText = ''
       }
     },
     mounted(){
@@ -434,7 +462,24 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   .comment-box .msg-box .replyNum a:hover{
     color: green;
   }
+  .comment-box .reply-msg-box{
+    background: #eee;
+  }
 
+  .comment-box .reply-msg-box li{
+    margin-left: 30px;
+    margin-top: 10px;
+    /*background: yellow;*/
+    text-align: left;
+  }
+  .comment-box .reply-msg-box .replyTime-box{
+    margin-top: 10px;
+    font-size: 12px;
+    color: #93999F;
+  }
+  .comment-box .reply-msg-box .replyTime-box span:last-child{
+    margin-left: 100px;
+  }
   .appraise-box .shopList{
     margin-top: 20px;
     text-align: center;
