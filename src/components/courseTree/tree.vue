@@ -42,7 +42,6 @@
       }
     },
     computed:{
-
       course(){
           return this.$store.state.course;
       }
