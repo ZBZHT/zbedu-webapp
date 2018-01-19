@@ -39,7 +39,7 @@
                         {{$route.params.title}}开始考试
                     </button>
                     <div class="desc" v-for="(item,index) in textQuestionData.question">
-                        <span class="desctitle" :class="{setRed : index === errorIndex - 1 && submits == true}">
+                        <span class="desctitle">
                             <a @click="tip(index)">
                                 <img src="../assets/tip.png">
                             </a>
@@ -47,17 +47,25 @@
                         </span>
                         <ul class="ans">
 
-                            <li v-for="(item2,index2) in item.options">
-                                <label :for="item.forId[index2]">
-                                    <input :id="item.forId[index2]"
-                                    :type="item.type"
-                                    :value="item.value[index2]"
-                                    :name="item.name"
-                                    @change="myAnswer(item.name,item.value[index2],index)">
-                                        {{item2}}
+                            <li >
+                                <label :for="item.forId[0]" v-if="item.options[0]">
+                                    <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                        {{item.options[0]}}
+                                </label>
+                                <label :for="item.forId[1]" v-if="item.options[1]">
+                                    <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                        {{item.options[1]}}
+                                </label>
+                                <label :for="item.forId[2]" v-if="item.options[2]">
+                                    <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                        {{item.options[2]}}
+                                </label>
+                                <label :for="item.forId[3]" v-if="item.options[3]">
+                                    <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                        {{item.options[3]}}
                                 </label>
                             </li>
-
+                            <p >{{picked}}</p>
                         </ul>
                         <span :class="{answer : answer}">
                             正确答案：{{item.answer}}
@@ -100,7 +108,7 @@
                 <li class="testNumber">1</li>
                 <li class="testTime">xx.xx</li>
                 <li class="testTitle">
-                    <a @click="simplePrompt();getStatic()">
+                    <a @click="simplePrompt();getStatic();DisplayFun()">
                         汽车电气
                     </a>
                     <modal ref="modal" @receive="modal"></modal>
@@ -108,7 +116,7 @@
                 <li class="testState">已结束</li>
                 <li class="testGrade">50</li>
                 <li class="errAnalysis">
-                    <a @click="simplePrompt();getStatic()">
+                    <a @click="simplePrompt();getStatic();getDisplayFun()">
                         错题分析
                     </a>
                     <modal ref="modal" @receive="modal"></modal>
@@ -118,7 +126,7 @@
                 <li class="testNumber">2</li>
                 <li class="testTime">xx.xx</li>
                 <li class="testTitle">
-                    <a @click="simplePrompt();getStatic()">
+                    <a @click="simplePrompt();getStatic();getDisplayFun()">
                         汽车电气
                     </a>
                     <modal ref="modal" @receive="modal"></modal>
@@ -178,8 +186,11 @@ export default {
         isCheckArr:{},
         length:20,
         classItem:{},
-        answerArr:[],
-        userMessageData:''
+        QidArr:[],
+        userMessageData:'',
+        picked:[],
+        Display:false
+
     }
   },
   mounted(){
@@ -273,49 +284,32 @@ export default {
                     }
                 }).then((res)=>{
                     this.userMessageData = res.data.result;
-                    console.log("xjx"+this.userMessageData);
                     this.$store.commit('getUserMessage',this.userMessageData);
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
             },
-            myAnswer:function(id,answer,index){
-                
-                if(id == this.myId){
-                    this.answerArr.push(answer);
-                    console.log("--"+this.answerArr);
-                    console.log("---"+this.answerArr.length);
-                    this.myAns = this.$set(this.answerArr,this.answerArr.length - 1,answer);
-                    console.log("!!!!"+this.myAns);
-                }else{
-                    this.myAns = answer;
-                }
+            myAnswer:function(id){
                 this.myId = id;
-                
-                
-                this.questionIndex = index;
-                console.log("11111"+id+answer);
-                console.log("==="+this.myAns);
-                if(this.myAns !== ''){
-                    //  this.isCheck = index + 1;
-                    this.isCheckNum += 1;
-                    //  this.isCheckArr.push(this.isCheck);
-                    this.$set(this.isCheckArr,index,true);
-
-                }
-                this.length = this.textQuestionData.question.length;
-                for(var i = 0;i < this.textQuestionData.question.length;i++){
-                    if(this.myId == this.textQuestionData.question[i].name){
-                        if(this.myAns == this.textQuestionData.question[i].answer){
-                            this.sorce += 5;
-                            console.log(this.sorce);
+                if(this.QidArr.length == 0){
+                    this.QidArr.push(this.myId);
+                }else{
+                    for(var i = 0;i < this.QidArr.length;i++){
+                        console.log("111"+this.QidArr[i]);
+                        if(this.QidArr[i] === this.myId){
+                            this.myAns = '';
+                            console.log("222")
                         }else{
-                            this.error.push(this.textQuestionData.question[i].num);
-                            this.errorIndex = this.textQuestionData.question[i].num;
-                            //    this.setRed = true;
-                        }
+                            console.log("333");
+                            this.myAns = true;
+                        };
+                    }
+                    if(this.myAns == true){
+                        this.QidArr.push(this.myId);
+                        this.myAns = '';
                     }
                 }
+                console.log(this.QidArr);
             },
             tip(index){
                 this.$set(this.classItem,index,true)
@@ -337,6 +331,14 @@ export default {
                 });
             },
             modal:function(){
+            },
+            DisplayFun(){
+                this.Display = true;
+                this.$store.commit('getDisplay',this.Display);      
+            },
+            getDisplayFun(){
+                this.Display = false;
+                this.$store.commit('getDisplay',this.Display);
             }
     },
   components:{Modal}

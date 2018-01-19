@@ -10,7 +10,8 @@ export default new Vuex.Store({
     course:'',
     noTree:{},
     session:{},
-    userMessage:''
+    userMessage:'',
+    Display:''
 },
  mutations : {
     newTitle(state,item){
@@ -24,6 +25,9 @@ export default new Vuex.Store({
     },
     getUserMessage(state,item){
         state.userMessage = item;
+    },
+    getDisplay(state,item){
+        state.Display = item;
     }
 },
  plugins: [createPersistedState()]

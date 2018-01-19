@@ -3,30 +3,70 @@
         <div id="v-modal-wrap" v-show="show">
             <div id="v-modal-dialog">
 
-                <div id="v-modal-body">
+                <div id="v-modal-cancel">
+                    <button class="v-modal-btn slave" @click="cancel()">X</button>
+                </div>
 
+                <div id="v-modal-body">
+                /* 试题浏览 */
                     <div class="desc" v-for="(item,index) in userMessage.question">
                         <span class="desctitle">
                             {{item.num}}.{{item.desc}}
                         </span>
                         <ul class="ans">
-                            <li v-for="(item2,index2) in item.options">
-                                <label :for="item.forId[index2]">
-                                    <input :id="item.forId[index2]"
-                                    :type="item.type"
-                                    :value="item.value[index2]"
-                                    :name="item.name">
-                                        {{item2}}
+                            <li>
+                                <label for="11" v-if="item.options[0]">
+                                    <input id="11" :type="item.type" value="A" :name="item.name">
+                                        {{item.options[0]}}
+                                </label>
+                                <label for="22" v-if="item.options[1]">
+                                    <input id="22" :type="item.type" value="B" :name="item.name">
+                                        {{item.options[1]}}
+                                </label>
+                                <label for="33" v-if="item.options[2]">
+                                    <input id="33" :type="item.type" value="C" :name="item.name">
+                                        {{item.options[2]}}
+                                </label>
+                                <label for="44" v-if="item.options[3]">
+                                    <input id="44" :type="item.type" value="D" :name="item.name">
+                                        {{item.options[3]}}
                                 </label>
                             </li>
                         </ul>
                     </div>
+                /*错题分析*/    
+                    <div class="errAnaBox" :class="{display : Display}">
+                        <p>错题分析</p>
+                        <span class="desctitle">
+                            <img src="../../assets/err.jpg">
+                            2.变速器增加了超速挡可以( )。
+                        </span>
+                        <ul class="ans">
+                            <li>
+                                <label for="11">
+                                    <input id="11" type="radio" value="A" name="name">
+                                        A
+                                </label>
+                                <label for="22">
+                                    <input id="22" type="radio" value="B" name="name">
+                                        B
+                                </label>
+                                <label for="33">
+                                    <input id="33" type="radio" value="C" name="name">
+                                        C
+                                </label>
+                                <label for="44">
+                                    <input id="44" type="radio" value="D" name="name">
+                                        D
+                                </label>
+                            </li>
+                        </ul>
+                        <span>
+                            正确答案：A
+                        </span>
+                    </div>
                     
                     
-                </div>
-
-                <div id="v-modal-footer">
-                    <button class="v-modal-btn slave" @click="cancel()">取消</button>
                 </div>
 
             </div>
@@ -52,6 +92,9 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
         computed:{
             userMessage(){
                 return this.$store.state.userMessage;
+            },
+            Display(){
+                return this.$store.state.Display;
             }
         },
         methods: {
@@ -132,31 +175,20 @@ a:hover{
   box-sizing: border-box;
 }
 
-#v-modal-footer {
-  text-align: right;
-  display: flex;
-  height: 50px;
-  position: relative;
-}
 
-#v-modal-footer:after {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 1px;
-  background: #dadada;
-  transform: scaleY(0.5);
-  transform-origin: top left;
-}
 
 .v-modal-btn {
   flex: 1;
   border: none;
-  background-color: #ffffff;
+  background-color: #f00;
   outline: none;
   font-size: 16px;
+  position: absolute;
+  right: 22%;
+  top: 15%;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 .v-modal-btn.primary {
@@ -174,6 +206,17 @@ a:hover{
   padding: 0 20px;
   white-space: normal;
   test-align:left;
+  position:relative;
+}
+
+.errAnaBox{
+    padding: 0 20px;
+    position:absolute;
+    top:0;
+    left:0;
+    background:#fff;
+    width:100%;
+    height:100%;
 }
 
 .modal-enter-active, .modal-leave-active {
@@ -184,6 +227,7 @@ a:hover{
 }
 .desc{
     margin-top:15px;
+    background:#fff;
 }
 .desctitle{
     font-weight:bolder;
@@ -198,5 +242,8 @@ a:hover{
 }
 .ans li :hover{
     cursor:pointer;
+}
+.display{
+    display:none;
 }
 </style>
