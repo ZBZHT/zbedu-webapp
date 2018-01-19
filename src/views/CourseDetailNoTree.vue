@@ -27,42 +27,20 @@
                   </div>
                   <div class="msg-box">
                     <p class="time-box">时间：{{ person.commentTime }}</p>
-                    <p class="all-box">
-                      评分：
-                      <input
-                        type="radio"
-                        name="index"
-                        value="0" v-model="person.courseStarNum"  disabled="disabled"/>
-                      <span>★</span>
-                      <input
-                        type="radio"
-                        name="index"
-                        value="1" v-model="person.courseStarNum"  disabled="disabled"/>
-                      <span>★</span>
-                      <input
-                        type="radio"
-                        name="index"
-                        value="2" v-model="person.courseStarNum" disabled="disabled"/>
-                      <span>★</span>
-                      <input
-                        type="radio"
-                        name="index"
-                        value="3" v-model="person.courseStarNum"  disabled="disabled"/>
-                      <span>★</span>
-                      <input
-                        type="radio"
-                        name="index"
-                        value="4" v-model="person.courseStarNum"  disabled="disabled"/>
-                      <span>★</span>
-                      <!--<input-->
-                      <!--type="radio"-->
-                      <!--name="nameType"-->
-                      <!--value="5" v-model="score" checked="" disabled="disabled"/>-->
-                      <!--<span>★</span>-->
-
-                    </p>
-                    <p>{{ arrData[person.courseStarNum]}}</p>
-
+                    <ul class="star">
+                      <!--<span v-for="(itemClass,index) in itemClasses" :class="itemClass" class="star-item" track-by="index">-->
+                      <!--</span>-->
+                      <span  :class="{'on': person.courseStarNum>=0}"class="star-item" >
+                      </span>
+                      <span  :class="{'on': person.courseStarNum>=1}" class="star-item" >
+                      </span>
+                      <span  :class="{'on': person.courseStarNum>=2}" class="star-item" >
+                      </span>
+                      <span  :class="{'on': person.courseStarNum>=3}" class="star-item" >
+                      </span>
+                      <span  :class="{'on': person.courseStarNum>=4}" class="star-item" >
+                      </span>
+                    </ul>
                     <p class="replyNum" @click="wantReply(person,index)"><a href="#">回复</a></p>
 
                   </div>
@@ -146,6 +124,7 @@
     name: 'user',
     data () {
       return {
+        score: 0,
         user:'',
         currentIndex: 0,
         appraiseMsg: '全部评价',
@@ -171,7 +150,21 @@
     computed:{
       noTree(){
         return this.$store.state.noTree;
+      },
+      itemClasses () {
+
+        let result = []
+        let score = Math.floor(this.score * 2) / 2
+        let integer = Math.floor(score)
+        for (let i = 0; i < integer; i++) {
+          result.push('on')
+        }
+        while (result.length < 5) {
+          result.push('off')
+        }
+        return result
       }
+
     },
     methods: {
       onclick: function (index) {
@@ -204,6 +197,7 @@
           this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
             + ' ' + date.getHours() + seperator2 + date.getMinutes()
             + seperator2 + date.getSeconds()
+          this.score = this.inputdata
           this.personMsg.push({
             comment:this.text,
             commentTime:this.currentdate,
@@ -235,8 +229,8 @@
         this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
           + ' ' + date.getHours() + seperator2 + date.getMinutes()
           + seperator2 + date.getSeconds()
-        console.log(item.replyArr)
-        console.log(item)
+        // console.log(item.replyArr)
+        // console.log(item)
         item.replyArr.push({
           replyText:this.replyText,
           replyTime:this.replyTime,
@@ -361,7 +355,7 @@
     margin-bottom: 100px;
     position: relative;
     top: 20px;
-    background: lightyellow;
+    /*background: lightyellow;*/
   }
   .right-box .appraise-box .appraiseTitle{
     font-weight: normal;
@@ -410,6 +404,33 @@
     height: 20px;
     line-height: 20px;
   }
+  .comment-box .msg-box .star{
+    font-size: 0;
+    /*background: pink;*/
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    float: left;
+    margin-left: 10px;
+    /*margin-top: 2px;*/
+  }
+  .comment-box .msg-box .star-item{
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    margin-right: 2px;
+    background-size: 100%;
+  }
+  .comment-box .msg-box .star-item.on{
+    margin-top: 2px;
+    background-image: url(../../src/assets/on.png);
+  }
+  .comment-box .msg-box .star-item.off{
+    margin-top: 2px;
+    background-image: url(../../src/assets/off.png);
+  }
+
   .appraise-box .comment-box .msg-box p{
     display: inline-block;
     float: left;
@@ -431,7 +452,8 @@
     color: green;
   }
   .comment-box .reply-msg-box{
-    background: #eee;
+    border-radius: 3px;
+    background: #F7F7F7;
   }
   .comment-box .reply-msg-box li{
     margin-left: 30px;
@@ -440,7 +462,8 @@
     text-align: left;
   }
   .comment-box .reply-msg-box li {
-    font-size: 16px;
+    font-size: 14px;
+    font-weight: bold;
   }
   .comment-box .reply-msg-box .replyTime-box{
     margin-top: 10px;
@@ -454,7 +477,7 @@
     /*width: 500px;*/
     /*height: 100px;*/
     margin: 0 auto;
-    background: linen;
+    /*background: linen;*/
     text-align: center;
   }
   .comment-box .reply-input-box textarea{
@@ -486,9 +509,6 @@
   }
 
   .appraise-box .all>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
-
-  .appraise-box .all-box>input{opacity:0;position:absolute;width:2em;height:2em;margin:0;}
-
   .appraise-box .all>span{font-size:1em;color:gold;
 
     -webkit-transition:color
@@ -497,23 +517,10 @@
     transition:color
     .2s;
   }
-
-  .appraise-box .all-box~span{font-size:1em;color:gold;
-
-    -webkit-transition:color
-    .2s;
-
-    transition:color
-    .2s;
-  }
-
   .appraise-box .all>input:checked~span{color:#666;}
 
   .appraise-box .all>input:checked+span{color:gold;}
 
-  /*.appraise-box .all-box>input:checked~span{color:#666;}*/
-
-  /*.appraise-box .all-box>input:checked+span{color:gold;}*/
 
 
 
