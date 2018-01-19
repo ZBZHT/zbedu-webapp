@@ -35,41 +35,20 @@
                 </div>
                 <div class="msg-box">
                   <p class="time-box">时间：{{ person.commentTime }}</p>
-                  <p class="all">
-                    评分：
-                    <input
-                      type="radio"
-                      name="nameType"
-                      value="0" v-model="person.courseStarNum" checked="" disabled="disabled"/>
-                    <span>★</span>
-                    <input
-                      type="radio"
-                      name="nameType"
-                      value="1" v-model="person.courseStarNum" checked="" disabled="disabled"/>
-                    <span>★</span>
-                    <input
-                      type="radio"
-                      name="nameType"
-                      value="2" v-model="person.courseStarNum" checked="" disabled="disabled"/>
-                    <span>★</span>
-                    <input
-                      type="radio"
-                      name="nameType"
-                      value="3" v-model="person.courseStarNum" checked="" disabled="disabled"/>
-                    <span>★</span>
-                    <input
-                      type="radio"
-                      name="nameType"
-                      value="4" v-model="person.courseStarNum" checked="" disabled="disabled"/>
-                    <span>★</span>
-                    <!--<input-->
-                    <!--type="radio"-->
-                    <!--name="nameType"-->
-                    <!--value="5" v-model="score" checked="" disabled="disabled"/>-->
-                    <!--<span>★</span>-->
-
-                  </p>
-                  <p>{{ arrData[person.courseStarNum]}}</p>
+                  <ul class="star">
+                    <!--<span v-for="(itemClass,index) in itemClasses" :class="itemClass" class="star-item" track-by="index">-->
+                    <!--</span>-->
+                    <span  :class="{'on': person.courseStarNum>=0}"class="star-item" >
+                      </span>
+                    <span  :class="{'on': person.courseStarNum>=1}" class="star-item" >
+                      </span>
+                    <span  :class="{'on': person.courseStarNum>=2}" class="star-item" >
+                      </span>
+                    <span  :class="{'on': person.courseStarNum>=3}" class="star-item" >
+                      </span>
+                    <span  :class="{'on': person.courseStarNum>=4}" class="star-item" >
+                      </span>
+                  </ul>
                   <p class="replyNum" @click="wantReply(person,index)"><a href="#">回复</a></p>
                 </div>
                 <div class="reply-msg-box">
@@ -225,9 +204,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             user:this.user,
             replyArr:[]
           })
-
           this.text = ''
-          console.log(this.arr)
+          // console.log(this.arr)
         }
       },
       wantReply(item,num){
@@ -251,13 +229,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
           + ' ' + date.getHours() + seperator2 + date.getMinutes()
           + seperator2 + date.getSeconds()
-        console.log(item.replyArr)
-        console.log(item)
+        // console.log(item.replyArr)
+        // console.log(item)
         item.replyArr.push({
           replyText:this.replyText,
           replyTime:this.replyTime,
           replyUser:this.user})
-
         this.replyText = ''
       }
     },
@@ -375,7 +352,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     margin-left: 3%;
     position: relative;
     top: 20px;
-    background: lightyellow;
+    /*background: lightyellow;*/
   }
   .right-box .appraise-box .appraiseTitle{
     font-weight: normal;
@@ -416,13 +393,18 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   }
   .appraise-box .text-box{
     padding-top: 10px;
+
     /*background: linen;*/
   }
   .appraise-box .text-box p{
     font-size: 14px;
-    font-weight: normal;
+    font-weight: bold;
     text-align: left;
     margin-bottom: 10px;
+  }
+  .appraise-box .text-box p:last-child{
+    font-size: 18px;
+    font-weight: normal;
   }
   .appraise-box .text-box a{
     color: black;
@@ -447,6 +429,34 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     height: 20px;
     line-height: 20px;
   }
+  .comment-box .msg-box .star{
+    font-size: 0;
+    /*background: pink;*/
+    display: inline-block;
+    height: 20px;
+    line-height: 20px;
+    float: left;
+    margin-left: 10px;
+    /*margin-top: 2px;*/
+  }
+  .comment-box .msg-box .star-item{
+    /*background: red;*/
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 15px;
+    height: 15px;
+    margin-right: 2px;
+    background-size: 100%;
+  }
+  .comment-box .msg-box .star-item.on{
+    margin-top: 2px;
+    background-image: url(../../src/assets/on.png);
+  }
+  .comment-box .msg-box .star-item.off{
+    margin-top: 2px;
+    background-image: url(../../src/assets/off.png);
+  }
+
   .comment-box .msg-box p{
     display: inline-block;
     float: left;
@@ -463,10 +473,13 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     color: green;
   }
   .comment-box .reply-msg-box{
-    background: #eee;
+    border-radius: 3px;
+    background:#F7F7F7;
   }
 
   .comment-box .reply-msg-box li{
+    font-size: 14px;
+    font-weight: bold;
     margin-left: 30px;
     margin-top: 10px;
     /*background: yellow;*/
