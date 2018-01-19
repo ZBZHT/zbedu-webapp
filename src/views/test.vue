@@ -49,19 +49,19 @@
 
                             <li >
                                 <label :for="item.forId[0]" v-if="item.options[0]">
-                                    <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                    <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                         {{item.options[0]}}
                                 </label>
                                 <label :for="item.forId[1]" v-if="item.options[1]">
-                                    <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                    <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                         {{item.options[1]}}
                                 </label>
                                 <label :for="item.forId[2]" v-if="item.options[2]">
-                                    <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                    <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                         {{item.options[2]}}
                                 </label>
                                 <label :for="item.forId[3]" v-if="item.options[3]">
-                                    <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.name)">
+                                    <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                         {{item.options[3]}}
                                 </label>
                             </li>
@@ -189,7 +189,8 @@ export default {
         QidArr:[],
         userMessageData:'',
         picked:[],
-        Display:false
+        Display:false,
+        lengthData:''
 
     }
   },
@@ -211,13 +212,20 @@ export default {
     },
   methods:{
             submit:function () {
-                var _this = this;
-                _this.answer = !_this.answer;
-
-
-                alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
-                this.submits = true;
-
+                this.sorce=0;
+                this.error = [];
+           //     var _this = this;
+          //      _this.answer = !_this.answer;
+           //     alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
+            //    this.submits = true;
+            for(var i = 0;i < this.QidArr.length;i++){
+                if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
+                    this.sorce += 5;
+                }else{
+                    this.error.push(i+1);
+                }
+            }
+            alert(this.sorce + "==" + this.error);
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -289,26 +297,10 @@ export default {
                     console.log("error init." + error)
                 });
             },
-            myAnswer:function(id){
-                this.myId = id;
-                if(this.QidArr.length == 0){
-                    this.QidArr.push(this.myId);
-                }else{
-                    for(var i = 0;i < this.QidArr.length;i++){
-                        console.log("111"+this.QidArr[i]);
-                        if(this.QidArr[i] === this.myId){
-                            this.myAns = '';
-                            console.log("222")
-                        }else{
-                            console.log("333");
-                            this.myAns = true;
-                        };
-                    }
-                    if(this.myAns == true){
-                        this.QidArr.push(this.myId);
-                        this.myAns = '';
-                    }
-                }
+            myAnswer:function(id,index){
+                this.lengthData = this.textQuestionData.question.length;
+                this.QidArr[index] = id;
+                
                 console.log(this.QidArr);
             },
             tip(index){
