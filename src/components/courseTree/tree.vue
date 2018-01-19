@@ -1,19 +1,19 @@
 <template>
-  <li class="listItem" @mouseenter="enter">
-    <span @click="toggle" >
+  <li class="listItem">
+    <span  >
      <i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>
      <i v-if="!isInclude" class="icon"></i>
      <a href="#">{{course.title}}</a>
     </span>
     <ul class="son-box" v-show="open">
-      <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @mouseenter="enter1(index)" @mouseleave="leave">
+      <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)" @mouseleave="leave()">
         <span @click="toggle1(index)" :class="{'addBgcolor': isChange && (index === currentIndex)}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
          <!--<i v-if="!isInclude" class="icon"></i>-->
          <a href="#" @click="sendMsg(item)">{{item.title}}</a>
         </span>
         <ul class="grandson-box" v-show="(open1 && currentOpenIndex === index)" v-if="item">
-          <li class="grandsonListItem" v-for="(item2,index2) in item.children" @mouseenter="enter2(index2)" @mouseleave="leave">
+          <li class="grandsonListItem" v-for="(item2,index2) in item.children" @click="enter2(index2)">
             <span :class="{'addBgcolor': isChange && (index2 === currentIndex1)}">
              <i v-if="item && item2"></i>
              <a href="#" @click="sendMsg(item2)">{{item2.title}}</a>
@@ -36,6 +36,7 @@
         open1: false,
         isInclude:true,
         isChange:false,
+        isChange1:false,
         currentIndex:-1,
         currentIndex1:-1,
         currentOpenIndex:-1
@@ -47,11 +48,11 @@
       }
     },
     methods: {
-      toggle: function() {
-        if (this.isInclude) {
-          this.open = !this.open
-        }
-      },
+      // toggle: function() {
+      //   if (this.isInclude) {
+      //     this.open = !this.open
+      //   }
+      // },
       toggle1: function(index) {
         if (this.isInclude) {
           this.open1 = !this.open1
@@ -69,13 +70,10 @@
       enter2(index) {
         this.isChange = true
         this.currentIndex1  = index
-        // alert(index)
+        // alert(3333)
       },
       leave(){
-        this.currentIndex = -1
-      },
-      enter(){
-        this.isChange = true
+        // this.currentIndex = -1
       }
 
     },
@@ -96,7 +94,7 @@
   }
   .listItem{
     background: #000;
-    /*width: 250px;*/
+    font-size: 18px;
     line-height: 40px;
     color: #fff;
     margin-left: 10px;
