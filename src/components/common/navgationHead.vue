@@ -57,7 +57,7 @@ export default {
     }
   },
   mounted(){
-      axios.get("/api/menu/index",{
+      axios.get("http://192.168.2.251:8000/readJson/index",{
                 params:{
                      user:1
                 }
