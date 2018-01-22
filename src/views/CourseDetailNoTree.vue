@@ -46,14 +46,27 @@
                   </div>
                   <div class="reply-msg-box">
                   <ul v-show="person.replyArr">
-                    <li v-for="item in person.replyArr">
+                    <li v-for="(item,index) in person.replyArr">
                       <span>{{item.replyUser}}：</span>
                       <span>{{item.replyText}}</span>
                       <div class="replyTime-box">
-                        <span>{{item.replyTime}}</span>
-                        <span>回复</span>
+                        <p>{{item.replyTime}}</p>
+                        <p @click="replyToReply(item,index)"><a href="#">回复</a></p>
                       </div>
+                      <div class="replyToReply-box">
+                      <ul v-show="item.replyToReplyArr">
+                      <li v-for="(replyItem,index) in item.replyToReplyArr">
+                        <p>{{replyItem.replyToReplyText}}</p>
+                        <p>{{replyItem.replyToReplyTime}}</p>
+                      </li>
+                      </ul>
+                      </div>
+                      <div v-show="(isAppearCommentBox1 && currentReplyToReply === index)">
 
+                        <textarea type="text" v-model="replyToReplyText"></textarea>
+
+                        <button @click="submitReplyToReply(item)">回复他</button>
+                      </div>
                     </li>
                   </ul>
                 </div>
@@ -116,7 +129,7 @@
 </template>
 
 <script>
-
+  // import axios from 'axios'
   import navgationHead from '@/components/common/navgationHead'
   import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
@@ -140,11 +153,16 @@
         currentdate: '',
         nanmeType: '',
         isAppearCommentBox: false,
+        isAppearCommentBox1: false,
         replyArr:[],
         text:'',
         replyText:'',
         replyTime:'',
-        currentReplyOpen:-1
+        replyToReplyTime:'',
+        replyToReplyArr:[],
+        replyToReplyText:'',
+        currentReplyOpen:-1,
+        currentReplyToReply:-1
       }
     },
     computed:{
@@ -234,16 +252,58 @@
         item.replyArr.push({
           replyText:this.replyText,
           replyTime:this.replyTime,
-          replyUser:this.user})
+          replyUser:this.user,
+          replyToReplyArr:[]
+        })
 
         this.replyText = ''
       },
       enterUserManagement () {
         this.$router.push('/userManagement')
+      },
+      replyToReply(item, num){
+        this.currentReplyToReply = num
+        this.isAppearCommentBox1 = !this.isAppearCommentBox1
+
+        alert(num)
+      },
+      submitReplyToReply (item){
+
+        var date = new Date()
+        var seperator1 = '-'
+        var seperator2 = ':'
+        var month = date.getMonth() + 1
+        var strDate = date.getDate()
+        if (month >= 1 && month <= 9) {
+          month = '0' + month
+        }
+        if (strDate >= 0 && strDate <= 9) {
+          strDate = '0' + strDate
+        }
+        this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          + ' ' + date.getHours() + seperator2 + date.getMinutes()
+          + seperator2 + date.getSeconds()
+        item.replyToReplyArr.push({
+          replyToReplyTime:this.replyToReplyTime,
+          replyToReplyText:this.replyToReplyText
+        })
+        this.replyToReplyText = ''
+        console.log(item)
       }
     },
     mounted(){
       this.user = getCookie('username');
+
+      // axios.get("/api/menu/comment",{
+      //   params:{
+      //     user:3333
+      //   }
+      // }).then((res)=>{
+      //   console.log(res)
+      //   console.log(222222222)
+      // }).catch(function(error){
+      //   console.log("评论请求错误")
+      // });
     },
     watch: {
 
@@ -470,7 +530,10 @@
     font-size: 12px;
     color: #93999F;
   }
-  .comment-box .reply-msg-box .replyTime-box span:last-child{
+  .comment-box .reply-msg-box .replyTime-box p{
+    display: inline-block;
+  }
+  .comment-box .reply-msg-box .replyTime-box p:last-child{
     margin-left: 100px;
   }
   .comment-box .reply-input-box{
