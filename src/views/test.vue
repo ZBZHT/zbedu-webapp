@@ -29,7 +29,7 @@
                     </div>
                     <div class="infor">
                         <p>倒计时</p>
-                        <span class="time">{{minutes}}</span>`<span class="time">{{seconds}}</span>``</p>
+                        <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
                     </div>
                 </div>
             </div>
@@ -187,6 +187,7 @@ export default {
         length:20,
         classItem:{},
         QidArr:[],
+        null:[],
         userMessageData:'',
         picked:[],
         Display:false,
@@ -218,14 +219,21 @@ export default {
           //      _this.answer = !_this.answer;
            //     alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
             //    this.submits = true;
+            console.log(this.QidArr.length+"===this.QidArr.length");
             for(var i = 0;i < this.QidArr.length;i++){
-                if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
-                    this.sorce += 5;
+                if(this.QidArr[i] != null && this. QidArr[i] != ''){
+                    console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
+                    if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
+                        this.sorce += 5;
+                    }else{
+                        this.error.push(i+1);
+                    }
                 }else{
-                    this.error.push(i+1);
+                    console.log(i+"123456");
+                    this.null.push(i+1);
                 }
             }
-            alert(this.sorce + "==" + this.error);
+            alert(this.sorce + "==" + this.error + "==" + this.null);
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -300,8 +308,8 @@ export default {
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
-                
                 console.log(this.QidArr);
+                this.$set(this.isCheckArr,index,true);
             },
             tip(index){
                 this.$set(this.classItem,index,true)
