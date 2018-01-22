@@ -17,31 +17,31 @@ const config = {
   },
   '/api/menu/101': {
     method: 'get',
-    data: './testQuestion.json'
+    data: './testQuestion101.json'
   },
   '/api/menu/102': {
     method: 'get',
-    data: './testQuestion02.json'
+    data: './testQuestion102.json'
   },
   '/api/menu/103': {
     method: 'get',
-    data: './testQuestion03.json'
+    data: './testQuestion103.json'
   },
   '/api/menu/104': {
     method: 'get',
-    data: './testQuestion04.json'
+    data: './testQuestion104.json'
   },
   '/api/menu/105': {
     method: 'get',
-    data: './testQuestion05.json'
+    data: './testQuestion105.json'
   },
   '/api/menu/106': {
     method: 'get',
-    data: './testQuestion06.json'
+    data: './testQuestion106.json'
   },
   '/api/menu/107': {
     method: 'get',
-    data: './testQuestion07.json'
+    data: './testQuestion107.json'
   },
   '/api/menu/login': {
     method: 'login',

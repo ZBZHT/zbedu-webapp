@@ -270,7 +270,7 @@ export default {
 
             },
             getTest(e){
-                axios.get("/api/menu/"+e,{
+                axios.get("http://192.168.2.251:8000/readJson/testQuestion"+e,{
                     params:{
                         testId: e,
                         num: 30,
@@ -286,7 +286,7 @@ export default {
                 });
             },
             getStatic(){
-                axios.get("/api/menu/101",{
+                axios.get("http://192.168.2.251:8000/readJson/testQuestion106",{
                     params:{
                         user:178
                     }
