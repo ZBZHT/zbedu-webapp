@@ -115,23 +115,31 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                     /*请求存有用户账号的json文件*/
                     axios({
                         method: 'post',
-                        url: 'http://192.168.2.251:3000/api/user/login',
-                        params: {
+                        url: 'http://192.168.2.251:8000/api/user/login',
+                        data: {
                             username: this.username,
                             password: this.password
-                        }
+                        },
+                        withCredentials: true
                         }).then((res)=>{
                             console.log(res.data);
-                        /*传值是(2,用户名或密码错误),(0,可登录)*/
-                        if(res.data.code == 2){
-                            alert("用户名或密码输入错误")
-                        }else{
-                            setCookie('username',this.username,1000*60*60)
+                        /*传值是 0:登陆成功, 1: 已登陆, 2:用户名或密码错误 */
+                        if(res.data.code == 0){
+                 //           setCookie('username',this.username)
                                 setTimeout(function(){
-                                    this.nickName = document.userName;
+                                    this.nickName = res.data.username;
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
-                                }.bind(this),1000)
+                                }.bind(this),0.1)
+                        }else if(res.data.code == 1){
+                //            setCookie('username',this.username)
+                                setTimeout(function(){
+                                    this.nickName = res.data.username;
+                                    this.$emit("receive",this.nickName);
+                                    this.$router.push('/');
+                                }.bind(this),0.1)
+                        }else if(res.data.code == 2){
+                            alert("用户名或密码错误");
                         }
                   })
               };

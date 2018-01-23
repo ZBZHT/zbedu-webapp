@@ -124,7 +124,6 @@ const router = new Router({
     routes,
     mode:'history'
 });
-var b = 0;
 router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
@@ -169,8 +168,6 @@ router.beforeEach((to,from,next) => {
             }
       }else{
         if (to.matched.some(res => res.meta.requireQues)) {
-          if(b == 0){
-            b = b + 1;
             var con = confirm("确认用当前账号考试吗？");
             if(con == true){
               next();
@@ -181,7 +178,6 @@ router.beforeEach((to,from,next) => {
                 });
               router.go(0);
             }
-          }
         }else{
           next();
         };

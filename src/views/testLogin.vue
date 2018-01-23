@@ -39,24 +39,33 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 if(this.username == "" || this.password == ""){
                     alert("请输入用户名或密码")
                 }else{
-                    let data = {'username':this.username,'password':this.password}
-                    /*请求存有用户账号的json文件*/
-                    axios.post("/api/menu/login",data).then((res)=>{
-                        console.log(res.data);
-                        /*传值是(-2,该用户不存在),(1,密码错误),(0,可登录)*/
-                        if(res.data.status == -2){
-                            alert("该用户不存在")
-                        }else if(res.data.status == 1){
-                            alert("密码输入错误")
-                        }else{
-                            setCookie('username',this.username,1000*60*60)
-                            setTimeout(function(){
-                                this.nickName = document.userName;
-                                this.$emit("receive",this.nickName);
-                                this.$router.go(0);
-                                this.$router.push('/testCenter');
-                                this.$router.go(0);
-                            }.bind(this),0.1)
+                    axios({
+                        method: 'post',
+                        url: 'http://192.168.2.251:8000/api/user/login',
+                        data: {
+                            username: this.username,
+                            password: this.password
+                        },
+                        withCredentials: true
+                        }).then((res)=>{
+                            console.log(res.data);
+                        /*传值是 0:登陆成功, 1: 已登陆, 2:用户名或密码错误 */
+                        if(res.data.code == 0){
+                            setCookie('username',this.username)
+                                setTimeout(function(){
+                                    this.nickName = document.userName;
+                                    this.$emit("receive",this.nickName);
+                                    this.$router.push('/testCenter');
+                                }.bind(this),0.1)
+                        }else if(res.data.code == 1){
+                            setCookie('username',this.username)
+                                setTimeout(function(){
+                                    this.nickName = document.userName;
+                                    this.$emit("receive",this.nickName);
+                                    this.$router.push('/');
+                                }.bind(this),0.1)
+                        }else if(res.data.code == 2){
+                            alert("用户名或密码错误");
                         }
                   })
               };

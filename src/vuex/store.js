@@ -11,7 +11,9 @@ export default new Vuex.Store({
     noTree:{},
     session:{},
     userMessage:'',
-    Display:''
+    Display:'',
+    pickedArr:'',
+    getTextQuestionData:''
 },
  mutations : {
     newTitle(state,item){
@@ -28,6 +30,12 @@ export default new Vuex.Store({
     },
     getDisplay(state,item){
         state.Display = item;
+    },
+    pickedArr(state,item){
+        state.pickedArr = item;
+    },
+    getTextQuestionData(state,item){
+        state.getTextQuestionData = item;
     }
 },
  plugins: [createPersistedState()]
