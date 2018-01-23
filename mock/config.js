@@ -50,7 +50,11 @@ const config = {
   '/api/menu/logOut': {
     method: 'logOut',
     data: './logOut.json'
-  }
+  },
+  '/api/menu/comment': {
+    method: 'get',
+    data: './comment.json'
+  },
 };
 
 for(let item in config) {
