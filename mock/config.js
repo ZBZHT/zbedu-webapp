@@ -51,9 +51,9 @@ const config = {
     method: 'logOut',
     data: './logOut.json'
   },
-  '/api/menu/comment': {
+  '/api/menu/comments': {
     method: 'get',
-    data: './comment.json'
+    data: './comments.json'
   },
 };
 
