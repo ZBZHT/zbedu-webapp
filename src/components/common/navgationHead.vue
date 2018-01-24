@@ -79,9 +79,13 @@ export default {
   methods: {
       logOut(){
           /*删除cookie*/
-           axios.post("http://192.168.2.251:8000/api/user/logout").then((res)=>{
+           axios({
+                method: 'post',
+                url: 'http://192.168.2.251:8000/api/user/logout',
+                withCredentials: true
+                }).then((res)=>{
                         if(res.data.code == 3){
-                            delCookie('username');
+                        //    delCookie('username');
                             this.username = '';
                             this.password = '';
                             this.nickName = '';
