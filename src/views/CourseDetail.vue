@@ -24,62 +24,70 @@
             <p class="courseDescribe" >{{ noTree.describe }}</p>
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
+
+            <!--<div>-->
+            <!--<p v-for="bb in commentArr">{{bb}}</p>-->
+            <!--<hr>-->
+            <!--<p v-for="cc in replyArr">{{cc}}</p>-->
+            <!--<hr>-->
+            <!--<p v-for="dd in replyToReplyArr">{{dd}}</p>-->
+            <!--</div>-->
+
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
-            <p v-show="!commentObjArr.length">暂无评价</p>
+            <p v-show="!commentArr.length">暂无评价</p>
             <div class="comment-box">
-              <div v-for="(commentObj,index) in commentObjArr" >
+              <div v-for="(commentItem,index) in commentArr" v-show="commentItem.commentTitle === noTree.title">
                 <div class="text-box">
-                  <p>用户名：<a href="#" title="用户名">{{ commentObj.user }}</a></p>
-                  <p>{{commentObj.comment}}</p>
+                  <p @click="enterUserManagement" >用户名：<a href="">{{ commentItem.commentUser  }}</a></p>
+                  <p >{{commentItem.commentText}}</p>
                 </div>
                 <div class="msg-box">
-                  <p class="time-box">时间：{{ commentObj.commentTime }}</p>
-                  <ul class="star">
-                    <span  :class="{'on': commentObj.commentScore>=0}"class="star-item" >
+                  <p class="time-box">时间：{{ commentItem.commentTime }}</p>
+                  <p class="star">
+                      <span  :class="{'on': commentItem.commentScore>=0}"class="star-item" >
                       </span>
-                    <span  :class="{'on': commentObj.commentScore>=1}" class="star-item" >
+                    <span  :class="{'on': commentItem.commentScore>=1}" class="star-item" >
                       </span>
-                    <span  :class="{'on': commentObj.commentScore>=2}" class="star-item" >
+                    <span  :class="{'on': commentItem.commentScore>=2}" class="star-item" >
                       </span>
-                    <span  :class="{'on': commentObj.commentScore>=3}" class="star-item" >
+                    <span  :class="{'on': commentItem.commentScore>=3}" class="star-item" >
                       </span>
-                    <span  :class="{'on': commentObj.commentScore>=4}" class="star-item" >
+                    <span  :class="{'on': commentItem.commentScore>=4}" class="star-item" >
                       </span>
-                  </ul>
-                  <p class="replyNum" @click="wantReply(commentObj,index)"><a href="#">回复（{{commentObj.replyArr.length}}）</a></p>
+                  </p>
+                  <p class="replyNum" @click="wantReply(commentItem,index)"><a href="#">回复</a></p>
                 </div>
                 <div class="reply-msg-box">
-                  <ul v-show="commentObj.replyArr">
-                    <li v-for="(item,index1) in commentObj.replyArr">
-                      <span>{{item.replyUser}}:</span>
-                      <span>{{item.replyText}}</span>
+                  <ul v-show="replyArr.length">
+                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.commentUser && replyItem.commentTitle ===noTree.title">
+                      <span>{{replyItem.commentUser}}：</span>
+                      <span>{{replyItem.commentText}}</span>
                       <div class="replyTime-box">
-                        <p>{{item.replyTime}}</p>
-                        <p @click="replyToReply(item,index1)"><a href="#">回复</a></p>
+                        <p>{{replyItem.commentTime}}</p>
+                        <p @click="replyToReply(replyItem,index)"><a href="#">回复</a></p>
                       </div>
+
                       <div class="replyToReply-box">
-                        <ul v-show="item.replyToReplyArr">
-                          <li v-for="(replyItem,index) in item.replyToReplyArr">
-                            <span>{{replyItem.replyToReplyUser}}  回复   {{ item.replyUser }}</span>
-                            <span>{{replyItem.replyToReplyText}}</span>
-                            <p>{{replyItem.replyToReplyTime}}</p>
+                        <ul v-show="replyToReplyArr.length">
+                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.commentUser && replytoReplyItem.commentTitle ===noTree.title">
+                            <span>{{replytoReplyItem.commentUser}}  回复   {{ replyItem.commentUser }}</span>
+                            <span>{{replytoReplyItem.commentText}}</span>
+                            <p>{{replytoReplyItem.commentTime}}</p>
                           </li>
                         </ul>
                       </div>
-
-                      <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index1))">
+                      <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
 
                         <textarea type="text" v-model="replyToReplyText"></textarea>
 
-                        <button @click="submitReplyToReply(item)">回复他</button>
+                        <button @click="submitReplyToReply(replyItem)">回复他</button>
                       </div>
-
                     </li>
                   </ul>
                 </div>
                 <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
                   <textarea type="text" v-model="replyText"></textarea>
-                  <button @click="submitReply(commentObj,index)">提交回复</button>
+                  <button @click="submitReply(commentItem,index)">提交回复</button>
                 </div>
                 <hr>
               </div>
@@ -151,20 +159,25 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     data () {
       return {
         currentIndex: 0,
+        currentCoursrTitle:'',
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
+
+        commentAllObj:[],
+        commentArr:[],
+        replyArr:[],
+        replyToReplyArr:[],
+
+
         currentMsg:'',
-        commentObjArr:[],
         appraiseMsg: '全部评价',
-        comment:'',
-        commentTime:'',
-        commentScore:'',
+        // comment:'',
+        // commentTime:'',
+        // commentScore:'',
         inputdata: 0,
         arrData: ['一星', '两星', '三星', '四星', '五星'],
         currentdate: '',
         isAppearCommentBox: false,
         isAppearCommentBox1: false,
-        replyArr:[],
-        replyToReplyArr:[],
         text:'',
         replyText:'',
         replyToReplyText:'',
@@ -176,6 +189,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     },
     computed:{
       noTree(){
+        this.currentCoursrTitle = this.$store.state.noTree.title
         return this.$store.state.noTree;
       }
     },
@@ -188,6 +202,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         if (this.currentIndex === 2) {
           this.$router.push({path: '/playVideo'})
         }
+      },
+      enterUserManagement () {
+        this.$router.push('/userManagement')
       },
       dele: function (index) {
         this.replyArr.splice(index, 1)
@@ -210,24 +227,35 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
             + ' ' + date.getHours() + seperator2 + date.getMinutes()
             + seperator2 + date.getSeconds()
-          this.commentObjArr.push({
+          this.score = this.inputdata
+          // console.log(999999)
+          // console.log(this.commentAllObj)
+          // this.commentAllObj.push({
+          //   type:1,
+          //   commentTitle: 2222,
+          //   commentUser:this.user,
+          //   commentText:this.text,
+          //   commentTime:this.currentdate,
+          //   commentScore:this.inputdata,
+          // })
+          this.commentArr.push({
+            type:1,
+            commentTitle: this.appraiseMsg,
+            commentUser:this.user,
             commentText:this.text,
             commentTime:this.currentdate,
             commentScore:this.inputdata,
-            commentUser:this.user,
-            replyArr:[]
           })
           this.text = ''
-          // console.log(this.arr)
         }
       },
       wantReply(item,num){
 
         this.currentReplyOpen = num
-        this.isAppearCommentBox = !this.isAppearCommentBox
+        this.isAppearCommentBox = true
+        // this.isAppearCommentBox = !this.isAppearCommentBox
       },
       submitReply(item,aa) {
-
         var date = new Date()
         var seperator1 = '-'
         var seperator2 = ':'
@@ -244,16 +272,23 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           + seperator2 + date.getSeconds()
         // console.log(item.replyArr)
         // console.log(item)
-        item.replyArr.push({
-          replyText:this.replyText,
-          replyTime:this.replyTime,
-          replyUser:this.user})
+        this.replyArr.push({
+          type:2,
+          commentTitle:this.appraiseMsg,
+          commentUser:this.user,
+          commentText:this.replyText,
+          commentTime:this.replyTime,
+          commentScore:'',
+          target:item.commentUser
+        })
+        this.currentReplyOpen = -1
         this.replyText = ''
       },
       replyToReply(item, num){
         this.currentReplyToReply = num
-        this.isAppearCommentBox1 = !this.isAppearCommentBox1
-        alert(num)
+        this.isAppearCommentBox1 = true
+        // this.isAppearCommentBox1 = !this.isAppearCommentBox1
+        // alert(num)
       },
       submitReplyToReply (item){
 
@@ -271,26 +306,47 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
           + ' ' + date.getHours() + seperator2 + date.getMinutes()
           + seperator2 + date.getSeconds()
-        item.replyToReplyArr.push({
-          replyToReplyUser: this.user,
-          replyToReplyTime:this.replyToReplyTime,
-          replyToReplyText:this.replyToReplyText
+        this.replyToReplyArr.push({
+          type:3,
+          commentTitle:this.appraiseMsg,
+          commentUser: this.user,
+          commentText: this.replyToReplyText,
+          commentTime: this.replyToReplyTime,
+          commentScore:'',
+          target:item.commentUser
+
         })
         this.replyToReplyText = ''
-        console.log(item)
+        // console.log(item)
+        this.currentReplyToReply = -1
       }
     },
     mounted(){
       this.user = getCookie('username');
-      axios.get("/api/menu/comment",{
+      // axios.get("/api/menu/comments",{
+      axios.get("http://192.168.2.251:8000/readJson/comments",{
         params:{
-          user:3333
+          user:6666
         }
       }).then((res)=>{
         console.log(res.data.msg)
-        console.log(res.data.result)
-        this.commentObjArr = res.data.result
-        console.log(222222222)
+        // console.log(res.data.result)
+        this.commentAllObj = res.data.result
+        for (var i=0;i<this.commentAllObj.length; i++){
+          if (this.commentAllObj[i].type === "1"){
+            // console.log(this.commentAllObj[i])
+            this.commentArr.push(this.commentAllObj[i])
+          }
+          if (this.commentAllObj[i].type === "2"){
+            // console.log(this.commentAllObj[i])
+            this.replyArr.push(this.commentAllObj[i])
+          }
+          if (this.commentAllObj[i].type === "3"){
+            // console.log(this.commentAllObj[i])
+            this.replyToReplyArr.push(this.commentAllObj[i])
+          }
+        }
+        // console.log(this.qqqq)
       }).catch(function(error){
         console.log("评论请求错误")
       });
