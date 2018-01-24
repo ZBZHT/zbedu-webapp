@@ -196,28 +196,38 @@ export default {
     }
   },
   mounted(){
-      this.user = getCookie('username');
-      modalEventBind(this.$refs.modal);
+         this.user = getCookie('username');
+         modalEventBind(this.$refs.modal);
+         this.picked = this.$store.state.pickedArr;
+         this.textQuestionData = this.$store.state.getTextQuestionData;
     },
   watch: {
-    second:{
-        handler(newVal){
-            this.num(newVal)
+        second:{
+            handler(newVal){
+                this.num(newVal)
+            }
+        },
+        minute:{
+            handler(newVal){
+                this.num(newVal)
+            }
         }
     },
-    minute:{
-        handler(newVal){
-            this.num(newVal)
-        }
-    }
-    },
+  computed:{
+      pickedArr(){
+          return this.$store.state.pickedArr;
+      },
+      getTextQuestionData(){
+          return this.$store.state.getTextQuestionData;
+      }
+    },  
   methods:{
             submit:function () {
                 this.sorce=0;
                 this.error = [];
-           //     var _this = this;
-          //      _this.answer = !_this.answer;
-           //     alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
+            //     var _this = this;
+            //      _this.answer = !_this.answer;
+            //     alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
             //    this.submits = true;
             console.log(this.QidArr.length+"===this.QidArr.length");
             for(var i = 0;i < this.QidArr.length;i++){
@@ -289,6 +299,7 @@ export default {
                         return;
                     }
                     this.textQuestionData = res.data.result;
+                    this.$store.commit('getTextQuestionData',this.textQuestionData);
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
@@ -310,6 +321,7 @@ export default {
                 this.QidArr[index] = id;
                 console.log(this.QidArr);
                 this.$set(this.isCheckArr,index,true);
+                this.$store.commit('pickedArr',this.picked);
             },
             tip(index){
                 this.$set(this.classItem,index,true)
