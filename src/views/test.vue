@@ -198,8 +198,16 @@ export default {
   mounted(){
          this.user = getCookie('username');
          modalEventBind(this.$refs.modal);
-         this.picked = this.$store.state.pickedArr;
+         this.hours = this.$store.state.testStartTime;
+         this.minute = this.$store.state.testStartTimeMinute;
+         this.second = this.$store.state.testStartTimeSecond;
+         this.dispear = this.$store.state.startBtnDispear;
          this.textQuestionData = this.$store.state.getTextQuestionData;
+         this.picked = this.$store.state.pickedArr;
+         this.minutes = this.$store.state.testTimeMinutes;
+         this.seconds = this.$store.state.testTimeSeconds;
+         this.isCheckNum = this.$store.state.CheckNum;
+       //  this.isCheckArr = this.$store.state.CheckArr;
     },
   watch: {
         second:{
@@ -220,7 +228,7 @@ export default {
       getTextQuestionData(){
           return this.$store.state.getTextQuestionData;
       }
-    },  
+    },
   methods:{
             submit:function () {
                 this.sorce=0;
@@ -244,6 +252,19 @@ export default {
                 }
             }
             alert(this.sorce + "==" + this.error + "==" + this.null);
+
+            this.$store.commit('testStartTime','');
+            this.$store.commit('testStartTimeMinute','');
+            this.$store.commit('testStartTimeSecond','');
+            this.$store.commit('startBtnDispear',true);
+            this.$store.commit('getTextQuestionData','');
+            this.$store.commit('pickedArr',[]);
+            this.$store.commit('testTimeMinutes',120);
+            this.$store.commit('testTimeSeconds',0);
+            this.$store.commit('CheckNum',0);
+            console.log(this.picked+"/////");
+
+            this.$router.go(0);
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -270,9 +291,11 @@ export default {
                     if(_this.seconds < 10){
                     _this.seconds = "0" + _this.seconds;
                     }
+                    _this.$store.commit('testTimeMinutes',_this.minutes);
+                    _this.$store.commit('testTimeSeconds',_this.seconds);
 
                  },1000);
-                
+
                  _this.dispear = !_this.dispear;
                  _this.nowTime = new Date();
                  _this.hours = _this.nowTime.getHours();
@@ -284,8 +307,10 @@ export default {
                  if(_this.second < 10){
                      _this.second = "0" + _this.second;
                  }
-
-
+                 _this.$store.commit('testStartTime',_this.hours);
+                 _this.$store.commit('testStartTimeMinute',_this.minute);
+                 _this.$store.commit('testStartTimeSecond',_this.second);
+                 _this.$store.commit('startBtnDispear',_this.dispear);
             },
             getTest(e){
                 axios.get("http://192.168.2.251:8000/readJson/testQuestion"+e,{
@@ -305,22 +330,16 @@ export default {
                 });
             },
             getStatic(){
-                axios.get("http://192.168.2.251:8000/readJson/testQuestion106",{
-                    params:{
-                        user:178
-                    }
-                }).then((res)=>{
-                    this.userMessageData = res.data.result;
-                    this.$store.commit('getUserMessage',this.userMessageData);
-                }).catch(function(error){
-                    console.log("error init." + error)
-                });
+           
             },
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
                 console.log(this.QidArr);
+                this.isCheckNum += 1;
+                this.$store.commit('CheckNum',this.isCheckNum);
                 this.$set(this.isCheckArr,index,true);
+                this.$store.commit('CheckArr',this.isCheckArr);
                 this.$store.commit('pickedArr',this.picked);
             },
             tip(index){
@@ -346,7 +365,7 @@ export default {
             },
             DisplayFun(){
                 this.Display = true;
-                this.$store.commit('getDisplay',this.Display);      
+                this.$store.commit('getDisplay',this.Display);
             },
             getDisplayFun(){
                 this.Display = false;
