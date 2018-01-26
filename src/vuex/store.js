@@ -10,7 +10,7 @@ export default new Vuex.Store({
     course:'',
     noTree:{},
     session:{},
-    userMessage:'',
+    userMessage:[],
     Display:'',
     pickedArr:{},
     getTextQuestionData:'',
@@ -35,7 +35,7 @@ export default new Vuex.Store({
         state.session = item;
     },
     getUserMessage(state,item){
-        state.userMessage = item;
+        state.userMessage.push(item);
     },
     getDisplay(state,item){
         state.Display = item;

@@ -104,32 +104,14 @@
                 <li class="testState">状态</li>
                 <li class="testGrade">分数</li>
             </ul>
-            <ul class="testLine">
+            <ul class="testLine" v-for="(item,index) in userMessageData">
                 <li class="testNumber">1</li>
                 <li class="testTime">xx.xx</li>
                 <li class="testTitle">
-                    <a @click="simplePrompt();getStatic();DisplayFun()">
+                    <a @click="simplePrompt();getStatic()">
                         汽车电气
+                        <modal ref="modal" @receive="modal"></modal>
                     </a>
-                    <modal ref="modal" @receive="modal"></modal>
-                </li>
-                <li class="testState">已结束</li>
-                <li class="testGrade">50</li>
-                <li class="errAnalysis">
-                    <a @click="simplePrompt();getStatic();getDisplayFun()">
-                        错题分析
-                    </a>
-                    <modal ref="modal" @receive="modal"></modal>
-                </li>
-            </ul>
-            <ul class="testLine">
-                <li class="testNumber">2</li>
-                <li class="testTime">xx.xx</li>
-                <li class="testTitle">
-                    <a @click="simplePrompt();getStatic();getDisplayFun()">
-                        汽车电气
-                    </a>
-                    <modal ref="modal" @receive="modal"></modal>
                 </li>
                 <li class="testState">已结束</li>
                 <li class="testGrade">50</li>
@@ -188,7 +170,7 @@ export default {
         classItem:{},
         QidArr:[],
         null:[],
-        userMessageData:'',
+        userMessageData:[],
         picked:[],
         Display:false,
         lengthData:''
@@ -208,6 +190,7 @@ export default {
          this.seconds = this.$store.state.testTimeSeconds;
          this.isCheckNum = this.$store.state.CheckNum;
        //  this.isCheckArr = this.$store.state.CheckArr;
+         this.userMessageData = this.$store.state.userMessage;
     },
   watch: {
         second:{
@@ -237,34 +220,46 @@ export default {
             //      _this.answer = !_this.answer;
             //     alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
             //    this.submits = true;
-            console.log(this.QidArr.length+"===this.QidArr.length");
-            for(var i = 0;i < this.QidArr.length;i++){
-                if(this.QidArr[i] != null && this. QidArr[i] != ''){
-                    console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
-                    if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
-                        this.sorce += 5;
+                console.log(this.QidArr.length+"===this.QidArr.length");
+                for(var i = 0;i < this.QidArr.length;i++){
+                    if(this.QidArr[i] != null && this. QidArr[i] != ''){
+                        console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
+                        if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
+                            this.sorce += 5;
+                        }else{
+                            this.error.push(i+1);
+                        }
                     }else{
-                        this.error.push(i+1);
+                        console.log(i+"123456");
+                        this.null.push(i+1);
                     }
-                }else{
-                    console.log(i+"123456");
-                    this.null.push(i+1);
                 }
-            }
-            alert(this.sorce + "==" + this.error + "==" + this.null);
+                alert(this.sorce + "==" + this.error + "==" + this.null);
 
-            this.$store.commit('testStartTime','');
-            this.$store.commit('testStartTimeMinute','');
-            this.$store.commit('testStartTimeSecond','');
-            this.$store.commit('startBtnDispear',true);
-            this.$store.commit('getTextQuestionData','');
-            this.$store.commit('pickedArr',[]);
-            this.$store.commit('testTimeMinutes',120);
-            this.$store.commit('testTimeSeconds',0);
-            this.$store.commit('CheckNum',0);
-            console.log(this.picked+"/////");
+                this.$store.commit('testStartTime','');
+                this.$store.commit('testStartTimeMinute','');
+                this.$store.commit('testStartTimeSecond','');
+                this.$store.commit('startBtnDispear',true);
+                this.$store.commit('getTextQuestionData','');
+                this.$store.commit('pickedArr',[]);
+                this.$store.commit('testTimeMinutes',120);
+                this.$store.commit('testTimeSeconds',0);
+                this.$store.commit('CheckNum',0);
+                console.log(this.picked+"/////");
+               // this.$router.go(0);
 
-            this.$router.go(0);
+                axios({
+                        method: 'post',
+                        url: 'http://192.168.2.251:8000/readJson/testQuestion101',
+                        data: {
+                            userMessageData: this.userMessageData
+                        }
+                        }).then((req,res)=>{
+                            console.log(res.data);
+                            console.log(req);
+                            
+                  })
+
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -325,12 +320,13 @@ export default {
                     }
                     this.textQuestionData = res.data.result;
                     this.$store.commit('getTextQuestionData',this.textQuestionData);
+                     this.$store.commit('getUserMessage',this.textQuestionData);
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
             },
             getStatic(){
-           
+                
             },
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
