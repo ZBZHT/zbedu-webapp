@@ -57,14 +57,13 @@ export default {
     }
   },
   mounted(){
-      axios.get("http://192.168.2.251:8000/readJson/index",{
+      axios.get("http://192.168.2.251:8000/readJson/bannerLeftData",{
                 params:{
-                     user:1
+                     user:234
                 }
             }).then((res)=>{
                 this.indexData = res.data;
-                this.navData = this.indexData.bannerLeftData;
-
+                this.navData = this.indexData;
             }).catch(function(error){
                 console.log("error init." + error)
             });
