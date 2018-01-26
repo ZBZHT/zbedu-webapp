@@ -59,7 +59,7 @@
                 </div>
                 <div class="reply-msg-box">
                   <ul v-show="replyArr.length">
-                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.commentUser && replyItem.commentTitle ===noTree.title">
+                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.commentUser && replyItem.commentTitle ===noTree.title && replyItem.targetId === commentItem.commentId">
                       <span>{{replyItem.commentUser}}：</span>
                       <span>{{replyItem.commentText}}</span>
                       <div class="replyTime-box">
@@ -69,7 +69,7 @@
 
                       <div class="replyToReply-box">
                         <ul v-show="replyToReplyArr.length">
-                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.commentUser && replytoReplyItem.commentTitle ===noTree.title">
+                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.commentUser && replytoReplyItem.commentTitle ===noTree.title && replytoReplyItem.targetId === replyItem.commentId">
                             <span>{{replytoReplyItem.commentUser}}  回复   {{ replyItem.commentUser }}</span>
                             <span>{{replytoReplyItem.commentText}}</span>
                             <p>{{replytoReplyItem.commentTime}}</p>
@@ -170,9 +170,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
         currentMsg:'',
         appraiseMsg: '全部评价',
-        // comment:'',
-        // commentTime:'',
-        // commentScore:'',
         inputdata: 0,
         arrData: ['一星', '两星', '三星', '四星', '五星'],
         currentdate: '',
@@ -240,11 +237,13 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           // })
           this.commentArr.push({
             type:1,
-            commentTitle: this.appraiseMsg,
+            commentId:this.commentAllObj.length,
+            commentTitle: this.currentCoursrTitle,
             commentUser:this.user,
             commentText:this.text,
             commentTime:this.currentdate,
             commentScore:this.inputdata,
+            targetId:''
           })
           this.text = ''
         }
@@ -274,12 +273,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         // console.log(item)
         this.replyArr.push({
           type:2,
-          commentTitle:this.appraiseMsg,
+          commentId:this.commentAllObj.length,
+          commentTitle:this.currentCoursrTitle,
           commentUser:this.user,
           commentText:this.replyText,
           commentTime:this.replyTime,
           commentScore:'',
-          target:item.commentUser
+          target:item.commentUser,
+          targetId:item.commentId
         })
         this.currentReplyOpen = -1
         this.replyText = ''
@@ -308,13 +309,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           + seperator2 + date.getSeconds()
         this.replyToReplyArr.push({
           type:3,
-          commentTitle:this.appraiseMsg,
+          commentId:this.commentAllObj.length,
+          commentTitle:this.currentCoursrTitle,
           commentUser: this.user,
           commentText: this.replyToReplyText,
           commentTime: this.replyToReplyTime,
           commentScore:'',
-          target:item.commentUser
-
+          target:item.commentUser,
+          targetId:item.commentId
         })
         this.replyToReplyText = ''
         // console.log(item)
@@ -323,8 +325,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     },
     mounted(){
       this.user = getCookie('username');
-      // axios.get("/api/menu/comments",{
-      axios.get("http://192.168.2.251:8000/readJson/comments",{
+      axios.get("/api/menu/comments",{
+      // axios.get("http://192.168.2.251:8000/readJson/comments",{
         params:{
           user:6666
         }

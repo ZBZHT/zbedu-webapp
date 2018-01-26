@@ -228,7 +228,7 @@
             + seperator2 + date.getSeconds()
           this.score = this.inputdata
           // console.log(999999)
-          console.log(this.commentAllObj)
+          console.log(this.commentAllObj.length)
           // this.commentAllObj.push({
           //   type:1,
           //   commentTitle: 2222,
@@ -237,16 +237,16 @@
           //   commentTime:this.currentdate,
           //   commentScore:this.inputdata,
           // })
-          // this.commentAllObj.push({
-          //   type:1,
-          //   commentId:this.commentAllObj.length,
-          //   commentTitle: this.currentCoursrTitle,
-          //   commentUser:this.user,
-          //   commentText:this.text,
-          //   commentTime:this.currentdate,
-          //   commentScore:this.inputdata,
-          //   targetId:''
-          // })
+          this.commentAllObj.push({
+            type:1,
+            commentId:this.commentAllObj.length,
+            commentTitle: this.currentCoursrTitle,
+            commentUser:this.user,
+            commentText:this.text,
+            commentTime:this.currentdate,
+            commentScore:this.inputdata,
+            targetId:''
+          })
           console.log(this.currentCoursrTitle)
           this.commentArr.push({
             type:1,
@@ -302,6 +302,17 @@
           + seperator2 + date.getSeconds()
         // console.log(item.replyArr)
         // console.log(item)
+        this.commentAllObj.push({
+          type:1,
+          commentId:this.commentAllObj.length,
+          commentTitle: this.currentCoursrTitle,
+          commentUser:this.user,
+          commentText:this.text,
+          commentTime:this.currentdate,
+          commentScore:this.inputdata,
+          targetId:''
+        })
+        console.log(this.commentAllObj.length)
         this.replyArr.push({
           type:2,
           commentId:this.commentAllObj.length,
@@ -342,6 +353,17 @@
         this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
           + ' ' + date.getHours() + seperator2 + date.getMinutes()
           + seperator2 + date.getSeconds()
+        this.commentAllObj.push({
+          type:1,
+          commentId:this.commentAllObj.length,
+          commentTitle: this.currentCoursrTitle,
+          commentUser:this.user,
+          commentText:this.text,
+          commentTime:this.currentdate,
+          commentScore:this.inputdata,
+          targetId:''
+        })
+        console.log(this.commentAllObj.length)
         this.replyToReplyArr.push({
           type:3,
           commentId:this.commentAllObj.length,
