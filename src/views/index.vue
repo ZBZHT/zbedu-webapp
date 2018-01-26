@@ -145,8 +145,18 @@ export default {
                 this.total = this.all.length;
                 this.bottomLeftData = this.indexData.bottomLeftData;
                 this.bottomRightData = this.indexData.bottomRightData;
-                this.bannerLeftData = this.indexData.bannerLeftData;
                 this.slides = this.indexData.slides;
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
+
+        axios.get("http://192.168.2.251:8000/readJson/bannerLeftData",{
+                params:{
+                     user:234
+                }
+            }).then((res)=>{
+                this.indexData = res.data;
+                this.bannerLeftData = this.indexData;
             }).catch(function(error){
                 console.log("error init." + error)
             });
