@@ -12,8 +12,17 @@ export default new Vuex.Store({
     session:{},
     userMessage:'',
     Display:'',
-    pickedArr:'',
-    getTextQuestionData:''
+    pickedArr:{},
+    getTextQuestionData:'',
+    testStartTime:'',
+    testStartTimeMinute:'',
+    testStartTimeSecond:'',
+    testTimeMinutes:'',
+    testTimeSeconds:'',
+    startBtnDispear:'',
+    CheckNum:0,
+    CheckArr:{}
+
 },
  mutations : {
     newTitle(state,item){
@@ -36,6 +45,30 @@ export default new Vuex.Store({
     },
     getTextQuestionData(state,item){
         state.getTextQuestionData = item;
+    },
+    testStartTime(state,item){
+        state.testStartTime = item;
+    },
+    testStartTimeMinute(state,item){
+        state.testStartTimeMinute = item;
+    },
+    testStartTimeSecond(state,item){
+        state.testStartTimeSecond = item;
+    },
+    testTimeMinutes(state,item){
+        state.testTimeMinutes = item;
+    },
+    testTimeSeconds(state,item){
+        state.testTimeSeconds = item;
+    },
+    startBtnDispear(state,item){
+        state.startBtnDispear = item;
+    },
+    CheckNum(state,item){
+        state.CheckNum = item;
+    },
+    CheckArr(state,item){
+        state.CheckArr = item;
     }
 },
  plugins: [createPersistedState()]
