@@ -25,13 +25,13 @@
           </div>
           <div class="appraise-box" v-show="this.currentIndex === 3">
 
-            <div>
-            <p v-for="bb in commentArr">{{bb}}</p>
-            <hr>
-            <p v-for="cc in replyArr">{{cc}}</p>
-            <hr>
-            <p v-for="dd in replyToReplyArr">{{dd}}</p>
-            </div>
+            <!--<div>-->
+            <!--<p v-for="bb in commentArr">{{bb}}</p>-->
+            <!--<hr>-->
+            <!--<p v-for="cc in replyArr">{{cc}}</p>-->
+            <!--<hr>-->
+            <!--<p v-for="dd in replyToReplyArr">{{dd}}</p>-->
+            <!--</div>-->
 
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
             <p v-show="!commentArr.length">暂无评价</p>
