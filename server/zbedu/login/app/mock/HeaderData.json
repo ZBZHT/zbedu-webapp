@@ -1,0 +1,175 @@
+{
+  "status": 0,
+  "msg": "header data a success",
+  "result": [
+    {
+      "navId": "dropMenu1",
+      "navName'": "教学中心",
+      "lev1Data": [
+        {
+          "title": "新能源汽车",
+          "href": "",
+          "children": [
+            {
+              "childrenTitle": "纯电动汽车",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "混合动力汽车",
+              "childrenHref": ""
+            }
+          ]
+        },
+        {
+          "title": "汽车发动机",
+          "href": "",
+          "children": [
+            {
+              "childrenTitle": "机械系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "电控系统",
+              "childrenHref": ""
+            }
+          ]
+        },
+        {
+          "title": "汽车底盘",
+          "href": "",
+          "children": [
+            {
+              "childrenTitle": "传动系",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "行驶系",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "制动系",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "转向系",
+              "childrenHref": ""
+            }
+          ]
+        },
+        {
+          "title": "汽车电气",
+          "href": "",
+          "children": [
+            {
+              "childrenTitle": "电源系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "点火系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "启动系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "照明系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "辅助电器系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "仪表系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "空调系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "信号系统",
+              "childrenHref": ""
+            },
+            {
+              "childrenTitle": "电子控制系统",
+              "childrenHref": ""
+            }
+          ]
+        },
+        {
+          "title": "汽车结构",
+          "href": "",
+          "children": [
+            {
+              "childrenTitle": "车身结构",
+              "childrenHref": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "navId": "dropMenu2",
+      "navName": "实训中心",
+      "lev1Data": [
+        {
+          "title": "教学设备",
+          "href": "",
+          "children": [
+
+          ]
+        },
+        {
+          "title": "智慧教室",
+          "href": "",
+          "children": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "navId": "dropMenu3",
+      "navName": "考试中心",
+      "lev1Data": [
+
+      ]
+    },
+    {
+      "navId": "dropMenu4",
+      "navName": "评价中心",
+      "lev1Data": [
+        {
+          "title": "课程评价",
+          "href": "",
+          "children": [
+
+          ]
+        },
+        {
+          "title": "教室评价",
+          "href": "",
+          "children": [
+
+          ]
+        },
+        {
+          "title": "设备评价",
+          "href": "",
+          "children": [
+
+          ]
+        }
+      ]
+    },
+    {
+      "navId": "dropMenu5",
+      "navName": "资源中心",
+      "lev1Data": [
+
+      ]
+    }
+  ]
+}

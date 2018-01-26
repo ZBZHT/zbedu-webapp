@@ -1,0 +1,96 @@
+{"status": 0,
+  "msg": "comments data a success",
+  "result": [
+    {
+      "type":"1",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"橘子1",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"2",
+      "target":""
+    },
+    {
+      "type":"2",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"葡萄🍇",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"2",
+      "target":"橘子1"
+    },
+    {
+      "type":"3",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"西瓜🍉",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"2",
+      "target":"葡萄🍇"
+    },
+    {
+      "type":"1",
+      "commentTitle":"安全操作与新车交接检查",
+      "commentUser":"橘子2",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"1",
+      "target":""
+    },
+    {
+      "type":"2",
+      "commentTitle":"安全操作与新车交接检查",
+      "commentUser":"apple",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"",
+      "target":"橘子2"
+    },
+    {
+      "type":"2",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"rose",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"",
+      "target":"橘子2"
+    },
+    {
+      "type":"3",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"柚子",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"",
+      "target":"apple"
+    },
+    {
+      "type":"1",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"橘子3",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"4",
+      "target":""
+    },
+    {
+      "type":"3",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"橘子",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"",
+      "target":"apple"
+    },
+    {
+      "type":"3",
+      "commentTitle":"动力电池系统故障检修",
+      "commentUser":"橘子",
+      "commentText":"不错，微课拍的很专业，也很详细",
+      "commentTime":"2017-12-12 10:20:36",
+      "commentScore":"",
+      "target":"apple"
+    }
+
+  ]
+}
