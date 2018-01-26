@@ -53,7 +53,7 @@
                   </div>
                   <div class="reply-msg-box">
                    <ul v-show="replyArr.length">
-                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.commentUser && replyItem.commentTitle ===noTree.title">
+                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.commentUser && replyItem.commentTitle ===noTree.title && replyItem.targetId === commentItem.commentId">
                       <span>{{replyItem.commentUser}}：</span>
                       <span>{{replyItem.commentText}}</span>
                       <div class="replyTime-box">
@@ -63,7 +63,7 @@
 
                       <div class="replyToReply-box">
                       <ul v-show="replyToReplyArr.length">
-                      <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.commentUser && replytoReplyItem.commentTitle ===noTree.title">
+                      <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.commentUser && replytoReplyItem.commentTitle ===noTree.title && replytoReplyItem.targetId === replyItem.commentId">
                         <span>{{replytoReplyItem.commentUser}}  回复   {{ replyItem.commentUser }}</span>
                         <span>{{replytoReplyItem.commentText}}</span>
                         <p>{{replytoReplyItem.commentTime}}</p>
@@ -155,6 +155,7 @@
         msg: '',
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
         commentAllObj:[],
+        qqqqArr:[],
         commentArr:[],
         replyArr:[],
         replyToReplyArr:[],
@@ -168,8 +169,6 @@
         isAppearCommentBox1: false,
         text:'',
         replyText:'',
-        // replyTime:'',
-        // replyToReplyTime:'',
         replyToReplyText:'',
         currentReplyOpen:-1,
         currentReplyToReply:-1
@@ -229,7 +228,7 @@
             + seperator2 + date.getSeconds()
           this.score = this.inputdata
           // console.log(999999)
-          // console.log(this.commentAllObj)
+          console.log(this.commentAllObj)
           // this.commentAllObj.push({
           //   type:1,
           //   commentTitle: 2222,
@@ -238,15 +237,46 @@
           //   commentTime:this.currentdate,
           //   commentScore:this.inputdata,
           // })
+          // this.commentAllObj.push({
+          //   type:1,
+          //   commentId:this.commentAllObj.length,
+          //   commentTitle: this.currentCoursrTitle,
+          //   commentUser:this.user,
+          //   commentText:this.text,
+          //   commentTime:this.currentdate,
+          //   commentScore:this.inputdata,
+          //   targetId:''
+          // })
           console.log(this.currentCoursrTitle)
           this.commentArr.push({
             type:1,
+            commentId:this.commentAllObj.length,
             commentTitle: this.currentCoursrTitle,
             commentUser:this.user,
             commentText:this.text,
             commentTime:this.currentdate,
             commentScore:this.inputdata,
+            targetId:''
           })
+
+          // axios({
+          //   method:'post',
+          //   url:'http://192.168.2.251:8000/readJson/comments',
+          //   data:{
+          //     type:1,
+          //     commentTitle: this.currentCoursrTitle,
+          //     commentUser:this.user,
+          //     commentText:this.text,
+          //     commentTime:this.currentdate,
+          //     commentScore:this.inputdata,
+          //   }
+          // }).then(
+          //   function (req,res) {
+          //     console.log(req)
+          //     console.log(res)
+          //   }
+          // )
+
           this.text = ''
         }
     },
@@ -274,12 +304,14 @@
         // console.log(item)
         this.replyArr.push({
           type:2,
+          commentId:this.commentAllObj.length,
           commentTitle:this.currentCoursrTitle,
           commentUser:this.user,
           commentText:this.replyText,
           commentTime:this.replyTime,
           commentScore:'',
-          target:item.commentUser
+          target:item.commentUser,
+          targetId:item.commentId
         })
         this.currentReplyOpen = -1
         this.replyText = ''
@@ -312,12 +344,14 @@
           + seperator2 + date.getSeconds()
         this.replyToReplyArr.push({
           type:3,
+          commentId:this.commentAllObj.length,
           commentTitle:this.currentCoursrTitle,
           commentUser: this.user,
           commentText: this.replyToReplyText,
           commentTime: this.replyToReplyTime,
           commentScore:'',
-          target:item.commentUser
+          target:item.commentUser,
+          targetId:item.commentId
 
         })
         this.replyToReplyText = ''
@@ -329,8 +363,8 @@
       this.user = getCookie('username');
 
 
-
-      axios.get("http://192.168.2.251:8000/readJson/comments",{
+      axios.get("/api/menu/comments",{
+      // axios.get("http://192.168.2.251:8000/readJson/comments",{
         params:{
           user:6666
         }
@@ -339,8 +373,6 @@
         // console.log(res.data.result)
         this.commentAllObj = res.data.result
         for (var i=0;i<this.commentAllObj.length; i++){
-
-
           if (this.commentAllObj[i].type === "1"){
             // console.log(this.commentAllObj[i])
             this.commentArr.push(this.commentAllObj[i])
