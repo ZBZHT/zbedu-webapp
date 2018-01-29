@@ -173,11 +173,12 @@ export default {
         userMessageData:[],
         picked:[],
         Display:false,
-        lengthData:''
-
+        lengthData:'',
+        url:''
     }
   },
   mounted(){
+         this.url = document.domain;
          this.user = getCookie('username');
          modalEventBind(this.$refs.modal);
          this.hours = this.$store.state.testStartTime;
@@ -246,19 +247,18 @@ export default {
                 this.$store.commit('testTimeSeconds',0);
                 this.$store.commit('CheckNum',0);
                 console.log(this.picked+"/////");
-               // this.$router.go(0);
+                this.$router.go(0);
 
-                axios({
-                        method: 'post',
-                        url: 'http://192.168.2.251:8000/readJson/testQuestion101',
-                        data: {
-                            userMessageData: this.userMessageData
-                        }
-                        }).then((req,res)=>{
-                            console.log(res.data);
-                            console.log(req);
-                            
-                  })
+//                axios({
+//                        method: 'post',
+//                        url: 'http://" + this.url + ":8000/readJson/testQuestion101',
+//                        data: {
+//                            userMessageData: this.userMessageData
+//                        }
+//                        }).then((req,res)=>{
+//                            console.log(res.data);
+//                            console.log(req);                            
+//                  })
 
             },
             num:function (n) {
@@ -308,7 +308,7 @@ export default {
                  _this.$store.commit('startBtnDispear',_this.dispear);
             },
             getTest(e){
-                axios.get("http://192.168.2.251:8000/readJson/testQuestion"+e,{
+                axios.get("http://" + this.url + ":8000/readJson/testQuestion"+e,{
                     params:{
                         testId: e,
                         num: 30,

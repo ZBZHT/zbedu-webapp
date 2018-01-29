@@ -31,8 +31,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 show: false,
                 username: '',
                 password:'',
-                nickName:''
+                nickName:'',
+                url:''
             }
+        },
+        mounted(){
+            this.url = document.domain;
         },
         methods: {
             login(){
@@ -41,7 +45,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 }else{
                     axios({
                         method: 'post',
-                        url: 'http://192.168.2.251:8000/api/user/login',
+                        url: 'http://" + this.url + ":8000/api/user/login',
                         data: {
                             username: this.username,
                             password: this.password
@@ -51,16 +55,16 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                             console.log(res.data);
                         /*传值是 0:登陆成功, 1: 已登陆, 2:用户名或密码错误 */
                         if(res.data.code == 0){
-                            setCookie('username',this.username)
+                        //    setCookie('username',this.username)
                                 setTimeout(function(){
-                                    this.nickName = document.userName;
+                                    this.nickName = res.data.username;
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/testCenter');
                                 }.bind(this),0.1)
                         }else if(res.data.code == 1){
-                            setCookie('username',this.username)
+                        //    setCookie('username',this.username)
                                 setTimeout(function(){
-                                    this.nickName = document.userName;
+                                    this.nickName = res.data.username;
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
                                 }.bind(this),0.1)

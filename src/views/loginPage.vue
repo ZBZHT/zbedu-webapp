@@ -27,11 +27,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 show: false,
                 username: '',
                 password:'',
-                nickName:''
+                nickName:'',
+                url:''
             }
         },
         mounted(){
-            
+            this.url = document.domain;
         },
         methods: {
             login(){
@@ -40,7 +41,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 }else{
                     axios({
                         method: 'post',
-                        url: 'http://192.168.2.251:8000/api/user/login',
+                        url: 'http://" + this.url + ":8000/api/user/login',
                         data: {
                             username: this.username,
                             password: this.password

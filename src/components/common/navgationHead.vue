@@ -53,11 +53,13 @@ export default {
       phText:true,
       phPassword:true,
       nickName:'',
-      currentNavData: ''
+      currentNavData: '',
+      url:''
     }
   },
   mounted(){
-      axios.get("http://192.168.2.251:8000/readJson/bannerLeftData",{
+      this.url = document.domain;
+      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
                      user:234
                 }
@@ -80,10 +82,11 @@ export default {
           /*删除cookie*/
            axios({
                 method: 'post',
-                url: 'http://192.168.2.251:8000/api/user/logout',
+                url: 'http://' + this.url + ':8000/api/user/logout',
                 withCredentials: true
                 }).then((res)=>{
                         if(res.data.code == 3){
+                            console.log(res.data.code);
                         //    delCookie('username');
                             this.username = '';
                             this.password = '';

@@ -4,6 +4,7 @@ const router = express.Router();
 const config = require('../app/mock/config.js');
 const HeaderData = require('../app/mock/HeaderData.json');
 const index = require('../app/mock/index.json');
+const bannerLeftData = require('../app/mock/bannerLeftData.json');
 const login = require('../app/mock/login.json');
 const logOut = require('../app/mock/logOut.json');
 const test = require('../app/mock/test.json');
@@ -65,6 +66,10 @@ router.get('/HeaderData', function (req, res) {
 router.get('/index', function (req, res) {
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(index));
+});
+router.get('/bannerLeftData', function (req, res) {
+    res.setHeader("Content-Type", "application/json");
+    res.end(JSON.stringify(bannerLeftData));
 });
 router.get('/login', function (req, res) {
     res.setHeader("Content-Type", "application/json");

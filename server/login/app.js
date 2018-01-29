@@ -38,7 +38,7 @@ app.use(session({
     cookie: {maxAge: 1000*60*30 }, //设置maxAge是30分钟
     resave: false,
     saveUninitialized: false,      // 是否自动保存未初始化的会话
-    store: new MongoStore({ url: 'mongodb://192.168.2.251/db' })//设置数据库
+    store: new MongoStore({ url: 'mongodb://127.0.0.1/db' })//设置数据库
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));

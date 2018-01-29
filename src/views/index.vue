@@ -104,11 +104,12 @@ export default {
       page:1,//当前页码
       currentPages:'',
       slides: [],
-        inv: 3000,
-        styleObject: {
+      inv: 3000,
+      styleObject: {
           width: '795px',
           height: '384px'
-        }
+        },
+      url:''
     }
   },
   computed:{
@@ -133,8 +134,8 @@ export default {
         },
   },
   mounted(){
-
-        axios.get("http://192.168.2.251:8000/readJson/index",{
+        this.url = document.domain;
+        axios.get("http://" + this.url + ":8000/readJson/index",{
                 params:{
                      user:123
                 }
@@ -150,7 +151,7 @@ export default {
                 console.log("error init." + error)
             });
 
-        axios.get("http://192.168.2.251:8000/readJson/bannerLeftData",{
+        axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
                      user:234
                 }

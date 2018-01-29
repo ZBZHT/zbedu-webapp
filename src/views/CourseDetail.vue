@@ -181,7 +181,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         replyTime:'',
         replyToReplyTime:'',
         currentReplyOpen:-1,
-        currentReplyToReply:-1
+        currentReplyToReply:-1,
+        url:''
       }
     },
     computed:{
@@ -324,9 +325,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       }
     },
     mounted(){
+      this.url = document.domain;
       this.user = getCookie('username');
-      axios.get("/api/menu/comments",{
-      // axios.get("http://192.168.2.251:8000/readJson/comments",{
+     // axios.get("/api/menu/comments",{
+        axios.get("http://" + this.url + ":8000/readJson/comments",{
         params:{
           user:6666
         }

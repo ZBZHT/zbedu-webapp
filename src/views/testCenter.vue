@@ -98,14 +98,16 @@ export default {
         styleObject: {
           width: '960px',
           height: '295px'
-        }
+        },
+        url:''
     }
   },
   created(){
      
   },
   mounted(){
-      axios.get("/api/menu/index",{
+      this.url = document.domain;
+      axios.get("http://" + this.url + ":8000/readJson/index",{
                 params:{
                      user:123
                 }

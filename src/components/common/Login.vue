@@ -40,7 +40,8 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 inputType: 'text',
                 username: '',
                 password:'',
-                nickName:''
+                nickName:'',
+                url:''
             }
         },
         created(){
@@ -78,6 +79,9 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                         }
                     )
                 },
+        mounted(){
+            this.url = document.domain;
+        },
         methods: {
             modal: function(message, title) {
                 if (typeof message === 'string') {
@@ -115,7 +119,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                     /*请求存有用户账号的json文件*/
                     axios({
                         method: 'post',
-                        url: 'http://192.168.2.251:8000/api/user/login',
+                        url: 'http://' + this.url + ':8000/api/user/login',
                         data: {
                             username: this.username,
                             password: this.password

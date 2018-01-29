@@ -7,7 +7,7 @@ const Session = require('../app/models/Session');
 let userInfo;
 router.use(function (req, res, next) {
     userInfo = {
-        code: '',//0:登录成功  1:已登录  2:用户名或密码错误 3:退出成功 4:未登录
+        code: ''//0:登录成功  1:已登录  2:用户名或密码错误 3:退出成功 4:未登录
     };
     next();
 });
@@ -23,25 +23,8 @@ router.all('*', function(req, res, next) {
     else  next();
 });
 
-/*router.post('/', function (req, res) {
-    if(req.session.userinfo) {
-        //已经登录
-        responseData.userInfo = {
-            code: 1
-        };
-        //sessDada = req.session.responseData;
-        //console.log(sessDada);
-        //res.end(JSON.stringify(responseData));
-        return res.end(JSON.stringify(responseData));
-
-    } else {
-        req.session.error='请先登陆';
-        return res.redirect('/user/login');
-    }
-});*/
-
 //login处理
-router.post('/user/login', function (req, res) {
+router.post('/user/login', checkNotLogin,  function (req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
@@ -72,13 +55,13 @@ router.post('/user/login', function (req, res) {
     })
     }
 });
-//如果登录了，是无法访问登录和注册页面的
+//判断是否是已登录状态
 function checkNotLogin(req, res, next) {
     let sessID = req.sessionID;
     //查询数据库中用户名是否存在,存在则登录
     //console.log(req.cookies);
     Session.findOne({
-        _id: sessID,
+        _id: sessID
     }).then(function (sessID) {
         //_id存在则更新此id
         if (sessID) {
@@ -96,7 +79,7 @@ function checkNotLogin(req, res, next) {
 }
 
 // 退出
-router.post('/user/logout',checkNotLogin, function (req, res) {
+router.post('/user/logout', function (req, res) {
     let ID = req.sessionID;
     let conditions = {_id: ID};
     Session.remove(conditions, function (error) {

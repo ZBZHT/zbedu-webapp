@@ -171,7 +171,8 @@
         replyText:'',
         replyToReplyText:'',
         currentReplyOpen:-1,
-        currentReplyToReply:-1
+        currentReplyToReply:-1,
+        url:''
       }
     },
     computed:{
@@ -261,7 +262,7 @@
 
           // axios({
           //   method:'post',
-          //   url:'http://192.168.2.251:8000/readJson/comments',
+          //   url:'http://" + this.url + ":8000/readJson/comments',
           //   data:{
           //     type:1,
           //     commentTitle: this.currentCoursrTitle,
@@ -382,11 +383,10 @@
       }
     },
     mounted(){
+      this.url = document.domain;
       this.user = getCookie('username');
-
-
       axios.get("/api/menu/comments",{
-      // axios.get("http://192.168.2.251:8000/readJson/comments",{
+      // axios.get("http://" + this.url + ":8000/readJson/comments",{
         params:{
           user:6666
         }
