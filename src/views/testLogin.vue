@@ -45,7 +45,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                 }else{
                     axios({
                         method: 'post',
-                        url: 'http://" + this.url + ":8000/api/user/login',
+                        url: 'http://' + this.url + ':8000/api/user/login',
                         data: {
                             username: this.username,
                             password: this.password
