@@ -229,15 +229,7 @@
             + seperator2 + date.getSeconds()
           this.score = this.inputdata
           // console.log(999999)
-          console.log(this.commentAllObj.length)
-          // this.commentAllObj.push({
-          //   type:1,
-          //   commentTitle: 2222,
-          //   commentUser:this.user,
-          //   commentText:this.text,
-          //   commentTime:this.currentdate,
-          //   commentScore:this.inputdata,
-          // })
+
           this.commentAllObj.push({
             type:1,
             commentId:this.commentAllObj.length,
@@ -259,6 +251,7 @@
             commentScore:this.inputdata,
             targetId:''
           })
+          console.log(this.commentAllObj.length)
 
           // axios({
           //   method:'post',
@@ -304,7 +297,7 @@
         // console.log(item.replyArr)
         // console.log(item)
         this.commentAllObj.push({
-          type:1,
+          type:2,
           commentId:this.commentAllObj.length,
           commentTitle: this.currentCoursrTitle,
           commentUser:this.user,
@@ -355,7 +348,7 @@
           + ' ' + date.getHours() + seperator2 + date.getMinutes()
           + seperator2 + date.getSeconds()
         this.commentAllObj.push({
-          type:1,
+          type:3,
           commentId:this.commentAllObj.length,
           commentTitle: this.currentCoursrTitle,
           commentUser:this.user,
