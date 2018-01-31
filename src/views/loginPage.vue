@@ -19,6 +19,7 @@
 
 <script>
 import axios from 'axios'
+import md5 from 'js-md5'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     export default {
         name: 'v-modal',
@@ -44,7 +45,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                         url: 'http://' + this.url + ':8000/api/user/login',
                         data: {
                             username: this.username,
-                            password: this.password
+                            password: md5(this.password)
                         },
                         withCredentials: true
                         }).then((res)=>{

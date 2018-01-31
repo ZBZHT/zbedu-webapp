@@ -91,10 +91,10 @@ export default {
                             this.username = '';
                             this.password = '';
                             this.nickName = '';
-                            this.$router.push('/');
                         }
                   });
            this.$store.commit('username','');
+           this.$router.push('/');
            this.$router.go(0);
       },
       prompt: function(message, title, callback, options) {
