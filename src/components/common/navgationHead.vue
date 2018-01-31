@@ -71,8 +71,8 @@ export default {
             });
 
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
-        if(getCookie('username')){
-            this.nickName = getCookie('username')
+        if(this.$store.state.username){
+            this.nickName = this.$store.state.username;
         };
 
          modalEventBind(this.$refs.modal);
@@ -93,7 +93,9 @@ export default {
                             this.nickName = '';
                             this.$router.push('/');
                         }
-                  })
+                  });
+           this.$store.commit('username','');
+           this.$router.go(0);
       },
       prompt: function(message, title, callback, options) {
             if (typeof title === 'function') {

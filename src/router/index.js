@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../vuex/store'
 import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index'
 import testCenter from '@/views/testCenter'
@@ -124,11 +125,12 @@ const router = new Router({
     routes,
     mode:'history'
 });
+var username = store.state.username;
 router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
     console.log("22");
-      if (!getCookie('username')){
+      if (!username){
             var con = confirm("请登录");
               if(con == true){
                   next({
@@ -151,7 +153,7 @@ router.beforeEach((to,from,next) => {
     next();
   };
   if (to.matched.some(res => res.meta.requireTest)) {
-      if (!getCookie('username')){
+      if (!username){
         var con = confirm("请登录");
           if(con == true){
               next({

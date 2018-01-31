@@ -13,12 +13,12 @@
                         <p> <img class="psw" src="../assets/psw.png"> </p>
                         <input type="password" placeholder="密码" v-model="password">
                     </div>
-                    <div class="btn"> 
+                    <div class="btn">
                         <button class="btnOk" @click="login">确定</button>
                         <button class="btnCancel" @click="cancel">返回</button>
                     </div>
                 </div>
-    </div>  
+    </div>
 </template>
 
 <script>
@@ -58,15 +58,19 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
                                     this.nickName = res.data.username;
+                                    this.$store.commit('username',res.data.username);
                                     this.$emit("receive",this.nickName);
-                                    this.$router.push('/testCenter');
+                                    this.$router.push('/');
+                                    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 1){
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
                                     this.nickName = res.data.username;
+                                    this.$store.commit('username',res.data.username);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
+                                    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
                             alert("用户名或密码错误");

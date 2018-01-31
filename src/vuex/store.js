@@ -7,6 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
  state : {
+    username:'',
     course:'',
     noTree:{},
     session:{},
@@ -69,6 +70,9 @@ export default new Vuex.Store({
     },
     CheckArr(state,item){
         state.CheckArr = item;
+    },
+    username(state,item){
+      state.username = item;
     }
 },
  plugins: [createPersistedState()]

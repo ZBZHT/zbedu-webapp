@@ -132,15 +132,19 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                  //           setCookie('username',this.username)
                                 setTimeout(function(){
                                     this.nickName = res.data.username;
+                                    this.$store.commit('username',res.data.username);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
+                                    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 1){
                 //            setCookie('username',this.username)
                                 setTimeout(function(){
                                     this.nickName = res.data.username;
+                                    this.$store.commit('username',res.data.username);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
+                                    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
                             alert("用户名或密码错误");
