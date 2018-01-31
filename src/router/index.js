@@ -13,6 +13,8 @@ import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
 import loginPage from '@/views/loginPage'
+import resourceCenter from '@/views/resourceCenter'
+
 // import userManagement from '@/views/UserManagement'
 import testLogin from '@/views/testLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
@@ -112,7 +114,12 @@ const routes = [
       path: '/testLogin',
       name: 'testLogin',
       component: testLogin
-    }
+    },
+  {
+    path:'/resourceCenter',
+    name:'resourceCenter',
+    component: resourceCenter
+  }
     // ,
     // {
     //   path:'/userManagement',
