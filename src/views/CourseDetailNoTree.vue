@@ -257,23 +257,26 @@
           })
           console.log(this.commentAllObj.length)
 
-          // axios({
-          //   method:'post',
-          //   url:'http://" + this.url + ":8000/readJson/comments',
-          //   data:{
-          //     type:1,
-          //     title: this.currentCoursrTitle,
-          //     user:this.user,
-          //     text:this.text,
-          //     time:this.currentdate,
-          //     score:this.inputdata,
-          //   }
-          // }).then(
-          //   function (req,res) {
-          //     console.log(req)
-          //     console.log(res)
-          //   }
-          // )
+          axios({
+            method:'get',
+            url:'http://192.168.2.251:8000/readComments/update',
+            params:{
+              type:1,
+              id:this.commentAllObj.length + 1,
+              title: this.currentCoursrTitle,
+              source:"course",
+              user:this.user,
+              text:this.text,
+              time:this.currentdate,
+              score:this.inputdata,
+              targetId:'',
+              target:''
+            }
+          }).then(
+            function (res) {
+              console.log(res.data.code)
+            }
+          )
 
           this.text = ''
         }
@@ -325,6 +328,29 @@
           target:item.user,
           targetId:item.id
         })
+
+        axios({
+          method:'get',
+          url:'http://192.168.2.251:8000/readComments/update',
+          params:{
+            type:2,
+            id:this.commentAllObj.length,
+            source:"course",
+            title:this.currentCoursrTitle,
+            user:this.user,
+            text:this.replyText,
+            time:this.replyTime,
+            score:'',
+            target:item.user,
+            targetId:item.id
+          }
+        }).then(
+          function (res) {
+            console.log(res.data.code)
+          }
+        )
+
+
         this.currentReplyOpen = -1
         this.replyText = ''
       },
@@ -380,6 +406,27 @@
           targetId:item.id
 
         })
+
+        axios({
+          method:'get',
+          url:"http://"+this.url+":8000/readComments/update",
+          params:{
+            type:3,
+            id:this.commentAllObj.length,
+            source:"course",
+            title:this.currentCoursrTitle,
+            user: this.user,
+            text: this.replyToReplyText,
+            time: this.replyToReplyTime,
+            score:'',
+            target:item.user,
+            targetId:item.id
+          }
+        }).then(
+          function (res) {
+            console.log(res.data.code)
+          }
+        )
         this.replyToReplyText = ''
         // console.log(item)
         this.currentReplyToReply = -1
@@ -389,27 +436,34 @@
       this.url = document.domain;
       this.user = getCookie('username');
       // axios.get("/api/menu/comments",{
-      axios.get("http://" + this.url + ":8000/readJson/comments",{
+      axios.get("http://"+this.url+":8000/readComments/all",{
         params:{
           user:6666
         }
       }).then((res)=>{
-        console.log(res.data.msg)
+        // console.log(res.data.msg)
         console.log(res.data.result)
         this.commentAllObj = res.data.result
+        // console.log(typeof this.commentAllObj)
+
+
         for (var i=0;i<this.commentAllObj.length; i++){
-          if (this.commentAllObj[i].type === "1"){
-            // console.log(this.commentAllObj[i])
-            this.commentArr.push(this.commentAllObj[i])
+          if (this.commentAllObj[i].title == this.currentCoursrTitle) {
+            if (this.commentAllObj[i].type == "1"){
+              // console.log(this.commentAllObj[i])
+              // console.log(i)
+              this.commentArr.push(this.commentAllObj[i])
+            }
+            if (this.commentAllObj[i].type == "2"){
+              // console.log(this.commentAllObj[i])
+              this.replyArr.push(this.commentAllObj[i])
+            }
+            if (this.commentAllObj[i].type == "3"){
+              // console.log(this.commentAllObj[i])
+              this.replyToReplyArr.push(this.commentAllObj[i])
+            }
           }
-          if (this.commentAllObj[i].type === "2"){
-            // console.log(this.commentAllObj[i])
-            this.replyArr.push(this.commentAllObj[i])
-          }
-          if (this.commentAllObj[i].type === "3"){
-            // console.log(this.commentAllObj[i])
-            this.replyToReplyArr.push(this.commentAllObj[i])
-          }
+
         }
         // console.log(this.qqqq)
       }).catch(function(error){
