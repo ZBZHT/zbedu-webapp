@@ -36,43 +36,43 @@
             <p class="appraiseTitle">{{ appraiseMsg }}</p>
             <p v-show="!commentArr.length">暂无评价</p>
             <div class="comment-box">
-              <div v-for="(commentItem,index) in commentArr" v-show="commentItem.commentTitle === noTree.title">
+              <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.title">
                 <div class="text-box">
-                  <p @click="enterUserManagement" >用户名：<a href="">{{ commentItem.commentUser  }}</a></p>
-                  <p >{{commentItem.commentText}}</p>
+                  <p @click="enterUserManagement" >用户名：<a href="">{{ commentItem.user  }}</a></p>
+                  <p >{{commentItem.text}}</p>
                 </div>
                 <div class="msg-box">
-                  <p class="time-box">时间：{{ commentItem.commentTime }}</p>
+                  <p class="time-box">时间：{{ commentItem.time }}</p>
                   <p class="star">
-                      <span  :class="{'on': commentItem.commentScore>=0}"class="star-item" >
+                      <span  :class="{'on': commentItem.score>=0}"class="star-item" >
                       </span>
-                    <span  :class="{'on': commentItem.commentScore>=1}" class="star-item" >
+                    <span  :class="{'on': commentItem.score>=1}" class="star-item" >
                       </span>
-                    <span  :class="{'on': commentItem.commentScore>=2}" class="star-item" >
+                    <span  :class="{'on': commentItem.score>=2}" class="star-item" >
                       </span>
-                    <span  :class="{'on': commentItem.commentScore>=3}" class="star-item" >
+                    <span  :class="{'on': commentItem.score>=3}" class="star-item" >
                       </span>
-                    <span  :class="{'on': commentItem.commentScore>=4}" class="star-item" >
+                    <span  :class="{'on': commentItem.score>=4}" class="star-item" >
                       </span>
                   </p>
                   <p class="replyNum" @click="wantReply(commentItem,index)"><a href="#">回复</a></p>
                 </div>
                 <div class="reply-msg-box">
                   <ul v-show="replyArr.length">
-                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.commentUser && replyItem.commentTitle ===noTree.title && replyItem.targetId === commentItem.commentId">
-                      <span>{{replyItem.commentUser}}：</span>
-                      <span>{{replyItem.commentText}}</span>
+                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.id">
+                      <span>{{replyItem.user}}：</span>
+                      <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
-                        <p>{{replyItem.commentTime}}</p>
+                        <p>{{replyItem.time}}</p>
                         <p @click="replyToReply(replyItem,index)"><a href="#">回复</a></p>
                       </div>
 
                       <div class="replyToReply-box">
                         <ul v-show="replyToReplyArr.length">
-                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.commentUser && replytoReplyItem.commentTitle ===noTree.title && replytoReplyItem.targetId === replyItem.commentId">
-                            <span>{{replytoReplyItem.commentUser}}  回复   {{ replyItem.commentUser }}</span>
-                            <span>{{replytoReplyItem.commentText}}</span>
-                            <p>{{replytoReplyItem.commentTime}}</p>
+                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.id">
+                            <span>{{replytoReplyItem.user}}  回复   {{ replyItem.user }}</span>
+                            <span>{{replytoReplyItem.text}}</span>
+                            <p>{{replytoReplyItem.time}}</p>
                           </li>
                         </ul>
                       </div>
@@ -229,22 +229,26 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           // console.log(999999)
           this.commentAllObj.push({
             type:1,
-            commentId:this.commentAllObj.length,
-            commentTitle: this.currentCoursrTitle,
-            commentUser:this.user,
-            commentText:this.text,
-            commentTime:this.currentdate,
-            commentScore:this.inputdata,
-            targetId:''
+            id:this.commentAllObj.length,
+            source:"course",
+            title: this.currentCoursrTitle,
+            user:this.user,
+            text:this.text,
+            time:this.currentdate,
+            score:this.inputdata,
+            targetId:'',
+            target:''
           })
           this.commentArr.push({
             type:1,
-            commentId:this.commentAllObj.length,
-            commentTitle: this.currentCoursrTitle,
-            commentUser:this.user,
-            commentText:this.text,
-            commentTime:this.currentdate,
-            commentScore:this.inputdata,
+            id:this.commentAllObj.length,
+            source:"course",
+            title: this.currentCoursrTitle,
+            user:this.user,
+            text:this.text,
+            time:this.currentdate,
+            score:this.inputdata,
+            target:'',
             targetId:''
           })
           console.log(this.commentAllObj.length)
@@ -276,25 +280,28 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         // console.log(item)
         this.commentAllObj.push({
           type:2,
-          commentId:this.commentAllObj.length,
-          commentTitle: this.currentCoursrTitle,
-          commentUser:this.user,
-          commentText:this.text,
-          commentTime:this.currentdate,
-          commentScore:this.inputdata,
-          targetId:''
+          id:this.commentAllObj.length,
+          source:"course",
+          title: this.currentCoursrTitle,
+          user:this.user,
+          text:this.text,
+          time:this.currentdate,
+          score:this.inputdata,
+          target:item.user,
+          targetId:item.id
         })
         console.log(this.commentAllObj.length)
         this.replyArr.push({
           type:2,
-          commentId:this.commentAllObj.length,
-          commentTitle:this.currentCoursrTitle,
-          commentUser:this.user,
-          commentText:this.replyText,
-          commentTime:this.replyTime,
-          commentScore:'',
-          target:item.commentUser,
-          targetId:item.commentId
+          id:this.commentAllObj.length,
+          source:"course",
+          title:this.currentCoursrTitle,
+          user:this.user,
+          text:this.replyText,
+          time:this.replyTime,
+          score:'',
+          target:item.user,
+          targetId:item.id
         })
         this.currentReplyOpen = -1
         this.replyText = ''
@@ -324,25 +331,28 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
         this.commentAllObj.push({
           type:3,
-          commentId:this.commentAllObj.length,
-          commentTitle: this.currentCoursrTitle,
-          commentUser:this.user,
-          commentText:this.text,
-          commentTime:this.currentdate,
-          commentScore:this.inputdata,
-          targetId:''
+          id:this.commentAllObj.length,
+          source:"course",
+          title: this.currentCoursrTitle,
+          user:this.user,
+          text:this.text,
+          time:this.currentdate,
+          score:this.inputdata,
+          target:item.user,
+          targetId:item.id
         })
         console.log(this.commentAllObj.length)
         this.replyToReplyArr.push({
           type:3,
-          commentId:this.commentAllObj.length,
-          commentTitle:this.currentCoursrTitle,
-          commentUser: this.user,
-          commentText: this.replyToReplyText,
-          commentTime: this.replyToReplyTime,
-          commentScore:'',
-          target:item.commentUser,
-          targetId:item.commentId
+          id:this.commentAllObj.length,
+          source:"course",
+          title:this.currentCoursrTitle,
+          user: this.user,
+          text: this.replyToReplyText,
+          time: this.replyToReplyTime,
+          score:'',
+          target:item.user,
+          targetId:item.id
         })
         this.replyToReplyText = ''
         // console.log(item)
