@@ -1,0 +1,13 @@
+{
+    "status": 0,
+    "msg": "error parameter",
+    "result": {
+        "users": [
+            {
+                "id" : 1,
+                "username": "aaa",
+                "password": "aaa"
+            }
+        ]    
+    }
+}
