@@ -38,6 +38,12 @@ export default new Vuex.Store({
     getUserMessage(state,item){
         state.userMessage.push(item);
     },
+    userMessagePickedArr(state,item){
+        state.userMessage.push(item);
+    },
+    getUserMessageData(state,item){
+        state.userMessage = [];
+    },
     getDisplay(state,item){
         state.Display = item;
     },

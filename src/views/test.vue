@@ -104,24 +104,58 @@
                 <li class="testState">状态</li>
                 <li class="testGrade">分数</li>
             </ul>
-            <ul class="testLine" v-for="(item,index) in userMessageData">
-                <li class="testNumber">1</li>
+            <ul class="testLine" v-for="(item,index) in userMessageData" v-if="index % 2 == 0">
+                <li class="testNumber">{{index + 1}}</li>
                 <li class="testTime">xx.xx</li>
                 <li class="testTitle">
-                    <a @click="simplePrompt();getStatic()">
-                        汽车电气
-                        <modal ref="modal" @receive="modal"></modal>
+                    <a id="show-modal" @click="showModal=true">
+                        <p @click="myNum(index)">{{item.testId}}</p>
                     </a>
+                    <modal v-if="showModal" @close="showModal = false">
+                        <h3 slot="header">custom header</h3>
+                        <div slot="body">
+                            <div v-for="(item2,index2) in userMessageData[myNumber].question">
+                                <span class="desctitle">
+                                    {{item2.num}}.{{item2.desc}}
+                                </span>
+                                <ul class="ans">
+                                    <li>
+                                        <label for="11" v-if="item2.options[0]">
+                                            <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
+                                                {{item2.options[0]}}
+                                        </label>
+                                        <label for="22" v-if="item2.options[1]">
+                                            <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
+                                                {{item2.options[1]}}
+                                        </label>
+                                        <label for="33" v-if="item2.options[2]">
+                                            <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
+                                                {{item2.options[2]}}
+                                        </label>
+                                        <label for="44" v-if="item2.options[3]">
+                                            <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
+                                                {{item2.options[3]}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>    
+                        </div>
+                    </modal>
                 </li>
                 <li class="testState">已结束</li>
                 <li class="testGrade">50</li>
                 <li class="errAnalysis">
-                    <a @click="simplePrompt();getStatic()">
+                    <a id="show-modal1" @click="showModal1=true">
                         错题分析
                     </a>
-                    <modal ref="modal" @receive="modal"></modal>
+                    <modal v-if="showModal1" @close="showModal1 = false">
+                        <h3 slot="header">custom2333 header</h3>
+                        
+                    </modal>
                 </li>
             </ul>
+            <button @click="clearAll">删除所有记录</button>
+        
         </div>
     </div>
 </div>
@@ -131,9 +165,6 @@
 import axios from 'axios'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 import Modal from '@/components/testCenter/modal';
-import modalEventBind from '../assets/js/ModalEventBind';
-import EventBus from '../assets/js/EventBus';
-
 
 export default {
   name: 'test',
@@ -149,7 +180,7 @@ export default {
         dispear:true,
         answer:true,
         myAns:'',
-        myId:'',
+        myNumber:'',
         questionIndex:'',
         errorIndex:'',
         sorce:0,
@@ -174,13 +205,14 @@ export default {
         picked:[],
         Display:false,
         lengthData:'',
-        url:''
+        url:'',
+        showModal:false,
+        showModal1:false
     }
   },
   mounted(){
          this.url = document.domain;
          this.user = getCookie('username');
-         modalEventBind(this.$refs.modal);
          this.hours = this.$store.state.testStartTime;
          this.minute = this.$store.state.testStartTimeMinute;
          this.second = this.$store.state.testStartTimeSecond;
@@ -217,10 +249,6 @@ export default {
             submit:function () {
                 this.sorce=0;
                 this.error = [];
-            //     var _this = this;
-            //      _this.answer = !_this.answer;
-            //     alert("您的总分为：" + _this.sorce + ",错误的题有：" + _this.error);
-            //    this.submits = true;
                 console.log(this.QidArr.length+"===this.QidArr.length");
                 for(var i = 0;i < this.QidArr.length;i++){
                     if(this.QidArr[i] != null && this. QidArr[i] != ''){
@@ -237,17 +265,23 @@ export default {
                 }
                 alert(this.sorce + "==" + this.error + "==" + this.null);
 
-                this.$store.commit('testStartTime','');
-                this.$store.commit('testStartTimeMinute','');
-                this.$store.commit('testStartTimeSecond','');
-                this.$store.commit('startBtnDispear',true);
-                this.$store.commit('getTextQuestionData','');
-                this.$store.commit('pickedArr',[]);
-                this.$store.commit('testTimeMinutes',120);
-                this.$store.commit('testTimeSeconds',0);
-                this.$store.commit('CheckNum',0);
-                console.log(this.picked+"/////");
-                this.$router.go(0);
+                this.$store.commit('userMessagePickedArr',this.picked)
+
+                setTimeout(function(){
+                    this.$store.commit('testStartTime','');
+                    this.$store.commit('testStartTimeMinute','');
+                    this.$store.commit('testStartTimeSecond','');
+                    this.$store.commit('startBtnDispear',true);
+                    this.$store.commit('getTextQuestionData','');
+                    this.$store.commit('pickedArr',[]);
+                    this.$store.commit('testTimeMinutes',120);
+                    this.$store.commit('testTimeSeconds',0);
+                    this.$store.commit('CheckNum',0);
+                    console.log(this.picked+"/////");
+                    this.$router.go(0);
+                }.bind(this),0.1)
+
+                
 
 //                axios({
 //                        method: 'post',
@@ -320,13 +354,10 @@ export default {
                     }
                     this.textQuestionData = res.data.result;
                     this.$store.commit('getTextQuestionData',this.textQuestionData);
-                     this.$store.commit('getUserMessage',this.textQuestionData);
+                    this.$store.commit('getUserMessage',this.textQuestionData);
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
-            },
-            getStatic(){
-                
             },
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
@@ -338,26 +369,17 @@ export default {
                 this.$store.commit('CheckArr',this.isCheckArr);
                 this.$store.commit('pickedArr',this.picked);
             },
+            myNum:function(index){
+                this.myNumber = index;
+            },
             tip(index){
                 this.$set(this.classItem,index,true)
             },
             rightAppear (index) {
                 this.currIndex = index;
             },
-            prompt: function(message, title, callback, options) {
-                if (typeof title === 'function') {
-                    options = callback;
-                    callback = title;
-                    title = undefined;
-                }
-                EventBus.$emit('prompt', {message: message, title: title, callback: callback, options: options || {}});
-            },
-            simplePrompt() {
-                this.prompt((username) => {
-                    alert(username);
-                });
-            },
-            modal:function(){
+            clearAll(){
+                this.$store.commit('getUserMessageData',[]);
             },
             DisplayFun(){
                 this.Display = true;
@@ -587,5 +609,17 @@ a{
 }
 .errAnalysis a:hover{
     color:#f00;
+}
+.ans{
+    display:flex;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+.ans li{
+    margin-left:27px;
+    width: 100%;
+}
+.ans li :hover{
+    cursor:pointer;
 }
 </style>
