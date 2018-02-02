@@ -31,28 +31,6 @@ router.all('*', function (req, res, next) {
         next();
     }
 });
-// create
-/*function create() {
-    console.log('1');
-
-    let parentNode = Node.findOne({_id: '1234567890'});
-
-    let node = new Node({
-        parent: parentNode._id,
-        ancestors: parentNode.parent.concat(parentNode._id)
-    });
-    console.log('2');
-    let newNode = node.save();
-
-    Node.update({_id: parentNode._id}, {
-        $push: {children: newNode._id}
-    }).exec();
-    console.log('3');
-    return newNode
-}
-
-create(login);*/
-
 
 /* GET index.json */
 router.get('/config', function (req, res) {
@@ -84,6 +62,7 @@ router.get('/test', function (req, res) {
     res.end(JSON.stringify(test));
 });
 router.get('/comments', function (req, res) {
+  console.log(req);
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(comments));
 });

@@ -7,8 +7,6 @@ var MongoStore = require('connect-mongo')(session);
 var bodyParser = require('body-parser');//处理post请求
 var swig = require('swig');
 
-
-
 var bms = require('./routes/bms');
 //var login = require('./routes/login');
 var api = require('./routes/api');
@@ -16,6 +14,7 @@ var home1 = require('./routes/home1');
 var login1 = require('./routes/login1');
 var logout1 = require('./routes/login1');
 var readJson = require('./routes/readJson');
+var readComments = require('./routes/readComments');
 
 var app = express();
 
@@ -54,6 +53,7 @@ app.use('/home1', home1);
 app.use('/login1', login1);
 app.use('/logout1', logout1);
 app.use('/readJson', readJson);
+app.use('/readComments', readComments);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
