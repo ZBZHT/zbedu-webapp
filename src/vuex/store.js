@@ -12,6 +12,7 @@ export default new Vuex.Store({
     noTree:{},
     session:{},
     userMessage:[],
+    errorArr:[],
     Display:'',
     pickedArr:{},
     getTextQuestionData:'',
@@ -41,8 +42,20 @@ export default new Vuex.Store({
     userMessagePickedArr(state,item){
         state.userMessage.push(item);
     },
+    userMessageTime(state,item){
+        state.userMessage.push(item);
+    },
+    userMessageSorce(state,item){
+        state.userMessage.push(item);
+    },
     getUserMessageData(state,item){
         state.userMessage = [];
+    },
+    errorArrData(state,item){
+        state.errorArr.push(item); 
+    },
+    ClearErrorArrData(state,item){
+        state.errorArr = []; 
     },
     getDisplay(state,item){
         state.Display = item;
