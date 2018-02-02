@@ -15,11 +15,18 @@
       <form action="http://192.168.2.251:8000/FileUpDown/download" method="get">
         <button type="submit">下载文件</button>
       </form>
+      <br>
+      <button @click="qqq">
+        展示
+      </button>
 
     </div>
     <h1>666666</h1>
 
     <input type="file" value=""  id="file"  @change='onUpload'>
+    <ul>
+      <li v-for="item in msgArr">{{item.name}}</li>
+    </ul>
   </div>
 </template>
 
@@ -34,6 +41,7 @@
     name: 'user',
     data () {
       return {
+        msgArr:[]
       }
     },
     computed:{
@@ -41,18 +49,20 @@
     },
     methods: {
       upload() {
-        axios.get("http://192.168.2.251:8000/FileUpDown/loadFile",{
+      },
+      download() {
+        alert(222)
+      },
+      qqq () {
+        axios.post("http://192.168.2.251:8000/FileUpDown/loadFile",{
           params:{
             user:6666
           }
         }).then((res)=>{
-        console.log(res)
-        }
+            console.log(res.data.var)
+            this.msgArr = res.data.var
+          }
         )
-
-      },
-      download() {
-        alert(222)
       },
       onUpload(e) {
 
