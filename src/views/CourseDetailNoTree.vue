@@ -259,7 +259,7 @@
 
           axios({
             method:'get',
-            url:'http://192.168.2.251:8000/readComments/update',
+            url:"http://"+this.url+":8000/readComments/update",
             params:{
               type:1,
               id:this.commentAllObj.length + 1,
@@ -331,7 +331,7 @@
 
         axios({
           method:'get',
-          url:'http://192.168.2.251:8000/readComments/update',
+          url:"http://"+this.url+":8000/readComments/update",
           params:{
             type:2,
             id:this.commentAllObj.length,
@@ -435,6 +435,8 @@
     mounted(){
       this.url = document.domain;
       this.user = getCookie('username');
+      console.log('9999')
+      console.log(this.user)
       // axios.get("/api/menu/comments",{
       axios.get("http://"+this.url+":8000/readComments/all",{
         params:{
@@ -442,7 +444,7 @@
         }
       }).then((res)=>{
         // console.log(res.data.msg)
-        console.log(res.data.result)
+        // console.log(res.data.result)
         this.commentAllObj = res.data.result
         // console.log(typeof this.commentAllObj)
 
