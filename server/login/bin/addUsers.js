@@ -20,8 +20,8 @@ let users = mongoose.model("users",studentSchema);
 
 //实例化几个学生
 var aaa = new users({
-    user: 'aaa',
-    pwd: '111',
+    user: '徐瑞',
+    pwd: '698d51a19d8a121ce581499d7b701668',
     admin: false,
     userID: '00000001',
     IDNo: '410521000000000001',
@@ -29,8 +29,8 @@ var aaa = new users({
     userType: 'T'
 });
 var bbb = new users({
-    user: 'bbb',
-    pwd: '111',
+    user: '谢佳芯',
+    pwd: '698d51a19d8a121ce581499d7b701668',
     admin: false,
     userID: '00000002',
     IDNo: '410521000000000002',
@@ -38,8 +38,8 @@ var bbb = new users({
     userType: 'S'
 });
 var ccc = new users({
-    user: 'ccc',
-    pwd: '111',
+    user: '路晓东',
+    pwd: '698d51a19d8a121ce581499d7b701668',
     admin: false,
     userID: '00000003',
     IDNo: '410521000000000003',
@@ -47,8 +47,8 @@ var ccc = new users({
     userType: 'S'
 });
 var ddd = new users({
-    user: 'ddd',
-    pwd: '111',
+    user: '东阳',
+    pwd: '698d51a19d8a121ce581499d7b701668',
     admin: false,
     userID: '00000004',
     IDNo: '410521000000000004',
