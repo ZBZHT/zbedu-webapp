@@ -65,7 +65,7 @@
                                         {{item.options[3]}}
                                 </label>
                             </li>
-                            <p >{{picked}}</p>
+                        
                         </ul>
                         <span :class="{answer : answer}">
                             正确答案：{{item.answer}}
@@ -104,9 +104,9 @@
                 <li class="testState">状态</li>
                 <li class="testGrade">分数</li>
             </ul>
-            <ul class="testLine" v-for="(item,index) in userMessageData" v-if="index % 2 == 0">
-                <li class="testNumber">{{index + 1}}</li>
-                <li class="testTime">xx.xx</li>
+            <ul class="testLine" v-for="(item,index) in userMessageData" v-if="index % 4 == 0">
+                <li class="testNumber">{{index / 4 + 1}}</li>
+                <li class="testTime">{{userMessageData[index + 2]}}</li>
                 <li class="testTitle">
                     <a id="show-modal" @click="showModal=true">
                         <p @click="myNum(index)">{{item.testId}}</p>
@@ -143,14 +143,32 @@
                     </modal>
                 </li>
                 <li class="testState">已结束</li>
-                <li class="testGrade">50</li>
+                <li class="testGrade">{{userMessageData[index + 3]}}</li>
                 <li class="errAnalysis">
                     <a id="show-modal1" @click="showModal1=true">
-                        错题分析
+                        <p @click="myNum(index)">错题分析</p>
                     </a>
                     <modal v-if="showModal1" @close="showModal1 = false">
                         <h3 slot="header">custom2333 header</h3>
-                        
+                        <div slot="body">
+                            <div v-for="(item,index) in errorIndex[myNumber / 4]">
+                                <span class="desctitle">
+                                    <img src="../assets/err.jpg">
+                                    {{item}}.{{userMessageData[myNumber].question[item].desc}}
+                                </span>
+                                <ul class="ans">
+                            <li>
+                                {{userMessageData[myNumber].question[item].options[0]}}
+                                {{userMessageData[myNumber].question[item].options[1]}}
+                                {{userMessageData[myNumber].question[item].options[2]}}
+                                {{userMessageData[myNumber].question[item].options[3]}}
+                            </li>
+                        </ul>
+                        <span>
+                            正确答案：{{userMessageData[myNumber].question[item].answer}}
+                        </span>
+                            </div>
+                        </div>
                     </modal>
                 </li>
             </ul>
@@ -182,12 +200,13 @@ export default {
         myAns:'',
         myNumber:'',
         questionIndex:'',
-        errorIndex:'',
+        errorIndex:[],
         sorce:0,
         error:[],
         setRed:false,
         submits:false,
         nowTime:'',
+        currentdate:'',
         hours:'',
         minute:'',
         second:'',
@@ -224,6 +243,7 @@ export default {
          this.isCheckNum = this.$store.state.CheckNum;
        //  this.isCheckArr = this.$store.state.CheckArr;
          this.userMessageData = this.$store.state.userMessage;
+         this.errorIndex = this.$store.state.errorArr;
     },
   watch: {
         second:{
@@ -265,7 +285,10 @@ export default {
                 }
                 alert(this.sorce + "==" + this.error + "==" + this.null);
 
-                this.$store.commit('userMessagePickedArr',this.picked)
+                this.$store.commit('userMessagePickedArr',this.picked);
+                this.$store.commit('errorArrData',this.error);
+                this.$store.commit('userMessageTime',this.currentdate);
+                this.$store.commit('userMessageSorce',this.sorce);
 
                 setTimeout(function(){
                     this.$store.commit('testStartTime','');
@@ -327,15 +350,32 @@ export default {
 
                  _this.dispear = !_this.dispear;
                  _this.nowTime = new Date();
+                 //给考试管理存时间
+                 var seperator1 = '-';
+                 var seperator2 = ':';
+                 var month = _this.nowTime.getMonth() + 1;
+                 var strDate = _this.nowTime.getDate();
+
+                 //给在线考试存时间
                  _this.hours = _this.nowTime.getHours();
                  _this.minute = _this.nowTime.getMinutes();
-                 if(_this.minute < 10){
+                 if(_this.minute >= 0 && _this.minute <= 9){
                      _this.minute = "0" + _this.minute;
                  }
                  _this.second = _this.nowTime.getSeconds();
-                 if(_this.second < 10){
+                 if(_this.second >= 0 && _this.second <= 9){
                      _this.second = "0" + _this.second;
                  }
+
+                 if (month >= 0 && month <= 9) {
+                     month = '0' + month
+                 }
+                 if (strDate >= 0 && strDate <= 9) {
+                     strDate = '0' + strDate
+                 }
+                 _this.currentdate = _this.nowTime.getFullYear() + seperator1 + month + seperator1 + strDate
+                 + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
+                 
                  _this.$store.commit('testStartTime',_this.hours);
                  _this.$store.commit('testStartTimeMinute',_this.minute);
                  _this.$store.commit('testStartTimeSecond',_this.second);
@@ -380,6 +420,8 @@ export default {
             },
             clearAll(){
                 this.$store.commit('getUserMessageData',[]);
+                this.$store.commit('ClearErrorArrData',[]);
+                this.$router.go(0);
             },
             DisplayFun(){
                 this.Display = true;
@@ -587,6 +629,7 @@ a{
     padding:10px;
     box-sizing:border-box;
     text-align:left;
+    overflow:auto;
 }
 .testLine{
     background:#ddd;
@@ -595,8 +638,8 @@ a{
 }
 .testLine li{
     display:inline-block;
-    width:145px;
-    margin-right:20px;
+    width:143px;
+    margin-right:17px;
 }
 .testLine .testTitle a{
     text-decoration:underline;

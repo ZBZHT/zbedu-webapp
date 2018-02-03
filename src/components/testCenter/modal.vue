@@ -82,7 +82,7 @@ a:hover{
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.2);
   display: table;
   transition: opacity .3s ease;
 }

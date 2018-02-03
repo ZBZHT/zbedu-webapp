@@ -187,7 +187,7 @@ a:hover{
 }
 .username{
     position:absolute;
-    top:5px;
+    top:1px;
     right:110px;
 }
 .user a{
