@@ -7,7 +7,7 @@
     </span>
     <ul class="son-box" v-show="open">
       <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)" @mouseleave="leave()">
-        <span @click="toggle1(index)" :class="{'addBgcolor': isChange && (index === currentIndex)}">
+        <span @click="toggle1(index)" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
          <!--<i v-if="!isInclude" class="icon"></i>-->
          <a href="#" @click="sendMsg(item)">{{item.title}}</a>
@@ -112,7 +112,11 @@
     margin-top: 0px;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-left: 20px;
     /*background: lightseagreen;*/
+  }
+  .listItem .sonListItem span{
+    margin-left: -20px;
   }
   .listItem  .addBgcolor{
     background: red;
@@ -146,12 +150,17 @@
   .grandson-box{
     margin-left: 0px;
     background: #ccc;
+
   }
   .grandson-box .grandsonListItem{
     border-bottom: 1px solid #fff;
     line-height: 40px;
     overflow: hidden;
-    /*margin-left: 20px;*/
+    padding-left: 20px;
+    /*background: pink;*/
+  }
+  .grandson-box .grandsonListItem span{
+    width: 250px;
   }
 
   .icon{
