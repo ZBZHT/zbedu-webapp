@@ -12,6 +12,11 @@
               {{ item}}
             </li>
           </ul>
+          <!--<ul class="nav-box">-->
+            <!--<li v-for="(item,index) in detailNavData1" @click="onclick(index)" :class="{'line': index !== currentIndex}">-->
+              <!--{{ item}}-->
+            <!--</li>-->
+          <!--</ul>-->
           <div class="course-box" v-show="this.currentIndex === 0">
             <p class="introduce">{{ noTree.describe }}</p>
           </div>
@@ -48,17 +53,17 @@
                       <span  :class="{'on': commentItem.score>=4}" class="star-item" >
                       </span>
                     </p>
-                    <p class="replyNum" @click="wantReply(commentItem,index)"><a href="#">回复</a></p>
+                    <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
 
                   </div>
                   <div class="reply-msg-box">
                    <ul v-show="replyArr.length">
                     <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.id">
-                      <span>{{replyItem.user}}：</span>
+                      <span>@{{replyItem.user}}：</span>
                       <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
                         <p>{{replyItem.time}}</p>
-                        <p @click="replyToReply(replyItem,index)"><a href="#">回复</a></p>
+                        <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
                       </div>
 
                       <div class="replyToReply-box">
@@ -154,6 +159,7 @@
         line: true,
         msg: '',
         detailNavData:["课程详情","教学课件","教学微课","课程评价"],
+        detailNavData1:["课程详情","教学课件","教学微课","课程评价"],
         commentAllObj:[],
         qqqqArr:[],
         commentArr:[],
@@ -434,8 +440,10 @@
     },
     mounted(){
       this.url = document.domain;
-      this.user = getCookie('username');
+      this.user = this.$store.state.username;
+
       console.log('9999')
+
       console.log(this.user)
       // axios.get("/api/menu/comments",{
       axios.get("http://"+this.url+":8000/readComments/all",{
