@@ -55,7 +55,7 @@
                     <span  :class="{'on': commentItem.score>=4}" class="star-item" >
                       </span>
                   </p>
-                  <p class="replyNum" @click="wantReply(commentItem,index)"><a href="#">回复</a></p>
+                  <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
                 </div>
                 <div class="reply-msg-box">
                   <ul v-show="replyArr.length">
@@ -64,13 +64,13 @@
                       <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
                         <p>{{replyItem.time}}</p>
-                        <p @click="replyToReply(replyItem,index)"><a href="#">回复</a></p>
+                        <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
                       </div>
 
                       <div class="replyToReply-box">
                         <ul v-show="replyToReplyArr.length">
                           <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.id">
-                            <span>{{replytoReplyItem.user}}  回复   {{ replyItem.user }}</span>
+                            <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
                             <span>{{replytoReplyItem.text}}</span>
                             <p>{{replytoReplyItem.time}}</p>
                           </li>
@@ -166,8 +166,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         commentArr:[],
         replyArr:[],
         replyToReplyArr:[],
-
-
         currentMsg:'',
         appraiseMsg: '全部评价',
         inputdata: 0,
@@ -253,7 +251,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           })
           axios({
             method:'get',
-            url:'http://192.168.2.251:8000/readComments/update',
+            url:"http://"+this.url+":8000/readComments/update",
             params:{
               type:1,
               id:this.commentAllObj.length + 1,
@@ -327,7 +325,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         })
         axios({
           method:'get',
-          url:'http://192.168.2.251:8000/readComments/update',
+          url:"http://"+this.url+":8000/readComments/update",
           params:{
             type:2,
             id:this.commentAllObj.length,
@@ -345,6 +343,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             console.log(res.data.code)
           }
         )
+
         this.currentReplyOpen = -1
         this.replyText = ''
       },
@@ -396,9 +395,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           target:item.user,
           targetId:item.id
         })
+
         axios({
           method:'get',
-          url:'http://192.168.2.251:8000/readComments/update',
+          url:"http://"+this.url+":8000/readComments/update",
           params:{
             type:3,
             id:this.commentAllObj.length,
@@ -416,7 +416,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             console.log(res.data.code)
           }
         )
-
         this.replyToReplyText = ''
         // console.log(item)
         this.currentReplyToReply = -1
@@ -424,29 +423,36 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     },
     mounted(){
       this.url = document.domain;
-      this.user = getCookie('username');
-     // axios.get("/api/menu/comments",{
-        axios.get("http://192.168.2.251:8000/readComments/all",{
+      this.user = this.$store.state.username;
+      console.log('9999')
+      console.log(this.user)
+      // axios.get("/api/menu/comments",{
+      axios.get("http://"+this.url+":8000/readComments/all",{
         params:{
           user:6666
         }
       }).then((res)=>{
-        console.log(res.data.msg)
-        // console.log(res.data.result)
+        // console.log(res.data.msg)
+        console.log(res.data.result)
         this.commentAllObj = res.data.result
+        // console.log(typeof this.commentAllObj)
         for (var i=0;i<this.commentAllObj.length; i++){
-          if (this.commentAllObj[i].type == "1"){
-            // console.log(this.commentAllObj[i])
-            this.commentArr.push(this.commentAllObj[i])
+          if (this.commentAllObj[i].title == this.currentCoursrTitle) {
+            if (this.commentAllObj[i].type == "1"){
+              // console.log(this.commentAllObj[i])
+              // console.log(i)
+              this.commentArr.push(this.commentAllObj[i])
+            }
+            if (this.commentAllObj[i].type == "2"){
+              // console.log(this.commentAllObj[i])
+              this.replyArr.push(this.commentAllObj[i])
+            }
+            if (this.commentAllObj[i].type == "3"){
+              // console.log(this.commentAllObj[i])
+              this.replyToReplyArr.push(this.commentAllObj[i])
+            }
           }
-          if (this.commentAllObj[i].type == "2"){
-            // console.log(this.commentAllObj[i])
-            this.replyArr.push(this.commentAllObj[i])
-          }
-          if (this.commentAllObj[i].type == "3"){
-            // console.log(this.commentAllObj[i])
-            this.replyToReplyArr.push(this.commentAllObj[i])
-          }
+
         }
         // console.log(this.qqqq)
       }).catch(function(error){
@@ -493,8 +499,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     left: 350px;
   }
   .right-box .courseDescribe{
-    /*background: pink;*/
-    margin-bottom: 50px;
+
+    width: 500px;
+    font-size: 16px;
+    font-weight: normal;
+    /*background: red;*/
+    word-wrap: break-word;
   }
    .right-box .detail-box{
     height: 500px;
