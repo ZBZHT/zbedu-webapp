@@ -230,6 +230,24 @@ export default {
     }
   },
   mounted(){
+    window.setInterval(function () {
+
+                    
+                 },1000*60*2);
+    window.addEventListener("popstate",this.myFunction);
+
+    //window.onpopstate=function(e){     
+    　　//var e = window.event||e;  
+    　　//e.returnValue=("确定离开当前页面吗？");
+    //} 
+
+    window.onbeforeunload=function(e){     
+    　　var e = window.event||e;  
+    　　e.returnValue=("确定离开当前页面吗？");
+    } 
+
+    
+
          this.url = document.domain;
          this.user = getCookie('username');
          this.hours = this.$store.state.testStartTime;
@@ -430,6 +448,15 @@ export default {
             getDisplayFun(){
                 this.Display = false;
                 this.$store.commit('getDisplay',this.Display);
+            },
+            myFunction(event){
+                 var con = confirm("完成此操作将自动帮您提交，是否继续确认");
+                    if(con == true){
+                        
+                        this.submit();
+                    }else{
+                        console.log("xjxjxjx")
+                    }
             }
     },
   components:{Modal}
