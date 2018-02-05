@@ -12,15 +12,18 @@
               {{ item}}
             </li>
           </ul>
-          <!--<ul class="nav-box">-->
-            <!--<li v-for="(item,index) in detailNavData1" @click="onclick(index)" :class="{'line': index !== currentIndex}">-->
-              <!--{{ item}}-->
-            <!--</li>-->
-          <!--</ul>-->
-          <div class="course-box" v-show="this.currentIndex === 0">
+          <div class="teaching-box" v-show="this.currentIndex === 0">
+
+            <p class="teaching" >本节教材</p>
+          </div>
+          <div class="course-box" v-show="this.currentIndex === 1">
             <p class="introduce">{{ noTree.describe }}</p>
           </div>
-          <div class="appraise-box" v-show="this.currentIndex === 3">
+          <div class="homework-box" v-show="this.currentIndex === 4">
+
+            <p class="homework">课后作业</p>
+          </div>
+          <div class="appraise-box" v-show="this.currentIndex === 5">
             <!--<div>-->
               <!--<p v-for="bb in commentArr">{{bb}}</p>-->
               <!--<hr>-->
@@ -158,9 +161,9 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        detailNavData:["课程详情","教学课件","教学微课","课程评价"],
-        detailNavData1:["课程详情","教学课件","教学微课","课程评价"],
+        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
         commentAllObj:[],
+        currentPageCommentObj:[],
         qqqqArr:[],
         commentArr:[],
         replyArr:[],
@@ -204,10 +207,10 @@
     methods: {
       onclick: function (index) {
         this.currentIndex = index
-        if (this.currentIndex === 1) {
+        if (this.currentIndex === 2) {
            this.$router.push({path: '/playPdf'})
         }
-        if (this.currentIndex === 2) {
+        if (this.currentIndex === 3) {
           this.$router.push({path: '/playVideo'})
         }
       },
@@ -459,6 +462,9 @@
 
         for (var i=0;i<this.commentAllObj.length; i++){
           if (this.commentAllObj[i].title == this.currentCoursrTitle) {
+            this.currentPageCommentObj.push(this.commentAllObj[i])
+            console.log(i)
+            console.log(this.currentPageCommentObj)
             if (this.commentAllObj[i].type == "1"){
               // console.log(this.commentAllObj[i])
               // console.log(i)
@@ -543,7 +549,7 @@
   .right-box .nav-box li{
     /*height: 40px;*/
     line-height: 40px;
-    width: 130px;
+    width: 110px;
     background: linen;
     color: red;
     border: 1px solid #444;
@@ -564,12 +570,12 @@
     color: red;
   }
   .right-box .nav-box li:first-child{
-    margin-left: 23%;
+    margin-left: 13%;
   }
   .right-box .course-box{
     width: 700px;
     height: 400px;
-    margin: 0 18%;
+    margin: 0 16%;
     position: relative;
     /*background: lavender;*/
     background: url("../assets/bbb.png") no-repeat;
@@ -608,6 +614,25 @@
     width: 60%;
     font-size: 20px;
     outline: none;
+  }
+
+  .right-box .teaching-box{
+    width: 620px;
+    height: 200px;
+    margin-left: 8%;
+    position: relative;
+    background: #F3F3F3;
+    padding: 130px 100px;
+    margin-top: 20px;
+  }
+  .right-box .homework-box{
+    width: 620px;
+    height: 200px;
+    margin-left: 8%;
+    position: relative;
+    background: #F3F3F3;
+    padding: 130px 100px;
+    margin-top: 20px;
   }
   .detail-box .appraise-box .comment-box{
     margin: 0 50px 0 50px;
