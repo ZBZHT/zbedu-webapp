@@ -10,8 +10,11 @@
         <tree></tree>
     </div>
         <div class="right-box">
+          <h2>{{currentCourseTitle.title}}</h2>
+          <p class="courseTitle">{{ noTree.title }}</p>
+          <!--<p>{{aa}}</p>-->
 
-        <p class="courseTitle">111{{ noTree.title }}</p>
+          <!--<p v-for="(item,index) in aa.children" v-show="index ==0">{{ item.title}}</p>-->
 
         <div class="detail-box">
           <ul class="nav-box">
@@ -19,11 +22,19 @@
               {{item }}
             </li>
           </ul>
-          <div class="course-box" v-show="this.currentIndex === 0">
+          <div class="teaching-box" v-show="this.currentIndex === 0">
 
-            <p class="courseDescribe" >{{ noTree.describe }}</p>
+            <p class="teaching" >本节教材</p>
           </div>
-          <div class="appraise-box" v-show="this.currentIndex === 3">
+          <div class="course-box" v-show="this.currentIndex === 1">
+
+            <p class="courseDescribe" >{{ noTree.describe }}{{ noTree.title }}</p>
+          </div>
+          <div class="homework-box" v-show="this.currentIndex === 4">
+
+            <p class="homework">课后作业</p>
+          </div>
+          <div class="appraise-box" v-show="this.currentIndex === 5">
 
             <!--<div>-->
             <!--<p v-for="bb in commentArr">{{bb}}</p>-->
@@ -160,9 +171,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       return {
         currentIndex: 0,
         currentCoursrTitle:'',
-        detailNavData:["课程详情","教学课件","教学微课","课程评价"],
+        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
 
         commentAllObj:[],
+        currentPageCommentObj:[],
         commentArr:[],
         replyArr:[],
         replyToReplyArr:[],
@@ -187,15 +199,18 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       noTree(){
         this.currentCoursrTitle = this.$store.state.noTree.title
         return this.$store.state.noTree;
+      },
+      currentCourseTitle(){
+        return this.$store.state.course;
       }
     },
     methods: {
       onclick: function (index) {
         this.currentIndex = index
-        if (this.currentIndex === 1) {
+        if (this.currentIndex === 2) {
           this.$router.push({name:'playPdf',params:'playPdf'})
         }
-        if (this.currentIndex === 2) {
+        if (this.currentIndex === 3) {
           this.$router.push({path: '/playVideo'})
         }
       },
@@ -438,6 +453,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         // console.log(typeof this.commentAllObj)
         for (var i=0;i<this.commentAllObj.length; i++){
           if (this.commentAllObj[i].title == this.currentCoursrTitle) {
+
+            this.currentPageCommentObj.push(this.commentAllObj[i])
+            // console.log(i)
+            // console.log(this.currentPageCommentObj)
+
             if (this.commentAllObj[i].type == "1"){
               // console.log(this.commentAllObj[i])
               // console.log(i)
@@ -525,7 +545,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   .right-box .nav-box .nav-item{
     /*height: 40px;*/
     line-height: 40px;
-    width: 100px;
+    width: 90px;
     background: linen;
     border: 1px solid #444;
     color: red;
@@ -534,7 +554,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     text-align: center;
   }
   .right-box .nav-box .nav-item:first-child{
-    margin-left: 23%;
+    margin-left: 10%;
   }
   .right-box .nav-box .nav-item{
     border-bottom: none;
@@ -556,10 +576,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     padding: 130px 100px;
   }
   .right-box .courseTitle{
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 16px;
+    /*font-weight: bold;*/
     /*background: red;*/
-    margin-top: 30px;
+    margin-top: 10px;
   }
   .right-box .course-box .appraiseTitle{
     width: 500px;
@@ -601,8 +621,22 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     /*background: red;*/
     /*border-bottom: 1px solid #ccc;*/
   }
-
-
+  .right-box .teaching-box{
+    width: 450px;
+    height: 400px;
+    margin-left: 7%;
+    position: relative;
+    background: #F3F3F3;
+    padding: 130px 100px;
+  }
+  .right-box .homework-box{
+    width: 450px;
+    height: 400px;
+    margin-left: 7%;
+    position: relative;
+    background: #F3F3F3;
+    padding: 130px 100px;
+  }
   .appraise-box textarea{
     margin-top: 20px;
     height: 60px;
