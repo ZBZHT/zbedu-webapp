@@ -3,20 +3,20 @@
     <span  >
      <i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>
      <i v-if="!isInclude" class="icon"></i>
-     <a href="#">{{course.title}}</a>
+     <a href="javascript:void(0)">{{course.title}}</a>
     </span>
     <ul class="son-box" v-show="open">
       <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)" @mouseleave="leave()">
-        <span @click="toggle1(index)" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
+        <span @click="toggle1(index)" :title="item.title" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
          <!--<i v-if="!isInclude" class="icon"></i>-->
-         <a href="#" @click="sendMsg(item)">{{item.title}}</a>
+         <a href="javascript:void(0)" @click="sendMsg(item)" >{{item.title}}</a>
         </span>
         <ul class="grandson-box" v-show="(open1 && currentOpenIndex === index)" v-if="item">
           <li class="grandsonListItem" v-for="(item2,index2) in item.children" @click="enter2(index2)">
-            <span :class="{'addBgcolor': isChange && (index2 === currentIndex1)}">
+            <span :class="{'addBgcolor': isChange && (index2 === currentIndex1)}" :title="item2.title" @click="sendMsg(item2)">
              <i v-if="item && item2"></i>
-             <a href="#" @click="sendMsg(item2)">{{item2.title}}</a>
+             <a href="javascript:void(0)" >{{item2.title}}</a>
             </span>
           </li>
         </ul>
@@ -60,6 +60,7 @@
         }
       },
       sendMsg(item){
+        // console.log(item)
         this.$store.commit('noTreeTitle',item);
       },
       enter1(index) {
@@ -104,6 +105,7 @@
     /*line-height: 40px;*/
     width: 270px;
     text-align: left;
+    cursor: pointer;
     /*background: pink;*/
   }
   .listItem .sonListItem{
