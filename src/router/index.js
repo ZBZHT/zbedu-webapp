@@ -14,7 +14,6 @@ import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
 import loginPage from '@/views/loginPage'
 import resourceCenter from '@/views/resourceCenter'
-
 // import userManagement from '@/views/UserManagement'
 import testLogin from '@/views/testLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
@@ -44,7 +43,7 @@ const routes = [
       path:'/exerciseCenter',
       name:'exerciseCenter',
       meta:{
-        requireTest:true
+        require:true
       },
       component:exerciseCenter
     },
@@ -52,7 +51,7 @@ const routes = [
       path:'/appraiseCenter',
       name:'appraiseCenter',
       meta:{
-        requireTest:true
+        require:true
       },
       component:appraiseCenter
     },
@@ -60,7 +59,7 @@ const routes = [
       path:'/sourceCenter',
       name:'sourceCenter',
       meta:{
-        requireTest:true
+        require:true
       },
       component:sourceCenter
     },
@@ -69,8 +68,7 @@ const routes = [
       name:'test',
       component:test,
       meta:{
-        requireTest:true,
-        requireQues:true
+
       }
     },
     // {
@@ -133,6 +131,7 @@ const router = new Router({
     mode:'history'
 });
 var username = store.state.username;
+var a = 0;
 router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
@@ -160,39 +159,34 @@ router.beforeEach((to,from,next) => {
     next();
   };
   if (to.matched.some(res => res.meta.requireTest)) {
-      if (!username){
+      if (!store.state.username){
+        console.log("AAAA")
         var con = confirm("请登录");
           if(con == true){
               next({
                 path:'/testLogin',
                 query:{redirect:to.fullPath}
               })
-              router.go(0);
+           //   router.go(0);
             }else{
               next({
                 path:'/',
                 query:{redirect:to.fullPath}
               })
-              router.go(0);
-            }
-      }else{
-        if (to.matched.some(res => res.meta.requireQues)) {
-            var con = confirm("确认用当前账号考试吗？");
-            if(con == true){
-              next();
-            }else{
-              next({
-                  path:'/testLogin',
-                  query:{redirect:to.fullPath}
-                });
-              router.go(0);
-            }
-        }else{
-          next();
-        };
+            //  router.go(0);
+          }
+
+      }else if(store.state.username&&a==0){
+        next({
+                path:'/testLogin',
+                query:{redirect:to.fullPath}
+              })
+              a+=1;
+
       }
   }else{
     next();
+  //  a=0;
   };
 });
 export default router;

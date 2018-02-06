@@ -23,7 +23,8 @@ export default new Vuex.Store({
     testTimeSeconds:'',
     startBtnDispear:'',
     CheckNum:0,
-    CheckArr:{}
+    CheckArr:[],
+    vuexx:0
 
 },
  mutations : {
@@ -92,6 +93,9 @@ export default new Vuex.Store({
     },
     username(state,item){
       state.username = item;
+    },
+    getvuex(state,item){
+        state.vuexx = item;
     }
 },
  plugins: [createPersistedState()]

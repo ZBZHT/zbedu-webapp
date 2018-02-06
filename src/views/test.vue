@@ -215,7 +215,7 @@ export default {
         time:0,
         isCheck:'',
         isCheckNum:0,
-        isCheckArr:{},
+        isCheckArr:[],
         length:20,
         classItem:{},
         QidArr:[],
@@ -230,6 +230,29 @@ export default {
     }
   },
   mounted(){
+    if(this.$store.state.vuexx == 1){
+        //window.addEventListener("popstate",this.myFunction);
+
+        //window.onpopstate=function(e){     
+        　　//var e = window.event||e;  
+        　　//e.returnValue=("确定离开当前页面吗？");
+        //} 
+
+
+
+        window.onbeforeunload=function(e){     
+        　　var e = window.event||e;  
+        　　e.returnValue=("确定离开当前页面吗？");
+        } 
+    }
+
+    window.setInterval(function () {
+
+                    
+                 },1000*60*2);
+
+    
+
          this.url = document.domain;
          this.user = getCookie('username');
          this.hours = this.$store.state.testStartTime;
@@ -241,7 +264,7 @@ export default {
          this.minutes = this.$store.state.testTimeMinutes;
          this.seconds = this.$store.state.testTimeSeconds;
          this.isCheckNum = this.$store.state.CheckNum;
-       //  this.isCheckArr = this.$store.state.CheckArr;
+         this.isCheckArr = this.$store.state.CheckArr;
          this.userMessageData = this.$store.state.userMessage;
          this.errorIndex = this.$store.state.errorArr;
     },
@@ -289,6 +312,7 @@ export default {
                 this.$store.commit('errorArrData',this.error);
                 this.$store.commit('userMessageTime',this.currentdate);
                 this.$store.commit('userMessageSorce',this.sorce);
+                this.$store.commit('getvuex',0);
 
                 setTimeout(function(){
                     this.$store.commit('testStartTime','');
@@ -380,13 +404,13 @@ export default {
                  _this.$store.commit('testStartTimeMinute',_this.minute);
                  _this.$store.commit('testStartTimeSecond',_this.second);
                  _this.$store.commit('startBtnDispear',_this.dispear);
+                 _this.$store.commit('getvuex',1);
             },
             getTest(e){
                 axios.get("http://" + this.url + ":8000/readJson/testQuestion"+e,{
                     params:{
                         testId: e,
-                        num: 30,
-                        grade: 'hard'
+                        num: 20
                     }
                 }).then((res)=>{
                     if(res.data.status!==0) {
@@ -403,7 +427,13 @@ export default {
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
                 console.log(this.QidArr);
-                this.isCheckNum += 1;
+                var a=0;
+                for(var i = 0;i < this.QidArr.length;i++){
+                    if(this.QidArr[i] != null){
+                        a+=1;
+                        this.isCheckNum = a ;
+                    }
+                }
                 this.$store.commit('CheckNum',this.isCheckNum);
                 this.$set(this.isCheckArr,index,true);
                 this.$store.commit('CheckArr',this.isCheckArr);
@@ -430,6 +460,16 @@ export default {
             getDisplayFun(){
                 this.Display = false;
                 this.$store.commit('getDisplay',this.Display);
+            },
+            myFunction(event){
+                 var con = confirm("完成此操作将自动帮您提交，是否继续确认");
+                    if(con == true){
+                        
+                        this.submit();
+                    }else{
+                        console.log("xjxjxjx");
+                        return false;
+                    }
             }
     },
   components:{Modal}
