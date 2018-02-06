@@ -130,13 +130,12 @@ const router = new Router({
     routes,
     mode:'history'
 });
-var username = store.state.username;
 var a = 0;
 router.beforeEach((to,from,next) => {
   console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
     console.log("22");
-      if (!username){
+      if (!store.state.username){
             var con = confirm("请登录");
               if(con == true){
                   next({
