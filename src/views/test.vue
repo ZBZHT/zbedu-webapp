@@ -109,7 +109,7 @@
                 <li class="testTime">{{userMessageData[index + 2]}}</li>
                 <li class="testTitle">
                     <a id="show-modal" @click="showModal=true">
-                        <p @click="myNum(index)">{{item.testId}}</p>
+                        <p @click="myNum(index)">111</p>
                     </a>
                     <modal v-if="showModal" @close="showModal = false">
                         <h3 slot="header">custom header</h3>
@@ -215,7 +215,7 @@ export default {
         time:0,
         isCheck:'',
         isCheckNum:0,
-        isCheckArr:[],
+        isCheckArr:{},
         length:20,
         classItem:{},
         QidArr:[],
@@ -407,7 +407,7 @@ export default {
                  _this.$store.commit('getvuex',1);
             },
             getTest(e){
-                axios.get("http://" + this.url + ":8000/readJson/testQuestion"+e,{
+                axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
                     params:{
                         testId: e,
                         num: 20
@@ -416,7 +416,8 @@ export default {
                     if(res.data.status!==0) {
                         return;
                     }
-                    this.textQuestionData = res.data.result;
+                    this.textQuestionData = res.data;
+                    console.log(this.userMessageData)
                     this.$store.commit('getTextQuestionData',this.textQuestionData);
                     this.$store.commit('getUserMessage',this.textQuestionData);
                 }).catch(function(error){
