@@ -68,7 +68,7 @@ const routes = [
       name:'test',
       component:test,
       meta:{
-        
+
       }
     },
     // {
@@ -175,18 +175,18 @@ router.beforeEach((to,from,next) => {
               })
             //  router.go(0);
           }
-          
+
       }else if(store.state.username&&a==0){
         next({
                 path:'/testLogin',
                 query:{redirect:to.fullPath}
               })
               a+=1;
-              
+
       }
   }else{
     next();
-    a=0;
+  //  a=0;
   };
 });
 export default router;
