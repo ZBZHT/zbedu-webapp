@@ -70,7 +70,7 @@
                 </div>
                 <div class="reply-msg-box">
                   <ul v-show="replyArr.length">
-                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.id">
+                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.num">
                       <span>{{replyItem.user}}：</span>
                       <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
@@ -80,7 +80,7 @@
 
                       <div class="replyToReply-box">
                         <ul v-show="replyToReplyArr.length">
-                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.id">
+                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.num">
                             <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
                             <span>{{replytoReplyItem.text}}</span>
                             <p>{{replytoReplyItem.time}}</p>
@@ -221,9 +221,105 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         this.replyArr.splice(index, 1)
       },
       submitComments () {
-        if (this.text === '') {
+        if(this.user === ''){
+          var con = confirm("请登录");
+          if(con == true){
+            this.$router.push({path: '/loginPage'})
+          }else{
+            return false;
+          }
+        }else {
+          if (this.text === '') {
+            alert('评论不能为空')
+          } else {
+            var date = new Date()
+            var seperator1 = '-'
+            var seperator2 = ':'
+            var month = date.getMonth() + 1
+            var strDate = date.getDate()
+            if (month >= 1 && month <= 9) {
+              month = '0' + month
+            }
+            if (strDate >= 0 && strDate <= 9) {
+              strDate = '0' + strDate
+            }
+            this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+              + ' ' + date.getHours() + seperator2 + date.getMinutes()
+              + seperator2 + date.getSeconds()
+            this.score = this.inputdata
+            // console.log(999999)
+
+            this.commentAllObj.push({
+              type:1,
+              num:this.commentAllObj.length,
+              source:"course",
+              title: this.currentCoursrTitle,
+              user:this.user,
+              text:this.text,
+              time:this.currentdate,
+              score:this.inputdata,
+              targetId:'',
+              target:''
+            })
+            console.log(this.currentCoursrTitle)
+            this.commentArr.push({
+              type:1,
+              num:this.commentAllObj.length,
+              source:"course",
+              title: this.currentCoursrTitle,
+              user:this.user,
+              text:this.text,
+              time:this.currentdate,
+              score:this.inputdata,
+              targetId:'',
+              target:''
+            })
+            console.log(this.commentAllObj.length)
+
+            axios({
+              method:'get',
+              url:"http://"+this.url+":8000/readComments/update",
+              params:{
+                type:1,
+                num:this.commentAllObj.length + 1,
+                title: this.currentCoursrTitle,
+                source:"course",
+                user:this.user,
+                text:this.text,
+                time:this.currentdate,
+                score:this.inputdata,
+                targetId:'',
+                target:''
+              }
+            }).then(
+              function (res) {
+                console.log(res.data.code)
+              }
+            )
+            this.text = ''
+          }
+        }
+      },
+      wantReply(item,num){
+        if(this.user === ''){
+          var con = confirm("请登录");
+          if(con == true){
+            this.$router.push({path: '/loginPage'})
+          }else{
+            return false;
+          }
+        }else {
+          this.currentReplyOpen = num
+          this.isAppearCommentBox = true
+        }
+        // this.isAppearCommentBox = !this.isAppearCommentBox
+      },
+      submitReply(item,aa) {
+        console.log(item)
+        if (this.replyText === '') {
           alert('评论不能为空')
-        } else {
+        }else {
+
           var date = new Date()
           var seperator1 = '-'
           var seperator2 = ':'
@@ -235,115 +331,26 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           if (strDate >= 0 && strDate <= 9) {
             strDate = '0' + strDate
           }
-          this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+          this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
             + ' ' + date.getHours() + seperator2 + date.getMinutes()
             + seperator2 + date.getSeconds()
-          this.score = this.inputdata
-          // console.log(999999)
+          // console.log(item.replyArr)
+          // console.log(item)
           this.commentAllObj.push({
-            type:1,
-            id:this.commentAllObj.length,
-            source:"course",
-            title: this.currentCoursrTitle,
-            user:this.user,
-            text:this.text,
-            time:this.currentdate,
-            score:this.inputdata,
-            targetId:'',
-            target:''
-          })
-          this.commentArr.push({
-            type:1,
-            id:this.commentAllObj.length,
-            source:"course",
-            title: this.currentCoursrTitle,
-            user:this.user,
-            text:this.text,
-            time:this.currentdate,
-            score:this.inputdata,
-            target:'',
-            targetId:''
-          })
-          axios({
-            method:'get',
-            url:"http://"+this.url+":8000/readComments/update",
-            params:{
-              type:1,
-              id:this.commentAllObj.length + 1,
-              title: this.currentCoursrTitle,
-              source:"course",
-              user:this.user,
-              text:this.text,
-              time:this.currentdate,
-              score:this.inputdata,
-              targetId:'',
-              target:''
-            }
-          }).then(
-            function (res) {
-              console.log(res.data.code)
-            }
-          )
-
-
-          console.log(this.commentAllObj.length)
-          this.text = ''
-        }
-      },
-      wantReply(item,num){
-
-        this.currentReplyOpen = num
-        this.isAppearCommentBox = true
-        // this.isAppearCommentBox = !this.isAppearCommentBox
-      },
-      submitReply(item,aa) {
-        var date = new Date()
-        var seperator1 = '-'
-        var seperator2 = ':'
-        var month = date.getMonth() + 1
-        var strDate = date.getDate()
-        if (month >= 1 && month <= 9) {
-          month = '0' + month
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = '0' + strDate
-        }
-        this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
-          + ' ' + date.getHours() + seperator2 + date.getMinutes()
-          + seperator2 + date.getSeconds()
-        // console.log(item.replyArr)
-        // console.log(item)
-        this.commentAllObj.push({
-          type:2,
-          id:this.commentAllObj.length,
-          source:"course",
-          title: this.currentCoursrTitle,
-          user:this.user,
-          text:this.text,
-          time:this.currentdate,
-          score:this.inputdata,
-          target:item.user,
-          targetId:item.id
-        })
-        console.log(this.commentAllObj.length)
-        this.replyArr.push({
-          type:2,
-          id:this.commentAllObj.length,
-          source:"course",
-          title:this.currentCoursrTitle,
-          user:this.user,
-          text:this.replyText,
-          time:this.replyTime,
-          score:'',
-          target:item.user,
-          targetId:item.id
-        })
-        axios({
-          method:'get',
-          url:"http://"+this.url+":8000/readComments/update",
-          params:{
             type:2,
-            id:this.commentAllObj.length,
+            num:this.commentAllObj.length,
+            source:"course",
+            title: this.currentCoursrTitle,
+            user:this.user,
+            text:this.text,
+            time:this.currentdate,
+            score:this.inputdata,
+            target:item.user,
+            targetId:item.num
+          })
+          this.replyArr.push({
+            type:2,
+            num:this.commentAllObj.length,
             source:"course",
             title:this.currentCoursrTitle,
             user:this.user,
@@ -351,72 +358,80 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             time:this.replyTime,
             score:'',
             target:item.user,
-            targetId:item.id
-          }
-        }).then(
-          function (res) {
-            console.log(res.data.code)
-          }
-        )
-
-        this.currentReplyOpen = -1
-        this.replyText = ''
+            targetId:item.num
+          })
+          axios({
+            method:'get',
+            url:"http://"+this.url+":8000/readComments/update",
+            params:{
+              type:2,
+              num:this.commentAllObj.length,
+              source:"course",
+              title:this.currentCoursrTitle,
+              user:this.user,
+              text:this.replyText,
+              time:this.replyTime,
+              score:'',
+              target:item.user,
+              targetId:item.num
+            }
+          }).then(
+            function (res) {
+              console.log(res.data.code)
+            }
+          )
+          this.currentReplyOpen = -1
+          this.replyText = ''
+        }
       },
       replyToReply(item, num){
-        this.currentReplyToReply = num
-        this.isAppearCommentBox1 = true
-        // this.isAppearCommentBox1 = !this.isAppearCommentBox1
-        // alert(num)
+        if(this.user === ''){
+          var con = confirm("请登录");
+          if(con == true){
+            this.$router.push({path: '/loginPage'})
+          }else{
+            return false;
+          }
+        }else {
+          this.currentReplyToReply = num
+          this.isAppearCommentBox1 = true
+        }
       },
       submitReplyToReply (item){
+        if (this.replyToReplyText === '') {
+          alert('评论不能为空')
+        }else {
 
-        var date = new Date()
-        var seperator1 = '-'
-        var seperator2 = ':'
-        var month = date.getMonth() + 1
-        var strDate = date.getDate()
-        if (month >= 1 && month <= 9) {
-          month = '0' + month
-        }
-        if (strDate >= 0 && strDate <= 9) {
-          strDate = '0' + strDate
-        }
-        this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
-          + ' ' + date.getHours() + seperator2 + date.getMinutes()
-          + seperator2 + date.getSeconds()
-
-        this.commentAllObj.push({
-          type:3,
-          id:this.commentAllObj.length,
-          source:"course",
-          title: this.currentCoursrTitle,
-          user:this.user,
-          text:this.text,
-          time:this.currentdate,
-          score:this.inputdata,
-          target:item.user,
-          targetId:item.id
-        })
-        console.log(this.commentAllObj.length)
-        this.replyToReplyArr.push({
-          type:3,
-          id:this.commentAllObj.length,
-          source:"course",
-          title:this.currentCoursrTitle,
-          user: this.user,
-          text: this.replyToReplyText,
-          time: this.replyToReplyTime,
-          score:'',
-          target:item.user,
-          targetId:item.id
-        })
-
-        axios({
-          method:'get',
-          url:"http://"+this.url+":8000/readComments/update",
-          params:{
+          var date = new Date()
+          var seperator1 = '-'
+          var seperator2 = ':'
+          var month = date.getMonth() + 1
+          var strDate = date.getDate()
+          if (month >= 1 && month <= 9) {
+            month = '0' + month
+          }
+          if (strDate >= 0 && strDate <= 9) {
+            strDate = '0' + strDate
+          }
+          this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + ' ' + date.getHours() + seperator2 + date.getMinutes()
+            + seperator2 + date.getSeconds()
+          this.commentAllObj.push({
             type:3,
-            id:this.commentAllObj.length,
+            num:this.commentAllObj.length,
+            source:"course",
+            title: this.currentCoursrTitle,
+            user:this.user,
+            text:this.text,
+            time:this.currentdate,
+            score:this.inputdata,
+            target:item.user,
+            targetId:item.num
+          })
+          console.log(this.commentAllObj.length)
+          this.replyToReplyArr.push({
+            type:3,
+            num:this.commentAllObj.length,
             source:"course",
             title:this.currentCoursrTitle,
             user: this.user,
@@ -424,16 +439,34 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             time: this.replyToReplyTime,
             score:'',
             target:item.user,
-            targetId:item.id
-          }
-        }).then(
-          function (res) {
-            console.log(res.data.code)
-          }
-        )
-        this.replyToReplyText = ''
-        // console.log(item)
-        this.currentReplyToReply = -1
+            targetId:item.num
+
+          })
+
+          axios({
+            method:'get',
+            url:"http://"+this.url+":8000/readComments/update",
+            params:{
+              type:3,
+              id:this.commentAllObj.length,
+              source:"course",
+              title:this.currentCoursrTitle,
+              user: this.user,
+              text: this.replyToReplyText,
+              time: this.replyToReplyTime,
+              score:'',
+              target:item.user,
+              targetId:item.num
+            }
+          }).then(
+            function (res) {
+              console.log(res.data.code)
+            }
+          )
+          this.replyToReplyText = ''
+          // console.log(item)
+          this.currentReplyToReply = -1
+        }
       }
     },
     mounted(){
@@ -442,7 +475,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       console.log('9999')
       console.log(this.user)
       // axios.get("/api/menu/comments",{
-      axios.get("http://"+this.url+":8000/readComments/all",{
+      axios.get("http://192.168.2.251:8000/readComments/all",{
+      // axios.get("http://"+this.url+":8000/readComments/all",{
         params:{
           user:6666
         }
@@ -450,7 +484,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         // console.log(res.data.msg)
         console.log(res.data.result)
         this.commentAllObj = res.data.result
-        // console.log(typeof this.commentAllObj)
+        console.log(typeof this.commentAllObj)
         for (var i=0;i<this.commentAllObj.length; i++){
           if (this.commentAllObj[i].title == this.currentCoursrTitle) {
 
