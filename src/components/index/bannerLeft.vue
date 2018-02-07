@@ -51,9 +51,11 @@ export default {
   },
   methods: {
     setMsg: function (item) {
+      // console.log(item)
       this.$store.commit('newTitle',item);
     },
     setMsg1: function (item) {
+      console.log(item)
       this.$store.commit('noTreeTitle',item);
     }
   }
