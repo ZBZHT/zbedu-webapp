@@ -53,10 +53,10 @@ export default new Vuex.Store({
         state.userMessage = [];
     },
     errorArrData(state,item){
-        state.errorArr.push(item); 
+        state.errorArr.push(item);
     },
     ClearErrorArrData(state,item){
-        state.errorArr = []; 
+        state.errorArr = [];
     },
     getDisplay(state,item){
         state.Display = item;
