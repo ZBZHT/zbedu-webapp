@@ -1,16 +1,16 @@
 <template>
   <li class="listItem">
     <span  >
-     <i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>
+     <!--<i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>-->
      <i v-if="!isInclude" class="icon"></i>
      <a href="javascript:void(0)">{{course.title}}</a>
     </span>
     <ul class="son-box" v-show="open">
-      <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)" @mouseleave="leave()">
-        <span @click="toggle1(index)" :title="item.title" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
+      <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)">
+        <span @click="toggle1(index);sendMsg(item)" :title="item.title" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
          <!--<i v-if="!isInclude" class="icon"></i>-->
-         <a href="javascript:void(0)" @click="sendMsg(item)" >{{item.title}}</a>
+         <a href="javascript:void(0)" >{{item.title}}</a>
         </span>
         <ul class="grandson-box" v-show="(open1 && currentOpenIndex === index)" v-if="item">
           <li class="grandsonListItem" v-for="(item2,index2) in item.children" @click="enter2(index2)">
@@ -71,11 +71,7 @@
         this.isChange = true
         this.currentIndex1  = index
         // alert(3333)
-      },
-      leave(){
-        // this.currentIndex = -1
       }
-
     },
     mounted () {
 
@@ -111,6 +107,7 @@
     border-bottom: 1px solid #fff;
     line-height: 40px;
     margin-top: 0px;
+    font-weight: normal;
     text-overflow: ellipsis;
     white-space: nowrap;
     padding-left: 20px;
@@ -150,18 +147,22 @@
   }
   .grandson-box{
     margin-left: 0px;
-    background: #ccc;
+    /*background: #ccc;*/
 
   }
   .grandson-box .grandsonListItem{
+    font-size: 18px;
+    font-weight: normal;
     border-bottom: 1px solid #fff;
     line-height: 40px;
+    height: 40px;
     overflow: hidden;
     padding-left: 20px;
     /*background: pink;*/
   }
   .grandson-box .grandsonListItem span{
     width: 250px;
+    text-overflow:ellipsis; white-space:nowrap; overflow:hidden;
   }
 
   .icon{
