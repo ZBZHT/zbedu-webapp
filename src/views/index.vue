@@ -10,9 +10,7 @@
 
         </div>
         <div class="rightbox">
-
             <swipe :slides="slides" :inv="inv" :style="styleObject"></swipe>
-
         </div>
     </div>
 
@@ -39,7 +37,7 @@
                         <div class="mask-play">
                             <img :src="item.url">
                             <div class="mask">
-                                <img @click="toPlayVideo" class="play" src="src/assets/play3.png">
+                                <img @click="toPlayVideo(item)" class="play" src="src/assets/play3.png">
                                 <p @click="toPlayPdf(item)" class="ppv"><span>PPT</span></p>
                                 <p @click="toPlayVideo(item)" class="ppv"><span>Video</span></p>
                             </div>

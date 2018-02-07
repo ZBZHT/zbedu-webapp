@@ -20,6 +20,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
 Vue.use(Router)
 
+
 const routes = [
     {
       path: '/index',
