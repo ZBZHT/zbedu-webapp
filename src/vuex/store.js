@@ -23,7 +23,7 @@ export default new Vuex.Store({
     testTimeSeconds:'',
     startBtnDispear:'',
     CheckNum:0,
-    CheckArr:[],
+    CheckArr:{},
     vuexx:0
 
 },

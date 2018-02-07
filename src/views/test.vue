@@ -35,7 +35,7 @@
             </div>
             <div class="content">
                 <div class="data">
-                    <button @click='add();getTest($route.params.testId)' :class="{dispear : !dispear}">
+                    <button @click='add();getTest($route.params.testId);sendInfor()' :class="{dispear : !dispear}">
                         {{$route.params.title}}开始考试
                     </button>
                     <div class="desc" v-for="(item,index) in textQuestionData.question">
@@ -109,7 +109,7 @@
                 <li class="testTime">{{userMessageData[index + 2]}}</li>
                 <li class="testTitle">
                     <a id="show-modal" @click="showModal=true">
-                        <p @click="myNum(index)">{{item.testId}}</p>
+                        <p @click="myNum(index)">111</p>
                     </a>
                     <modal v-if="showModal" @close="showModal = false">
                         <h3 slot="header">custom header</h3>
@@ -211,11 +211,11 @@ export default {
         minute:'',
         second:'',
         currIndex:0,
-        user:'',
+        user:this.$store.state.username,
         time:0,
         isCheck:'',
         isCheckNum:0,
-        isCheckArr:[],
+        isCheckArr:{},
         length:20,
         classItem:{},
         QidArr:[],
@@ -226,7 +226,10 @@ export default {
         lengthData:'',
         url:'',
         showModal:false,
-        showModal1:false
+        showModal1:false,
+        currTestInfor:[],
+        currTestRes:[],
+        currTestId:''
     }
   },
   mounted(){
@@ -246,27 +249,34 @@ export default {
         } 
     }
 
-    window.setInterval(function () {
 
-                    
-                 },1000*60*2);
-
+    axios.get("http://192.168.2.251:8000/readTestQuestionInfo/update",{
+        params:{
+          user:this.user,
+          currTestId:this.currTestId
+        }
+      }).then((res)=>{
+        console.log(res.data.result)
+        
+      }).catch(function(error){
+        console.log("错误")
+      });
+    
     
 
          this.url = document.domain;
-         this.user = getCookie('username');
-         this.hours = this.$store.state.testStartTime;
-         this.minute = this.$store.state.testStartTimeMinute;
-         this.second = this.$store.state.testStartTimeSecond;
-         this.dispear = this.$store.state.startBtnDispear;
-         this.textQuestionData = this.$store.state.getTextQuestionData;
-         this.picked = this.$store.state.pickedArr;
-         this.minutes = this.$store.state.testTimeMinutes;
-         this.seconds = this.$store.state.testTimeSeconds;
-         this.isCheckNum = this.$store.state.CheckNum;
-         this.isCheckArr = this.$store.state.CheckArr;
-         this.userMessageData = this.$store.state.userMessage;
-         this.errorIndex = this.$store.state.errorArr;
+//         this.hours = this.$store.state.testStartTime;
+//         this.minute = this.$store.state.testStartTimeMinute;
+//         this.second = this.$store.state.testStartTimeSecond;
+//         this.dispear = this.$store.state.startBtnDispear;
+//         this.textQuestionData = this.$store.state.getTextQuestionData;
+//         this.picked = this.$store.state.pickedArr;
+//         this.minutes = this.$store.state.testTimeMinutes;
+//         this.seconds = this.$store.state.testTimeSeconds;
+//         this.isCheckNum = this.$store.state.CheckNum;
+//         this.isCheckArr = this.$store.state.CheckArr;
+//         this.userMessageData = this.$store.state.userMessage;
+//         this.errorIndex = this.$store.state.errorArr;
     },
   watch: {
         second:{
@@ -280,15 +290,47 @@ export default {
             }
         }
     },
-  computed:{
-      pickedArr(){
-          return this.$store.state.pickedArr;
-      },
-      getTextQuestionData(){
-          return this.$store.state.getTextQuestionData;
-      }
-    },
+//  computed:{
+//      pickedArr(){
+//          return this.$store.state.pickedArr;
+//      },
+//      getTextQuestionData(){
+//          return this.$store.state.getTextQuestionData;
+//      }
+//    },
   methods:{
+            sendInfor(){
+                window.setInterval(function () {
+        
+                    axios({
+                        method:'get',
+                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
+                        params:{
+                            currTestInfor: this.currTestInfor
+                        }
+                    }).then(
+                        function (res) {
+                        console.log(res.data.code)
+                    }
+                )
+
+
+                },3000);
+
+                setTimeout(function(){
+                    this.currTestInfor.push({
+                        user:this.user,
+                        currTestId:this.currTestId,
+                        testQuestion:this.textQuestionData.question,
+                        startTime:this.currentdate,
+                        currAnswer:this.picked,
+                        currState:this.isCheckArr,
+                        error:this.error,
+                        sorce:this.sorce
+                    })
+                    console.log(this.currTestInfor)
+                }.bind(this),1000)
+            },
             submit:function () {
                 this.sorce=0;
                 this.error = [];
@@ -407,7 +449,7 @@ export default {
                  _this.$store.commit('getvuex',1);
             },
             getTest(e){
-                axios.get("http://" + this.url + ":8000/readJson/testQuestion"+e,{
+                axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
                     params:{
                         testId: e,
                         num: 20
@@ -416,7 +458,8 @@ export default {
                     if(res.data.status!==0) {
                         return;
                     }
-                    this.textQuestionData = res.data.result;
+                    this.textQuestionData = res.data;
+                    this.currTestId = e;
                     this.$store.commit('getTextQuestionData',this.textQuestionData);
                     this.$store.commit('getUserMessage',this.textQuestionData);
                 }).catch(function(error){
