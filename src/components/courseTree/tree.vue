@@ -26,7 +26,7 @@
 </template>
 <script>
   import Vue from 'vue'
-
+  import axios from 'axios'
   export default {
     name: 'tree',
     data() {
@@ -60,7 +60,6 @@
         }
       },
       sendMsg(item){
-        // console.log(item)
         this.$store.commit('noTreeTitle',item);
       },
       enter1(index) {
