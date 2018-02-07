@@ -4,7 +4,7 @@
         <div class="mask-play zz mf">
             <img :src="item.url">
             <div class="mask">
-                <img @click="playBestVideo" src="src/assets/play3.png">
+                <img @click="playBestVideo(item)" src="src/assets/play3.png">
                 <p class="ppv" @click="playBestPdf(item)"><span>PPT</span></p>
                 <p class="ppv" @click="playBestVideo(item)"><span>Video</span></p>
             </div>
