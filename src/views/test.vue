@@ -229,7 +229,8 @@ export default {
         showModal1:false,
         currTestInfor:[],
         currTestRes:[],
-        currTestId:''
+        currTestId:'',
+        interval:{}
     }
   },
   mounted(){
@@ -250,17 +251,29 @@ export default {
     }
 
 
-    axios.get("http://192.168.2.251:8000/readTestQuestionInfo/update",{
+    axios.get("http://192.168.2.251:8000/readTestQuestionInfo/all",{
         params:{
           user:this.user,
-          currTestId:this.currTestId
+          currTestId:this.$route.params.testId
         }
       }).then((res)=>{
-        console.log(res.data.result)
+        console.log(res.data)
         
       }).catch(function(error){
         console.log("错误")
       });
+
+
+      axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
+                    params:{
+                        currTestNum:10001
+                    }
+                }).then((res)=>{
+                    console.log(res.data);
+                    this.textQuestionData = res.data;
+                }).catch(function(error){
+                    console.log("error init." + error)
+                });
     
     
 
@@ -300,38 +313,65 @@ export default {
 //    },
   methods:{
             sendInfor(){
-                window.setInterval(function () {
-        
-                    axios({
-                        method:'get',
-                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
-                        params:{
-                            currTestInfor: this.currTestInfor
-                        }
-                    }).then(
-                        function (res) {
-                        console.log(res.data.code)
-                    }
-                )
-
-
-                },3000);
-
                 setTimeout(function(){
                     this.currTestInfor.push({
                         user:this.user,
                         currTestId:this.currTestId,
-                        testQuestion:this.textQuestionData.question,
+                        testQuestion:10001,
                         startTime:this.currentdate,
                         currAnswer:this.picked,
                         currState:this.isCheckArr,
                         error:this.error,
                         sorce:this.sorce
                     })
-                    console.log(this.currTestInfor)
-                }.bind(this),1000)
+                    this.$store.commit('setCurrTestInfor',this.currTestInfor);
+                }.bind(this),1000);
+
+            this.interval = window.setInterval(function () {
+                    axios({
+                        method:'get',
+                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
+                        params:{
+                            user:this.user,
+                            currTestId:this.currTestId,
+                            testQuestion:10001,
+                            startTime:this.currentdate,
+                            currAnswer:this.picked,
+                            currState:this.isCheckArr,
+                            error:this.error,
+                            sorce:this.sorce
+                        }
+                    }).then(
+                        function (res) {
+                        console.log(res.data.code)
+                        }   
+                    )
+                }.bind(this),3000);
+
+
             },
             submit:function () {
+                setTimeout(function(){
+                    window.clearInterval(this.interval);
+                }.bind(this),2000);
+                axios({
+                        method:'get',
+                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
+                        params:{
+                            user:this.user,
+                            currTestId:this.currTestId,
+                            testQuestion:10001,
+                            startTime:this.currentdate,
+                            currAnswer:this.picked,
+                            currState:this.isCheckArr,
+                            error:this.error,
+                            sorce:this.sorce
+                        }
+                    }).then(
+                        function (res) {
+                        console.log(res.data.code)
+                        }   
+                    )
                 this.sorce=0;
                 this.error = [];
                 console.log(this.QidArr.length+"===this.QidArr.length");
@@ -367,7 +407,7 @@ export default {
                     this.$store.commit('testTimeSeconds',0);
                     this.$store.commit('CheckNum',0);
                     console.log(this.picked+"/////");
-                    this.$router.go(0);
+                   // this.$router.go(0);
                 }.bind(this),0.1)
 
                 
@@ -452,7 +492,8 @@ export default {
                 axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
                     params:{
                         testId: e,
-                        num: 20
+                        num: 20,
+                        currTestNum:10001
                     }
                 }).then((res)=>{
                     if(res.data.status!==0) {

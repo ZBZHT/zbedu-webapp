@@ -48,8 +48,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         },
         mounted(){
             this.url = document.domain;
+            window.addEventListener("popstate",this.myFunction);
         },
         methods: {
+            myFunction(){
+                this.$router.push('/');
+            },
             login(){
                 if(this.username == "" || this.password == ""){
                     alert("请输入用户名或密码")

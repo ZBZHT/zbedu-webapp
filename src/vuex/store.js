@@ -24,7 +24,8 @@ export default new Vuex.Store({
     startBtnDispear:'',
     CheckNum:0,
     CheckArr:{},
-    vuexx:0
+    vuexx:0,
+    setCurrTestInfor:[]
 
 },
  mutations : {
@@ -96,6 +97,9 @@ export default new Vuex.Store({
     },
     getvuex(state,item){
         state.vuexx = item;
+    },
+    setCurrTestInfor(state,item){
+        state.setCurrTestInfor = item;
     }
 },
  plugins: [createPersistedState()]
