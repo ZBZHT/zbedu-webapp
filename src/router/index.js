@@ -175,7 +175,7 @@ router.beforeEach((to,from,next) => {
             //  router.go(0);
           }
 
-      }else if(store.state.username&&a==0){
+      }else if(store.state.username && a == 0){
         next({
                 path:'/testLogin',
                 query:{redirect:to.fullPath}
