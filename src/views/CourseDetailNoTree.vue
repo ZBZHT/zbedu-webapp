@@ -8,7 +8,7 @@
         <p class="courseTitle">{{ noTree.title }}</p>
         <div class="detail-box">
           <ul class="nav-box">
-            <li v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
+            <li v-for="(item,index) in detailNavData" @click="onclick(noTree,index)" :class="{'line': index !== currentIndex}">
               {{ item}}
             </li>
           </ul>
@@ -23,7 +23,11 @@
 
             <p class="homework">课后作业</p>
           </div>
-          <div class="appraise-box" v-show="this.currentIndex === 5">
+          <div class="design-box" v-show="this.currentIndex === 5">
+
+            <p class="design">教学设计</p>
+          </div>
+          <div class="appraise-box" v-show="this.currentIndex === 6">
             <!--<div>-->
               <!--<p v-for="bb in commentArr">{{bb}}</p>-->
               <!--<hr>-->
@@ -68,7 +72,6 @@
                         <p>{{replyItem.time}}</p>
                         <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
                       </div>
-
                       <div class="replyToReply-box">
                       <ul v-show="replyToReplyArr.length">
                       <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.num">
@@ -161,7 +164,7 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
+        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","教学设计","课程评价"],
         commentAllObj:[],
         currentPageCommentObj:[],
         qqqqArr:[],
@@ -205,13 +208,14 @@
 
     },
     methods: {
-      onclick: function (index) {
+      onclick: function (courseMsg,index) {
         this.currentIndex = index
+        // console.log(courseMsg)
         if (this.currentIndex === 2) {
-           this.$router.push({path: '/playPdf'})
+           this.$router.push('/playPdf/'+courseMsg.courseId + '/pdf/' + courseMsg.title)
         }
         if (this.currentIndex === 3) {
-          this.$router.push({path: '/playVideo'})
+          this.$router.push('/playVideo/'+ courseMsg.courseId + '/video/' + courseMsg.title)
         }
       },
       dele: function (index) {
@@ -596,7 +600,7 @@
   .right-box .course-box{
     width: 700px;
     height: 400px;
-    margin: 0 16%;
+    margin: 0 22%;
     position: relative;
     /*background: lavender;*/
     background: url("../assets/bbb.png") no-repeat;
@@ -613,7 +617,7 @@
 
   .right-box .appraise-box{
     width: 900px;
-    margin-left: 50px;
+    margin-left: 11%;
     margin-bottom: 100px;
     position: relative;
     top: 20px;
@@ -638,7 +642,7 @@
   }
 
   .right-box .teaching-box{
-    width: 620px;
+    width: 750px;
     height: 200px;
     margin-left: 8%;
     position: relative;
@@ -647,7 +651,16 @@
     margin-top: 20px;
   }
   .right-box .homework-box{
-    width: 620px;
+    width: 750px;
+    height: 200px;
+    margin-left: 8%;
+    position: relative;
+    background: #F3F3F3;
+    padding: 130px 100px;
+    margin-top: 20px;
+  }
+  .right-box .design-box{
+    width: 750px;
     height: 200px;
     margin-left: 8%;
     position: relative;
