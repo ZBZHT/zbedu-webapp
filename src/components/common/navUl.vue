@@ -5,9 +5,9 @@
             <div class="dropdown-toggle">
                 <ul>
                     <li class="dr-li" v-for="(item,index) in navData" @click="goto(item.name)">
-                        <router-link :to="'/' + item.name" class="title" :class="isSelect === item.name ? 'active' : '' ">
+                        <a @click="fobLink(index)" class="title" :class="isSelect === item.name ? 'active' : '' ">
                             {{item.title}}
-                        </router-link>
+                        </a>
                         <div class="dropdown-menu" v-show="item.children">
 
                             <ul>
@@ -66,6 +66,19 @@ export default {
     },
     goto(title){
         this.isSelect = this.$route.name;
+    },
+    fobLink(index){
+        if(index == 0){
+            this.$router.push('/');
+        }else if(index == 1){
+            this.$router.push('/exerciseCenter');
+        }else if(index == 2){
+            this.$router.push('/testCenter');
+        }else if(index == 3){
+            this.$router.push('/appraiseCenter');
+        }else if(index == 4){
+            this.$router.push('/sourceCenter');
+        }
     }
   }
 }
