@@ -214,10 +214,11 @@
         this.currentIndex = index
         // console.log(courseMsg)
         if (this.currentIndex === 2) {
-           this.$router.push('/playPdf/'+courseMsg.courseId + '/pdf/' + courseMsg.title)
+           this.$router.push('/playPdf/'+this.$route.params.courseId + '/pdf/' + this.$route.params.title)
         }
         if (this.currentIndex === 3) {
-          this.$router.push('/playVideo/'+ courseMsg.courseId + '/video/' + courseMsg.title)
+          this.$route.params.title
+          this.$router.push('/playVideo/'+ this.$route.params.courseId + '/video/' + this.$route.params.title)
         }
       },
       dele: function (index) {
