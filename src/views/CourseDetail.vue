@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="page-box">
 
     <div class="header-box">
       <navgation-head></navgation-head>
@@ -10,12 +10,12 @@
         <tree></tree>
     </div>
         <div class="right-box">
-          <h2>{{currentCourseTitle.title}}</h2>
+
+          <h2>{{currentTitle.title}}</h2>
+          <!--<p>{{aa}}aa</p>-->
+          <!--<p>{{noTree.title}}title</p>-->
           <p class="courseTitle">{{ noTree.title }}</p>
-          <!--<p>{{aa}}</p>-->
-
-          <!--<p v-for="(item,index) in aa.children" v-show="index ==0">{{ item.title}}</p>-->
-
+          <!--<p >{{ noTree}}</p>-->
         <div class="detail-box">
           <ul class="nav-box">
             <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -24,7 +24,7 @@
           </ul>
           <div class="teaching-box" v-show="this.currentIndex === 0">
 
-            <p class="teaching" >本节教材</p>
+            <p class="teaching" >待上传</p>
           </div>
           <div class="course-box" v-show="this.currentIndex === 1">
 
@@ -32,8 +32,12 @@
           </div>
           <div class="homework-box" v-show="this.currentIndex === 4">
 
-            <p class="homework">课后作业</p>
+            <p class="homework">待上传</p>
           </div>
+          <!--<div class="design-box" v-show="this.currentIndex === 5">-->
+
+            <!--<p class="design">待上传</p>-->
+          <!--</div>-->
           <div class="appraise-box" v-show="this.currentIndex === 5">
 
             <!--<div>-->
@@ -49,7 +53,7 @@
             <div class="comment-box">
               <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.title">
                 <div class="text-box">
-                  <p @click="enterUserManagement" >用户名：<a href="">{{ commentItem.user  }}</a></p>
+                  <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
                   <p >{{commentItem.text}}</p>
                 </div>
                 <div class="msg-box">
@@ -152,10 +156,7 @@
           </div>
         </div>
       </div>
-
     </div>
-
-
   </div>
 </template>
 
@@ -170,11 +171,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     data () {
       return {
         currentIndex: 0,
-        currentCoursrTitle:'',
+        currentCourseMsg:'',
+        currentCourseTitle:'',
+        aa:'',
         detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
-
         commentAllObj:[],
-        currentPageCommentObj:[],
         commentArr:[],
         replyArr:[],
         replyToReplyArr:[],
@@ -197,21 +198,35 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     },
     computed:{
       noTree(){
-        this.currentCoursrTitle = this.$store.state.noTree.title
+        this.currentCourseMsg = this.$store.state.noTree
+        this.currentCourseTitle = this.$store.state.noTree.title
         return this.$store.state.noTree;
       },
-      currentCourseTitle(){
+      currentTitle(){
+        // for (var  i= 0; i< this.$store.state.course.children.length; i++){
+          // console.log(this.$store.state.course.children[i])
+          if (this.$store.state.course.children[0].describe){
+            this.aa = this.$store.state.course.children[0].title
+            // console.log(this.aa)
+            // console.log('======')
+          }else {
+            this.aa = this.$store.state.course.children[0].children[0].title
+            // console.log(this.aa)
+          }
+        // }
+
         return this.$store.state.course;
       }
     },
     methods: {
       onclick: function (index) {
         this.currentIndex = index
+        // console.log(this.currentCourseMsg)
         if (this.currentIndex === 2) {
-          this.$router.push({name:'playPdf',params:'playPdf'})
+          this.$router.push('/playPdf/'+this.currentCourseMsg.courseId + '/pdf/' + this.currentCourseMsg.title)
         }
         if (this.currentIndex === 3) {
-          this.$router.push({path: '/playVideo'})
+          this.$router.push('/playVideo/'+ this.currentCourseMsg.courseId + '/video/' + this.currentCourseMsg.title)
         }
       },
       enterUserManagement () {
@@ -247,13 +262,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
               + ' ' + date.getHours() + seperator2 + date.getMinutes()
               + seperator2 + date.getSeconds()
             this.score = this.inputdata
-            // console.log(999999)
-
             this.commentAllObj.push({
               type:1,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length +1 ,
               source:"course",
-              title: this.currentCoursrTitle,
+              title: this.currentCourseTitle,
               user:this.user,
               text:this.text,
               time:this.currentdate,
@@ -261,12 +274,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
               targetId:'',
               target:''
             })
-            console.log(this.currentCoursrTitle)
+            console.log(this.currentCourseTitle)
             this.commentArr.push({
               type:1,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length + 1,
               source:"course",
-              title: this.currentCoursrTitle,
+              title: this.currentCourseTitle,
               user:this.user,
               text:this.text,
               time:this.currentdate,
@@ -274,15 +287,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
               targetId:'',
               target:''
             })
-            console.log(this.commentAllObj.length)
 
             axios({
               method:'get',
-              url:"http://"+this.url+":8000/readComments/update",
+              url:"http://192.168.2.251:8000/readComments/update",
               params:{
                 type:1,
                 num:this.commentAllObj.length + 1,
-                title: this.currentCoursrTitle,
+                title: this.currentCourseTitle,
                 source:"course",
                 user:this.user,
                 text:this.text,
@@ -338,9 +350,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           // console.log(item)
           this.commentAllObj.push({
             type:2,
-            num:this.commentAllObj.length,
+            num:this.commentAllObj.length + 1 ,
             source:"course",
-            title: this.currentCoursrTitle,
+            title: this.currentCourseTitle,
             user:this.user,
             text:this.text,
             time:this.currentdate,
@@ -350,9 +362,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           })
           this.replyArr.push({
             type:2,
-            num:this.commentAllObj.length,
+            num:this.commentAllObj.length + 1,
             source:"course",
-            title:this.currentCoursrTitle,
+            title:this.currentCourseTitle,
             user:this.user,
             text:this.replyText,
             time:this.replyTime,
@@ -362,12 +374,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           })
           axios({
             method:'get',
-            url:"http://"+this.url+":8000/readComments/update",
+            url:"http://192.168.2.251:8000/readComments/update",
             params:{
               type:2,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length + 1,
               source:"course",
-              title:this.currentCoursrTitle,
+              title:this.currentCourseTitle,
               user:this.user,
               text:this.replyText,
               time:this.replyTime,
@@ -418,9 +430,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             + seperator2 + date.getSeconds()
           this.commentAllObj.push({
             type:3,
-            num:this.commentAllObj.length,
+            num:this.commentAllObj.length+1,
             source:"course",
-            title: this.currentCoursrTitle,
+            title: this.currentCourseTitle,
             user:this.user,
             text:this.text,
             time:this.currentdate,
@@ -428,29 +440,27 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             target:item.user,
             targetId:item.num
           })
-          console.log(this.commentAllObj.length)
           this.replyToReplyArr.push({
             type:3,
-            num:this.commentAllObj.length,
+            num:this.commentAllObj.length +1,
             source:"course",
-            title:this.currentCoursrTitle,
+            title:this.currentCourseTitle,
             user: this.user,
             text: this.replyToReplyText,
             time: this.replyToReplyTime,
             score:'',
             target:item.user,
             targetId:item.num
-
           })
 
           axios({
             method:'get',
-            url:"http://"+this.url+":8000/readComments/update",
+            url:"http://192.168.2.251:8000/readComments/update",
             params:{
               type:3,
-              id:this.commentAllObj.length,
+              num:this.commentAllObj.length+1,
               source:"course",
-              title:this.currentCoursrTitle,
+              title:this.currentCourseTitle,
               user: this.user,
               text: this.replyToReplyText,
               time: this.replyToReplyTime,
@@ -472,8 +482,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     mounted(){
       this.url = document.domain;
       this.user = this.$store.state.username;
-      console.log('9999')
-      console.log(this.user)
+      // console.log(this.user)
       // axios.get("/api/menu/comments",{
       axios.get("http://192.168.2.251:8000/readComments/all",{
       // axios.get("http://"+this.url+":8000/readComments/all",{
@@ -482,16 +491,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         }
       }).then((res)=>{
         // console.log(res.data.msg)
-        console.log(res.data.result)
+        // console.log(res.data.result)
         this.commentAllObj = res.data.result
-        console.log(typeof this.commentAllObj)
+        // console.log(this.commentAllObj)
         for (var i=0;i<this.commentAllObj.length; i++){
-          if (this.commentAllObj[i].title == this.currentCoursrTitle) {
-
-            this.currentPageCommentObj.push(this.commentAllObj[i])
             // console.log(i)
-            // console.log(this.currentPageCommentObj)
-
             if (this.commentAllObj[i].type == "1"){
               // console.log(this.commentAllObj[i])
               // console.log(i)
@@ -505,8 +509,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
               // console.log(this.commentAllObj[i])
               this.replyToReplyArr.push(this.commentAllObj[i])
             }
-          }
-
         }
         // console.log(this.qqqq)
       }).catch(function(error){
@@ -523,92 +525,216 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     margin: 0;
     padding: 0;
   }
+  .page-box{
+    /*background: pink;*/
+  }
   .nav{
     background: #ddd;
-    position: absolute;
+    /*position: absolute;*/
     left: 0;
     right: 0;
     top: 0;
   }
   .content-box{
     width: 100%;
-    min-width: 960px;
-    margin-top: 150px;
+    min-width: 1000px;
+    margin-top: 20px;
     height: 700px;
     /*background: lightgoldenrodyellow;*/
-    position: relative;
+    /*position: relative;*/
   }
   .content-box .tree-box{
     width: 280px;
-    height: 1000px;
+    /*height: 1000px;*/
     /*background: lightcyan;*/
     position: absolute;
     left: 60px;
   }
-  .content-box .right-box{
-    width: 800px;
-    height: 700px;
-    /*background: aliceblue;*/
-    position: absolute;
-    left: 350px;
-  }
-  .right-box .courseDescribe{
+  @media screen and (max-width: 1200px) {
+    .right-box .detail-box{
+      height: 500px;
+      width: auto;
+      text-align: center;
+      /*background: pink;*/
+    }
+    .content-box .right-box{
+      width: 800px;
+      height: 700px;
+      /*background: aliceblue;*/
+      /*position: absolute;*/
+      margin-left: 360px;
+      /*left: 350px*/
+    }
 
-    width: 500px;
-    font-size: 16px;
-    font-weight: normal;
-    /*background: red;*/
-    word-wrap: break-word;
+    .right-box .nav-box{
+      margin-top: 20px;
+      height: 40px;
+      /*background: lightseagreen;*/
+      text-align: center;
+      display: flex;
+      border-bottom: 1px solid #333;
+      box-sizing: content-box;
+      margin-bottom: -0px;
+    }
+    .right-box .nav-box .nav-item{
+      /*height: 40px;*/
+      line-height: 40px;
+      width: 12%;
+      background: linen;
+      border: 1px solid #444;
+      color: red;
+      border-radius: 5px 5px 0px 0;
+      margin-left: 10px;
+      text-align: center;
+    }
+    .right-box .nav-box .nav-item:first-child{
+      margin-left: 10%;
+    }
+    .right-box .nav-box .nav-item{
+      border-bottom: none;
+      margin-bottom: -1px;
+    }
+    .right-box .nav-box .line{
+      border-bottom: 1px solid black;
+      color: #000;
+    }
+    .right-box .teaching-box{
+      width: 90%;
+      height: 400px;
+      margin:0 5%;
+      position: relative;
+      background: #F3F3F3;
+    }
+    .right-box .course-box{
+      width: 80%;
+      height: 400px;
+      margin:0 10%;
+      position: relative;
+      /*background: lavender;*/
+      background: url("../assets/bbb.png") no-repeat center top;
+      /*padding: 130px 100px;*/
+    }
+    .right-box .courseDescribe{
+      width: 80%;
+      font-size: 16px;
+      margin: 0 10% 0 10%;
+      padding-top: 120px;
+      font-weight: normal;
+      /*background: red;*/
+      word-wrap: break-word;
+    }
+    .right-box .homework-box{
+      width: 90%;
+      height: 400px;
+      margin:0 5%;
+      position: relative;
+      background: #F3F3F3;
+    }
+    .right-box .appraise-box{
+      width: 90%;
+      /*height: 400px;*/
+      margin:0 5%;
+      position: relative;
+      top: 20px;
+      /*background: lightyellow;*/
+    }
+
   }
-   .right-box .detail-box{
-    height: 500px;
-    width: auto;
-    text-align: center;
-     margin-left: 50px;
-  }
-  .right-box .nav-box{
-    margin-top: 20px;
-    height: 40px;
-    /*background: lightseagreen;*/
-    text-align: center;
-    display: flex;
-    border-bottom: 1px solid #333;
-    box-sizing: content-box;
-    margin-bottom: -0px;
-  }
-  .right-box .nav-box .nav-item{
-    /*height: 40px;*/
-    line-height: 40px;
-    width: 90px;
-    background: linen;
-    border: 1px solid #444;
-    color: red;
-    border-radius: 5px 5px 0px 0;
-    margin-left: 10px;
-    text-align: center;
-  }
-  .right-box .nav-box .nav-item:first-child{
-    margin-left: 10%;
-  }
-  .right-box .nav-box .nav-item{
-    border-bottom: none;
-    margin-bottom: -1px;
-  }
-  .right-box .nav-box .line{
-    border-bottom: 1px solid black;
-    color: #000;
+
+  @media screen and (min-width: 1200px) {
+    .right-box .detail-box{
+      height: 500px;
+      width: auto;
+      text-align: center;
+      /*background: pink;*/
+    }
+    .content-box .right-box{
+      width: 60%;
+      height: 700px;
+      /*background: aliceblue;*/
+      /*position: absolute;*/
+      margin:0 10% 0 30%;
+    }
+
+    .right-box .nav-box{
+      margin-top: 20px;
+      height: 40px;
+      /*background: lightseagreen;*/
+      text-align: center;
+      display: flex;
+      border-bottom: 1px solid #333;
+      box-sizing: content-box;
+      margin-bottom: -0px;
+    }
+    .right-box .nav-box .nav-item{
+      /*height: 40px;*/
+      line-height: 40px;
+      width: 12%;
+      background: linen;
+      border: 1px solid #444;
+      color: red;
+      border-radius: 5px 5px 0px 0;
+      margin-left: 10px;
+      text-align: center;
+    }
+    .right-box .nav-box .nav-item:first-child{
+      margin-left: 10%;
+    }
+    .right-box .nav-box .nav-item{
+      border-bottom: none;
+      margin-bottom: -1px;
+    }
+    .right-box .nav-box .line{
+      border-bottom: 1px solid black;
+      color: #000;
+    }
+
+    .right-box .teaching-box{
+      width: 90%;
+      height: 400px;
+      margin:0 5%;
+      position: relative;
+      background: #F3F3F3;
+    }
+    .right-box .course-box{
+      width: 80%;
+      height: 400px;
+      margin:0 10%;
+      position: relative;
+      /*background: lavender;*/
+      background: url("../assets/bbb.png") no-repeat center top;
+      /*padding: 130px 100px;*/
+    }
+    .right-box .courseDescribe{
+      width: 80%;
+      font-size: 16px;
+      margin: 0 10% 0 10%;
+      padding-top: 120px;
+      font-weight: normal;
+      /*background: red;*/
+      word-wrap: break-word;
+    }
+    .right-box .homework-box{
+      width: 90%;
+      height: 400px;
+      margin:0 5%;
+      position: relative;
+      background: #F3F3F3;
+    }
+    .right-box .appraise-box{
+      width: 90%;
+      /*height: 400px;*/
+      margin:0 5%;
+      position: relative;
+      top: 20px;
+      /*background: lightyellow;*/
+    }
   }
 
 
-  .right-box .course-box{
-    width: 600px;
-    height: 400px;
-    margin-left: 7%;
-    position: relative;
-    /*background: lavender;*/
-    background: url("../assets/bbb.png") no-repeat;
-    padding: 130px 100px;
-  }
+
+
+
   .right-box .courseTitle{
     font-size: 16px;
     /*font-weight: bold;*/
@@ -622,14 +748,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     /*background: red;*/
     word-wrap: break-word;
   }
-  .right-box .appraise-box{
-    width: 700px;
-    /*height: 400px;*/
-    margin-left: 3%;
-    position: relative;
-    top: 20px;
-    /*background: lightyellow;*/
-  }
+
   .right-box .appraise-box .appraiseTitle{
     font-weight: normal;
     font-size: 16px;
@@ -655,18 +774,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     /*background: red;*/
     /*border-bottom: 1px solid #ccc;*/
   }
-  .right-box .teaching-box{
-    width: 450px;
+
+
+  .right-box .design-box{
+    width: 560px;
     height: 400px;
-    margin-left: 7%;
-    position: relative;
-    background: #F3F3F3;
-    padding: 130px 100px;
-  }
-  .right-box .homework-box{
-    width: 450px;
-    height: 400px;
-    margin-left: 7%;
+    margin-left: 6%;
     position: relative;
     background: #F3F3F3;
     padding: 130px 100px;
@@ -696,11 +809,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     font-size: 18px;
     font-weight: normal;
   }
-  .appraise-box .text-box a{
+  .appraise-box .text-box .text-box-a{
     color: black;
     text-decoration: none;
   }
-  .appraise-box .text-box a:hover{
+  .appraise-box .text-box .text-box-a:hover{
     color: red;
     text-decoration: none;
   }
