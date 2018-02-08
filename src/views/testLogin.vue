@@ -142,8 +142,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     width:278px;
     height:200px;
     position:absolute;
-    top:300px;
-    right:39%;
+    top:50%;
+    right:50%;
+    transform: translate(34%, -50%);
     text-align:left;
 }
 .userBox{
