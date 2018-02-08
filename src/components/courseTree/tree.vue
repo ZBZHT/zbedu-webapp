@@ -9,7 +9,7 @@
       <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)">
         <span @click="toggle1(index);sendMsg(item)" :title="item.title" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
-         <!--<i v-if="!isInclude" class="icon"></i>-->
+         <i v-if="!item.children">&nbsp;&nbsp;&nbsp;</i>
          <a href="javascript:void(0)" >{{item.title}}</a>
         </span>
         <ul class="grandson-box" v-show="(open1 && currentOpenIndex === index)" v-if="item">
@@ -84,7 +84,11 @@
     margin: 0;
     padding: 0;
   }
-  a{
+  .listItem a{
+    color: #fff;
+    text-decoration: none;
+  }
+  .listItem a:hover{
     color: #fff;
     text-decoration: none;
   }
