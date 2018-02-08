@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!--<div class="header-box">-->
-      <!--<navgation-head></navgation-head>-->
-    <!--</div>-->
+    <div class="header-box">
+      <navgation-head></navgation-head>
+    </div>
     <div>
       <button class="upload-btn" @click="upload">上传</button>
       <button class="download-btn" @click="download">下载</button>
@@ -72,33 +72,33 @@
 
         formData.append('type', 'test');
 
-        $.ajax({
-
-          url: 'http://192.168.2.251:8000/FileUpDown/upload',
-          type: 'POST',
-          dataType: 'json',
-          cache: false,
-          data: formData,
-          processData: false,
-          contentType: false,
-          success: (res) => {
-            if (res.code === 200) {
-
-              console.log(res.code)
-              // var img_tpl ='<div class="picture" style="width:108px;float:left;"><img id="preview" src="'+后台返回的tu'pian路径+'" style="width:48px;height:48px;float:left;background-size:cover;"/><span class="r-span"
-              // onclick = "onDeletePicture()" style="color:#49BDCC;display:block;float:left;margin-left:10px;line-height:48px;">删除</span></div>';
-              // $("#refund_img").after(img_tpl);
-            }
-
-          },
-
-          error: function (err) {
-
-            alert("网络错误");
-
-          }
-
-        });
+        // $.ajax({
+        //
+        //   url: 'http://192.168.2.251:8000/FileUpDown/upload',
+        //   type: 'POST',
+        //   dataType: 'json',
+        //   cache: false,
+        //   data: formData,
+        //   processData: false,
+        //   contentType: false,
+        //   success: (res) => {
+        //     if (res.code === 200) {
+        //
+        //       console.log(res.code)
+        //       // var img_tpl ='<div class="picture" style="width:108px;float:left;"><img id="preview" src="'+后台返回的tu'pian路径+'" style="width:48px;height:48px;float:left;background-size:cover;"/><span class="r-span"
+        //       // onclick = "onDeletePicture()" style="color:#49BDCC;display:block;float:left;margin-left:10px;line-height:48px;">删除</span></div>';
+        //       // $("#refund_img").after(img_tpl);
+        //     }
+        //
+        //   },
+        //
+        //   error: function (err) {
+        //
+        //     alert("网络错误");
+        //
+        //   }
+        //
+        // });
 
       },
       mounted() {
