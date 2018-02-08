@@ -14,20 +14,21 @@
           </ul>
           <div class="teaching-box" v-show="this.currentIndex === 0">
 
-            <p class="teaching" >本节教材</p>
+            <p class="teaching" >待上传</p>
           </div>
           <div class="course-box" v-show="this.currentIndex === 1">
             <p class="introduce">{{ noTree.describe }}</p>
           </div>
           <div class="homework-box" v-show="this.currentIndex === 4">
 
-            <p class="homework">课后作业</p>
+            <p class="homework">待上传</p>
           </div>
-          <div class="design-box" v-show="this.currentIndex === 5">
+          <!--<div class="design-box" v-show="this.currentIndex === 5">-->
 
-            <p class="design">教学设计</p>
-          </div>
-          <div class="appraise-box" v-show="this.currentIndex === 6">
+            <!--<p class="design">待上传</p>-->
+          <!--</div>-->
+          <div class="appraise-box" v-show="this.currentIndex === 5">
+
             <!--<div>-->
               <!--<p v-for="bb in commentArr">{{bb}}</p>-->
               <!--<hr>-->
@@ -66,6 +67,7 @@
                   <div class="reply-msg-box">
                    <ul v-show="replyArr.length">
                     <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.num">
+                      <!--<p>{{replyArr.length}}000</p>-->
                       <span>{{replyItem.user}}：</span>
                       <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
@@ -164,7 +166,7 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","教学设计","课程评价"],
+        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
         commentAllObj:[],
         currentPageCommentObj:[],
         qqqqArr:[],
@@ -265,7 +267,7 @@
             // console.log(this.currentCoursrTitle)
             this.commentArr.push({
               type:1,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length + 1,
               source:"course",
               title: this.currentCoursrTitle,
               user:this.user,
@@ -278,7 +280,7 @@
             // console.log(this.commentAllObj.length)
             axios({
               method:'get',
-              url:"http://"+this.url+":8000/readComments/update",
+              url:"http://192.168.2.251:8000/readComments/update",
               params:{
                 type:1,
                 num:this.commentAllObj.length + 1,
@@ -332,10 +334,9 @@
             this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
               + ' ' + date.getHours() + seperator2 + date.getMinutes()
               + seperator2 + date.getSeconds()
-
             this.commentAllObj.push({
               type:2,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length+1,
               source:"course",
               title: this.currentCoursrTitle,
               user:this.user,
@@ -347,7 +348,7 @@
             })
             this.replyArr.push({
               type:2,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length +1 ,
               source:"course",
               title:this.currentCoursrTitle,
               user:this.user,
@@ -357,13 +358,12 @@
               target:item.user,
               targetId:item.num
             })
-
             axios({
               method:'get',
-              url:"http://"+this.url+":8000/readComments/update",
+              url:"http://192.168.2.251:8000/readComments/update",
               params:{
                 type:2,
-                num:this.commentAllObj.length,
+                num:this.commentAllObj.length +1 ,
                 source:"course",
                 title:this.currentCoursrTitle,
                 user:this.user,
@@ -402,7 +402,6 @@
         if (this.replyToReplyText === '') {
           alert('评论不能为空')
         }else {
-
           var date = new Date()
           var seperator1 = '-'
           var seperator2 = ':'
@@ -419,7 +418,7 @@
             + seperator2 + date.getSeconds()
           this.commentAllObj.push({
             type:3,
-            num:this.commentAllObj.length,
+            num:this.commentAllObj.length + 1,
             source:"course",
             title: this.currentCoursrTitle,
             user:this.user,
@@ -431,7 +430,7 @@
           })
           this.replyToReplyArr.push({
             type:3,
-            num:this.commentAllObj.length,
+            num:this.commentAllObj.length + 1,
             source:"course",
             title:this.currentCoursrTitle,
             user: this.user,
@@ -445,10 +444,10 @@
 
           axios({
             method:'get',
-            url:"http://"+this.url+":8000/readComments/update",
+            url:"http://192.168.2.251:8000/readComments/update",
             params:{
               type:3,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length+1,
               source:"course",
               title:this.currentCoursrTitle,
               user: this.user,
@@ -484,9 +483,8 @@
         }
       }).then((res)=>{
         console.log(res.data.msg)
-        // console.log(res.data.result)
+        console.log(res.data.result)
         this.commentAllObj = res.data.result
-
         for (var i=0;i<this.commentAllObj.length; i++){
           if (this.commentAllObj[i].title == this.currentCoursrTitle) {
             this.currentPageCommentObj.push(this.commentAllObj[i])
@@ -540,14 +538,15 @@
     height: 700px;
     /*background: lightgoldenrodyellow;*/
     position: relative;
-    padding: 0 10%;
+    padding: 0 15%;
   }
 
   .content-box .right-box{
-    width: 80%;
-    min-width: 1000px;
+    width: 70%;
+    min-width: 960px;
     height: 700px;
     /*background: aliceblue;*/
+    position: relative;
     /*margin: 0 150px;*/
 
   }
@@ -560,7 +559,8 @@
   .right-box .detail-box{
     height: 500px;
     width: auto;
-    text-align: center;
+    /*text-align: center;*/
+    /*background: pink;*/
   }
   .right-box .nav-box{
     /*list-style: none;*/
@@ -574,7 +574,7 @@
   .right-box .nav-box li{
     /*height: 40px;*/
     line-height: 40px;
-    width: 110px;
+    width: 10%;
     background: linen;
     color: red;
     border: 1px solid #444;
@@ -595,32 +595,30 @@
     color: red;
   }
   .right-box .nav-box li:first-child{
-    margin-left: 13%;
+    margin-left: 17%;
   }
   .right-box .course-box{
-    width: 700px;
-    height: 400px;
-    margin: 0 22%;
-    position: relative;
+    /*width: 700px;*/
+    height: 100px;
+    margin: 20px 15%;
     /*background: lavender;*/
-    background: url("../assets/bbb.png") no-repeat;
+    background: url("../assets/bbb.png") no-repeat center top;
     padding: 130px 100px;
   }
 
   .right-box .course-box .introduce{
     width: 500px;
     font-size: 16px;
+    height: 150px;
     font-weight: normal;
     /*background: red;*/
     word-wrap: break-word;
   }
 
   .right-box .appraise-box{
-    width: 900px;
-    margin-left: 11%;
+    /*width: 900px;*/
+    margin:20px 5%;
     margin-bottom: 100px;
-    position: relative;
-    top: 20px;
     /*background: lightyellow;*/
   }
   .right-box .appraise-box .appraiseTitle{
@@ -642,32 +640,28 @@
   }
 
   .right-box .teaching-box{
-    width: 750px;
+    width: 70%;
     height: 200px;
-    margin-left: 8%;
-    position: relative;
+    margin: 20px 10%;
     background: #F3F3F3;
     padding: 130px 100px;
-    margin-top: 20px;
   }
   .right-box .homework-box{
-    width: 750px;
+    width: 60%;
     height: 200px;
-    margin-left: 8%;
-    position: relative;
+    margin: 20px 10%;
     background: #F3F3F3;
     padding: 130px 100px;
-    margin-top: 20px;
   }
-  .right-box .design-box{
-    width: 750px;
-    height: 200px;
-    margin-left: 8%;
-    position: relative;
-    background: #F3F3F3;
-    padding: 130px 100px;
-    margin-top: 20px;
-  }
+  /*.right-box .design-box{*/
+    /*width: 750px;*/
+    /*height: 200px;*/
+    /*margin-left: 8%;*/
+    /*position: relative;*/
+    /*background: #F3F3F3;*/
+    /*padding: 130px 100px;*/
+    /*margin-top: 20px;*/
+  /*}*/
   .detail-box .appraise-box .comment-box{
     margin: 0 50px 0 50px;
     /*background: hotpink;*/
@@ -746,14 +740,14 @@
     color: green;
   }
   .comment-box .reply-msg-box{
-    background: pink;
+    /*background: pink;*/
     border-radius: 3px;
     background: #F7F7F7;
   }
   .comment-box .reply-msg-box li{
     margin-left: 30px;
     margin-top: 10px;
-    /*background: yellow;*/
+    background: yellow;
     text-align: left;
   }
   .comment-box .reply-msg-box li {
