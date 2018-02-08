@@ -9,19 +9,19 @@
                             {{item.title}}
                         </a>
                         <div class="dropdown-menu" v-show="item.children">
-
                             <ul>
                                 <li v-for="item2 in item.children">
                                     <div class="dr-a">
-                                        <span @click="sendMsg(item2)">
-                                          <router-link :to="{path:'/course' + '/title/'+ item2.title}">{{item2.title}}</router-link>
+                                        <span >
+                                          <a @click="sendMsg(item2,index)">{{item2.title}}</a>
+                                          <!--<router-link :to="{path:'/course' + '/title/'+ item2.title}">{{item2.title}}</router-link>-->
                                         </span>
                                         <div class="drop-right" v-show="item2.children">
                                             <ul>
-                                                <li v-for="item3 in item2.children" @click="sendMsg(item3)">
-                                                  <router-link :to="{path:'/course' + '/title/'+ item3.title}">
+                                                <li v-for="item3 in item2.children" @click="sendMsg(item3,index)">
+                                                  <!--<router-link :to="{path:'/course' + '/title/'+ item3.title}">-->
                                                     <a  href="#">{{item3.title}}</a>
-                                                  </router-link>
+                                                  <!--</router-link>-->
                                                 </li>
                                             </ul>
                                         </div>
@@ -48,11 +48,12 @@ export default {
   data () {
     return {
       msg: 'navUl',
-      isSelect:''
+      isSelect:'',
+      isAppear:true
     }
   },
   computed:{
-      
+
   },
   mounted(){
     this.isSelect = this.$route.name;
@@ -61,8 +62,14 @@ export default {
     }
   },
   methods: {
-    sendMsg: function (item) {
-      this.$store.commit('newTitle',item);      
+    sendMsg: function (item,index) {
+      // this.isAppear = !this.isAppear
+      if (index == 0){
+        this.$router.push({path:'/course' + '/title/'+ item.title});
+        this.$store.commit('newTitle',item);
+      }else if(index == 1 || index== 2 || index == 3 || index == 4){
+        this.$router.push('/');
+      }
     },
     goto(title){
         this.isSelect = this.$route.name;
