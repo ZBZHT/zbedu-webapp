@@ -9,7 +9,7 @@
                 <p class="ppv" @click="playBestVideo(item)"><span>Video</span></p>
             </div>
         </div>
-        <p class="p" @click="sendBestTitle(item,item.title)">
+        <p class="p" @click="sendBestTitle(item)">
           <router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link>
         </p>
     </div>
@@ -29,7 +29,8 @@ export default {
   },
   methods: {
     sendBestTitle(item){
-      this.$emit('sendBestCourseData',item)
+      this.$store.commit('noTreeTitle',item);
+      // this.$emit('sendBestCourseData',item)
       // alert(title)
     },
     playBestVideo (item) {
