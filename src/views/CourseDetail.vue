@@ -74,7 +74,7 @@
                 </div>
                 <div class="reply-msg-box">
                   <ul v-show="replyArr.length">
-                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.num">
+                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.title && replyItem.targetId == commentItem.num">
                       <span>{{replyItem.user}}：</span>
                       <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
@@ -84,7 +84,7 @@
 
                       <div class="replyToReply-box">
                         <ul v-show="replyToReplyArr.length">
-                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.num">
+                          <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.title && replytoReplyItem.targetId == replyItem.num">
                             <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
                             <span>{{replytoReplyItem.text}}</span>
                             <p>{{replytoReplyItem.time}}</p>
@@ -530,7 +530,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   }
   .nav{
     background: #ddd;
-    /*position: absolute;*/
+    position: absolute;
     left: 0;
     right: 0;
     top: 0;
@@ -538,7 +538,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   .content-box{
     width: 100%;
     min-width: 1000px;
-    margin-top: 20px;
+    margin-top: 180px;
     height: 700px;
     /*background: lightgoldenrodyellow;*/
     /*position: relative;*/
