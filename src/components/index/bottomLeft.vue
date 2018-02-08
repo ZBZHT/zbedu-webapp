@@ -27,7 +27,7 @@ export default {
       this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
     },
     sendButtomLeftTitle(item) {
-      this.$emit('sendLeftData',item)
+      this.$store.commit('noTreeTitle',item);
     }
   }
 }
