@@ -6,10 +6,9 @@
     <div class="content-box">
       <!--<p>完整url:{{aa}}</p>-->
       <!--<p>路由路径:{{bb}}</p>-->
-      <!--<p>路由路径参数:{{cc}}</p>-->
-
+      <p>路由路径参数:{{cc}}</p>
       <video id="video-box" autoplay controls @click="stop">
-        <source :src="videoId" type="video/mp4">
+        <source :src="videoTitle" type="video/mp4">
       </video>
     </div>
 
@@ -32,8 +31,12 @@
     },
     computed:{
       videoId(){
-        console.log('/src/assets/'+this.$route.params.courseId+'.mp4')
-        return '/src/assets/'+this.$route.params.courseId+'.mp4'
+        console.log('/video/'+this.$route.params.courseId+'.mp4'+'----')
+        return '/video/'+this.$route.params.courseId+'.mp4'
+      },
+      videoTitle(){
+        console.log('/video/'+this.$route.params.title+'.mp4'+'======')
+        return '/video/'+this.$route.params.title+'.mp4'
       }
     },
     methods:{
