@@ -66,8 +66,8 @@
                   </div>
                   <div class="reply-msg-box">
                    <ul v-show="replyArr.length">
-                    <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title ===noTree.title && replyItem.targetId === commentItem.num">
-                      <!--<p>{{replyArr.length}}000</p>-->
+                     <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title == noTree.title && replyItem.targetId == commentItem.num">
+                     <!--<li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title === noTree.title && replyItem.targetId === commentItem.num">-->
                       <span>{{replyItem.user}}：</span>
                       <span>{{replyItem.text}}</span>
                       <div class="replyTime-box">
@@ -76,7 +76,7 @@
                       </div>
                       <div class="replyToReply-box">
                       <ul v-show="replyToReplyArr.length">
-                      <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target === replyItem.user && replytoReplyItem.title ===noTree.title && replytoReplyItem.targetId === replyItem.num">
+                      <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title ==noTree.title && replytoReplyItem.targetId == replyItem.num">
                         <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
                         <span>{{replytoReplyItem.text}}</span>
                         <p>{{replytoReplyItem.time}}</p>
@@ -254,7 +254,7 @@
 
             this.commentAllObj.push({
               type:1,
-              num:this.commentAllObj.length,
+              num:this.commentAllObj.length+1,
               source:"course",
               title: this.currentCoursrTitle,
               user:this.user,
@@ -483,8 +483,8 @@
         }
       }).then((res)=>{
         console.log(res.data.msg)
-        console.log(res.data.result)
         this.commentAllObj = res.data.result
+          console.log(this.commentAllObj)
         for (var i=0;i<this.commentAllObj.length; i++){
           if (this.commentAllObj[i].title == this.currentCoursrTitle) {
             this.currentPageCommentObj.push(this.commentAllObj[i])
@@ -599,17 +599,17 @@
   }
   .right-box .course-box{
     /*width: 700px;*/
-    height: 100px;
+    height: 400px;
     margin: 20px 15%;
-    /*background: lavender;*/
     background: url("../assets/bbb.png") no-repeat center top;
-    padding: 130px 100px;
+    /*background: lavender;*/
+
   }
 
   .right-box .course-box .introduce{
-    width: 500px;
+    width: 60%;
     font-size: 16px;
-    height: 150px;
+    padding: 150px 20% 0 20%;
     font-weight: normal;
     /*background: red;*/
     word-wrap: break-word;
@@ -640,7 +640,7 @@
   }
 
   .right-box .teaching-box{
-    width: 70%;
+    width: 60%;
     height: 200px;
     margin: 20px 10%;
     background: #F3F3F3;
@@ -747,7 +747,7 @@
   .comment-box .reply-msg-box li{
     margin-left: 30px;
     margin-top: 10px;
-    background: yellow;
+    /*background: yellow;*/
     text-align: left;
   }
   .comment-box .reply-msg-box li {
