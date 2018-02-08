@@ -49,7 +49,7 @@
                             {{item.intro}}
                         </div>
                         </div>
-                    <p class="p"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
+                    <p class="p" @click="sendRecommendTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
                     </a>
                 </li>
               </ul>
@@ -130,6 +130,9 @@ export default {
           toPlayPdf(item) {
             this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
         },
+    sendRecommendTitle(item){
+      this.$store.commit('noTreeTitle',item);
+    }
   },
   mounted(){
         this.url = document.domain;
