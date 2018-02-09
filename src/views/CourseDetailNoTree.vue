@@ -534,6 +534,7 @@
   .notree-box1{
     width: 960px;
     margin: 0 auto;
+    /*background: pink;*/
   }
   .nav{
     background: #ddd;
@@ -549,7 +550,7 @@
     height: 700px;
     /*background: lightgoldenrodyellow;*/
     position: relative;
-    padding: 0 15%;
+    /*padding: 0 15%;*/
   }
 
   .content-box .right-box{
