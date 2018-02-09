@@ -1,47 +1,48 @@
 <template>
-  <div>
-    <div class="header-box">
-      <navgation-head></navgation-head>
-    </div>
-    <div class="content-box">
-      <div class="right-box">
-        <p class="courseTitle">{{ noTree.title }}</p>
-        <div class="detail-box">
-          <ul class="nav-box">
-            <li v-for="(item,index) in detailNavData" @click="onclick(noTree,index)" :class="{'line': index !== currentIndex}">
-              {{ item}}
-            </li>
-          </ul>
-          <div class="teaching-box" v-show="this.currentIndex === 0">
+  <div class="noTree-box">
+    <div class = "notree-box1">
+      <div class="header-box">
+        <navgation-head></navgation-head>
+      </div>
+      <div class="content-box">
+        <div class="right-box">
+          <p class="courseTitle">{{ noTree.title }}</p>
+          <div class="detail-box">
+            <ul class="nav-box">
+              <li v-for="(item,index) in detailNavData" @click="onclick(noTree,index)" :class="{'line': index !== currentIndex}">
+                {{ item}}
+              </li>
+            </ul>
+            <div class="teaching-box" v-show="this.currentIndex === 0">
 
-            <p class="teaching" >待上传</p>
-          </div>
-          <div class="course-box" v-show="this.currentIndex === 1">
-            <p class="introduce">{{ noTree.describe }}</p>
-          </div>
-          <div class="homework-box" v-show="this.currentIndex === 4">
+              <p class="teaching" >待上传</p>
+            </div>
+            <div class="course-box" v-show="this.currentIndex === 1">
+              <p class="introduce">{{ noTree.describe }}</p>
+            </div>
+            <div class="homework-box" v-show="this.currentIndex === 4">
 
-            <p class="homework">待上传</p>
-          </div>
-          <!--<div class="design-box" v-show="this.currentIndex === 5">-->
+              <p class="homework">待上传</p>
+            </div>
+            <!--<div class="design-box" v-show="this.currentIndex === 5">-->
 
             <!--<p class="design">待上传</p>-->
-          <!--</div>-->
-          <div class="appraise-box" v-show="this.currentIndex === 5">
+            <!--</div>-->
+            <div class="appraise-box" v-show="this.currentIndex === 5">
 
-            <!--<div>-->
+              <!--<div>-->
               <!--<p v-for="bb in commentArr">{{bb}}</p>-->
               <!--<hr>-->
               <!--<p v-for="cc in replyArr">{{cc}}</p>-->
               <!--<hr>-->
               <!--<p v-for="dd in replyToReplyArr">{{dd}}</p>-->
-            <!--</div>-->
+              <!--</div>-->
 
-            <!--<p>{{this.commentObjArr}}</p>-->
-            <p class="appraiseTitle">{{ appraiseMsg }}</p>
-            <p v-show="!commentArr.length">暂无评价</p>
-            <div class="comment-box">
-              <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.title">
+              <!--<p>{{this.commentObjArr}}</p>-->
+              <p class="appraiseTitle">{{ appraiseMsg }}</p>
+              <p v-show="!commentArr.length">暂无评价</p>
+              <div class="comment-box">
+                <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.title">
                   <div class="text-box" >
                     <p @click="enterUserManagement" >用户名：<a href="">{{ commentItem.user  }}</a></p>
                     <p >{{commentItem.text}}</p>
@@ -65,32 +66,32 @@
 
                   </div>
                   <div class="reply-msg-box">
-                   <ul v-show="replyArr.length">
-                     <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title == noTree.title && replyItem.targetId == commentItem.num">
-                     <!--<li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title === noTree.title && replyItem.targetId === commentItem.num">-->
-                      <span>{{replyItem.user}}：</span>
-                      <span>{{replyItem.text}}</span>
-                      <div class="replyTime-box">
-                        <p>{{replyItem.time}}</p>
-                        <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
-                      </div>
-                      <div class="replyToReply-box">
-                      <ul v-show="replyToReplyArr.length">
-                      <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title ==noTree.title && replytoReplyItem.targetId == replyItem.num">
-                        <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
-                        <span>{{replytoReplyItem.text}}</span>
-                        <p>{{replytoReplyItem.time}}</p>
+                    <ul v-show="replyArr.length">
+                      <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title == noTree.title && replyItem.targetId == commentItem.num">
+                        <!--<li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title === noTree.title && replyItem.targetId === commentItem.num">-->
+                        <span>{{replyItem.user}}：</span>
+                        <span>{{replyItem.text}}</span>
+                        <div class="replyTime-box">
+                          <p>{{replyItem.time}}</p>
+                          <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
+                        </div>
+                        <div class="replyToReply-box">
+                          <ul v-show="replyToReplyArr.length">
+                            <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title ==noTree.title && replytoReplyItem.targetId == replyItem.num">
+                              <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
+                              <span>{{replytoReplyItem.text}}</span>
+                              <p>{{replytoReplyItem.time}}</p>
+                            </li>
+                          </ul>
+                        </div>
+                        <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
+
+                          <textarea type="text" v-model="replyToReplyText"></textarea>
+
+                          <button @click="submitReplyToReply(replyItem)">回复他</button>
+                        </div>
                       </li>
-                      </ul>
-                      </div>
-                      <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
-
-                        <textarea type="text" v-model="replyToReplyText"></textarea>
-
-                        <button @click="submitReplyToReply(replyItem)">回复他</button>
-                      </div>
-                    </li>
-                  </ul>
+                    </ul>
                   </div>
                   <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
 
@@ -98,55 +99,57 @@
 
                     <button @click="submitReply(commentItem,index)">提交回复</button>
                   </div>
-                <hr >
+                  <hr >
+                </div>
               </div>
-            </div>
-            <p class="appraiseTitle">我要评价</p>
-            <textarea type="text" v-model="text"/>
-            <div class="shopList">
-              <p>请评价：</p>
-              <p class="all">
+              <p class="appraiseTitle">我要评价</p>
+              <textarea type="text" v-model="text"/>
+              <div class="shopList">
+                <p>请评价：</p>
+                <p class="all">
 
-                <input
-                  type="radio"
-                  name="b"
-                  value="0" v-model="inputdata"/>
-                <span>★</span>
-                <input
-                  type="radio"
-                  name="b"
-                  value="1" v-model="inputdata" />
-                <span>★</span>
-                <input
-                  type="radio"
-                  name="b"
-                  value="2" v-model="inputdata" />
-                <span>★</span>
-                <input
-                  type="radio"
-                  name="b"
-                  value="3" v-model="inputdata" />
-                <span>★</span>
-                <input
-                  type="radio"
-                  name="b"
-                  value="4" v-model="inputdata" />
-                <span>★</span>
-                <!--<input-->
+                  <input
+                    type="radio"
+                    name="b"
+                    value="0" v-model="inputdata"/>
+                  <span>★</span>
+                  <input
+                    type="radio"
+                    name="b"
+                    value="1" v-model="inputdata" />
+                  <span>★</span>
+                  <input
+                    type="radio"
+                    name="b"
+                    value="2" v-model="inputdata" />
+                  <span>★</span>
+                  <input
+                    type="radio"
+                    name="b"
+                    value="3" v-model="inputdata" />
+                  <span>★</span>
+                  <input
+                    type="radio"
+                    name="b"
+                    value="4" v-model="inputdata" />
+                  <span>★</span>
+                  <!--<input-->
                   <!--type="radio"-->
                   <!--name="b"-->
                   <!--value="5" v-model="inputdata" />-->
-                <!--<span>★</span>-->
+                  <!--<span>★</span>-->
 
-              </p>
-              <p>{{ arrData[inputdata]}}</p>
-              <br>
-              <button class="commit-btn" @click="submitComments">提交评论</button>
+                </p>
+                <p>{{ arrData[inputdata]}}</p>
+                <br>
+                <button class="commit-btn" @click="submitComments">提交评论</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -524,6 +527,13 @@
     margin: 0;
     padding: 0;
     list-style: none;
+  }
+  .noTree-box{
+    min-width: 960px;
+  }
+  .notree-box1{
+    width: 960px;
+    margin: 0 auto;
   }
   .nav{
     background: #ddd;
