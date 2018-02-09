@@ -603,6 +603,7 @@
     height: 400px;
     margin: 20px 15%;
     background: url("../assets/bbb.png") no-repeat center top;
+    background-size: cover;
     /*background: lavender;*/
 
   }
@@ -610,7 +611,7 @@
   .right-box .course-box .introduce{
     width: 60%;
     font-size: 16px;
-    padding: 150px 20% 0 20%;
+    padding: 200px 20% 0 20%;
     font-weight: normal;
     /*background: red;*/
     word-wrap: break-word;
