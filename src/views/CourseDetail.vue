@@ -612,6 +612,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       position: relative;
       /*background: lavender;*/
       background: url("../assets/bbb.png") no-repeat center top;
+      background-size: cover;
       /*padding: 130px 100px;*/
     }
     .right-box .courseDescribe{
@@ -703,13 +704,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       position: relative;
       /*background: lavender;*/
       background: url("../assets/bbb.png") no-repeat center top;
+      background-size: cover;
       /*padding: 130px 100px;*/
     }
     .right-box .courseDescribe{
       width: 80%;
       font-size: 16px;
       margin: 0 10% 0 10%;
-      padding-top: 120px;
+      padding-top: 200px;
       font-weight: normal;
       /*background: red;*/
       word-wrap: break-word;
