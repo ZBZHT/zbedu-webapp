@@ -6,7 +6,7 @@
     <div class="content-box">
       <!--<p>完整url:{{aa}}</p>-->
       <!--<p>路由路径:{{bb}}</p>-->
-      <p>路由路径参数:{{cc}}</p>
+      <!--<p>路由路径参数:{{cc}}</p>-->
       <video id="video-box" autoplay controls @click="stop">
         <source :src="videoTitle" type="video/mp4">
       </video>
