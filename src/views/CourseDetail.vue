@@ -560,7 +560,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       height: 500px;
       width: auto;
       text-align: center;
-      background: pink;
+      /*background: pink;*/
     }
     .content-box .right-box{
       width: 800px;
