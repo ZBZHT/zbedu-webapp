@@ -1,12 +1,6 @@
-const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-/*mongoose.connect('mongodb://127.0.0.1:27017/db');
-
-const db = mongoose.connection;
-db.once('open', function (callback) {
-  console.log("数据库成功打开");
-});*/
+const Comments = require('../app/models/Comments');
 
 //设置跨域请求
 router.all('*', function (req, res, next) {
@@ -23,39 +17,16 @@ router.all('*', function (req, res, next) {
   }
 });
 
-//定义result
-let resultSchema = new mongoose.Schema({
-  type: Number,
-  Id: Number,
-  source: String,
-  title: String,
-  user: String,
-  text: String,
-  time: String,
-  score: String,
-  target: String,
-  targetId: String
-});
-let Result = mongoose.model("Result", resultSchema);
-
-//定义comments
-let commentsSchema = new mongoose.Schema({
-  status: String,
-  msg: String,
-  result: [resultSchema]
-});
-let Comments = mongoose.model("Comments", commentsSchema);
-
 //添加新comment
 router.get('/addComment', function (req, res) {
-  let reqComment = req.query;
+  //let reqComment = req.query;
   let comments = new Comments({
     status: '0',
     msg: "comments data a success"
   });
   comments.result.push({
     type: "1",
-    Id: "1",
+    num: "1",
     source: "course",
     title: "动力电池系统故障检修",
     user: "橘子1",
@@ -91,7 +62,7 @@ router.get('/update', function (req, res) {
       $push: {
         result: {
           type: reqComment.type,
-          Id: reqComment.Id,
+          num: reqComment.num,
           source: reqComment.source,
           title: reqComment.title,
           user: reqComment.user,

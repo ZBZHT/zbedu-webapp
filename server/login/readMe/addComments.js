@@ -10,7 +10,7 @@ db.once('open', function (callback) {
 //定义result
 let resultSchema = new mongoose.Schema({
   type: Number,
-  Id: Number,
+  num: Number,
   source: String,
   title: String,
   user: String,
@@ -37,7 +37,7 @@ let comments = new Comments({
 });
 comments.result.push({
     "type":"1",
-    "Id":"1",
+    "num":"1",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"橘子1",
@@ -49,7 +49,7 @@ comments.result.push({
   },
   {
     "type":"2",
-    "Id":"2",
+    "num":"2",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"葡萄🍇",
@@ -61,7 +61,7 @@ comments.result.push({
   },
   {
     "type":"3",
-    "Id":"3",
+    "num":"3",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"西瓜🍉",
@@ -73,7 +73,7 @@ comments.result.push({
   },
   {
     "type":"1",
-    "Id":"4",
+    "num":"4",
     "source":"course",
     "title":"安全操作与新车交接检查",
     "user":"橘子2",
@@ -85,7 +85,7 @@ comments.result.push({
   },
   {
     "type":"2",
-    "Id":"5",
+    "num":"5",
     "source":"course",
     "title":"安全操作与新车交接检查",
     "user":"apple",
@@ -97,7 +97,7 @@ comments.result.push({
   },
   {
     "type":"2",
-    "Id":"6",
+    "num":"6",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"rose",
@@ -109,7 +109,7 @@ comments.result.push({
   },
   {
     "type":"3",
-    "Id":"7",
+    "num":"7",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"柚子",
@@ -121,7 +121,7 @@ comments.result.push({
   },
   {
     "type":"1",
-    "Id":"8",
+    "num":"8",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"橘子3",
@@ -133,7 +133,7 @@ comments.result.push({
   },
   {
     "type":"3",
-    "Id":"9",
+    "num":"9",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"橘子",
@@ -145,7 +145,7 @@ comments.result.push({
   },
   {
     "type":"3",
-    "Id":"10",
+    "num":"10",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"橘子",
@@ -157,7 +157,7 @@ comments.result.push({
   },
   {
     "type":"2",
-    "Id":"11",
+    "num":"11",
     "source":"course",
     "title":"动力电池系统故障检修",
     "user":"徐瑞",

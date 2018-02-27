@@ -10,7 +10,7 @@ router.get('/', function(req, res) {
     }
     */
     User.find().then(function (users) {
-        res.render('bms', {
+        res.render('./bms/bms', {
             //设置模板
             //userInfo: req.userInfo,
             users: users
@@ -30,12 +30,8 @@ router.get('/', function(req, res) {
         } else {
             users: users
         }
-
     });
 });*/
-
-//分类删除
-
 
 
 module.exports = router;

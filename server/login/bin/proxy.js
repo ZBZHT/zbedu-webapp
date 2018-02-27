@@ -1,8 +1,8 @@
-//这个是用来测试代理服务
+//用来测试代理服务
 http = require('http');
-var app = require('../app');
-var debug = require('debug')('login2:server');
-var mongoose = require('mongoose');
+const app = require('../app');
+const debug = require('debug')('login2:server');
+const mongoose = require('mongoose');
 httpProxy = require('http-proxy');
 
 // 新建一个代理 Proxy Server 对象

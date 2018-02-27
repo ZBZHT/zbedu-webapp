@@ -8,7 +8,6 @@ const bannerLeftData = require('../app/mock/bannerLeftData.json');
 const login = require('../app/mock/login.json');
 const logOut = require('../app/mock/logOut.json');
 const test = require('../app/mock/test.json');
-const comments = require('../app/mock/comments.json');
 const testQuestion = require('../app/mock/testQuestion101.json');
 const testQuestion02 = require('../app/mock/testQuestion102.json');
 const testQuestion03 = require('../app/mock/testQuestion103.json');
@@ -60,11 +59,6 @@ router.get('/logOut', function (req, res) {
 router.get('/test', function (req, res) {
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(test));
-});
-router.get('/comments', function (req, res) {
-  console.log(req);
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(comments));
 });
 router.get('/testQuestion101', function (req, res) {
     res.setHeader("Content-Type", "application/json");

@@ -14,7 +14,7 @@ router.use(function (req, res, next) {
 
 //设置跨域请求
 router.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
+  res.header("Access-Control-Allow-Origin", "http://192.168.2.251:8080");
   res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
   res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -24,10 +24,9 @@ router.all('*', function (req, res, next) {
 });
 
 //login处理
-router.post('/user/login', checkNotLogin, function (req, res) {
+router.post('/user/login', checkLogin, function (req, res) {
   let username = req.body.username;
   let password = req.body.password;
-  console.log(Array.isArray);
 
   let userID = /^\d{8}$/;  //只能是8为数字
   let MoNo = /^[1][3,4,5,7,8][0-9]{9}$/;  //是否为11位有效手机号码
@@ -142,10 +141,10 @@ router.post('/user/login', checkNotLogin, function (req, res) {
 });
 
 //判断是否是已登录状态
-function checkNotLogin(req, res, next) {
+function checkLogin(req, res, next) {
   let sessID = req.sessionID;
   //查询数据库中用户名是否存在,存在则登录
-  //console.log(req.cookies);
+  console.log(req.session.cookie);
   Session.findOne({
     _id: sessID,
   }).then(function (sessID) {

@@ -1,23 +1,25 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
 //定义result
-let resultSchema = new mongoose.Schema({
-  type : Number,
-  Id : Number,
-  source : String,
-  title : String,
-  user : String,
-  text : String,
-  time : String,
-  score : Number,
-  target : String,
-  targetId : Number
+let resultSchema = new Schema({
+  type: Number,
+  num: Number,
+  source: String,
+  title: String,
+  user: String,
+  text: String,
+  time: String,
+  score: String,
+  target: String,
+  targetId: String
 });
-let Result = mongoose.model("Result",resultSchema);
+let Result = mongoose.model("Result", resultSchema);
 
 //定义comments
-let commentsSchema = new mongoose.Schema({
-  status : String,
-  msg : Number,
-  result : [studentSchema]
+module.exports = new Schema({
+  status: String,
+  msg: String,
+  result: [resultSchema]
 });
-let Comments = mongoose.model("Comments",commentsSchema);
+
