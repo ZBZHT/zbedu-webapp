@@ -1,187 +1,193 @@
 <template>
-<div class="question">
-    <div class="leftBox">
-        <p>{{user}}</p>
-        <ul class="leftItem" :class="{dispear : !dispear}">
-            <li class="leftLi" v-for="(item,index) in leftBox"
-                @click="rightAppear(index)"
-                :class="currIndex === index ? 'active' : '' ">
-                {{item.li}}
-            </li>
-        </ul>
-    </div>
-    <div class="rightBox">
-        <div class="testOnline" v-show="currIndex === 0">
-            <div class="title">
-                <div>
-                    <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-                    <p class="titleP">{{$route.params.title}}考试</p>
-                </div>
-                <div class="inforItem">
-                    <div class="infor">
-                        <p>开始时间</p>
-                        <span>{{hours}}:{{minute}}:{{second}}</span>
-                    </div>
-                    <div class="infor notSt">
-                        <p>状态</p>
-                        <p class="notStart" :class="{dispear : !dispear}">未考</p>
-                        <p>正在考试</p>
-                    </div>
-                    <div class="infor">
-                        <p>倒计时</p>
-                        <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
-                    </div>
-                </div>
-            </div>
-            <div class="content">
-                <div class="data">
-                    <button @click='add();getTest($route.params.testId);sendInfor()' :class="{dispear : !dispear}">
-                        {{$route.params.title}}开始考试
-                    </button>
-                    <div class="desc" v-for="(item,index) in textQuestionData.question">
-                        <span class="desctitle">
-                            <a @click="tip(index)">
-                                <img src="../assets/tip.png">
-                            </a>
-                            {{item.num}}.{{item.desc}}
-                        </span>
-                        <ul class="ans">
-
-                            <li >
-                                <label :for="item.forId[0]" v-if="item.options[0]">
-                                    <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                        {{item.options[0]}}
-                                </label>
-                                <label :for="item.forId[1]" v-if="item.options[1]">
-                                    <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                        {{item.options[1]}}
-                                </label>
-                                <label :for="item.forId[2]" v-if="item.options[2]">
-                                    <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                        {{item.options[2]}}
-                                </label>
-                                <label :for="item.forId[3]" v-if="item.options[3]">
-                                    <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                        {{item.options[3]}}
-                                </label>
-                            </li>
-                        
-                        </ul>
-                        <span :class="{answer : answer}">
-                            正确答案：{{item.answer}}
-                        </span>
-                    </div>
-                </div>
-                <div class="number">
-                    <ul>
-                        <li v-for="(item,index) in textQuestionData.question">
-                            <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
-                        </li>
-                    </ul>
-                    <div class="status">
-                        <div class="do">
-                            <p class="doP isCheck">{{isCheckNum}}</p>
-                            <p>已答题</p>
-                        </div>
-                        <div class="do">
-                            <p class="doP">{{length - isCheckNum}}</p>
-                            <p>未答题</p>
-                        </div>
-                        <div class="do">
-                            <p class="doP tip"></p>
-                            <p>标记题</p>
-                        </div>
-                    </div>
-                    <button @click='submit' class="btn" :class="{answer : !answer,dispear : dispear}">提交</button>
-                </div>
-            </div>
-        </div>
-        <div class="userMessage" v-show="currIndex === 1">
-            <ul class="testLine">
-                <li class="testNumber">NO.</li>
-                <li class="testTime">时间</li>
-                <li class="testTitle">项目</li>
-                <li class="testState">状态</li>
-                <li class="testGrade">分数</li>
-            </ul>
-            <ul class="testLine" v-for="(item,index) in userMessageData" v-if="index % 4 == 0">
-                <li class="testNumber">{{index / 4 + 1}}</li>
-                <li class="testTime">{{userMessageData[index + 2]}}</li>
-                <li class="testTitle">
-                    <a id="show-modal" @click="showModal=true">
-                        <p @click="myNum(index)">111</p>
-                    </a>
-                    <modal v-if="showModal" @close="showModal = false">
-                        <h3 slot="header">custom header</h3>
-                        <div slot="body">
-                            <div v-for="(item2,index2) in userMessageData[myNumber].question">
-                                <span class="desctitle">
-                                    {{item2.num}}.{{item2.desc}}
-                                </span>
-                                <ul class="ans">
-                                    <li>
-                                        <label for="11" v-if="item2.options[0]">
-                                            <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
-                                                {{item2.options[0]}}
-                                        </label>
-                                        <label for="22" v-if="item2.options[1]">
-                                            <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
-                                                {{item2.options[1]}}
-                                        </label>
-                                        <label for="33" v-if="item2.options[2]">
-                                            <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
-                                                {{item2.options[2]}}
-                                        </label>
-                                        <label for="44" v-if="item2.options[3]">
-                                            <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="userMessageData[myNumber+1][index2]">
-                                                {{item2.options[3]}}
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>    
-                        </div>
-                    </modal>
+<div>
+    <div class="question">
+        <div class="leftBox">
+            <p>{{user}}</p>
+            <ul class="leftItem" :class="{dispear : !dispear}">
+                <li class="leftLi" v-for="(item,index) in leftBox"
+                    @click="rightAppear(index)"
+                    :class="currIndex === index ? 'active' : '' ">
+                    {{item.li}}
                 </li>
-                <li class="testState">已结束</li>
-                <li class="testGrade">{{userMessageData[index + 3]}}</li>
-                <li class="errAnalysis">
-                    <a id="show-modal1" @click="showModal1=true">
-                        <p @click="myNum(index)">错题分析</p>
-                    </a>
-                    <modal v-if="showModal1" @close="showModal1 = false">
-                        <h3 slot="header">custom2333 header</h3>
-                        <div slot="body">
-                            <div v-for="(item,index) in errorIndex[myNumber / 4]">
-                                <span class="desctitle">
-                                    <img src="../assets/err.jpg">
-                                    {{item}}.{{userMessageData[myNumber].question[item].desc}}
-                                </span>
-                                <ul class="ans">
-                            <li>
-                                {{userMessageData[myNumber].question[item].options[0]}}
-                                {{userMessageData[myNumber].question[item].options[1]}}
-                                {{userMessageData[myNumber].question[item].options[2]}}
-                                {{userMessageData[myNumber].question[item].options[3]}}
+            </ul>
+        </div>
+        <div class="rightBox">
+            <div class="testOnline" v-show="currIndex === 0">
+                <div class="title">
+                    <div>
+                        <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+                        <p class="titleP">{{$route.params.title}}考试</p>
+                    </div>
+                    <div class="inforItem">
+                        <div class="infor">
+                            <p>开始时间</p>
+                            <span>{{hours}}:{{minute}}:{{second}}</span>
+                        </div>
+                        <div class="infor notSt">
+                            <p>状态</p>
+                            <p class="notStart" :class="{dispear : !dispear}">未考</p>
+                            <p>正在考试</p>
+                        </div>
+                        <div class="infor">
+                            <p>倒计时</p>
+                            <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="data">
+                        <button @click='add();getTest($route.params.testId);sendInfor()' v-show="!textQuestionData">
+                            {{$route.params.title}}开始考试
+                        </button>
+                        <div class="desc" v-for="(item,index) in textQuestionData.question">
+                            <span class="desctitle">
+                                <a @click="tip(index)">
+                                    <img src="../assets/tip.png">
+                                </a>
+                                {{item.num}}.{{item.desc}}
+                            </span>
+                            <ul class="ans">
+
+                                <li >
+                                    <label :for="item.forId[0]" v-if="item.options[0]">
+                                        <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                            {{item.options[0]}}
+                                    </label>
+                                    <label :for="item.forId[1]" v-if="item.options[1]">
+                                        <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                            {{item.options[1]}}
+                                    </label>
+                                    <label :for="item.forId[2]" v-if="item.options[2]">
+                                        <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                            {{item.options[2]}}
+                                    </label>
+                                    <label :for="item.forId[3]" v-if="item.options[3]">
+                                        <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                            {{item.options[3]}}
+                                    </label>
+                                </li>
+
+                            </ul>
+                            <span :class="{answer : answer}">
+                                正确答案：{{item.answer}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="number">
+                        <ul>
+                            <li v-for="(item,index) in textQuestionData.question">
+                                <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                             </li>
                         </ul>
-                        <span>
-                            正确答案：{{userMessageData[myNumber].question[item].answer}}
-                        </span>
+                        <div class="status">
+                            <div class="do">
+                                <p class="doP isCheck">{{isCheckNum}}</p>
+                                <p>已答题</p>
+                            </div>
+                            <div class="do">
+                                <p class="doP">{{length - isCheckNum}}</p>
+                                <p>未答题</p>
+                            </div>
+                            <div class="do">
+                                <p class="doP tip"></p>
+                                <p>标记题</p>
                             </div>
                         </div>
-                    </modal>
-                </li>
-            </ul>
-            <button @click="clearAll">删除所有记录</button>
-        
+                        <button @click='submit' class="btn" :class="{answer : !answer}" v-show="textQuestionData">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="userMessage" v-show="currIndex === 1">
+                <ul class="testLine">
+                    <li class="testNumber">NO.</li>
+                    <li class="testTime">时间</li>
+                    <li class="testTitle">项目</li>
+                    <li class="testState">状态</li>
+                    <li class="testGrade">分数</li>
+                </ul>
+                <ul class="testLine" v-for="(item,index) in userMessageData.testQuestion">
+                <ul v-for="(item4,index4) in userMessageData.testQuestionInfo" v-if="index4 == index">
+                    <li class="testNumber">{{index + 1}}</li>
+                    <li class="testTime">{{item4.startTime}}</li>
+                    <li class="testTitle">
+                        <a id="show-modal" @click="showModal=true">
+                            <p @click="myNum(index)">{{item.currTestNum}}</p>
+                        </a>
+                        <modal v-if="showModal" @close="showModal = false">
+                            <h3 slot="header">custom header</h3>
+                            <div slot="body">
+                                <div v-for="(item2,index2) in userMessageData.testQuestion[myNumber].question">
+                                    <span class="desctitle">
+                                        {{item2.num}}.{{item2.desc}}
+                                    </span>
+                                    <ul class="ans">
+                                        <li>
+                                            <label for="11" v-if="item2.options[0]">
+                                                <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                    {{item2.options[0]}}
+                                            </label>
+                                            <label for="22" v-if="item2.options[1]">
+                                                <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                    {{item2.options[1]}}
+                                            </label>
+                                            <label for="33" v-if="item2.options[2]">
+                                                <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                    {{item2.options[2]}}
+                                            </label>
+                                            <label for="44" v-if="item2.options[3]">
+                                                <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                    {{item2.options[3]}}
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </modal>
+                    </li>
+                    <li class="testState">已结束</li>
+                    <li class="testGrade">{{item4.sorce}}</li>
+                    <li class="errAnalysis">
+                        <a id="show-modal1" @click="showModal1=true">
+                            <p @click="myNum(index)">错题分析</p>
+                        </a>
+                        <modal v-if="showModal1" @close="showModal1 = false">
+                            <h3 slot="header">custom2333 header</h3>
+                            <div slot="body">
+                                <div v-for="(item,index) in errorIndex[myNumber / 4]">
+                                    <span class="desctitle">
+                                        <img src="../assets/err.jpg">
+                                        {{item}}.{{userMessageData[myNumber].question[item].desc}}
+                                    </span>
+                                    <ul class="ans">
+                                <li>
+                                    {{userMessageData[myNumber].question[item].options[0]}}
+                                    {{userMessageData[myNumber].question[item].options[1]}}
+                                    {{userMessageData[myNumber].question[item].options[2]}}
+                                    {{userMessageData[myNumber].question[item].options[3]}}
+                                    {{userMessageData[myNumber].question[item].options[3]}}
+                                </li>
+                            </ul>
+                            <span>
+                                正确答案：{{userMessageData[myNumber].question[item].answer}}
+                            </span>
+                                </div>
+                            </div>
+                        </modal>
+                    </li>
+                    </ul>
+                </ul>
+            </div>
         </div>
+    </div>
+    <div class="footer">
+        <foot-footer></foot-footer>
     </div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
-import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
+import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
 
 export default {
@@ -220,8 +226,8 @@ export default {
         classItem:{},
         QidArr:[],
         null:[],
-        userMessageData:[],
-        picked:[],
+        userMessageData:'',
+        picked:{},
         Display:false,
         lengthData:'',
         url:'',
@@ -230,66 +236,83 @@ export default {
         currTestInfor:[],
         currTestRes:[],
         currTestId:'',
-        interval:{}
+        interval:{},
+        TestNum:0
+
     }
   },
   mounted(){
     if(this.$store.state.vuexx == 1){
-        //window.addEventListener("popstate",this.myFunction);
+        window.addEventListener("popstate",this.myFunction);
 
-        //window.onpopstate=function(e){     
-        　　//var e = window.event||e;  
+        //window.onpopstate=function(e){
+        　　//var e = window.event||e;
         　　//e.returnValue=("确定离开当前页面吗？");
-        //} 
+        //}
 
 
 
-        window.onbeforeunload=function(e){     
-        　　var e = window.event||e;  
+        window.onbeforeunload=function(e){
+        　　var e = window.event||e;
         　　e.returnValue=("确定离开当前页面吗？");
-        } 
+        }
     }
 
+    //var allTestNum = this.$store.state.allTestNum ;
+    var allTestNum = 0;
+    console.log(allTestNum+"TTT")
+
+      axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
+            params:{
+                user:this.user,
+                currTestNum: 1 + allTestNum
+            }
+        }).then((res)=>{
+            if(res.data.testQuestion.state == 1){
+                this.textQuestionData = res.data.testQuestion;
+            }
+            console.log(res.data);
+            this.TestNum = res.data.testLength;
+            console.log(this.TestNum+"LLL")
+        //    this.$store.commit('allTestNum',this.TestNum);
+            this.$store.commit('allTestNum',0);
+        }).catch(function(error){
+            console.log("error init." + error)
+        });
 
     axios.get("http://192.168.2.251:8000/readTestQuestionInfo/all",{
         params:{
           user:this.user,
-          currTestId:this.$route.params.testId
+          currTestId:this.$route.params.testId,
+          currTestNum: 1 + allTestNum
         }
       }).then((res)=>{
-        console.log(res.data)
-        
+          console.log(res.data)
+          console.log(res.data.currState)
+
+            if(res.data.state == 1){
+               this.picked = res.data.currAnswer;
+               this.isCheckArr = res.data.currState;
+
+
+
+               this.hours = res.data.startTimeHours;
+               this.minute = res.data.startTimeMinutes;
+               this.second = res.data.startTimeSeconds;
+               this.minutes = res.data.testTimeMinutes;
+               this.seconds = res.data.testTimeSeconds;
+               this.isCheckNum = res.data.isCheckNum;
+               console.log(this.isCheckNum+"qqqqqqq");
+               console.log(this.isCheckArr+"wwwww");
+            }
       }).catch(function(error){
         console.log("错误")
       });
 
 
-      axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
-                    params:{
-                        currTestNum:10001
-                    }
-                }).then((res)=>{
-                    console.log(res.data);
-                    this.textQuestionData = res.data;
-                }).catch(function(error){
-                    console.log("error init." + error)
-                });
-    
-    
 
          this.url = document.domain;
-//         this.hours = this.$store.state.testStartTime;
-//         this.minute = this.$store.state.testStartTimeMinute;
-//         this.second = this.$store.state.testStartTimeSecond;
-//         this.dispear = this.$store.state.startBtnDispear;
-//         this.textQuestionData = this.$store.state.getTextQuestionData;
-//         this.picked = this.$store.state.pickedArr;
-//         this.minutes = this.$store.state.testTimeMinutes;
-//         this.seconds = this.$store.state.testTimeSeconds;
-//         this.isCheckNum = this.$store.state.CheckNum;
-//         this.isCheckArr = this.$store.state.CheckArr;
-//         this.userMessageData = this.$store.state.userMessage;
-//         this.errorIndex = this.$store.state.errorArr;
+
     },
   watch: {
         second:{
@@ -313,74 +336,63 @@ export default {
 //    },
   methods:{
             sendInfor(){
-                setTimeout(function(){
-                    this.currTestInfor.push({
-                        user:this.user,
-                        currTestId:this.currTestId,
-                        testQuestion:10001,
-                        startTime:this.currentdate,
-                        currAnswer:this.picked,
-                        currState:this.isCheckArr,
-                        error:this.error,
-                        sorce:this.sorce
-                    })
-                    this.$store.commit('setCurrTestInfor',this.currTestInfor);
-                }.bind(this),1000);
 
-            this.interval = window.setInterval(function () {
-                    axios({
-                        method:'get',
-                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
-                        params:{
-                            user:this.user,
-                            currTestId:this.currTestId,
-                            testQuestion:10001,
-                            startTime:this.currentdate,
-                            currAnswer:this.picked,
-                            currState:this.isCheckArr,
-                            error:this.error,
-                            sorce:this.sorce
-                        }
-                    }).then(
-                        function (res) {
-                        console.log(res.data.code)
-                        }   
-                    )
-                }.bind(this),3000);
+
 
 
             },
             submit:function () {
                 setTimeout(function(){
                     window.clearInterval(this.interval);
-                }.bind(this),2000);
-                axios({
+                    axios({
                         method:'get',
-                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
+                        url:"http://192.168.2.251:8000/readTestQuestionInfo/submitQuestionInfo",
                         params:{
+                            state:2,
                             user:this.user,
-                            currTestId:this.currTestId,
-                            testQuestion:10001,
+                            currTestId:this.$route.params.testId,
+                            testQuestion: 1 + this.$store.state.allTestNum,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currState:this.isCheckArr,
                             error:this.error,
-                            sorce:this.sorce
+                            sorce:this.sorce,
+                            startTimeHours:this.hours,
+                            startTimeMinutes:this.minute,
+                            startTimeSeconds:this.second,
+                            testTimeMinutes:this.minutes,
+                            testTimeSeconds:this.seconds,
+                            isCheckNum:this.isCheckNum
                         }
                     }).then(
                         function (res) {
                         console.log(res.data.code)
-                        }   
-                    )
+                        }
+                    );
+                }.bind(this),2000);
+                axios({
+                        method:'get',
+                        url:"http://192.168.2.251:8000/readTestQuestion/submitQuestionInfo",
+                        params:{
+                            state:2,
+                            testQuestion: 1 + this.$store.state.allTestNum
+                        }
+                    }).then((res)=>{
+                            
+                        });
                 this.sorce=0;
                 this.error = [];
                 console.log(this.QidArr.length+"===this.QidArr.length");
                 for(var i = 0;i < this.QidArr.length;i++){
                     if(this.QidArr[i] != null && this. QidArr[i] != ''){
                         console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
+                        console.log("asd"+this.picked[i])
+                        console.log(this.textQuestionData)
                         if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
+
                             this.sorce += 5;
                         }else{
+                            console.log(this.picked[i])
                             this.error.push(i+1);
                         }
                     }else{
@@ -389,39 +401,6 @@ export default {
                     }
                 }
                 alert(this.sorce + "==" + this.error + "==" + this.null);
-
-                this.$store.commit('userMessagePickedArr',this.picked);
-                this.$store.commit('errorArrData',this.error);
-                this.$store.commit('userMessageTime',this.currentdate);
-                this.$store.commit('userMessageSorce',this.sorce);
-                this.$store.commit('getvuex',0);
-
-                setTimeout(function(){
-                    this.$store.commit('testStartTime','');
-                    this.$store.commit('testStartTimeMinute','');
-                    this.$store.commit('testStartTimeSecond','');
-                    this.$store.commit('startBtnDispear',true);
-                    this.$store.commit('getTextQuestionData','');
-                    this.$store.commit('pickedArr',[]);
-                    this.$store.commit('testTimeMinutes',120);
-                    this.$store.commit('testTimeSeconds',0);
-                    this.$store.commit('CheckNum',0);
-                    console.log(this.picked+"/////");
-                   // this.$router.go(0);
-                }.bind(this),0.1)
-
-                
-
-//                axios({
-//                        method: 'post',
-//                        url: 'http://" + this.url + ":8000/readJson/testQuestion101',
-//                        data: {
-//                            userMessageData: this.userMessageData
-//                        }
-//                        }).then((req,res)=>{
-//                            console.log(res.data);
-//                            console.log(req);                            
-//                  })
 
             },
             num:function (n) {
@@ -449,8 +428,6 @@ export default {
                     if(_this.seconds < 10){
                     _this.seconds = "0" + _this.seconds;
                     }
-                    _this.$store.commit('testTimeMinutes',_this.minutes);
-                    _this.$store.commit('testTimeSeconds',_this.seconds);
 
                  },1000);
 
@@ -481,19 +458,16 @@ export default {
                  }
                  _this.currentdate = _this.nowTime.getFullYear() + seperator1 + month + seperator1 + strDate
                  + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
-                 
-                 _this.$store.commit('testStartTime',_this.hours);
-                 _this.$store.commit('testStartTimeMinute',_this.minute);
-                 _this.$store.commit('testStartTimeSecond',_this.second);
-                 _this.$store.commit('startBtnDispear',_this.dispear);
-                 _this.$store.commit('getvuex',1);
+
             },
             getTest(e){
-                axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
+                axios.get("http://192.168.2.251:8000/readTestQuestion/clickQuery",{
                     params:{
+                        //state默认为0未开始考试，开始后为1
+                        state:1,
                         testId: e,
                         num: 20,
-                        currTestNum:10001
+                        currTestNum: 1 + this.$store.state.allTestNum
                     }
                 }).then((res)=>{
                     if(res.data.status!==0) {
@@ -501,8 +475,6 @@ export default {
                     }
                     this.textQuestionData = res.data;
                     this.currTestId = e;
-                    this.$store.commit('getTextQuestionData',this.textQuestionData);
-                    this.$store.commit('getUserMessage',this.textQuestionData);
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
@@ -518,45 +490,68 @@ export default {
                         this.isCheckNum = a ;
                     }
                 }
-                this.$store.commit('CheckNum',this.isCheckNum);
                 this.$set(this.isCheckArr,index,true);
-                this.$store.commit('CheckArr',this.isCheckArr);
-                this.$store.commit('pickedArr',this.picked);
+
+                axios({
+                        method:'get',
+                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
+                        params:{
+                            state:1,
+                            user:this.user,
+                            currTestId:this.$route.params.testId,
+                            testQuestion: 1 + this.$store.state.allTestNum,
+                            startTime:this.currentdate,
+                            currAnswer:this.picked,
+                            currState:this.isCheckArr,
+                            error:this.error,
+                            sorce:this.sorce,
+                            startTimeHours:this.hours,
+                            startTimeMinutes:this.minute,
+                            startTimeSeconds:this.second,
+                            testTimeMinutes:this.minutes,
+                            testTimeSeconds:this.seconds,
+                            isCheckNum:this.isCheckNum
+                        }
+                    }).then((res)=>{
+                            
+                        })
             },
-            myNum:function(index){
-                this.myNumber = index;
+            myNum:function(index2){
+                this.myNumber = index2;
+                console.log(this.myNumber)
             },
             tip(index){
                 this.$set(this.classItem,index,true)
             },
             rightAppear (index) {
                 this.currIndex = index;
-            },
-            clearAll(){
-                this.$store.commit('getUserMessageData',[]);
-                this.$store.commit('ClearErrorArrData',[]);
-                this.$router.go(0);
+                if(index == 1){
+                    this.testManagen();
+                }
             },
             DisplayFun(){
                 this.Display = true;
-                this.$store.commit('getDisplay',this.Display);
             },
             getDisplayFun(){
                 this.Display = false;
-                this.$store.commit('getDisplay',this.Display);
             },
             myFunction(event){
-                 var con = confirm("完成此操作将自动帮您提交，是否继续确认");
-                    if(con == true){
-                        
-                        this.submit();
-                    }else{
-                        console.log("xjxjxjx");
-                        return false;
-                    }
+                 window.clearInterval(this.interval);
+            },
+            testManagen(){
+                axios({
+                        method:'get',
+                        url:"http://192.168.2.251:8000/testManagement/testManagement",
+                        params:{
+                            user:this.user
+                        }
+                        }).then((res)=>{
+                            this.userMessageData = res.data;
+                            console.log(res.data.testQuestionInfo)
+                        })
             }
     },
-  components:{Modal}
+  components:{Modal,footFooter}
 
 }
 </script>
@@ -579,6 +574,7 @@ a{
     width:1200px;
     height:700px;
     margin:0 auto;
+    margin-top: 40px;
     border:1px solid #000;
     display:flex;
 }

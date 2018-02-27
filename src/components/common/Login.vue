@@ -45,41 +45,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
                 url:''
             }
         },
-        created(){
-                    axios.interceptors.request.use(
-                        config => {
-                            console.log('开始请求');
-                            console.log(`请求地址:${config.url}`);
-                            if(getCookie('username')){
-                                config.headers.Authorization = `getCookie('username')`;
-                            }
-                            return config;
-                        },
-                        err => {
-                            console.log('请求失败');
-                            return Promise.reject(error)
-                        })
-                    axios.interceptors.response.use(
-                        response => {
-                            console.log('接收响应');
-                            return response;
-                        },
-                        error => {
-                            console.log('响应出错');
-                            if(error.response){
-                                switch(error.response.status){
-                                    case 401:
-                                        delCookie('username');
-                                        this.username = '';
-                                        this.password = '';
-                                        this.nickName = '';
-                                        this.$router.push('/');
-                                }
-                            }
-                            return Promise.reject(error);
-                        }
-                    )
-                },
+        
         mounted(){
             this.url = document.domain;
         },
