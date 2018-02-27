@@ -27,6 +27,7 @@ router.all('*', function (req, res, next) {
 router.post('/user/login', checkNotLogin, function (req, res) {
   let username = req.body.username;
   let password = req.body.password;
+  console.log(Array.isArray);
 
   let userID = /^\d{8}$/;  //只能是8为数字
   let MoNo = /^[1][3,4,5,7,8][0-9]{9}$/;  //是否为11位有效手机号码

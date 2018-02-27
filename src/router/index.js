@@ -133,9 +133,7 @@ const router = new Router({
 });
 var a = 0;
 router.beforeEach((to,from,next) => {
-  console.log("11");
   if (to.matched.some(res => res.meta.requireAuth)) {
-    console.log("22");
       if (!store.state.username){
             var con = confirm("请登录");
               if(con == true){
@@ -152,7 +150,6 @@ router.beforeEach((to,from,next) => {
                   router.go(0);
                 }
       }else{
-        console.log("33");
         next();
       }
   }else{
@@ -186,7 +183,7 @@ router.beforeEach((to,from,next) => {
       }
   }else{
     next();
-  //  a=0;
+    a=0;
   };
 });
 export default router;
