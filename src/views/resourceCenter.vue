@@ -1,119 +1,258 @@
 <template>
-  <div>
-    <div class="header-box">
+  <div id="app" class="container">
+    <div class="nav">
       <navgation-head></navgation-head>
     </div>
-    <div>
-      <button class="upload-btn" @click="upload">上传</button>
-      <button class="download-btn" @click="download">下载</button>
-<h1>9999</h1>
-      <form action="http://192.168.2.251:8000/FileUpDown/upload" method="post" enctype='multipart/form-data'  onsubmit=" return checkTask(this)">
-        <label for="resource">上传文档</label>
-        <input type="file" id="resource" name="resource">
-        <button type="submit">新建任务</button>
-      </form>
-      <form action="http://192.168.2.251:8000/FileUpDown/download" method="get">
-        <button type="submit">下载文件</button>
-      </form>
-      <br>
-      <button @click="qqq">
-        展示
-      </button>
 
+    <div class="fileList-box">
+      <div>
+
+        <form action="http://192.168.2.251:8000/FileUpDown/upload" method="post" enctype='multipart/form-data'>
+          <label for="resource">选择要上传的文件</label>
+          <input type="file" id="resource" name="resource">
+          <button type="submit">新建任务</button>
+        </form>
+
+        <!--下载-->
+        <!--<form action="http://192.168.2.251:8000/FileUpDown/download" method="get">-->
+        <!--<button type="submit">下载文件</button>-->
+        <!--</form>-->
+
+        <br>
+      </div>
+      <!--<h1>全部内容</h1>-->
+      <!--<ul>-->
+        <!--<li>-->
+          <!--<span>名称</span>-->
+          <!--<span>上传时间</span>-->
+          <!--<span>文件大小</span>-->
+          <!--<span>操作️</span>-->
+        <!--</li>-->
+        <!--<li v-for="item in msgArr" @click="sendName(item.name)">-->
+          <!--<span>{{item.name}}</span>-->
+          <!--<span>{{item.birthtime}}</span>-->
+          <!--<span>{{item.size}} kb</span>-->
+          <!--<span>⬇️</span>-->
+        <!--</li>-->
+      <!--</ul>-->
+
+      <h1>视频</h1>
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>上传时间</span>
+          <span>文件大小</span>
+          <span>操作️</span>
+        </li>
+        <li v-for="item1 in videoArr">
+          <span>{{item1.name}}</span>
+          <span>{{item1.birthtime}}</span>
+          <span>{{item1.size}}</span>
+          <span>⬇️</span>
+        </li>
+      </ul>
+      <h1>pptArr</h1>
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>上传时间</span>
+          <span>文件大小</span>
+          <span>操作️</span>
+        </li>
+        <li v-for="item2 in pptArr">
+          <span>{{item2.name}}</span>
+          <span>{{item2.birthtime}}</span>
+          <span>{{item2.size}}</span>
+          <span>⬇️</span>
+        </li>
+      </ul>
+      <h1>textArr</h1>
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>上传时间</span>
+          <span>文件大小</span>
+          <span>操作️</span>
+        </li>
+        <li v-for="item3 in textArr">
+          <span>{{item3.name}}</span>
+          <span>{{item3.birthtime}}</span>
+          <span>{{item3.size}}</span>
+          <span>⬇️</span>
+        </li>
+      </ul>
+      <h1>picArr</h1>
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>上传时间</span>
+          <span>文件大小</span>
+          <span>操作️</span>
+        </li>
+        <li v-for="item4 in picArr">
+          <span>{{item4.name}}</span>
+          <span>{{item4.birthtime}}</span>
+          <span>{{item4.size}}</span>
+          <span>⬇️</span>
+        </li>
+      </ul>
+      <h1>otherArr</h1>
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>上传时间</span>
+          <span>文件大小</span>
+          <span>操作️</span>
+        </li>
+        <li v-for="item5 in otherArr">
+          <span>{{item5.name}}</span>
+          <span>{{item5.birthtime}}</span>
+          <span>{{item5.size}}</span>
+          <span>⬇️</span>
+        </li>
+      </ul>
     </div>
-    <h1>666666</h1>
 
-    <input type="file" value=""  id="file"  @change='onUpload'>
-    <ul>
-      <li v-for="item in msgArr">{{item.name}}</li>
-    </ul>
+    <div class="footer">
+      <foot-footer></foot-footer>
+    </div>
   </div>
 </template>
 
-
 <script>
-
   import axios from 'axios'
   import navgationHead from '@/components/common/navgationHead'
-  import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
+  import footFooter from '@/components/common/footFooter'
 
   export default {
-    name: 'user',
+    name: 'sourceCenter',
     data () {
       return {
-        msgArr:[]
+        msgArr:[],
+        videoArr:[],
+        pptArr:[],
+        textArr:[],
+        picArr:[],
+        otherArr:[]
       }
     },
     computed:{
 
     },
     methods: {
-      upload() {
-      },
-      download() {
-        alert(222)
-      },
-      qqq () {
-        axios.post("http://192.168.2.251:8000/FileUpDown/loadFile",{
-          params:{
-            user:6666
+
+      sendName(item){
+        alert(item)
+
+        axios({
+          method:'post',
+          url:"http://192.168.2.251:8000/FileUpDown/download",
+          data:{
+            downloadName:item
           }
-        }).then((res)=>{
-            console.log(res.data.var)
-            this.msgArr = res.data.var
+        }).then(
+          function (res) {
           }
         )
-      },
-      onUpload(e) {
 
-        var formData = new FormData();
 
-        formData.append('file', e.target.files[0]);
-
-        formData.append('type', 'test');
-
-        // $.ajax({
-        //
-        //   url: 'http://192.168.2.251:8000/FileUpDown/upload',
-        //   type: 'POST',
-        //   dataType: 'json',
-        //   cache: false,
-        //   data: formData,
-        //   processData: false,
-        //   contentType: false,
-        //   success: (res) => {
-        //     if (res.code === 200) {
-        //
-        //       console.log(res.code)
-        //       // var img_tpl ='<div class="picture" style="width:108px;float:left;"><img id="preview" src="'+后台返回的tu'pian路径+'" style="width:48px;height:48px;float:left;background-size:cover;"/><span class="r-span"
-        //       // onclick = "onDeletePicture()" style="color:#49BDCC;display:block;float:left;margin-left:10px;line-height:48px;">删除</span></div>';
-        //       // $("#refund_img").after(img_tpl);
-        //     }
-        //
-        //   },
-        //
-        //   error: function (err) {
-        //
-        //     alert("网络错误");
-        //
-        //   }
-        //
-        // });
-
-      },
-      mounted() {
-      },
-      watch: {},
-      components: {
-        navgationHead
       }
-    }
+    },
+    mounted(){
+      // alert(222)
+      axios.get("http://192.168.2.251:8000/FileUpDown/loadFile",{
+        params:{
+          user:6666
+        }
+      }).then((res)=>{
+          // console.log(res.data.var)
+
+          // this.msgArr = res.data.var
+
+          for (var i = 0; i < res.data.var.length; i++){
+            if (res.data.var[i].size != 0){
+              this.msgArr.push(res.data.var[i])
+            }
+          }
+          for ( var j = 0; j < this.msgArr.length; j++){
+            var index = this.msgArr[j].name.indexOf(".") //得到"."在第几位
+            var suffix = this.msgArr[j].name.substring(index) //截断"."之前的，得到后缀
+            if (suffix == '.mp4' || suffix == '.rmvb' || suffix == '.avi'){
+              this.videoArr.push(this.msgArr[j])
+            }else if(suffix == '.pptx'){
+              this.pptArr.push(this.msgArr[j])
+            }else if(suffix == '.txt' || suffix == '.docx' || suffix == '.xlsx' || suffix == '.pdf'){
+              this.textArr.push(this.msgArr[j])
+            }else if(suffix == '.jpg' || suffix == '.png' || suffix == '.gif' || suffix == '.jpeg'){
+              this.picArr.push(this.msgArr[j])
+            }else {
+              this.otherArr.push(this.msgArr[j])
+            }
+          }
+          console.log(this.msgArr)
+
+        }
+      )
+      console.log('00===========')
+    },
+    components:{navgationHead,footFooter}
   }
 </script>
 
-<style scoped>
-
-  .header-box{
-    margin: -7px -7px 0px -7px;
+<style>
+  *{
+    margin:0;
+    padding:0;
+  }
+  ul li{
+    list-style: none;
+  }
+  .fileList-box ul li{
+    background: #ECECEC;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px dotted #8c8c8c;
+    text-align: left;
+  }
+  .fileList-box ul li span:first-child{
+    display: inline-block;
+    width: 40%;
+    /*background: lightgoldenrodyellow;*/
+    text-align: center;
+  }
+  .fileList-box ul li span:nth-child(2){
+    display: inline-block;
+    width: 30%;
+    /*background: lightgoldenrodyellow;*/
+    text-align: center;
+  }
+  .fileList-box ul li span:nth-child(3){
+    display: inline-block;
+    width: 20%;
+    /*background: lightgoldenrodyellow;*/
+    text-align: center;
+  }
+  .fileList-box ul li span:nth-child(4){
+    display: inline-block;
+    width: 8%;
+    /*background: lightgoldenrodyellow;*/
+    text-align: center;
+  }
+  a{
+    color: inherit;
+    cursor: pointer;
+    text-decoration:none;
+  }
+  a:hover{
+    text-decoration: none;
+    color: #f00;
+  }
+  a:focus {
+    color: #f00;
+    text-decoration: none;
+  }
+  hr{
+    margin-top: 2px;
+    margin-bottom:2px;
   }
 </style>
