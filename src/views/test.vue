@@ -47,8 +47,7 @@
                                 {{item.num}}.{{item.desc}}
                             </span>
                             <ul class="ans">
-
-                                <li >
+                                <li>
                                     <label :for="item.forId[0]" v-if="item.options[0]">
                                         <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                             {{item.options[0]}}
@@ -66,11 +65,7 @@
                                             {{item.options[3]}}
                                     </label>
                                 </li>
-
                             </ul>
-                            <span :class="{answer : answer}">
-                                正确答案：{{item.answer}}
-                            </span>
                         </div>
                     </div>
                     <div class="number">
@@ -153,23 +148,24 @@
                         <modal v-if="showModal1" @close="showModal1 = false">
                             <h3 slot="header">custom2333 header</h3>
                             <div slot="body">
-                                <div v-for="(item,index) in errorIndex[myNumber / 4]">
+                                <div v-for="(item5,index5) in userMessageData.testQuestionInfo[myNumber].error">
+                                <div v-for="(item6,index6) in userMessageData.testQuestion[myNumber].question" v-if="index6 == 0">
                                     <span class="desctitle">
                                         <img src="../assets/err.jpg">
-                                        {{item}}.{{userMessageData[myNumber].question[item].desc}}
+                                        {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
                                     </span>
                                     <ul class="ans">
-                                <li>
-                                    {{userMessageData[myNumber].question[item].options[0]}}
-                                    {{userMessageData[myNumber].question[item].options[1]}}
-                                    {{userMessageData[myNumber].question[item].options[2]}}
-                                    {{userMessageData[myNumber].question[item].options[3]}}
-                                    {{userMessageData[myNumber].question[item].options[3]}}
-                                </li>
-                            </ul>
-                            <span>
-                                正确答案：{{userMessageData[myNumber].question[item].answer}}
-                            </span>
+                                        <li>
+                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[0]}}
+                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[1]}}
+                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[2]}}
+                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[3]}}
+                                        </li>
+                                    </ul>
+                                    <span>
+                                        正确答案：{{userMessageData.testQuestion[myNumber].question[item5 - 1].answer}}
+                                    </span>
+                                </div>
                                 </div>
                             </div>
                         </modal>
@@ -242,22 +238,7 @@ export default {
     }
   },
   mounted(){
-    if(this.$store.state.vuexx == 1){
-        window.addEventListener("popstate",this.myFunction);
-
-        //window.onpopstate=function(e){
-        　　//var e = window.event||e;
-        　　//e.returnValue=("确定离开当前页面吗？");
-        //}
-
-
-
-        window.onbeforeunload=function(e){
-        　　var e = window.event||e;
-        　　e.returnValue=("确定离开当前页面吗？");
-        }
-    }
-
+        
     //var allTestNum = this.$store.state.allTestNum ;
     var allTestNum = 0;
     console.log(allTestNum+"TTT")
@@ -270,6 +251,9 @@ export default {
         }).then((res)=>{
             if(res.data.testQuestion.state == 1){
                 this.textQuestionData = res.data.testQuestion;
+
+                
+
             }
             console.log(res.data);
             this.TestNum = res.data.testLength;
@@ -401,7 +385,7 @@ export default {
                     }
                 }
                 alert(this.sorce + "==" + this.error + "==" + this.null);
-
+                this.$router.go(0);
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -470,8 +454,20 @@ export default {
                         currTestNum: 1 + this.$store.state.allTestNum
                     }
                 }).then((res)=>{
-                    if(res.data.status!==0) {
+                    if(res.data.status !== 0) {
                         return;
+                    }
+                    if(res.data.state == 1 ){
+                        window.addEventListener("popstate",this.myFunction);
+
+                        window.onpopstate=function(e){
+                        　　var e = window.event||e;
+                        　　e.returnValue=("确定离开当前页面吗？");
+                        }
+                        window.onbeforeunload=function(e){
+                        　　var e = window.event||e;
+                        　　e.returnValue=("确定离开当前页面吗？");
+                        }
                     }
                     this.textQuestionData = res.data;
                     this.currTestId = e;
@@ -536,7 +532,7 @@ export default {
                 this.Display = false;
             },
             myFunction(event){
-                 window.clearInterval(this.interval);
+                 alert("aaa")
             },
             testManagen(){
                 axios({
@@ -547,7 +543,7 @@ export default {
                         }
                         }).then((res)=>{
                             this.userMessageData = res.data;
-                            console.log(res.data.testQuestionInfo)
+                            console.log(res.data)
                         })
             }
     },

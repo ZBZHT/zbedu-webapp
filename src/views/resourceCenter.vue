@@ -13,28 +13,29 @@
           <button type="submit">新建任务</button>
         </form>
 
-        <!--下载-->
+        //下载
         <!--<form action="http://192.168.2.251:8000/FileUpDown/download" method="get">-->
         <!--<button type="submit">下载文件</button>-->
         <!--</form>-->
 
         <br>
       </div>
-      <!--<h1>全部内容</h1>-->
-      <!--<ul>-->
-        <!--<li>-->
-          <!--<span>名称</span>-->
-          <!--<span>上传时间</span>-->
-          <!--<span>文件大小</span>-->
-          <!--<span>操作️</span>-->
-        <!--</li>-->
-        <!--<li v-for="item in msgArr" @click="sendName(item.name)">-->
-          <!--<span>{{item.name}}</span>-->
-          <!--<span>{{item.birthtime}}</span>-->
-          <!--<span>{{item.size}} kb</span>-->
-          <!--<span>⬇️</span>-->
-        <!--</li>-->
-      <!--</ul>-->
+      <h1>全部内容</h1>
+
+      <ul>
+        <li>
+          <span>名称</span>
+          <span>上传时间</span>
+          <span>文件大小</span>
+          <span>操作️</span>
+        </li>
+        <li v-for="item in msgArr" @click="sendName(item.name)">
+          <span>{{item.name}}</span>
+          <span>{{item.birthtime}}</span>
+          <span>{{item.size}} kb</span>
+          <span>⬇️</span>
+        </li>
+      </ul>
 
       <h1>视频</h1>
       <ul>
@@ -47,7 +48,7 @@
         <li v-for="item1 in videoArr">
           <span>{{item1.name}}</span>
           <span>{{item1.birthtime}}</span>
-          <span>{{item1.size}}</span>
+          <span>{{item1.size}} kb</span>
           <span>⬇️</span>
         </li>
       </ul>
@@ -62,7 +63,7 @@
         <li v-for="item2 in pptArr">
           <span>{{item2.name}}</span>
           <span>{{item2.birthtime}}</span>
-          <span>{{item2.size}}</span>
+          <span>{{item2.size}} kb</span>
           <span>⬇️</span>
         </li>
       </ul>
@@ -77,7 +78,7 @@
         <li v-for="item3 in textArr">
           <span>{{item3.name}}</span>
           <span>{{item3.birthtime}}</span>
-          <span>{{item3.size}}</span>
+          <span>{{item3.size}} kb</span>
           <span>⬇️</span>
         </li>
       </ul>
@@ -92,7 +93,7 @@
         <li v-for="item4 in picArr">
           <span>{{item4.name}}</span>
           <span>{{item4.birthtime}}</span>
-          <span>{{item4.size}}</span>
+          <span>{{item4.size}} kb</span>
           <span>⬇️</span>
         </li>
       </ul>
@@ -107,7 +108,7 @@
         <li v-for="item5 in otherArr">
           <span>{{item5.name}}</span>
           <span>{{item5.birthtime}}</span>
-          <span>{{item5.size}}</span>
+          <span>{{item5.size}} kb</span>
           <span>⬇️</span>
         </li>
       </ul>
@@ -145,15 +146,29 @@
         alert(item)
 
         axios({
-          method:'post',
+          method:'get',
           url:"http://192.168.2.251:8000/FileUpDown/download",
-          data:{
+          responseType: 'blob',
+          params:{
             downloadName:item
           }
-        }).then(
-          function (res) {
+        }).then((res) => { // 处理返回的文件流
+          const content = res.data;
+          const blob = new Blob([content]);
+          if ('download' in document.createElement('a')) { // 非IE下载
+            const elink = document.createElement('a');
+            elink.download = item;
+            elink.style.display = 'none';
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href);// 释放URL 对象
+            document.body.removeChild(elink)
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, item)
           }
-        )
+        })
+      
 
 
       }

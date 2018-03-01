@@ -7,7 +7,7 @@
                     </div>
                     <div class="passwordBox">
                         <p> <img class="psw" src="../assets/psw.png"> </p>
-                        <input type="password" placeholder="密码" v-model="password">
+                        <input type="password" placeholder="密码" @keyup.enter="login" v-model="password">
                     </div>
                     <div class="btn">
                         <button class="btnOk" @click="login">确定</button>

@@ -7,9 +7,11 @@
                     <template v-if="type == 'prompt'">
                         <form class="v-modal-prompt-form">
                             <p> <img class="unm" src="../../assets/unm.png"> </p>
-                                <input type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号">
+                                <input name="fname" type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号" autocomplete="on" autofocus="autofocus">
                             <p> <img class="psw" src="../../assets/psw.png"> </p>
-                                <input type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码">
+                                
+                                <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
+                                
                         </form>
                     </template>
                 </div>

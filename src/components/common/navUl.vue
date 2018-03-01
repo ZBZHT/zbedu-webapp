@@ -84,7 +84,7 @@ export default {
         }else if(index == 3){
             this.$router.push('/appraiseCenter');
         }else if(index == 4){
-            this.$router.push('/sourceCenter');
+            this.$router.push('/resourceCenter');
         }
     }
   }
