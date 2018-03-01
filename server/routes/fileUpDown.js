@@ -2,32 +2,75 @@ const express = require('express');
 const path = require('path');
 const _ = require('lodash');
 const fs = require('fs');
-var archiver = require('archiver');
+const archiver = require('archiver');
 const formidable = require('formidable');
 
 const fs_ext = require('../utils/fs_ext')();
 const core = require('../utils/core');
 const router = express.Router();
 
-var sysInfo = core.getServerInfo();
-var rootDir = path.resolve(__dirname,"../app/uploads");
-var zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
+const sysInfo = core.getServerInfo();
+const rootDir = path.resolve(__dirname,"../app/uploads");
+const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
 //var uploadDir = path.join(path.resolve(__dirname,"../"), "uploads");
-var zipName = "moreFiles.zip";
-
+const zipName = "moreFiles.zip";
 //设置跨域请求
-router.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("X-Powered-By", ' 3.2.1');
-  if (req.method == "OPTIONS") res.sendStatus(204);/*让options请求快速返回*/
-  else next();
-});
+/*router.all('*', function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', 'http://192.168.2.251:8080');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+  if (req.method == 'OPTIONS') {
+    res.sendStatus(200);
+    /让options请求快速返回/
+  } else {next();}
+});*/
+// 判断origin是否在域名白名单列表中
+function isOriginAllowed(origin, allowedOrigin) {
+  if (_.isArray(allowedOrigin)) {
+    for(let i = 0; i < allowedOrigin.length; i++) {
+      if(isOriginAllowed(origin, allowedOrigin[i])) {
+        return true;
+      }
+    }
+    return false;
+  } else if (_.isString(allowedOrigin)) {
+    return origin === allowedOrigin;
+  } else if (allowedOrigin instanceof RegExp) {
+    return allowedOrigin.test(origin);
+  } else {
+    return !!allowedOrigin;
+  }
+}
+const ALLOW_ORIGIN = [ // 域名白名单
+  'http://192.168.2.251:8080',
+  'http://192.168.2.251:8000',
+  'http://localhost:8080',
+  'http://127.0.0.1:8080',
+  'http://127.0.0.1:8000',
+];
 
+router.all('*', function (req, res, next) {
+  let reqOrigin =req.headers.origin ; // request响应头的origin属性
+  console.log(reqOrigin);
+
+  // 判断请求是否在域名白名单内
+  if(isOriginAllowed(reqOrigin, ALLOW_ORIGIN)) {
+    // 设置CORS为请求的Origin值
+    res.header("Access-Control-Allow-Origin", reqOrigin);
+    res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    res.header("X-Powered-By", ' 3.2.1');
+    /*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
+    else next();*/
+  } else {
+    res.send({ code: -2, msg: '非法请求' });
+  }
+  next()
+});
+//默认页
 router.get('/', function(req, res) {
-    res.render('fileUpDown');
+  res.render('fileUpDown');
 });
 
 //文件上传
@@ -52,7 +95,7 @@ router.post('/upload', function(req, res, next) {
           return names;
         }
       }
-      let newPath = GetFileName(oldPath).join('//');
+      let newPath = GetFileName(oldPath).join('/');
       console.log(newPath);
       //改名   path: 'D:\\zbedu-webapp-master2.23\\server\\login\\app\\uploads\\upload_8ba6e0974e8e7d19a6ca242a303eb9ee.exe',
       fs.rename(oldPath,newPath,function (err) {
@@ -68,29 +111,15 @@ router.post('/upload', function(req, res, next) {
     });
 });
 
-//下载单个文件
-router.get('/downloadSingle',function(req, res, next){
-  var currDir = path.normalize(req.query.dir),
-    comefrom = req.query.comefrom,
-    fileName = req.query.name,
-    currFile = path.join(currDir,fileName),
-    fReadStream;
+//文件下载
+router.get('/download', function(req, res) {
+  let fileName = path.normalize(req.query.downloadName),
+      currFile = "D:/zbedu-webapp-master2.28/server/login/app/uploads/" + fileName;
+  //console.log(currFile);
 
   fs.exists(currFile,function(exist) {
     if(exist){
-      res.set({
-        "Content-type":"application/octet-stream",
-        "Content-Disposition":"attachment;filename="+encodeURI(fileName)
-      });
-      fReadStream = fs.createReadStream(currFile);
-      fReadStream.on("data",(chunk) => res.write(chunk,"binary"));
-      fReadStream.on("end",function () {
-        res.end();
-        //删除生成的压缩文件
-        if(comefrom == "archive"){
-          setTimeout(() => fs.unlink(path.join(zipDir,zipName)), 100);
-        }
-      });
+      res.download( currFile );
     }else{
       res.set("Content-type","text/html");
       res.send("file not exist!");
@@ -99,13 +128,56 @@ router.get('/downloadSingle',function(req, res, next){
   });
 });
 
-//获取下载文件的地址
-router.post('/download',function(req, res){
-  console.log(res.body.downloadName);
-  var currDir = path.normalize(req.body.dir),
-    fileArray = req.body.fileArray,
-    filesCount = 0,     //非文件夹文件个数
-    fileNameArray = [];
+router.get('/download2', function (req, res, next) {
+
+  var options = {
+    root: '../app/uploads/',
+    dotfiles: 'deny',
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true
+    }
+  };
+  console.log(options);
+  let fileName = req.query.downloadName;
+  console.log(fileName);
+
+  res.sendFile(fileName, options, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(err.status).end();
+    }
+    else {
+      console.log('Sent:', fileName);
+    }
+  });
+
+});
+
+//文件下载
+router.get('/download1', function(req, res) {
+ // let fileName = path.normalize(req.query.downloadName),
+   // currFile = path.join(rootDir , fileName);
+  //console.log(res);
+  let path = "D:/zbedu-webapp-master2.28/server/login/app/uploads/";  // 文件存储的路径
+  //console.log(path);
+  /*let fileName = req.query.downloadName,
+    currFile = rootDir + fileName;*/
+  let fileName = 'file.txt';
+  console.log(path);
+  res.download( path + fileName);
+  /*if (fileName) {
+    //绝对路径
+    //res.download('/public/uploads/file.txt');
+    res.download(join(rootDir, fileName));
+  }else{
+    res.send('错误的请求');
+  }*/
+});
+
+/*//获取下载文件的地址
+router.get('/download',function(req, res){
+  let fileName = path.normalize(req.query.downloadName);
 
   //将文件和文件夹分开命名
   fileArray.forEach(function(file) {
@@ -113,7 +185,7 @@ router.post('/download',function(req, res){
       filesCount++;
       fileNameArray.push(file.name);
     }else{
-      fileNameArray.push(path.join(file.name,"**"));  //文件夹格式：folderName/**
+      fileNameArray.push(path.join(file.name,"**"));  //文件夹格式：folderName/!**
     }
   });
 
@@ -122,11 +194,12 @@ router.post('/download',function(req, res){
     return;
   }
 
-  if(filesCount == 1 && fileNameArray.length == 1){
-    //只有一个文件的时候直接走get
-    var downloadUrl = "/downloadSingle?dir="+encodeURIComponent(currDir)+"&name="+encodeURIComponent(fileNameArray[0]);
+  if(fileName){
+    //直接走get
+    let downloadUrl = "/downloadSingle?dir="+encodeURIComponent(rootDir)+"&name="+encodeURIComponent(fileName);
     res.send({"code":"s_ok", "url":downloadUrl});
   }else{
+    console.log('err');
     //多个文件就压缩后再走get
     var output = fs.createWriteStream(path.join("zip",zipName));
     var archive = archiver.create('zip', {});
@@ -151,19 +224,6 @@ router.post('/download',function(req, res){
     });
     archive.finalize();
   }
-});
-
-/*//文件下载
-router.get('/download', function(req, res) {
-  let path = 'public/upload/file.txt';  // 文件存储的路径
-  // filename:设置下载时文件的文件名，可不填，则为原名称
-  res.download('../public/uploads/file.txt', function(err){
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("success");
-    }
-  });
 });*/
 
 router.get('/files', function (req, res, next) {
@@ -226,7 +286,7 @@ router.get('/loadFile',function(req, res) {
                 type: stats.isFile() ? 1:0,
                 isFile: stats.isFile(),
                 isDirectory: stats.isDirectory(),
-                size: (stats.size) / 1024,
+                size: ((stats.size) / 1000000).toFixed(2),
                 birthtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.birthtime),
                 ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
                 //mtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.mtime)    //modify time

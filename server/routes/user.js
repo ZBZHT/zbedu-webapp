@@ -11,20 +11,8 @@ router.use(function (req, res, next) {
   };
   next();
 });
-
-//设置跨域请求
-router.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("X-Powered-By", ' 3.2.1');
-  if (req.method == "OPTIONS") res.sendStatus(204);/*让options请求快速返回*/
-  else next();
-});
-
 //login处理
-router.post('/user/login', checkLogin, function (req, res) {
+router.post('login', checkLogin, function (req, res) {
   let username = req.body.username;
   let password = req.body.password;
 
@@ -164,7 +152,7 @@ function checkLogin(req, res, next) {
 }
 
 // 退出
-router.post('/user/logout', function (req, res) {
+router.post('/logout', function (req, res) {
   let ID = req.sessionID;
   let conditions = {_id: ID};
   Session.remove(conditions, function (error) {
@@ -177,5 +165,7 @@ router.post('/user/logout', function (req, res) {
     }
   });
 });
+
+
 
 module.exports = router;
