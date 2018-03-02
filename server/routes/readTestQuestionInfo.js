@@ -33,7 +33,9 @@ router.get('/update', function (req, res) {
   let QuestionInfo = req.query;
   let reqTestQuestion = QuestionInfo.testQuestion;
   let code = '';
-  //console.log(QuestionInfo.state);
+
+  //console.log( (QuestionInfo.startTime));
+
   TestQuestionInfo.findOneAndUpdate({
       testQuestion: reqTestQuestion
     }, {
@@ -68,6 +70,8 @@ router.get('/submitQuestionInfo', function (req, res) {
   let QuestionInfo = req.query;
   let reqTestQuestion = QuestionInfo.testQuestion;
   let code = '';
+  console.log('11');
+  console.log(QuestionInfo.startTime);
 
   TestQuestionInfo.findOneAndUpdate({
       testQuestion: reqTestQuestion

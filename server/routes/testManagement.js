@@ -32,7 +32,6 @@ router.get('/testManagement', function (req, res) {
     user: reqUser
   }).then(function (TestQuestion) {
     console.log('请求考试题成功');
-
     TestQuestionInfo.find({
       user: reqUser
     }).then(function (TestQuestionInfo) {

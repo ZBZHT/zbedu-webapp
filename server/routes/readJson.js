@@ -58,11 +58,9 @@ const ALLOW_ORIGIN = [ // 域名白名单
 
 router.all('*', function (req, res, next) {
   let reqOrigin =req.headers.origin ; // request响应头的origin属性
-
   // 判断请求是否在域名白名单内
   if(isOriginAllowed(reqOrigin, ALLOW_ORIGIN)) {
     // 设置CORS为请求的Origin值
-    console.log(reqOrigin);
     res.header("Access-Control-Allow-Origin", reqOrigin);
     res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
     res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");

@@ -41,7 +41,7 @@ let testQuestion = new TestQuestion({
   "msg": "error parameter",
   "testId": 101,
   "state":0,
-  "currTestNum":5,
+  "currTestNum":1,
   "title": "发动机7考试",
   "desc": "biansuqi test"
 });

@@ -15,15 +15,6 @@ const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
 //var uploadDir = path.join(path.resolve(__dirname,"../"), "uploads");
 const zipName = "moreFiles.zip";
 //设置跨域请求
-/*router.all('*', function (req, res, next) {
-  res.header('Access-Control-Allow-Origin', 'http://192.168.2.251:8080');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-  if (req.method == 'OPTIONS') {
-    res.sendStatus(200);
-    /让options请求快速返回/
-  } else {next();}
-});*/
 // 判断origin是否在域名白名单列表中
 function isOriginAllowed(origin, allowedOrigin) {
   if (_.isArray(allowedOrigin)) {
@@ -51,8 +42,6 @@ const ALLOW_ORIGIN = [ // 域名白名单
 
 router.all('*', function (req, res, next) {
   let reqOrigin =req.headers.origin ; // request响应头的origin属性
-  console.log(reqOrigin);
-
   // 判断请求是否在域名白名单内
   if(isOriginAllowed(reqOrigin, ALLOW_ORIGIN)) {
     // 设置CORS为请求的Origin值
@@ -75,9 +64,8 @@ router.get('/', function(req, res) {
 
 //文件上传
 router.post('/upload', function(req, res, next) {
-
   let form = new formidable.IncomingForm();
-  form.uploadDir = path.join(__dirname, '../app/uploads');//设置文件上传存放地址
+  form.uploadDir = "../app/uploads/";//设置文件上传存放地址
   form.maxFieldsSize = 300 * 1024 * 1024; //设置最大300M
   form.keepExtensions = true;
 
@@ -96,7 +84,7 @@ router.post('/upload', function(req, res, next) {
         }
       }
       let newPath = GetFileName(oldPath).join('/');
-      console.log(newPath);
+      //console.log(newPath);
       //改名   path: 'D:\\zbedu-webapp-master2.23\\server\\login\\app\\uploads\\upload_8ba6e0974e8e7d19a6ca242a303eb9ee.exe',
       fs.rename(oldPath,newPath,function (err) {
         if(err){
@@ -114,7 +102,7 @@ router.post('/upload', function(req, res, next) {
 //文件下载
 router.get('/download', function(req, res) {
   let fileName = path.normalize(req.query.downloadName),
-      currFile = "D:/zbedu-webapp-master2.28/server/login/app/uploads/" + fileName;
+      currFile = "../app/uploads/" + fileName;
   //console.log(currFile);
 
   fs.exists(currFile,function(exist) {
@@ -126,53 +114,6 @@ router.get('/download', function(req, res) {
       res.end();
     }
   });
-});
-
-router.get('/download2', function (req, res, next) {
-
-  var options = {
-    root: '../app/uploads/',
-    dotfiles: 'deny',
-    headers: {
-      'x-timestamp': Date.now(),
-      'x-sent': true
-    }
-  };
-  console.log(options);
-  let fileName = req.query.downloadName;
-  console.log(fileName);
-
-  res.sendFile(fileName, options, function (err) {
-    if (err) {
-      console.log(err);
-      res.status(err.status).end();
-    }
-    else {
-      console.log('Sent:', fileName);
-    }
-  });
-
-});
-
-//文件下载
-router.get('/download1', function(req, res) {
- // let fileName = path.normalize(req.query.downloadName),
-   // currFile = path.join(rootDir , fileName);
-  //console.log(res);
-  let path = "D:/zbedu-webapp-master2.28/server/login/app/uploads/";  // 文件存储的路径
-  //console.log(path);
-  /*let fileName = req.query.downloadName,
-    currFile = rootDir + fileName;*/
-  let fileName = 'file.txt';
-  console.log(path);
-  res.download( path + fileName);
-  /*if (fileName) {
-    //绝对路径
-    //res.download('/public/uploads/file.txt');
-    res.download(join(rootDir, fileName));
-  }else{
-    res.send('错误的请求');
-  }*/
 });
 
 /*//获取下载文件的地址

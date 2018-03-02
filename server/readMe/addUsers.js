@@ -306,7 +306,7 @@ let a6 = new users({
     userID: '00000001',
     IDNo: '410521000000000001',
     MoNo: '18362826594',
-    userType: 'T'
+    userType: 'S'
   });
 let a7 = new users({
     user: '马聪',
@@ -324,7 +324,7 @@ let a8 = new users({
     userID: '00000001',
     IDNo: '410521000000000001',
     MoNo: '18537228775',
-    userType: 'T'
+    userType: 'O'
   });
 let a9 = new users({
     user: '毛耀辉',

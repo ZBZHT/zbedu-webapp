@@ -38,7 +38,7 @@ function newTestQuestion(req, res, next) {
       "user": reqUser,
       "msg": "error parameter",
       "testId": 101,
-      "state":1,
+      "state": 1,
       "currTestNum": testResult.testLength + 1,
       "title": "发动机7考试",
       "desc": "biansuqi test"
