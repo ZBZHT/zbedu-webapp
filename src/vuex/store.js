@@ -8,10 +8,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
  state : {
     username:'',
+    userType:'',
     course:'',
     noTree:{},
     session:{},
-    allTestNum:''
+    allTestNum:'',
+    vuexState:''
 },
  mutations : {
     newTitle(state,item){
@@ -24,10 +26,16 @@ export default new Vuex.Store({
         state.session = item;
     },
     username(state,item){
-      state.username = item;
+        state.username = item;
+    },
+    userType(state,item){
+        state.userType = item;
     },
     allTestNum(state,item){
-      state.allTestNum = item;
+        state.allTestNum = item;
+    },
+    vuexState(state,item){
+        state.vuexState = item;
     }
 },
  plugins: [createPersistedState()]

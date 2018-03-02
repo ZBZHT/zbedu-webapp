@@ -3,7 +3,7 @@
     <div class="question">
         <div class="leftBox">
             <p>{{user}}</p>
-            <ul class="leftItem" :class="{dispear : !dispear}">
+            <ul class="leftItem">
                 <li class="leftLi" v-for="(item,index) in leftBox"
                     @click="rightAppear(index)"
                     :class="currIndex === index ? 'active' : '' ">
@@ -19,10 +19,7 @@
                     </div>
                 </div>
                 <div class="content">
-                    <div class="data">
-                        
-                        
-                    </div>
+                    
                 </div>
             </div>
             <div class="userMessage" v-show="currIndex === 1">
@@ -46,14 +43,24 @@ export default {
   name: 'test',
   data () {
     return {
-
+        leftBox:[
+            {li:'在线考试'},
+            {li:'考试管理'}
+        ],
+        currIndex:0,
+        user:this.$store.state.username,
     }
   },
   mounted(){
 
     },
   methods:{
-                   
+        rightAppear (index) {
+                this.currIndex = index;
+                if(index == 1){
+                    
+                }
+            }          
     },
   components:{Modal,footFooter}
 
@@ -118,6 +125,7 @@ a{
     position:absolute;
     top:0;
     left:0;
+    border:1px solid #000;
 }
 .title{
     width:100%;
@@ -133,15 +141,6 @@ a{
 .content{
     width:100%;
     display:flex;
-}
-.data{
-    width:990px;
-    height:550px;
-    border:1px solid #000;
-    overflow:auto;
-    text-align:left;
-    padding:20px;
-    box-sizing:border-box;
 }
 .dispear{
     display:none;

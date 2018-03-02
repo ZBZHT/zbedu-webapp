@@ -31,7 +31,7 @@ let TestQuestionInfo = mongoose.model("TestQuestionInfo", testQuestionInfoSchema
 let testQuestionInfo = new TestQuestionInfo({
   user: '谢佳芯',
   currTestId: '101',
-  testQuestion: 10010,
+  testQuestion: 5,
   state: 0,
   startTime: '',
   currAnswer: '',

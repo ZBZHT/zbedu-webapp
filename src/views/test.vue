@@ -3,7 +3,7 @@
     <div class="question">
         <div class="leftBox">
             <p>{{user}}</p>
-            <ul class="leftItem" :class="{dispear : !dispear}">
+            <ul class="leftItem" v-show="!textQuestionData">
                 <li class="leftLi" v-for="(item,index) in leftBox"
                     @click="rightAppear(index)"
                     :class="currIndex === index ? 'active' : '' ">
@@ -25,7 +25,7 @@
                         </div>
                         <div class="infor notSt">
                             <p>状态</p>
-                            <p class="notStart" :class="{dispear : !dispear}">未考</p>
+                            <p class="notStart" v-show="!textQuestionData">未考</p>
                             <p>正在考试</p>
                         </div>
                         <div class="infor">
@@ -217,13 +217,13 @@ export default {
         time:0,
         isCheck:'',
         isCheckNum:0,
-        isCheckArr:{},
+        isCheckArr:[],
         length:20,
         classItem:{},
         QidArr:[],
         null:[],
         userMessageData:'',
-        picked:{},
+        picked:[],
         Display:false,
         lengthData:'',
         url:'',
@@ -238,47 +238,53 @@ export default {
     }
   },
   mounted(){
+    
         
-    //var allTestNum = this.$store.state.allTestNum ;
-    var allTestNum = 0;
+    var allTestNum = this.$store.state.allTestNum ;
+    var url = document.domain;
     console.log(allTestNum+"TTT")
 
-      axios.get("http://192.168.2.251:8000/readTestQuestion/all",{
+      axios.get("http://" + url + ":8000/readTestQuestion/all",{
             params:{
                 user:this.user,
-                currTestNum: 1 + allTestNum
+                currTestNum:allTestNum
             }
         }).then((res)=>{
             if(res.data.testQuestion.state == 1){
                 this.textQuestionData = res.data.testQuestion;
-
-                
-
             }
             console.log(res.data);
             this.TestNum = res.data.testLength;
             console.log(this.TestNum+"LLL")
-        //    this.$store.commit('allTestNum',this.TestNum);
-            this.$store.commit('allTestNum',0);
         }).catch(function(error){
             console.log("error init." + error)
         });
 
-    axios.get("http://192.168.2.251:8000/readTestQuestionInfo/all",{
+    axios.get("http://" + url + ":8000/readTestQuestionInfo/all",{
         params:{
           user:this.user,
           currTestId:this.$route.params.testId,
-          currTestNum: 1 + allTestNum
+          currTestNum:allTestNum
         }
       }).then((res)=>{
           console.log(res.data)
           console.log(res.data.currState)
-
+          this.$store.commit('vuexState',res.data.state);
             if(res.data.state == 1){
                this.picked = res.data.currAnswer;
                this.isCheckArr = res.data.currState;
 
+                console.log("bbbbccccc")
+                window.addEventListener("popstate",this.myFunction);
 
+        //        window.onpopstate=function(e){
+        //                var e = window.event||e;
+        //                e.returnValue=("确定离开当前页面吗？");
+        //        }    
+        //        window.onbeforeunload=function(e){
+        //                var e = window.event||e;
+        //               e.returnValue=("确定离开当前页面吗？");
+        //        }
 
                this.hours = res.data.startTimeHours;
                this.minute = res.data.startTimeMinutes;
@@ -330,12 +336,12 @@ export default {
                     window.clearInterval(this.interval);
                     axios({
                         method:'get',
-                        url:"http://192.168.2.251:8000/readTestQuestionInfo/submitQuestionInfo",
+                        url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
                         params:{
                             state:2,
                             user:this.user,
                             currTestId:this.$route.params.testId,
-                            testQuestion: 1 + this.$store.state.allTestNum,
+                            testQuestion:this.$store.state.allTestNum,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currState:this.isCheckArr,
@@ -353,16 +359,16 @@ export default {
                         console.log(res.data.code)
                         }
                     );
-                }.bind(this),2000);
+                }.bind(this),0.1);
                 axios({
                         method:'get',
-                        url:"http://192.168.2.251:8000/readTestQuestion/submitQuestionInfo",
+                        url:"http://" + this.url + ":8000/readTestQuestion/submitQuestionInfo",
                         params:{
                             state:2,
-                            testQuestion: 1 + this.$store.state.allTestNum
+                            testQuestion:this.$store.state.allTestNum
                         }
                     }).then((res)=>{
-                            
+                            this.$store.commit('vuexState',res.data.state);
                         });
                 this.sorce=0;
                 this.error = [];
@@ -385,7 +391,7 @@ export default {
                     }
                 }
                 alert(this.sorce + "==" + this.error + "==" + this.null);
-                this.$router.go(0);
+            //    this.$router.go(0);
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -445,41 +451,41 @@ export default {
 
             },
             getTest(e){
-                axios.get("http://192.168.2.251:8000/readTestQuestion/clickQuery",{
+                axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery",{
                     params:{
                         //state默认为0未开始考试，开始后为1
+                        user:this.user,
                         state:1,
-                        testId: e,
-                        num: 20,
-                        currTestNum: 1 + this.$store.state.allTestNum
+                    //    testId: e,
+                    //    num: 20,
+                    //    currTestNum: 1 + this.$store.state.allTestNum,
+                    //    startTime:this.currentdate,
+                    //    startTimeHours:this.hours,
+                    //    startTimeMinutes:this.minute,
+                    //    startTimeSeconds:this.second,
+                    //    testTimeMinutes:this.minutes,
+                    //   testTimeSeconds:this.seconds
                     }
                 }).then((res)=>{
                     if(res.data.status !== 0) {
                         return;
                     }
-                    if(res.data.state == 1 ){
-                        window.addEventListener("popstate",this.myFunction);
-
-                        window.onpopstate=function(e){
-                        　　var e = window.event||e;
-                        　　e.returnValue=("确定离开当前页面吗？");
-                        }
-                        window.onbeforeunload=function(e){
-                        　　var e = window.event||e;
-                        　　e.returnValue=("确定离开当前页面吗？");
-                        }
-                    }
+                    console.log(res.data.currTestNum+"currTestNum");
+                    this.$store.commit('allTestNum',res.data.currTestNum);
+                    this.$store.commit('vuexState',res.data.state);
                     this.textQuestionData = res.data;
                     this.currTestId = e;
                 }).catch(function(error){
                     console.log("error init." + error)
                 });
+
+                
             },
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
                 console.log(this.QidArr);
-                var a=0;
+                var a = 0;
                 for(var i = 0;i < this.QidArr.length;i++){
                     if(this.QidArr[i] != null){
                         a+=1;
@@ -490,12 +496,12 @@ export default {
 
                 axios({
                         method:'get',
-                        url:"http://192.168.2.251:8000/readTestQuestionInfo/update",
+                        url:"http://" + this.url + ":8000/readTestQuestionInfo/update",
                         params:{
                             state:1,
                             user:this.user,
                             currTestId:this.$route.params.testId,
-                            testQuestion: 1 + this.$store.state.allTestNum,
+                            testQuestion:this.$store.state.allTestNum,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currState:this.isCheckArr,
@@ -532,12 +538,17 @@ export default {
                 this.Display = false;
             },
             myFunction(event){
-                 alert("aaa")
+                var con = confirm("考试未完成，点击确定将帮您提交");
+                if(con){
+                    this.submit();
+                }else{
+                    console.log("mamamama")
+                }
             },
             testManagen(){
                 axios({
                         method:'get',
-                        url:"http://192.168.2.251:8000/testManagement/testManagement",
+                        url:"http://" + this.url + ":8000/testManagement/testManagement",
                         params:{
                             user:this.user
                         }

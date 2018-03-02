@@ -8,6 +8,7 @@ import exerciseCenter from '@/views/exerciseCenter'
 import appraiseCenter from '@/views/appraiseCenter'
 import sourceCenter from '@/views/sourceCenter'
 import test from '@/views/test'
+import teachTest from '@/views/teachTest'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
 import playPdf from '@/views/playPdf'
@@ -39,6 +40,11 @@ const routes = [
         requireTest:true
       },
       component:testCenter
+    },
+    {
+      path:'/teachTest',
+      name:'teachTest',
+      component:teachTest
     },
     {
       path:'/exerciseCenter',
