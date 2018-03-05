@@ -3,67 +3,9 @@
     <div class="nav">
         <navgation-head></navgation-head>
     </div>
-    <div class="banner">
-        <div class="left-menu">
-
-            <banner-left :bannerLeftData = "bannerLeftData"></banner-left>
-
-        </div>
-        <div class="rightbox">
-            <swipe :slides="slides" :inv="inv" :style="styleObject"></swipe>
-        </div>
-    </div>
-
-    <span class="title">精品课程</span>
-    <div class="best-class">
-
-        <bestClass :bestClassData = "bestClassData"></bestClass>
-
-    </div>
-
-    <div class="bottom-box">
-        <div class="bb-left">
-            <span class="bb-span">猜你感兴趣</span>
-            <bottom-left :bottomLeftData = "bottomLeftData"></bottom-left>
-        </div>
-        <div class="bb-middle">
-        <span class="title">实战推荐</span>
-            <div class="shizhan">
-              <ul>
-                <li class="row-a"
-                    v-for="(item,index) in pageData"
-                    v-if="index >= (page-1)*6 && index <= (page-1)*6 + 5">
-                    <a>
-                        <div class="mask-play">
-                            <img :src="item.url">
-                            <div class="mask">
-                                <img @click="toPlayVideo(item)" class="play" src="src/assets/play3.png">
-                                <p @click="toPlayPdf(item)" class="ppv"><span>PPT</span></p>
-                                <p @click="toPlayVideo(item)" class="ppv"><span>Video</span></p>
-                            </div>
-
-                        <div class="intro">
-                            <span class="jianjie">
-                            简介:
-                            </span>
-                            {{item.intro}}
-                        </div>
-                        </div>
-                    <p class="p" @click="sendRecommendTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
-                    </a>
-                </li>
-              </ul>
-            </div>
-            <mo-paging
-            :total="total"
-            :size="size"
-            :page="page"
-            :changge="pageFn">
-            </mo-paging>
-        </div>
-        <div class="bb-right">
-            <bottom-right :bottomRightData = "bottomRightData"></bottom-right>
-        </div>
+   
+    <div class="list">
+            <nav-ul :navData = "navData"></nav-ul>
     </div>
 
     <div class="footer">
@@ -75,95 +17,37 @@
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
+import navUl from '@/components/common/navUl'
 import footFooter from '@/components/common/footFooter'
-import bannerLeft from '@/components/index/bannerLeft'
-import swipe from '@/components/testCenter/swipe'
-import bestClass from '@/components/index/bestClass'
-import bottomLeft from '@/components/index/bottomLeft'
-import moPaging from '@/components/index/moPaging'
-import bottomRight from '@/components/index/bottomRight'
 
 export default {
   name: 'index',
 
   data () {
     return {
-      msg: 'index',
-      indexData:'',
-      leftData:'',
-      bestClassData:'',
-      pageData:'',
-      bottomLeftData:'',
-      bottomRightData:'',
-      bannerLeftData:'',
-      imgArray:'',
-      total:'',//总信息数
-      size:6,//每页显示信息个数不传默认6
-      page:1,//当前页码
-      currentPages:'',
-      slides: [],
-      inv: 3000,
-      styleObject: {
-          width: '795px',
-          height: '384px'
-        },
-      url:''
+      navData:'',
     }
   },
   computed:{
-          all:function(){
-              return this.pageData
-          },
-          testData() {
-            return this.leftData
-          }
+          
       },
   methods:{
-              //页码切换执行方法
-          pageFn(val){
-            this.page=val;
-            console.log(val);
-        },
-          toPlayVideo(item) {
-            this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
-        },
-          toPlayPdf(item) {
-            this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
-        },
-    sendRecommendTitle(item){
-      this.$store.commit('noTreeTitle',item);
-    }
+              
   },
   mounted(){
-        this.url = document.domain;
-        axios.get("http://" + this.url + ":8000/readJson/index",{
-                params:{
-                     user:123
-                }
-            }).then((res)=>{
-                this.indexData = res.data;
-                this.bestClassData = this.indexData.bestClassData;
-                this.pageData = this.indexData.pageData;
-                this.total = this.all.length;
-                this.bottomLeftData = this.indexData.bottomLeftData;
-                this.bottomRightData = this.indexData.bottomRightData;
-                this.slides = this.indexData.slides;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-
-        axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
+      this.url = document.domain;
+      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
                      user:234
                 }
             }).then((res)=>{
                 this.indexData = res.data;
-                this.bannerLeftData = this.indexData;
+                this.navData = this.indexData;
             }).catch(function(error){
                 console.log("error init." + error)
             });
     },
-  components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,footFooter}
+  components:{navgationHead,navUl,footFooter}
 }
 </script>
 
@@ -174,9 +58,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-.container{
-  min-width:960px;
 }
 *{
     margin:0;
@@ -202,214 +83,4 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.title{
-    font-size:20px;
-    font-weight:bolder;
-}
-.banner{
-  width:960px;
-  height:384px;
-  margin:0 auto;
-  position:relative;
-  display:flex;
-  margin-bottom:75px;
-}
-.left-menu{
-  width:165px;;
-  height:384px;
-  padding:17px;
-  padding-left:0;
-  box-sizing: border-box;
-  background: #2b333b;
-  border-bottom-left-radius: 10px;
-  border-top-left-radius: 10px;
-  font-weight:200;
-}
-.rightbox {
-    width:795px;
-    overflow:hidden;
-}
-.mask-play>img{
-  width:169px;
-  height:100px;
-}
-.zz{
-    border-radius:10px;
-    overflow: hidden;
-}
-.mf{
-    width:171px;
-    height:100px;
-    margin-bottom:40px;
-}
-.mask-play .mask{
-    width:171px;
-    height:100px;
-    background: rgba(0, 0, 0, 0.7);
-    position: relative;
-    top:-104px;
-    right:0;
-    display:none;
-}
-.mask>img{
-    margin-top:20px;
-}
-.mask p>span{
-    font-size:13px;
-}
-div.mask-play:hover .mask{
-    display: block;
-    cursor: pointer;
-}
-.bottom-box{
-  width:960px;
-  height:550px;
-  margin:0 auto;
-  margin-bottom:20px;
-  display:flex;
-}
-.bb-left{
-    width:156px;
-    height: 490px;
-    box-shadow: 10px 10px 30px #ccc;
-    margin-top:20px;
-    margin-right:30px;
-}
-.bb-span{
-    color:#222;
-    font-size: 18px;
-    float: left;
-    height: 20px;
-    line-height: 20px;
-    padding-left: 2px;
-    border-left:4px solid #e4393c;
-    margin-right:25px;
-}
-.bb-right{
-    width:156px;
-    height: 490px;
-    box-shadow: 10px 10px 30px #ccc;
-    margin-top:20px;
-    padding-right:0;
-}
-.bb-middle{
-    width:582px;
-    height:630px;
-    margin-right:33px;
-    margin-top:15px;
-}
-.shizhan{
-    width:580px;
-    height:422px;
-    margin-top:18px;
-    margin-left:15px;
-}
-.shizhan>ul{
-    text-align:left;
-}
-.mask-play{
-    height:100px;
-    position:relative;
-}
-.mask .play{
-    margin-left:53px;
-}
-.row-a{
-    width:169px;
-    height:100px;
-    margin-top:5px;
-    display:inline-block;
-    margin-right:20px;
-    margin-bottom:88px;
-}
-.ppv{
-    width:37px;
-    height:18px;
-    border-radius: 8px;
-    background: #fff;
-    color:#000;
-    margin-left: 124px;
-    margin-top:-43px;
-    text-align: center;
-}
-.intro{
-    width:140px;
-    height:50px;
-    border-radius: 15px;
-    background: rgba(200,200,200,1);
-    color:#fff;
-    padding:10px;
-    display: none;
-    position: absolute;
-    top:-71px;
-    left:5px;
-    overflow: hidden;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    color:#000;
-    font-size:14px;
-}
-.jianjie{
-    font-weight: bolder;
-}
-div.mask-play:hover .intro{
-    display: -webkit-box;
-}
-.intro::after {
-    content: '...'
-}
-.bb-middle .row-a .p{
-    margin-top:15px;
-    font-size: 18px;
-}
-
-
-.pageination_align {
-            text-align: center
-        }
-
-        .pageination {
-            color: #48576a;
-            font-size: 12px;
-            display: inline-block;
-            user-select: none;
-        }
-
-        .pagination_page {
-            padding: 0 4px;
-            border: 1px solid #d1dbe5;
-            border-right: 0;
-            background: #fff;
-            font-size: 13px;
-            min-width: 28px;
-            height: 28px;
-            line-height: 28px;
-            cursor: pointer;
-            box-sizing: border-box;
-            text-align: center;
-            float: left;
-            margin-right:5px;
-            border-radius:5px;
-        }
-
-        .pagination_page_right {
-            border-right: 1px solid #d1dbe5;
-        }
-
-        .pagination_page:hover {
-            color: #e4393c;
-        }
-
-        .disabled {
-            color: #e4e4e4 !important;
-            background-color: #fff;
-            cursor: not-allowed;
-        }
-
-        .pagination_page_active {
-            border-color: #e4393c;
-            background-color: #e4393c;
-            color: #fff !important;;
-            cursor: default;
-        }
 </style>

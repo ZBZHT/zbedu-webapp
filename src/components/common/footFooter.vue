@@ -34,22 +34,22 @@
 <style scoped>
   .footer-bigbox{
     width: 100%;
-    height: 135px;
-    background-color: #eee;
+    height: 130px;
+    background-color: #22132d;
   }
   .footer-box{
+    color: #a5a2a7;
     margin: 0 auto;
     width: 960px;
-    height: 135px;
-    font-size: 1em;
+    height: 130px;
+    font-size: 12px;
     text-align: center;
-    padding-top: 20px;
-    margin-top: 60px;
+    padding-top: 14px;
+    margin-top: 40px;
     box-sizing: border-box;
   }
   p{
     margin: 0 0 10px;
-
   }
   .row1{
     margin-bottom: 15px;

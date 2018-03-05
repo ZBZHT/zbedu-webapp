@@ -7,11 +7,7 @@
             </router-link>
         </div>
         <div class="collapse">
-            <div class="list">
-                   <nav-ul :navData = "navData" v-on:child="fromChild"
-                           @sendHeaderNavData="receiveFromNavData"
-                           :currentNavData="currentNavData"></nav-ul>
-            </div>
+            
 
             <form>
                     <input type="text" class="search" placeholder="Search">
@@ -33,7 +29,6 @@
 
 <script>
 import axios from 'axios'
-import navUl from '@/components/common/navUl'
 import Modal from '@/components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import modalEventBind from '../../assets/js/ModalEventBind';
@@ -125,7 +120,7 @@ export default {
     }
 
   },
-  components:{navUl,Modal}
+  components:{Modal}
 
 }
 </script>
@@ -154,7 +149,7 @@ a:hover{
 .navbar{
     width:100%;
     height:100px;
-     box-shadow:0 0 10px #000;
+    box-shadow:0 0 10px #000;
     padding:20px;
     box-sizing: border-box;
     display:flex;
