@@ -1,7 +1,8 @@
 [
     {
       "title":"教学中心",
-      "name":"",
+      "name":"courseIndex",
+      "introduce":"...",
       "children":[
         {
           "title":"新能源汽车",
@@ -430,6 +431,7 @@
     {
       "title":"实训中心",
       "name":"exerciseCenter",
+      "introduce":"...",
       "children":[
         {
           "title":"教学设备"
@@ -441,11 +443,13 @@
     },
     {
       "title":"考试中心",
+      "introduce":"...",
       "name":"testCenter"
     },
     {
       "title":"评价中心",
       "name":"appraiseCenter",
+      "introduce":"...",
       "children":[
         {
           "title":"课程评价"
@@ -460,7 +464,8 @@
     },
     {
       "title":"资源中心",
-      "name":"sourceCenter",
+      "name":"resourceCenter",
+      "introduce":"...",
       "children":[
         {
           "title":"上传"
@@ -469,5 +474,20 @@
           "title":"下载"
         }
       ]
+    },
+    {
+      "title":"敬请期待...",
+      "introduce":"...",
+      "name":"more"
+    },
+    {
+      "title":"敬请期待...",
+      "introduce":"...",
+      "name":"more"
+    },
+    {
+      "title":"敬请期待...",
+      "introduce":"...",
+      "name":"more"
     }
 ]
