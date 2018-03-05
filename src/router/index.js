@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import store from '../vuex/store'
 import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index'
+import courseIndex from '@/views/courseIndex'
 import testCenter from '@/views/testCenter'
 import exerciseCenter from '@/views/exerciseCenter'
 import appraiseCenter from '@/views/appraiseCenter'
@@ -32,6 +33,11 @@ const routes = [
       path:'/',
       name:'index',
       component:index
+    },
+    {
+      path:'/courseIndex',
+      name:'courseIndex',
+      component:courseIndex
     },
     {
       path:'/testCenter',
