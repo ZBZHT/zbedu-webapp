@@ -7,11 +7,11 @@
                     <p>考试系统登录</p>
                     <div class="userBox">
                         <p> <img class="unm" src="../assets/unm.png"> </p>
-                        <input type="text" placeholder="学号/ID/身份证号/手机号" v-model="username">
+                        <input name="fname" type="text" placeholder="学号/ID/身份证号/手机号" v-model="username" autocomplete="on" autofocus="autofocus">
                     </div>
                     <div class="passwordBox">
                         <p> <img class="psw" src="../assets/psw.png"> </p>
-                        <input type="password" placeholder="密码"  @keyup.enter="login" v-model="password">
+                        <input name="fpassword" type="password" placeholder="密码"  @keyup.enter="login" autocomplete="new-password" v-model="password">
                     </div>
                     <div class="btn">
                         <button class="btnOk" @click="login">确定</button>
@@ -48,11 +48,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         },
         mounted(){
             this.url = document.domain;
-            window.addEventListener("popstate",this.myFunction);
+          //  window.addEventListener("popstate",this.myFunction);
         },
         methods: {
             myFunction(){
-                this.$router.go(-1);
+                this.$router.push('/');
             },
             login(){
                 if(this.username == "" || this.password == ""){
