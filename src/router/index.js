@@ -19,6 +19,10 @@ import resourceCenter from '@/views/resourceCenter'
 // import userManagement from '@/views/UserManagement'
 import testLogin from '@/views/testLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
+import axios from 'axios'
+//import md5 from 'js-md5'
+
+
 
 Vue.use(Router)
 
@@ -37,6 +41,9 @@ const routes = [
     {
       path:'/courseIndex',
       name:'courseIndex',
+  //    meta:{
+  //      requireAuth:true
+  //    },
       component:courseIndex
     },
     {
@@ -143,7 +150,10 @@ const router = new Router({
     routes,
     mode:'history'
 });
+
 var a = 0;
+var url = document.domain;
+
 router.beforeEach((to,from,next) => {
   if (to.matched.some(res => res.meta.requireAuth)) {
       if (!store.state.username){
@@ -153,13 +163,12 @@ router.beforeEach((to,from,next) => {
                     path:'/loginPage',
                     query:{redirect:to.fullPath}
                   })
-                  router.go(0);
                 }else{
                   next({
                     path:'/',
                     query:{redirect:to.fullPath}
                   })
-                  router.go(0);
+                //  router.go(0);
                 }
       }else{
         next();
@@ -172,11 +181,7 @@ router.beforeEach((to,from,next) => {
         console.log("AAAA")
         var con = confirm("请登录");
           if(con == true){
-              next({
-                path:'/testLogin',
-                query:{redirect:to.fullPath}
-              })
-           //   router.go(0);
+              router.replace('/testLogin')
             }else{
               next({
                 path:'/',
@@ -198,4 +203,24 @@ router.beforeEach((to,from,next) => {
     a=0;
   };
 });
+
+//判断是否退出
+axios({
+  method: 'post',
+  url: 'http://'+ url +':8000/api/user/loginState',
+  data: {
+  //    username: this.username,
+   //   password: md5(this.password)
+  },
+  withCredentials: true
+  }).then((res)=>{
+  /*传值是 1: 已登陆, 4:未登录*/
+  if(res.data == 1){
+
+  }else if(res.data == 4){
+      store.commit('userType','');
+      store.commit('username','');
+  }
+  })
+  
 export default router;

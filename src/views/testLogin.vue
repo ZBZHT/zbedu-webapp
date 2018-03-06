@@ -72,6 +72,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                         if(res.data.code == 0){
                             this.nickName = res.data.username;
                             this.$store.commit('username',res.data.username);
+                            this.$store.commit('userType',res.data.userType);
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
                                     
@@ -82,6 +83,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                         }else if(res.data.code == 1){
                             this.nickName = res.data.username;
                             this.$store.commit('username',res.data.username);
+                            this.$store.commit('userType',res.data.userType);
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
                                     
@@ -98,11 +100,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
             cancel(){
                 setTimeout(function(){
                               this.$router.push('/');
-                              this.$router.go(0);
                           }.bind(this),0.1)
             },
             yes(){
-                this.$router.push('/testCenter');
+                this.$router.push('testCenter');
             },
             no(){
                 axios({

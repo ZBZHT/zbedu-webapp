@@ -192,6 +192,28 @@ function checkLogin(req, res, next) {
   });
 }
 
+//跳转判断登录状态
+router.post('/user/loginState', function (req, res) {
+  let sessID = req.sessionID;
+  let code = '';
+  console.log(sessID);
+  //查询数据库中用户名是否存在,存在则登录
+  Session.findOne({
+    _id: sessID
+  }).then(function (sessID) {
+    //_id存在则更新此id
+    if (sessID) {
+      code = 1;
+      console.log('已登录');
+      res.end(JSON.stringify(code));
+    } else {
+      code = 4;
+      console.log('未登录');
+      res.end(JSON.stringify(code));
+    }
+  });
+});
+
 // 退出
 router.post('/user/logout', function (req, res) {
   let ID = req.sessionID;

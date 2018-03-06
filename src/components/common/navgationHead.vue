@@ -7,13 +7,10 @@
             </router-link>
         </div>
         <div class="collapse">
-            
-
-            <form>
-                    <input type="text" class="search" placeholder="Search">
-            </form>
-
             <ul class="user">
+                <form>
+                        <input type="text" class="search" placeholder="Search">
+                </form>
                 <li>
                     <a v-text="nickName" v-if="nickName" class="username" :value="nickName"></a>
                         <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
@@ -21,7 +18,6 @@
                         <a :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</a>
                 </li>
             </ul>
-
         </div>
     </div>
 </div>
@@ -66,9 +62,14 @@ export default {
             });
 
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
-        if(this.$store.state.username){
+      
+        
+
+        setTimeout(function(){
+                    if(this.$store.state.username){
             this.nickName = this.$store.state.username;
         };
+                }.bind(this),1000);
 
          modalEventBind(this.$refs.modal);
   },
@@ -89,6 +90,7 @@ export default {
                         }
                   });
            this.$store.commit('username','');
+           this.$store.commit('userType','');
            this.$router.push('/');
            this.$router.go(0);
       },
@@ -156,6 +158,7 @@ a:hover{
     position:relative;
 }
 .collapse{
+    width:100%;
     display:flex;
 }
 .list{
@@ -165,8 +168,7 @@ a:hover{
     width:196px;
     height:32px;
     border-radius:5px;
-    margin-top:27px;
-    margin-left:20px;
+    margin-right:260px;
 }
 
 .user{

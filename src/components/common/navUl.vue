@@ -3,7 +3,9 @@
         <el-row :gutter="15">
             <el-col :span="6"  v-for="(item,index) in navData">
                 <a @click="fobLink(index)">
-                    <div class="grid-content bg-purple">
+                    <div class="grid-content" 
+                         :style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"
+                         >
                         <p class="p">{{item.title}}</p>
                         <div class="introduce">
                             <p>{{item.introduce}}</p>
@@ -37,6 +39,8 @@ export default {
             this.$router.push('/courseIndex');
         }else if(index == 1){
             this.$router.push('/exerciseCenter');
+        }else if(index == 2 && this.$store.state.userType == ""){
+            this.$router.push('/testCenter');
         }else if(index == 2 && this.$store.state.userType == "S"){
             this.$router.push('/testCenter');
         }else if(index == 2 && this.$store.state.userType == "T"){
@@ -65,7 +69,7 @@ a {
     color: #000;
     cursor: pointer;
     font-weight:bolder;
-  text-decoration: none;
+    text-decoration: none;
 }
 a:hover{
     text-decoration: none;
@@ -75,7 +79,7 @@ a:hover{
     color:#f00;
 }
 .content{
-    width:960px;
+    width:1200px;
     margin:0 auto;
 }
 .el-row {
@@ -94,7 +98,7 @@ a:hover{
     left:0;
     bottom:0;
     background:#e4393c;
-    transition:height 1s;
+    transition:height 0.5s;
 }
 .introduce p{
     color:#000;
@@ -106,14 +110,8 @@ a:hover{
 .el-col:hover .introduce p{
     display:block;
 }
-.bg-purple-dark {
-    background: #99a9bf;
-}
 .bg-purple {
-    background: #d3dce6;
-}
-.bg-purple-light {
-    background: #e5e9f2;
+    background-color:rgba(0,0,0,0.5);
 }
 .grid-content {
     border-radius: 4px;
@@ -123,7 +121,7 @@ a:hover{
     padding-top: 98px;
     box-sizing: border-box;
     position:relative;
-    transition:1s ease;
+    transition:0.5s ease;
     overflow:hidden;
 }
 .grid-content:hover{

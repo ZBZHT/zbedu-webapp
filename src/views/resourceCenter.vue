@@ -5,113 +5,175 @@
     </div>
 
     <div class="fileList-box">
+      <el-upload
+        class="upload-demo"
+        action="http://192.168.2.251:8000/FileUpDown/upload"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :before-remove="beforeRemove"
+        :onError="uploadError"
+        :onSuccess="uploadSuccess"
+        :beforeUpload="beforeAvatarUpload"
+        multiple
+        :limit="3"
+        :on-exceed="handleExceed">
+        <el-button class="uploadBut" size="medium " type="primary">点击上传</el-button>
+        <div slot="tip" class="el-upload__tip">温馨提示 : 只能上传xls xlsx doc docx txt mp4 rmvb avi pdf格式的文件，且不超过100M</div>
+      </el-upload>
+      <br>
       <div>
+        <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
 
-        <form action="http://192.168.2.251:8000/FileUpDown/upload" method="post" enctype='multipart/form-data'>
-          <label for="resource">选择要上传的文件</label>
-          <input type="file" id="resource" name="resource">
-          <button type="submit">新建任务</button>
-        </form>
+          <!--全部教材-->
+          <el-tab-pane label="全部教材" name="first">
+            <el-table
+              ref="multipleTable"
+              :data="msgArr"
+              tooltip-effect="dark"
+              style="width: 100%"
+              @selection-change="handleSelectionChange">
+              <el-table-column type="selection" width="55">
+              </el-table-column>
 
-        //下载
-        <!--<form action="http://192.168.2.251:8000/FileUpDown/download" method="get">-->
-        <!--<button type="submit">下载文件</button>-->
-        <!--</form>-->
+              <el-table-column label="名称" width="500">
+                <template slot-scope="scope">{{ scope.row.name }}</template>
+              </el-table-column>
 
-        <br>
+              <el-table-column label="上传时间" width="300">
+                <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              </el-table-column>
+
+              <el-table-column label="文件大小" show-overflow-tooltip>
+                <template slot-scope="scope">{{ scope.row.size }}M</template>
+              </el-table-column>
+
+              <el-table-column width="120" class="tableName4">
+                <template slot-scope="scope">
+                  <el-button type="text" size="mini" @click="sendName(scope.row.name)">下载</el-button>
+                  <el-button
+
+                    type="text"
+                    size="mini">
+                    删除
+                  </el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+            <div style="margin-top: 20px">
+              <el-button @click="toggleSelection()">取消选择</el-button>
+              <el-button @click="sendName(scope.row.name)">下载选中项</el-button>
+            </div>
+          </el-tab-pane>
+
+          <!--教学课件-->
+          <el-tab-pane label="教学课件" name="second">
+            <el-table
+              ref="multipleTable"
+              :data="courseWareArr"
+              tooltip-effect="dark"
+              style="width: 100%"
+              @selection-change="handleSelectionChange">
+              <el-table-column type="selection" width="55">
+              </el-table-column>
+
+              <el-table-column label="名称" width="500">
+                <template slot-scope="scope">{{ scope.row.name }}</template>
+              </el-table-column>
+
+              <el-table-column label="上传时间" width="300">
+                <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              </el-table-column>
+
+              <el-table-column label="文件大小" show-overflow-tooltip>
+                <template slot-scope="scope">{{ scope.row.size }}M</template>
+              </el-table-column>
+
+              <el-table-column width="120">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="sendName(scope.row.name)">点击下载</el-button>
+                </template>
+              </el-table-column>
+
+            </el-table>
+            <div style="margin-top: 20px">
+              <el-button @click="toggleSelection()">取消选择</el-button>
+              <el-button @click="sendName(scope.row.name)">下载选中项</el-button>
+            </div>
+          </el-tab-pane>
+
+          <!--教学微课-->
+          <el-tab-pane label="教学微课" name="third">
+            <el-table
+              ref="multipleTable"
+              :data="videoArr"
+              tooltip-effect="dark"
+              style="width: 100%"
+              @selection-change="handleSelectionChange">
+              <el-table-column type="selection" width="55">
+              </el-table-column>
+
+              <el-table-column label="名称" width="500">
+                <template slot-scope="scope">{{ scope.row.name }}</template>
+              </el-table-column>
+
+              <el-table-column label="上传时间" width="300">
+                <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              </el-table-column>
+
+              <el-table-column label="文件大小" show-overflow-tooltip>
+                <template slot-scope="scope">{{ scope.row.size }}M</template>
+              </el-table-column>
+
+              <el-table-column width="120">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="sendName(scope.row.name)">点击下载</el-button>
+                </template>
+              </el-table-column>
+
+            </el-table>
+            <div style="margin-top: 20px">
+              <el-button @click="toggleSelection()">取消选择</el-button>
+              <el-button @click="sendName(scope.row.name)">下载选中项</el-button>
+            </div>
+          </el-tab-pane>
+
+          <!--其他教材-->
+          <el-tab-pane label="其他教材" name="fourth">
+            <el-table
+              ref="multipleTable"
+              :data="otherArr"
+              tooltip-effect="dark"
+              style="width: 100%"
+              @selection-change="handleSelectionChange">
+              <el-table-column type="selection" width="55">
+              </el-table-column>
+
+              <el-table-column label="名称" width="500">
+                <template slot-scope="scope">{{ scope.row.name }}</template>
+              </el-table-column>
+
+              <el-table-column label="上传时间" width="300">
+                <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              </el-table-column>
+
+              <el-table-column label="文件大小" show-overflow-tooltip>
+                <template slot-scope="scope">{{ scope.row.size }}M</template>
+              </el-table-column>
+
+              <el-table-column width="120">
+                <template slot-scope="scope">
+                  <el-button size="mini" @click="sendName(scope.row.name)">点击下载</el-button>
+                </template>
+              </el-table-column>
+
+            </el-table>
+            <div style="margin-top: 20px">
+              <el-button @click="toggleSelection()">取消选择</el-button>
+              <el-button @click="sendName(scope.row.name)">下载选中项</el-button>
+            </div>
+          </el-tab-pane>
+        </el-tabs>
       </div>
-      <h1>全部内容</h1>
-
-      <ul>
-        <li>
-          <span>名称</span>
-          <span>上传时间</span>
-          <span>文件大小</span>
-          <span>操作️</span>
-        </li>
-        <li v-for="item in msgArr" @click="sendName(item.name)">
-          <span>{{item.name}}</span>
-          <span>{{item.birthtime}}</span>
-          <span>{{item.size}} kb</span>
-          <span>⬇️</span>
-        </li>
-      </ul>
-
-      <h1>视频</h1>
-      <ul>
-        <li>
-          <span>名称</span>
-          <span>上传时间</span>
-          <span>文件大小</span>
-          <span>操作️</span>
-        </li>
-        <li v-for="item1 in videoArr">
-          <span>{{item1.name}}</span>
-          <span>{{item1.birthtime}}</span>
-          <span>{{item1.size}} kb</span>
-          <span>⬇️</span>
-        </li>
-      </ul>
-      <h1>pptArr</h1>
-      <ul>
-        <li>
-          <span>名称</span>
-          <span>上传时间</span>
-          <span>文件大小</span>
-          <span>操作️</span>
-        </li>
-        <li v-for="item2 in pptArr">
-          <span>{{item2.name}}</span>
-          <span>{{item2.birthtime}}</span>
-          <span>{{item2.size}} kb</span>
-          <span>⬇️</span>
-        </li>
-      </ul>
-      <h1>textArr</h1>
-      <ul>
-        <li>
-          <span>名称</span>
-          <span>上传时间</span>
-          <span>文件大小</span>
-          <span>操作️</span>
-        </li>
-        <li v-for="item3 in textArr">
-          <span>{{item3.name}}</span>
-          <span>{{item3.birthtime}}</span>
-          <span>{{item3.size}} kb</span>
-          <span>⬇️</span>
-        </li>
-      </ul>
-      <h1>picArr</h1>
-      <ul>
-        <li>
-          <span>名称</span>
-          <span>上传时间</span>
-          <span>文件大小</span>
-          <span>操作️</span>
-        </li>
-        <li v-for="item4 in picArr">
-          <span>{{item4.name}}</span>
-          <span>{{item4.birthtime}}</span>
-          <span>{{item4.size}} kb</span>
-          <span>⬇️</span>
-        </li>
-      </ul>
-      <h1>otherArr</h1>
-      <ul>
-        <li>
-          <span>名称</span>
-          <span>上传时间</span>
-          <span>文件大小</span>
-          <span>操作️</span>
-        </li>
-        <li v-for="item5 in otherArr">
-          <span>{{item5.name}}</span>
-          <span>{{item5.birthtime}}</span>
-          <span>{{item5.size}} kb</span>
-          <span>⬇️</span>
-        </li>
-      </ul>
     </div>
 
     <div class="footer">
@@ -131,20 +193,88 @@
       return {
         msgArr:[],
         videoArr:[],
-        pptArr:[],
-        textArr:[],
+        courseWareArr:[],
         picArr:[],
-        otherArr:[]
+        otherArr:[],
+        activeName2: 'first',
+        checked: true,
+        multipleSelection: []
       }
     },
     computed:{
-
     },
     methods: {
+      /*上传方法*/
+      // 上传成功后的回调
+      uploadSuccess (response, file) {
 
+        let newFile = [];
+        newFile.push(file.name);
+        newFile.push(file.birthtime);
+        //this.msgArr.name(file.name);
+        console.log(newFile);
+        //console.log(file.name);
+        //console.log(file.size);
+        console.log(file);
+        //console.log(file.birthtime);
+        //console.log('上传文件', response)
+      },
+      // 上传错误
+      uploadError (response, file, fileList) {
+        console.log('上传失败，请重试！')
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
+      },
+      // 上传前对文件的大小的判断  xls xlsx doc docx txt mp4 rmvb avi pdf
+      beforeAvatarUpload (file) {
+        const fileArr = file.name.split('.');
+        const fileSuffix = fileArr[fileArr.length-1];
+        const extension = fileSuffix === 'xls';
+        const extension2 = fileSuffix === 'xlsx';
+        const extension3 = fileSuffix === 'doc';
+        const extension4 = fileSuffix === 'docx';
+        const extension5 = fileSuffix === 'txt';
+        const extension6 = fileSuffix === 'mp4';
+        const extension7 = fileSuffix === 'rmvb';
+        const extension8 = fileSuffix === 'avi';
+        const extension9 = fileSuffix === 'pdf';
+        const isLt2M = file.size / 1024 / 1024 < 100;
+        if (!extension && !extension2 && !extension3 && !extension4 && !extension5 && !extension6 && !extension7 && !extension8 && !extension9) {
+          console.log('上传只能是 xls、xlsx、doc、docx txt mp4 rmvb avi格式!')
+        }
+        if (!isLt2M) {
+          console.log('上传模板大小不能超过 100MB!')
+        }
+        return extension || extension2 || extension3 || extension4 || extension5 || extension6 || extension7 || extension8 || extension9 && isLt2M
+      },
+      handleClick(tab, event) {
+        //console.log(tab, event);
+      },
+
+      /*下载方法*/
+      toggleSelection(rows) {
+        if (rows) {
+          rows.forEach(row => {
+            this.$refs.multipleTable.toggleRowSelection(row);
+          });
+        } else {
+          this.$refs.multipleTable.clearSelection();
+        }
+      },
+      handleSelectionChange(val) {
+        this.multipleSelection = val;
+      },
       sendName(item){
-        alert(item)
-
         axios({
           method:'get',
           url:"http://192.168.2.251:8000/FileUpDown/download",
@@ -168,106 +298,53 @@
             navigator.msSaveBlob(blob, item)
           }
         })
-      
-
-
-      }
+      },
     },
     mounted(){
-      // alert(222)
       axios.get("http://192.168.2.251:8000/FileUpDown/loadFile",{
         params:{
           user:6666
         }
       }).then((res)=>{
-          // console.log(res.data.var)
-
-          // this.msgArr = res.data.var
-
           for (var i = 0; i < res.data.var.length; i++){
             if (res.data.var[i].size != 0){
               this.msgArr.push(res.data.var[i])
             }
           }
           for ( var j = 0; j < this.msgArr.length; j++){
-            var index = this.msgArr[j].name.indexOf(".") //得到"."在第几位
-            var suffix = this.msgArr[j].name.substring(index) //截断"."之前的，得到后缀
-            if (suffix == '.mp4' || suffix == '.rmvb' || suffix == '.avi'){
-              this.videoArr.push(this.msgArr[j])
-            }else if(suffix == '.pptx'){
-              this.pptArr.push(this.msgArr[j])
-            }else if(suffix == '.txt' || suffix == '.docx' || suffix == '.xlsx' || suffix == '.pdf'){
-              this.textArr.push(this.msgArr[j])
-            }else if(suffix == '.jpg' || suffix == '.png' || suffix == '.gif' || suffix == '.jpeg'){
-              this.picArr.push(this.msgArr[j])
+            var index = this.msgArr[j].name.split(".");
+            var suffix = index[index.length-1];
+            if (suffix == 'mp4' || suffix == 'rmvb' || suffix == 'avi'){
+              this.videoArr.push(this.msgArr[j]);
+            }else if(suffix == 'txt' || suffix == 'docx' || suffix == 'doc' || suffix == 'xlsx' || suffix == 'xls' || suffix == 'pdf' || suffix == 'pptx'){
+              this.courseWareArr.push(this.msgArr[j])
             }else {
               this.otherArr.push(this.msgArr[j])
             }
           }
-          console.log(this.msgArr)
-
         }
-      )
-      console.log('00===========')
+      );
     },
-    components:{navgationHead,footFooter}
+    components: {navgationHead, footFooter}
   }
 </script>
 
 <style>
-  *{
-    margin:0;
-    padding:0;
+  * {
+    margin: 0;
+    padding: 0;
   }
-  ul li{
-    list-style: none;
+
+  .fileList-box {
+    width: 1200px;
+    margin: 0 auto;
   }
-  .fileList-box ul li{
-    background: #ECECEC;
-    height: 40px;
-    line-height: 40px;
-    border-bottom: 1px dotted #8c8c8c;
+
+  .el-upload__tip {
     text-align: left;
   }
-  .fileList-box ul li span:first-child{
-    display: inline-block;
-    width: 40%;
-    /*background: lightgoldenrodyellow;*/
-    text-align: center;
-  }
-  .fileList-box ul li span:nth-child(2){
-    display: inline-block;
-    width: 30%;
-    /*background: lightgoldenrodyellow;*/
-    text-align: center;
-  }
-  .fileList-box ul li span:nth-child(3){
-    display: inline-block;
-    width: 20%;
-    /*background: lightgoldenrodyellow;*/
-    text-align: center;
-  }
-  .fileList-box ul li span:nth-child(4){
-    display: inline-block;
-    width: 8%;
-    /*background: lightgoldenrodyellow;*/
-    text-align: center;
-  }
-  a{
-    color: inherit;
-    cursor: pointer;
-    text-decoration:none;
-  }
-  a:hover{
-    text-decoration: none;
-    color: #f00;
-  }
-  a:focus {
-    color: #f00;
-    text-decoration: none;
-  }
-  hr{
-    margin-top: 2px;
-    margin-bottom:2px;
+
+  .container .fileList-box .uploadBut {
+    margin-left: -68.5rem;
   }
 </style>

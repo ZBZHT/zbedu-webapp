@@ -56,6 +56,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                                 setTimeout(function(){
                                     this.nickName = res.data.username;
                                     this.$store.commit('username',res.data.username);
+                                    this.$store.commit('userType',res.data.userType);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
                                     this.$router.go(0);
@@ -65,6 +66,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                                 setTimeout(function(){
                                     this.nickName = res.data.username;
                                     this.$store.commit('username',res.data.username);
+                                    this.$store.commit('userType',res.data.userType);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
                                     this.$router.go(0);
