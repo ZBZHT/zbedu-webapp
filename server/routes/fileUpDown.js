@@ -35,6 +35,8 @@ function isOriginAllowed(origin, allowedOrigin) {
 const ALLOW_ORIGIN = [ // 域名白名单
   'http://192.168.2.251:8080',
   'http://192.168.2.251:8000',
+  'http://192.168.2.250:8080',
+  'http://192.168.2.250:8000',
   'http://localhost:8080',
   'http://127.0.0.1:8080',
   'http://127.0.0.1:8000',
@@ -57,37 +59,24 @@ router.all('*', function (req, res, next) {
   }
   next()
 });
-//默认页
-router.get('/', function(req, res) {
-  res.render('fileUpDown');
-});
 
 //文件上传
-router.post('/upload', function(req, res, next) {
+router.post('/upload', function(req, res) {
   let form = new formidable.IncomingForm();
   form.uploadDir = "../app/uploads/";//设置文件上传存放地址
-  form.maxFieldsSize = 300 * 1024 * 1024; //设置最大300M
+  form.maxFieldsSize = 100 * 1024 * 1024; //设置最大100M
   form.keepExtensions = true;
 
-    form.parse(req, function(err, fields, files) {
+  form.parse(req, function (err, fields, files) {
+    try {
       //旧名字
-      let oldName = files.resource.name;
+      let fileName = files.file.name;
       //新名字
-      let oldPath = files.resource.path;
+      let oldPath = files.file.path;
+      let newPath = form.uploadDir + fileName;
 
-      //取文件全名名称
-      function GetFileName(filePath) {
-        if (filePath != "") {
-          var names = filePath.split("\\");
-          names[names.length - 1] = oldName;
-          return names;
-        }
-      }
-      let newPath = GetFileName(oldPath).join('/');
-      //console.log(newPath);
-      //改名   path: 'D:\\zbedu-webapp-master2.23\\server\\login\\app\\uploads\\upload_8ba6e0974e8e7d19a6ca242a303eb9ee.exe',
-      fs.rename(oldPath,newPath,function (err) {
-        if(err){
+      fs.rename(oldPath, newPath, function (err) {
+        if (err) {
           throw  Error("改名失败");
         }
         res.status(200).send({
@@ -95,8 +84,14 @@ router.post('/upload', function(req, res, next) {
           msg: 'upload success',
         });
       });
-
-    });
+    }
+    catch (e) {
+      res.status(404).send({
+        success: 1,
+        msg: 'upload err',
+      });
+    }
+  });
 });
 
 //文件下载
@@ -202,7 +197,6 @@ router.get('/loadFile',function(req, res) {
     currDir = rootDir;
   }else{
     currDir = path.join(req.body.dir,req.body.folderName);
-
   }
 
   if(!req.body.order){
@@ -223,13 +217,13 @@ router.get('/loadFile',function(req, res) {
           fs.lstat(path.join(currDir,fileName),function(err,stats){
             if(!err){
               var obj = {
-                name: fileName,
-                type: stats.isFile() ? 1:0,
-                isFile: stats.isFile(),
-                isDirectory: stats.isDirectory(),
+               //name: fileName,
+                //type: stats.isFile() ? 1:0,
+                //isFile: stats.isFile(),
+                //isDirectory: stats.isDirectory(),
                 size: ((stats.size) / 1000000).toFixed(2),
                 birthtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.birthtime),
-                ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
+                //ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
                 //mtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.mtime)    //modify time
               };
               fileDetailArray.push(obj);
@@ -265,13 +259,13 @@ router.get('/loadFile',function(req, res) {
             //文件类型相同再第二级比较
             var forward;
             switch (order) {
-              case "size":
+              /*case "size":
                 if(a.size >= b.size){
                   forward = -1;
                 }else{
                   forward = 1;
                 }
-                break;
+                break;*/
               case "birthtime":
                 if(a.birthtime >= b.birthtime){
                   forward = -1;

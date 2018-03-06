@@ -34,6 +34,8 @@ function isOriginAllowed(origin, allowedOrigin) {
 const ALLOW_ORIGIN = [ // 域名白名单
   'http://192.168.2.251:8080',
   'http://192.168.2.251:8000',
+  'http://192.168.2.250:8080',
+  'http://192.168.2.250:8000',
   'http://localhost:8080',
   'http://127.0.0.1:8080',
   'http://127.0.0.1:8000',
@@ -172,37 +174,16 @@ router.post('/user/login', checkLogin, function (req, res) {
   }
 });
 
-//判断是否是已登录状态
-function checkLogin(req, res, next) {
-  let sessID = req.sessionID;
-  //查询数据库中用户名是否存在,存在则登录
-  Session.findOne({
-    _id: sessID,
-  }).then(function (sessID) {
-    //_id存在则更新此id
-    if (sessID) {
-      let users = JSON.parse(sessID._doc.session).users;
-
-      users.code = 1;
-      console.log('已登录');
-      res.end(JSON.stringify(users));
-    } else {
-      next()
-    }
-  });
-}
-
 //跳转判断登录状态
 router.post('/user/loginState', function (req, res) {
   let sessID = req.sessionID;
   let code = '';
-  console.log(sessID);
   //查询数据库中用户名是否存在,存在则登录
   Session.findOne({
-    _id: sessID
-  }).then(function (sessID) {
+    _id: sessID,
+  }).then(function (sesID) {
     //_id存在则更新此id
-    if (sessID) {
+    if (sesID) {
       code = 1;
       console.log('已登录');
       res.end(JSON.stringify(code));
@@ -213,6 +194,25 @@ router.post('/user/loginState', function (req, res) {
     }
   });
 });
+
+//判断是否是已登录状态
+function checkLogin(req, res, next) {
+  let sessID = req.sessionID;
+  //查询数据库中用户名是否存在,存在则登录
+  Session.findOne({
+    _id: sessID,
+  }).then(function (sesID) {
+    //_id存在则更新此id
+    if (sesID) {
+      let users = JSON.parse(sesID._doc.session).users;
+      users.code = 1;
+      console.log('已登录');
+      res.end(JSON.stringify(users));
+    } else {
+      next()
+    }
+  });
+}
 
 // 退出
 router.post('/user/logout', function (req, res) {
