@@ -4,6 +4,10 @@
         <navgation-head></navgation-head>
     </div>
    
+    <div class="topbox">
+        <swipe :slides="slides" :inv="inv" :style="styleObject" class="swipe"></swipe>
+    </div>
+
     <div class="list">
             <nav-ul :navData = "navData"></nav-ul>
     </div>
@@ -17,6 +21,7 @@
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
+import swipe from '@/components/testCenter/swipe'
 import navUl from '@/components/common/navUl'
 import footFooter from '@/components/common/footFooter'
 
@@ -26,11 +31,17 @@ export default {
   data () {
     return {
       navData:'',
+      slides: [],
+      inv: 3000,
+        styleObject: {
+          width: '100%',
+          height: '295px'
+        }
     }
   },
   computed:{
-          
-      },
+
+  },
   methods:{
               
   },
@@ -46,8 +57,19 @@ export default {
             }).catch(function(error){
                 console.log("error init." + error)
             });
+
+      axios.get("http://" + this.url + ":8000/readJson/index",{
+                params:{
+                     user:123
+                }
+            }).then((res)=>{
+                console.log(res)
+                this.slides = res.data.slides;
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
     },
-  components:{navgationHead,navUl,footFooter}
+  components:{navgationHead,swipe,navUl,footFooter}
 }
 </script>
 
@@ -82,5 +104,17 @@ a:focus {
 hr{
     margin-top: 2px;
     margin-bottom:2px;
+}
+.topbox{
+    width:100%;
+    height:295px;
+    margin:0 auto;
+    position:relative;
+    overflow:hidden;
+    margin-top: -40px;
+    margin-bottom: 40px;
+}
+.swipe{
+    margin:0 auto;
 }
 </style>

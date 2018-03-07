@@ -1,5 +1,6 @@
 <template>
 <div class="nav">
+    <div class='headHr'></div>
     <div class="navbar">
         <div class="navbar-header">
             <router-link :to="{path:'/'}">
@@ -7,6 +8,9 @@
             </router-link>
         </div>
         <div class="collapse">
+            <b>
+                智    慧    教    学    系    统
+            </b>
             <ul class="user">
                 <form>
                         <input type="text" class="search" placeholder="Search">
@@ -67,9 +71,9 @@ export default {
 
         setTimeout(function(){
                     if(this.$store.state.username){
-            this.nickName = this.$store.state.username;
-        };
-                }.bind(this),1000);
+                    this.nickName = this.$store.state.username;
+                };
+        }.bind(this),200);
 
          modalEventBind(this.$refs.modal);
   },
@@ -144,6 +148,11 @@ a {
 a:hover{
     text-decoration: none;
 }
+.headHr{
+    width:100%;
+    height:5px;
+    background:#7a2020;
+}
 .nav{
     min-width:1200px;
     margin-bottom: 40px;
@@ -160,6 +169,11 @@ a:hover{
 .collapse{
     width:100%;
     display:flex;
+}
+.collapse b{
+    font-size:30px;
+    padding-top:21px;
+    padding-left:10px;
 }
 .list{
     margin-left:43px;

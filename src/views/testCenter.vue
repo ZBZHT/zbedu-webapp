@@ -63,7 +63,7 @@
             <ul class="test">
                 <li class="test-li" v-for="item in contentTest">
                         <img :src="item.url">
-                        <button class="btn">
+                        <button class="btn" type="button">
                             <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>

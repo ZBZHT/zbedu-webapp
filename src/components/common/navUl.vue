@@ -66,14 +66,14 @@ ul li{
     list-style: none;
 }
 a {
-    color: #000;
+    color: #fff;
     cursor: pointer;
     font-weight:bolder;
     text-decoration: none;
 }
 a:hover{
     text-decoration: none;
-    color:#f00;
+    color:#000;
 }
 .active{
     color:#f00;
@@ -109,6 +109,7 @@ a:hover{
 }
 .el-col:hover .introduce p{
     display:block;
+    color:#000;
 }
 .bg-purple {
     background-color:rgba(0,0,0,0.5);

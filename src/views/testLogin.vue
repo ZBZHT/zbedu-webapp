@@ -132,7 +132,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     min-width:960px;
     margin:0 auto;
     min-height:700px;
-    height:900px;
+    height: auto  !important;
     background-size:100% 100%;
     position:relative;
     box-shadow:0 300px 400px -100px #e4393c inset;

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="question">
+    <div class="question" id="content">
         <div class="leftBox">
             <p>{{user}}</p>
             <ul class="leftItem" v-show="!textQuestionData">
@@ -326,10 +326,20 @@ export default {
 //    },
   methods:{
             sendInfor(){
-
-
-
-
+                var elem = document.getElementById("content");   
+                console.log(elem);   
+                this.requestFullScreen(elem);
+            },
+            requestFullScreen(element){
+                var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;    
+                if (requestMethod) {      
+                    requestMethod.call(element);    
+                } else if (typeof window.ActiveXObject !== "undefined") {      
+                    var wscript = new ActiveXObject("WScript.Shell");    
+                    if (wscript !== null) {    
+                        wscript.SendKeys("{F11}");    
+                    }    
+                }
             },
             submit:function () {
                 setTimeout(function(){
@@ -586,7 +596,7 @@ a{
     display:flex;
 }
 .leftBox{
-    width:150px;
+    width:12.5%;
     height:100%;
     border:1px solid #000;
 }
@@ -610,12 +620,12 @@ a{
     color:#f00;
 }
 .rightBox{
-    width:1050px;
+    width:87.5%;
     height:100%;
     position:relative;
 }
 .testOnline{
-    width:1050px;
+    width:100%;
     height:100%;
     background:#fff;
     position:absolute;
@@ -624,7 +634,7 @@ a{
 }
 .title{
     width:100%;
-    height:150px;
+    height:21%;
     border:1px solid #000;
     text-align:left;
     font-weight: bolder;
@@ -661,11 +671,12 @@ a{
 }
 .content{
     width:100%;
+    height:79%;
     display:flex;
 }
 .data{
-    width:990px;
-    height:550px;
+    width:94%;
+    height:100%;
     border:1px solid #000;
     overflow:auto;
     text-align:left;
@@ -680,8 +691,8 @@ a{
     height:18px;
 }
 .number{
-    width:310px;
-    height:550px;
+    width:29%;
+    height:100%;
     border:1px solid #000;
     position:relative;
 }
@@ -791,5 +802,9 @@ a{
 }
 .ans li :hover{
     cursor:pointer;
+}
+#content:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
 }
 </style>
