@@ -2,6 +2,7 @@
     {
       "title":"教学中心",
       "name":"courseIndex",
+      "background":"#feb913",
       "introduce":"...",
       "children":[
         {
@@ -431,6 +432,7 @@
     {
       "title":"实训中心",
       "name":"exerciseCenter",
+      "background":"#7bcb50",
       "introduce":"...",
       "children":[
         {
@@ -444,11 +446,13 @@
     {
       "title":"考试中心",
       "introduce":"...",
+      "background":"#5e69e4",
       "name":"testCenter"
     },
     {
       "title":"评价中心",
       "name":"appraiseCenter",
+      "background":"#00bff6",
       "introduce":"...",
       "children":[
         {
@@ -465,6 +469,7 @@
     {
       "title":"资源中心",
       "name":"resourceCenter",
+      "background":"#eb7325",
       "introduce":"...",
       "children":[
         {
@@ -477,16 +482,19 @@
     },
     {
       "title":"敬请期待...",
+      "background":"#01a648",
       "introduce":"...",
       "name":"more"
     },
     {
       "title":"敬请期待...",
+      "background":"#5e51a1",
       "introduce":"...",
       "name":"more"
     },
     {
       "title":"敬请期待...",
+      "background":"#456cbb",
       "introduce":"...",
       "name":"more"
     }
