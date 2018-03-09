@@ -16,7 +16,7 @@ import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
 import loginPage from '@/views/loginPage'
 import resourceCenter from '@/views/resourceCenter'
-// import userManagement from '@/views/UserManagement'
+import teacherCMS from '@/views/teacherCMS'
 import testLogin from '@/views/testLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 import axios from 'axios'
@@ -133,11 +133,16 @@ const routes = [
       name: 'testLogin',
       component: testLogin
     },
-  {
-    path:'/resourceCenter',
-    name:'resourceCenter',
-    component: resourceCenter
-  }
+    {
+      path:'/resourceCenter',
+      name:'resourceCenter',
+      component: resourceCenter
+    },
+    {
+      path:'/teacherCMS',
+      name:'teacherCMS',
+      component: teacherCMS
+    }
     // ,
     // {
     //   path:'/userManagement',
@@ -183,18 +188,11 @@ router.beforeEach((to,from,next) => {
           if(con == true){
               router.replace('/testLogin')
             }else{
-              next({
-                path:'/',
-                query:{redirect:to.fullPath}
-              })
-            //  router.go(0);
+              router.replace('/')
           }
 
       }else if(store.state.username && a == 0){
-        next({
-                path:'/testLogin',
-                query:{redirect:to.fullPath}
-              })
+        router.replace('/testLogin')
               a+=1;
 
       }
