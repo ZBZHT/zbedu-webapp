@@ -3,7 +3,7 @@
       "title":"教学中心",
       "name":"courseIndex",
       "background":"#6d6d6d",
-      "introduce":"...",
+      "introduce":"教师教，学生自学，相互补充",
       "children":[
         {
           "title":"新能源汽车",
@@ -433,7 +433,7 @@
       "title":"实训中心",
       "name":"exerciseCenter",
       "background":"#64181a",
-      "introduce":"...",
+      "introduce":"实训教室和实训设备管理",
       "children":[
         {
           "title":"教学设备"
@@ -445,7 +445,7 @@
     },
     {
       "title":"考试中心",
-      "introduce":"...",
+      "introduce":"课程练习与等级考试并重",
       "background":"#730714",
       "name":"testCenter"
     },
@@ -453,7 +453,7 @@
       "title":"评价中心",
       "name":"appraiseCenter",
       "background":"#aeafb1",
-      "introduce":"...",
+      "introduce":"评价智能分析及应用",
       "children":[
         {
           "title":"课程评价"
@@ -470,7 +470,7 @@
       "title":"资源中心",
       "name":"resourceCenter",
       "background":"#9f5355",
-      "introduce":"...",
+      "introduce":"与教学、实训相关资源管理",
       "children":[
         {
           "title":"上传"
