@@ -79,7 +79,7 @@ a:hover{
     color:#f00;
 }
 .content{
-    width:1200px;
+    width:960px;
     margin:0 auto;
 }
 .el-row {

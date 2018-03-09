@@ -237,12 +237,34 @@ export default {
 
     }
   },
+  created(){
+ //   document.onkeydown = function(e){
+      //  if(window.event.keyCode === 27){
+      //      alert("...")
+     //   }
+ //   };
+
+    window.onkeydown = function(){
+        if(checkFull()){
+            if(window.event.keyCode === 27){
+              alert("...")
+              event.preventDefault();
+          }
+        }
+    }
+
+        function checkFull(){
+        var isFull =  document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
+
+        //to fix : false || undefined == undefined
+        if(isFull === undefined) isFull = false;
+        return isFull;
+        }
+
+  },
   mounted(){
-    
-        
     var allTestNum = this.$store.state.allTestNum ;
     var url = document.domain;
-    console.log(allTestNum+"TTT")
 
       axios.get("http://" + url + ":8000/readTestQuestion/all",{
             params:{
@@ -300,9 +322,6 @@ export default {
       });
 
 
-
-         this.url = document.domain;
-
     },
   watch: {
         second:{
@@ -337,7 +356,7 @@ export default {
                 } else if (typeof window.ActiveXObject !== "undefined") {      
                     var wscript = new ActiveXObject("WScript.Shell");    
                     if (wscript !== null) {    
-                        wscript.SendKeys("{F11}");    
+                        wscript.SendKeys(122);    
                     }    
                 }
             },

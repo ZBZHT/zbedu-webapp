@@ -9,7 +9,9 @@
         </div>
         <div class="collapse">
             <b>
-                智    慧    教    学    系    统
+                <router-link :to="{path:'/teacherCMS'}">
+                    智    慧    教    学    系    统
+                </router-link>
             </b>
             <ul class="user">
                 <form>
