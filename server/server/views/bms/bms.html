@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Home</title>
+  <link rel="stylesheet" href="/stylesheets/reset.css">
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <link rel="stylesheet" href="/stylesheets/bms.css">
+
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img src="/images/zb_logo.png" alt="中邦智慧后台管理系统">
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <span class="zb">中邦智慧后台管理系统</span>
+            <!--<form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="查询">
+                </div>
+                <button type="submit" class="btn btn-default">查询</button>
+            </form>-->
+            <ul class="nav navbar-nav navbar-right">
+                <li><span>{{userInfo.username}}</span></li>
+                <li class="loginbut">
+                    <button type="button" class="btn btn-default">管理员登录</button>
+                </li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<div class="cont-list">
+    <!--左边列表-->
+    <div class="panel-group cont-list-left pull-left" id="accordion">
+        <div class="panel panel-default">
+            <button class="panel-heading">
+                <span class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseOne">
+                        数据管理&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;>
+                    </a>
+                </span>
+            </button>
+            <div id="collapseOne" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="list-group">
+                        <button type="button" class="list-group-item">&emsp;用户数据</button>
+                        <button type="button" class="list-group-item">&emsp;考试题数据</button>
+                        <button type="button" class="list-group-item">&emsp;考试答案数据</button>
+                        <button type="button" class="list-group-item">&emsp;评论数据</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <button class="panel-heading">
+                <span class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseTwo">
+                        其他设置&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;>
+                    </a>
+                </span>
+            </button>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="list-group">
+                        <button type="button" class="list-group-item">&emsp;备用列表1</button>
+                        <button type="button" class="list-group-item">&emsp;备用列表2</button>
+                        <button type="button" class="list-group-item">&emsp;备用列表3</button>
+                        <button type="button" class="list-group-item">&emsp;备用列表3</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <button class="panel-heading">
+                <span class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseThree">
+                        系统设置&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;>
+                    </a>
+                </span>
+            </button>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <div class="list-group">
+                        <button type="button" class="list-group-item">&emsp;备用列表1</button>
+                        <button type="button" class="list-group-item">&emsp;备用列表2</button>
+                        <button type="button" class="list-group-item">&emsp;备用列表3</button>
+                        <button type="button" class="list-group-item">&emsp;备用列表3</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--右边内容-->
+    <table class="table table-striped pull-left table-hover">
+      <a href="javascrip:void(0)">添加用户</a>
+        <thead>
+        <tr>
+            <th>学号</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>是否管理员</th>
+            <th>身份证号</th>
+            <th>手机号</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{user.StuID}}</td>
+            <td>{{user.user}}</td>
+            <td>{{user.pwd}}</td>
+            <td>{%if user.admin === 'true' %}yes{%endif%}</td>
+            <td>{{user.IDNo}}</td>
+            <td>{{user.MoNo}}</td>
+            <td><a href="/bms/User/edit?id={{user._id.toString()}}">修改</a> |
+                <a href="/bms/User/delete?id={{user._id.toString()}}">删除</a>
+                <!--<a href="javascript:window.history.back();">返回</a>-->
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="demo">
+        {{ demo }}
+
+    </div>
+
+
+
+
+
+
+</div>
+
+
+
+<script src="/javascripts/jquery-2.1.1.min.js"></script>
+<script src="/javascripts/bootstrap.min.js"></script>
+</body>
+</html>

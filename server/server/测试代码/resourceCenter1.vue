@@ -8,30 +8,17 @@
       <el-upload
         class="upload-demo"
         action="http://192.168.2.251:8000/FileUpDown/upload"
+        :on-preview="handlePreview"
+        :on-remove="handleRemove"
+        :before-remove="beforeRemove"
         :onError="uploadError"
         :beforeUpload="beforeAvatarUpload"
         :onSuccess="uploadSuccess"
+        multiple
         :on-exceed="handleExceed">
         <el-button class="uploadBut" size="medium " type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">温馨提示: 上传的文件不可超过100M</div>
+        <div slot="tip" class="el-upload__tip">温馨提示 : 只能上传xls xlsx doc docx ppt pptx txt mp4 rmvb avi pdf格式的文件，且不超过100M</div>
       </el-upload>
-      <!--对话框-->
-      <el-dialog
-        title="请选择上传文件的类型"
-        :visible.sync="centerDialogVisible"
-        width="25%"
-        :show-close=false
-        :close-on-press-escape=false
-        center>
-        <div style="margin-top: 20px; margin-left: 60px;">
-          <el-radio v-model="radioJX" label="1" border size="medium">教学课件</el-radio>
-          <el-radio v-model="radioJX" label="2" border size="medium">教学微课</el-radio>
-        </div>
-        <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="addArr">确 定</el-button>
-  </span>
-      </el-dialog>
-
       <br>
       <div>
         <el-tabs v-model="activeName2" type="card" @tab-click="handleClick">
@@ -202,15 +189,13 @@
     data () {
       return {
         msgArr:[],
-        courseWareArr:[],
         videoArr:[],
+        courseWareArr:[],
+        picArr:[],
         otherArr:[],
         activeName2: 'first',
         checked: true,
-        multipleSelection: [],
-        centerDialogVisible: false,
-        radioJX: '1',
-        url:document.domain
+        multipleSelection: []
       }
     },
     computed:{
@@ -221,32 +206,80 @@
       uploadSuccess (res, file) {
         let resFileMsg = res.fileMsg[0];
         this.msgArr.push(resFileMsg);
+        console.log(this.msgArr);
+
+        for ( let j = 0; j < resFileMsg.length; j++){
+          let index = resFileMsg[j].name.split(".");
+          let suffix = index[index.length-1];
+          if (suffix == 'mp4' || suffix == 'rmvb' || suffix == 'avi'){
+            this.videoArr.push(resFileMsg[j]);
+          }else if(suffix == 'txt' || suffix == 'docx' || suffix == 'doc' || suffix == 'xlsx' || suffix == 'xls' || suffix == 'pdf' || suffix == 'ppt' || suffix == 'pptx'){
+            this.courseWareArr.push(this.msgArr[j])
+          }else {
+            this.otherArr.push(this.msgArr[j])
+          }
+        }
+
       },
       // 上传错误
       uploadError (res, file, fileList) {
         console.log('上传失败，请重试！')
       },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
       handleExceed(files, fileList) {
-        this.$message.warning(`每次只能上传 1 个文件`);
+        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
       },
-      addArr() {
-        this.centerDialogVisible = false;
-        if (this.radioJX == 1)
-        {
-          this.courseWareArr.push(this.msgArr[this.msgArr.length-1])
-        }
-        else if (this.radioJX == 2)
-        {
-          this.videoArr.push(this.msgArr[this.msgArr.length-1])
-        }
-        else
-        {
-          this.otherArr.push(this.msgArr[this.msgArr.length-1])
-        }
+      beforeRemove(file, fileList) {
+        return this.$confirm(`确定移除 ${ file.name }？`);
       },
-      // 上传前弹出对话框
+      // 上传前对文件的大小的判断  xls xlsx doc docx txt mp4 rmvb avi pdf
       beforeAvatarUpload (file) {
-      this.centerDialogVisible = true;
+
+        const h = this.$createElement;
+        this.$msgbox({
+          title: '请选择上传课程的类型',
+          message: h('p', null, [
+            h('span', null, '内容可以是 '),
+            h('i', { style: 'color: teal' }, 'VNode')
+          ]),
+          showClose: false,
+          confirmButtonText: '确定',
+          closeOnPressEscape: false,
+          closeOnClickModal: false,
+          callback: action => {
+            this.$message({
+              type: 'info',
+              message: `action: ${ action }`
+            });
+          }
+        });
+
+        let fileArr = file.name.split('.');
+        let fileSuffix = fileArr[fileArr.length-1];
+        let extension = fileSuffix === 'xls';
+        let extension2 = fileSuffix === 'xlsx';
+        let extension3 = fileSuffix === 'doc';
+        let extension4 = fileSuffix === 'docx';
+        let extension5 = fileSuffix === 'txt';
+        let extension6 = fileSuffix === 'mp4';
+        let extension7 = fileSuffix === 'rmvb';
+        let extension8 = fileSuffix === 'avi';
+        let extension9 = fileSuffix === 'pdf';
+        let extension10 = fileSuffix === 'ppt';
+        let extension11 = fileSuffix === 'pptx';
+        let isLt2M = file.size / 1024 / 1024 < 100;
+        if (!extension && !extension2 && !extension3 && !extension4 && !extension5 && !extension6 && !extension7 && !extension8 && !extension9 && !extension10 && !extension11) {
+          console.log('上传只能是 xls/xlsx/doc/docx/ppt/pptx/txt/mp4/rmvb/avi格式!')
+        }
+        if (!isLt2M) {
+          console.log('上传模板大小不能超过 100MB!')
+        }
+        return extension || extension2 || extension3 || extension4 || extension5 || extension6 || extension7 || extension8 || extension9 || extension10 || extension11 && isLt2M
       },
       handleClick(tab, event) {
         //console.log(tab, event);
@@ -268,7 +301,7 @@
       sendName(item){
         axios({
           method:'get',
-          url:'http://' + this.url + ': 8000/FileUpDown/download',
+          url:"http://192.168.2.251:8000/FileUpDown/download",
           responseType: 'blob',
           params:{
             downloadName:item
@@ -293,34 +326,17 @@
       fileDelete(item){
         axios({
           method:'get',
-          url:'http://' + this.url + ': 8000/FileUpDown/fileDelete',
+          url:"http://192.168.2.251:8000/FileUpDown/fileDelete",
           params:{
             downloadName:item
           }
         }).then((res) => { // 处理返回的文件流
-          let resFileName = res.data.fileName;
 
-          dellArrE(this.msgArr, resFileName);
-          dellArrE(this.courseWareArr, resFileName);
-          dellArrE(this.videoArr, resFileName);
-          dellArrE(this.otherArr, resFileName);
-
-          function dellArrE(arr, resFileName) {
-            if (resFileName) {
-              for (let i=0; i<arr.length; i++)
-              {
-                if (arr[i].name === resFileName)
-                {
-                  arr.splice(i,1);
-                }
-              }
-            }
-          }
         })
       },
     },
     mounted(){
-      axios.get('http://' + this.url + ':8000/FileUpDown/loadFile',{
+      axios.get("http://192.168.2.251:8000/FileUpDown/loadFile",{
         params:{
           user:6666
         }
