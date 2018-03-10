@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <el-row :gutter="15">
-            <el-col :span="6"  v-for="(item,index) in navData">
+            <el-col :span="8"  v-for="(item,index) in navData">
                 <a @click="fobLink(index)">
                     <div class="grid-content" 
                          :style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"
@@ -79,7 +79,7 @@ a:hover{
     color:#f00;
 }
 .content{
-    width:960px;
+    width:860px;
     margin:0 auto;
 }
 .el-row {
