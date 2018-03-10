@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <el-row :gutter="15">
-            <el-col :span="8"  v-for="(item,index) in navData">
+            <el-col :span="8"  v-for="(item,index) in navData" :key = "index">
                 <a @click="fobLink(index)">
                     <div class="grid-content" 
                          :style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"
