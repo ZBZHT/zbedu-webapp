@@ -104,8 +104,8 @@ export default {
       slides: [],
       inv: 3000,
       styleObject: {
-          width: '795px',
-          height: '384px'
+          width: '100%',
+          height: '100%'
         },
       url:''
     }
@@ -227,6 +227,7 @@ hr{
 }
 .rightbox {
     width:795px;
+    height:384px;
     overflow:hidden;
 }
 .mask-play>img{

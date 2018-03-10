@@ -35,7 +35,7 @@ export default {
       inv: 3000,
         styleObject: {
           width: '100%',
-          height: '295px'
+          height: '100%'
         }
     }
   },
@@ -75,7 +75,7 @@ export default {
 
 <style>
 .container{
-    
+
 }
 *{
     margin:0;

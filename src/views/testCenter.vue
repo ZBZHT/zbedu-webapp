@@ -96,8 +96,8 @@ export default {
         slides: [],
         inv: 3000,
         styleObject: {
-          width: '960px',
-          height: '295px'
+          width: '100%',
+          height: '100%'
         },
         url:''
     }
@@ -137,7 +137,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .btn{
     background-color:#e4393c;
     border-radius:5px;
