@@ -16,14 +16,41 @@
                 <div class="title">
                     <div>
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-                        <p class="titleP">{{$route.params.title}}考试</p>
                     </div>
                 </div>
                 <div class="content">
                     <div class="data">
-                        <button @click='add();getTest($route.params.testId);sendInfor()' v-show="!textQuestionData">
-                            {{$route.params.title}}开始考试
-                        </button>
+                        <div  v-show="!textQuestionData">
+                            <el-row>
+                                <el-col :span="6">
+                                    <div class="grid-content bg-purple">考试名称</div>
+                                </el-col>
+                                <el-col :span="6">
+                                    <div class="grid-content bg-purple">考试时间</div>
+                                </el-col>
+                                <el-col :span="6">
+                                    <div class="grid-content bg-purple">题数</div>
+                                </el-col>
+                            </el-row>
+                            <el-row>
+                                <el-col :span="6">
+                                    <div class="grid-content">{{$route.params.title}}</div>
+                                </el-col>
+                                <el-col :span="6">
+                                    <div class="grid-content">{{minutes}}'{{seconds}}''</div>
+                                </el-col>
+                                <el-col :span="6">
+                                    <div class="grid-content">{{length - isCheckNum}}</div>
+                                </el-col>
+                                <el-col :span="6">
+                                    <div class="grid-content">
+                                        <el-button type="danger" plain @click='add();getTest($route.params.testId);sendInfor()'>
+                                            <p>开始考试</p>
+                                        </el-button>
+                                    </div>
+                                </el-col>
+                            </el-row>
+                        </div>
                         <div class="desc" v-for="(item,index) in textQuestionData.question">
                             <span class="desctitle">
                                 <a @click="tip(index)">
@@ -662,9 +689,6 @@ a{
     box-sizing:border-box;
     display:flex;
 }
-.titleP{
-    margin-top:37px;
-}
 .inforItem{
     margin-left:8px;
     display:flex;
@@ -699,7 +723,7 @@ a{
     border:1px solid #000;
     overflow:auto;
     text-align:left;
-    padding:20px;
+    padding-top:40px;
     box-sizing:border-box;
 }
 .dispear{
@@ -825,5 +849,35 @@ a{
 #content:-webkit-full-screen {
     width: 100%;
     height: 100%;
+}
+.el-row {
+    
+}
+.el-col {
+    border-radius: 4px;
+}
+.bg-purple-dark {
+    background: #99a9bf;
+}
+.bg-purple {
+    font-weight:bolder;
+}
+.bg-purple-light {
+    
+}
+.grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+    text-align:center;
+}
+.row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+}
+.el-button--danger.is-plain{
+    padding: 15px 40px 15px 40px;
+}
+.el-button--danger.is-plain p{
+    font-size:20px;
 }
 </style>
