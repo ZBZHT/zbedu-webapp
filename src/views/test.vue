@@ -18,21 +18,6 @@
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                         <p class="titleP">{{$route.params.title}}考试</p>
                     </div>
-                    <div class="inforItem">
-                        <div class="infor">
-                            <p>开始时间</p>
-                            <span>{{hours}}:{{minute}}:{{second}}</span>
-                        </div>
-                        <div class="infor notSt">
-                            <p>状态</p>
-                            <p class="notStart" v-show="!textQuestionData">未考</p>
-                            <p>正在考试</p>
-                        </div>
-                        <div class="infor">
-                            <p>倒计时</p>
-                            <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
-                        </div>
-                    </div>
                 </div>
                 <div class="content">
                     <div class="data">
@@ -74,6 +59,21 @@
                                 <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                             </li>
                         </ul>
+                        <div class="inforItem">
+                            <div class="infor">
+                                <p>开始时间</p>
+                                <span>{{hours}}:{{minute}}:{{second}}</span>
+                            </div>
+                            <div class="infor notSt">
+                                <p>状态</p>
+                                <p class="notStart" v-show="!textQuestionData">未考</p>
+                                <p>正在考试</p>
+                            </div>
+                            <div class="infor">
+                                <p>倒计时</p>
+                                <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
+                            </div>
+                        </div>
                         <div class="status">
                             <div class="do">
                                 <p class="doP isCheck">{{isCheckNum}}</p>
@@ -666,12 +666,12 @@ a{
     margin-top:37px;
 }
 .inforItem{
-    margin-left: 430px;
+    margin-left:8px;
     display:flex;
 }
 .infor{
-    margin-right:38px;
-    margin-top:65px;
+    margin-right:14px;
+    margin-top:20px;
 }
 .infor p{
     font-size:17px;

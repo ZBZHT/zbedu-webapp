@@ -97,7 +97,7 @@ a:hover{
     position:absolute;
     left:0;
     bottom:0;
-    background:#e4393c;
+    background:rgba(200,200,200,0.5);
     transition:height 0.5s;
 }
 .introduce p{
@@ -105,7 +105,7 @@ a:hover{
     display:none;
 }
 .el-col:hover .introduce{
-    height:50px;
+    height:80px;
 }
 .el-col:hover .introduce p{
     display:block;
