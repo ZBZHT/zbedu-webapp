@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="container">
     <div class="nav">
-        <navgation-head></navgation-head>
+      <navgation-head></navgation-head>
     </div>
     <el-row>
       <el-col :span="4">
@@ -12,37 +12,39 @@
           @node-click="handleNodeClick"></el-tree>
       </el-col>
 
-      <el-col :span="16">
-        <el-table
-          :data="tableData"
-          stripe
-          style="width: 100%">
-          <el-table-column
-            prop="date"
-            label="日期"
-            style="width: 30%">
+      <!--用户管理页面-->
+      <div ID="labelAll">
+
+      <el-col :span="20" style="display: none">
+        <el-table :data="dataManager" stripe style="width: 100%">
+
+          <el-table-column prop="user" label="用户名" style="width: 10%">
           </el-table-column>
-          <el-table-column
-            prop="name"
-            label="姓名"
-            style="width: 30%">
+
+          <el-table-column prop="userID" label="用户ID" style="width: 20%">
           </el-table-column>
-          <el-table-column
-            prop="address"
-            label="地址"
-            style="width: 30%">
+
+          <el-table-column prop="IDNo" label="身份证号" style="width: 30%">
           </el-table-column>
-          <el-table-column
-            label="操作"
-            style="width: 30%">
+
+          <el-table-column prop="MoNo" label="手机号" style="width: 10%">
           </el-table-column>
+
+          <el-table-column prop="userType" label="用户类型" style="width: 10%">
+          </el-table-column>
+
+          <el-table-column label="操作" style="width: 10%">
+          </el-table-column>
+
         </el-table>
       </el-col>
+      </div>
+
 
     </el-row>
 
     <div class="footer">
-        <foot-footer></foot-footer>
+      <foot-footer></foot-footer>
     </div>
   </div>
 </template>
@@ -50,11 +52,14 @@
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
+import swipe from '@/components/testCenter/swipe'
+import navUl from '@/components/common/navUl'
 import footFooter from '@/components/common/footFooter'
 
 export default {
-  name: 'sourceCenter',
-  data() {
+  name: 'index',
+
+  data () {
     return {
       data: [{
         label: '数据管理',
@@ -63,69 +68,83 @@ export default {
           {label: '题库管理', id: '102'},
           {label: '考试管理', id: '103'},
           {label: '评论管理', id: '104'},
-          ]
+        ]
       }, {
         label: '个人中心',
         children: [
           {label: '二级 2-1', id: '201'},
           {label: '二级 2-2', id: '202'},
-          ]
+        ]
       }, {
         label: '系统设置',
         children: [
           {label: '二级 3-1', id: '301'},
           {label: '二级 3-2', id: '302'},
-          ]
+        ]
       }],
-      tableData: [{
-        date: '2016-05-02',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        address: '上海市普陀区金沙江路 1516 弄'
-      }],
+      dataManager: [{
+        user: '',
+        userID: '',
+        IDNo: '',
+        MoNo: '',
+        userType: ''
+      },
+      ],
       defaultProps: {
         children: 'children',
         label: 'label'
-      }
-    };
+      },
+      url:document.domain,
+      handleNode101: false,
+      username: this.$store.state.username,
+    }
   },
   computed:{
-
-      },
-  methods: {
-    components: {
-    },
+  },
+  methods:{
     handleNodeClick(data) {
       console.log(data.id);
-      console.log(data);
+
+      //控制标签的显示和隐藏
+      if (data.id == 101) {
+        document.getElementById('labelAll')
+
+      }
+
+      if (data.id == 101) {  //用户管理请求
+        this.handleNode101 = false;
+        axios.get('http://' + this.url + ':8000/teacherCMS/userManager', {
+          params: {
+            username: this.username
+          }
+        }).then((res) => {
+          this.handleNode101 = true;
+          this.dataManager = res.data.userInfo;
+        })
+      }
+
+      if (data.id == 102) {  //用户管理请求
+        this.handleNode = '';
+        axios.get('http://' + this.url + ':8000/teacherCMS/userManager', {
+          params: {
+            username: this.username
+          }
+        }).then((res) => {
+          this.handleNode = 102;
+          this.dataManager = res.data.userInfo;
+        })
+      }
     },
+
   },
   mounted(){
-    axios.get("http://192.168.2.251:8000/readJson/bannerLeftData",{
-      params:{
-        user:6666
-      }
-    }).then((res)=>{
-         console.log(res.data[0])
-      }
-    )
     },
-  components:{navgationHead,footFooter}
+  components:{navgationHead,swipe,navUl,footFooter}
 }
 </script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -138,6 +157,12 @@ export default {
 }
 .el-tree{
   background-color: #dcdfe6;
+}
+.el-table .cell{
+  text-align: left;
+}
+.dataManager{
+
 }
 
 </style>
