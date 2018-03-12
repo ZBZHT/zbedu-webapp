@@ -1,7 +1,0 @@
-说明:
-1 . 运行addUsers.js  //添加公司内部用户信息
-2 . 运行addComments.js  //添加comment评论数据
-3 . 运行addTestQuestion101.js  //添加TestQuestion101考试题数据
-4 . 运行addTestQuestion102.js  //添加TestQuestion102考试题数据
-5 . 运行addTestQuestionInfo.js  //添加TestQuestionInfo考试信息
- . 运行www启动服务

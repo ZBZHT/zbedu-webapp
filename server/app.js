@@ -10,7 +10,7 @@ const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');//处理post请求
 const swig = require('swig');
 
-const bms = require('./routes/bms');
+const teacherCMS = require('./routes/teacherCMS');
 //var login = require('./routes/login');
 const api = require('./routes/api');
 const readJson = require('./routes/readJson');
@@ -38,7 +38,7 @@ app.use(cookieParser());
 app.use(session({
     secret: '12345',          //session ID cookie进行签名
     name: 'user',          //是cookie的name，默认：connect.sid
-    cookie: { maxAge: 1000*60*30 }, //设置maxAge是30分钟
+    cookie: { maxAge: 1000*60*180 }, //设置maxAge是30分钟
     resave: false,
     saveUninitialized: false,      // 是否自动保存未初始化的会话
     store: new MongoStore({ url: 'mongodb://127.0.0.1/db' })//设置数据库
@@ -52,8 +52,7 @@ app.use('/public', express.static( __dirname + 'public' ));
 
 //app.use('/api', proxy('localhost:8080'));
 //app.use('/api', proxy({ target: 'http://localhost:8080', changeOrigin: true ,}));
-app.use('/', bms);
-app.use('/bms', bms);//后台管理
+app.use('/teacherCMS', teacherCMS);//后台管理
 app.use('/api', api);//登录
 app.use('/readJson', readJson);//读取json文件
 app.use('/readComments', readComments);//读取评论数据
@@ -61,47 +60,6 @@ app.use('/readTestQuestion', readTestQuestion);//读取考试数据
 app.use('/readTestQuestionInfo', readTestQuestionInfo);//考试成绩
 app.use('/testManagement', testManagement);//考试管理
 app.use('/fileUpDown', fileUpDown);//上传下载
-
-/*//设置跨域请求
-// 判断origin是否在域名白名单列表中
-function isOriginAllowed(origin, allowedOrigin) {
-  if (_.isArray(allowedOrigin)) {
-    for(let i = 0; i < allowedOrigin.length; i++) {
-      if(isOriginAllowed(origin, allowedOrigin[i])) {
-        return true;
-      }
-    }
-    return false;
-  } else if (_.isString(allowedOrigin)) {
-    return origin === allowedOrigin;
-  } else if (allowedOrigin instanceof RegExp) {
-    return allowedOrigin.test(origin);
-  } else {
-    return !!allowedOrigin;
-  }
-}
-const ALLOW_ORIGIN = [ // 域名白名单
-  'http://192.168.2.251:8080',
-  'http://192.168.2.251:8000',
-  'http://localhost:8080',
-  'http://127.0.0.1:8080',
-  'http://127.0.0.1:8000',
-];
-router.all('*', function (req, res, next) {
-  let reqOrigin =req.headers.origin ; // request响应头的origin属性
-  // 判断请求是否在域名白名单内
-  if(isOriginAllowed(reqOrigin, ALLOW_ORIGIN)) {
-    // 设置CORS为请求的Origin值
-    res.header("Access-Control-Allow-Origin", reqOrigin);
-    res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
-    res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("X-Powered-By", ' 3.2.1');
-    /!*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
-    else next();*!/
-  } else { res.send({ code: -2, msg: '非法请求' });}
-  next()
-});*/
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

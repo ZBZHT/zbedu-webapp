@@ -11,9 +11,11 @@ const router = express.Router();
 
 const sysInfo = core.getServerInfo();
 const rootDir = path.resolve(__dirname,"../app/uploads");
+const uploadsPath = "../app/uploads/";
 const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
 //var uploadDir = path.join(path.resolve(__dirname,"../"), "uploads");
 const zipName = "moreFiles.zip";
+
 //设置跨域请求
 // 判断origin是否在域名白名单列表中
 function isOriginAllowed(origin, allowedOrigin) {
@@ -38,6 +40,7 @@ const ALLOW_ORIGIN = [ // 域名白名单
   'http://192.168.2.250:8080',
   'http://192.168.2.250:8000',
   'http://localhost:8080',
+  'http://localhost:8000',
   'http://127.0.0.1:8080',
   'http://127.0.0.1:8000',
 ];
@@ -62,44 +65,54 @@ router.all('*', function (req, res, next) {
 
 //文件上传
 router.post('/upload', function(req, res) {
-  let form = new formidable.IncomingForm();
-  form.uploadDir = "../app/uploads/";//设置文件上传存放地址
-  form.maxFieldsSize = 100 * 1024 * 1024; //设置最大100M
-  form.keepExtensions = true;
+  try {
+    let form = new formidable.IncomingForm();
+    form.uploadDir = "../app/uploads/";//设置文件上传存放地址
+    form.maxFieldsSize = 100 * 1024 * 1024; //设置最大100M
+    form.keepExtensions = true;
 
-  form.parse(req, function (err, fields, files) {
-    try {
+    form.parse(req, function (err, fields, files) {
       //旧名字
       let fileName = files.file.name;
       //新名字
       let oldPath = files.file.path;
-      let newPath = form.uploadDir + fileName;
+      let newPath = uploadsPath + fileName;
+      let fileMsg = [];
 
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
           throw  Error("改名失败");
         }
-        res.status(200).send({
-          success: 0,
-          msg: 'upload success',
+        fs.stat(newPath, function(err,stats){  //获取文件信息
+          if(err){
+            return err;
+          }
+          let obj = {
+            name: fileName,
+            size: ((stats.size) / 1000000).toFixed(2),
+            birthtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.birthtime),
+          };
+          fileMsg.push(obj);
+          res.status(200).send({
+            fileMsg : fileMsg,
+            success : 0,
+          });
         });
       });
-    }
-    catch (e) {
-      res.status(404).send({
-        success: 1,
-        msg: 'upload err',
-      });
-    }
-  });
+    });
+  }
+catch (e) {
+    res.status(404).send({
+      err: 1,
+      msg: 'upload err',
+    });
+  }
 });
 
 //文件下载
 router.get('/download', function(req, res) {
-  let fileName = path.normalize(req.query.downloadName),
-      currFile = "../app/uploads/" + fileName;
-  //console.log(currFile);
-
+  let fileName = req.query.downloadName;
+  let currFile = uploadsPath + fileName;
   fs.exists(currFile,function(exist) {
     if(exist){
       res.download( currFile );
@@ -162,6 +175,31 @@ router.get('/download',function(req, res){
   }
 });*/
 
+//删除文件
+router.get('/fileDelete', function (req, res, next) {
+  try {
+  let fileName = req.query.downloadName;
+  let filePath = uploadsPath + fileName;
+      if (fileName) {
+        if (fs.statSync(filePath).isDirectory()) {// 删除文件夹
+          deleteFolder(filePath);
+        } else { // 删除单文件
+          fs.unlinkSync(filePath);
+          res.status(200).send({
+            success: 0,
+            fileName: fileName,
+          });
+        }
+      }
+  }
+  catch (e) {
+    res.status(404).send({
+      err: 1,
+      msg: 'fileDelete err',
+    });
+  }
+});
+
 router.get('/files', function (req, res, next) {
   fs.readdir(FilePath, function (err, results) {
     if (err) {
@@ -189,8 +227,9 @@ router.get('/files', function (req, res, next) {
 });
 
 //读取目录文件并排序
+
 router.get('/loadFile',function(req, res) {
-  var currDir = "",
+  let currDir = "",
     order = "";
 
   if(!req.body.dir){
@@ -210,14 +249,14 @@ router.get('/loadFile',function(req, res) {
       return _.clone(files);
     })
     .then(function(fileArray){
-      var fileDetailArray = [];
+      let fileDetailArray = [];
 
       function getFileInfo(fileName){
         return new Promise(function(resolve,rejected){
           fs.lstat(path.join(currDir,fileName),function(err,stats){
             if(!err){
-              var obj = {
-               //name: fileName,
+              let obj = {
+                name: fileName,
                 //type: stats.isFile() ? 1:0,
                 //isFile: stats.isFile(),
                 //isDirectory: stats.isDirectory(),
@@ -243,7 +282,7 @@ router.get('/loadFile',function(req, res) {
         .then(function() {
           //TODO:sort 按文件夹在上的顺序
           fileDetailArray.sort(sortOrder);
-          var result = {"code":"s_ok", "path":currDir, "var":fileDetailArray, sysInfo:sysInfo};
+          let result = {"code":"s_ok", "path":currDir, "var":fileDetailArray, sysInfo:sysInfo};
           res.send(result);
           //console.log(result);
           //排序
@@ -257,15 +296,15 @@ router.get('/loadFile',function(req, res) {
             }
 
             //文件类型相同再第二级比较
-            var forward;
+            let forward;
             switch (order) {
-              /*case "size":
+              case "size":
                 if(a.size >= b.size){
                   forward = -1;
                 }else{
                   forward = 1;
                 }
-                break;*/
+                break;
               case "birthtime":
                 if(a.birthtime >= b.birthtime){
                   forward = -1;
@@ -292,13 +331,13 @@ router.get('/loadFile',function(req, res) {
           }
         })
         .catch(function(err){
-          var result = {"code":"failed", "path":currDir, "summary":err};
+          let result = {"code":"failed", "path":currDir, "summary":err};
           res.send(result);
         })
         .done();
     })
     .catch(function(err){
-      var result = {"code":"failed", "path":currDir, "summary":err};
+      let result = {"code":"failed", "path":currDir, "summary":err};
       res.send(result);
     })
     .done();
