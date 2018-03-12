@@ -6,7 +6,7 @@
                     <div class="grid-content" 
                          :style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"
                          >
-                        <p class="p">{{item.title}}</p>
+                        <p class="p">{{item.label}}</p>
                         <div class="introduce">
                             <p>{{item.introduce}}</p>
                         </div>

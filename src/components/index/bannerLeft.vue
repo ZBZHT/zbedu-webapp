@@ -3,28 +3,28 @@
   <div v-for="(item,index) in bannerLeftData" v-if="index <= 0">
     <div class="item-a" v-for="item2 in item.children">
                 <a @click="setMsg(item2)">
-                    <router-link :to="{path:'/course' + '/title/'+ item2.title}">
+                    <router-link :to="{path:'/course' + '/label/'+ item2.label}">
                         <span class="item-b">
-                            <span class="bleft">{{item2.title}}</span>
+                            <span class="bleft">{{item2.label}}</span>
                             <b class="jiantou"> > </b>
                         </span>
                     </router-link>
                 </a>
                 <div class="hiddenbox">
                     <div v-for="item3 in item2.children">
-                        <b class="hd-title" @click="setMsg(item3)">
-                          <router-link :to="{path:'/course' + '/title/'+ item3.title}">
-                            {{item3.title}}
+                        <b class="hd-label" @click="setMsg(item3)">
+                          <router-link :to="{path:'/course' + '/label/'+ item3.label}">
+                            {{item3.label}}
                           </router-link>
 
-                            <!--<a @click="qqq(item3.title)">{{item3.title}}</a>-->
+                            <!--<a @click="qqq(item3.label)">{{item3.label}}</a>-->
                         </b>
                         <hr/>
                         <ul class="hd-desc-ul">
                             <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg1(item4)">
 
-                              <router-link :to="{path:'/courseNoTree/'+ item4.courseId + '/title/' + item4.title}">
-                                {{item4.title}}
+                              <router-link :to="{path:'/courseNoTree/'+ item4.courseId + '/label/' + item4.label}">
+                                {{item4.label}}
                               </router-link>
 
                             </li>
