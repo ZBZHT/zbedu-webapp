@@ -268,7 +268,7 @@
       sendName(item){
         axios({
           method:'get',
-          url:'http://' + this.url + ': 8000/FileUpDown/download',
+          url:'http://' + this.url + ':8000/FileUpDown/download',
           responseType: 'blob',
           params:{
             downloadName:item
@@ -293,7 +293,7 @@
       fileDelete(item){
         axios({
           method:'get',
-          url:'http://' + this.url + ': 8000/FileUpDown/fileDelete',
+          url:'http://' + this.url + ':8000/FileUpDown/fileDelete',
           params:{
             downloadName:item
           }
