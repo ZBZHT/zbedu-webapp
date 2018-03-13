@@ -13,21 +13,220 @@
         </div>
         <div class="rightBox">
             <div class="testOnline" v-show="currIndex === 0">
-                <div class="title">
+                <div class="titleB">
                     <div>
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     </div>
                 </div>
-                <div class="content">
-                    <div>
-                        <p>请选择考试范围：</p>
-                        <el-cascader :options="options" change-on-select multiple></el-cascader>
-                    </div>
+                <div class="contentBox">
+                    <el-tabs type="border-card" style="float:none;">
+
+                        <el-tab-pane label="创建考试">
+                            <div>
+                                <label class="fontL">考试范围</label>
+                                    <el-dropdown>
+                                        <span class="el-dropdown-link">
+                                            <el-input v-model="form.name" :disabled="true">
+                                            
+                                            </el-input>
+                                            
+                                        </span>
+                                        <el-dropdown-menu slot="dropdown" class="dropdown">
+                                            <el-tree
+                                                :data="data"
+                                                show-checkbox
+                                                node-key="id"
+                                                @check-change="handleCheckChange">
+                                            </el-tree>
+                                        </el-dropdown-menu>
+                                    </el-dropdown>
+                                
+                                <el-form ref="form" :model="form" label-width="80px">
+                                    <el-form-item label="开始时间">
+                                        <el-col :span="11">
+                                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                                        </el-col>
+                                        <el-col class="line" :span="2">-</el-col>
+                                        <el-col :span="11">
+                                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
+                                        </el-col>
+                                    </el-form-item>
+
+                                    <el-form-item label="结束时间">
+                                        <el-col :span="11">
+                                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+                                        </el-col>
+                                        <el-col class="line" :span="2">-</el-col>
+                                        <el-col :span="11">
+                                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date4" style="width: 100%;"></el-time-picker>
+                                        </el-col>
+                                    </el-form-item>
+
+                                    <el-form-item label="考试类型">
+                                        <el-select v-model="form.region" placeholder="请选择考试类型">
+                                        <el-option label="期末考试" value="Etest"></el-option>
+                                        <el-option label="期中考试" value="Mtest"></el-option>
+                                        <el-option label="随堂练习" value="Ntest"></el-option>
+                                        </el-select>
+                                    </el-form-item>
+                                    <label class="fontL">考试数目</label>
+
+                                    <el-input class="numberClass" v-model="form.num"></el-input>
+                                    <p><el-button type="primary" @click="onSubmit">立即创建</el-button></p>
+                                </el-form>
+                            </div>
+                        </el-tab-pane>
+
+                        <el-tab-pane label="待考试">
+                            <el-table :data="tableData" style="width: 100%">
+
+                                <el-table-column label="考试题目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试类型" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试数目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="创建人" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                    <p>姓名: {{ scope.row.name }}</p>
+                                    <p>住址: {{ scope.row.address }}</p>
+                                    <div slot="reference" class="name-wrapper">
+                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                                    </div>
+                                    </el-popover>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="操作">
+                                <template slot-scope="scope">
+                                    <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">
+                                        修改
+                                    </el-button>
+                                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
+                                        删除
+                                    </el-button>
+                                </template>
+                                </el-table-column>
+                            </el-table>
+
+                        </el-tab-pane>
+
+                        <el-tab-pane label="历史考试">
+                            <el-table :data="tableData" style="width: 100%">
+
+                                <el-table-column label="考试题目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试类型" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试数目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="创建人" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+                            </el-table>
+
+                        </el-tab-pane>
+                    </el-tabs>
                 </div>
             </div>
             <div class="userMessage" v-show="currIndex === 1">
-                
-                
+                <div class="titleB">
+                    <div>
+                        <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+                    </div>
+                </div>
+                <el-table :data="tableData" style="width: 100%">
+
+                    <el-table-column label="NO." width="150">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                    </template>
+                    </el-table-column>
+
+                    <el-table-column label="考试时间" width="150">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                    </template>
+                    </el-table-column>
+
+                    <el-table-column label="考试题目" width="150">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                    </template>
+                    </el-table-column>
+
+                    <el-table-column label="考试类型" width="150">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                    </template>
+                    </el-table-column>
+
+                    <el-table-column label="查看成绩" width="150">
+                    <template slot-scope="scope">
+                        <i class="el-icon-time"></i>
+                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                    </template>
+                    </el-table-column>
+                </el-table>
             </div>
         </div>
     </div>
@@ -47,210 +246,46 @@ export default {
   data () {
     return {
         leftBox:[
-            {li:'在线考试'},
-            {li:'考试管理'}
+            {li:'考试管理'},
+            {li:'成绩管理'}
         ],
         currIndex:0,
         user:this.$store.state.username,
-        options:[{
-          value: 'zhinan',
-          label: '新能源汽车',
-          children: [{
-            value: 'shejiyuanze',
-            label: '纯电动汽车',
-            children: [{
-              value: 'yizhi',
-              label: '安全操作与新车交接检查'
+        data:[],
+        form: {
+            name: '',
+            region: '',
+            date1: '',
+            date2: '',
+            date3: '',
+            date4: '',
+            num:'',
+            delivery: false,
+            type: [],
+            resource: '',
+            desc: ''
+        },
+        tableData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
             }, {
-              value: 'fankui',
-              label: '动力电池系统故障检修'
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
             }, {
-              value: 'xiaolv',
-              label: '充电故障检修'
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
             }, {
-              value: 'kekong',
-              label: '驱动电机故障检修'
-            }]
-          }, {
-            value: 'daohang',
-            label: '导航',
-            children: [{
-              value: 'cexiangdaohang',
-              label: '侧向导航'
-            }, {
-              value: 'dingbudaohang',
-              label: '顶部导航'
-            }]
-          }]
-        }, {
-          value: 'zujian',
-          label: '组件',
-          children: [{
-            value: 'basic',
-            label: 'Basic',
-            children: [{
-              value: 'layout',
-              label: 'Layout 布局'
-            }, {
-              value: 'color',
-              label: 'Color 色彩'
-            }, {
-              value: 'typography',
-              label: 'Typography 字体'
-            }, {
-              value: 'icon',
-              label: 'Icon 图标'
-            }, {
-              value: 'button',
-              label: 'Button 按钮'
-            }]
-          }, {
-            value: 'form',
-            label: 'Form',
-            children: [{
-              value: 'radio',
-              label: 'Radio 单选框'
-            }, {
-              value: 'checkbox',
-              label: 'Checkbox 多选框'
-            }, {
-              value: 'input',
-              label: 'Input 输入框'
-            }, {
-              value: 'input-number',
-              label: 'InputNumber 计数器'
-            }, {
-              value: 'select',
-              label: 'Select 选择器'
-            }, {
-              value: 'cascader',
-              label: 'Cascader 级联选择器'
-            }, {
-              value: 'switch',
-              label: 'Switch 开关'
-            }, {
-              value: 'slider',
-              label: 'Slider 滑块'
-            }, {
-              value: 'time-picker',
-              label: 'TimePicker 时间选择器'
-            }, {
-              value: 'date-picker',
-              label: 'DatePicker 日期选择器'
-            }, {
-              value: 'datetime-picker',
-              label: 'DateTimePicker 日期时间选择器'
-            }, {
-              value: 'upload',
-              label: 'Upload 上传'
-            }, {
-              value: 'rate',
-              label: 'Rate 评分'
-            }, {
-              value: 'form',
-              label: 'Form 表单'
-            }]
-          }, {
-            value: 'data',
-            label: 'Data',
-            children: [{
-              value: 'table',
-              label: 'Table 表格'
-            }, {
-              value: 'tag',
-              label: 'Tag 标签'
-            }, {
-              value: 'progress',
-              label: 'Progress 进度条'
-            }, {
-              value: 'tree',
-              label: 'Tree 树形控件'
-            }, {
-              value: 'pagination',
-              label: 'Pagination 分页'
-            }, {
-              value: 'badge',
-              label: 'Badge 标记'
-            }]
-          }, {
-            value: 'notice',
-            label: 'Notice',
-            children: [{
-              value: 'alert',
-              label: 'Alert 警告'
-            }, {
-              value: 'loading',
-              label: 'Loading 加载'
-            }, {
-              value: 'message',
-              label: 'Message 消息提示'
-            }, {
-              value: 'message-box',
-              label: 'MessageBox 弹框'
-            }, {
-              value: 'notification',
-              label: 'Notification 通知'
-            }]
-          }, {
-            value: 'navigation',
-            label: 'Navigation',
-            children: [{
-              value: 'menu',
-              label: 'NavMenu 导航菜单'
-            }, {
-              value: 'tabs',
-              label: 'Tabs 标签页'
-            }, {
-              value: 'breadcrumb',
-              label: 'Breadcrumb 面包屑'
-            }, {
-              value: 'dropdown',
-              label: 'Dropdown 下拉菜单'
-            }, {
-              value: 'steps',
-              label: 'Steps 步骤条'
-            }]
-          }, {
-            value: 'others',
-            label: 'Others',
-            children: [{
-              value: 'dialog',
-              label: 'Dialog 对话框'
-            }, {
-              value: 'tooltip',
-              label: 'Tooltip 文字提示'
-            }, {
-              value: 'popover',
-              label: 'Popover 弹出框'
-            }, {
-              value: 'card',
-              label: 'Card 卡片'
-            }, {
-              value: 'carousel',
-              label: 'Carousel 走马灯'
-            }, {
-              value: 'collapse',
-              label: 'Collapse 折叠面板'
-            }]
-          }]
-        }, {
-          value: 'ziyuan',
-          label: '资源',
-          children: [{
-            value: 'axure',
-            label: 'Axure Components'
-          }, {
-            value: 'sketch',
-            label: 'Sketch Templates'
-          }, {
-            value: 'jiaohu',
-            label: '组件交互文档'
-          }]
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
         }]
     }
   },
+  
   mounted(){
-console.log(this.options);
 
         this.url = document.domain;
         axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
@@ -259,7 +294,7 @@ console.log(this.options);
                 }
             }).then((res)=>{
                 console.log((res.data[0].children));
-            //    this.options = res.data[0].children;
+                this.data = res.data[0].children;
             }).catch(function(error){
                 console.log("error init." + error)
             });
@@ -270,14 +305,29 @@ console.log(this.options);
                 if(index == 1){
                     
                 }
-            }          
+        },
+        //考试主题显示在input的func
+        handleCheckChange(data) {
+            this.form.name=data.label;
+            console.log(this.form.name);
+        },
+        onSubmit() {
+            console.log('submit!');
+        },
+        handleEdit(index, row) {
+            console.log(index, row);
+        },
+        handleDelete(index, row) {
+            console.log(index, row);
+        }
+      
     },
   components:{Modal,footFooter}
 
 }
 </script>
 
-<style scoped>
+<style>
 *{
     margin:0;
     padding:0;
@@ -328,8 +378,50 @@ a{
     height:100%;
     position:relative;
 }
+.el-tabs{
+    width:100%;
+    height:99%;
+    overflow: auto;
+}
+.fontL{
+    text-align: right;
+    vertical-align: middle;
+    float: left;
+    font-size: 14px;
+    color: #606266;
+    line-height: 40px;
+    margin-left: 12px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.el-dropdown {
+    width: 488px;
+    margin-left: 12px;
+    position:relative;
+}
+.numberClass{
+    width:488px;
+    margin-left: 12px;
+}
+.dropdown{
+    width:488px;
+    height:300px;
+    overflow:auto;
+    position:absolute;
+    left:75px;
+    bottom:0;
+}
+.el-form-item{
+    margin-top:22px;
+}
+.el-button{
+    margin-top:22px;
+}
+.el-tabs--border-card>.el-tabs__content {
+    padding: 25px;
+}
 .testOnline{
-    width:1050px;
+    width:100%;
     height:100%;
     background:#fff;
     position:absolute;
@@ -337,7 +429,7 @@ a{
     left:0;
     border:1px solid #000;
 }
-.title{
+.titleB{
     width:100%;
     height:150px;
     border:1px solid #000;
@@ -348,8 +440,9 @@ a{
     box-sizing:border-box;
     display:flex;
 }
-.content{
+.contentBox{
     width:100%;
+    height:79%;
     display:flex;
 }
 .dispear{
@@ -362,7 +455,6 @@ a{
     position:absolute;
     top:0;
     left:0;
-    padding:10px;
     box-sizing:border-box;
     text-align:left;
     overflow:auto;

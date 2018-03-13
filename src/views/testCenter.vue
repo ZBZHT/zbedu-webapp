@@ -30,26 +30,12 @@
 
     <div class="bottombox">
         <div class="hot-test">
-            <p>热门考试</p>
+            <p>最新考试</p>
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in hotTest">
                         <img :src="item.url">
                         <button class="btn" >
-                            <router-link :to="'/test/' + item.testId + '/title/' + item.title">
-                                {{item.title}}
-                            </router-link>
-                        </button>
-                </li>
-            </ul>
-        </div>
-        <div class="grade-test">
-            <p>等级考试</p>
-            <hr>
-            <ul class="test">
-                <li class="test-li" v-for="item in gradeTest">
-                        <img :src="item.url">
-                        <button class="btn">
                             <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
@@ -64,6 +50,20 @@
                 <li class="test-li" v-for="item in contentTest">
                         <img :src="item.url">
                         <button class="btn" type="button">
+                            <router-link :to="'/test/' + item.testId + '/title/' + item.title">
+                                {{item.title}}
+                            </router-link>
+                        </button>
+                </li>
+            </ul>
+        </div>
+        <div class="grade-test">
+            <p>等级考试</p>
+            <hr>
+            <ul class="test">
+                <li class="test-li" v-for="item in gradeTest">
+                        <img :src="item.url">
+                        <button class="btn">
                             <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
                             </router-link>
