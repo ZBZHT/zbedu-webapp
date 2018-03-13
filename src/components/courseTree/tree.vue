@@ -3,20 +3,20 @@
     <span  >
      <!--<i v-if="isInclude" class="icon" :class="[open ? 'folder-open': 'folder']"></i>-->
      <i v-if="!isInclude" class="icon"></i>
-     <a href="javascript:void(0)">{{course.title}}</a>
+     <a href="javascript:void(0)">{{course.label}}</a>
     </span>
     <ul class="son-box" v-show="open">
       <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)">
-        <span @click="toggle1(index);sendMsg(item)" :title="item.title" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
+        <span @click="toggle1(index);sendMsg(item)" :label="item.label" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
          <i v-if="!item.children">&nbsp;&nbsp;&nbsp;</i>
-         <a href="javascript:void(0)" >{{item.title}}</a>
+         <a href="javascript:void(0)" >{{item.label}}</a>
         </span>
         <ul class="grandson-box" v-show="(open1 && currentOpenIndex === index)" v-if="item">
           <li class="grandsonListItem" v-for="(item2,index2) in item.children" @click="enter2(index2)">
-            <span :class="{'addBgcolor': isChange && (index2 === currentIndex1)}" :title="item2.title" @click="sendMsg(item2)">
+            <span :class="{'addBgcolor': isChange && (index2 === currentIndex1)}" :label="item2.label" @click="sendMsg(item2)">
              <i v-if="item && item2"></i>
-             <a href="javascript:void(0)" >{{item2.title}}</a>
+             <a href="javascript:void(0)" >{{item2.label}}</a>
             </span>
           </li>
         </ul>
