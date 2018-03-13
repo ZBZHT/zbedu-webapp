@@ -101,7 +101,7 @@ const routes = [
     //   }
     // },
     {
-      path: '/course/title/:title',
+      path: '/course/label/:label',
       name: 'course',
       meta:{
         requireAuth:true
@@ -109,17 +109,17 @@ const routes = [
       component: course
     },
     {
-      path: '/courseNoTree/:courseId/title/:title',
+      path: '/courseNoTree/:courseId/label/:label',
       name: 'courseNoTree',
       component: courseNoTree
     },
     {
-      path: '/playPdf/:courseId/pdf/:title',
+      path: '/playPdf/:courseId/pdf/:label',
       name: 'playPdf',
       component: playPdf
     },
     {
-      path: '/playVideo/:courseId/video/:title',
+      path: '/playVideo/:courseId/video/:label',
       name: 'playVideo',
       component: playVideo
     },
