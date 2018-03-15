@@ -9,6 +9,7 @@ import exerciseCenter from '@/views/exerciseCenter'
 import appraiseCenter from '@/views/appraiseCenter'
 import sourceCenter from '@/views/sourceCenter'
 import test from '@/views/test'
+import realyTest from '@/views/realyTest'
 import teachTest from '@/views/teachTest'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
@@ -86,10 +87,12 @@ const routes = [
     {
       path:'/test/:testId/title/:title',
       name:'test',
-      component:test,
-      meta:{
-
-      }
+      component:test
+    },
+    {
+      path:'/realyTest',
+      name:'realyTest',
+      component:realyTest
     },
     // {
     //   path:'/testQuestion/:testId/title/:title',
