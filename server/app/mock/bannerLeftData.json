@@ -7,11 +7,9 @@
       "children":[
         {
           "label":"新能源汽车",
-          "courseId": 100,
           "children":[
               {
                 "label":"纯电动汽车",
-                "courseId": 110,
                 "children":[
                     {
                       "label":"安全操作与新车交接检查",
@@ -42,7 +40,6 @@
               },
               {
                 "label":"混合动力汽车",
-                "courseId": 120,
                 "children":[
                     {
                       "label":"总体结构",
@@ -75,11 +72,9 @@
         },
         {
           "label":"汽车发动机",
-          "courseId": 200,
           "children":[
               {
                 "label":"机械系统",
-                "courseId": 210,
                 "children":[
                     {
                       "label":"认识发动机总体",
@@ -115,7 +110,6 @@
               },
               {
                 "label":"电控系统",
-                "courseId": 220,
                 "children":[
                     {
                       "label":"认识发动机电控系统总体",
@@ -148,11 +142,9 @@
         },
         {
           "label":"汽车底盘",
-          "courseId": 300,
           "children":[
               {
                 "label":"传动系",
-                "courseId": 310,
                 "children":[
                     {
                       "label":"自动变速器识别",
@@ -188,7 +180,6 @@
               },
               {
                 "label":"行驶系",
-                "courseId": 320,
                 "children":[
                     {
                       "label":"轮胎构造及规格",
@@ -219,7 +210,6 @@
               },
               {
                 "label":"制动系",
-                "courseId": 330,
                 "children":[
                     {
                       "label":"制动系统构造与原理",
@@ -240,7 +230,6 @@
               },
               {
                 "label":"转向系",
-                "courseId": 340,
                 "children":[
                     {
                       "label":"转向系统构造与原理",
@@ -258,11 +247,9 @@
         },
         {
           "label":"汽车电气",
-          "courseId": 400,
           "children":[
               {
                 "label":"电源系统",
-                "courseId": 410,
                 "children":[
                     {
                       "label":"蓄电池技术状况检修",
@@ -278,7 +265,6 @@
               },
               {
                 "label":"点火系统",
-                "courseId": 420,
                 "children":[
                     {
                       "label":"点火线圈初级线圈故障检修",
@@ -294,7 +280,6 @@
               },
               {
                 "label":"启动系统",
-                "courseId": 430,
                 "children":[
                     {
                       "label":"起动机拆装及电路检修",
@@ -310,7 +295,6 @@
               },
               {
                 "label":"照明系统",
-                "courseId": 440,
                 "children":[
                     {
                       "label":"照明系统装置的检修",
@@ -321,121 +305,98 @@
               },
               {
                 "label":"辅助电器系统",
-                "courseId": 450,
                 "children":[
                     {
                       "label":"汽车总线路检修",
-                      "describe":"describe",
-                      "courseId": 451
+                      "describe":"describe"
                     },
                     {
                       "label":"中央控制门锁故障检修",
-                      "describe":"describe",
-                      "courseId": 452
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车防盗装置故障检修",
-                      "describe":"describe",
-                      "courseId": 453
+                      "describe":"describe"
                     },
                     {
                       "label":"雨刮故障检修与更换修",
-                      "describe":"describe",
-                      "courseId": 454
+                      "describe":"describe"
                     },
                     {
                       "label":"电动车窗故障检修",
-                      "describe":"describe",
-                      "courseId": 455
+                      "describe":"describe"
                     },
                     {
                       "label":"电动后视镜故障检修",
-                      "describe":"describe",
-                      "courseId": 456
+                      "describe":"describe"
                     },
                     {
                       "label":"多媒体系统故障检测与更换",
-                      "describe":"describe",
-                      "courseId": 457
+                      "describe":"describe"
                     }
                 ]
               },
               {
                 "label":"仪表系统",
-                "courseId": 460,
                 "children":[
                     {
                       "label":"汽车仪表结构原理",
-                      "describe":"describe",
-                      "courseId": 461
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车仪常见故障与排除",
-                      "describe":"describe",
-                      "courseId": 462
+                      "describe":"describe"
                     }
                 ]
               },
               {
                 "label":"空调系统",
-                "courseId": 470,
                 "children":[
                     {
                       "label":"汽车空调结构",
-                      "describe":"describe",
-                      "courseId": 471
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车空调冷媒充注及回收",
-                      "describe":"describe",
-                      "courseId": 472
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车空调系统检漏",
-                      "describe":"describe",
-                      "courseId": 473
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车空调拆装",
-                      "describe":"describe",
-                      "courseId": 474
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车空调维护与保养",
-                      "describe":"describe",
-                      "courseId": 475
+                      "describe":"describe"
                     },
                     {
                       "label":"汽车手动空调常见故障诊断与排除",
-                      "describe":"describe",
-                      "courseId": 476
+                      "describe":"describe"
                     }
                 ]
               },
               {
                 "label":"信号系统",
-                "courseId": 480,
                 "children":[
                     {
                       "label":"喇叭故障检修",
-                      "describe":"describe",
-                      "courseId": 481
+                      "describe":"describe"
                     }
                 ]
               },
               {
                 "label":"电子控制系统",
-                "courseId": 490,
                 "children":[
                     {
                       "label":"电控燃油喷射装置故障检修",
-                      "describe":"describe",
-                      "courseId": 491
+                      "describe":"describe"
                     },
                     {
                       "label":"电子点火装置故障检修",
-                      "describe":"describe",
-                      "courseId": 492
+                      "describe":"describe"
                     }
                 ]
               }
@@ -443,11 +404,9 @@
         },
         {
           "label":"车身结构",
-          "courseId": 500,
           "children":[
               {
                 "label":"车身结构",
-                "courseId": 510,
                 "children":[
                     {
                       "label":"车身结构",
@@ -458,7 +417,6 @@
               },
               {
                 "label":"车身结构",
-                "courseId": 520,
                 "children":[
                     {
                       "label":"车身结构",

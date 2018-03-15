@@ -7,7 +7,7 @@ var fs = require("fs"),
 	os = require("os");
 
 module.exports = {
-    
+
     /**
      * 格式化时间文本
      * @param {Date} text 要格式化的文本
@@ -91,7 +91,7 @@ module.exports = {
                 }
             }
         }
-        
+
         return{
             host: os.hostname(),
             ipv4: ipv4,
@@ -104,7 +104,7 @@ module.exports = {
     getServerTime: function(){
         return this.formatDate("[yyyy.MM.dd hh:mm:ss]",new Date());
     },
-    
+
     /**
      * 获取访问者的信息
      * @params req 请求
@@ -115,14 +115,14 @@ module.exports = {
             ___reqTime: new Date(),
             ___reqAddr: req ? req.connection.remoteAddress : ""
         };
-        
+
         if(!arguments[0]){//如果没传第一个参数req
             var schemaBase = {};
             schemaBase["___reqTime"] = Date;
             schemaBase["___reqAddr"] = String;
             return schemaBase;
         }
-        
+
         if(!arguments[1]){//如果没传第二个参数data
             return _.assign(req.body,info);
         }else{
@@ -150,5 +150,21 @@ module.exports = {
                 return false;
             }
         });
+    },
+  /**
+   * 删除数组中指定元素
+   * arr指定要删除的数组
+   * index指定要删除的数组下标
+   */
+  remove:function (arr, index) {
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    //console.log(arr[i].id);
+    if (arr[i] != index) {
+      result.push(arr[i]);
     }
+  }
+  return result;
+}
+
 };

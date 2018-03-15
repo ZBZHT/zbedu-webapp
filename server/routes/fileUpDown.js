@@ -74,6 +74,7 @@ router.post('/upload', function(req, res) {
     form.parse(req, function (err, fields, files) {
       //旧名字
       let fileName = files.file.name;
+      console.log(fileName);
       //新名字
       let oldPath = files.file.path;
       let newPath = uploadsPath + fileName;
