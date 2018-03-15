@@ -43,6 +43,8 @@ export default {
             this.$router.push('/testCenter');
         }else if(index == 2 && this.$store.state.userType == "S"){
             this.$router.push('/testCenter');
+        }else if(index == 2 && this.$store.state.userType == "E"){
+            this.$router.push('/testCenter');
         }else if(index == 2 && this.$store.state.userType == "T"){
             this.$router.push('/teachTest');
         }else if(index == 3){
