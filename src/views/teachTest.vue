@@ -17,61 +17,68 @@
                     <div>
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     </div>
+                    {{form.date1}}...{{form.date2}}...{{form.date3}}...{{form.date4}}
                 </div>
                 <div class="contentBox">
                     <el-tabs type="border-card" style="float:none;">
 
                         <el-tab-pane label="创建考试">
                             <div>
+                                <div>
+                                    <label class="fontL">考试题目</label>
+                                    <el-input class="numberClass" placeholder="请创建考试题目" v-model="theme"></el-input>
+                                </div>
                                 <label class="fontL">考试范围</label>
-                                    <el-dropdown>
-                                        <span class="el-dropdown-link">
-                                            <el-input v-model="form.name" :disabled="true">
+                                <el-dropdown>
+                                    <span class="el-dropdown-link">
+                                        
+                                        <div class="elinput">
+                                        {{name}}
+                                        </div>
                                             
-                                            </el-input>
-                                            
-                                        </span>
-                                        <el-dropdown-menu slot="dropdown" class="dropdown">
-                                            <el-tree
-                                                :data="data"
-                                                show-checkbox
-                                                node-key="id"
-                                                @check-change="handleCheckChange">
-                                            </el-tree>
-                                        </el-dropdown-menu>
-                                    </el-dropdown>
+                                    </span>
+                                    <el-dropdown-menu slot="dropdown" class="dropdown">
+                                        <el-tree
+                                            :data="data"
+                                            show-checkbox
+                                            node-key="id"
+                                            @check-change="handleCheckChange"
+                                            @node-click="handleClick">
+                                        </el-tree>
+                                    </el-dropdown-menu>
+                                </el-dropdown>   
                                 
-                                <el-form ref="form" :model="form" label-width="80px">
+                                <el-form ref="form" :model="form" label-width="80px" formatter>
                                     <el-form-item label="开始时间">
                                         <el-col :span="11">
-                                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                                        <el-date-picker type="date" placeholder="选择开始日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
                                         </el-col>
                                         <el-col class="line" :span="2">-</el-col>
                                         <el-col :span="11">
-                                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
+                                        <el-time-picker type="fixed-time" placeholder="选择开始时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
                                         </el-col>
                                     </el-form-item>
 
                                     <el-form-item label="结束时间">
                                         <el-col :span="11">
-                                        <el-date-picker type="date" placeholder="选择日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+                                        <el-date-picker type="date" placeholder="选择结束日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
                                         </el-col>
                                         <el-col class="line" :span="2">-</el-col>
                                         <el-col :span="11">
-                                        <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date4" style="width: 100%;"></el-time-picker>
+                                        <el-time-picker type="fixed-time" placeholder="选择结束时间" v-model="form.date4" style="width: 100%;"></el-time-picker>
                                         </el-col>
                                     </el-form-item>
 
                                     <el-form-item label="考试类型">
                                         <el-select v-model="form.region" placeholder="请选择考试类型">
-                                        <el-option label="期末考试" value="Etest"></el-option>
-                                        <el-option label="期中考试" value="Mtest"></el-option>
-                                        <el-option label="随堂练习" value="Ntest"></el-option>
+                                            <el-option label="期末考试" value="Etest"></el-option>
+                                            <el-option label="期中考试" value="Mtest"></el-option>
+                                            <el-option label="随堂练习" value="Ntest"></el-option>
                                         </el-select>
                                     </el-form-item>
                                     <label class="fontL">考试数目</label>
 
-                                    <el-input class="numberClass" v-model="form.num"></el-input>
+                                    <el-input class="numberClass" v-model="form.num" placeholder="本次考试共有——题"></el-input>
                                     <p><el-button type="primary" @click="onSubmit">立即创建</el-button></p>
                                 </el-form>
                             </div>
@@ -240,11 +247,14 @@
 import axios from 'axios'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
+import core from '../../server/utils/core.js'
 
 export default {
   name: 'test',
   data () {
     return {
+        url:document.domain,
+        user:this.$store.state.username,
         leftBox:[
             {li:'考试管理'},
             {li:'成绩管理'}
@@ -252,18 +262,15 @@ export default {
         currIndex:0,
         user:this.$store.state.username,
         data:[],
+        theme:'',
+        name: [],
         form: {
-            name: '',
             region: '',
             date1: '',
             date2: '',
             date3: '',
             date4: '',
-            num:'',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: ''
+            num:''
         },
         tableData: [{
             date: '2016-05-02',
@@ -284,7 +291,6 @@ export default {
         }]
     }
   },
-  
   mounted(){
 
         this.url = document.domain;
@@ -293,7 +299,7 @@ export default {
                      user:234
                 }
             }).then((res)=>{
-                console.log((res.data[0].children));
+            //    console.log((res.data[0].children));
                 this.data = res.data[0].children;
             }).catch(function(error){
                 console.log("error init." + error)
@@ -308,19 +314,36 @@ export default {
         },
         //考试主题显示在input的func
         handleCheckChange(data) {
-            this.form.name=data.label;
-            console.log(this.form.name);
+            this.name.push(data.label);
+            console.log(this.name+"AAAA");
+        },
+        handleClick(data){
+            
         },
         onSubmit() {
-            console.log('submit!');
+            axios({
+                method:'get',
+                url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+                params:{
+                    user:this.user,
+                    theme:this.theme,
+                    name:this.name,
+                    sixData:this.form
+                }
+            }).then(
+                function (res) {
+                console.log(res.data.code)
+                }
+            );
         },
+        //编辑按钮
         handleEdit(index, row) {
             console.log(index, row);
         },
+        //修改按钮
         handleDelete(index, row) {
             console.log(index, row);
         }
-      
     },
   components:{Modal,footFooter}
 
@@ -399,9 +422,16 @@ a{
     margin-left: 12px;
     position:relative;
 }
+.elinput{
+    width:486px;
+    height:38px;
+    border:1px solid #ccc;
+    border-radius:4px;
+}
 .numberClass{
     width:488px;
     margin-left: 12px;
+    margin-bottom:22px;
 }
 .dropdown{
     width:488px;

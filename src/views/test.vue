@@ -3,7 +3,7 @@
     <div class="question" id="content">
         <div class="leftBox">
             <p>{{user}}</p>
-            <ul class="leftItem" v-show="!textQuestionData">
+            <ul class="leftItem">
                 <li class="leftLi" v-for="(item,index) in leftBox"
                     @click="rightAppear(index)"
                     :class="currIndex === index ? 'active' : '' ">
@@ -20,7 +20,7 @@
                 </div>
                 <div class="content">
                     <div class="data">
-                        <div  v-show="!textQuestionData">
+                        <div>
                             <el-row>
                                 <el-col :span="6">
                                     <div class="grid-content bg-purple">考试名称</div>
@@ -79,43 +79,6 @@
                                 </li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="number">
-                        <ul>
-                            <li v-for="(item,index) in textQuestionData.question">
-                                <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
-                            </li>
-                        </ul>
-                        <div class="inforItem">
-                            <div class="infor">
-                                <p>开始时间</p>
-                                <span>{{hours}}:{{minute}}:{{second}}</span>
-                            </div>
-                            <div class="infor notSt">
-                                <p>状态</p>
-                                <p class="notStart" v-show="!textQuestionData">未考</p>
-                                <p>正在考试</p>
-                            </div>
-                            <div class="infor">
-                                <p>倒计时</p>
-                                <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
-                            </div>
-                        </div>
-                        <div class="status">
-                            <div class="do">
-                                <p class="doP isCheck">{{isCheckNum}}</p>
-                                <p>已答题</p>
-                            </div>
-                            <div class="do">
-                                <p class="doP">{{length - isCheckNum}}</p>
-                                <p>未答题</p>
-                            </div>
-                            <div class="do">
-                                <p class="doP tip"></p>
-                                <p>标记题</p>
-                            </div>
-                        </div>
-                        <button @click='submit' class="btn" :class="{answer : !answer}" v-show="textQuestionData">提交</button>
                     </div>
                 </div>
             </div>
@@ -264,7 +227,7 @@ export default {
         picked:[],
         Display:false,
         lengthData:'',
-        url:'',
+        url:document.domain,
         showModal:false,
         showModal1:false,
         currTestInfor:[],
@@ -383,6 +346,7 @@ export default {
 //    },
   methods:{
             sendInfor(){
+                this.$router.push('/realyTest');
                 var elem = document.getElementById("content");   
                 console.log(elem);   
                 this.requestFullScreen(elem);
@@ -729,10 +693,10 @@ a{
     display:flex;
 }
 .data{
-    width:94%;
+    width:100%;
     height:100%;
     border:1px solid #000;
-    overflow:auto;
+    overflow:hidden;
     text-align:left;
     padding-top:40px;
     box-sizing:border-box;
