@@ -7,42 +7,43 @@
 
       <el-button size="small" @click="dialogFormVisible = true">添加单个用户</el-button>
 
-      <!--添加单个用户对话框-->
-      <el-dialog title="添加用户" :visible.sync="dialogFormVisible">
+      <!--添加用户对话框-->
+      <el-dialog title="添加用户"
+                 :visible.sync="dialogFormVisible"
+                 :before-close="handleClose"
+                 :close-on-click-modal="false">
         <el-form :model="addUserForm" :rules="rules" ref="addUserForm" label-width="80px" class="demo-addUserForm">
 
+          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
           <el-form-item label="姓名" prop="name" >
             <el-input v-model="addUserForm.name" placeholder="姓名为2-4个汉字"></el-input>
           </el-form-item>
+          <el-form-item label="昵称" prop="n_name">
+            <el-input v-model="addUserForm.n_name" placeholder="昵称为2-12个字符"></el-input>
+          </el-form-item>
+          </el-form>
 
-          <el-form-item label="性别" prop="gender">
+          <el-form-item label="性别" prop="gender" style="width: 48%">
             <el-radio-group v-model="addUserForm.gender">
               <el-radio label="男"></el-radio>
               <el-radio label="女"></el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="昵称" prop="n_name">
-            <el-input v-model="addUserForm.n_name" placeholder="昵称为2-12个字符"></el-input>
-          </el-form-item>
-
-          <el-form-item label="密码" prop="pwd">
-            <el-input v-model="addUserForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
-          </el-form-item>
-
+          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
           <el-form-item label="学号" prop="userID">
             <el-input v-model="addUserForm.userID" placeholder="学号为8位数字"></el-input>
           </el-form-item>
-
-          <el-form-item label="身份证号" prop="IDNo">
-            <el-input v-model="addUserForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
-          </el-form-item>
-
           <el-form-item label="手机号" prop="MoNo">
             <el-input v-model="addUserForm.MoNo" placeholder="手机号码位11位"></el-input>
           </el-form-item>
+          </el-form>
 
-          <el-form-item label="用户类别" prop="resource">
+          <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
+            <el-input v-model="addUserForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+          </el-form-item>
+
+          <el-form-item label="用户类别" prop="userType" style="width: 92%">
             <el-radio-group v-model="addUserForm.userType">
               <el-radio label="管理员"></el-radio>
               <el-radio label="教务管理员"></el-radio>
@@ -52,21 +53,38 @@
             </el-radio-group>
           </el-form-item>
 
-          <el-form-item label="入学时间" prop="AdmDate">
-            <el-input v-model="addUserForm.AdmDate" placeholder="手机号码位11位"></el-input>
-          </el-form-item>
+          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm" style="width: 98%">
+            <el-form-item label="专业" prop="major">
+              <el-select v-model="addUserForm.major" placeholder="请选择专业">
+                <el-option label="汽车专业" value="汽车专业"></el-option>
+                <el-option label="机电专业" value="机电专业"></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="班级" prop="classGrade" >
+              <el-input v-model="addUserForm.classGrade" placeholder="请输入班级"></el-input>
+            </el-form-item>
+          </el-form>
 
+          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
+            <el-form-item prop="AdmDate" label="入学时间">
+              <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm.AdmDate"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="密码" prop="pwd">
+              <el-input v-model="addUserForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
+            </el-form-item>
+          </el-form>
         </el-form>
 
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addUser">确 定</el-button>
+        <div slot="footer" class="dialog-footer" style="width: 93%">
+          <el-button @click="resetUser">重&emsp;置</el-button>
+            <el-button type="primary" @click="addUser('addUserForm')">立即创建</el-button>
         </div>
       </el-dialog>
 
+      <!--addUser-->
+      <el-button size="small" @click="addExcelUser">Excel导入用户</el-button>
 
-      <el-button size="small" @click="">Excel导入用户</el-button> <!--addUser-->
-
+      <!--列表-->
       <el-table :data="dataManager.slice((currentPage-1)*pagesize,currentPage*pagesize)"
                 @selection-change="changeFun"
                 stripe style="width: 98%;">
@@ -107,23 +125,6 @@
         </el-pagination>
       </div>
 
-      <!--添加用户-->
-      <el-dialog
-        title="提示"
-        :visible.sync="dialogVisible"
-        width="30%"
-        :before-close="handleClose">
-        <el-form ref="data" :model="data" label-width="80px">
-          <el-form-item label="姓名">
-            <el-input v-model="data.name"></el-input>
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="addUser('addUserForm')">立即创建</el-button>
-            <el-button @click="resetAddUser('addUserForm')">重置</el-button>
-          </el-form-item>
-        </el-form>
-      </el-dialog>
     </el-col>
 
   </div>
@@ -140,11 +141,17 @@
       return {
         data: [],
         dataManager: [{
-          user: '',
+          n_name: '',
+          name: '',
+          pwd: '',
           userID: '',
           IDNo: '',
           MoNo: '',
-          userType: ''
+          userType: '',
+          gender: '',
+          AdmDate: '',
+          major: '',
+          classGrade: ''
         }],
         total: '',
         pagesize: 12,
@@ -174,24 +181,43 @@
         },
         rules: {
           n_name: [
-            { min: 2, max: 12, message: '长度在 2 到 12 个字符', trigger: 'blur' }
+            { min: 1, max: 8, message: '长度在 1 到 8 个字', trigger: 'blur' }
           ],
           name: [
             { required: true, message: '请输入姓名', trigger: 'blur' },
-            { min: 4, max: 8, message: '长度在 2 到 4 个汉字', trigger: 'blur' }
+            { min: 2, max: 4, message: '长度在 2 到 4 个汉字', trigger: 'blur' }
           ],
           pwd: [
-            { required: true, message: '请输入姓名', trigger: 'blur' },
-            { min: 4, max: 8, message: '长度在 2 到 4 个汉字', trigger: 'blur' }
+            { min: 6, max: 12, message: '长度在 6 到 12 位', trigger: 'blur' }
           ],
-          region: [
-            { required: true, message: '请选择活动区域', trigger: 'change' }
+          userID: [
+            { required: true, message: '请输入学号', trigger: 'change' },
+            { min: 8, max: 8, message: '长度在 8 个字符', trigger: 'blur' }
           ],
-          date1: [
+          IDNo: [
+            { required: true, message: '请输入身份证号', trigger: 'change' },
+            { min: 15, max: 18, message: '长度在 15 到 18 位', trigger: 'blur' }
+          ],
+          MoNo: [
+            { required: true, message: '请输入手机号', trigger: 'change' },
+            { min: 11, max: 11, message: '长度在 11 位', trigger: 'blur' }
+          ],
+          userType: [
+            { required: true, message: '请选择一个类型', trigger: 'change' }
+          ],
+          gender: [
+            { required: true, message: '请选择性别', trigger: 'change'}
+          ],
+          AdmDate: [
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
           ],
-          resource: [
-            { required: true, message: '请选择性别', trigger: 'change' }
+          major: [
+            { required: true, message: '请输入专业', trigger: 'blur' },
+            { min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur' }
+          ],
+          classGrade: [
+            { required: true, message: '请输入班级', trigger: 'blur' },
+            { min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur' }
           ],
         },
 
@@ -254,11 +280,59 @@
 
       //添加单个用户
       addUser() {
+        this.dialogFormVisible = false;
 
+        //处理发送的用户信息方法
+        function resUserData(data) {
+          if (data.pwd == '') {
+            data.pwd = data.IDNo.substring(data.IDNo.length-6);
+          }
+          data.gender = data.gender=='男'?'1':'2';
+          data.AdmDate = core.formatDate("yyyy-MM-dd", data.AdmDate);
+          if (data.userType == '管理员') {
+            data.userType = 'admin';
+          } else if (data.userType == '教务管理员') {
+            data.userType = 'E';
+          }else if (data.userType == '教师') {
+            data.userType = 'T';
+          }else if (data.userType == '学生') {
+            data.userType = 'S';
+          }else if (data.userType == '外来学生') {
+            data.userType = 'O';
+          }
+          return data;
+        }
+
+        let resData = resUserData(this.addUserForm);
+          console.log(this.addUserForm);
+          axios.post('http://' + this.url + ':8000/teacherCMS/addUser', {
+            data: {
+              userType: this.userType,
+              addUser: resData
+            }
+          }).then((res) => {
+            if (res.data.userInfo.length > 0) {
+              this.dataManager = res.data.userInfo;
+              this.total = this.dataManager.length
+            }
+          });
       },
+
       //重置添加添加用户
-      resetAddUser(formName) {
-        this.$refs[formName].resetFields();
+      resetUser() {
+        console.log(this.addUserForm);
+          this.addUserForm.n_name = '';
+          this.addUserForm.name = '';
+          this.addUserForm.pwd = '';
+          this.addUserForm.userID = '';
+          this.addUserForm.IDNo = '';
+          this.addUserForm.MoNo = '';
+          this.addUserForm.userType = '';
+          this.addUserForm.gender = '';
+          this.addUserForm.AdmDate = '';
+          this.addUserForm.major = '';
+          this.addUserForm.classGrade = '';
+        console.log(this.addUserForm)
       },
 
       handleSizeChange(val) {
@@ -267,12 +341,19 @@
       handleCurrentChange(val) {
         //console.log(`当前页: ${val}`);
       },
-      deleteRow(index, rows) {
-        rows.splice(index, 1);
+      //导入Excel用户
+      addExcelUser(){
+        console.log(this.addUserForm.pwd);
+        if (this.addUserForm.pwd === "") {
+          let ee = this.addUserForm.IDNo;
+          console.log(ee);
+          this.addUserForm.pwd = this.addUserForm.IDNo.substring(this.addUserForm.IDNo.length-6);
+        }
+        console.log(this.addUserForm.pwd);
       },
 
       handleClose(done) {  //对话框关闭确认
-        this.$confirm('确认关闭？')
+        this.$confirm('已输入的信息未保存! 确认关闭？')
           .then(_ => {
             done();
           })
@@ -345,5 +426,8 @@
 
   .block .el-button {
     float: left;
+  }
+  .el-dialog{
+    width: 40.5%;
   }
 </style>
