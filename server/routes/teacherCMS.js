@@ -212,7 +212,7 @@ router.post('/labelTree', function (req, res) {
 
 /*删除所选用户*/
 router.post('/delChecked', function (req, res) {
-  console.log(req.body.data);
+  //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
     if (reqData.userType == 'admin') {
@@ -248,6 +248,48 @@ router.post('/delChecked', function (req, res) {
   }
 });
 
+//添加用户
+router.post('/addUser', function (req, res) {
+  if (req.body.data) {
+    let reqData = req.body.data;
+    console.log(reqData);
+    let reqUser = reqData.addUser;
+    console.log(reqUser.name);
+    if (reqData.userType == 'admin') {
+      console.log('11');
+
+      let addUserData = new User({
+        user: reqUser.name,
+        pwd: reqUser.pwd,
+        userID: reqUser.userID,
+        IDNo: reqUser.IDNo,
+        MoNo: reqUser.MoNo,
+        userType: reqUser.userType,
+        gender: reqUser.gender,
+        AdmDate: reqUser.AdmDate,
+        major: reqUser.major,
+        classGrade: reqUser.classGrade
+      });
+      addUserData.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Save success');
+        }
+      });
+    }else {
+      res.status(404).send({
+        Msg: '用户无添加权限',
+        success: 0,
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
 
 
 module.exports = router;
