@@ -24,62 +24,87 @@
 
                         <el-tab-pane label="创建考试">
                             <div>
-                                <div>
-                                    <label class="fontL">考试题目</label>
-                                    <el-input class="numberClass" placeholder="请创建考试题目" v-model="theme"></el-input>
-                                </div>
-                                <label class="fontL">考试范围</label>
-                                <el-dropdown>
-                                    <span class="el-dropdown-link">
-                                        
-                                        <div class="elinput">
-                                        {{name}}
-                                        </div>
+                                <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px"  class="demo-ruleForm">
+                                    
+                                    <el-form-item label="考试题目" prop="theme">
+                                        <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme"></el-input>
+                                    </el-form-item>
+
+                                    <label class="fontL"></label>
+                                    <el-form-item label="考试范围" prop="name">
+                                    <el-dropdown>
+                                        <span class="el-dropdown-link">
                                             
-                                    </span>
-                                    <el-dropdown-menu slot="dropdown" class="dropdown">
-                                        <el-tree
-                                            :data="data"
-                                            show-checkbox
-                                            node-key="id"
-                                            @check-change="handleCheckChange"
-                                            @node-click="handleClick">
-                                        </el-tree>
-                                    </el-dropdown-menu>
-                                </el-dropdown>   
+                                            <div class="elinput">
+                                                <ul>
+                                                    <li v-for="item in form.name">{{item}}/</li>
+                                                </ul>
+                                            </div>
+                                                
+                                        </span>
+                                        <el-dropdown-menu slot="dropdown" class="dropdown">
+                                            <div class="treeModle">
+                                                <el-tree
+                                                    :data="data"
+                                                    ref="tree"
+                                                    show-checkbox
+                                                    node-key="id"
+                                                    @check-change="handleCheckChange"
+                                                    @node-click="handleClick">
+                                                </el-tree>
+                                            </div>
+                                            <div class="buttons">
+                                                <el-button @click="getCheckedNodes">确定</el-button>
+                                            </div>
+                                        </el-dropdown-menu>
+                                    </el-dropdown>   
+                                    </el-form-item>
                                 
-                                <el-form ref="form" :model="form" label-width="80px" formatter>
-                                    <el-form-item label="开始时间">
+                                    <el-form-item label="开始时间" required>
                                         <el-col :span="11">
-                                        <el-date-picker type="date" placeholder="选择开始日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                                            <el-form-item prop="date1">
+                                                <el-date-picker type="date" placeholder="选择开始日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
+                                            </el-form-item>
                                         </el-col>
                                         <el-col class="line" :span="2">-</el-col>
                                         <el-col :span="11">
-                                        <el-time-picker type="fixed-time" placeholder="选择开始时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
+                                            <el-form-item prop="date3">
+                                                <el-time-picker type="fixed-time" placeholder="选择开始时间" v-model="form.date3" style="width: 100%;"></el-time-picker>
+                                            </el-form-item>
                                         </el-col>
                                     </el-form-item>
 
-                                    <el-form-item label="结束时间">
+                                    <el-form-item label="结束时间" required>
                                         <el-col :span="11">
-                                        <el-date-picker type="date" placeholder="选择结束日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+                                            <el-form-item prop="date2">
+                                                <el-date-picker type="date" placeholder="选择结束日期" v-model="form.date2" style="width: 100%;"></el-date-picker>
+                                            </el-form-item>    
                                         </el-col>
                                         <el-col class="line" :span="2">-</el-col>
                                         <el-col :span="11">
-                                        <el-time-picker type="fixed-time" placeholder="选择结束时间" v-model="form.date4" style="width: 100%;"></el-time-picker>
+                                            <el-form-item prop="date4">
+                                                <el-time-picker type="fixed-time" placeholder="选择结束时间" v-model="form.date4" style="width: 100%;"></el-time-picker>
+                                            </el-form-item>    
                                         </el-col>
                                     </el-form-item>
 
-                                    <el-form-item label="考试类型">
+                                    <el-form-item label="考试时长" prop="time" required>
+                                        <el-input class="numberClass" placeholder="请创建考试时长/分钟" v-model.time="form.time"></el-input>
+                                    </el-form-item>
+
+                                    <el-form-item label="考试类型" prop="region">
                                         <el-select v-model="form.region" placeholder="请选择考试类型">
                                             <el-option label="期末考试" value="Etest"></el-option>
                                             <el-option label="期中考试" value="Mtest"></el-option>
                                             <el-option label="随堂练习" value="Ntest"></el-option>
                                         </el-select>
                                     </el-form-item>
-                                    <label class="fontL">考试数目</label>
 
-                                    <el-input class="numberClass" v-model="form.num" placeholder="本次考试共有——题"></el-input>
-                                    <p><el-button type="primary" @click="onSubmit">立即创建</el-button></p>
+                                    <el-form-item label="考题数目" prop="num" required>
+                                        <el-input v-model.number="form.num" placeholder="请输入考试题数"></el-input>
+                                    </el-form-item>
+
+                                    <p><el-button type="primary" @click="submitForm('form')">立即创建</el-button></p>
                                 </el-form>
                             </div>
                         </el-tab-pane>
@@ -252,6 +277,22 @@ import core from '../../server/utils/core.js'
 export default {
   name: 'test',
   data () {
+    var checkAge = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('题数不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          } else {
+            if (value <= 0) {
+              callback(new Error('题数必须大于0'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };  
     return {
         url:document.domain,
         user:this.$store.state.username,
@@ -262,15 +303,46 @@ export default {
         currIndex:0,
         user:this.$store.state.username,
         data:[],
-        theme:'',
-        name: [],
         form: {
+            theme:'',
+            name: [],
+            nameId:[],
             region: '',
             date1: '',
             date2: '',
             date3: '',
             date4: '',
-            num:''
+            num:'',
+            time:''
+        },
+        rules: {
+            theme: [
+                { required: true, message: '请输入考试题目', trigger: 'blur' },
+            ],
+            name: [
+                { required: true, message: '请输入考试范围', trigger: 'blur' },
+            ],
+            region: [
+                { required: true, message: '请选择考试类型', trigger: 'change' }
+            ],
+            date1: [
+                { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+            ],
+            date2: [
+                { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+            ],
+            date3: [
+                { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+            ],
+            date4: [
+                { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+            ],
+            num: [
+              { validator: checkAge, trigger: 'blur' }
+            ],
+            time: [
+                { required: true, message: '请输入考试时长', trigger: 'blur' },
+            ]
         },
         tableData: [{
             date: '2016-05-02',
@@ -289,7 +361,7 @@ export default {
             name: '王小虎',
             address: '上海市普陀区金沙江路 1516 弄'
         }]
-    }
+    };
   },
   mounted(){
 
@@ -312,22 +384,49 @@ export default {
                     
                 }
         },
+        //本来考试主题显示在input的func
+        handleCheckChange(data, checked, indeterminate) {
+            console.log(data, checked, indeterminate)
+            if(checked == true){
+            //    console.log(this.form.name+"AAAA");
+            //    this.form.name.push(data.label);
+            }else{
+                for(var i = 0;i < this.form.name.length;i++){
+                    if(this.form.name[i] == data.label){
+                    //    core.remove(this.form.name, i);
+                    }
+                }
+            }
+        },
         //考试主题显示在input的func
-        handleCheckChange(data) {
-            this.name.push(data.label);
-            console.log(this.name+"AAAA");
+        getCheckedNodes() {
+            this.form.name = [];
+            this.form.nameId = [];
+            console.log(this.$refs.tree.getCheckedNodes());
+            var arr = this.$refs.tree.getCheckedNodes();
+            for(var i = 0;i < arr.length;i++){
+                console.log(arr[i].label);
+                this.form.name.push(arr[i].label);
+                this.form.nameId.push(arr[i].courseId);
+                console.log(arr[i].courseId);
+                console.log(this.form.nameId);
+            }
         },
         handleClick(data){
             
         },
         onSubmit() {
+        //    console.log()
+            this.form.date1 = core.formatDate("yyyy-MM-dd",this.form.date1);
+            this.form.date2 = core.formatDate("yyyy-MM-dd",this.form.date2);
+        //    this.form.date3 = core.formatDate("hh:mm:ss",this.form.date3);
+        //    this.form.date4 = core.formatDate("hh:mm:ss",this.form.date4);
+            console.log(this.form.date3)
             axios({
                 method:'get',
                 url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
                 params:{
                     user:this.user,
-                    theme:this.theme,
-                    name:this.name,
                     sixData:this.form
                 }
             }).then(
@@ -335,6 +434,16 @@ export default {
                 console.log(res.data.code)
                 }
             );
+        },
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+            if (valid) {
+                this.onSubmit();
+            } else {
+                console.log('error submit!!');
+                return false;
+            }
+            });
         },
         //编辑按钮
         handleEdit(index, row) {
@@ -427,6 +536,10 @@ a{
     height:38px;
     border:1px solid #ccc;
     border-radius:4px;
+    overflow:auto;
+}
+.elinput ul li{
+    display:inline-block;
 }
 .numberClass{
     width:488px;
@@ -436,13 +549,17 @@ a{
 .dropdown{
     width:488px;
     height:300px;
-    overflow:auto;
     position:absolute;
     left:75px;
     bottom:0;
 }
-.el-form-item{
-    margin-top:22px;
+.treeModle{
+    width:488px;
+    height:250px;
+    overflow:auto;
+}
+.buttons .el-button{
+    width:100%;
 }
 .el-button{
     margin-top:22px;
