@@ -40,7 +40,6 @@
     height: 44px;
     font-size: 12px;
     text-align: center;
-    margin-top: 30px;
   }
   p{
     line-height:44px;

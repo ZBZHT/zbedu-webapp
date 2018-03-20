@@ -18,7 +18,12 @@
                         <input type="text" class="search" placeholder="Search">
                 </form>
                 <li>
-                    <a v-text="nickName" v-if="nickName" class="username" :value="nickName"></a>
+                    <div class="userPic" v-if="nickName">
+                        <img src="../../assets/user.png">
+                    </div>
+                    <a v-text="nickName" v-if="nickName" class="username" :value="nickName">
+                        
+                    </a>
                         <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
                             <modal ref="modal" @receive="modal"></modal>
                         <a :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</a>
@@ -145,7 +150,6 @@ ul li{
 a {
     color: inherit;
     cursor: pointer;
-    font-weight:bolder;
 }
 a:hover{
     text-decoration: none;
@@ -157,7 +161,6 @@ a:hover{
 }
 .nav{
     min-width:1200px;
-    margin-bottom: 40px;
 }
 .navbar{
     width:100%;
@@ -200,11 +203,11 @@ a:hover{
 }
 .username{
     position:absolute;
-    top:1px;
-    right:110px;
+    top:15px;
+    right:80px;
 }
 .user a{
-  font-size:20px;
+  font-size:18px;
   color:inherit;
   /*background: pink;*/
   display: inline-block;
@@ -218,9 +221,21 @@ a:hover{
 .user p{
   margin-top:6px;
 }
+.user .userPic{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    overflow:hidden;
+    position: absolute;
+    top: -50px;
+    right: 99px;
+}
+.user .userPic img{
+    width:100%;
+}
 .logOut{
     position:absolute;
-    top:0;
+    top:14px;
     right:0;
 }
 </style>
