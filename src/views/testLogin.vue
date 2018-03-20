@@ -21,7 +21,7 @@
                 <div class="login" v-show="this.$store.state.username">
                     <p>{{this.$store.state.username}},欢迎进入考试系统</p>
                     <div class="userBox">
-                        <p>确定用此账号开始考试吗？</p>
+                        <p>确定用此账号进入考试系统吗？</p>
                     </div>
                     <div class="btn">
                         <button class="btnOk" @click="yes">确定</button>
@@ -75,9 +75,19 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                             this.$store.commit('userType',res.data.userType);
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
+                                    if(this.$store.state.userType == "admin"){
+                                        this.$router.push('/teachTest');
+                                    }else if(this.$store.state.userType == ""){
+                                        this.$router.push('/testCenter');
+                                    }else if(this.$store.state.userType == "S"){
+                                        this.$router.push('/testCenter');
+                                    }else if(this.$store.state.userType == "E"){
+                                        this.$router.push('/testCenter');
+                                    }else if(this.$store.state.userType == "T"){
+                                        
+                                        this.$router.push('/teachTest');
+                                    }
                                     
-                                    
-                                    this.$router.push('/testCenter');
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 1){
@@ -86,9 +96,17 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                             this.$store.commit('userType',res.data.userType);
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
-                                    
-                                    
-                                    this.$router.push('/testCenter');
+                                    if(this.$store.state.userType == "admin"){
+                                        this.$router.push('/teachTest');
+                                    }else if(this.$store.state.userType == ""){
+                                        this.$router.push('/testCenter');
+                                    }else if(this.$store.state.userType == "S"){
+                                        this.$router.push('/testCenter');
+                                    }else if(this.$store.state.userType == "E"){
+                                        this.$router.push('/testCenter');
+                                    }else if(this.$store.state.userType == "T"){
+                                        this.$router.push('/teachTest');
+                                    }
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
@@ -103,7 +121,17 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                           }.bind(this),0.1)
             },
             yes(){
-                this.$router.push('testCenter');
+                if(this.$store.state.userType == "admin"){
+                    this.$router.push('/teachTest');
+                }else if(this.$store.state.userType == ""){
+                    this.$router.push('/testCenter');
+                }else if(this.$store.state.userType == "S"){
+                    this.$router.push('/testCenter');
+                }else if(this.$store.state.userType == "E"){
+                    this.$router.push('/testCenter');
+                }else if(this.$store.state.userType == "T"){
+                    this.$router.push('/teachTest');
+                }
             },
             no(){
                 axios({

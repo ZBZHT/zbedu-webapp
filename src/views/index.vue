@@ -107,7 +107,6 @@ hr{
     margin:0 auto;
     position:relative;
     overflow:hidden;
-    margin-top: -40px;
     margin-bottom: 40px;
 }
 .swipe{
