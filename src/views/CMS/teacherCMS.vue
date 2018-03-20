@@ -16,10 +16,12 @@
         </el-col>
 
         <!--显示的首页-->
-        <el-card v-show="isShow000">
-          <h1>欢迎使用中邦智慧教学</h1><br>
-          <h1>后台管理系统</h1>
-        </el-card>
+        <el-col class="cont_page" :span="16">
+          <el-card v-show="isShow000">
+            <h1>欢迎使用中邦智慧教学</h1><br>
+            <h1>后台管理系统</h1>
+          </el-card>
+        </el-col>
 
         <!--用户管理-->
         <div v-show="isShow101">
@@ -27,37 +29,28 @@
         </div>
         <!--题库管理-->
         <div v-show="isShow102">
-          题库管理
-        </div>
-        <!--考试管理-->
-        <div v-show="isShow103">
-          考试管理
-        </div>
-        <!--评论管理-->
-        <div v-show="isShow104">
-          评论管理
+          <test-base-m></test-base-m>
         </div>
         <!--课程管理-->
-        <div v-show="isShow105">
-          课程管理
+        <div v-show="isShow103">
+          <course-m></course-m>
+        </div>
+        <!--大赛管理-->
+        <div v-show="isShow104">
+          <game-m></game-m>
         </div>
 
-        <!--个人资料-->
+        <!--我的资料-->
         <div v-show="isShow201">
-          个人资料
+          <my-data></my-data>
         </div>
-        <!--登录信息-->
+        <!--我的足迹-->
         <div v-show="isShow202">
-          登录信息
+          <my-footprint></my-footprint>
         </div>
-
-        <!--个人设置-->
-        <div v-show="isShow301">
-          个人设置
-        </div>
-        <!--其他设置-->
-        <div v-show="isShow302">
-          其他设置
+        <!--我的课程-->
+        <div v-show="isShow203">
+          <my-course></my-course>
         </div>
 
       </el-row>
@@ -74,6 +67,12 @@
   import navUl from '@/components/common/navUl'
   import footFooter from '@/components/common/footFooter'
   import userManager from './userManager'
+  import TestBaseM from './testBaseM'
+  import CourseM from './courseM'
+  import GameM from './gameM'
+  import MyData from './myData'
+  import MyFootprint from './myFootprint'
+  import MyCourse from './myCourse'
   //import core from '../../server/utils/core.js'
 
   export default {
@@ -96,11 +95,9 @@
         isShow102: false,
         isShow103: false,
         isShow104: false,
-        isShow105: false,
         isShow201: false,
         isShow202: false,
-        isShow301: false,
-        isShow302: false,
+        isShow203: false,
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
@@ -112,17 +109,14 @@
         //console.log(data.id);
         //点击用户管理
         if (data.id == 101) {
-
           this.isShow000 = false;
           this.isShow101 = true;
           this.isShow102 = false;
           this.isShow103 = false;
           this.isShow104 = false;
-          this.isShow105 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = false;
+          this.isShow203 = false;
         }
         //点击题库管理
         if (data.id == 102) {
@@ -131,102 +125,64 @@
           this.isShow102 = true;
           this.isShow103 = false;
           this.isShow104 = false;
-          this.isShow105 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = false;
+          this.isShow203 = false;
         }
-        //点击考试管理
+        //点击课程管理
         if (data.id == 103) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow103 = true;
           this.isShow104 = false;
-          this.isShow105 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = false;
+          this.isShow203 = false;
         }
-        //点击评论管理
+        //点击大赛管理
         if (data.id == 104) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow103 = false;
           this.isShow104 = true;
-          this.isShow105 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = false;
+          this.isShow203 = false;
         }
-        //点击课程管理
-        if (data.id == 105) {
-          this.isShow000 = false;
-          this.isShow101 = false;
-          this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = false;
-          this.isShow105 = true;
-          this.isShow201 = false;
-          this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = false;
-        }
-        //点击个人资料
+        //点击我的资料
         if (data.id == 201) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow103 = false;
           this.isShow104 = false;
-          this.isShow105 = false;
           this.isShow201 = true;
           this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = false;
+          this.isShow203 = false;
         }
-        //点击登录信息
+        //点击我的足迹
         if (data.id == 202) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow103 = false;
           this.isShow104 = false;
-          this.isShow105 = false;
           this.isShow201 = false;
           this.isShow202 = true;
-          this.isShow301 = false;
-          this.isShow302 = false;
+          this.isShow203 = false;
         }
-        //点击个人设置
-        if (data.id == 301) {
+        //点击我的课程
+        if (data.id == 203) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow103 = false;
           this.isShow104 = false;
-          this.isShow105 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow301 = true;
-          this.isShow302 = false;
-        }
-        //点击其他设置
-        if (data.id == 302) {
-          this.isShow000 = false;
-          this.isShow101 = false;
-          this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = false;
-          this.isShow105 = false;
-          this.isShow201 = false;
-          this.isShow202 = false;
-          this.isShow301 = false;
-          this.isShow302 = true;
+          this.isShow203 = true;
         }
       },
     },
@@ -241,7 +197,12 @@
         this.data = res.data.result;
       })
     },
-    components: {navgationHead, navUl, footFooter, userManager}
+    components: {
+      MyFootprint,
+      MyData,
+      MyCourse,
+      GameM,
+      navgationHead, navUl, footFooter, userManager, TestBaseM, CourseM}
   }
 </script>
 
@@ -252,28 +213,41 @@
     padding: 0;
   }
 
-  .el-tree-node__expand-icon {
+  .CMS_cont .cont_page {
+    margin-top: 20px;
+  }
+  .CMS_cont {
+    min-height: 38.7rem;
+    background-color: #f0f3ef;
+  }
+
+  .CMS_cont .el-tree-node__expand-icon {
     font-size: 16px;
   }
 
-  .el-tree-node__label {
+  .CMS_cont .el-tree-node__label {
     font-size: 16px;
   }
 
-  .el-tree {
-    background-color: #dcdfe6;
+  .CMS_cont .el-tree {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  .CMS_cont .el-tree-node:focus>.el-tree-node__content, .el-tree-node__content:hover{
+    background-color: #d9d9d9;
+  }
+  .CMS_cont .el-col-4 {
+    margin: 10px;
+    margin-top: 20px;
   }
 
-  .el-table .cell {
+  .CMS_cont .el-table .cell {
     text-align: left;
     margin-left: 14px
   }
 
-  .CMS_cont {
-    min-height: 34.3rem;
-  }
-
-  .el-card__body {
+  .CMS_cont .el-card__body {
     padding: 10rem;
   }
 

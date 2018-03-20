@@ -2,10 +2,26 @@
   <div class="userManager_cont">
 
     <!--用户管理-->
-    <el-col :span="20" class="el-Col">
-      <el-button size="small" @click="delChecked">删除选中用户</el-button>
-
-      <el-button size="small" @click="dialogFormVisible = true">添加单个用户</el-button>
+    <el-col :span="19" class="el-Col">
+        <span>
+          <el-button size="small" @click="delChecked">删除选中用户</el-button>
+        </span>
+        <span>
+          <el-button size="small" @click="dialogFormVisible = true">添加单个用户</el-button>
+        </span>
+        <!--addUser-->
+        <span>
+          <el-upload
+            class="upload-demo"
+            action="'http://' + this.url + ':8000/teacherCMS/addExcelUsers'"
+            :onError="uploadError"
+            :beforeUpload="beforeAvatarUpload"
+            :onSuccess="uploadSuccess"
+            :show-file-list=false
+            :on-exceed="handleExceed">
+          <el-button size="small">Excel导入用户</el-button>
+        </el-upload>
+        </span>
 
       <!--添加用户对话框-->
       <el-dialog title="添加用户"
@@ -81,9 +97,6 @@
         </div>
       </el-dialog>
 
-      <!--addUser-->
-      <el-button size="small" @click="addExcelUser">Excel导入用户</el-button>
-
       <!--列表-->
       <el-table :data="dataManager.slice((currentPage-1)*pagesize,currentPage*pagesize)"
                 @selection-change="changeFun"
@@ -108,7 +121,9 @@
 
         <el-table-column label="操作" style="width: 100px">
           <template slot-scope="scope">
-            <el-button type="text" size="small">编辑</el-button>
+            <el-button type="text" size="small"
+              @click="handleEdit(scope.$index, scope.row)">编辑
+            </el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -341,15 +356,35 @@
       handleCurrentChange(val) {
         //console.log(`当前页: ${val}`);
       },
+      // 上传成功后的回调
+      uploadSuccess (res, file) {
+
+      },
+      // 上传错误
+      uploadError (res, file, fileList) {
+        console.log('上传失败，请重试！')
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`每次只能上传 1 个文件`);
+      },
+
+      // 上传前判断是不是Excel文件
+      beforeAvatarUpload(file) {
+        let index = file.name.split(".");
+        let isxls = index[index.length-1];
+        if (isxls == 'xlsx' || isxls == 'xls') {
+          return true;
+        } else {
+          this.$message.error('只能导入是 xls 或者 xlsx格式!');
+        }
+      },
       //导入Excel用户
       addExcelUser(){
-        console.log(this.addUserForm.pwd);
-        if (this.addUserForm.pwd === "") {
-          let ee = this.addUserForm.IDNo;
-          console.log(ee);
-          this.addUserForm.pwd = this.addUserForm.IDNo.substring(this.addUserForm.IDNo.length-6);
-        }
-        console.log(this.addUserForm.pwd);
+      },
+      //编辑
+      handleEdit(index, row) {
+        console.log(index, row);
+        this.dialogFormVisible = true;
       },
 
       handleClose(done) {  //对话框关闭确认
@@ -390,44 +425,56 @@
     margin: 0;
     padding: 0;
   }
+  .userManager_cont .el-col-19 {
+  }
 
-  .el-tree-node__expand-icon {
+  .userManager_cont .el-tree-node__expand-icon {
     font-size: 16px;
   }
 
-  .el-tree-node__label {
+  .userManager_cont .el-tree-node__label {
     font-size: 16px;
   }
 
-  .el-tree {
+  .userManager_cont .el-tree {
     background-color: #dcdfe6;
   }
-
-  .el-table .cell {
-    text-align: left;
-    margin-left: 14px
+  .userManager_cont .el-table {
+    margin-top: 6px;
   }
 
-  .CMS_cont {
+  .userManager_cont .el-table .cell {
+    text-align: left;
+    margin-left: 14px
+
+  }
+
+  .userManager_cont .CMS_cont {
     min-height: 34.3rem;
   }
 
-  .el-card__body {
+  .userManager_cont .el-card__body {
     padding: 10rem;
   }
 
-  .el-table td, .el-table th {
+  .userManager_cont .el-table td, .el-table th {
     padding: 2px;
   }
 
-  .el-table-column--selection .cell {
+  .userManager_cont .el-table-column--selection .cell {
     padding-left: 0;
   }
 
-  .block .el-button {
+  .userManager_cont .block .el-button {
     float: left;
   }
-  .el-dialog{
+  .userManager_cont .el-dialog{
     width: 40.5%;
+  }
+  .userManager_cont span{
+    display: inline-block;
+  }
+  .userManager_cont .el-dialog{
+    width: 650px;
   }
 </style>
