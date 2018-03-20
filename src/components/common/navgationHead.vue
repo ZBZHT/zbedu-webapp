@@ -9,21 +9,19 @@
         </div>
         <div class="collapse">
             <b>
-                <router-link :to="{path:'/teacherCMS'}">
                     智    慧    教    学    系    统
-                </router-link>
             </b>
             <ul class="user">
                 <form>
                         <input type="text" class="search" placeholder="Search">
                 </form>
                 <li>
-                    <div class="userPic" v-if="nickName">
-                        <img src="../../assets/user.png">
-                    </div>
-                    <a v-text="nickName" v-if="nickName" class="username" :value="nickName">
-                        
-                    </a>
+                    <router-link :to="{path:'/teacherCMS'}">
+                        <div class="userPic" v-if="nickName">
+                            <img src="../../assets/user.png">
+                        </div>
+                        <a v-text="nickName" v-if="nickName" class="username" :value="nickName"></a>
+                    </router-link>
                         <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
                             <modal ref="modal" @receive="modal"></modal>
                         <a :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</a>
