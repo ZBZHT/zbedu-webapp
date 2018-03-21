@@ -49,7 +49,7 @@
                             {{item.intro}}
                         </div>
                         </div>
-                    <p class="p" @click="sendRecommendTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
+                    <p class="p" @click="sendRecommendTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link></p>
                     </a>
                 </li>
               </ul>
@@ -208,7 +208,7 @@ hr{
 }
 .banner{
   width:960px;
-  height:384px;
+  height:460px;
   margin:0 auto;
   position:relative;
   display:flex;
@@ -216,7 +216,7 @@ hr{
 }
 .left-menu{
   width:165px;;
-  height:384px;
+  height:100%;
   padding:17px;
   padding-left:0;
   box-sizing: border-box;
@@ -227,7 +227,7 @@ hr{
 }
 .rightbox {
     width:795px;
-    height:384px;
+    height:100%;
     overflow:hidden;
 }
 .mask-play>img{

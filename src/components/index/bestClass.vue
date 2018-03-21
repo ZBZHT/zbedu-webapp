@@ -10,7 +10,7 @@
             </div>
         </div>
         <p class="p" @click="sendBestTitle(item)">
-          <router-link :to="{path:'/courseNoTree/'+ item.courseId + '/title/' + item.title}">{{item.title}}</router-link>
+          <router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link>
         </p>
     </div>
 </div>
