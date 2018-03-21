@@ -145,6 +145,14 @@
                 <button class="commit-btn" @click="submitComments">提交评论</button>
               </div>
             </div>
+            <div class="teaching-box" v-show="this.currentIndex === 6">
+
+              <p class="teaching" >待上传</p>
+            </div>
+            <div class="teaching-box" v-show="this.currentIndex === 7">
+
+              <p class="teaching" >待上传</p>
+            </div>
           </div>
         </div>
       </div>
@@ -169,7 +177,7 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
+        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价","工作页","二维动画"],
         commentAllObj:[],
         currentPageCommentObj:[],
         qqqqArr:[],
@@ -554,8 +562,7 @@
   }
 
   .content-box .right-box{
-    width: 70%;
-    min-width: 960px;
+    width: 100%;
     height: 700px;
     /*background: aliceblue;*/
     position: relative;
@@ -582,6 +589,7 @@
     width: 100%;
     border-bottom: 1px solid #333;
     text-align: center;
+    padding-right:44px;
   }
   .right-box .nav-box li{
     /*height: 40px;*/
@@ -607,7 +615,7 @@
     color: red;
   }
   .right-box .nav-box li:first-child{
-    margin-left: 17%;
+    margin-left: 8%;
   }
   .right-box .course-box{
     /*width: 700px;*/

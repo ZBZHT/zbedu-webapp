@@ -153,6 +153,14 @@
               </div>
 
             </div>
+            <div class="teaching-box" v-show="this.currentIndex === 6">
+
+              <p class="teaching" >待上传</p>
+            </div>
+            <div class="teaching-box" v-show="this.currentIndex === 7">
+
+              <p class="teaching" >待上传</p>
+            </div>
           </div>
         </div>
       </div>
@@ -175,7 +183,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         currentCourseMsg:'',
         currentCourseTitle:'',
         aa:'',
-        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价"],
+        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价","工作页","二维动画"],
         commentAllObj:[],
         commentArr:[],
         replyArr:[],
@@ -548,13 +556,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     /*background: lightgoldenrodyellow;*/
     /*position: relative;*/
   }
-  .content-box .tree-box{
-    width: 280px;
-    /*height: 1000px;*/
-    /*background: lightcyan;*/
-    position: absolute;
-    left: 60px;
-  }
   @media screen and (max-width: 1200px) {
     .right-box .detail-box{
       height: 500px;
@@ -655,7 +656,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       /*background: pink;*/
     }
     .content-box .right-box{
-      width: 60%;
+      width: 66%;
       height: 700px;
       /*background: aliceblue;*/
       /*position: absolute;*/
@@ -663,6 +664,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     }
 
     .right-box .nav-box{
+      padding-right:82px;
+      box-sizing:border-box;
       margin-top: 20px;
       height: 40px;
       /*background: lightseagreen;*/
@@ -823,16 +826,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   .appraise-box .text-box .text-box-a:hover{
     color: red;
     text-decoration: none;
-  }
-  .tree-box{
-    background: #DDDDDD;
-    width: 300px;
-    margin-top: 80px;
-    font-weight: bold;
-    border-radius: 5px;
-    font-size: 16px;
-    position: relative;
-
   }
   .comment-box .msg-box{
     /*background: pink;*/

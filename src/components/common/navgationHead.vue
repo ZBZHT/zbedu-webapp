@@ -212,6 +212,7 @@ a:hover{
   height: 50px;
   width: 100px;
   /*text-align: right;*/
+  margin-bottom:-22px;
 }
 .user a:hover{
   color:#f00;
