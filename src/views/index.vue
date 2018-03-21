@@ -4,9 +4,6 @@
         <navgation-head></navgation-head>
     </div>
    
-    <div class="topbox">
-        <swipe :slides="slides" :inv="inv" :style="styleObject" class="swipe"></swipe>
-    </div>
 
     <div class="list">
             <nav-ul :navData = "navData"></nav-ul>
@@ -30,6 +27,7 @@ export default {
 
   data () {
     return {
+      windowHeight:'',
       navData:'',
       slides: [],
       inv: 3000,
@@ -47,6 +45,13 @@ export default {
   },
   mounted(){
       this.url = document.domain;
+      let _this = this;
+      _this.windowHeight = window.innerHeight;
+      _this.windowHeight -= 152;
+      console.log(window.innerHeight);
+      console.log(_this.windowHeight);
+      document.querySelector(".list").style.height = _this.windowHeight + "px";
+
       axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
                      user:234
@@ -101,15 +106,10 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.topbox{
-    width:100%;
-    height:295px;
-    margin:0 auto;
-    position:relative;
-    overflow:hidden;
-    margin-bottom: 40px;
+.list{
+    height:0;
 }
-.swipe{
-    margin:0 auto;
+.content{
+    padding:6%;
 }
 </style>

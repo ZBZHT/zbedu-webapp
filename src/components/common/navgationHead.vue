@@ -158,7 +158,7 @@ a:hover{
     background:#7a2020;
 }
 .nav{
-    min-width:1200px;
+    min-width:960px;
 }
 .navbar{
     width:100%;

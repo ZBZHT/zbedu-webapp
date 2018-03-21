@@ -85,6 +85,7 @@ a:hover{
 .content{
     width:800px;
     margin:0 auto;
+    padding-top:6%;
 }
 .el-row {
     margin-bottom: 20px;
