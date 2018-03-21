@@ -82,13 +82,6 @@ a:focus {
     color: #f00;
     text-decoration: none;
 }
-.banner{
-  width:920px;
-  height:384px;
-  border:1px solid #000;
-  margin:0 auto;
-  position:relative;
-}
 .left-menu{
   z-index:2;
   width:17.5%;
@@ -133,7 +126,7 @@ a:focus {
 }
 .hiddenbox{
     width:600px;
-    height:384px;
+    height:100%;
     background:#fff;
     padding-left:20px;
     position: absolute;
