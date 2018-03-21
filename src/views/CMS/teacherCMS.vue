@@ -233,6 +233,7 @@
     background-color: #ffffff;
     padding: 10px;
     border-radius: 10px;
+    border: 1px solid #9f5355;
   }
   .CMS_cont .el-tree-node:focus>.el-tree-node__content, .el-tree-node__content:hover{
     background-color: #d9d9d9;

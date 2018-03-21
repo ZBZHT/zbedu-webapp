@@ -13,7 +13,7 @@
         <span>
           <el-upload
             class="upload-demo"
-            action="'http://' + this.url + ':8000/teacherCMS/addExcelUsers'"
+            action="http://192.168.2.251:8000/teacherCMS/addExcelUsers"
             :onError="uploadError"
             :beforeUpload="beforeAvatarUpload"
             :onSuccess="uploadSuccess"
@@ -102,7 +102,10 @@
                 @selection-change="changeFun"
                 stripe style="width: 98%;">
 
-        <el-table-column type="selection" width="40"></el-table-column>
+        <el-table-column type="selection" width="30"></el-table-column>
+
+        <el-table-column label="序号" type="index" width="60">
+        </el-table-column>
 
         <el-table-column prop="user" label="用户名" width="100">
         </el-table-column>
@@ -133,7 +136,7 @@
 
         <el-table-column label="操作" style="width: 100px">
           <template slot-scope="scope">
-            <el-button type="text" size="small"
+            <el-button size="small"
               @click="handleEdit(scope.$index, scope.row)">修 改
             </el-button>
           </template>

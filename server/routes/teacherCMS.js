@@ -274,13 +274,14 @@ router.post('/addUser', function (req, res) {
   }
 });
 
+//Excel导入用户
 router.post('/addExcelUsers', function (req, res) {
-  if (req.body.data) {
-    let reqData = req.body.data;
-    console.log(reqData);
-    let reqUser = reqData.addUser;
-    console.log(reqUser.name);
-    form.parse(req, function (err, fields, files) {});
+  let form = new formidable.IncomingForm();
+  console.log('11');
+    form.parse(req, function (err, fields, files) {
+      console.log(files);
+
+    });
     /*if (reqData.userType == 'admin') {
       console.log('11');
 
@@ -309,12 +310,6 @@ router.post('/addExcelUsers', function (req, res) {
         success: 0,
       });
     }*/
-  } else {
-    res.status(404).send({
-      Msg: '无法获取请求数据',
-      success: 1,
-    });
-  }
 });
 
 
