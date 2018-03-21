@@ -2,7 +2,10 @@
   <div class="myFootprint_cont">
 
     <!--我的足迹-->
-    我的足迹
+    <el-col :span="19">
+      题库管理
+
+    </el-col>
 
   </div>
 </template>

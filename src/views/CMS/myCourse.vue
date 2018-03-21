@@ -2,7 +2,10 @@
   <div class="myCourse_cont">
 
     <!--我的课程-->
-    我的课程
+    <el-col :span="19">
+      题库管理
+
+    </el-col>
 
   </div>
 </template>

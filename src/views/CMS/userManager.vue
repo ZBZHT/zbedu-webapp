@@ -104,25 +104,37 @@
 
         <el-table-column type="selection" width="40"></el-table-column>
 
-        <el-table-column prop="user" label="用户名" style="width: 5%">
+        <el-table-column prop="user" label="用户名" width="100">
         </el-table-column>
 
-        <el-table-column prop="userID" label="用户ID" style="width: 100px">
+        <el-table-column prop="userID" label="用户ID" width="130">
         </el-table-column>
 
-        <el-table-column prop="IDNo" label="身份证号" style="width: 200px">
+        <el-table-column prop="IDNo" label="身份证号" width="200">
         </el-table-column>
 
-        <el-table-column prop="MoNo" label="手机号" style="width: 100px">
+        <el-table-column prop="MoNo" label="手机号" width="136">
         </el-table-column>
 
-        <el-table-column prop="userType" label="用户类型" style="width: 100px">
+        <el-table-column prop="userType" label="用户类型" width="90">
+        </el-table-column>
+
+        <el-table-column prop="gender" label="性别" width="70">
+        </el-table-column>
+
+        <el-table-column prop="AdmDate" label="入学时间" width="130">
+        </el-table-column>
+
+        <el-table-column prop="major" label="专业" width="100">
+        </el-table-column>
+
+        <el-table-column prop="classGrade" label="班级" width="60">
         </el-table-column>
 
         <el-table-column label="操作" style="width: 100px">
           <template slot-scope="scope">
             <el-button type="text" size="small"
-              @click="handleEdit(scope.$index, scope.row)">编辑
+              @click="handleEdit(scope.$index, scope.row)">修 改
             </el-button>
           </template>
         </el-table-column>
@@ -151,10 +163,8 @@
 
   export default {
     name: 'userManager',
-    activeName2: 'first',
     data() {
       return {
-        data: [],
         dataManager: [{
           n_name: '',
           name: '',
@@ -408,9 +418,13 @@
           userType: this.userType
         }
       }).then((res) => {
-        if (res.data.userInfo.length > 0) {
-          this.dataManager = res.data.userInfo;
-          this.total = this.dataManager.length
+        let resUserInfo = res.data.userInfo;
+        if (resUserInfo.length > 0) {
+          for (let i = 0; i < resUserInfo.length; i++) {
+            resUserInfo[i].AdmDate = core.formatDate("yyyy-MM-dd", new Date(resUserInfo[i].AdmDate));
+          }
+          this.dataManager = resUserInfo;
+          this.total = this.dataManager.length;
         }
       });
 

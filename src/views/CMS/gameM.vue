@@ -2,7 +2,10 @@
   <div class="gameM_cont">
 
     <!--大赛管理-->
-    大赛管理
+    <el-col :span="19">
+      题库管理
+
+    </el-col>
 
   </div>
 </template>

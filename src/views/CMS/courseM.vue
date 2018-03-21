@@ -2,7 +2,10 @@
   <div class="courseM_cont">
 
     <!--课程管理-->
-    课程管理
+    <el-col :span="19">
+      题库管理
+
+    </el-col>
 
   </div>
 </template>
