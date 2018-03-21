@@ -1,20 +1,16 @@
 <template>
   <div class="page-box">
-    <div class="page-box1">
-      <div class="header-box">
-        <navgation-head></navgation-head>
-      </div>
-      <div class="content-box">
+    <div class="header-box">
+      <navgation-head></navgation-head>
+    </div>
+    <div class="content-box">
         <div class="tree-box">
           <tree></tree>
         </div>
         <div class="right-box">
 
-          <h2>{{currentTitle.title}}</h2>
-          <!--<p>{{aa}}aa</p>-->
-          <!--<p>{{noTree.title}}title</p>-->
-          <p class="courseTitle">{{ noTree.title }}</p>
-          <!--<p >{{ noTree}}</p>-->
+          <h2>{{currentTitle.label}}</h2>
+          <p class="courseTitle">{{ noTree.label }}</p>
           <div class="detail-box">
             <ul class="nav-box">
               <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -163,14 +159,13 @@
             </div>
           </div>
         </div>
-      </div>
     </div>
 
   </div>
 </template>
 
 <script scoped>
-  import axios from 'axios'
+import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
 import tree from '@/components/courseTree/tree'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
@@ -535,12 +530,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     padding: 0;
   }
   .page-box{
-    min-width: 1200px;
-    /*background: pink;*/
-  }
-  .page-box1{
-    width: 1200px;
-    margin: 0 auto;
+    min-width: 1024px;
+    width:1024px;
+    margin:0 auto;
   }
   .nav{
     background: #ddd;
@@ -550,13 +542,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     top: 0;
   }
   .content-box{
-    width: 100%;
+    width: 109%;
     margin-top: 180px;
     height: 700px;
-    /*background: lightgoldenrodyellow;*/
-    /*position: relative;*/
+    display:flex;
   }
-  @media screen and (max-width: 1200px) {
+  .content-box .tree-box{
+    width:30%;
+  }
     .right-box .detail-box{
       height: 500px;
       width: auto;
@@ -564,103 +557,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       /*background: pink;*/
     }
     .content-box .right-box{
-      width: 800px;
-      height: 700px;
+      width: 80%;
       /*background: aliceblue;*/
       /*position: absolute;*/
-      margin-left: 360px;
-      /*left: 350px*/
-    }
-
-    .right-box .nav-box{
-      margin-top: 20px;
-      height: 40px;
-      /*background: lightseagreen;*/
-      text-align: center;
-      display: flex;
-      border-bottom: 1px solid #333;
-      box-sizing: content-box;
-      margin-bottom: -0px;
-    }
-    .right-box .nav-box .nav-item{
-      /*height: 40px;*/
-      line-height: 40px;
-      width: 12%;
-      background: linen;
-      border: 1px solid #444;
-      color: red;
-      border-radius: 5px 5px 0px 0;
-      margin-left: 10px;
-      text-align: center;
-    }
-    .right-box .nav-box .nav-item:first-child{
-      margin-left: 10%;
-    }
-    .right-box .nav-box .nav-item{
-      border-bottom: none;
-      margin-bottom: -1px;
-    }
-    .right-box .nav-box .line{
-      border-bottom: 1px solid black;
-      color: #000;
-    }
-    .right-box .teaching-box{
-      width: 90%;
-      height: 400px;
-      margin:0 5%;
-      position: relative;
-      background: #F3F3F3;
-    }
-    .right-box .course-box{
-      width: 80%;
-      height: 400px;
-      margin:0 10%;
-      position: relative;
-      /*background: lavender;*/
-      background: url("../assets/bbb.png") no-repeat center top;
-      background-size: cover;
-      /*padding: 130px 100px;*/
-    }
-    .right-box .courseDescribe{
-      width: 80%;
-      font-size: 16px;
-      margin: 0 10% 0 10%;
-      padding-top: 120px;
-      font-weight: normal;
-      /*background: red;*/
-      word-wrap: break-word;
-    }
-    .right-box .homework-box{
-      width: 90%;
-      height: 400px;
-      margin:0 5%;
-      position: relative;
-      background: #F3F3F3;
-    }
-    .right-box .appraise-box{
-      width: 90%;
-      /*height: 400px;*/
-      margin:0 5%;
-      position: relative;
-      top: 20px;
-      /*background: lightyellow;*/
-    }
-
-  }
-
-  @media screen and (min-width: 1200px) {
-    .right-box .detail-box{
-      height: 500px;
-      width: auto;
-      text-align: center;
-      /*background: pink;*/
-    }
-    .content-box .right-box{
-      width: 66%;
-      height: 700px;
-      /*background: aliceblue;*/
-      /*position: absolute;*/
-      margin:0 10% 0 30%;
+      margin:0 0% 0 0%;
     }
 
     .right-box .nav-box{
@@ -739,7 +639,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       top: 20px;
       /*background: lightyellow;*/
     }
-  }
+  
 
 
 
