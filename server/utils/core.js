@@ -2,7 +2,7 @@
  * core.js
  * 公共函数
  *********************/
-var fs = require("fs"),
+const fs = require("fs"),
 	_ = require("lodash"),
 	os = require("os");
 

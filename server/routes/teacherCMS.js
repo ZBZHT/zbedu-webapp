@@ -100,28 +100,12 @@ router.post('/labelTree', function (req, res) {
     let reqBody = req.body.data;
     res.setHeader("Content-Type", "application/json");
 
-    if (reqBody.userType == 'admin') {
+    if (reqBody.userType == 'admin' || reqBody.userType == 'E') {
       fs.readFile("../app/mock/CMSlabelTree.json", 'utf-8', function (err, data) {
         if (err) {
           console.log(err);
         } else {
           let labelTree = JSON.parse(data);
-          //console.log(labelTree);
-          res.status(200).send({
-            result: labelTree
-          });
-        }
-      });
-    } else if (reqBody.userType == 'E') {
-      //console.log('E');
-      fs.readFile("../app/mock/CMSlabelTree.json", 'utf-8', function (err, data) {
-        if (err) {
-          console.log(err);
-        } else {
-          let labelTree = JSON.parse(data);
-          let childrenE = labelTree[0].children;
-          children = removeChildren(childrenE, 102);  //传入要删除的Children id
-          labelTree[0].children = children;
           //console.log(labelTree);
           res.status(200).send({
             result: labelTree
@@ -136,7 +120,7 @@ router.post('/labelTree', function (req, res) {
         } else {
           let labelTree = JSON.parse(data);
           let childrenE = labelTree[0].children;
-          children = removeChildren(childrenE, 103);  //传入要删除的Children id
+          children = removeChildren(childrenE, 101);  //传入要删除的Children id
           labelTree[0].children = children;
           //console.log(labelTree);
           res.status(200).send({
@@ -151,8 +135,7 @@ router.post('/labelTree', function (req, res) {
           console.log(err);
         } else {
           let labelTree = JSON.parse(data);
-          childrenSS = removeNode(labelTree, 100);  //传入要删除的Node id
-          labelTree = removeNode(childrenSS, 300);  //传入要删除的Node id
+          labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
           console.log(labelTree);
           res.status(200).send({
             result: labelTree
@@ -191,7 +174,7 @@ router.post('/labelTree', function (req, res) {
         user: username,
       }).then(function (userType) {
         //console.log(userType.userType);
-        if (userType.userType == 'admin') {
+        if (userType.userType == 'admin' || userType.userType == 'E') {
 
         } else {
           res.status(200).send({
@@ -283,6 +266,49 @@ router.post('/addUser', function (req, res) {
         success: 0,
       });
     }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+
+router.post('/addExcelUsers', function (req, res) {
+  if (req.body.data) {
+    let reqData = req.body.data;
+    console.log(reqData);
+    let reqUser = reqData.addUser;
+    console.log(reqUser.name);
+    form.parse(req, function (err, fields, files) {});
+    /*if (reqData.userType == 'admin') {
+      console.log('11');
+
+      let addUserData = new User({
+        user: reqUser.name,
+        pwd: reqUser.pwd,
+        userID: reqUser.userID,
+        IDNo: reqUser.IDNo,
+        MoNo: reqUser.MoNo,
+        userType: reqUser.userType,
+        gender: reqUser.gender,
+        AdmDate: reqUser.AdmDate,
+        major: reqUser.major,
+        classGrade: reqUser.classGrade
+      });
+      addUserData.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Save success');
+        }
+      });
+    }else {
+      res.status(404).send({
+        Msg: '用户无添加权限',
+        success: 0,
+      });
+    }*/
   } else {
     res.status(404).send({
       Msg: '无法获取请求数据',

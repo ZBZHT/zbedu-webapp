@@ -17,7 +17,7 @@ let a8 = new User({
   MoNo: '18537228775',
   userType: 'admin',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -29,7 +29,7 @@ let a6 = new User({
   MoNo: '18362826594',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -41,7 +41,7 @@ let g = new User({
   MoNo: '18652051306',
   userType: 'T',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -53,7 +53,7 @@ let t = new User({
   MoNo: '13770739865',
   userType: 'S',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -65,7 +65,7 @@ let a3 = new User({
   MoNo: '13598602056',
   userType: 'O',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -77,7 +77,7 @@ let a = new User({
   MoNo: '13813998181',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 
@@ -90,7 +90,7 @@ let b = new User({
   MoNo: '13605185010',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -102,7 +102,7 @@ let c = new User({
   MoNo: '13913983690',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -114,7 +114,7 @@ let d = new User({
   MoNo: '15996292456',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -127,7 +127,7 @@ let e = new User({
   MoNo: '15952018058',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -139,7 +139,7 @@ let f = new User({
   MoNo: '13186412838',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -151,7 +151,7 @@ let h = new User({
   MoNo: '15161158321',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -163,7 +163,7 @@ let i = new User({
   MoNo: '13771521142',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -175,7 +175,7 @@ let j = new User({
   MoNo: '15755377635',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -187,7 +187,7 @@ let k = new User({
   MoNo: '18668053375',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -199,7 +199,7 @@ let l = new User({
   MoNo: '18255050632',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -211,7 +211,7 @@ let m = new User({
   MoNo: '18020152414',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -223,7 +223,7 @@ let n = new User({
   MoNo: '15651782650',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -235,7 +235,7 @@ let o = new User({
   MoNo: '13770690912',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -247,7 +247,7 @@ let p = new User({
   MoNo: '15850585691',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -259,7 +259,7 @@ let q = new User({
   MoNo: '18651546721',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -271,7 +271,7 @@ let r = new User({
   MoNo: '13851994583',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -283,7 +283,7 @@ let s = new User({
   MoNo: '18851057155',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -295,7 +295,7 @@ let u = new User({
   MoNo: '18651891811',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -307,7 +307,7 @@ let v = new User({
   MoNo: '18262622357',
   userType: 'E',
   gender: 2,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -319,7 +319,7 @@ let w = new User({
   MoNo: '13775704925',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -331,7 +331,7 @@ let y = new User({
   MoNo: '15695299151',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -343,7 +343,7 @@ let z = new User({
   MoNo: '15251805492',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -355,7 +355,7 @@ let a1 = new User({
   MoNo: '13914788247',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -367,7 +367,7 @@ let a2 = new User({
   MoNo: '18061726931',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -379,7 +379,7 @@ let a4 = new User({
   MoNo: '18179158578',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -391,7 +391,7 @@ let a5 = new User({
   MoNo: '18112340525',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -403,7 +403,7 @@ let a7 = new User({
   MoNo: '13605158120',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -415,7 +415,7 @@ let a9 = new User({
   MoNo: '17761665836',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });
@@ -427,7 +427,7 @@ let a10 = new User({
   MoNo: '15800014600',
   userType: 'E',
   gender: 1,
-  AdmDate: 2018 - 1 - 10,
+  AdmDate: new Date(),
   major: '汽车维修',
   classGrade: '03'
 });

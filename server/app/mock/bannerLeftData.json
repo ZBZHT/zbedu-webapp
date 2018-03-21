@@ -14,29 +14,201 @@
                 "courseId": 110,
                 "children":[
                     {
-                      "label":"安全操作与新车交接检查",
+                      "label":"纯电动汽车高压安全操作与保养维护",
                       "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
-                      "courseId": 111
+                      "courseId": 111,
+                      "children":[
+                            {
+                              "label":"纯电动汽车基本信息收集与介绍",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1111
+                            },
+                            {
+                              "label":"纯电动汽车总体结构认知",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1112
+                            },
+                            {
+                              "label":"纯电动汽车高压安全操作",
+                              "describe":"describe",
+                              "courseId": 1113
+                            },
+                            {
+                              "label":"高压危害与救助方法",
+                              "describe":"describe",
+                              "courseId": 1114
+                            },
+                            {
+                              "label":"新车PDI检查",
+                              "describe":"describe",
+                              "courseId": 1115
+                            },
+                            {
+                              "label":"常规保养与维护",
+                              "describe":"describe",
+                              "courseId": 1116
+                            }
+                        ]
                     },
                     {
-                      "label":"动力电池系统故障检修",
+                      "label":"纯电动汽车动力电池系统检修",
                       "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
-                      "courseId": 112
+                      "courseId": 112,
+                      "children":[
+                            {
+                              "label":"拆装动力电池组",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1121
+                            },
+                            {
+                              "label":"拆装BMS系统",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1122
+                            },
+                            {
+                              "label":"继电器模组故障检修",
+                              "describe":"describe",
+                              "courseId": 1123
+                            },
+                            {
+                              "label":"动力电池故障检修",
+                              "describe":"describe",
+                              "courseId": 1124
+                            }
+                        ]
                     },
                     {
-                      "label":"充电故障检修",
+                      "label":"纯电动汽车电机及控制系统检修",
                       "describe":"describe",
-                      "courseId": 113
+                      "courseId": 113,
+                      "children":[
+                            {
+                              "label":"拆装驱动电机",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1131
+                            },
+                            {
+                              "label":"拆装电机控制器",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1132
+                            },
+                            {
+                              "label":"MCU IGBT过温故障检修",
+                              "describe":"describe",
+                              "courseId": 1133
+                            },
+                            {
+                              "label":"MCU与VCU通讯丢失故障",
+                              "describe":"describe",
+                              "courseId": 1134
+                            },
+                            {
+                              "label":"电机旋变传感器故障检修",
+                              "describe":"describe",
+                              "courseId": 1135
+                            }
+                        ]
                     },
                     {
-                      "label":"驱动电机故障检修",
+                      "label":"纯电动汽车整车控制系统检修",
                       "describe":"describe",
-                      "courseId": 114
+                      "courseId": 114,
+                      "children":[
+                            {
+                              "label":"高压控制盒的故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1141
+                            },
+                            {
+                              "label":"DC/DC故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1142
+                            },
+                            {
+                              "label":"电子旋钮换挡器故障检修",
+                              "describe":"describe",
+                              "courseId": 1143
+                            },
+                            {
+                              "label":"加速踏板信号故障检修",
+                              "describe":"describe",
+                              "courseId": 1144
+                            },
+                            {
+                              "label":"新能源can线系统故障检修",
+                              "describe":"describe",
+                              "courseId": 1145
+                            },
+                            {
+                              "label":"高压线束及互锁故障检修",
+                              "describe":"describe",
+                              "courseId": 1146
+                            },
+                            {
+                              "label":"整车供断电控制故障",
+                              "describe":"describe",
+                              "courseId": 1147
+                            }
+                        ]
                     },
                     {
-                      "label":"控制系统故障检修",
+                      "label":"纯电动汽车充电系统检修",
                       "describe":"describe",
-                      "courseId": 115
+                      "courseId": 115,
+                      "children":[
+                            {
+                              "label":"慢充系统故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1151
+                            },
+                            {
+                              "label":"快充系统故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1152
+                            },
+                            {
+                              "label":"拆装车载充电机",
+                              "describe":"describe",
+                              "courseId": 1153
+                            },
+                            {
+                              "label":"低压蓄电池警示灯点亮故障检修",
+                              "describe":"describe",
+                              "courseId": 1154
+                            },
+                            {
+                              "label":"充电桩结构原理及性能介绍",
+                              "describe":"describe",
+                              "courseId": 1155
+                            }
+                        ]
+                    },
+                    {
+                      "label":"纯电动汽车辅助系统检修",
+                      "describe":"describe",
+                      "courseId": 116,
+                      "children":[
+                            {
+                              "label":"冷却系统故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1161
+                            },
+                            {
+                              "label":"电动助力转向系统故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1162
+                            },
+                            {
+                              "label":"制动系统故障检修",
+                              "describe":"describe",
+                              "courseId": 1163
+                            },
+                            {
+                              "label":"电动空调系统故障检修",
+                              "describe":"describe",
+                              "courseId": 1164
+                            }
+                        ]
                     }
                 ]
               },
@@ -45,29 +217,136 @@
                 "courseId": 120,
                 "children":[
                     {
-                      "label":"总体结构",
+                      "label":"混合动力汽车新车交接检查",
                       "describe":"describe",
-                      "courseId": 121
+                      "courseId": 121,
+                      "children":[
+                            {
+                              "label":"混合动力汽车概述",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1211
+                            },
+                            {
+                              "label":"混合动力汽车高压安全操作",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1212
+                            },
+                            {
+                              "label":"新车交接检查（PDI）",
+                              "describe":"describe",
+                              "courseId": 1213
+                            },
+                            {
+                              "label":"常规保养与维护",
+                              "describe":"describe",
+                              "courseId": 1214
+                            }
+                        ]
                     },
                     {
-                      "label":"高压电池及管理系统故障检修",
+                      "label":"混合动力汽车动力电池及管理系统故障检修",
                       "describe":"describe",
-                      "courseId": 122
+                      "courseId": 122,
+                      "children":[
+                            {
+                              "label":"更换混合动力汽车动力电池冷却滤清器",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1221
+                            },
+                            {
+                              "label":"混合动力汽车动力电池控制系统通信故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1222
+                            }
+                        ]
                     },
                     {
-                      "label":"发动机系统故障检修",
+                      "label":"混合动力汽车发动机系统故障检修",
                       "describe":"describe",
-                      "courseId": 123
+                      "courseId": 123,
+                      "children":[
+                            {
+                              "label":"混合动力汽车发动机故障灯常亮的故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1231
+                            },
+                            {
+                              "label":"冷却系统水温过高故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1232
+                            }
+                        ]
                     },
                     {
-                      "label":"变速驱动桥故障检修",
+                      "label":"混合动力汽车变速驱动桥故障检修",
                       "describe":"describe",
-                      "courseId": 124
+                      "courseId": 124,
+                      "children":[
+                            {
+                              "label":"混合动力汽车变速驱动桥异响故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1241
+                            },
+                            {
+                              "label":"混合动力汽车无法挂档故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1242
+                            },
+                            {
+                              "label":"混合动力汽车P410拆装",
+                              "describe":"describe",
+                              "courseId": 1243
+                            }
+                        ]
                     },
                     {
-                      "label":"HV控制系统故障检修",
+                      "label":"混合动力汽车HV控制系统故障检修",
                       "describe":"describe",
-                      "courseId": 125
+                      "courseId": 125,
+                      "children":[
+                            {
+                              "label":"混合动力汽车HV主警告灯点亮故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1251
+                            },
+                            {
+                              "label":"混合动力汽车充电警告灯点亮故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1252
+                            },
+                            {
+                              "label":"混合动力汽车无法行驶故障检修",
+                              "describe":"describe",
+                              "courseId": 1253
+                            },
+                            {
+                              "label":"混合动力汽车绝缘故障故障检修",
+                              "describe":"describe",
+                              "courseId": 1254
+                            }
+                        ]
+                    },
+                    {
+                      "label":"混合动力汽车辅助系统故障检修",
+                      "describe":"describe",
+                      "courseId": 126,
+                      "children":[
+                            {
+                              "label":"混合动力汽车ABS故障灯常亮故障检修",
+                              "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+                              "courseId": 1261
+                            },
+                            {
+                              "label":"混合动力汽车空调不制冷故障检修",
+                              "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
+                              "courseId": 1262
+                            },
+                            {
+                              "label":"混合动力汽车HV系统水温高故障检修",
+                              "describe":"describe",
+                              "courseId": 1263
+                            }
+                        ]
                     }
                 ]
               }
@@ -442,6 +721,33 @@
           ]
         },
         {
+          "label":"车身结构",
+          "courseId": 500,
+          "children":[
+              {
+                "label":"车身结构",
+                "courseId": 510,
+                "children":[
+                    {
+                      "label":"车身结构",
+                      "describe":"describe",
+                      "courseId": 511
+                    }
+                ]
+              },
+              {
+                "label":"车身结构",
+                "courseId": 520,
+                "children":[
+                    {
+                      "label":"车身结构",
+                      "describe":"describe",
+                      "courseId": 521
+                    }
+                ]
+              }
+          ]
+        },{
           "label":"车身结构",
           "courseId": 500,
           "children":[
