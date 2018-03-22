@@ -5,7 +5,7 @@
     <el-col :span="19">
       <!--头部按钮-->
         <span>
-          <el-button  size="small" @click="">显示全部试题</el-button>
+          <el-button size="small" type="primary" @click="" >显示全部试题</el-button>
         </span>
 
         <span>
@@ -17,7 +17,7 @@
             :onSuccess="uploadSuccess"
             :show-file-list=false
             :on-exceed="handleExceed">
-          <el-button size="small">Excel导入试题</el-button>
+          <el-button size="small" type="primary">Excel导入试题</el-button>
         </el-upload>
         </span>
 
@@ -82,11 +82,10 @@
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button
-              size="mini"
+              size="mini" type="warning"
               @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
             <el-button
-              size="mini"
-              type="danger"
+              size="mini" type="danger"
               @click="handleDelete(scope.$index, scope.row)">删 除</el-button>
           </template>
         </el-table-column>

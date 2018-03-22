@@ -31,15 +31,6 @@
         <div v-show="isShow102">
           <test-base-m></test-base-m>
         </div>
-        <!--课程管理-->
-        <div v-show="isShow103">
-          <course-m></course-m>
-        </div>
-        <!--大赛管理-->
-        <div v-show="isShow104">
-          <game-m></game-m>
-        </div>
-
         <!--我的资料-->
         <div v-show="isShow201">
           <my-data></my-data>
@@ -48,8 +39,16 @@
         <div v-show="isShow202">
           <my-footprint></my-footprint>
         </div>
+        <!--课程管理-->
+        <div v-show="isShow300">
+          <course-m></course-m>
+        </div>
         <!--我的课程-->
-        <div v-show="isShow203">
+        <div v-show="isShow301">
+          <my-course></my-course>
+        </div>
+        <!--我的考试-->
+        <div v-show="isShow400">
           <my-course></my-course>
         </div>
 
@@ -93,11 +92,11 @@
         isShow000: true,
         isShow101: false,
         isShow102: false,
-        isShow103: false,
-        isShow104: false,
         isShow201: false,
         isShow202: false,
-        isShow203: false,
+        isShow300: false,
+        isShow301: false,
+        isShow400: false,
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
@@ -112,77 +111,77 @@
           this.isShow000 = false;
           this.isShow101 = true;
           this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow203 = false;
+          this.isShow300 = false;
+          this.isShow301 = false;
+          this.isShow400 = false;
         }
         //点击题库管理
         if (data.id == 102) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = true;
-          this.isShow103 = false;
-          this.isShow104 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow203 = false;
-        }
-        //点击课程管理
-        if (data.id == 103) {
-          this.isShow000 = false;
-          this.isShow101 = false;
-          this.isShow102 = false;
-          this.isShow103 = true;
-          this.isShow104 = false;
-          this.isShow201 = false;
-          this.isShow202 = false;
-          this.isShow203 = false;
-        }
-        //点击大赛管理
-        if (data.id == 104) {
-          this.isShow000 = false;
-          this.isShow101 = false;
-          this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = true;
-          this.isShow201 = false;
-          this.isShow202 = false;
-          this.isShow203 = false;
+          this.isShow300 = false;
+          this.isShow301 = false;
+          this.isShow400 = false;
         }
         //点击我的资料
         if (data.id == 201) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = false;
           this.isShow201 = true;
           this.isShow202 = false;
-          this.isShow203 = false;
+          this.isShow300 = false;
+          this.isShow301 = false;
+          this.isShow400 = false;
         }
         //点击我的足迹
         if (data.id == 202) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = false;
           this.isShow201 = false;
           this.isShow202 = true;
-          this.isShow203 = false;
+          this.isShow300 = false;
+          this.isShow301 = false;
+          this.isShow400 = false;
         }
         //点击我的课程
-        if (data.id == 203) {
+        if (data.id == 300) {
           this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
-          this.isShow103 = false;
-          this.isShow104 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow203 = true;
+          this.isShow300 = true;
+          this.isShow301 = false;
+          this.isShow400 = false;
+        }
+        //点击我的课程
+        if (data.id == 301) {
+          this.isShow000 = false;
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow300 = false;
+          this.isShow301 = true;
+          this.isShow400 = false;
+        }
+        //点击我的课程
+        if (data.id == 400) {
+          this.isShow000 = false;
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow300 = false;
+          this.isShow301 = false;
+          this.isShow400 = true;
         }
       },
     },

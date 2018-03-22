@@ -93,8 +93,8 @@
     margin-top: 30px;
     margin-bottom: 30px;
     margin-left: 6rem;
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
     padding: 6px;
     border: 1px solid #e0e0e0;
     border-radius: 50%;

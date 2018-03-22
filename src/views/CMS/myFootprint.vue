@@ -126,6 +126,9 @@
   .myFootprint_cont .el-table td, .el-table th {
     height: 40px;
   }
+  .myFootprint_cont .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
+    font-size: 16px;
+  }
 
 
 
