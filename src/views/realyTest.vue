@@ -203,7 +203,7 @@ export default {
         //给考试管理存时间
         var seperator1 = '-';
         var seperator2 = ':';
-        var month = _this.nowTime.getMonth() + 1;
+        var month = _this.nowTime.getMonth();
         var strDate = _this.nowTime.getDate();
 
         //给在线考试存时间
@@ -377,9 +377,9 @@ export default {
                     }, 2000);
                     setTimeout(() => {
                         alert("提交成功");
-                        this.$router.go(-1);
+                        window.close();
                     }, 2001);
-                
+                    
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n

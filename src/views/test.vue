@@ -20,65 +20,46 @@
                 </div>
                 <div class="content">
                     <div class="data">
-                        <div>
-                            <el-row>
-                                <el-col :span="6">
-                                    <div class="grid-content bg-purple">考试名称</div>
-                                </el-col>
-                                <el-col :span="6">
-                                    <div class="grid-content bg-purple">考试开始时间</div>
-                                </el-col>
-                                <el-col :span="6">
-                                    <div class="grid-content bg-purple">题数</div>
-                                </el-col>
-                            </el-row>
-                            <el-row>
-                                <el-col :span="6">
-                                    <div class="grid-content">{{$route.params.title}}</div>
-                                </el-col>
-                                <el-col :span="6">
-                                    <div class="grid-content">{{currentdate}}</div>
-                                </el-col>
-                                <el-col :span="6">
-                                    <div class="grid-content">{{length - isCheckNum}}</div>
-                                </el-col>
-                                <el-col :span="6">
-                                    <div class="grid-content">
-                                        <el-button type="danger" plain @click='add();getTest($route.params.testId);sendInfor()'>
-                                            <p>开始考试</p>
-                                        </el-button>
-                                    </div>
-                                </el-col>
-                            </el-row>
-                        </div>
-                        <div class="desc" v-for="(item,index) in textQuestionData.question">
-                            <span class="desctitle">
-                                <a @click="tip(index)">
-                                    <img src="../assets/tip.png">
-                                </a>
-                                {{item.num}}.{{item.desc}}
-                            </span>
-                            <ul class="ans">
-                                <li>
-                                    <label :for="item.forId[0]" v-if="item.options[0]">
-                                        <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[0]}}
-                                    </label>
-                                    <label :for="item.forId[1]" v-if="item.options[1]">
-                                        <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[1]}}
-                                    </label>
-                                    <label :for="item.forId[2]" v-if="item.options[2]">
-                                        <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[2]}}
-                                    </label>
-                                    <label :for="item.forId[3]" v-if="item.options[3]">
-                                        <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[3]}}
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                        <p class="data-p">
+                            <span class="data-p-title">考试题目:</span>
+                            <span class="data-p-desc">{{$route.params.title}}</span>
+                        </p>
+                        <p class="data-p">
+                            <span class="data-p-title">考试时间:</span>
+                            <span class="data-p-desc">{{currentdate}}——{{currentdate}}</span>
+                        </p>
+                        <p class="data-p">
+                            <span class="data-p-title">考试时长:</span>
+                            <span class="data-p-desc">120分钟</span>
+                        </p>
+                        <p class="data-p">
+                            <span class="data-p-title">考题数目:</span>
+                            <span class="data-p-desc">{{length - isCheckNum}}</span>
+                        </p>
+                        <p class="data-p">
+                            <span class="data-p-title">考试总分:</span>
+                            <span class="data-p-desc">100</span>
+                        </p>
+                        <p>
+                            <span class="data-p-title">考试说明:</span>
+                            <p>  1. 考生考前15分钟到达考场，由监考人员核验考生准考证、有效身份证件。</p>
+                                                  <p>   2. 考生只准携带必要的考试文具（如钢笔，圆珠笔等）入场，不得携带任何书籍资料、通讯设备、数据存储设备、智能电子设备等辅助工具及其它未经允许的物品。</p>
+                                                  <p>   3. 考生请核验屏幕上显示的姓名、如有不符，请重新登录</p>
+                                                  <p>   4. 在自己核验无误后，等待监考人员统一指令开始进行正式考试。</p>
+                                                  <p>   5. 考试开始————分钟后，迟到考生不得进入考场。</p>
+                                                  <p>   6. 考试时间由系统自动控制，计时结束后系统将自动退出作答界面。</p>
+                                                  <p>   7. 考生在考场内应保持安静，严格遵守考场纪律，对于违反考场规定、不服从监考人员管理和作弊者将按按规定给予处罚。</p>
+                                                  <p>   8. 考试过程中，如出现死机或系统错误等，应立刻停止操作，举手与监考人员联系。</p>
+                                                  <p>   9. 考生点击交卷后，举手与监考人员联系，等监考人员确认考生交卷正常后，方可离开。</p>
+                                                  <p>   10. 考生离开考场后，不准在考场附近逗留和交谈。</p>
+                                                  <p>   11. 考生应自觉服从监考人员管理，不得以任何理由防碍监考人员正常工作。</p>
+                        </p>
+                    </div>
+                    <div class="sureBtn">
+                        <el-checkbox v-model="Iagree">我已阅读以上内容</el-checkbox>
+                        <el-button type="danger" :disabled="!Iagree" plain @click='add();getTest($route.params.testId);sendInfor()'>
+                            <p>进入考试</p>
+                        </el-button>
                     </div>
                 </div>
             </div>
@@ -174,6 +155,13 @@
                     <el-tab-pane label="正在考试">正在考试</el-tab-pane>
                 </el-tabs>
             </div>
+            <div class="exerciseOnline" v-show="currIndex === 2">
+                <div class="title">
+                    <div>
+                        <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="footer">
@@ -193,7 +181,8 @@ export default {
     return {
         leftBox:[
             {li:'在线考试'},
-            {li:'考试管理'}
+            {li:'考试管理'},
+            {li:'在线练习'}
         ],
         textQuestionData:'',
         minutes:120,
@@ -234,7 +223,8 @@ export default {
         currTestRes:[],
         currTestId:'',
         interval:{},
-        TestNum:0
+        TestNum:0,
+        Iagree:''
 
     }
   },
@@ -346,10 +336,14 @@ export default {
 //    },
   methods:{
             sendInfor(){
-                this.$router.push('/realyTest');
+            //    this.$router.push('/realyTest');
+                const {href} = this.$router.resolve({
+                    name: 'realyTest'
+                })
+                window.open(href,'_blank',"channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
                 var elem = document.getElementById("content");   
                 console.log(elem);   
-                this.requestFullScreen(elem);
+            //    this.requestFullScreen(elem);
             },
             requestFullScreen(element){
                 var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;    
@@ -613,13 +607,12 @@ a{
     height:700px;
     margin:0 auto;
     margin-top: 40px;
-    border:1px solid #000;
+    border:1px solid #6a1518;
     display:flex;
 }
 .leftBox{
     width:12.5%;
     height:100%;
-    border:1px solid #000;
 }
 .leftBox > p{
     font-size:20px;
@@ -644,6 +637,7 @@ a{
     width:87.5%;
     height:100%;
     position:relative;
+    border-left:1px solid #6a1518;
 }
 .testOnline{
     width:100%;
@@ -655,14 +649,14 @@ a{
 }
 .title{
     width:100%;
-    height:21%;
-    border:1px solid #000;
+    height:15%;
     text-align:left;
     font-weight: bolder;
     font-size:20px;
     padding:10px;
     box-sizing:border-box;
     display:flex;
+    border-bottom:1px solid #6a1518;
 }
 .inforItem{
     margin-left:8px;
@@ -689,17 +683,33 @@ a{
 }
 .content{
     width:100%;
-    height:79%;
-    display:flex;
+    height:85%;
 }
 .data{
     width:100%;
-    height:100%;
-    border:1px solid #000;
+    height:91%;
     overflow:hidden;
     text-align:left;
-    padding-top:40px;
+    padding:30px 40px 4px 40px;
     box-sizing:border-box;
+    overflow:auto;
+}
+.data-p{
+    height:9%;
+    line-height:9%;
+}
+.data-p-title{
+    margin-right:50px;
+    font-weight:bolder;
+}
+.data-p-desc{
+    font-size:15px;
+}
+.sureBtn{
+    width:100%;
+    height:9%;
+    border-top:1px solid #6a1518;
+    text-align:right;
 }
 .dispear{
     display:none;
@@ -776,9 +786,9 @@ a{
     cursor:pointer;
 }
 .userMessage{
-    width:1048px;
+    width:100%;
     height:100%;
-    background:#fff;s
+    background:#fff;
     position:absolute;
     top:0;
     left:0;
@@ -824,20 +834,11 @@ a{
     width: 100%;
     height: 100%;
 }
-.el-row {
-    
-}
 .el-col {
     border-radius: 4px;
 }
 .bg-purple-dark {
     background: #99a9bf;
-}
-.bg-purple {
-    font-weight:bolder;
-}
-.bg-purple-light {
-    
 }
 .grid-content {
     border-radius: 4px;
@@ -853,5 +854,16 @@ a{
 }
 .el-button--danger.is-plain p{
     font-size:20px;
+}
+.exerciseOnline{
+    width:100%;
+    height:100%;
+    background:#fff;
+    position:absolute;
+    top:0;
+    left:0;
+    box-sizing:border-box;
+    text-align:left;
+    overflow:auto;
 }
 </style>

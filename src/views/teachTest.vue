@@ -30,7 +30,6 @@
                                         <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme"></el-input>
                                     </el-form-item>
 
-                                    <label class="fontL"></label>
                                     <el-form-item label="考试范围" prop="name">
                                     <el-dropdown>
                                         <span class="el-dropdown-link">
@@ -88,8 +87,31 @@
                                         </el-col>
                                     </el-form-item>
 
-                                    <el-form-item label="考试时长" prop="time" required>
-                                        <el-input class="numberClass" placeholder="请创建考试时长/分钟" v-model.time="form.time"></el-input>
+                                    <el-form-item label="考试时长">
+                                        <el-col :span="8">
+                                            <el-form-item prop="timeHour">
+                                                <el-select v-model="form.timeHour" placeholder="请选择小时">
+                                                    <el-option label="0" value="zero"></el-option>
+                                                    <el-option label="1" value="one"></el-option>
+                                                    <el-option label="2" value="twe"></el-option>
+                                                    <el-option label="3" value="three"></el-option>
+                                                </el-select>
+                                            </el-form-item>    
+                                        </el-col>
+                                        <el-col class="line" :span="3">小时</el-col>
+                                        <el-col :span="8">
+                                            <el-form-item>
+                                                <el-select v-model="form.timeMin" placeholder="请选择分钟">
+                                                    <el-option label="0" value="zero"></el-option>
+                                                    <el-option label="10" value="ten"></el-option>
+                                                    <el-option label="20" value="twenty"></el-option>
+                                                    <el-option label="30" value="thirty"></el-option>
+                                                    <el-option label="40" value="forty"></el-option>
+                                                    <el-option label="50" value="fifty"></el-option>
+                                                </el-select>
+                                            </el-form-item>
+                                        </el-col>
+                                        <el-col class="line" :span="4">分钟</el-col>
                                     </el-form-item>
 
                                     <el-form-item label="考试类型" prop="region">
@@ -277,7 +299,7 @@ import core from '../../server/utils/core.js'
 export default {
   name: 'test',
   data () {
-    var checkAge = (rule, value, callback) => {
+    var checkNum = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('题数不能为空'));
         }
@@ -285,8 +307,8 @@ export default {
           if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
           } else {
-            if (value <= 0) {
-              callback(new Error('题数必须大于0'));
+            if (value <= 0 || value > 1000) {
+              callback(new Error('题数必须大于0且小于1000'));
             } else {
               callback();
             }
@@ -313,7 +335,8 @@ export default {
             date3: '',
             date4: '',
             num:'',
-            time:''
+            timeHour:'',
+            timeMin:''
         },
         rules: {
             theme: [
@@ -338,10 +361,10 @@ export default {
                 { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
             ],
             num: [
-              { validator: checkAge, trigger: 'blur' }
+              { validator: checkNum, trigger: 'blur' }
             ],
-            time: [
-                { required: true, message: '请输入考试时长', trigger: 'blur' },
+            timeHour: [
+                { required: true, message: '请选择考试小时', trigger: 'change' },
             ]
         },
         tableData: [{
@@ -417,10 +440,10 @@ export default {
         },
         onSubmit() {
         //    console.log()
-            this.form.date1 = core.formatDate("yyyy-MM-dd",this.form.date1);
-            this.form.date2 = core.formatDate("yyyy-MM-dd",this.form.date2);
-        //    this.form.date3 = core.formatDate("hh:mm:ss",this.form.date3);
-        //    this.form.date4 = core.formatDate("hh:mm:ss",this.form.date4);
+            this.form.date1 = core.formatDate("yyyy-MM-dd",new Date(this.form.date1));
+            this.form.date2 = core.formatDate("yyyy-MM-dd",new Date(this.form.date2));
+            this.form.date3 = core.formatDate("hh:mm:ss",new Date(this.form.date3));
+            this.form.date4 = core.formatDate("hh:mm:ss",new Date(this.form.date4));
             console.log(this.form.date3)
             axios({
                 method:'get',
@@ -528,11 +551,10 @@ a{
 }
 .el-dropdown {
     width: 488px;
-    margin-left: 12px;
     position:relative;
 }
 .elinput{
-    width:486px;
+    width:502px;
     height:38px;
     border:1px solid #ccc;
     border-radius:4px;
@@ -543,7 +565,6 @@ a{
 }
 .numberClass{
     width:488px;
-    margin-left: 12px;
     margin-bottom:22px;
 }
 .dropdown{
@@ -565,7 +586,21 @@ a{
     margin-top:22px;
 }
 .el-tabs--border-card>.el-tabs__content {
-    padding: 25px;
+    padding: 25px 75px 25px 25px;
+    text-align:left;
+}
+.el-form-item__content .el-col-2{
+    padding-left:0.4%;
+    width:1.33%;
+}
+.el-form-item__content .el-select{
+    width:100%;
+}
+.el-form-item__content .el-select-dropdown{
+    min-width:38%;
+}
+.el-form-item__content .el-input{
+    width:100%;
 }
 .testOnline{
     width:100%;
