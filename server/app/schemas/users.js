@@ -4,16 +4,13 @@ const Schema = mongoose.Schema;
 module.exports = new Schema({
   n_name: {
     type: String,
-    unique: true,  //索引值唯一
   },
   user: {
     type: String,
-    unique: true,  //索引值唯一
     required: true, //设定是否必填
   },
   pwd: {
     type: String,
-    required: true, //设定是否必填
   },
   userID: {
     type: String,

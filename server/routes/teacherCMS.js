@@ -2,7 +2,10 @@ const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
 const fs = require("fs");
+const formidable = require('formidable');
+const uploadsPath = "../app/uploads/addUser/";
 const User = require('../app/models/User');
+const xlsx2j = require('xlsx-2-json');
 
 //设置跨域请求
 {
@@ -91,6 +94,56 @@ const User = require('../app/models/User');
       }
     }
     return result;
+  }
+}
+
+//添加用户方法
+function addUsers(arr, res) {
+  if (arr.length == undefined) {
+    let addUserData = new User({
+      user: arr.user,
+      n_name: arr.n_name,
+      pwd: arr.pwd,
+      userID: arr.userID,
+      IDNo: arr.IDNo,
+      MoNo: arr.MoNo,
+      userType: arr.userType,
+      gender: arr.gender,
+      AdmDate: arr.AdmDate,
+      major: arr.major,
+      classGrade: arr.classGrade
+    });
+    addUserData.save(function (err) {
+      if (err) {
+        console.log(err)
+      } else {
+        console.log('Save success');
+      }
+    });
+  } else {
+    //console.log(arr.length);
+    for (let i = 0; i < arr.length; i++) {
+      let addUserData = new User({
+        n_name: arr[i].n_name,
+        user: arr[i].user,
+        pwd: arr[i].pwd,
+        userID: arr[i].userID,
+        IDNo: arr[i].IDNo,
+        MoNo: arr[i].MoNo,
+        userType: arr[i].userType,
+        gender: arr[i].gender,
+        AdmDate: arr[i].AdmDate,
+        major: arr[i].major,
+        classGrade: arr[i].classGrade
+      });
+      addUserData.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Save success');
+        }
+      });
+    }
   }
 }
 
@@ -198,29 +251,22 @@ router.post('/delChecked', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
-    if (reqData.userType == 'admin') {
-      if (reqData.msg.length == 1) {
-        User.remove({userID: reqData.msg.userID}, function (err) {
+    if (reqData.userType == 'admin' || reqData.userType == 'E') {
+      for (let i = 0; i < reqData.msg.length; i++) {
+        User.remove({userID: reqData.msg[i].userID}, function (err) {
           if (err) {
-            return res.json({err: err});
+            return res.status(404).send({err: err,});
           } else {
-            return res.json({msg: 'success'});
+            console.log('删除数据成功');
           }
         })
-      } else {
-        for (let i = 0; i < reqData.msg.length; i++) {
-          User.remove({userID: reqData.msg[i].userID}, function (err) {
-            if (err) {
-              return res.json({err: err});
-            } else {
-              console.log('删除成功')
-            }
-          })
-        }
       }
       res.status(200).send({
-        Msg: '删除数据成功',
         success: 0,
+      });
+    }else {
+      res.status(404).send({
+        Msg: '该用户无权限',
       });
     }
   } else {
@@ -235,35 +281,15 @@ router.post('/delChecked', function (req, res) {
 router.post('/addUser', function (req, res) {
   if (req.body.data) {
     let reqData = req.body.data;
-    console.log(reqData);
     let reqUser = reqData.addUser;
-    console.log(reqUser.name);
-    if (reqData.userType == 'admin') {
-      console.log('11');
-
-      let addUserData = new User({
-        user: reqUser.name,
-        pwd: reqUser.pwd,
-        userID: reqUser.userID,
-        IDNo: reqUser.IDNo,
-        MoNo: reqUser.MoNo,
-        userType: reqUser.userType,
-        gender: reqUser.gender,
-        AdmDate: reqUser.AdmDate,
-        major: reqUser.major,
-        classGrade: reqUser.classGrade
-      });
-      addUserData.save(function (err) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log('Save success');
-        }
+    if (reqData.userType == 'admin' || reqData.userType == 'E') {
+      addUsers(reqUser);
+      res.status(200).send({
+        Msg: '添加成功',
       });
     }else {
       res.status(404).send({
         Msg: '用户无添加权限',
-        success: 0,
       });
     }
   } else {
@@ -275,27 +301,69 @@ router.post('/addUser', function (req, res) {
 });
 
 //Excel导入用户
-router.post('/addExcelUsers', function (req, res) {
-  let form = new formidable.IncomingForm();
-  console.log('11');
+router.post('/addExcelUsers', function(req, res) {
+  try {
+    let form = new formidable.IncomingForm();
+    form.uploadDir = uploadsPath;//设置文件上传存放地址
+    form.maxFieldsSize = 10 * 1024 * 1024; //设置最大10M
+    form.keepExtensions = true;
+
     form.parse(req, function (err, fields, files) {
-      console.log(files);
+      //旧名字
+      let fileName = files.file.name;
+      console.log(fileName);
+      //新名字
+      let oldPath = files.file.path;
+      let newPath = uploadsPath + fileName;
 
+      fs.rename(oldPath, newPath, function (err) {
+        if (err) {
+          throw  Error("改名失败");
+        }
+        xlsx2j({
+          input: newPath,
+          output: newPath + "-output.json"
+        }, function(err, result) {
+          if(err) {
+            console.error(err);
+          }else {
+            addUsers(result);
+            res.status(200).send({
+              Msg: '添加成功',
+            });
+          }
+        });
+      });
     });
-    /*if (reqData.userType == 'admin') {
-      console.log('11');
+  }
+  catch (e) {
+    res.status(404).send({
+      err: 1,
+      msg: 'upload err',
+    });
+  }
+});
 
+//更新用户信息
+router.post('/updateUser', function (req, res) {
+  if (req.body.data) {
+    let reqData = req.body.data;
+    let reqUser = reqData.addUser;
+    console.log(reqData);
+    console.log(reqUser);
+    /*if (reqData.userType == 'admin' || reqData.userType == 'E') {
       let addUserData = new User({
-        user: reqUser.name,
-        pwd: reqUser.pwd,
-        userID: reqUser.userID,
-        IDNo: reqUser.IDNo,
-        MoNo: reqUser.MoNo,
-        userType: reqUser.userType,
-        gender: reqUser.gender,
-        AdmDate: reqUser.AdmDate,
-        major: reqUser.major,
-        classGrade: reqUser.classGrade
+        user: arr.user,
+        n_name: arr.n_name,
+        pwd: arr.pwd,
+        userID: arr.userID,
+        IDNo: arr.IDNo,
+        MoNo: arr.MoNo,
+        userType: arr.userType,
+        gender: arr.gender,
+        AdmDate: arr.AdmDate,
+        major: arr.major,
+        classGrade: arr.classGrade
       });
       addUserData.save(function (err) {
         if (err) {
@@ -304,13 +372,20 @@ router.post('/addExcelUsers', function (req, res) {
           console.log('Save success');
         }
       });
+      res.status(200).send({
+        Msg: '添加成功',
+      });
     }else {
       res.status(404).send({
         Msg: '用户无添加权限',
-        success: 0,
       });
     }*/
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
 });
-
 
 module.exports = router;
