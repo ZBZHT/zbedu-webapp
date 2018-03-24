@@ -56,7 +56,7 @@
                         </p>
                     </div>
                     <div class="sureBtn">
-                        <el-checkbox v-model="Iagree">我已阅读以上内容</el-checkbox>
+                        <el-checkbox v-model="Iagree">我已阅读以上内容，点击进入考试开始倒计时</el-checkbox>
                         <el-button type="danger" :disabled="!Iagree" plain @click='add();getTest($route.params.testId);sendInfor()'>
                             <p>进入考试</p>
                         </el-button>
@@ -161,6 +161,53 @@
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     </div>
                 </div>
+                <div class="test-exercise">
+                    <el-form class="test-exercise-form" ref="stuform" :model="stuform" status-icon :rules="rules" label-width="80px">
+                        <el-form-item label="练习内容" prop="radio">
+                            <el-radio-group v-model="stuform.radio">
+                                <el-radio label="新能源汽车"></el-radio>
+                                <el-radio label="汽车发动机"></el-radio>
+                                <el-radio label="汽车底盘"></el-radio>
+                                <el-radio label="汽车电气"></el-radio>
+                                <el-radio label="汽车变速器"></el-radio>
+                            </el-radio-group>
+                        </el-form-item>
+
+                        <el-form-item label="考题数目" prop="num" required>
+                            <el-input v-model.number="stuform.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
+                        </el-form-item>
+
+                        <el-form-item label="考试时长">
+                            <el-col :span="8">
+                                <el-form-item prop="timeHour">
+                                    <el-select v-model="stuform.timeHour" placeholder="请选择小时">
+                                        <el-option label="0" value="zero"></el-option>
+                                        <el-option label="1" value="one"></el-option>
+                                        <el-option label="2" value="twe"></el-option>
+                                        <el-option label="3" value="three"></el-option>
+                                    </el-select>
+                                </el-form-item>    
+                            </el-col>
+                            <el-col class="line" :span="3">小时</el-col>
+                            <el-col :span="8">
+                                <el-form-item>
+                                    <el-select v-model="stuform.timeMin" placeholder="请选择分钟" @visible-change="isMin">
+                                        <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
+                                        <el-option label="10" value="ten"></el-option>
+                                        <el-option label="20" value="twenty"></el-option>
+                                        <el-option label="30" value="thirty"></el-option>
+                                        <el-option label="40" value="forty"></el-option>
+                                        <el-option label="50" value="fifty"></el-option>
+                                    </el-select>
+                                </el-form-item>
+                            </el-col>
+                            <el-col class="line" :span="4">分钟</el-col>
+                        </el-form-item>
+
+                        <el-button type="primary" @click="submitForm('stuform')">开始练习</el-button>
+                        <el-button type="default" @click="resetForm('stuForm')" value="Reset">重置</el-button>
+                    </el-form>
+                </div>
             </div>
         </div>
     </div>
@@ -178,12 +225,45 @@ import Modal from '@/components/testCenter/modal';
 export default {
   name: 'test',
   data () {
+    var checkNum = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('题数不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          } else {
+            if (value <= 0 || value > 1000) {
+              callback(new Error('题数必须大于0且小于1000'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };  
     return {
         leftBox:[
             {li:'在线考试'},
             {li:'考试管理'},
             {li:'在线练习'}
         ],
+        stuform:{
+            radio:'',
+            timeHour:2,
+            timeMin:'',
+            num:''
+        },
+        rules: {
+            radio: [
+                { required: true, message: '请选择练习的内容', trigger: 'change' }
+            ],
+            timeHour: [
+                { required: true, message: '请选择考试小时', trigger: 'change' },
+            ],
+            num: [
+              { validator: checkNum, trigger: 'blur' }
+            ]
+        },
         textQuestionData:'',
         minutes:120,
         seconds:0,
@@ -224,7 +304,8 @@ export default {
         currTestId:'',
         interval:{},
         TestNum:0,
-        Iagree:''
+        Iagree:'',
+        formDisabled:false
 
     }
   },
@@ -354,6 +435,11 @@ export default {
                     if (wscript !== null) {    
                         wscript.SendKeys(122);    
                     }    
+                }
+            },
+            isMin(){
+                if(this.stuform.timeHour == "zero"){
+                    this.formDisabled = !this.formDisabled;
                 }
             },
             submit:function () {
@@ -581,6 +667,32 @@ export default {
                             this.userMessageData = res.data;
                             console.log(res.data)
                         })
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    axios({
+                        method:'get',
+                        url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+                        params:{
+                            user:this.user,
+                            testData:this.stuform
+                        }
+                    }).then(
+                        function (res) {
+                        console.log(res.data.code)
+                        }
+                    );
+                    
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+                });
+            },
+            resetForm(formName) {
+                this.stuform = {};
+                this.stuform.timeHour = 2;
             }
     },
   components:{Modal,footFooter}
@@ -590,7 +702,6 @@ export default {
 
 <style scoped>
 *{
-    margin:0;
     padding:0;
 }
 ul li{
@@ -599,6 +710,9 @@ ul li{
 a{
     color: inherit;
     cursor: pointer;
+}
+p{
+    margin:0;
 }
 .question{
     min-width:1200px;
@@ -865,5 +979,20 @@ a{
     box-sizing:border-box;
     text-align:left;
     overflow:auto;
+}
+.test-exercise{
+    width:100%;
+    height:85%;
+    padding: 30px 40px 4px 40px;
+    box-sizing:border-box;
+}
+.el-select-dropdown__list .el-select-dropdown__item{
+    padding: 0 20px !important;
+}
+.el-button--primary{
+    padding:10px !important;
+}
+.el-button--default{
+    padding:10px !important;
 }
 </style>

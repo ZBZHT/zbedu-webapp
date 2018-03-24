@@ -24,7 +24,7 @@
 
                         <el-tab-pane label="创建考试">
                             <div>
-                                <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px"  class="demo-ruleForm">
+                                <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px">
                                     
                                     <el-form-item label="考试题目" prop="theme">
                                         <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme"></el-input>
@@ -101,8 +101,8 @@
                                         <el-col class="line" :span="3">小时</el-col>
                                         <el-col :span="8">
                                             <el-form-item>
-                                                <el-select v-model="form.timeMin" placeholder="请选择分钟">
-                                                    <el-option label="0" value="zero"></el-option>
+                                                <el-select v-model="form.timeMin" placeholder="请选择分钟" @visible-change="isMin">
+                                                    <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
                                                     <el-option label="10" value="ten"></el-option>
                                                     <el-option label="20" value="twenty"></el-option>
                                                     <el-option label="30" value="thirty"></el-option>
@@ -123,7 +123,7 @@
                                     </el-form-item>
 
                                     <el-form-item label="考题数目" prop="num" required>
-                                        <el-input v-model.number="form.num" placeholder="请输入考试题数"></el-input>
+                                        <el-input v-model.number="form.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
                                     </el-form-item>
 
                                     <p><el-button type="primary" @click="submitForm('form')">立即创建</el-button></p>
@@ -297,7 +297,7 @@ import Modal from '@/components/testCenter/modal';
 import core from '../../server/utils/core.js'
 
 export default {
-  name: 'test',
+  name: 'teachTest',
   data () {
     var checkNum = (rule, value, callback) => {
         if (!value) {
@@ -325,6 +325,7 @@ export default {
         currIndex:0,
         user:this.$store.state.username,
         data:[],
+        formDisabled:false,
         form: {
             theme:'',
             name: [],
@@ -438,6 +439,11 @@ export default {
         handleClick(data){
             
         },
+        isMin(){
+            if(this.form.timeHour == "zero"){
+                this.formDisabled = !this.formDisabled;
+            }
+        },
         onSubmit() {
         //    console.log()
             this.form.date1 = core.formatDate("yyyy-MM-dd",new Date(this.form.date1));
@@ -450,7 +456,7 @@ export default {
                 url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
                 params:{
                     user:this.user,
-                    sixData:this.form
+                    teachData:this.form
                 }
             }).then(
                 function (res) {
