@@ -9,8 +9,7 @@
         <span  class="userM_But2">
           <el-button size="small" type="primary" @click="dialogFormVisible = true">添加单个用户</el-button>
         </span>
-        <!--addUser-->
-        <span   class="userM_But3">
+        <span class="userM_But3">
           <el-upload
             class="upload-demo"
             action="http://192.168.2.251:8000/teacherCMS/addExcelUsers"
@@ -41,8 +40,8 @@
 
           <el-form-item label="性别" prop="gender" style="width: 48%">
             <el-radio-group v-model="addUserForm.gender">
-              <el-radio v-model="radio1" label="1">男</el-radio>
-              <el-radio label="2">女</el-radio>
+              <el-radio v-model="radio" label="1">男</el-radio>
+              <el-radio v-model="radio" label="2">女</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -61,10 +60,10 @@
 
           <el-form-item label="用户类别" prop="userType" style="width: 92%">
             <el-radio-group v-model="addUserForm.userType">
-              <el-radio label="E">教务管理员</el-radio>
-              <el-radio label="T">教师</el-radio>
-              <el-radio v-model="radio2" label="S">学生</el-radio>
-              <el-radio label="O">外来学生</el-radio>
+              <el-radio v-model="radio1" label="E">教务管理员</el-radio>
+              <el-radio v-model="radio1" label="T">教师</el-radio>
+              <el-radio v-model="radio1" label="S">学生</el-radio>
+              <el-radio v-model="radio1" label="O">外来学生</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -92,7 +91,7 @@
 
         <div slot="footer" class="dialog-footer" style="width: 93%">
           <el-button @click="resetUser">重&emsp;置</el-button>
-            <el-button type="primary" @click="addUser('addUserForm')">提&emsp;交</el-button>
+            <el-button :plain="true" type="primary" @click="addUser('addUserForm')">提&emsp;交</el-button>
         </div>
       </el-dialog>
 
@@ -160,8 +159,8 @@
 
           <el-form-item label="性别" prop="gender" style="width: 48%">
             <el-radio-group v-model="addUserForm1.gender">
-              <el-radio v-model="radio1" label="1">男</el-radio>
-              <el-radio label="2">女</el-radio>
+              <el-radio v-model="radio" label="1">男</el-radio>
+              <el-radio v-model="radio" label="2">女</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -180,10 +179,10 @@
 
           <el-form-item label="用户类别" prop="userType" style="width: 92%">
             <el-radio-group v-model="addUserForm1.userType">
-              <el-radio label="E">教务管理员</el-radio>
-              <el-radio label="T">教师</el-radio>
-              <el-radio v-model="radio2" label="S">学生</el-radio>
-              <el-radio label="O">外来学生</el-radio>
+              <el-radio v-model="radio1" label="E">教务管理员</el-radio>
+              <el-radio v-model="radio1" label="T">教师</el-radio>
+              <el-radio v-model="radio1" label="S">学生</el-radio>
+              <el-radio v-model="radio1" label="O">外来学生</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -235,6 +234,7 @@
 <script>
   import axios from 'axios'
   import core from '../../../server/utils/core.js'
+  import md5 from 'js-md5'
 
   export default {
     name: 'userManager',
@@ -259,8 +259,6 @@
           children: 'children',
           label: 'label'
         },
-        radio1: '1',
-        radio2: 'S',
         url: document.domain,
         username: this.$store.state.username,
         userType: this.$store.state.userType,
@@ -336,6 +334,8 @@
             { min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur' }
           ],
         },
+        radio: '1',
+        radio1: 'S',
 
       }
     },
@@ -343,7 +343,27 @@
     methods: {
       // Excel导入成功后的回调
       uploadSuccess (res, file) {
-        this.$message.warning(`用户已导入成功`);
+        //console.log(res.userInfo);
+        if (res.userInfo) {
+          let userInfo = res.userInfo;
+          for (let i=0; i<userInfo.length; i++) {
+            this.dataManager.push(userInfo[i])
+          }
+          this.$message({
+            message: '用户信息已存入数据库',
+            type: 'success'
+          });
+        }else {
+          console.log('返回为空')
+        }
+      },
+      // 添加用户成功后提示信息
+      addUserSuccess() {
+        this.$message({
+          showClose: true,
+          message: '用户信息已存入数据库',
+          type: 'success'
+        });
       },
       //重置添加添加用户
       resetUser() {
@@ -373,6 +393,22 @@
         this.addUserForm1.major = '';
         this.addUserForm1.classGrade = '';
       },
+
+      //修改
+      handleEdit(index, row) {
+        this.addUserForm1.n_name = row.n_name;
+        this.addUserForm1.user = row.user;
+        this.addUserForm1.userID = row.userID;
+        this.addUserForm1.IDNo = row.IDNo;
+        this.addUserForm1.MoNo = row.MoNo;
+        this.addUserForm1.userType = row.userType;
+        this.addUserForm1.gender = row.gender;
+        this.addUserForm1.AdmDate = row.AdmDate;
+        this.addUserForm1.major = row.major;
+        this.addUserForm1.classGrade = row.classGrade;
+        this.dialogFormVisible1 = true;
+      },
+
       //删除用户信息方法
       delChecked() {
         this.$confirm('此操作将永久删除用户信息, 是否继续?', '提示', {
@@ -432,7 +468,7 @@
         //处理发送的用户信息方法
         function resUserData(data) {
           if (data.pwd == '') {
-            data.pwd = data.IDNo.substring(data.IDNo.length-6);
+            data.pwd = md5(data.IDNo.substring(data.IDNo.length-6));
           }
           data.AdmDate = core.formatDate("yyyy-MM-dd", data.AdmDate);
           if (data.n_name == '') {
@@ -445,46 +481,46 @@
           console.log(this.addUserForm);
           axios.post('http://' + this.url + ':8000/teacherCMS/addUser', {
             data: {
+              username: this.username,
               userType: this.userType,
               addUser: resData
             }
           }).then((res) => {
-            if (res.data.userInfo.length > 0) {
-              this.dataManager = res.data.userInfo;
+            console.log(res);
+            if (res.data.userInfo) {
+              this.dataManager.push(res.data.userInfo);
               this.total = this.dataManager.length;
-              uploadSuccess();
-              resetUser();
+              this.addUserSuccess();
+              this.resetUser();
             }
           });
       },
       //修改用户信息
       reUser() {
         this.dialogFormVisible1 = false;
+        console.log(this.addUserForm1);
         //处理发送的用户信息方法
         function resUserData1(data) {
-          if (data.pwd == '') {
-            data.pwd = data.IDNo.substring(data.IDNo.length-6);
-          }
-          data.AdmDate = core.formatDate("yyyy-MM-dd", data.AdmDate);
-          if (data.n_name == '') {
-            data.n_name = data.user
+          if (data.pwd != '') {
+            data.pwd = md5(data.pwd);
           }
           return data;
         }
 
         let resData = resUserData1(this.addUserForm1);
-          console.log(this.addUserForm1);
           axios.post('http://' + this.url + ':8000/teacherCMS/updateUser', {
             data: {
+              username: this.username,
               userType: this.userType,
               addUser: resData
             }
           }).then((res) => {
-            if (res.data.userInfo.length > 0) {
-              this.dataManager = res.data.userInfo;
-              this.total = this.dataManager.length;
-              uploadSuccess();
-              resetUser1();
+            if (res.data.userInfo) {
+              console.log(res.data.userInfo);
+              /*this.dataManager = res.data.userInfo;
+              this.total = this.dataManager.length;*/
+              this.addUserSuccess();
+              this.resetUser1();
             }
           });
       },
@@ -497,10 +533,13 @@
       },
       // 上传错误
       uploadError (res, file, fileList) {
-        console.log('上传失败，请重试！')
+        this.$message.error('上传失败，请重试！');
       },
       handleExceed(files, fileList) {
-        this.$message.warning(`每次只能上传 1 个文件`);
+        this.$message({
+          message: '每次只能上传 1 个文件',
+          type: 'warning'
+        });
       },
 
       // 上传前判断是不是Excel文件
@@ -513,24 +552,7 @@
           this.$message.error('只能导入是 xls 或者 xlsx格式!');
         }
       },
-      //编辑
-      handleEdit(index, row) {
-        console.log(row);
-        console.log(row.user);
-        this.addUserForm1.n_name = row.n_name;
-        this.addUserForm1.user = row.user;
-        this.addUserForm1.userID = row.userID;
-        this.addUserForm1.IDNo = row.IDNo;
-        this.addUserForm1.MoNo = row.MoNo;
-        this.addUserForm1.userType = row.userType;
-        this.addUserForm1.gender = row.gender;
-        this.addUserForm1.AdmDate = row.AdmDate;
-        this.addUserForm1.major = row.major;
-        this.addUserForm1.classGrade = row.classGrade;
-        console.log(this.addUserForm1);
 
-        this.dialogFormVisible1 = true;
-      },
       handleClose(done) {  //对话框关闭确认
         this.$confirm('已输入的信息未保存! 确认关闭？')
           .then(_ => {
@@ -543,7 +565,6 @@
         this.multipleSelection = val;
         console.log(this.multipleSelection);
       },
-
     },
     mounted() {
       axios.post('http://' + this.url + ':8000/teacherCMS/userManager', {

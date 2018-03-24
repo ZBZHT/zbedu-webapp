@@ -3,7 +3,6 @@
 
     <!--课程管理-->
     <el-col :span="19">
-      课程管理
 
     </el-col>
 
@@ -23,8 +22,6 @@
     },
     computed: {},
     methods: {
-      //删除用户信息方法
-
 
     },
     mounted() {
@@ -49,6 +46,10 @@
   * {
     margin: 0;
     padding: 0;
+  }
+  .courseM_cont {
+  }
+  .courseM_cont {
   }
 
 

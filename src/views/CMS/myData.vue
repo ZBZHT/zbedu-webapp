@@ -15,7 +15,7 @@
           </el-col>
 
           <el-col :span="6" class="nameMsg_2 nameMsg">
-            <span class="">账户类型 :</span><br>
+            <span class="">账户类型 : {{userT}}</span><br>
             <span class="nameMsg_3">绑定手机 :</span><br>
             <span class="">下午好</span><br>
           </el-col>
@@ -35,6 +35,7 @@
     data() {
       return {
         username:this.$store.state.username,
+        userT: core.userType(this.$store.state.userType),
       }
     },
     computed: {},
