@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="contentui">
         <el-row :gutter="15">
             <el-col :span="8"  v-for="(item,index) in navData" :key = "index">
                 <a @click="fobLink(index)">
@@ -82,10 +82,10 @@ a:hover{
 .active{
     color:#f00;
 }
-.content{
-    width:800px;
-    margin:0 auto;
-    padding-top:6%;
+.contentui{
+    width:83%;
+    padding:5%;
+    box-sizing:border-box;
 }
 .el-row {
     margin-bottom: 20px;
@@ -121,14 +121,15 @@ a:hover{
 }
 .grid-content {
     border-radius: 4px;
-    min-height: 214.5px;
+    min-height: 184px;
     margin-top: 7.5px;
     margin-bottom: 7.5px;
-    padding-top: 98px;
+    padding-top: 74px;
     box-sizing: border-box;
     position:relative;
     transition:0.5s ease;
     overflow:hidden;
+    border: 1px solid #ccc;
 }
 .grid-content:hover{
     transform:scale(1.05);

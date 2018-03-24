@@ -5,8 +5,16 @@
     </div>
    
 
-    <div class="list">
-            <nav-ul :navData = "navData"></nav-ul>
+    <div class="index-list">
+        <div class="index-list-topline"></div>
+        <div class="index-list-main">
+            <img src="../assets/index-bg.png">
+            <div class="index-list-nav">
+                <nav-ul :navData = "navData"></nav-ul>
+            </div>
+        </div>
+        <div class="index-list-middleline"></div>
+        <div class="index-list-bottomline"></div>
     </div>
 
     <div class="footer">
@@ -28,6 +36,7 @@ export default {
   data () {
     return {
       windowHeight:'',
+      windowWidth:'',
       navData:'',
       slides: [],
       inv: 3000,
@@ -47,10 +56,12 @@ export default {
       this.url = document.domain;
       let _this = this;
       _this.windowHeight = window.innerHeight;
+      _this.windowWidth = window.innerWidth;
       _this.windowHeight -= 152;
-      console.log(window.innerHeight);
-      console.log(_this.windowHeight);
-      document.querySelector(".list").style.height = _this.windowHeight + "px";
+ //     console.log(window.innerHeight);
+ //     console.log(_this.windowHeight);
+      document.querySelector(".index-list").style.height = _this.windowHeight + "px";
+      document.querySelector(".index-list").style.width = _this.windowWidth + "px";
 
       axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
@@ -106,8 +117,39 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.list{
+.index-list{
+    width:0;
     height:0;
+    position:relative;
+    background:rgb(122,18,19);
+}
+.index-list-topline{
+    width:100%;
+    height:2%;
+    background:rgb(172,172,172);
+}
+.index-list-middleline{
+    width:100%;
+    height:2%;
+    background:rgb(172,172,172);
+}
+.index-list-bottomline{
+    width:100%;
+    height:4%;
+    background:#000;
+}
+.index-list-main{
+    width:100%;
+    height:92%;
+    display:flex;
+}
+.index-list img{
+    width:52%;
+    height:100%;
+}
+.index-list .index-list-nav{
+    width:47%;
+    height:100%;
 }
 .content{
     padding:6%;

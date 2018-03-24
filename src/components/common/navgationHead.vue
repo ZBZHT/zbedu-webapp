@@ -8,14 +8,18 @@
             </router-link>
         </div>
         <div class="collapse">
-            <b>
-                    智    慧    教    学    系    统
-            </b>
+            <div class="collapse-title">
+                <span>ZBT</span>
+                <span>INTELLGENT TEACHING SYSTEM</span>
+                <p>
+                        中    邦    智    慧    教    学    系    统
+                </p>
+            </div>
             <ul class="user">
-                <form>
-                        <input type="text" class="search" placeholder="Search">
-                </form>
                 <li>
+                    <div class="phoneApp">
+                        手机客户端
+                    </div>
                     <router-link :to="{path:'/teacherCMS'}">
                         <div class="userPic" v-if="nickName">
                             <img src="../../assets/user.png">
@@ -170,13 +174,17 @@ a:hover{
     position:relative;
 }
 .collapse{
-    width:100%;
+    width:800px;
     display:flex;
 }
-.collapse b{
+.collapse .collapse-title{
+    width:366px;
+    padding-top:11px;
+    padding-left:16px;
+} 
+.collapse p{
     font-size:30px;
-    padding-top:21px;
-    padding-left:10px;
+    font-weight:bolder;
 }
 .list{
     margin-left:43px;
@@ -194,6 +202,11 @@ a:hover{
   top:59px;
   right:20px;
 }
+.collapse .phoneApp{
+  position:absolute;
+  top:5px;
+  left:-300px;
+}
 .user span{
     position:absolute;
     top:0;
@@ -201,7 +214,7 @@ a:hover{
 }
 .username{
     position:absolute;
-    top:15px;
+    top:6px;
     right:80px;
 }
 .user a{
@@ -212,7 +225,7 @@ a:hover{
   height: 50px;
   width: 100px;
   /*text-align: right;*/
-  margin-bottom:-22px;
+  margin-bottom:-26px;
 }
 .user a:hover{
   color:#f00;
@@ -226,15 +239,15 @@ a:hover{
     border-radius:50%;
     overflow:hidden;
     position: absolute;
-    top: -50px;
-    right: 99px;
+    top: -30px;
+    right: 170px;
 }
 .user .userPic img{
     width:100%;
 }
 .logOut{
     position:absolute;
-    top:14px;
+    top:6px;
     right:0;
 }
 </style>
