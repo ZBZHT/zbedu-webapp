@@ -156,15 +156,35 @@ module.exports = {
    * arr指定要删除的数组
    * index指定要删除的数组下标
    */
-  remove:function (arr, index) {
-  let result = [];
-  for (let i = 0; i < arr.length; i++) {
-    //console.log(arr[i].id);
-    if (arr[i] != index) {
-      result.push(arr[i]);
+  remove: function (arr, index) {
+    let result = [];
+    for (let i = 0; i < arr.length; i++) {
+      //console.log(arr[i].id);
+      if (arr[i] != index) {
+        result.push(arr[i]);
+      }
+    }
+    return result;
+  },
+  /**
+   * userType(user)
+   * 返会用户类型的汉字
+   */
+  userType : function (user) {
+    let userT ='';
+    if (user == 'S' || user == 'O') {
+      userT = '学生';
+      return userT;
+    }else if(user == 'T'){
+      userT = '教师';
+      return userT;
+    }else if(user == 'E'){
+      userT = '教务管理员';
+      return userT;
+    }else if(user == 'admin'){
+      userT = '超级管理员';
+      return userT;
     }
   }
-  return result;
-}
 
 };

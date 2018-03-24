@@ -6,6 +6,7 @@ const formidable = require('formidable');
 const uploadsPath = "../app/uploads/addUser/";
 const User = require('../app/models/User');
 const xlsx2j = require('xlsx-2-json');
+const md5 = require('js-md5');
 
 //设置跨域请求
 {
@@ -97,56 +98,6 @@ const xlsx2j = require('xlsx-2-json');
   }
 }
 
-//添加用户方法
-function addUsers(arr, res) {
-  if (arr.length == undefined) {
-    let addUserData = new User({
-      user: arr.user,
-      n_name: arr.n_name,
-      pwd: arr.pwd,
-      userID: arr.userID,
-      IDNo: arr.IDNo,
-      MoNo: arr.MoNo,
-      userType: arr.userType,
-      gender: arr.gender,
-      AdmDate: arr.AdmDate,
-      major: arr.major,
-      classGrade: arr.classGrade
-    });
-    addUserData.save(function (err) {
-      if (err) {
-        console.log(err)
-      } else {
-        console.log('Save success');
-      }
-    });
-  } else {
-    //console.log(arr.length);
-    for (let i = 0; i < arr.length; i++) {
-      let addUserData = new User({
-        n_name: arr[i].n_name,
-        user: arr[i].user,
-        pwd: arr[i].pwd,
-        userID: arr[i].userID,
-        IDNo: arr[i].IDNo,
-        MoNo: arr[i].MoNo,
-        userType: arr[i].userType,
-        gender: arr[i].gender,
-        AdmDate: arr[i].AdmDate,
-        major: arr[i].major,
-        classGrade: arr[i].classGrade
-      });
-      addUserData.save(function (err) {
-        if (err) {
-          console.log(err)
-        } else {
-          console.log('Save success');
-        }
-      });
-    }
-  }
-}
-
 /* 获取目录tree */
 router.post('/labelTree', function (req, res) {
   if (req.body.data) {
@@ -230,7 +181,7 @@ router.post('/labelTree', function (req, res) {
         if (userType.userType == 'admin' || userType.userType == 'E') {
 
         } else {
-          res.status(200).send({
+          res.status(404).send({
             Msg: '找不到此用户',
             success: 1,
           });
@@ -279,17 +230,39 @@ router.post('/delChecked', function (req, res) {
 
 //添加用户
 router.post('/addUser', function (req, res) {
+  console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
-    let reqUser = reqData.addUser;
+    let addUsers = reqData.addUser;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
-      addUsers(reqUser);
-      res.status(200).send({
-        Msg: '添加成功',
+      let addUserData = new User({
+        user: addUsers.user,
+        n_name: addUsers.n_name,
+        pwd: addUsers.pwd,
+        userID: addUsers.userID,
+        IDNo: addUsers.IDNo,
+        MoNo: addUsers.MoNo,
+        userType: addUsers.userType,
+        gender: addUsers.gender,
+        AdmDate: addUsers.AdmDate,
+        major: addUsers.major,
+        classGrade: addUsers.classGrade
+      });
+      addUserData.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('Save success');
+          res.status(200).send({
+            userInfo: addUsers,
+            success: 0,
+          });
+        }
       });
     }else {
       res.status(404).send({
         Msg: '用户无添加权限',
+        success: 1,
       });
     }
   } else {
@@ -315,11 +288,12 @@ router.post('/addExcelUsers', function(req, res) {
       //新名字
       let oldPath = files.file.path;
       let newPath = uploadsPath + fileName;
-
+      //改名
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
           throw  Error("改名失败");
         }
+        //xlsx转换为json
         xlsx2j({
           input: newPath,
           output: newPath + "-output.json"
@@ -327,9 +301,42 @@ router.post('/addExcelUsers', function(req, res) {
           if(err) {
             console.error(err);
           }else {
-            addUsers(result);
+            let userInfo = [];
+            //格式化数据
+            for (let i = 0; i < result.length; i++) {
+              if (result[i].pwd == '') {
+                result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
+              } else {
+                result[i].pwd = md5(result[i].pwd);
+              }
+              if (result[i].n_name == '') {
+                result[i].n_name = result[i].user
+              }
+              userInfo = result;
+              let addUserData = new User({
+                n_name: result[i].n_name,
+                user: result[i].user,
+                pwd: result[i].pwd,
+                userID: result[i].userID,
+                IDNo: result[i].IDNo,
+                MoNo: result[i].MoNo,
+                userType: result[i].userType,
+                gender: result[i].gender,
+                AdmDate: result[i].AdmDate,
+                major: result[i].major,
+                classGrade: result[i].classGrade
+              });
+              //保存到数据库
+              addUserData.save(function (err) {
+                if (err) {
+                  console.log(err)
+                } else {
+                  console.log('Save success');
+                }
+              });
+            }
             res.status(200).send({
-              Msg: '添加成功',
+              userInfo: userInfo,
             });
           }
         });
@@ -349,40 +356,63 @@ router.post('/updateUser', function (req, res) {
   if (req.body.data) {
     let reqData = req.body.data;
     let reqUser = reqData.addUser;
-    console.log(reqData);
-    console.log(reqUser);
-    /*if (reqData.userType == 'admin' || reqData.userType == 'E') {
-      let addUserData = new User({
-        user: arr.user,
-        n_name: arr.n_name,
-        pwd: arr.pwd,
-        userID: arr.userID,
-        IDNo: arr.IDNo,
-        MoNo: arr.MoNo,
-        userType: arr.userType,
-        gender: arr.gender,
-        AdmDate: arr.AdmDate,
-        major: arr.major,
-        classGrade: arr.classGrade
-      });
-      addUserData.save(function (err) {
+    if (reqData.userType == 'admin' || reqData.userType == 'E') {
+      console.log(reqUser);
+      //查找userID来更新数据
+      User.findOneAndUpdate({
+        userID: reqUser.userID
+      }, {
+        n_name: reqUser.n_name,
+        user: reqUser.user,
+        pwd: reqUser.pwd,
+        IDNo: reqUser.IDNo,
+        MoNo: reqUser.MoNo,
+        userType: reqUser.userType,
+        gender: reqUser.gender,
+        AdmDate: reqUser.AdmDate,
+        major: reqUser.major,
+        classGrade: reqUser.classGrade
+      }, function (err) {
         if (err) {
-          console.log(err)
+          console.log(err);
+          //查找IDNo来更新数据
+          User.findOneAndUpdate({
+            IDNo: reqUser.IDNo
+          }, {
+            n_name: reqUser.n_name,
+            user: reqUser.user,
+            pwd: reqUser.pwd,
+            userID: reqUser.userID,
+            MoNo: reqUser.MoNo,
+            userType: reqUser.userType,
+            gender: reqUser.gender,
+            AdmDate: reqUser.AdmDate,
+            major: reqUser.major,
+            classGrade: reqUser.classGrade
+          }, function (err) {
+            if (err) {
+              console.log(err);
+              res.status(404).send({
+                Msg: '更新失败',
+              });
+            } else {
+              console.log('修改成功IDNo');
+              res.status(200).send({
+                Msg: '更新成功',
+              });
+            }
+          });
         } else {
-          console.log('Save success');
+          console.log('修改成功userID');
+          res.status(200).send({
+            Msg: '更新成功',
+          });
         }
       });
-      res.status(200).send({
-        Msg: '添加成功',
-      });
-    }else {
-      res.status(404).send({
-        Msg: '用户无添加权限',
-      });
-    }*/
+    }
   } else {
     res.status(404).send({
-      Msg: '无法获取请求数据',
+      Msg: '该用户无权限',
       success: 1,
     });
   }
