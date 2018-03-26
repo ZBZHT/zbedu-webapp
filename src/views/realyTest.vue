@@ -2,7 +2,9 @@
 <div>
     <div class="question" id="content">
         <div class="leftBox">
-            <p>{{user}}</p>
+            <p>
+                <nav-user></nav-user>
+            </p>
         </div>
         <div class="rightBox">
             <div class="testOnline" v-show="currIndex === 0">
@@ -95,6 +97,8 @@
 import axios from 'axios'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
+import navUser from '@/components/common/navUser';
+
 
 export default {
   name: 'test',
@@ -480,7 +484,7 @@ export default {
                         })
             }
     },
-  components:{Modal,footFooter}
+  components:{Modal,navUser,footFooter}
 
 }
 </script>
@@ -514,7 +518,7 @@ a{
 }
 .leftBox > p{
     font-size:20px;
-    margin-top:68px;
+    margin-top:110px;
 }
 .leftBox .leftItem{
     margin-top:57px;

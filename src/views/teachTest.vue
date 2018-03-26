@@ -1,8 +1,10 @@
 <template>
-<div>
+<div class="teach_Test">
     <div class="question">
         <div class="leftBox">
-            <p>{{user}}</p>
+            <p>
+                <nav-user></nav-user>
+            </p>
             <ul class="leftItem">
                 <li class="leftLi" v-for="(item,index) in leftBox"
                     @click="rightAppear(index)"
@@ -294,7 +296,8 @@
 import axios from 'axios'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
-import core from '../../server/utils/core.js'
+import core from '../../server/utils/core.js';
+import navUser from '@/components/common/navUser';
 
 export default {
   name: 'teachTest',
@@ -483,7 +486,7 @@ export default {
             console.log(index, row);
         }
     },
-  components:{Modal,footFooter}
+  components:{Modal,navUser,footFooter}
 
 }
 </script>
@@ -500,7 +503,7 @@ a{
     color: inherit;
     cursor: pointer;
 }
-.question{
+.teach_Test .question{
     min-width:1200px;
     min-width:700px;
     width:1200px;
@@ -510,19 +513,19 @@ a{
     border:1px solid #000;
     display:flex;
 }
-.leftBox{
+.teach_Test .leftBox{
     width:150px;
     height:100%;
     border:1px solid #000;
 }
-.leftBox > p{
+.teach_Test .leftBox > p{
     font-size:20px;
-    margin-top:68px;
+    margin-top:110px;
 }
-.leftBox .leftItem{
+.teach_Test .leftBox .leftItem{
     margin-top:57px;
 }
-.leftLi{
+.teach_Test .leftLi{
     line-height:56px;
     background:#2b333b;
     margin-top:10px;
@@ -531,20 +534,20 @@ a{
     cursor:pointer;
     color:#fff;
 }
-.active{
+.teach_Test .active{
     color:#f00;
 }
-.rightBox{
+.teach_Test .rightBox{
     width:1050px;
     height:100%;
     position:relative;
 }
-.el-tabs{
+.teach_Test .el-tabs{
     width:100%;
     height:99%;
     overflow: auto;
 }
-.fontL{
+.teach_Test .fontL{
     text-align: right;
     vertical-align: middle;
     float: left;
@@ -555,60 +558,60 @@ a{
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
 }
-.el-dropdown {
+.teach_Test .el-dropdown {
     width: 488px;
     position:relative;
 }
-.elinput{
+.teach_Test .elinput{
     width:502px;
     height:38px;
     border:1px solid #ccc;
     border-radius:4px;
     overflow:auto;
 }
-.elinput ul li{
+.teach_Test .elinput ul li{
     display:inline-block;
 }
-.numberClass{
+.teach_Test .numberClass{
     width:488px;
     margin-bottom:22px;
 }
-.dropdown{
+.teach_Test .dropdown{
     width:488px;
     height:300px;
     position:absolute;
     left:75px;
     bottom:0;
 }
-.treeModle{
+.teach_Test .treeModle{
     width:488px;
     height:250px;
     overflow:auto;
 }
-.buttons .el-button{
+.teach_Test .buttons .el-button{
     width:100%;
 }
-.el-button{
+.teach_Test .el-button{
     margin-top:22px;
 }
-.el-tabs--border-card>.el-tabs__content {
+.teach_Test .el-tabs--border-card>.el-tabs__content {
     padding: 25px 75px 25px 25px;
     text-align:left;
 }
-.el-form-item__content .el-col-2{
+.teach_Test .el-form-item__content .el-col-2{
     padding-left:0.4%;
     width:1.33%;
 }
-.el-form-item__content .el-select{
+.teach_Test .el-form-item__content .el-select{
     width:100%;
 }
-.el-form-item__content .el-select-dropdown{
+.teach_Test .el-form-item__content .el-select-dropdown{
     min-width:38%;
 }
-.el-form-item__content .el-input{
+.teach_Test .el-form-item__content .el-input{
     width:100%;
 }
-.testOnline{
+.teach_Test .testOnline{
     width:100%;
     height:100%;
     background:#fff;
@@ -617,7 +620,7 @@ a{
     left:0;
     border:1px solid #000;
 }
-.titleB{
+.teach_Test .titleB{
     width:100%;
     height:150px;
     border:1px solid #000;
@@ -628,18 +631,18 @@ a{
     box-sizing:border-box;
     display:flex;
 }
-.contentBox{
+.teach_Test .contentBox{
     width:100%;
     height:79%;
     display:flex;
 }
-.dispear{
+.teach_Test .dispear{
     display:none;
 }
-.userMessage{
+.teach_Test .userMessage{
     width:1048px;
     height:100%;
-    background:#fff;s
+    background:#fff;
     position:absolute;
     top:0;
     left:0;

@@ -9,6 +9,7 @@ export default new Vuex.Store({
  state : {
     username:'',
     userType:'',
+    userTypeC:'',
     course:'',
     noTree:{},
     session:{},
@@ -30,6 +31,9 @@ export default new Vuex.Store({
     },
     userType(state,item){
         state.userType = item;
+    },
+    userTypeC(state,item){
+        state.userTypeC = item;
     },
     allTestNum(state,item){
         state.allTestNum = item;

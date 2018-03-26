@@ -20,15 +20,20 @@
                     <div class="phoneApp">
                         手机客户端
                     </div>
-                    <router-link :to="{path:'/teacherCMS'}">
-                        <div class="userPic" v-if="nickName">
-                            <img src="../../assets/user.png">
-                        </div>
-                        <a v-text="nickName" v-if="nickName" class="username" :value="nickName"></a>
-                    </router-link>
+                    <div class="user_bn">
+                        <router-link :to="{path:'/teacherCMS'}">
+                            <div class="userPic" v-if="nickName">
+                                <img src="../../assets/user.png">
+                            </div>
+                            <a v-text="nickName+ '(' + $store.state.userTypeC + ')'" v-if="nickName" class="username" :value="nickName"></a>
+                        </router-link>
                         <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
                             <modal ref="modal" @receive="modal"></modal>
-                        <a :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</a>
+                        <div class="userhover" v-if="nickName">
+                            <span class="usermine">我的</span>
+                            <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -42,7 +47,9 @@ import Modal from '@/components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import modalEventBind from '../../assets/js/ModalEventBind';
 import EventBus from '../../assets/js/EventBus';
-import bus from '../../assets/js/Bus'
+import bus from '../../assets/js/Bus';
+import core from '../../../server/utils/core.js'
+
 
 export default {
   name: 'navgationHead',
@@ -58,7 +65,8 @@ export default {
       phPassword:true,
       nickName:'',
       currentNavData: '',
-      url:''
+      url:'',
+      userId:''
     }
   },
   mounted(){
@@ -73,18 +81,15 @@ export default {
             }).catch(function(error){
                 console.log("error init." + error)
             });
-
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
-      
-        
 
         setTimeout(function(){
                     if(this.$store.state.username){
                     this.nickName = this.$store.state.username;
+
                 };
         }.bind(this),200);
-
-         modalEventBind(this.$refs.modal);
+        modalEventBind(this.$refs.modal);
   },
   methods: {
       logOut(){
@@ -104,8 +109,9 @@ export default {
                   });
            this.$store.commit('username','');
            this.$store.commit('userType','');
+           this.$store.commit('userTypeC','');
            this.$router.push('/');
-           this.$router.go(0);
+        //   this.$router.go(0);
       },
       prompt: function(message, title, callback, options) {
             if (typeof title === 'function') {
@@ -133,10 +139,8 @@ export default {
       bus.$emit('passHeaderNavData',currentNavData)
       // console.log(currentNavData)
     }
-
   },
   components:{Modal}
-
 }
 </script>
 
@@ -195,7 +199,6 @@ a:hover{
     border-radius:5px;
     margin-right:260px;
 }
-
 .user{
   display:flex;
   position:absolute;
@@ -207,28 +210,20 @@ a:hover{
   top:5px;
   left:-300px;
 }
-.user span{
-    position:absolute;
-    top:0;
-    right:100px;
-}
 .username{
     position:absolute;
-    top:6px;
+    top:9px;
     right:80px;
 }
 .user a{
-  font-size:18px;
+  font-size:16px;
   color:inherit;
   /*background: pink;*/
   display: inline-block;
   height: 50px;
-  width: 100px;
+  width: 155px;
   /*text-align: right;*/
   margin-bottom:-26px;
-}
-.user a:hover{
-  color:#f00;
 }
 .user p{
   margin-top:6px;
@@ -239,15 +234,46 @@ a:hover{
     border-radius:50%;
     overflow:hidden;
     position: absolute;
-    top: -30px;
-    right: 170px;
+    top: -50px;
+    right: 148px;
 }
 .user .userPic img{
     width:100%;
 }
-.logOut{
+.user_bn{
+    position:relative;
+}
+.userhover{
+    width:160px;
+    height:52px;
+    background:#ddd;
     position:absolute;
-    top:6px;
-    right:0;
+    top:34px;
+    right:79px;
+    z-index:1000;
+    border-radius:24px;
+    display:none;
+    
+}
+.user_bn:hover .userhover{
+    display:block;
+}
+.usermine{
+    font-size:16px;
+    position:absolute;
+    top:14px;
+    right:98px;
+}
+.logOut{
+    font-size:16px;
+    position:absolute;
+    top:14px;
+    right:27px;
+}
+.usermine:hover{
+    color:#f00;
+}
+.logOut:hover{
+    color:#f00;
 }
 </style>

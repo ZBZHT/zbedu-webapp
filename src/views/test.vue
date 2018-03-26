@@ -1,8 +1,10 @@
 <template>
-<div>
+<div class="test_T">
     <div class="question" id="content">
         <div class="leftBox">
-            <p>{{user}}</p>
+            <p>
+                <nav-user></nav-user>
+            </p>
             <ul class="leftItem">
                 <li class="leftLi" v-for="(item,index) in leftBox"
                     @click="rightAppear(index)"
@@ -221,6 +223,8 @@
 import axios from 'axios'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
+import navUser from '@/components/common/navUser';
+
 
 export default {
   name: 'test',
@@ -695,7 +699,7 @@ export default {
                 this.stuform.timeHour = 2;
             }
     },
-  components:{Modal,footFooter}
+  components:{Modal,navUser,footFooter}
 
 }
 </script>
@@ -714,7 +718,7 @@ a{
 p{
     margin:0;
 }
-.question{
+.test_T .question{
     min-width:1200px;
     min-width:700px;
     width:1200px;
@@ -724,18 +728,18 @@ p{
     border:1px solid #6a1518;
     display:flex;
 }
-.leftBox{
+.test_T .leftBox{
     width:12.5%;
     height:100%;
 }
-.leftBox > p{
+.test_T .leftBox > p{
     font-size:20px;
-    margin-top:68px;
+    margin-top:110px;
 }
-.leftBox .leftItem{
+.test_T .leftBox .leftItem{
     margin-top:57px;
 }
-.leftLi{
+.test_T .leftLi{
     line-height:56px;
     background:#2b333b;
     margin-top:10px;
@@ -744,16 +748,16 @@ p{
     cursor:pointer;
     color:#fff;
 }
-.active{
+.test_T .active{
     color:#f00;
 }
-.rightBox{
+.test_T .rightBox{
     width:87.5%;
     height:100%;
     position:relative;
     border-left:1px solid #6a1518;
 }
-.testOnline{
+.test_T .testOnline{
     width:100%;
     height:100%;
     background:#fff;
@@ -761,7 +765,7 @@ p{
     top:0;
     left:0;
 }
-.title{
+.test_T .title{
     width:100%;
     height:15%;
     text-align:left;
@@ -772,22 +776,22 @@ p{
     display:flex;
     border-bottom:1px solid #6a1518;
 }
-.inforItem{
+.test_T .inforItem{
     margin-left:8px;
     display:flex;
 }
-.infor{
+.test_T .infor{
     margin-right:14px;
     margin-top:20px;
 }
-.infor p{
+.test_T .infor p{
     font-size:17px;
     margin-top:-2px;
 }
-.notSt{
+.test_T .notSt{
     position:relative;
 }
-.notStart{
+.test_T .notStart{
     display:block;
     width:70px;
     background:#fff;
@@ -795,11 +799,11 @@ p{
     top:21px;
     left:0;
 }
-.content{
+.test_T .content{
     width:100%;
     height:85%;
 }
-.data{
+.test_T .data{
     width:100%;
     height:91%;
     overflow:hidden;
@@ -808,41 +812,41 @@ p{
     box-sizing:border-box;
     overflow:auto;
 }
-.data-p{
+.test_T .data-p{
     height:9%;
     line-height:9%;
 }
-.data-p-title{
+.test_T .data-p-title{
     margin-right:50px;
     font-weight:bolder;
 }
-.data-p-desc{
+.test_T .data-p-desc{
     font-size:15px;
 }
-.sureBtn{
+.test_T .sureBtn{
     width:100%;
     height:9%;
     border-top:1px solid #6a1518;
     text-align:right;
 }
-.dispear{
+.test_T .dispear{
     display:none;
 }
-.tip{
+.test_T .tip{
     background:yellow;
     height:18px;
 }
-.number{
+.test_T .number{
     width:29%;
     height:100%;
     border:1px solid #000;
     position:relative;
 }
-.number li{
+.test_T .number li{
     display:inline-block;
     margin-left:4px;
 }
-.number a{
+.test_T .number a{
     display:block;
     width:50px;
     height:50px;
@@ -851,44 +855,44 @@ p{
     padding-top:36%;
     box-sizing:border-box;
 }
-.isCheck{
+.test_T .isCheck{
     background:#953033;
     color:#fff;
 }
-.status{
+.test_T .status{
     display:flex;
     margin-top:30px;
 }
-.do{
+.test_T .do{
     margin-left:30px;
 }
-.doP{
+.test_T .doP{
     border:1px solid #000;
 }
-.desc{
+.test_T .desc{
     margin-top:15px;
 }
-.desctitle{
+.test_T .desctitle{
     font-weight:bolder;
 }
-.err{
+.test_T .err{
     color:#e4393c;
 }
-.ans{
+.test_T .ans{
     display:flex;
     margin-top:5px;
     margin-bottom:5px;
 }
-.answer{
+.test_T .answer{
     display:none;
 }
-.ans li{
+.test_T .ans li{
     margin-left:27px;
 }
-.ans li :hover{
+.test_T .ans li :hover{
     cursor:pointer;
 }
-.btn{
+.test_T .btn{
     width:85%;
     height: 78px;
     margin-top:10px;
@@ -899,7 +903,7 @@ p{
     left:18px;
     cursor:pointer;
 }
-.userMessage{
+.test_T .userMessage{
     width:100%;
     height:100%;
     background:#fff;
@@ -910,66 +914,66 @@ p{
     text-align:left;
     overflow:auto;
 }
-.testLine{
+.test_T .testLine{
     background:#ddd;
     padding-left:5px;
     margin-bottom:10px;
 }
-.testLine li{
+.test_T .testLine li{
     display:inline-block;
     width:143px;
     margin-right:17px;
 }
-.testLine .testTitle a{
+.test_T .testLine .testTitle a{
     text-decoration:underline;
 }
-.testLine .testTitle a:hover{
+.test_T .testLine .testTitle a:hover{
     color:#f00;
 }
-.errAnalysis a{
+.test_T .errAnalysis a{
     text-decoration:underline;
 }
-.errAnalysis a:hover{
+.test_T .errAnalysis a:hover{
     color:#f00;
 }
-.ans{
+.test_T .ans{
     display:flex;
     margin-top:5px;
     margin-bottom:5px;
 }
-.ans li{
+.test_T .ans li{
     margin-left:27px;
     width: 100%;
 }
-.ans li :hover{
+.test_T .ans li :hover{
     cursor:pointer;
 }
 #content:-webkit-full-screen {
     width: 100%;
     height: 100%;
 }
-.el-col {
+.test_T .el-col {
     border-radius: 4px;
 }
-.bg-purple-dark {
+.test_T .bg-purple-dark {
     background: #99a9bf;
 }
-.grid-content {
+.test_T .grid-content {
     border-radius: 4px;
     min-height: 36px;
     text-align:center;
 }
-.row-bg {
+.test_T .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
 }
 .el-button--danger.is-plain{
     padding: 15px 40px 15px 40px;
 }
-.el-button--danger.is-plain p{
+.test_T .el-button--danger.is-plain p{
     font-size:20px;
 }
-.exerciseOnline{
+.test_T .exerciseOnline{
     width:100%;
     height:100%;
     background:#fff;
@@ -980,19 +984,19 @@ p{
     text-align:left;
     overflow:auto;
 }
-.test-exercise{
+.test_T .test-exercise{
     width:100%;
     height:85%;
     padding: 30px 40px 4px 40px;
     box-sizing:border-box;
 }
-.el-select-dropdown__list .el-select-dropdown__item{
+.test_T .el-select-dropdown__list .el-select-dropdown__item{
     padding: 0 20px !important;
 }
-.el-button--primary{
+.test_T .el-button--primary{
     padding:10px !important;
 }
-.el-button--default{
+.test_T .el-button--default{
     padding:10px !important;
 }
 </style>
