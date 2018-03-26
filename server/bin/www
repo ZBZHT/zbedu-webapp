@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 
 // Get port from environment and store in Express.
 var port = normalizePort(process.env.PORT || '8000');
+app.set('port', port);
 
 // Create HTTP server.
 var server = http.createServer(app, function (req, res) {

@@ -222,6 +222,7 @@ function checkLogin(req, res, next) {
 
 // 退出
 router.post('/user/logout', function (req, res) {
+
   let ID = req.sessionID;
   let conditions = {_id: ID};
   Session.remove(conditions, function (error) {

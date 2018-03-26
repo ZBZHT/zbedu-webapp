@@ -4,6 +4,7 @@ const _ = require('lodash');
 const fs = require('fs');
 const archiver = require('archiver');
 const formidable = require('formidable');
+const moment = require('moment');
 
 const fs_ext = require('../utils/fs_ext')();
 const core = require('../utils/core');
@@ -265,7 +266,7 @@ router.get('/loadFile',function(req, res) {
                 //isFile: stats.isFile(),
                 //isDirectory: stats.isDirectory(),
                 size: ((stats.size) / 1000000).toFixed(2),
-                birthtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.birthtime),
+                birthtime: moment(stats.birthtime).format('YYYY-MM-DD, h:mm:ss'),
                 //ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
                 //mtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.mtime)    //modify time
               };

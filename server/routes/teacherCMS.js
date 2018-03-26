@@ -104,13 +104,15 @@ router.post('/labelTree', function (req, res) {
     let reqBody = req.body.data;
     res.setHeader("Content-Type", "application/json");
 
-    if (reqBody.userType == 'admin' || reqBody.userType == 'E') {
+    if (reqBody.userType == 'S' || reqBody.userType == 'O') {
+      //console.log('O');
       fs.readFile("../app/mock/CMSlabelTree.json", 'utf-8', function (err, data) {
         if (err) {
           console.log(err);
         } else {
           let labelTree = JSON.parse(data);
-          //console.log(labelTree);
+          labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
+          console.log(labelTree);
           res.status(200).send({
             result: labelTree
           });
@@ -132,15 +134,13 @@ router.post('/labelTree', function (req, res) {
           });
         }
       });
-    } else if (reqBody.userType == 'S' || reqBody.userType == 'O') {
-      //console.log('O');
+    } else if (reqBody.userType == 'admin' || reqBody.userType == 'E') {
       fs.readFile("../app/mock/CMSlabelTree.json", 'utf-8', function (err, data) {
         if (err) {
           console.log(err);
         } else {
           let labelTree = JSON.parse(data);
-          labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
-          console.log(labelTree);
+          //console.log(labelTree);
           res.status(200).send({
             result: labelTree
           });
@@ -413,6 +413,24 @@ router.post('/updateUser', function (req, res) {
   } else {
     res.status(404).send({
       Msg: '该用户无权限',
+      success: 1,
+    });
+  }
+});
+
+//个人信息请求
+router.post('/myDataMst', function (req, res) {
+  //console.log(req.body.data);
+  if (req.body.data) {
+    let username = req.body.data.username;
+    User.find().then(function (users) {
+      res.status(200).send({
+        userInfo: users
+      });
+    });
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
       success: 1,
     });
   }
