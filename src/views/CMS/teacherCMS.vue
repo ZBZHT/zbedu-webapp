@@ -48,7 +48,7 @@
           <my-course></my-course>
         </div>
         <!--我的考试-->
-        <div v-show="isShow400">
+        <div v-show="isShow401">
           <my-course></my-course>
         </div>
 
@@ -72,7 +72,6 @@
   import MyData from './myData'
   import MyFootprint from './myFootprint'
   import MyCourse from './myCourse'
-  //import core from '../../server/utils/core.js'
 
   export default {
     name: 'index',
@@ -96,7 +95,7 @@
         isShow202: false,
         isShow300: false,
         isShow301: false,
-        isShow400: false,
+        isShow401: false,
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
@@ -115,7 +114,7 @@
           this.isShow202 = false;
           this.isShow300 = false;
           this.isShow301 = false;
-          this.isShow400 = false;
+          this.isShow401 = false;
         }
         //点击题库管理
         if (data.id == 102) {
@@ -126,7 +125,7 @@
           this.isShow202 = false;
           this.isShow300 = false;
           this.isShow301 = false;
-          this.isShow400 = false;
+          this.isShow401 = false;
         }
         //点击我的资料
         if (data.id == 201) {
@@ -137,7 +136,7 @@
           this.isShow202 = false;
           this.isShow300 = false;
           this.isShow301 = false;
-          this.isShow400 = false;
+          this.isShow401 = false;
         }
         //点击我的足迹
         if (data.id == 202) {
@@ -148,7 +147,7 @@
           this.isShow202 = true;
           this.isShow300 = false;
           this.isShow301 = false;
-          this.isShow400 = false;
+          this.isShow401 = false;
         }
         //点击我的课程
         if (data.id == 300) {
@@ -159,7 +158,7 @@
           this.isShow202 = false;
           this.isShow300 = true;
           this.isShow301 = false;
-          this.isShow400 = false;
+          this.isShow401 = false;
         }
         //点击我的课程
         if (data.id == 301) {
@@ -170,7 +169,7 @@
           this.isShow202 = false;
           this.isShow300 = false;
           this.isShow301 = true;
-          this.isShow400 = false;
+          this.isShow401 = false;
         }
         //点击我的课程
         if (data.id == 400) {
@@ -181,7 +180,7 @@
           this.isShow202 = false;
           this.isShow300 = false;
           this.isShow301 = false;
-          this.isShow400 = true;
+          this.isShow401 = true;
         }
       },
     },
@@ -251,15 +250,15 @@
     padding: 10rem;
   }
 
-  .el-table td, .el-table th {
+  .CMS_cont .el-table td, .el-table th {
     padding: 2px;
   }
 
-  .el-table-column--selection .cell {
+  .CMS_cont .el-table-column--selection .cell {
     padding-left: 0;
   }
 
-  .block .el-button {
+  .CMS_cont .block .el-button {
     float: left;
   }
 </style>

@@ -159,8 +159,8 @@
 
           <el-form-item label="性别" prop="gender" style="width: 48%">
             <el-radio-group v-model="addUserForm1.gender">
-              <el-radio v-model="radio" label="1">男</el-radio>
-              <el-radio v-model="radio" label="2">女</el-radio>
+              <el-radio v-model="radio2" label="1">男</el-radio>
+              <el-radio v-model="radio2" label="2">女</el-radio>
             </el-radio-group>
           </el-form-item>
 
@@ -193,7 +193,7 @@
                 <el-option label="机电专业" value="机电专业"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="班级" prop="classGrade" >
+            <el-form-item label="班级" prop="classGrade">
               <el-input v-model="addUserForm1.classGrade" placeholder="请输入班级"></el-input>
             </el-form-item>
           </el-form>
@@ -209,7 +209,6 @@
         </el-form>
 
         <div slot="footer" class="dialog-footer" style="width: 93%">
-          <el-button @click="resetUser1">重&emsp;置</el-button>
           <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
         </div>
       </el-dialog>
@@ -235,6 +234,7 @@
   import axios from 'axios'
   import core from '../../../server/utils/core.js'
   import md5 from 'js-md5'
+  import moment from 'moment'
 
   export default {
     name: 'userManager',
@@ -334,9 +334,9 @@
             { min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur' }
           ],
         },
-        radio: '1',
-        radio1: 'S',
-
+        radio: "1",
+        radio2: "1",
+        radio1: "S",
       }
     },
     computed: {},
@@ -358,12 +358,16 @@
         }
       },
       // 添加用户成功后提示信息
-      addUserSuccess() {
+      addUserSuccess(msg) {
         this.$message({
           showClose: true,
-          message: '用户信息已存入数据库',
+          message: msg,
           type: 'success'
         });
+      },
+      // 添加用户失败提示信息
+      addUserDefeat(msg) {
+        this.$message.error(msg);
       },
       //重置添加添加用户
       resetUser() {
@@ -407,6 +411,8 @@
         this.addUserForm1.major = row.major;
         this.addUserForm1.classGrade = row.classGrade;
         this.dialogFormVisible1 = true;
+        console.log(this.addUserForm1);
+        console.log(this.addUserForm);
       },
 
       //删除用户信息方法
@@ -464,21 +470,40 @@
 
       //添加单个用户
       addUser() {
-        this.dialogFormVisible = false;
-        //处理发送的用户信息方法
-        function resUserData(data) {
-          if (data.pwd == '') {
-            data.pwd = md5(data.IDNo.substring(data.IDNo.length-6));
+        if (!this.addUserForm.user) {
+          this.addUserDefeat('请输入姓名!');
+        } else if (!this.addUserForm.gender) {
+          this.addUserDefeat('请选择性别!');
+        } else if (!this.addUserForm.userID) {
+          this.addUserDefeat('请输入学号!');
+        } else if (!this.addUserForm.MoNo) {
+          this.addUserDefeat('请输入手机号!');
+        } else if (!this.addUserForm.IDNo) {
+          this.addUserDefeat('请输入身份证号!');
+        } else if (!this.addUserForm.userType) {
+          this.addUserDefeat('请选择用户类别!');
+        } else if (!this.addUserForm.major) {
+          this.addUserDefeat('请选择专业!');
+        } else if (!this.addUserForm.classGrade) {
+          this.addUserDefeat('请输入班级!');
+        } else if (!this.addUserForm.AdmDate) {
+          this.addUserDefeat('请选择日期!');
+        } else {
+          this.dialogFormVisible = false;
+          //处理发送的用户信息方法
+          function resUserData(data) {
+            if (data.pwd == '') {
+              data.pwd = md5(data.IDNo.substring(data.IDNo.length-6));
+            }
+            data.AdmDate = moment(data.AdmDate).format("YYY-MM-DD");
+            if (data.n_name == '') {
+              data.n_name = data.user
+            }
+            return data;
           }
-          data.AdmDate = core.formatDate("yyyy-MM-dd", data.AdmDate);
-          if (data.n_name == '') {
-            data.n_name = data.user
-          }
-          return data;
-        }
 
-        let resData = resUserData(this.addUserForm);
-          console.log(this.addUserForm);
+          let resData = resUserData(this.addUserForm);
+          //console.log(this.addUserForm);
           axios.post('http://' + this.url + ':8000/teacherCMS/addUser', {
             data: {
               username: this.username,
@@ -490,10 +515,11 @@
             if (res.data.userInfo) {
               this.dataManager.push(res.data.userInfo);
               this.total = this.dataManager.length;
-              this.addUserSuccess();
+              this.addUserSuccess('用户信息已存入数据库');
               this.resetUser();
             }
           });
+        }
       },
       //修改用户信息
       reUser() {
@@ -576,7 +602,7 @@
         let resUserInfo = res.data.userInfo;
         if (resUserInfo.length > 0) {
           for (let i = 0; i < resUserInfo.length; i++) {
-            resUserInfo[i].AdmDate = core.formatDate("yyyy-MM-dd", new Date(resUserInfo[i].AdmDate));
+            resUserInfo[i].AdmDate = moment(new Date(resUserInfo[i].AdmDate)).format("YYYY-MM-DD");
           }
           this.dataManager = resUserInfo;
           this.total = this.dataManager.length;
@@ -596,6 +622,9 @@
   }
   .userManager_cont .userM_el-table .userM_el-tableBut {
     margin-top: 0;
+  }
+  .userManager_cont .el-dialog {
+    border-radius: 16px;
   }
   .userManager_cont .el-Col .userM_But1,.userM_But2,.userM_But3 {
     float: left;
