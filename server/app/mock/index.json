@@ -1,19 +1,19 @@
 {
   "slides":[
     {
-      "src":"src/assets/手机app下载.jpg"
+      "src":"手机app下载.jpg"
     },
     {
-      "src":"src/assets/case.jpg"
+      "src":"case.jpg"
     },
     {
-      "src":"src/assets/Congratulate.jpg"
+      "src":"Congratulate.jpg"
     },
     {
-      "src":"src/assets/platform.jpg"
+      "src":"platform.jpg"
     },
     {
-      "src":"src/assets/platform2.jpg"
+      "src":"platform2.jpg"
     }
   ],
   "bestClassData":[
@@ -97,17 +97,17 @@
   ],
   "bottomLeftData":[
     {
-      "url":"src/assets/left.png",
+      "url":"left.png",
       "title":"DC-DC检测",
       "courseId": 71
     },
     {
-      "url":"src/assets/left.png",
+      "url":"left.png",
       "title":"DC-DC检测",
       "courseId": 72
     },
     {
-      "url":"src/assets/left.png",
+      "url":"left.png",
       "title":"DC-DC检测",
       "courseId": 73
     }

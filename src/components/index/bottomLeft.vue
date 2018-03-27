@@ -2,7 +2,7 @@
             <div class="bb-left-case">
 
                 <div class="mask-play-right" v-for="item in bottomLeftData">
-                    <img :src="item.url">
+                    <img :src="url_before + item.url">
                     <img @click="playBottomLeftVideo(item)" class="play-right" src="src/assets/play3.png">
                     <p class="p" @click="sendButtomLeftTitle(item)"><router-link :to="{path:'/courseNoTree/'+item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
                 </div>
@@ -19,7 +19,8 @@ export default {
   props :['bottomLeftData'],
   data () {
     return {
-      msg: 'bottomLeft'
+      msg: 'bottomLeft',
+      url_before:'src/assets/imgs/'
     }
   },
   methods: {

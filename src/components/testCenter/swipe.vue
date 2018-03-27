@@ -3,7 +3,7 @@
     <transition-group tag="ul" class='slide-ul' :name="name">
       <li v-for="(item , index ) in slides" :key="index" v-show="index===nowIndex">
         <a :href="item.href" :target="target">
-          <img :src="item.src" alt="">
+          <img :src="url_before + item.src" alt="">
         </a>
       </li>
     </transition-group>
@@ -43,7 +43,8 @@
     },
     data () {
       return {
-        nowIndex: 0
+        nowIndex: 0,
+        url_before:'src/assets/imgs/'
       }
     },
     computed: {
