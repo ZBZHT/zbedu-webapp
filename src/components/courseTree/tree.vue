@@ -173,11 +173,11 @@
   }
   .icon.folder {
     background: #fff;
-    background-image: url(/src/assets/add.png);
+    background-image: url(/src/assets/imgs/add.png);
   }
   .icon.folder-open {
     background: #fff;
-    background-image: url(/src/assets/mnus.png);
+    background-image: url(/src/assets/imgs/mnus.png);
   }
   .son-box{
     margin: 0px;

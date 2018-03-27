@@ -621,7 +621,7 @@
     /*width: 700px;*/
     height: 400px;
     margin: 20px 15%;
-    background: url("../assets/bbb.png") no-repeat center top;
+    background: url("../assets/imgs/bbb.png") no-repeat center top;
     background-size: cover;
     /*background: lavender;*/
 
@@ -733,11 +733,11 @@
   }
   .comment-box .msg-box .star-item.on{
     margin-top: 2px;
-    background-image: url(../../src/assets/on.png);
+    background-image: url(../../src/assets/imgs/on.png);
   }
   .comment-box .msg-box .star-item.off{
     margin-top: 2px;
-    background-image: url(../../src/assets/off.png);
+    background-image: url(../../src/assets/imgs/off.png);
   }
 
   .appraise-box .comment-box .msg-box p{

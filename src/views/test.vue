@@ -132,7 +132,7 @@
                                         <div v-for="(item5,index5) in userMessageData.testQuestionInfo[myNumber].error">
                                         <div v-for="(item6,index6) in userMessageData.testQuestion[myNumber].question" v-if="index6 == 0">
                                             <span class="desctitle">
-                                                <img src="../assets/err.jpg">
+                                                <img src="../assets/imgs/err.jpg">
                                                 {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
                                             </span>
                                             <ul class="ans">

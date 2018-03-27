@@ -611,7 +611,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       margin:0 10%;
       position: relative;
       /*background: lavender;*/
-      background: url("../assets/bbb.png") no-repeat center top;
+      background: url("../assets/imgs/bbb.png") no-repeat center top;
       background-size: cover;
       /*padding: 130px 100px;*/
     }
@@ -753,11 +753,11 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   }
   .comment-box .msg-box .star-item.on{
     margin-top: 2px;
-    background-image: url(../../src/assets/on.png);
+    background-image: url(../../src/assets/imgs/on.png);
   }
   .comment-box .msg-box .star-item.off{
     margin-top: 2px;
-    background-image: url(../../src/assets/off.png);
+    background-image: url(../../src/assets/imgs/off.png);
   }
 
   .comment-box .msg-box p{

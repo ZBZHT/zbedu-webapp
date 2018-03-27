@@ -8,7 +8,7 @@
     <div class="index-list">
         <div class="index-list-topline"></div>
         <div class="index-list-main">
-            <img src="../assets/index-bg.png">
+            <img src="../assets/imgs/index-bg.png">
             <div class="index-list-nav">
                 <nav-ul :navData = "navData"></nav-ul>
             </div>

@@ -2,11 +2,11 @@
     <div class="user">
                 <div class="login" v-show="true">
                     <div class="userBox">
-                        <p> <img class="unm" src="../assets/unm.png"> </p>
+                        <p> <img class="unm" src="../assets/imgs/unm.png"> </p>
                         <input name="fname" type="text" placeholder="昵称/ID/身份证号/手机号" v-model="username" autocomplete="on" autofocus="autofocus">
                     </div>
                     <div class="passwordBox">
-                        <p> <img class="psw" src="../assets/psw.png"> </p>
+                        <p> <img class="psw" src="../assets/imgs/psw.png"> </p>
                         <input name="fpassword" type="password" placeholder="密码" @keyup.enter="login" v-model="password" autocomplete="new-password">
                     </div>
                     <div class="btn">
@@ -93,7 +93,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     margin:0 auto;
     min-height:700px;
     height:900px;
-    background:url("../../src/assets/loginPage.jpg") no-repeat;
+    background:url("../../src/assets/imgs/loginPage.jpg") no-repeat;
     background-size:100% 100%;
     position:relative;
 }

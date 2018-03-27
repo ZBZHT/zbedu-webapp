@@ -2,9 +2,9 @@
 <div class="best-class">
     <div class="five-box" v-for="item in bestClassData">
         <div class="mask-play zz mf">
-            <img :src="item.url">
+            <img :src="url_before + item.url">
             <div class="mask">
-                <img @click="playBestVideo(item)" src="src/assets/play3.png">
+                <img @click="playBestVideo(item)" src="src/assets/imgs/play3.png">
                 <p class="ppv" @click="playBestPdf(item)"><span>PPT</span></p>
                 <p class="ppv" @click="playBestVideo(item)"><span>Video</span></p>
             </div>
@@ -24,7 +24,8 @@ export default {
   props:['bestClassData'],
   data () {
     return {
-      msg: 'bestClass'
+      msg: 'bestClass',
+      url_before:'src/assets/imgs/'
     }
   },
   methods: {

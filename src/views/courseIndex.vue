@@ -35,9 +35,9 @@
                     v-if="index >= (page-1)*6 && index <= (page-1)*6 + 5">
                     <a>
                         <div class="mask-play">
-                            <img :src="item.url">
+                            <img :src="url_before + item.url">
                             <div class="mask">
-                                <img @click="toPlayVideo(item)" class="play" src="src/assets/play3.png">
+                                <img @click="toPlayVideo(item)" class="play" src="src/assets/imgs/play3.png">
                                 <p @click="toPlayPdf(item)" class="ppv"><span>PPT</span></p>
                                 <p @click="toPlayVideo(item)" class="ppv"><span>Video</span></p>
                             </div>
@@ -107,7 +107,8 @@ export default {
           width: '100%',
           height: '100%'
         },
-      url:''
+      url:'',
+      url_before:'src/assets/imgs/'
     }
   },
   computed:{

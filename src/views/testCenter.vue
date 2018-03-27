@@ -34,7 +34,7 @@
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in hotTest">
-                        <img :src="item.url">
+                        <img :src="url_before + item.url">
                         <button class="btn" >
                             <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
@@ -48,7 +48,7 @@
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in contentTest">
-                        <img :src="item.url">
+                        <img :src="url_before + item.url">
                         <button class="btn" type="button">
                             <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
@@ -62,7 +62,7 @@
             <hr>
             <ul class="test">
                 <li class="test-li" v-for="item in gradeTest">
-                        <img :src="item.url">
+                        <img :src="url_before + item.url">
                         <button class="btn">
                             <router-link :to="'/test/' + item.testId + '/title/' + item.title">
                                 {{item.title}}
@@ -99,7 +99,8 @@ export default {
           width: '100%',
           height: '100%'
         },
-        url:''
+        url:'',
+        url_before:'src/assets/imgs/'
     }
   },
   created(){

@@ -2,7 +2,7 @@
 <div class="user_bn">
     <router-link :to="{path:'/teacherCMS'}">
         <div class="userPic" v-if="nickName">
-            <img src="../../assets/user.png">
+            <img src="../../assets/imgs/user.png">
         </div>
         <a v-text="nickName + '(' + userId + ')'" v-if="nickName" class="username" :value="nickName"></a>
     </router-link>    

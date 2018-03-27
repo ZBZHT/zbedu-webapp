@@ -34,7 +34,7 @@
                         <div class="desc" v-for="(item,index) in textQuestionData.question">
                             <span class="desctitle">
                                 <a @click="tip(index)">
-                                    <img src="../assets/tip.png">
+                                    <img src="../assets/imgs/tip.png">
                                 </a>
                                 {{item.num}}.{{item.desc}}
                             </span>
