@@ -1,6 +1,6 @@
 <template>
     <div class="contentui">
-        <el-row :gutter="15">
+        <el-row :gutter="26">
             <el-col :span="8"  v-for="(item,index) in navData" :key = "index">
                 <a @click="fobLink(index)">
                     <div class="grid-content" 
@@ -84,19 +84,19 @@ a:hover{
 }
 .contentui{
     width:83%;
-    padding:5%;
+    padding: 22% 5% 5% 5%;
     box-sizing:border-box;
 }
-.el-row {
+.contentui .el-row {
     margin-bottom: 20px;
     &:last-child {
       margin-bottom: 0;
     }
 }
-.el-col {
+.contentui .el-col {
     border-radius: 4px;
 }
-.introduce{
+.contentui .introduce{
     width:100%;
     height:0px;
     position:absolute;
@@ -105,41 +105,41 @@ a:hover{
     background:rgba(200,200,200,0.5);
     transition:height 0.5s;
 }
-.introduce p{
+.contentui .introduce p{
     color:#000;
     display:none;
 }
-.el-col:hover .introduce{
+.contentui .el-col:hover .introduce{
     height:80px;
 }
-.el-col:hover .introduce p{
+.contentui .el-col:hover .introduce p{
     display:block;
     color:#000;
 }
-.bg-purple {
+.contentui .bg-purple {
     background-color:rgba(0,0,0,0.5);
 }
-.grid-content {
+.contentui .grid-content {
     border-radius: 4px;
-    min-height: 184px;
+    min-height: 0;
     margin-top: 7.5px;
-    margin-bottom: 7.5px;
-    padding-top: 74px;
+    margin-bottom: 20.5px;
+    padding: 50px;
     box-sizing: border-box;
     position:relative;
     transition:0.5s ease;
     overflow:hidden;
     border: 1px solid #ccc;
 }
-.grid-content:hover{
+.contentui .grid-content:hover{
     transform:scale(1.05);
     box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
-.grid-content .p{
+.contentui .grid-content .p{
     font-size:22px;
     font-weight:bolder;
 }
-.row-bg {
+.contentui .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
 }

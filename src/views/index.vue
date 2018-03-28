@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
+  <div class="index-container">
     <div class="nav">
         <navgation-head></navgation-head>
     </div>
-   
+
 
     <div class="index-list">
         <div class="index-list-topline"></div>
@@ -50,7 +50,7 @@ export default {
 
   },
   methods:{
-              
+
   },
   mounted(){
       this.url = document.domain;
@@ -90,9 +90,6 @@ export default {
 </script>
 
 <style>
-.container{
-
-}
 *{
     margin:0;
     padding:0;
@@ -142,6 +139,8 @@ hr{
     width:100%;
     height:92%;
     display:flex;
+    padding-left: 100px;
+    box-sizing: border-box;
 }
 .index-list img{
     width:52%;

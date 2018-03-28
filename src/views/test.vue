@@ -20,7 +20,7 @@
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     </div>
                 </div>
-                <div class="content">
+                <div class="Tecontent">
                     <div class="data">
                         <p class="data-p">
                             <span class="data-p-title">考试题目:</span>
@@ -164,51 +164,75 @@
                     </div>
                 </div>
                 <div class="test-exercise">
-                    <el-form class="test-exercise-form" ref="stuform" :model="stuform" status-icon :rules="rules" label-width="80px">
-                        <el-form-item label="练习内容" prop="radio">
-                            <el-radio-group v-model="stuform.radio">
-                                <el-radio label="新能源汽车"></el-radio>
-                                <el-radio label="汽车发动机"></el-radio>
-                                <el-radio label="汽车底盘"></el-radio>
-                                <el-radio label="汽车电气"></el-radio>
-                                <el-radio label="汽车变速器"></el-radio>
-                            </el-radio-group>
-                        </el-form-item>
+                    <el-tabs type="border-card">
+                        <el-tab-pane label="创建练习">
+                            <el-form class="test-exercise-form" ref="stuform" :model="stuform" status-icon :rules="rules" label-width="80px">
+                                <el-form-item label="练习内容" prop="name">
+                                    <el-dropdown>
+                                        <span class="el-dropdown-link">
 
-                        <el-form-item label="考题数目" prop="num" required>
-                            <el-input v-model.number="stuform.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
-                        </el-form-item>
+                                            <div class="elinput">
+                                                <ul>
+                                                    <li v-for="item in stuform.name">{{item}}/</li>
+                                                </ul>
+                                            </div>
 
-                        <el-form-item label="考试时长">
-                            <el-col :span="8">
-                                <el-form-item prop="timeHour">
-                                    <el-select v-model="stuform.timeHour" placeholder="请选择小时">
-                                        <el-option label="0" value="zero"></el-option>
-                                        <el-option label="1" value="one"></el-option>
-                                        <el-option label="2" value="twe"></el-option>
-                                        <el-option label="3" value="three"></el-option>
-                                    </el-select>
-                                </el-form-item>    
-                            </el-col>
-                            <el-col class="line" :span="3">小时</el-col>
-                            <el-col :span="8">
-                                <el-form-item>
-                                    <el-select v-model="stuform.timeMin" placeholder="请选择分钟" @visible-change="isMin">
-                                        <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
-                                        <el-option label="10" value="ten"></el-option>
-                                        <el-option label="20" value="twenty"></el-option>
-                                        <el-option label="30" value="thirty"></el-option>
-                                        <el-option label="40" value="forty"></el-option>
-                                        <el-option label="50" value="fifty"></el-option>
-                                    </el-select>
+                                        </span>
+                                        <el-dropdown-menu slot="dropdown" class="dropdown">
+                                            <div class="treeModle">
+                                                <el-tree
+                                                    :data="data"
+                                                    ref="tree"
+                                                    show-checkbox
+                                                    node-key="id"
+                                                    @node-click="handleClick">
+                                                </el-tree>
+                                            </div>
+                                            <div class="buttons">
+                                                <el-button @click="getCheckedNodes">确定</el-button>
+                                            </div>
+                                        </el-dropdown-menu>
+                                    </el-dropdown>
                                 </el-form-item>
-                            </el-col>
-                            <el-col class="line" :span="4">分钟</el-col>
-                        </el-form-item>
 
-                        <el-button type="primary" @click="submitForm('stuform')">开始练习</el-button>
-                        <el-button type="default" @click="resetForm('stuForm')" value="Reset">重置</el-button>
-                    </el-form>
+                                <el-form-item label="考题数目" prop="num" required>
+                                    <el-input v-model.number="stuform.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
+                                </el-form-item>
+
+                                <el-form-item label="考试时长">
+                                    <el-col :span="8">
+                                        <el-form-item prop="timeHour">
+                                            <el-select v-model="stuform.timeHour" placeholder="请选择小时">
+                                                <el-option label="0" value="zero"></el-option>
+                                                <el-option label="1" value="one"></el-option>
+                                                <el-option label="2" value="twe"></el-option>
+                                                <el-option label="3" value="three"></el-option>
+                                            </el-select>
+                                        </el-form-item>    
+                                    </el-col>
+                                    <el-col class="line" :span="3">小时</el-col>
+                                    <el-col :span="8">
+                                        <el-form-item>
+                                            <el-select v-model="stuform.timeMin" placeholder="请选择分钟" @visible-change="isMin">
+                                                <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
+                                                <el-option label="10" value="ten"></el-option>
+                                                <el-option label="20" value="twenty"></el-option>
+                                                <el-option label="30" value="thirty"></el-option>
+                                                <el-option label="40" value="forty"></el-option>
+                                                <el-option label="50" value="fifty"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col class="line" :span="4">分钟</el-col>
+                                </el-form-item>
+
+                                <el-button type="primary" @click="submitForm('stuform')">开始练习</el-button>
+                                <el-button type="default" @click="resetForm('stuForm')" value="Reset">重置</el-button>
+                            </el-form>
+                        </el-tab-pane>
+                        <el-tab-pane label="历史练习">历史练习</el-tab-pane>
+                    </el-tabs>
+                    
                 </div>
             </div>
         </div>
@@ -251,14 +275,16 @@ export default {
             {li:'考试管理'},
             {li:'在线练习'}
         ],
+        data:[],
         stuform:{
-            radio:'',
+            name:[],
+            nameId:[],
             timeHour:2,
             timeMin:'',
             num:''
         },
         rules: {
-            radio: [
+            name: [
                 { required: true, message: '请选择练习的内容', trigger: 'change' }
             ],
             timeHour: [
@@ -314,11 +340,18 @@ export default {
     }
   },
   created(){
- //   document.onkeydown = function(e){
-      //  if(window.event.keyCode === 27){
-      //      alert("...")
-     //   }
- //   };
+
+    this.url = document.domain;
+        axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
+                params:{
+                     user:234
+                }
+            }).then((res)=>{
+            //    console.log((res.data[0].children));
+                this.data = res.data[0].children;
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
 
     window.onkeydown = function(){
         if(checkFull()){
@@ -569,8 +602,10 @@ export default {
                 axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery",{
                     params:{
                         //state默认为0未开始考试，开始后为1
+                        //考试状态: currTestType 101 : 期末考试    102: 期中考试   103：随堂练习   104：在线练习
                         user:this.user,
                         state:1,
+                        currTestType:101
                     //    testId: e,
                     //    num: 20,
                     //    currTestNum: 1 + this.$store.state.allTestNum,
@@ -596,43 +631,6 @@ export default {
 
                 
             },
-            myAnswer:function(id,index){
-                this.lengthData = this.textQuestionData.question.length;
-                this.QidArr[index] = id;
-                console.log(this.QidArr);
-                var a = 0;
-                for(var i = 0;i < this.QidArr.length;i++){
-                    if(this.QidArr[i] != null){
-                        a+=1;
-                        this.isCheckNum = a ;
-                    }
-                }
-                this.$set(this.isCheckArr,index,true);
-
-                axios({
-                        method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestionInfo/update",
-                        params:{
-                            state:1,
-                            user:this.user,
-                            currTestId:this.$route.params.testId,
-                            testQuestion:this.$store.state.allTestNum,
-                            startTime:this.currentdate,
-                            currAnswer:this.picked,
-                            currState:this.isCheckArr,
-                            error:this.error,
-                            sorce:this.sorce,
-                            startTimeHours:this.hours,
-                            startTimeMinutes:this.minute,
-                            startTimeSeconds:this.second,
-                            testTimeMinutes:this.minutes,
-                            testTimeSeconds:this.seconds,
-                            isCheckNum:this.isCheckNum
-                        }
-                    }).then((res)=>{
-                            
-                        })
-            },
             myNum:function(index2){
                 this.myNumber = index2;
                 console.log(this.myNumber)
@@ -643,7 +641,9 @@ export default {
             rightAppear (index) {
                 this.currIndex = index;
                 if(index == 1){
-                    this.testManagen();
+                    this.testManagenHistory();
+                    this.testManagenWait();
+                    this.testManageNow();
                 }
             },
             DisplayFun(){
@@ -660,7 +660,13 @@ export default {
                     console.log("mamamama")
                 }
             },
-            testManagen(){
+            testManagenWait(){
+
+            },
+            testManageNow(){
+
+            },
+            testManagenHistory(){
                 axios({
                         method:'get',
                         url:"http://" + this.url + ":8000/testManagement/testManagement",
@@ -697,6 +703,19 @@ export default {
             resetForm(formName) {
                 this.stuform = {};
                 this.stuform.timeHour = 2;
+            },
+            //考试主题显示在input的func
+            getCheckedNodes() {
+                this.stuform.name = [];
+                this.stuform.nameId = [];
+                var arr = this.$refs.tree.getCheckedNodes();
+                for(var i = 0;i < arr.length;i++){
+                    this.stuform.name.push(arr[i].label);
+                    this.stuform.nameId.push(arr[i].courseId);
+                }
+            },
+            handleClick(data){
+
             }
     },
   components:{Modal,navUser,footFooter}
@@ -704,7 +723,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 *{
     padding:0;
 }
@@ -799,7 +818,7 @@ p{
     top:21px;
     left:0;
 }
-.test_T .content{
+.test_T .Tecontent{
     width:100%;
     height:85%;
 }
@@ -987,7 +1006,6 @@ p{
 .test_T .test-exercise{
     width:100%;
     height:85%;
-    padding: 30px 40px 4px 40px;
     box-sizing:border-box;
 }
 .test_T .el-select-dropdown__list .el-select-dropdown__item{
@@ -998,5 +1016,42 @@ p{
 }
 .test_T .el-button--default{
     padding:10px !important;
+}
+.test_T .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
+  border-right-color: #6a1518;
+  border-left-color: #6a1518;
+}
+.test_T .el-dropdown {
+    width: 488px;
+    position:relative;
+}
+.test_T .elinput{
+    width:502px;
+    height:38px;
+    border:1px solid #ccc;
+    border-radius:4px;
+    overflow:auto;
+}
+.test_T .el-form-item__content{
+    line-height:22px !important;
+}
+.test_T .elinput ul li{
+    display:inline-block;
+}
+.dropdown{
+    width:488px;
+    height:300px;
+    position:absolute;
+    left:75px;
+    bottom:0;
+}
+.treeModle{
+    width:488px;
+    height:250px;
+    overflow:auto;
+}
+.buttons .el-button{
+    width:100%;
+    height:60px;
 }
 </style>

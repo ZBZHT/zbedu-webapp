@@ -20,20 +20,21 @@
                     <div class="phoneApp">
                         手机客户端
                     </div>
-                    <div class="user_bn">
+                    <div class="user_bn" v-if="nickName">
                         <router-link :to="{path:'/teacherCMS'}">
                             <div class="userPic" v-if="nickName">
                                 <img src="../../assets/imgs/user.png">
                             </div>
                             <a v-text="nickName+ '(' + $store.state.userTypeC + ')'" v-if="nickName" class="username" :value="nickName"></a>
                         </router-link>
-                        <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
-                            <modal ref="modal" @receive="modal"></modal>
+                        
                         <div class="userhover" v-if="nickName">
                             <span class="usermine">我的</span>
                             <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
                         </div>
                     </div>
+                    <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
+                            <modal ref="modal" @receive="modal"></modal>
                 </li>
             </ul>
         </div>
@@ -212,8 +213,8 @@ a:hover{
 }
 .username{
     position:absolute;
-    top:9px;
-    right:80px;
+    top:60px;
+    right:31px;
 }
 .user a{
   font-size:16px;
@@ -223,7 +224,7 @@ a:hover{
   height: 50px;
   width: 155px;
   /*text-align: right;*/
-  margin-bottom:-26px;
+  margin-top:5px;
 }
 .user p{
   margin-top:6px;
@@ -234,22 +235,26 @@ a:hover{
     border-radius:50%;
     overflow:hidden;
     position: absolute;
-    top: -50px;
-    right: 148px;
+    top: 0px;
+    right: 86px;
 }
 .user .userPic img{
     width:100%;
 }
 .user_bn{
     position:relative;
+    width: 230px;
+    height: 84px;
+    margin-top: -50px;
+    box-shadow:0 0 10px #ccc;
 }
 .userhover{
     width:160px;
     height:52px;
     background:#ddd;
     position:absolute;
-    top:34px;
-    right:79px;
+    top:86px;
+    right:34px;
     z-index:1000;
     border-radius:24px;
     display:none;
