@@ -183,6 +183,7 @@ router.post('/user/login', checkLogin, function (req, res) {
 //跳转判断登录状态
 router.post('/user/loginState', function (req, res) {
   let sessID = req.sessionID;
+  console.log(sessID);
   let code = '';
   //查询数据库中用户名是否存在,存在则登录
   Session.findOne({

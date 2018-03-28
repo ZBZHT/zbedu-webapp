@@ -33,6 +33,8 @@ router.get('/update', function (req, res) {
   let QuestionInfo = req.query;
   let reqTestQuestion = QuestionInfo.testQuestion;
   let code = '';
+  console.log(QuestionInfo);
+  console.log(QuestionInfo.currTestType);
 
   //console.log( (QuestionInfo.startTime));
 
@@ -41,7 +43,7 @@ router.get('/update', function (req, res) {
     }, {
       state:QuestionInfo.state,
       user: QuestionInfo.user,
-      currTestId: QuestionInfo.currTestId,
+      currTestType: QuestionInfo.currTestType,
       startTime: QuestionInfo.startTime,
       currAnswer: QuestionInfo.currAnswer,
       currState: QuestionInfo.currState,

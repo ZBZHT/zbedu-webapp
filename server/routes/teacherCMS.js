@@ -4,8 +4,10 @@ const _ = require('lodash');
 const fs = require("fs");
 const formidable = require('formidable');
 const uploadsPath = "../app/uploads/addUser/";
+const addTestPath = "../app/uploads/addTest/";
 const User = require('../app/models/User');
 const xlsx2j = require('xlsx-2-json');
+const excel2json = require('excel-to-json');
 const md5 = require('js-md5');
 
 //设置跨域请求
@@ -299,45 +301,49 @@ router.post('/addExcelUsers', function(req, res) {
           output: newPath + "-output.json"
         }, function(err, result) {
           if(err) {
-            console.error(err);
+            console(err);
           }else {
-            let userInfo = [];
-            //格式化数据
-            for (let i = 0; i < result.length; i++) {
-              if (result[i].pwd == '') {
-                result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
-              } else {
-                result[i].pwd = md5(result[i].pwd);
-              }
-              if (result[i].n_name == '') {
-                result[i].n_name = result[i].user
-              }
-              userInfo = result;
-              let addUserData = new User({
-                n_name: result[i].n_name,
-                user: result[i].user,
-                pwd: result[i].pwd,
-                userID: result[i].userID,
-                IDNo: result[i].IDNo,
-                MoNo: result[i].MoNo,
-                userType: result[i].userType,
-                gender: result[i].gender,
-                AdmDate: result[i].AdmDate,
-                major: result[i].major,
-                classGrade: result[i].classGrade
-              });
-              //保存到数据库
-              addUserData.save(function (err) {
-                if (err) {
-                  console.log(err)
+            if (result) {
+              let userInfo = [];
+              //格式化数据
+              for (let i = 0; i < result.length; i++) {
+                if (result[i].pwd == '') {
+                  result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
                 } else {
-                  console.log('Save success');
+                  result[i].pwd = md5(result[i].pwd);
                 }
+                if (result[i].n_name == '') {
+                  result[i].n_name = result[i].user
+                }
+                userInfo = result;
+                let addUserData = new User({
+                  n_name: result[i].n_name,
+                  user: result[i].user,
+                  pwd: result[i].pwd,
+                  userID: result[i].userID,
+                  IDNo: result[i].IDNo,
+                  MoNo: result[i].MoNo,
+                  userType: result[i].userType,
+                  gender: result[i].gender,
+                  AdmDate: result[i].AdmDate,
+                  major: result[i].major,
+                  classGrade: result[i].classGrade
+                });
+                //保存到数据库
+                addUserData.save(function (err) {
+                  if (err) {
+                    console.log(err)
+                  } else {
+                    console.log('Save success');
+                  }
+                });
+              }
+              res.status(200).send({
+                userInfo: userInfo,
               });
+            } else {
+              console.log('文件读取错误');
             }
-            res.status(200).send({
-              userInfo: userInfo,
-            });
           }
         });
       });
@@ -346,7 +352,7 @@ router.post('/addExcelUsers', function(req, res) {
   catch (e) {
     res.status(404).send({
       err: 1,
-      msg: 'upload err',
+      msg: e,
     });
   }
 });
@@ -435,5 +441,90 @@ router.post('/myDataMst', function (req, res) {
     });
   }
 });
+
+//Excel导入考试题
+router.post('/addExcelTest', function(req, res) {
+  try {
+    let form = new formidable.IncomingForm();
+    form.uploadDir = uploadsPath;//设置文件上传存放地址
+    form.maxFieldsSize = 10 * 1024 * 1024; //设置最大10M
+    form.keepExtensions = true;
+
+    form.parse(req, function (err, fields, files) {
+      //旧名字
+      let fileName = files.file.name;
+      console.log(fileName);
+      //新名字
+      let oldPath = files.file.path;
+      let newPath = uploadsPath + fileName;
+      //改名
+      fs.rename(oldPath, newPath, function (err) {
+        if (err) {
+          throw  Error("改名失败");
+        }
+        //xlsx转换为json
+        xlsx2j({
+          input: newPath,
+          output: newPath + "-output.json"
+        }, function(err, result) {
+          if(err) {
+            console(err);
+          }else {
+            if (result) {
+              console.log((result));
+              let userInfo = [];
+              //格式化数据
+              /*for (let i = 0; i < result.length; i++) {
+                if (result[i].pwd == '') {
+                  result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
+                } else {
+                  result[i].pwd = md5(result[i].pwd);
+                }
+                if (result[i].n_name == '') {
+                  result[i].n_name = result[i].user
+                }
+                userInfo = result;
+                let addUserData = new User({
+                  n_name: result[i].n_name,
+                  user: result[i].user,
+                  pwd: result[i].pwd,
+                  userID: result[i].userID,
+                  IDNo: result[i].IDNo,
+                  MoNo: result[i].MoNo,
+                  userType: result[i].userType,
+                  gender: result[i].gender,
+                  AdmDate: result[i].AdmDate,
+                  major: result[i].major,
+                  classGrade: result[i].classGrade
+                });
+                //保存到数据库
+                addUserData.save(function (err) {
+                  if (err) {
+                    console.log(err)
+                  } else {
+                    console.log('Save success');
+                  }
+                });
+              }*/
+              res.status(200).send({
+                userInfo: userInfo,
+              });
+            } else {
+              console.log('文件读取错误');
+            }
+          }
+        });
+      });
+    });
+  }
+  catch (e) {
+    res.status(404).send({
+      err: 1,
+      msg: e,
+    });
+  }
+});
+
+
 
 module.exports = router;

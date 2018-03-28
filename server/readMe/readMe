@@ -5,3 +5,7 @@
 2 . 运行addComments.js  //添加comment评论数据
 5 . 运行addTestQuestionInfo.js  //添加TestQuestionInfo考试信息
  . 运行www启动服务
+
+
+考试状态: currTestType
+101 : 期末考试  102 : 期中考试  103 : 随堂练习  104: 在线练习

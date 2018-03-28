@@ -27,17 +27,22 @@ router.use(function (req, res, next) {
 
 //新增testQuestion的方法
 function newTestQuestion(req, res, next) {
-  let reqUser = req.query.user;
+  let reqQ = req.query;
+  let reqUser = reqQ.user;
+  let currTestType = reqQ.currTestType;
+  console.log('11');
+
   TestQuestion.find({
     user: reqUser
   }).then(function (msg) {
+    console.log(msg);
     testResult.testLength = msg.length;
 
     let testQuestion = new TestQuestion({
       "status": 0,
       "user": reqUser,
       "msg": "error parameter",
-      "testId": 101,
+      "currTestType" : currTestType,
       "state": 1,
       "currTestNum": testResult.testLength + 1,
       "title": "发动机7考试",
@@ -46,7 +51,7 @@ function newTestQuestion(req, res, next) {
 
     let testQuestionInfo = new TestQuestionInfo({
       user: reqUser,
-      currTestId: '101',
+      currTestType: currTestType,
       testQuestion: testResult.testLength + 1,
       state: 0,
       startTime: '',
@@ -283,7 +288,6 @@ router.get('/all', function (req, res) {
   let reqCurrTestNum = req.query.currTestNum;
   let reqUser = req.query.user;
   //console.log(reqUser);
-console.log(reqCurrTestNum);
     TestQuestion.findOne({
       currTestNum: reqCurrTestNum
     }).then(function (msgOne) {
@@ -334,5 +338,27 @@ router.get('/submitQuestionInfo', function (req, res) {
     }
   });
 });
+
+//老师创建考试
+router.get('/addTestQuestion', newTestQuestion, function (req, res) {
+  if (req.query) {
+    let reqQ = req.query;
+    let reqUser = reqQ.user;
+    //console.log(reqUser);
+    console.log(reqQ);
+
+    TestQuestion.find({
+      user: reqUser
+    }).then(function (msg) {
+      console.log(msg[msg.length-1]);
+
+    });
+  }
+});
+
+
+
+
+
 
 module.exports = router;
