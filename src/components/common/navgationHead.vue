@@ -246,7 +246,6 @@ a:hover{
     width: 230px;
     height: 84px;
     margin-top: -50px;
-    box-shadow:0 0 10px #ccc;
 }
 .userhover{
     width:160px;

@@ -280,7 +280,7 @@ export default {
             name:[],
             nameId:[],
             timeHour:2,
-            timeMin:'',
+            timeMin:0,
             num:''
         },
         rules: {
@@ -988,6 +988,8 @@ p{
 }
 .el-button--danger.is-plain{
     padding: 15px 40px 15px 40px;
+    color:#fef0f0;
+    background:#f56c6c;
 }
 .test_T .el-button--danger.is-plain p{
     font-size:20px;
