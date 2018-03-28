@@ -50,9 +50,6 @@ const routes = [
     {
       path:'/testCenter',
       name:'testCenter',
-      meta:{
-        requireTest:true
-      },
       component:testCenter
     },
     {
@@ -85,8 +82,11 @@ const routes = [
       component:sourceCenter
     },
     {
-      path:'/test/:testId/title/:title',
+      path:'/test',
       name:'test',
+      meta:{
+        requireTest:true
+      },
       component:test
     },
     {

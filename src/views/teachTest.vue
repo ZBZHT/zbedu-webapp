@@ -24,6 +24,109 @@
                 <div class="contentBox">
                     <el-tabs type="border-card" style="float:none;">
 
+                        <el-tab-pane label="待考试">
+                            <el-table :data="tableData" style="width: 100%">
+
+                                <el-table-column label="考试题目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试类型" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试数目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="创建人" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                    <p>姓名: {{ scope.row.name }}</p>
+                                    <p>住址: {{ scope.row.address }}</p>
+                                    <div slot="reference" class="name-wrapper">
+                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                                    </div>
+                                    </el-popover>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="操作">
+                                <template slot-scope="scope">
+                                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
+                                        删除
+                                    </el-button>
+                                </template>
+                                </el-table-column>
+                            </el-table>
+
+                        </el-tab-pane>
+
+                        <el-tab-pane label="历史考试">
+                            <el-table :data="tableData" style="width: 100%">
+
+                                <el-table-column label="考试题目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                              <el-form :inline="true">
+                                <el-table-column label="考试类型" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time" ></i>
+                                    <span style="margin-left: 10px;">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试数目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+                              </el-form>
+                                <el-table-column label="创建人" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+                            </el-table>
+
+                        </el-tab-pane>
+
                         <el-tab-pane label="创建考试">
                             <div>
                                 <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px">
@@ -146,108 +249,6 @@
                             </div>
                         </el-tab-pane>
 
-                        <el-tab-pane label="待考试">
-                            <el-table :data="tableData" style="width: 100%">
-
-                                <el-table-column label="考试题目" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试时间" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试类型" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试数目" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="创建人" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试时间" width="150">
-                                <template slot-scope="scope">
-                                    <el-popover trigger="hover" placement="top">
-                                    <p>姓名: {{ scope.row.name }}</p>
-                                    <p>住址: {{ scope.row.address }}</p>
-                                    <div slot="reference" class="name-wrapper">
-                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                                    </div>
-                                    </el-popover>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="操作">
-                                <template slot-scope="scope">
-                                    <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">
-                                        删除
-                                    </el-button>
-                                </template>
-                                </el-table-column>
-                            </el-table>
-
-                        </el-tab-pane>
-
-                        <el-tab-pane label="历史考试">
-                            <el-table :data="tableData" style="width: 100%">
-
-                                <el-table-column label="考试题目" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试时间" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                              <el-form :inline="true">
-                                <el-table-column label="考试类型" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time" ></i>
-                                    <span style="margin-left: 10px;">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试数目" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-                              </el-form>
-                                <el-table-column label="创建人" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-                            </el-table>
-
-                        </el-tab-pane>
                     </el-tabs>
                 </div>
             </div>

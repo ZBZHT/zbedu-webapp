@@ -42,11 +42,11 @@ export default {
         }else if(index == 2 && this.$store.state.userType == "admin"){
             this.$router.push('/teachTest');
         }else if(index == 2 && this.$store.state.userType == ""){
-            this.$router.push('/testCenter');
+            this.$router.push('/test');
         }else if(index == 2 && this.$store.state.userType == "S"){
-            this.$router.push('/testCenter');
+            this.$router.push('/test');
         }else if(index == 2 && this.$store.state.userType == "E"){
-            this.$router.push('/testCenter');
+            this.$router.push('/test');
         }else if(index == 2 && this.$store.state.userType == "T"){
             this.$router.push('/teachTest');
         }else if(index == 3){

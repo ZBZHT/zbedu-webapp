@@ -7,7 +7,9 @@
         <a v-text="nickName + '(' + userId + ')'" v-if="nickName" class="username" :value="nickName"></a>
     </router-link>    
         <div class="userhover">
-            <span class="usermine">我的</span>
+            <router-link :to="{path:'/teacherCMS'}">
+                <span class="usermine">我的</span>
+            </router-link>
             <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
         </div>
     

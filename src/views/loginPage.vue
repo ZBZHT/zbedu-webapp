@@ -21,6 +21,8 @@
 import axios from 'axios'
 import md5 from 'js-md5'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
+import core from '../../server/utils/core.js'
+
     export default {
         name: 'v-modal',
         data: function() {
@@ -57,9 +59,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                                     this.nickName = res.data.username;
                                     this.$store.commit('username',res.data.username);
                                     this.$store.commit('userType',res.data.userType);
+                                    this.$store.commit('userTypeC',core.userType(res.data.userType));
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
-                                    this.$router.go(0);
+                                //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 1){
                             //setCookie('username',this.username)
@@ -67,9 +70,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
                                     this.nickName = res.data.username;
                                     this.$store.commit('username',res.data.username);
                                     this.$store.commit('userType',res.data.userType);
+                                    this.$store.commit('userTypeC',core.userType(res.data.userType));
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
-                                    this.$router.go(0);
+                                //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
                             alert("用户名或密码错误");

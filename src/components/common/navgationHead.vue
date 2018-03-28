@@ -29,7 +29,9 @@
                         </router-link>
                         
                         <div class="userhover" v-if="nickName">
-                            <span class="usermine">我的</span>
+                            <router-link :to="{path:'/teacherCMS'}">
+                                <span class="usermine">我的</span>
+                            </router-link>
                             <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
                         </div>
                     </div>
