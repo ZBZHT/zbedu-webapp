@@ -30,9 +30,9 @@
                :visible.sync="dialogFormVisible"
                :before-close="handleClose"
                :close-on-click-modal="false">
-      <el-form :model="addUserForm" :rules="rules" ref="addUserForm" label-width="80px" class="demo-addUserForm">
+      <el-form :model="addUserForm" ref="addUserForm" label-width="80px" class="demo-addUserForm">
 
-        <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
+        <el-form :inline="true" :model="addUserForm" ref="addUserForm">
           <el-form-item label="手机号" prop="MoNo">
             <el-input v-model="addUserForm.MoNo" placeholder="手机号码位11位"></el-input>
           </el-form-item>

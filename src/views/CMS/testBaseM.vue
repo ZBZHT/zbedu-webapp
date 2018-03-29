@@ -11,7 +11,7 @@
         <span>
           <el-upload
             class="upload-demo"
-            action=""
+            action="http://192.168.2.251:8000/teacherCMS/addExcelTest"
             :onError="uploadError"
             :beforeUpload="beforeAvatarUpload"
             :onSuccess="uploadSuccess"
