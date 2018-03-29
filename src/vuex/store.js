@@ -14,7 +14,8 @@ export default new Vuex.Store({
     noTree:{},
     session:{},
     allTestNum:'',
-    vuexState:''
+    vuexState:'',
+    stillBtn:false
 },
  mutations : {
     newTitle(state,item){
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     vuexState(state,item){
         state.vuexState = item;
+    },
+    stillBtn(state,item){
+        state.stillBtn = item;
     }
 },
  plugins: [createPersistedState()]

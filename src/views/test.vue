@@ -58,9 +58,12 @@
                         </p>
                     </div>
                     <div class="sureBtn">
-                        <el-checkbox v-model="Iagree">我已阅读以上内容，点击进入考试开始倒计时</el-checkbox>
+                        <el-checkbox v-model="Iagree" v-if="!still_btn">我已阅读以上内容，点击进入考试开始倒计时</el-checkbox>
                         <el-button type="danger" :disabled="!Iagree" plain @click='add();getTest($route.params.testId);sendInfor()'>
-                            <p>进入考试</p>
+                            <p>开始考试</p>
+                        </el-button>
+                        <el-button type="danger" class="still_btn" v-if="still_btn" plain @click="sendInfor()">
+                            <p>继续考试</p>
                         </el-button>
                     </div>
                 </div>
@@ -72,7 +75,59 @@
                     </div>
                 </div>
                 <el-tabs type="border-card">
-                    <el-tab-pane label="待考试">待考试</el-tab-pane>
+                    <el-tab-pane label="待考试">
+                            <el-table :data="tableData" style="width: 100%">
+
+                                <el-table-column label="考试题目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试类型" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考题数目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="创建人" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试范围" width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                    <p>姓名: {{ scope.row.name }}</p>
+                                    <p>住址: {{ scope.row.address }}</p>
+                                    <div slot="reference" class="name-wrapper">
+                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                                    </div>
+                                    </el-popover>
+                                </template>
+                                </el-table-column>
+
+                            </el-table>
+
+                    </el-tab-pane>
                     <el-tab-pane label="历史考试">
                         <ul class="testLine">
                             <li class="testNumber">NO.</li>
@@ -154,7 +209,58 @@
                             </ul>
                         </ul>
                     </el-tab-pane>
-                    <el-tab-pane label="正在考试">正在考试</el-tab-pane>
+                    <el-tab-pane label="正在考试">
+                            <el-table :data="tableData" style="width: 100%">
+
+                                <el-table-column label="考试题目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试时间" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试类型" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考题数目" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="创建人" width="150">
+                                <template slot-scope="scope">
+                                    <i class="el-icon-time"></i>
+                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                </template>
+                                </el-table-column>
+
+                                <el-table-column label="考试范围" width="150">
+                                <template slot-scope="scope">
+                                    <el-popover trigger="hover" placement="top">
+                                    <p>姓名: {{ scope.row.name }}</p>
+                                    <p>住址: {{ scope.row.address }}</p>
+                                    <div slot="reference" class="name-wrapper">
+                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
+                                    </div>
+                                    </el-popover>
+                                </template>
+                                </el-table-column>
+
+                            </el-table>
+                    </el-tab-pane>
                 </el-tabs>
             </div>
             <div class="exerciseOnline" v-show="currIndex === 2">
@@ -196,13 +302,13 @@
                                 </el-form-item>
 
                                 <el-form-item label="考题数目" prop="num" required>
-                                    <el-input v-model.number="stuform.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
+                                    <el-input class="exerciseNum" v-model.number="stuform.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
                                 </el-form-item>
 
                                 <el-form-item label="考试时长">
-                                    <el-col :span="8">
+                                    <el-col :span="6">
                                         <el-form-item prop="timeHour">
-                                            <el-select v-model="stuform.timeHour" placeholder="请选择小时">
+                                            <el-select v-model="stuform.timeHour" placeholder="请选择小时" @change="isMin">
                                                 <el-option label="0" value="zero"></el-option>
                                                 <el-option label="1" value="one"></el-option>
                                                 <el-option label="2" value="twe"></el-option>
@@ -210,10 +316,10 @@
                                             </el-select>
                                         </el-form-item>    
                                     </el-col>
-                                    <el-col class="line" :span="3">小时</el-col>
-                                    <el-col :span="8">
+                                    <el-col class="line" :span="1">小时</el-col>
+                                    <el-col :span="6">
                                         <el-form-item>
-                                            <el-select v-model="stuform.timeMin" placeholder="请选择分钟" @visible-change="isMin">
+                                            <el-select v-model="stuform.timeMin" placeholder="请选择分钟">
                                                 <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
                                                 <el-option label="10" value="ten"></el-option>
                                                 <el-option label="20" value="twenty"></el-option>
@@ -223,7 +329,7 @@
                                             </el-select>
                                         </el-form-item>
                                     </el-col>
-                                    <el-col class="line" :span="4">分钟</el-col>
+                                    <el-col class="line" :span="1">分钟</el-col>
                                 </el-form-item>
 
                                 <el-button type="primary" @click="submitForm('stuform')">开始练习</el-button>
@@ -335,7 +441,25 @@ export default {
         interval:{},
         TestNum:0,
         Iagree:'',
-        formDisabled:false
+        formDisabled:false,
+        still_btn:false,
+        tableData: [{
+            date: '2016-05-02',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1518 弄'
+            }, {
+            date: '2016-05-04',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1517 弄'
+            }, {
+            date: '2016-05-01',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1519 弄'
+            }, {
+            date: '2016-05-03',
+            name: '王小虎',
+            address: '上海市普陀区金沙江路 1516 弄'
+        }]
 
     }
   },
@@ -405,9 +529,6 @@ export default {
                this.picked = res.data.currAnswer;
                this.isCheckArr = res.data.currState;
 
-                console.log("bbbbccccc")
-                window.addEventListener("popstate",this.myFunction);
-
         //        window.onpopstate=function(e){
         //                var e = window.event||e;
         //                e.returnValue=("确定离开当前页面吗？");
@@ -453,16 +574,18 @@ export default {
 //      }
 //    },
   methods:{
+        //开始考试跳转
             sendInfor(){
             //    this.$router.push('/realyTest');
                 const {href} = this.$router.resolve({
                     name: 'realyTest'
                 })
                 window.open(href,'_blank',"channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
-                var elem = document.getElementById("content");   
-                console.log(elem);   
+            //    var elem = document.getElementById("content");   
+            //    console.log(elem);   
             //    this.requestFullScreen(elem);
             },
+        //本来类似F11的全屏
             requestFullScreen(element){
                 var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;    
                 if (requestMethod) {      
@@ -474,11 +597,17 @@ export default {
                     }    
                 }
             },
+        //考试时长小时是0时分钟禁用0
             isMin(){
                 if(this.stuform.timeHour == "zero"){
                     this.formDisabled = !this.formDisabled;
+                    this.stuform.timeMin = '';
+                }else{
+                    this.stuform.timeMin = 0;
+                    this.formDisabled = !this.formDisabled;
                 }
             },
+        //本来提交
             submit:function () {
                 setTimeout(function(){
                     window.clearInterval(this.interval);
@@ -544,60 +673,11 @@ export default {
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
             },
+        //点击开始考试后继续考试
             add:function () {
-                var _this = this;
-                var time = window.setInterval(function () {
-
-                    if (_this.seconds == 0 && _this.minutes != 0) {
-                        _this.seconds = 59;
-                        _this.minutes -= 1;
-                    }else if(_this.minutes == 0 && _this.seconds == 0){
-                        _this.seconds = 0;
-                        window.clearInterval(time);
-                        console.log("111");
-                    }else{
-                        _this.seconds -= 1
-                    };
-                    if(_this.minutes == 0 && _this.seconds == 0){
-                        window.clearInterval(time);
-                        alert("时间到，已帮您提交");
-                        _this.submit();
-                    };
-                    if(_this.seconds < 10){
-                    _this.seconds = "0" + _this.seconds;
-                    }
-
-                 },1000);
-
-                 _this.dispear = !_this.dispear;
-                 _this.nowTime = new Date();
-                 //给考试管理存时间
-                 var seperator1 = '-';
-                 var seperator2 = ':';
-                 var month = _this.nowTime.getMonth() + 1;
-                 var strDate = _this.nowTime.getDate();
-
-                 //给在线考试存时间
-                 _this.hours = _this.nowTime.getHours();
-                 _this.minute = _this.nowTime.getMinutes();
-                 if(_this.minute >= 0 && _this.minute <= 9){
-                     _this.minute = "0" + _this.minute;
-                 }
-                 _this.second = _this.nowTime.getSeconds();
-                 if(_this.second >= 0 && _this.second <= 9){
-                     _this.second = "0" + _this.second;
-                 }
-
-                 if (month >= 0 && month <= 9) {
-                     month = '0' + month
-                 }
-                 if (strDate >= 0 && strDate <= 9) {
-                     strDate = '0' + strDate
-                 }
-                 _this.currentdate = _this.nowTime.getFullYear() + seperator1 + month + seperator1 + strDate
-                 + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
-
+                this.still_btn = true;
             },
+        //开始考试时获取考试题目
             getTest(e){
                 axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery",{
                     params:{
@@ -646,20 +726,6 @@ export default {
                     this.testManageNow();
                 }
             },
-            DisplayFun(){
-                this.Display = true;
-            },
-            getDisplayFun(){
-                this.Display = false;
-            },
-            myFunction(event){
-                var con = confirm("考试未完成，点击确定将帮您提交");
-                if(con){
-                    this.submit();
-                }else{
-                    console.log("mamamama")
-                }
-            },
             testManagenWait(){
 
             },
@@ -678,6 +744,7 @@ export default {
                             console.log(res.data)
                         })
             },
+        //提交创建练习结果并跳转
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                 if (valid) {
@@ -689,9 +756,9 @@ export default {
                             testData:this.stuform
                         }
                     }).then(
-                        function (res) {
-                        console.log(res.data.code)
-                        }
+                        function (res) {                            
+                            console.log("111111111111")
+                            }
                     );
                     
                 } else {
@@ -700,11 +767,12 @@ export default {
                 }
                 });
             },
+        //手动重置
             resetForm(formName) {
                 this.stuform = {};
                 this.stuform.timeHour = 2;
             },
-            //考试主题显示在input的func
+        //考试主题显示在input的func
             getCheckedNodes() {
                 this.stuform.name = [];
                 this.stuform.nameId = [];
@@ -843,6 +911,7 @@ p{
     font-size:15px;
 }
 .test_T .sureBtn{
+    position:relative;
     width:100%;
     height:9%;
     border-top:1px solid #6a1518;
@@ -850,6 +919,11 @@ p{
 }
 .test_T .dispear{
     display:none;
+}
+.test_T .still_btn{
+    position:absolute;
+    top:0;
+    right:0;
 }
 .test_T .tip{
     background:yellow;
@@ -1055,5 +1129,8 @@ p{
 .buttons .el-button{
     width:100%;
     height:60px;
+}
+.test_T .exerciseNum{
+    width:23%;
 }
 </style>

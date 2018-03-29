@@ -330,7 +330,7 @@ export default {
                         }
                     }).then(
                         function (res) {
-                        console.log(res.data.code)
+                        console.log(res.data)
                         }
                     );
                 }.bind(this),0.1);
@@ -364,8 +364,8 @@ export default {
                         this.null.push(i+1);
                     }
                 }
-                
-                
+               this.$store.commit('stillBtn',false); 
+
             //    alert(this.sorce + "==" + this.error + "==" + this.null);
             //    this.$router.go(0);
             },
