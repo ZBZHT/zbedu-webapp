@@ -13,7 +13,7 @@
                 <nav-ul :navData = "navData"></nav-ul>
             </div>
         </div>
-        <div class="index-list-middleline"></div>
+        <!--<div class="index-list-middleline"></div>-->
         <div class="index-list-bottomline"></div>
     </div>
 
@@ -131,12 +131,12 @@ hr{
     }
     .index-list-bottomline{
         width:100%;
-        height:4%;
-        background:#000;
+        height:2%;
+        background:rgb(172,172,172);
     }
     .index-list-main{
         width:100%;
-        height:92%;
+        height:96%;
         display:flex;
         padding-left: 100px;
         box-sizing: border-box;
@@ -172,12 +172,12 @@ hr{
     }
     .index-list-bottomline{
         width:100%;
-        height:4%;
-        background:#000;
+        height:2%;
+        background:rgb(172,172,172);
     }
     .index-list-main{
         width:100%;
-        height:92%;
+        height:96%;
         display:flex;
         padding-left: 100px;
         box-sizing: border-box;
@@ -213,12 +213,12 @@ hr{
     }
     .index-list-bottomline{
         width:100%;
-        height:4%;
-        background:#000;
+        height:2%;
+        background:rgb(172,172,172);
     }
     .index-list-main{
         width:100%;
-        height:92%;
+        height:96%;
         display:flex;
         padding-left: 100px;
         box-sizing: border-box;
@@ -254,12 +254,12 @@ hr{
     }
     .index-list-bottomline{
         width:100%;
-        height:4%;
-        background:#000;
+        height:2%;
+        background:rgb(172,172,172);
     }
     .index-list-main{
         width:100%;
-        height:92%;
+        height:96%;
         display:flex;
         padding-left: 100px;
         box-sizing: border-box;

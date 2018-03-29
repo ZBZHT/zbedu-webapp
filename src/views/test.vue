@@ -755,11 +755,9 @@ export default {
                             user:this.user,
                             testData:this.stuform
                         }
-                    }).then(
-                        function (res) {                            
-                            console.log("111111111111")
-                            }
-                    );
+                    }).then((res)=>{
+                            console.log(res+"1111111111")
+                        });
                     
                 } else {
                     console.log('error submit!!');

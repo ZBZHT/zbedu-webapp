@@ -19,40 +19,42 @@
             <div>
               <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
             </div>
-            {{form.date1}}...{{form.date2}}...{{form.date3}}...{{form.date4}}
           </div>
           <div class="contentBox">
             <el-tabs type="border-card" style="float:none;">
 
               <!--待考试-->
               <el-tab-pane label="待考试">
-                <el-table :data="toTestData" style="width: 100%">
+                <el-table style="width: 100%" :data="toTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+
+                  <el-table-column label="序号" type="index" width="60">
+                  </el-table-column>
 
                   <el-table-column label="考试题目" width="100">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.theme }}</span>
+                      <span>{{ scope.row.theme }}</span>
                     </template>
                   </el-table-column>
 
                   <el-table-column label="创建时间" width="200">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.newData }}</span>
+                      <span>{{ scope.row.newData }}</span>
                     </template>
                   </el-table-column>
 
                   <el-table-column label="考试类型" width="120">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.currTestType }}</span>
+                      <span>{{ scope.row.currTestType }}</span>
                     </template>
                   </el-table-column>
 
                   <el-table-column label="考试数目" width="120">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.num }}</span>
+                      <span>{{ scope.row.num }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="详细信息" width="150">
+                  <el-table-column label="详细信息" width="120">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
                         查看
@@ -69,40 +71,56 @@
                   </el-table-column>
                 </el-table>
 
+                <!--分页显示-->
+                <div class="block">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-size="pagesize"
+                    layout="prev, pager, next, jumper"
+                    :total=parseInt(total)>
+                  </el-pagination>
+                </div>
+
               </el-tab-pane>
 
               <!--历史考试-->
               <el-tab-pane label="历史考试">
                 <el-table :data="historyTestData" style="width: 100%">
 
-                  <el-table-column label="考试题目" width="150">
+                  <el-table-column label="序号" type="index" width="60">
+                  </el-table-column>
+
+                  <el-table-column label="考试题目" width="100">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                      <span>{{ scope.row.theme }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="考试时间" width="150">
+                  <el-table-column label="创建时间" width="200">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                      <span>{{ scope.row.newData }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-form :inline="true">
-                    <el-table-column label="考试类型" width="150">
-                      <template slot-scope="scope">
-                        <span style="margin-left: 10px;">{{ scope.row.date }}</span>
-                      </template>
-                    </el-table-column>
-
-                    <el-table-column label="考试数目" width="150">
-                      <template slot-scope="scope">
-                        <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                      </template>
-                    </el-table-column>
-                  </el-form>
-                  <el-table-column label="创建人" width="150">
+                  <el-table-column label="考试类型" width="120">
                     <template slot-scope="scope">
-                      <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                      <span>{{ scope.row.currTestType }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="考试数目" width="120">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.num }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="详细信息">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                        查看
+                      </el-button>
                     </template>
                   </el-table-column>
                 </el-table>
@@ -115,7 +133,7 @@
                   <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px">
 
                     <el-form-item label="考试题目" prop="theme">
-                      <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme"></el-input>
+                      <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme" style="width: 54.8%"></el-input>
                     </el-form-item>
 
                     <el-form-item label="考试范围" prop="name">
@@ -237,6 +255,8 @@
                 </div>
               </el-tab-pane>
 
+
+
             </el-tabs>
           </div>
         </div>
@@ -294,17 +314,17 @@
 </template>
 
 <script>
-import axios from 'axios'
-import moment from 'moment'
-import footFooter from '@/components/common/footFooter'
-import Modal from '@/components/testCenter/modal';
-import core from '../../server/utils/core.js';
-import navUser from '@/components/common/navUser';
+  import axios from 'axios'
+  import moment from 'moment'
+  import footFooter from '@/components/common/footFooter'
+  import Modal from '@/components/testCenter/modal';
+  import core from '../../server/utils/core.js';
+  import navUser from '@/components/common/navUser';
 
-export default {
-  name: 'teachTest',
-  data () {
-    var checkNum = (rule, value, callback) => {
+  export default {
+    name: 'teachTest',
+    data() {
+      var checkNum = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('题数不能为空'));
         }
@@ -320,16 +340,16 @@ export default {
           }
         }, 1000);
       };
-    return {
-        url:document.domain,
-        user:this.$store.state.username,
-        leftBox:[
-            {li:'考试管理'},
-            {li:'成绩管理'}
+      return {
+        url: document.domain,
+        user: this.$store.state.username,
+        leftBox: [
+          {li: '考试管理'},
+          {li: '成绩管理'}
         ],
-        currIndex:0,
-        data:[],
-        formDisabled:false,
+        currIndex: 0,
+        data: [],
+        formDisabled: false,
         form: {
           theme: '',
           name: [],
@@ -347,228 +367,308 @@ export default {
           newData: moment().format("YYYY-MM-DD hh:mm:ss")
         },
         rules: {
-            theme: [
-                { required: true, message: '请输入考试题目', trigger: 'blur' },
-            ],
-            name: [
-                { required: true, message: '请输入考试范围', trigger: 'blur' },
-            ],
-            currTestType: [
-                { required: true, message: '请选择考试类型', trigger: 'change' }
-            ],
-            date1: [
-                { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-            ],
-            date2: [
-                { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
-            ],
-            date3: [
-                { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-            ],
-            date4: [
-                { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
-            ],
-            num: [
-              { validator: checkNum, trigger: 'blur' }
-            ],
-            timeHour: [
-                { required: true, message: '请选择考试小时', trigger: 'change' },
-            ],
-            major: [
-                { required: true, message: '请输入专业', trigger: 'blur' },
-                { min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur' }
-            ],
-            classGrade: [
-                { required: true, message: '请输入班级', trigger: 'blur' },
-                { min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur' }
-            ]
+          theme: [
+            {required: true, message: '请输入考试题目', trigger: 'blur'},
+          ],
+          name: [
+            {required: true, message: '请输入考试范围', trigger: 'blur'},
+          ],
+          currTestType: [
+            {required: true, message: '请选择考试类型', trigger: 'change'}
+          ],
+          date1: [
+            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          date2: [
+            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          date3: [
+            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+          ],
+          date4: [
+            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+          ],
+          num: [
+            {validator: checkNum, trigger: 'blur'}
+          ],
+          timeHour: [
+            {required: true, message: '请选择考试小时', trigger: 'change'},
+          ],
+          major: [
+            {required: true, message: '请输入专业', trigger: 'blur'},
+            {min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur'}
+          ],
+          classGrade: [
+            {required: true, message: '请输入班级', trigger: 'blur'},
+            {min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur'}
+          ]
         },
-      toTestData: [],
-      historyTestData: [],
-      scoreM: [],
-    };
-  },
-  mounted() {
-    //待考试请求
-    this.url = document.domain;
-    axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
-      params: {
-        user: this.user,
-      }
-    }).then((res) => {
-      console.log(res.data);
-      let resData = res.data;
-      for (let i=0; i<resData.length; i++) {
-        resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
-      }
-      this.toTestData = resData;
-
-    });
-  },
-
-  methods: {
-    rightAppear(index) {
-      this.currIndex = index;
-      if (index == 1) {
-
-      }
+        toTestData: [],
+        historyTestData: [],
+        scoreM: [],
+        currentPage: 1,
+        pagesize: 10,
+        total: '',
+      };
     },
-    // 成功后提示信息
-    Success(msg) {
-      this.$message({
-        showClose: true,
-        message: msg,
-        type: 'success'
-      });
-    },
-    //本来考试主题显示在input的func
-    handleCheckChange(data, checked, indeterminate) {
-      console.log(data, checked, indeterminate);
-      if (checked == true) {
-        //    console.log(this.form.name+"AAAA");
-        //    this.form.name.push(data.label);
-      } else {
-        for (var i = 0; i < this.form.name.length; i++) {
-          if (this.form.name[i] == data.label) {
-            //    core.remove(this.form.name, i);
+
+    methods: {
+      handleSizeChange(val) {
+        //console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        //console.log(`当前页: ${val}`);
+      },
+      rightAppear(index) {
+        this.currIndex = index;
+        if (index == 1) {
+
+        }
+      },
+      // 成功后提示信息
+      Success(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      //本来考试主题显示在input的func
+      handleCheckChange(data, checked, indeterminate) {
+        console.log(data, checked, indeterminate);
+        if (checked == true) {
+          //    console.log(this.form.name+"AAAA");
+          //    this.form.name.push(data.label);
+        } else {
+          for (var i = 0; i < this.form.name.length; i++) {
+            if (this.form.name[i] == data.label) {
+              //    core.remove(this.form.name, i);
+            }
           }
         }
-      }
-    },
-    //考试主题显示在input的func
-    getCheckedNodes() {
-      this.form.name = [];
-      this.form.nameId = [];
-      console.log(this.$refs.tree.getCheckedNodes());
-      var arr = this.$refs.tree.getCheckedNodes();
-      for (var i = 0; i < arr.length; i++) {
-        console.log(arr[i].label);
-        this.form.name.push(arr[i].label);
-        this.form.nameId.push(arr[i].courseId);
-        console.log(arr[i].courseId);
-        console.log(this.form.nameId);
-      }
-    },
-    handleClick(data) {
+      },
+      //考试主题显示在input的func
+      getCheckedNodes() {
+        this.form.name = [];
+        this.form.nameId = [];
+        console.log(this.$refs.tree.getCheckedNodes());
+        var arr = this.$refs.tree.getCheckedNodes();
+        for (var i = 0; i < arr.length; i++) {
+          console.log(arr[i].label);
+          this.form.name.push(arr[i].label);
+          this.form.nameId.push(arr[i].courseId);
+          console.log(arr[i].courseId);
+          console.log(this.form.nameId);
+        }
+      },
+      handleClick(data) {
+      },
 
-    },
-    isMin() {
-      if (this.form.timeHour == "zero") {
-        this.formDisabled = !this.formDisabled;
+      isMin() {
+        if (this.form.timeHour == "zero") {
+          this.formDisabled = !this.formDisabled;
+        }
+      },
+
+      //创建考试方法
+      onSubmit() {
+        //console.log()
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
+        this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
+        this.form.date4 = core.formatDate("hh:mm:ss", new Date(this.form.date4));
+        //console.log(this.form.date3);
+        axios({
+          method: 'get',
+          url: "http://" + this.url + ":8000/readTestQuestion/addTestQuestion",
+          params: {
+            user: this.user,
+            theme: this.form.theme,
+            name: this.form.name,
+            nameId: this.form.nameId,
+            currTestType: this.form.currTestType,
+            date1: this.form.date1,
+            date2: this.form.date2,
+            date3: this.form.date3,
+            date4: this.form.date4,
+            num: this.form.num,
+            timeHour: this.form.timeHour,
+            timeMin: this.form.timeMin,
+            major: this.form.major,
+            classGrade: this.form.classGrade,
+            newData: this.form.newData,
+          }
+        }).then((res) => {
+            this.Success('考试创建成功');
+            //console.log(res.data);
+            this.toTestData = res.data;
+
+          }
+        );
+      },
+
+      submitForm(formName) {
+        this.$refs[formName].validate((valid) => {
+          if (valid) {
+            this.onSubmit();
+          } else {
+            console.log('error submit!!');
+            return false;
+          }
+        });
+      },
+
+      //修改按钮
+      handleDelete(index, row) {
+        console.log(row.id);
+        axios({
+          method: 'get',
+          url: "http://" + this.url + ":8000/readTestQuestion/dellNewTestQ",
+          params: {
+            user : this.user,
+            id : row.id
+          }
+        }).then((res) => {
+          console.log(res.data.code);
+          if (res.data.code == 0) {
+            for (let i=0; i<this.toTestData.length; i++) {
+              if (this.toTestData[i].id == row.id) {
+                //console.log(this.toTestData[i].id);
+                let e = core.remove(this.toTestData, this.toTestData[i]);
+                //console.log(e);
+                this.toTestData = e;
+              }
+            }
+            this.total = this.toTestData.length;
+            this.Success('删除成功');
+          } else if (res.data.code == 1) {
+            this.Success('删除成功');
+          }
+
+        });
       }
     },
-    onSubmit() {
-      //console.log()
-      this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
-      this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
-      this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
-      this.form.date4 = core.formatDate("hh:mm:ss", new Date(this.form.date4));
-      //console.log(this.form.date3);
-      axios({
-        method: 'get',
-        url: "http://" + this.url + ":8000/readTestQuestion/addTestQuestion",
+
+    mounted() {
+
+      //请求待考试数据
+      this.url = document.domain;
+      axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
         params: {
           user: this.user,
-          theme: this.form.theme,
-          name: this.form.name,
-          nameId: this.form.nameId,
-          currTestType: this.form.currTestType,
-          date1: this.form.date1,
-          date2: this.form.date2,
-          date3: this.form.date3,
-          date4: this.form.date4,
-          num: this.form.num,
-          timeHour: this.form.timeHour,
-          timeMin: this.form.timeMin,
-          major: this.form.major,
-          classGrade: this.form.classGrade,
-          newData: this.form.newData,
         }
       }).then((res) => {
-          console.log(res.data);
-          this.toTestData = res.data;
-
-          this.Success('考试创建成功');
-
+        //console.log(res.data);
+        let resData = res.data;
+        for (let i = 0; i < resData.length; i++) {
+          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
         }
-      );
-    },
-        submitForm(formName) {
-            this.$refs[formName].validate((valid) => {
-            if (valid) {
-                this.onSubmit();
-            } else {
-                console.log('error submit!!');
-                return false;
-            }
-            });
-        },
-        //修改按钮
-        handleDelete(index, row) {
-            console.log(index, row);
-        }
-    },
-  components:{Modal,navUser,footFooter}
+        this.toTestData = resData;
+        this.total = this.toTestData.length;
+      });
 
-}
+      //请求历史考试数据
+      this.url = document.domain;
+      axios.get("http://" + this.url + ":8000/readTestQuestion/historyTestData", {
+        params: {
+          user: this.user,
+        }
+      }).then((res) => {
+        //console.log(res.data);
+        let resData = res.data;
+        for (let i = 0; i < resData.length; i++) {
+          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+        }
+        this.historyTestData = resData;
+        this.total = this.historyTestData.length;
+      });
+
+      //请求data数据
+      this.url = document.domain;
+      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
+        params:{
+          user:234
+        }
+      }).then((res)=>{
+        //    console.log((res.data[0].children));
+        this.data = res.data[0].children;
+      }).catch(function(error){
+        console.log("error init." + error)
+      });
+    },
+
+    components: {Modal, navUser, footFooter}
+
+  }
 </script>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-}
-ul li{
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  ul li {
     list-style: none;
-}
-a{
+  }
+
+  a {
     color: inherit;
     cursor: pointer;
-}
-.teach_Test .question{
-    min-width:700px;
-    width:1200px;
-    height:700px;
-    margin:0 auto;
+  }
+
+  .teach_Test .question {
+    min-width: 700px;
+    width: 1200px;
+    height: 700px;
+    margin: 0 auto;
     margin-top: 40px;
-    border:1px solid #6a1518;
-    display:flex;
-}
-.teach_Test .leftBox{
-  width:12.5%;
-  height:100%;
-}
-.teach_Test .leftBox > p{
-    font-size:20px;
-    margin-top:110px;
-}
-.teach_Test .leftBox .leftItem{
-    margin-top:57px;
-}
-.teach_Test .leftLi{
-    line-height:56px;
-    background:#2b333b;
-    margin-top:10px;
-    font-weight:bolder;
-    font-size:20px;
-    cursor:pointer;
-    color:#fff;
-}
-.teach_Test .active{
-    color:#f00;
-}
-.teach_Test .rightBox{
-  width: 87.5%;
-  height: 100%;
-  position: relative;
-  border-left: 1px solid #6a1518;
-}
-.teach_Test .el-tabs{
-    width:100%;
-    height:100%;
+    border: 1px solid #6a1518;
+    display: flex;
+  }
+
+  .teach_Test .leftBox {
+    width: 12.5%;
+    height: 100%;
+  }
+
+  .teach_Test .leftBox > p {
+    font-size: 20px;
+    margin-top: 110px;
+  }
+
+  .teach_Test .leftBox .leftItem {
+    margin-top: 57px;
+  }
+
+  .teach_Test .leftLi {
+    line-height: 56px;
+    background: #2b333b;
+    margin-top: 10px;
+    font-weight: bolder;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+  }
+
+  .teach_Test .active {
+    color: #f00;
+  }
+
+  .teach_Test .rightBox {
+    width: 87.5%;
+    height: 100%;
+    position: relative;
+    border-left: 1px solid #6a1518;
+  }
+
+  .teach_Test .el-tabs {
+    width: 100%;
+    height: 100%;
     overflow: auto;
-}
-.teach_Test .fontL{
+  }
+
+  .teach_Test .fontL {
     text-align: right;
     vertical-align: middle;
     float: left;
@@ -578,89 +678,113 @@ a{
     margin-left: 12px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-}
-.teach_Test .el-dropdown {
+  }
+
+  .teach_Test .el-dropdown {
     width: 488px;
-    position:relative;
-}
-.teach_Test .elinput{
-    width:502px;
-    height:38px;
-    border:1px solid #ccc;
-    border-radius:4px;
-    overflow:auto;
-}
-.teach_Test .elinput ul li{
-    display:inline-block;
-}
-.dropdown{
-    width:488px;
-    height:300px;
-    position:absolute;
-    left:75px;
-    bottom:0;
-}
-.treeModle{
-    width:488px;
-    height:250px;
-    overflow:auto;
-}
-.buttons .el-button{
-    width:100%;
-}
-.teach_Test .el-tabs--border-card>.el-tabs__content {
-    text-align:left;
-}
-.teach_Test .el-form-item__content .el-col-2{
-    padding-left:0.4%;
-    width:1.33%;
-}
-.teach_Test .el-form-item__content .el-select{
-    width:100%;
-}
-.teach_Test .el-form-item__content .el-select-dropdown{
-    min-width:38%;
-}
-.teach_Test .testOnline{
-    width:100%;
-    height:100%;
-    background:#fff;
-    position:absolute;
-    top:0;
-    left:0;
-}
-.teach_Test .titleB{
-    width:100%;
-    height:15%;
+    position: relative;
+  }
+
+  .teach_Test .elinput {
+    width: 502px;
+    height: 38px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: auto;
+  }
+
+  .teach_Test .elinput ul li {
+    display: inline-block;
+  }
+
+  .dropdown {
+    width: 488px;
+    height: 300px;
+    position: absolute;
+    left: 75px;
+    bottom: 0;
+  }
+
+  .treeModle {
+    width: 488px;
+    height: 250px;
+    overflow: auto;
+  }
+
+  .buttons .el-button {
+    width: 100%;
+  }
+
+  .teach_Test .el-tabs--border-card > .el-tabs__content {
+    text-align: left;
+  }
+
+  .teach_Test .el-form-item__content .el-col-2 {
+    padding-left: 0.4%;
+    width: 1.33%;
+  }
+
+  .teach_Test .el-form-item__content .el-select {
+    width: 100%;
+  }
+
+  .teach_Test .el-form-item__content .el-select-dropdown {
+    min-width: 38%;
+  }
+
+  .teach_Test .testOnline {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .teach_Test .titleB {
+    width: 100%;
+    height: 15%;
     border-bottom: 1px solid #6a1518;
-    text-align:left;
+    text-align: left;
     font-weight: bolder;
-    font-size:20px;
-    padding:10px;
-    box-sizing:border-box;
-    display:flex;
-}
-.teach_Test .contentBox{
-    width:100%;
-    height:79%;
-    display:flex;
-}
-.teach_Test .dispear{
-    display:none;
-}
-.teach_Test .userMessage{
-    width:1048px;
-    height:100%;
-    background:#fff;
-    position:absolute;
-    top:0;
-    left:0;
-    box-sizing:border-box;
-    text-align:left;
-    overflow:auto;
-}
-.teach_Test .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
-  border-right-color: #6a1518;
-  border-left-color: #6a1518;
-}
+    font-size: 20px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+  }
+
+  .teach_Test .contentBox {
+    width: 100%;
+    height: 79%;
+    display: flex;
+  }
+
+  .teach_Test .dispear {
+    display: none;
+  }
+
+  .teach_Test .el-table td, .el-table th {
+    padding: 6px 0;
+  }
+
+  .teach_Test .el-button--mini, .el-button--mini.is-round {
+    margin-left: 10px;
+  }
+
+  .teach_Test .userMessage {
+    width: 1048px;
+    height: 100%;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    text-align: left;
+    overflow: auto;
+  }
+
+  .teach_Test .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
+    border-right-color: #6a1518;
+    border-left-color: #6a1518;
+  }
 </style>
