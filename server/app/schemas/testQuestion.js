@@ -8,7 +8,7 @@ module.exports = new Schema({
   user: String,
   msg: String,
   testId: Number,
-  state:Number,   //0:表示未开始不显示  1:表示已开始显示  2:表示已经考试结束
+  state:Number,   //0:表示未开始考试,不显示  1:表示已开始考试,显示  2:表示已经考试结束
   currTestNum:{ type: Number, unique: true, },
   currTestType: Number,
   title: String,

@@ -289,13 +289,14 @@ function newTestQuestion(req, res, next) {
 function addNewTestQuestion(req, res, next) {
   let reqQ = req.query;
 
-  TeachNewTestQ.find().then(function (result) {
+  TeachNewTestQ.find().sort({id:-1}).then(function (result) {
+    //console.log(result[0].id);
     if (result.length != 0) {
-      testResult.resId = Number(result[result.length - 1].id) + 1;
+      testResult.resId = Number(result[0].id) + 1;
     } else {
       testResult.resId = 100;
     }
-    console.log(testResult.resId);
+    //console.log(testResult.resId);
     let teachNewTestQ = new TeachNewTestQ({
       id : testResult.resId,
       user: reqQ.user,
@@ -303,6 +304,7 @@ function addNewTestQuestion(req, res, next) {
       name: reqQ.name,
       nameId: reqQ.nameId,
       currTestType: reqQ.currTestType,
+      state: 0,
       date1: reqQ.date1,
       date2: reqQ.date2,
       date3: reqQ.date3,
@@ -315,9 +317,13 @@ function addNewTestQuestion(req, res, next) {
       newData: reqQ.newData
     });
     teachNewTestQ.save(function (err) {
-      if (err) console.log(err);
-      console.log('Success! teachNewTestQ');
-      next();
+      if (err) {
+        console.log(err);
+        res.end(JSON.stringify({code : 1 }));
+      } else {
+        console.log('Success! teachNewTestQ');
+        next();
+      }
     });
   });
 }
@@ -394,11 +400,37 @@ router.get('/addTestQuestion', addNewTestQuestion, function (req, res) {
 router.get('/toTestData', function (req, res) {
   let reqUser = req.query.user;
   TeachNewTestQ.find({
-    user: reqUser
+    user: reqUser,
+    state: 0,
   }).then(function (result) {
     //console.log(result);
     res.end(JSON.stringify(result));
   });
+});
+
+//历史考试请求
+router.get('/historyTestData', function (req, res) {
+  let reqUser = req.query.user;
+  TeachNewTestQ.find({
+    user: reqUser,
+    state: 1,
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
+
+//删除创建的考试
+router.get('/dellNewTestQ', function (req, res) {
+  let reqId = req.query.id;
+  TeachNewTestQ.remove({id: reqId}, function (err) {
+    if (err) {
+      return res.status(404).send({err: err,});
+    } else {
+      console.log('删除数据成功');
+      res.end(JSON.stringify({code : 0 }));
+    }
+  })
 });
 
 
