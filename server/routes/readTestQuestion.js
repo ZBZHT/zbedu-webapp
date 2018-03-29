@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const TestQuestion = require('../app/models/TestQuestion');
 const TestQuestionInfo = require('../app/models/TestQuestionInfo');
+const TeachNewTestQ = require('../app/models/TeachNewTestQ');
 
 //设置跨域请求
 router.all('*', function (req, res, next) {
@@ -20,7 +21,8 @@ let testResult;
 router.use(function (req, res, next) {
   testResult = {
     testLength: '',
-    testQuestion: ''
+    testQuestion: '',
+    resId : 100
   };
   next();
 });
@@ -283,6 +285,43 @@ function newTestQuestion(req, res, next) {
   });
 }
 
+//老师创建考试新增考题
+function addNewTestQuestion(req, res, next) {
+  let reqQ = req.query;
+
+  TeachNewTestQ.find().then(function (result) {
+    if (result.length != 0) {
+      testResult.resId = Number(result[result.length - 1].id) + 1;
+    } else {
+      testResult.resId = 100;
+    }
+    console.log(testResult.resId);
+    let teachNewTestQ = new TeachNewTestQ({
+      id : testResult.resId,
+      user: reqQ.user,
+      theme: reqQ.theme,
+      name: reqQ.name,
+      nameId: reqQ.nameId,
+      currTestType: reqQ.currTestType,
+      date1: reqQ.date1,
+      date2: reqQ.date2,
+      date3: reqQ.date3,
+      date4: reqQ.date4,
+      num: reqQ.num,
+      timeHour: reqQ.timeHour,
+      timeMin: reqQ.timeMin,
+      major: reqQ.major,
+      classGrade: reqQ.classGrade,
+      newData: reqQ.newData
+    });
+    teachNewTestQ.save(function (err) {
+      if (err) console.log(err);
+      console.log('Success! teachNewTestQ');
+      next();
+    });
+  });
+}
+
 //刷新查询整个文档
 router.get('/all', function (req, res) {
   let reqCurrTestNum = req.query.currTestNum;
@@ -340,20 +379,26 @@ router.get('/submitQuestionInfo', function (req, res) {
 });
 
 //老师创建考试
-router.get('/addTestQuestion', newTestQuestion, function (req, res) {
-  if (req.query) {
-    let reqQ = req.query;
-    let reqUser = reqQ.user;
-    //console.log(reqUser);
-    console.log(reqQ);
+router.get('/addTestQuestion', addNewTestQuestion, function (req, res) {
+  let reqQ = req.query;
+  let reqUser = reqQ.user;
+  TeachNewTestQ.find({
+    user: reqUser
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
 
-    TestQuestion.find({
-      user: reqUser
-    }).then(function (msg) {
-      console.log(msg[msg.length-1]);
-
-    });
-  }
+//待考试请求
+router.get('/toTestData', function (req, res) {
+  let reqUser = req.query.user;
+  TeachNewTestQ.find({
+    user: reqUser
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
 });
 
 
