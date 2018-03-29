@@ -211,7 +211,7 @@ a:hover{
 .collapse .phoneApp{
   position:absolute;
   top:5px;
-  left:-300px;
+  left:-121px;
 }
 .username{
     position:absolute;

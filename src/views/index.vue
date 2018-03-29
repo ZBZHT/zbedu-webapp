@@ -56,12 +56,10 @@ export default {
       this.url = document.domain;
       let _this = this;
       _this.windowHeight = window.innerHeight;
-      _this.windowWidth = window.innerWidth;
       _this.windowHeight -= 152;
  //     console.log(window.innerHeight);
  //     console.log(_this.windowHeight);
       document.querySelector(".index-list").style.height = _this.windowHeight + "px";
-      document.querySelector(".index-list").style.width = _this.windowWidth + "px";
 
       axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
@@ -114,43 +112,168 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.index-list{
-    width:0;
-    height:0;
-    position:relative;
-    background:rgb(122,18,19);
+@media screen and (min-width:1800px){
+    .index-list{
+        width:100%;
+        height:0;
+        position:relative;
+        background:rgb(122,18,19);
+    }
+    .index-list-topline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-middleline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-bottomline{
+        width:100%;
+        height:4%;
+        background:#000;
+    }
+    .index-list-main{
+        width:100%;
+        height:92%;
+        display:flex;
+        padding-left: 100px;
+        box-sizing: border-box;
+    }
+    .index-list img{
+        width:52%;
+        height:100%;
+    }
+    .index-list .index-list-nav{
+        width:47%;
+        height:100%;
+    }
+    .content{
+        padding:6%;
+    }
 }
-.index-list-topline{
-    width:100%;
-    height:2%;
-    background:rgb(172,172,172);
+@media screen and (min-width: 1420px) and (max-width: 1799px) {
+    .index-list{
+        width:100%;
+        height:0;
+        position:relative;
+        background:rgb(122,18,19);
+    }
+    .index-list-topline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-middleline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-bottomline{
+        width:100%;
+        height:4%;
+        background:#000;
+    }
+    .index-list-main{
+        width:100%;
+        height:92%;
+        display:flex;
+        padding-left: 100px;
+        box-sizing: border-box;
+    }
+    .index-list img{
+        width:52%;
+        height:100%;
+    }
+    .index-list .index-list-nav{
+        width:47%;
+        height:100%;
+    }
+    .content{
+        padding:6%;
+    }
 }
-.index-list-middleline{
-    width:100%;
-    height:2%;
-    background:rgb(172,172,172);
+@media screen and (min-width: 1270px) and (max-width: 1419px) {
+    .index-list{
+        width:100%;
+        height:0;
+        position:relative;
+        background:rgb(122,18,19);
+    }
+    .index-list-topline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-middleline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-bottomline{
+        width:100%;
+        height:4%;
+        background:#000;
+    }
+    .index-list-main{
+        width:100%;
+        height:92%;
+        display:flex;
+        padding-left: 100px;
+        box-sizing: border-box;
+    }
+    .index-list img{
+        width:52%;
+        height:100%;
+    }
+    .index-list .index-list-nav{
+        width:47%;
+        height:100%;
+    }
+    .content{
+        padding:6%;
+    }
 }
-.index-list-bottomline{
-    width:100%;
-    height:4%;
-    background:#000;
-}
-.index-list-main{
-    width:100%;
-    height:92%;
-    display:flex;
-    padding-left: 100px;
-    box-sizing: border-box;
-}
-.index-list img{
-    width:52%;
-    height:100%;
-}
-.index-list .index-list-nav{
-    width:47%;
-    height:100%;
-}
-.content{
-    padding:6%;
+@media screen and (min-width: 960px) and (max-width: 1269px) {
+    .index-list{
+        width:100%;
+        height:0;
+        position:relative;
+        background:rgb(122,18,19);
+    }
+    .index-list-topline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-middleline{
+        width:100%;
+        height:2%;
+        background:rgb(172,172,172);
+    }
+    .index-list-bottomline{
+        width:100%;
+        height:4%;
+        background:#000;
+    }
+    .index-list-main{
+        width:100%;
+        height:92%;
+        display:flex;
+        padding-left: 100px;
+        box-sizing: border-box;
+    }
+    .index-list img{
+        width:52%;
+        height:100%;
+    }
+    .index-list .index-list-nav{
+        width:47%;
+        height:100%;
+    }
+    .content{
+        padding:6%;
+    }
 }
 </style>
