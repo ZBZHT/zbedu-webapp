@@ -87,7 +87,7 @@
 
               <!--历史考试-->
               <el-tab-pane label="历史考试">
-                <el-table :data="historyTestData" style="width: 100%">
+                <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
                   <el-table-column label="序号" type="index" width="60">
                   </el-table-column>
@@ -123,7 +123,20 @@
                       </el-button>
                     </template>
                   </el-table-column>
+
                 </el-table>
+
+                <!--分页显示-->
+                <div class="block">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-size="pagesize"
+                    layout="prev, pager, next, jumper"
+                    :total=parseInt(total)>
+                  </el-pagination>
+                </div>
 
               </el-tab-pane>
 
