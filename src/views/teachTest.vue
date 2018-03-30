@@ -212,10 +212,10 @@
                       <el-col :span="8">
                         <el-form-item prop="timeHour">
                           <el-select v-model="form.timeHour" placeholder="请选择小时">
-                            <el-option label="0" value="zero"></el-option>
-                            <el-option label="1" value="one"></el-option>
-                            <el-option label="2" value="twe"></el-option>
-                            <el-option label="3" value="three"></el-option>
+                            <el-option label="0" value="0"></el-option>
+                            <el-option label="1" value="1"></el-option>
+                            <el-option label="2" value="2"></el-option>
+                            <el-option label="3" value="3"></el-option>
                           </el-select>
                         </el-form-item>
                       </el-col>
@@ -223,12 +223,12 @@
                       <el-col :span="8">
                         <el-form-item>
                           <el-select v-model="form.timeMin" placeholder="请选择分钟" @visible-change="isMin">
-                            <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
-                            <el-option label="10" value="ten"></el-option>
-                            <el-option label="20" value="twenty"></el-option>
-                            <el-option label="30" value="thirty"></el-option>
-                            <el-option label="40" value="forty"></el-option>
-                            <el-option label="50" value="fifty"></el-option>
+                            <el-option label="0" :disabled="formDisabled" value="0"></el-option>
+                            <el-option label="10" value="10"></el-option>
+                            <el-option label="20" value="20"></el-option>
+                            <el-option label="30" value="30"></el-option>
+                            <el-option label="40" value="40"></el-option>
+                            <el-option label="50" value="50"></el-option>
                           </el-select>
                         </el-form-item>
                       </el-col>
@@ -517,7 +517,7 @@
       },
 
       isMin() {
-        if (this.form.timeHour == "zero") {
+        if (this.form.timeHour == "0") {
           this.formDisabled = !this.formDisabled;
         }
       },

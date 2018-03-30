@@ -272,9 +272,11 @@
                                                     @node-click="handleClick">
                                                 </el-tree>
                                             </div>
-                                            <div class="buttons">
-                                                <el-button @click="getCheckedNodes">确定</el-button>
-                                            </div>
+                                            <el-dropdown-item>
+                                                <div class="buttons">
+                                                    <el-button @click="getCheckedNodes">确定</el-button>
+                                                </div>
+                                            </el-dropdown-item>
                                         </el-dropdown-menu>
                                     </el-dropdown>
                                 </el-form-item>
@@ -531,7 +533,7 @@ export default {
         historyTestData: [],
         total: '',
         currentPage: 1,
-        pagesize: 10,
+        pagesize: 10
     }
   },
   created(){
@@ -676,12 +678,12 @@ export default {
             },
         //考试时长小时是0时分钟禁用0
             isMin(){
-                if(this.stuform.timeHour == "zero"){
+                if(this.stuform.timeHour == "0"){
                     this.formDisabled = !this.formDisabled;
                     this.stuform.timeMin = '';
                 }else{
                     this.stuform.timeMin = 0;
-                    this.formDisabled = !this.formDisabled;
+                    this.formDisabled = false;
                 }
             },
         //本来提交
@@ -938,6 +940,7 @@ p{
     height:700px;
     margin:0 auto;
     margin-top: 40px;
+    margin-bottom: 40px;
     border:1px solid #6a1518;
     display:flex;
 }
@@ -1223,6 +1226,10 @@ p{
   border-right-color: #6a1518;
   border-left-color: #6a1518;
 }
+.test_T .el-tabs--border-card>.el-tabs__content .block{
+    padding-left:36%;
+    box-sizing:border-box;
+}
 .test_T .el-dropdown {
     width: 488px;
     position:relative;
@@ -1255,8 +1262,17 @@ p{
 .buttons .el-button{
     width:100%;
     height:60px;
+    position:absolute;
+    left:0;
+    bottom:0;
 }
 .test_T .exerciseNum{
     width:23%;
 }
+/*.test_T .footer{*/
+    /*position: fixed;*/
+    /*left: 0;*/
+    /*bottom: 0;*/
+    /*width: 100%;*/
+/*}*/
 </style>

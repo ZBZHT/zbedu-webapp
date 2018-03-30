@@ -31,7 +31,11 @@ export default {
 
   },
   mounted(){
-    
+    var _this = this;
+    window.onresize = function(){
+        _this.$router.go(0);
+    }
+
   },
   methods: {
       fobLink(index){
@@ -152,7 +156,7 @@ a:hover{
 @media screen and (min-width: 1420px) and (max-width: 1799px) {
     .contentui{
         width:100%;
-        padding: 28% 11% 5% 1%;
+        padding: 28% 11% 0% 1%;
         box-sizing:border-box;
     }
     .contentui .el-row {
