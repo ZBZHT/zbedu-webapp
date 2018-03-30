@@ -12,7 +12,7 @@
                     <div>
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     </div>
-
+                
                     <div class="inforItem"  v-show="textQuestionData">
                         <div class="infor">
                             <p>开始时间</p>
@@ -20,8 +20,7 @@
                         </div>
                         <div class="infor notSt">
                             <p>状态</p>
-                            <p class="notStart" v-show="!textQuestionData">未考</p>
-                            <p>正在考试</p>
+                            <p>练习</p>
                         </div>
                         <div class="infor">
                             <p>倒计时</p>
@@ -84,7 +83,7 @@
                     </div>
                 </div>
             </div>
-
+            
         </div>
     </div>
     <div class="footer">
@@ -241,12 +240,7 @@ export default {
                 currTestNum:allTestNum
             }
         }).then((res)=>{
-            if(res.data.testQuestion.state == 1){
-                this.textQuestionData = res.data.testQuestion;
-            }
-            console.log(res.data);
-            this.TestNum = res.data.testLength;
-            console.log(this.TestNum+"LLL")
+            
         }).catch(function(error){
             console.log("error init." + error)
         });
@@ -258,38 +252,11 @@ export default {
           currTestNum:allTestNum
         }
       }).then((res)=>{
-          console.log('11');
-          console.log(res.data.currState);
-          this.$store.commit('vuexState',res.data.state);
-            if(res.data.state == 1){
-               this.picked = res.data.currAnswer;
-               this.isCheckArr = res.data.currState;
-
-                console.log("bbbbccccc");
-                window.addEventListener("popstate",this.myFunction);
-
-        //        window.onpopstate=function(e){
-        //                var e = window.event||e;
-        //                e.returnValue=("确定离开当前页面吗？");
-        //        }
-        //        window.onbeforeunload=function(e){
-        //                var e = window.event||e;
-        //               e.returnValue=("确定离开当前页面吗？");
-        //        }
-
-               this.hours = res.data.startTimeHours;
-               this.minute = res.data.startTimeMinutes;
-               this.second = res.data.startTimeSeconds;
-               this.minutes = res.data.testTimeMinutes;
-               this.seconds = res.data.testTimeSeconds;
-               this.isCheckNum = res.data.isCheckNum;
-               console.log(this.isCheckNum+"qqqqqqq");
-               console.log(this.isCheckArr+"wwwww");
-            }
+          
       }).catch(function(error){
         console.log("错误")
       });
-    }.bind(this),500)
+    }.bind(this),500)   
 
     },
   watch: {
@@ -364,60 +331,13 @@ export default {
                         this.null.push(i+1);
                     }
                 }
-               this.$store.commit('stillBtn',false);
+               this.$store.commit('stillBtn',false); 
 
             //    alert(this.sorce + "==" + this.error + "==" + this.null);
             //    this.$router.go(0);
             },
-            openFullScreen() {
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                    });
-                    setTimeout(() => {
-                        loading.close();
-                    }, 2000);
-                    setTimeout(() => {
-                        alert("提交成功");
-                        window.close();
-                    }, 2001);
-
-            },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
-            },
-            getTest(e){
-                axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery",{
-                    params:{
-                        //state默认为0未开始考试，开始后为1
-                        user:this.user,
-                        state:1,
-                    //    testId: e,
-                    //    num: 20,
-                    //    currTestNum: 1 + this.$store.state.allTestNum,
-                    //    startTime:this.currentdate,
-                    //    startTimeHours:this.hours,
-                    //    startTimeMinutes:this.minute,
-                    //    startTimeSeconds:this.second,
-                    //    testTimeMinutes:this.minutes,
-                    //   testTimeSeconds:this.seconds
-                    }
-                }).then((res)=>{
-                    if(res.data.status !== 0) {
-                        return;
-                    }
-                    console.log(res.data.currTestNum+"currTestNum");
-                    this.$store.commit('allTestNum',res.data.currTestNum);
-                    this.$store.commit('vuexState',res.data.state);
-                    this.textQuestionData = res.data;
-                    this.currTestId = e;
-                }).catch(function(error){
-                    console.log("error init." + error)
-                });
-
-
             },
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
@@ -431,30 +351,6 @@ export default {
                     }
                 }
                 this.$set(this.isCheckArr,index,true);
-
-                axios({
-                        method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestionInfo/update",
-                        params:{
-                            state:1,
-                            user:this.user,
-                            currTestId:this.$route.params.testId,
-                            testQuestion:this.$store.state.allTestNum,
-                            startTime:this.currentdate,
-                            currAnswer:this.picked,
-                            currState:this.isCheckArr,
-                            error:this.error,
-                            sorce:this.sorce,
-                            startTimeHours:this.hours,
-                            startTimeMinutes:this.minute,
-                            startTimeSeconds:this.second,
-                            testTimeMinutes:this.minutes,
-                            testTimeSeconds:this.seconds,
-                            isCheckNum:this.isCheckNum
-                        }
-                    }).then((res)=>{
-
-                        })
             },
             myNum:function(index2){
                 this.myNumber = index2;
@@ -462,26 +358,6 @@ export default {
             },
             tip(index){
                 this.$set(this.classItem,index,true)
-            },
-            myFunction(event){
-                var con = confirm("考试未完成，点击确定将帮您提交");
-                if(con){
-                    this.submit();
-                }else{
-                    console.log("mamamama")
-                }
-            },
-            testManagen(){
-                axios({
-                        method:'get',
-                        url:"http://" + this.url + ":8000/testManagement/testManagement",
-                        params:{
-                            user:this.user
-                        }
-                        }).then((res)=>{
-                            this.userMessageData = res.data;
-                            console.log(res.data)
-                        })
             }
     },
   components:{Modal,navUser,footFooter}
@@ -707,7 +583,7 @@ a{
     height: 100%;
 }
 .el-row {
-
+    
 }
 .el-col {
     border-radius: 4px;
@@ -719,7 +595,7 @@ a{
     font-weight:bolder;
 }
 .bg-purple-light {
-
+    
 }
 .grid-content {
     border-radius: 4px;

@@ -56,7 +56,7 @@
 
                   <el-table-column label="详细信息" width="120">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                      <el-button size="mini" type="primary">
                         查看
                       </el-button>
                     </template>
@@ -118,7 +118,7 @@
 
                   <el-table-column label="详细信息">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                      <el-button size="mini" type="primary">
                         查看
                       </el-button>
                     </template>
@@ -268,11 +268,10 @@
                 </div>
               </el-tab-pane>
 
-
-
             </el-tabs>
           </div>
         </div>
+
         <div class="userMessage" v-show="currIndex === 1">
           <div class="titleB">
             <div>
@@ -280,45 +279,83 @@
             </div>
           </div>
 
-          <el-table :data="scoreM" style="width: 100%">
+          <el-table style="width: 97%; margin-left: 16px" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
-            <el-table-column label="NO." width="150">
+            <el-table-column label="序号" type="index" width="60">
+            </el-table-column>
+
+            <el-table-column label="考试题目" width="100">
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                <span>{{ scope.row.theme }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="考试时间" width="150">
+            <el-table-column label="创建时间" width="200">
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                <span>{{ scope.row.newData }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="考试题目" width="150">
+            <el-table-column label="考试类型" width="120">
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                <span>{{ scope.row.currTestType }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="考试类型" width="150">
+            <el-table-column label="专业" width="120">
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                <span>{{ scope.row.major }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="查看成绩" width="150">
+            <el-table-column label="班级" width="120">
               <template slot-scope="scope">
-                <i class="el-icon-time"></i>
-                <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                <span>{{ scope.row.classGrade }}</span>
               </template>
             </el-table-column>
+
+            <el-table-column label="成绩详情">
+              <template slot-scope="scope">
+                <el-button size="mini" type="primary" @click="scoreManData(scope.$index, scope.row)">
+                  查看成绩
+                </el-button>
+              </template>
+            </el-table-column>
+
           </el-table>
+
+          <!--分页显示-->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="pagesize"
+              layout="prev, pager, next, jumper"
+              :total=parseInt(total)>
+            </el-pagination>
+          </div>
+
+          <!--查看成绩对话框-->
+          <el-dialog title="成绩列表"
+                     width="70%"
+                     :visible.sync="dialogTableVisible">
+            <el-table :data="scoreData">
+              <el-table-column label="序号" type="index" width="60"></el-table-column>
+              <el-table-column property="name" label="姓名" width="120"></el-table-column>
+              <el-table-column property="data" label="学号" width="120"></el-table-column>
+              <el-table-column property="data" label="分数" width="100"></el-table-column>
+              <el-table-column property="data" label="总题数" width="100"></el-table-column>
+              <el-table-column property="data" label="错题数" width="100"></el-table-column>
+              <el-table-column property="data" label="正确率" width="100"></el-table-column>
+              <el-table-column property="data" label="答题用时" width="100"></el-table-column>
+            </el-table>
+          </el-dialog>
+
         </div>
+
       </div>
+
     </div>
     <div class="footer">
       <foot-footer></foot-footer>
@@ -337,7 +374,7 @@
   export default {
     name: 'teachTest',
     data() {
-      var checkNum = (rule, value, callback) => {
+      let checkNum = (rule, value, callback) => {
         if (!value) {
           return callback(new Error('题数不能为空'));
         }
@@ -422,6 +459,8 @@
         currentPage: 1,
         pagesize: 10,
         total: '',
+        dialogTableVisible: false,
+        scoreData: [],
       };
     },
 
@@ -533,7 +572,7 @@
 
       //修改按钮
       handleDelete(index, row) {
-        console.log(row.id);
+        //console.log(row.id);
         axios({
           method: 'get',
           url: "http://" + this.url + ":8000/readTestQuestion/dellNewTestQ",
@@ -559,13 +598,30 @@
           }
 
         });
-      }
+      },
+
+      //查看成绩请求
+      scoreManData(index, row) {
+        this.dialogTableVisible = true;
+        console.log(row);
+        axios.get("http://" + this.url + ":8000/readTestQuestion/scoreManData",{
+          params:{
+            user:this.user,
+            classGrade: this.classGrade,
+            major: this.major
+          }
+        }).then((res)=>{
+          console.log(res.data);
+          //    console.log((res.data[0].children));
+        }).catch(function(error){
+          console.log("error init." + error)
+        });
+      },
     },
 
     mounted() {
 
       //请求待考试数据
-      this.url = document.domain;
       axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
         params: {
           user: this.user,
@@ -581,7 +637,6 @@
       });
 
       //请求历史考试数据
-      this.url = document.domain;
       axios.get("http://" + this.url + ":8000/readTestQuestion/historyTestData", {
         params: {
           user: this.user,
@@ -597,7 +652,6 @@
       });
 
       //请求data数据
-      this.url = document.domain;
       axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
         params:{
           user:234
@@ -701,7 +755,7 @@
   .teach_Test .elinput {
     width: 502px;
     height: 38px;
-    border: 1px solid #ccc;
+    border: 1px solid #dcdfe6;
     border-radius: 4px;
     overflow: auto;
   }
@@ -780,10 +834,6 @@
     padding: 6px 0;
   }
 
-  .teach_Test .el-button--mini, .el-button--mini.is-round {
-    margin-left: 10px;
-  }
-
   .teach_Test .userMessage {
     width: 1048px;
     height: 100%;
@@ -799,5 +849,8 @@
   .teach_Test .el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
     border-right-color: #6a1518;
     border-left-color: #6a1518;
+  }
+  .teach_Test .block {
+    text-align: center;
   }
 </style>

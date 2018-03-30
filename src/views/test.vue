@@ -76,138 +76,116 @@
                 </div>
                 <el-tabs type="border-card">
                     <el-tab-pane label="待考试">
-                            <el-table :data="tableData" style="width: 100%">
+                            <el-table :data="toTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%">
+
+                                <el-table-column label="序号" type="index" width="60">
+                                </el-table-column>
 
                                 <el-table-column label="考试题目" width="150">
                                 <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.theme }}</span>
                                 </template>
                                 </el-table-column>
 
                                 <el-table-column label="考试时间" width="150">
                                 <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.newData }}</span>
                                 </template>
                                 </el-table-column>
 
                                 <el-table-column label="考试类型" width="150">
                                 <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.currTestType }}</span>
                                 </template>
                                 </el-table-column>
 
                                 <el-table-column label="考题数目" width="150">
                                 <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.num }}</span>
                                 </template>
                                 </el-table-column>
 
-                                <el-table-column label="创建人" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
+                                <el-table-column label="详细信息" width="120">
+                                    <template slot-scope="scope">
+                                    <el-button size="mini" type="primary">
+                                        查看
+                                    </el-button>
+                                    </template>
                                 </el-table-column>
 
-                                <el-table-column label="考试范围" width="150">
-                                <template slot-scope="scope">
-                                    <el-popover trigger="hover" placement="top">
-                                    <p>姓名: {{ scope.row.name }}</p>
-                                    <p>住址: {{ scope.row.address }}</p>
-                                    <div slot="reference" class="name-wrapper">
-                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                                    </div>
-                                    </el-popover>
-                                </template>
+                                <el-table-column label="操作">
+                                    <template slot-scope="scope">
+                                    <el-button size="mini" type="danger">
+                                        开始考试
+                                    </el-button>
+                                    </template>
                                 </el-table-column>
 
                             </el-table>
 
+                            <div class="block">
+                                <el-pagination
+                                    @size-change="handleSizeChange"
+                                    @current-change="handleCurrentChange"
+                                    :current-page.sync="currentPage"
+                                    :page-size="pagesize"
+                                    layout="prev, pager, next, jumper"
+                                    :total=parseInt(total)>
+                                </el-pagination>
+                            </div>
+
                     </el-tab-pane>
                     <el-tab-pane label="历史考试">
-                        <ul class="testLine">
-                            <li class="testNumber">NO.</li>
-                            <li class="testTime">时间</li>
-                            <li class="testTitle">项目</li>
-                            <li class="testState">状态</li>
-                            <li class="testGrade">分数</li>
-                        </ul>
-                        <ul class="testLine" v-for="(item,index) in userMessageData.testQuestion">
-                        <ul v-for="(item4,index4) in userMessageData.testQuestionInfo" v-if="index4 == index">
-                            <li class="testNumber">{{index + 1}}</li>
-                            <li class="testTime">{{item4.startTime}}</li>
-                            <li class="testTitle">
-                                <a id="show-modal" @click="showModal=true">
-                                    <p @click="myNum(index)">{{item.currTestNum}}</p>
-                                </a>
-                                <modal v-if="showModal" @close="showModal = false">
-                                    <h3 slot="header">custom header</h3>
-                                    <div slot="body">
-                                        <div v-for="(item2,index2) in userMessageData.testQuestion[myNumber].question">
-                                            <span class="desctitle">
-                                                {{item2.num}}.{{item2.desc}}
-                                            </span>
-                                            <ul class="ans">
-                                                <li>
-                                                    <label for="11" v-if="item2.options[0]">
-                                                        <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                                            {{item2.options[0]}}
-                                                    </label>
-                                                    <label for="22" v-if="item2.options[1]">
-                                                        <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                                            {{item2.options[1]}}
-                                                    </label>
-                                                    <label for="33" v-if="item2.options[2]">
-                                                        <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                                            {{item2.options[2]}}
-                                                    </label>
-                                                    <label for="44" v-if="item2.options[3]">
-                                                        <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                                            {{item2.options[3]}}
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </modal>
-                            </li>
-                            <li class="testState">已结束</li>
-                            <li class="testGrade">{{item4.sorce}}</li>
-                            <li class="errAnalysis">
-                                <a id="show-modal1" @click="showModal1=true">
-                                    <p @click="myNum(index)">错题分析</p>
-                                </a>
-                                <modal v-if="showModal1" @close="showModal1 = false">
-                                    <h3 slot="header">custom2333 header</h3>
-                                    <div slot="body">
-                                        <div v-for="(item5,index5) in userMessageData.testQuestionInfo[myNumber].error">
-                                        <div v-for="(item6,index6) in userMessageData.testQuestion[myNumber].question" v-if="index6 == 0">
-                                            <span class="desctitle">
-                                                <img src="../assets/imgs/err.jpg">
-                                                {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
-                                            </span>
-                                            <ul class="ans">
-                                                <li>
-                                                    {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[0]}}
-                                                    {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[1]}}
-                                                    {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[2]}}
-                                                    {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[3]}}
-                                                </li>
-                                            </ul>
-                                            <span>
-                                                正确答案：{{userMessageData.testQuestion[myNumber].question[item5 - 1].answer}}
-                                            </span>
-                                        </div>
-                                        </div>
-                                    </div>
-                                </modal>
-                            </li>
-                            </ul>
-                        </ul>
+                        <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+
+                            <el-table-column label="序号" type="index" width="60">
+                            </el-table-column>
+
+                            <el-table-column label="考试题目" width="100">
+                                <template slot-scope="scope">
+                                <span>{{ scope.row.theme }}</span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column label="创建时间" width="200">
+                                <template slot-scope="scope">
+                                <span>{{ scope.row.newData }}</span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column label="考试类型" width="120">
+                                <template slot-scope="scope">
+                                <span>{{ scope.row.currTestType }}</span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column label="考试数目" width="120">
+                                <template slot-scope="scope">
+                                <span>{{ scope.row.num }}</span>
+                                </template>
+                            </el-table-column>
+
+                            <el-table-column label="详细信息">
+                                <template slot-scope="scope">
+                                <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                                    查看
+                                </el-button>
+                                </template>
+                            </el-table-column>
+
+                        </el-table>
+
+                            <!--分页显示-->
+                            <div class="block">
+                                <el-pagination
+                                    @size-change="handleSizeChange"
+                                    @current-change="handleCurrentChange"
+                                    :current-page.sync="currentPage"
+                                    :page-size="pagesize"
+                                    layout="prev, pager, next, jumper"
+                                    :total=parseInt(total)>
+                                </el-pagination>
+                            </div>
                     </el-tab-pane>
                     <el-tab-pane label="正在考试">
                             <el-table :data="tableData" style="width: 100%">
@@ -309,23 +287,23 @@
                                     <el-col :span="6">
                                         <el-form-item prop="timeHour">
                                             <el-select v-model="stuform.timeHour" placeholder="请选择小时" @change="isMin">
-                                                <el-option label="0" value="zero"></el-option>
-                                                <el-option label="1" value="one"></el-option>
-                                                <el-option label="2" value="twe"></el-option>
-                                                <el-option label="3" value="three"></el-option>
+                                                <el-option label="0" value="0"></el-option>
+                                                <el-option label="1" value="1"></el-option>
+                                                <el-option label="2" value="2"></el-option>
+                                                <el-option label="3" value="3"></el-option>
                                             </el-select>
-                                        </el-form-item>    
+                                        </el-form-item>
                                     </el-col>
                                     <el-col class="line" :span="1">小时</el-col>
                                     <el-col :span="6">
                                         <el-form-item>
                                             <el-select v-model="stuform.timeMin" placeholder="请选择分钟">
-                                                <el-option label="0" :disabled="formDisabled" value="zero"></el-option>
-                                                <el-option label="10" value="ten"></el-option>
-                                                <el-option label="20" value="twenty"></el-option>
-                                                <el-option label="30" value="thirty"></el-option>
-                                                <el-option label="40" value="forty"></el-option>
-                                                <el-option label="50" value="fifty"></el-option>
+                                                <el-option label="0" :disabled="formDisabled" value="0"></el-option>
+                                                <el-option label="10" value="10"></el-option>
+                                                <el-option label="20" value="20"></el-option>
+                                                <el-option label="30" value="30"></el-option>
+                                                <el-option label="40" value="40"></el-option>
+                                                <el-option label="50" value="50"></el-option>
                                             </el-select>
                                         </el-form-item>
                                     </el-col>
@@ -336,9 +314,96 @@
                                 <el-button type="default" @click="resetForm('stuForm')" value="Reset">重置</el-button>
                             </el-form>
                         </el-tab-pane>
-                        <el-tab-pane label="历史练习">历史练习</el-tab-pane>
+                        <el-tab-pane label="历史练习">
+
+
+                                <ul class="testLine">
+                                    <li class="testNumber">NO.</li>
+                                    <li class="testTime">时间</li>
+                                    <li class="testTitle">项目</li>
+                                    <li class="testState">状态</li>
+                                    <li class="testGrade">分数</li>
+                                </ul>
+                                <ul class="testLine" v-for="(item,index) in userMessageData.testQuestion">
+                                <ul v-for="(item4,index4) in userMessageData.testQuestionInfo" v-if="index4 == index">
+                                    <li class="testNumber">{{index + 1}}</li>
+                                    <li class="testTime">{{item4.startTime}}</li>
+                                    <li class="testTitle">
+                                        <a id="show-modal" @click="showModal=true">
+                                            <p @click="myNum(index)">{{item.currTestNum}}</p>
+                                        </a>
+                                        <modal v-if="showModal" @close="showModal = false">
+                                            <h3 slot="header">custom header</h3>
+                                            <div slot="body">
+                                                <div v-for="(item2,index2) in userMessageData.testQuestion[myNumber].question">
+                                                    <span class="desctitle">
+                                                        {{item2.num}}.{{item2.desc}}
+                                                    </span>
+                                                    <ul class="ans">
+                                                        <li>
+                                                            <label for="11" v-if="item2.options[0]">
+                                                                <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                                    {{item2.options[0]}}
+                                                            </label>
+                                                            <label for="22" v-if="item2.options[1]">
+                                                                <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                                    {{item2.options[1]}}
+                                                            </label>
+                                                            <label for="33" v-if="item2.options[2]">
+                                                                <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                                    {{item2.options[2]}}
+                                                            </label>
+                                                            <label for="44" v-if="item2.options[3]">
+                                                                <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                                                    {{item2.options[3]}}
+                                                            </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </modal>
+                                    </li>
+                                    <li class="testState">已结束</li>
+                                    <li class="testGrade">{{item4.sorce}}</li>
+                                    <li class="errAnalysis">
+                                        <a id="show-modal1" @click="showModal1=true">
+                                            <p @click="myNum(index)">错题分析</p>
+                                        </a>
+                                        <modal v-if="showModal1" @close="showModal1 = false">
+                                            <h3 slot="header">custom2333 header</h3>
+                                            <div slot="body">
+                                                <div v-for="(item5,index5) in userMessageData.testQuestionInfo[myNumber].error">
+                                                <div v-for="(item6,index6) in userMessageData.testQuestion[myNumber].question" v-if="index6 == 0">
+                                                    <span class="desctitle">
+                                                        <img src="../assets/imgs/err.jpg">
+                                                        {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
+                                                    </span>
+                                                    <ul class="ans">
+                                                        <li>
+                                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[0]}}
+                                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[1]}}
+                                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[2]}}
+                                                            {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[3]}}
+                                                        </li>
+                                                    </ul>
+                                                    <span>
+                                                        正确答案：{{userMessageData.testQuestion[myNumber].question[item5 - 1].answer}}
+                                                    </span>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </modal>
+                                    </li>
+                                    </ul>
+                                </ul>
+
+
+
+                            <!--分页显示-->
+
+                        </el-tab-pane>
                     </el-tabs>
-                    
+
                 </div>
             </div>
         </div>
@@ -351,6 +416,8 @@
 
 <script>
 import axios from 'axios'
+import moment from 'moment'
+import core from '../../server/utils/core.js';
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
 import navUser from '@/components/common/navUser';
@@ -374,7 +441,7 @@ export default {
             }
           }
         }, 1000);
-      };  
+      };
     return {
         leftBox:[
             {li:'在线考试'},
@@ -459,8 +526,12 @@ export default {
             date: '2016-05-03',
             name: '王小虎',
             address: '上海市普陀区金沙江路 1516 弄'
-        }]
-
+        }],
+        toTestData: [],
+        historyTestData: [],
+        total: '',
+        currentPage: 1,
+        pagesize: 10,
     }
   },
   created(){
@@ -522,8 +593,8 @@ export default {
           currTestNum:allTestNum
         }
       }).then((res)=>{
-          console.log(res.data)
-          console.log(res.data.currState)
+          console.log('11');
+          console.log(res.data.currState);
           this.$store.commit('vuexState',res.data.state);
             if(res.data.state == 1){
                this.picked = res.data.currAnswer;
@@ -532,7 +603,7 @@ export default {
         //        window.onpopstate=function(e){
         //                var e = window.event||e;
         //                e.returnValue=("确定离开当前页面吗？");
-        //        }    
+        //        }
         //        window.onbeforeunload=function(e){
         //                var e = window.event||e;
         //               e.returnValue=("确定离开当前页面吗？");
@@ -574,6 +645,12 @@ export default {
 //      }
 //    },
   methods:{
+            handleSizeChange(val) {
+                //console.log(`每页 ${val} 条`);
+            },
+            handleCurrentChange(val) {
+                //console.log(`当前页: ${val}`);
+            },
         //开始考试跳转
             sendInfor(){
             //    this.$router.push('/realyTest');
@@ -581,20 +658,20 @@ export default {
                     name: 'realyTest'
                 })
                 window.open(href,'_blank',"channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
-            //    var elem = document.getElementById("content");   
-            //    console.log(elem);   
+            //    var elem = document.getElementById("content");
+            //    console.log(elem);
             //    this.requestFullScreen(elem);
             },
         //本来类似F11的全屏
             requestFullScreen(element){
-                var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;    
-                if (requestMethod) {      
-                    requestMethod.call(element);    
-                } else if (typeof window.ActiveXObject !== "undefined") {      
-                    var wscript = new ActiveXObject("WScript.Shell");    
-                    if (wscript !== null) {    
-                        wscript.SendKeys(122);    
-                    }    
+                var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+                if (requestMethod) {
+                    requestMethod.call(element);
+                } else if (typeof window.ActiveXObject !== "undefined") {
+                    var wscript = new ActiveXObject("WScript.Shell");
+                    if (wscript !== null) {
+                        wscript.SendKeys(122);
+                    }
                 }
             },
         //考试时长小时是0时分钟禁用0
@@ -709,7 +786,7 @@ export default {
                     console.log("error init." + error)
                 });
 
-                
+
             },
             myNum:function(index2){
                 this.myNumber = index2;
@@ -724,15 +801,51 @@ export default {
                     this.testManagenHistory();
                     this.testManagenWait();
                     this.testManageNow();
+                }else if(index == 2){
+                    this.exerciseHistory();
                 }
             },
+        //请求待考试数据
             testManagenWait(){
-
+                this.url = document.domain;
+                    axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
+                        params: {
+                        user: this.user,
+                        }
+                    }).then((res) => {
+                        console.log("AAAA")
+                        console.log(res);
+                        let resData = res.data;
+                        for (let i = 0; i < resData.length; i++) {
+                        resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+                        }
+                        this.toTestData = resData;
+                        this.total = this.toTestData.length;
+                    });
             },
             testManageNow(){
 
             },
+        //请求历史考试数据
             testManagenHistory(){
+                this.url = document.domain;
+                axios.get("http://" + this.url + ":8000/readTestQuestion/historyTestData", {
+                    params: {
+                    user: this.user,
+                    }
+                }).then((res) => {
+                    console.log("BBBB")
+                    console.log(res);
+                    let resData = res.data;
+                    for (let i = 0; i < resData.length; i++) {
+                    resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+                    }
+                    this.historyTestData = resData;
+                    this.total = this.historyTestData.length;
+                });
+            },
+        //请求历史练习数据
+            exerciseHistory(){
                 axios({
                         method:'get',
                         url:"http://" + this.url + ":8000/testManagement/testManagement",
@@ -744,25 +857,40 @@ export default {
                             console.log(res.data)
                         })
             },
-        //提交创建练习结果并跳转
-            submitForm(formName) {
-                this.$refs[formName].validate((valid) => {
-                if (valid) {
-                    axios({
+        // 成功后提示信息
+            Success(msg) {
+                this.$message({
+                showClose: true,
+                message: msg,
+                type: 'success'
+                });
+            },
+            onSubmit(){
+                axios({
                         method:'get',
                         url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
                         params:{
                             user:this.user,
                             testData:this.stuform
                         }
-                    }).then((res)=>{
+                    }).then((res) => {
+                            this.Success('创建成功');
                             console.log(res+"1111111111")
                         });
-                    
-                } else {
-                    console.log('error submit!!');
-                    return false;
-                }
+            },
+        //提交创建练习结果并跳转
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
+                    if (valid) {
+                        this.onSubmit();
+                        const {href} = this.$router.resolve({
+                            name: 'testExercise'
+                        })
+                        window.open(href,'_blank',"channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
+                    } else {
+                        console.log('error submit!!');
+                        return false;
+                    }
                 });
             },
         //手动重置

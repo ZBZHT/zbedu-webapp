@@ -399,11 +399,12 @@ router.get('/addTestQuestion', addNewTestQuestion, function (req, res) {
 //待考试请求
 router.get('/toTestData', function (req, res) {
   let reqUser = req.query.user;
+  console.log(reqUser);
   TeachNewTestQ.find({
     user: reqUser,
     state: 0,
   }).then(function (result) {
-    //console.log(result);
+    console.log(result);
     res.end(JSON.stringify(result));
   });
 });
@@ -411,11 +412,12 @@ router.get('/toTestData', function (req, res) {
 //历史考试请求
 router.get('/historyTestData', function (req, res) {
   let reqUser = req.query.user;
+  console.log(reqUser);
   TeachNewTestQ.find({
     user: reqUser,
-    state: 1,
+    state: 2,
   }).then(function (result) {
-    //console.log(result);
+    console.log(result);
     res.end(JSON.stringify(result));
   });
 });

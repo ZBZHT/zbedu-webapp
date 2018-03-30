@@ -10,6 +10,7 @@ import appraiseCenter from '@/views/appraiseCenter'
 import sourceCenter from '@/views/sourceCenter'
 import test from '@/views/test'
 import realyTest from '@/views/realyTest'
+import testExercise from '@/views/testExercise'
 import teachTest from '@/views/teachTest'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
@@ -93,6 +94,11 @@ const routes = [
       path:'/realyTest',
       name:'realyTest',
       component:realyTest
+    },
+    {
+      path:'/testExercise',
+      name:'testExercise',
+      component:testExercise
     },
     // {
     //   path:'/testQuestion/:testId/title/:title',
