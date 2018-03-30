@@ -14,35 +14,41 @@
           <div class="detail-box">
             <ul class="nav-box">
               <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
-                {{item }}
+                {{item}}
               </li>
             </ul>
-            <div class="teaching-box" v-show="this.currentIndex === 0">
 
+            <div class="teaching-box" v-show="this.currentIndex === 0">
               <p class="teaching" >待上传</p>
             </div>
-            <div class="course-box" v-show="this.currentIndex === 1">
 
+            <div class="course-box" v-show="this.currentIndex === 1">
               <p class="courseDescribe" >{{ noTree.describe }}{{ noTree.title }}</p>
             </div>
-            <div class="homework-box" v-show="this.currentIndex === 4">
+{{noTree}}
+            <div class="contentSmallCourse" v-show="this.currentIndex === 2">
+              <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                <param name="_Version" value="65539">
+                <param name="_ExtentX" value="20108">
+                <param name="_ExtentY" value="10866">
+                <param name="_StockProps" value="0">
+                <param name="SRC" value="teachingMaterial">
+                <object :data="noTree.teachingMaterial" type="application/pdf" class="pdf-box">
+                </object>
+              </object>
+            </div>
 
+            <div class="" v-show="this.currentIndex === 3">
+              <video id="video-box" controls @click="videstop">
+                <source :src="videoTitle">
+              </video>
+            </div>
+
+            <div class="homework-box" v-show="this.currentIndex === 4">
               <p class="homework">待上传</p>
             </div>
-            <!--<div class="design-box" v-show="this.currentIndex === 5">-->
 
-            <!--<p class="design">待上传</p>-->
-            <!--</div>-->
             <div class="appraise-box" v-show="this.currentIndex === 5">
-
-              <!--<div>-->
-              <!--<p v-for="bb in commentArr">{{bb}}</p>-->
-              <!--<hr>-->
-              <!--<p v-for="cc in replyArr">{{cc}}</p>-->
-              <!--<hr>-->
-              <!--<p v-for="dd in replyToReplyArr">{{dd}}</p>-->
-              <!--</div>-->
-
               <p class="appraiseTitle">{{ appraiseMsg }}</p>
               <p v-show="!commentArr.length">暂无评价</p>
               <div class="comment-box">
@@ -102,7 +108,6 @@
                   <hr>
                 </div>
               </div>
-
               <p class="appraiseTitle">我要评价</p>
 
               <textarea type="text" v-model="text"/>
@@ -147,16 +152,15 @@
                 <br>
                 <button class="commit-btn" @click="submitComments">提交评论</button>
               </div>
-
             </div>
-            <div class="teaching-box" v-show="this.currentIndex === 6">
 
+            <div class="teaching-box" v-show="this.currentIndex === 6">
               <p class="teaching" >待上传</p>
             </div>
             <div class="teaching-box" v-show="this.currentIndex === 7">
-
               <p class="teaching" >待上传</p>
             </div>
+
           </div>
         </div>
     </div>
@@ -220,18 +224,21 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         // }
 
         return this.$store.state.course;
+      },
+      videoTitle(){
+        return this.$store.state.noTree.videoTitle;
       }
     },
     methods: {
       onclick: function (index) {
         this.currentIndex = index
-        // console.log(this.currentCourseMsg)
-        if (this.currentIndex === 2) {
-          this.$router.push('/playPdf/'+this.currentCourseMsg.courseId + '/pdf/' + this.currentCourseMsg.title)
-        }
-        if (this.currentIndex === 3) {
-          this.$router.push('/playVideo/'+ this.currentCourseMsg.courseId + '/video/' + this.currentCourseMsg.title)
-        }
+    //    console.log(this.currentCourseMsg)
+    //    if (this.currentIndex === 2) {
+    //      this.$router.push('/playPdf/'+this.currentCourseMsg.courseId + '/pdf/' + this.currentCourseMsg.label)
+    //    }
+    //    if (this.currentIndex === 3) {
+    //      this.$router.push('/playVideo/'+ this.currentCourseMsg.courseId + '/video/' + this.currentCourseMsg.label)
+    //    }
       },
       enterUserManagement () {
         this.$router.push('/userManagement')
@@ -481,6 +488,10 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           // console.log(item)
           this.currentReplyToReply = -1
         }
+      },
+      //点击视频暂停开始
+      videstop(){
+
       }
     },
     mounted(){
@@ -614,6 +625,15 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       background: url("../assets/imgs/bbb.png") no-repeat center top;
       background-size: cover;
       /*padding: 130px 100px;*/
+    }
+    .right-box .contentSmallCourse{
+      width: 100%;
+      height: 450px;
+      position: relative;
+    }
+    .right-box .contentSmallCourse .pdf-box{
+      width: 100%;
+      height: 100%;
     }
     .right-box .courseDescribe{
       width: 80%;

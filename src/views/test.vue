@@ -298,7 +298,7 @@
                                     </el-col>
                                     <el-col class="line" :span="1">小时</el-col>
                                     <el-col :span="6">
-                                        <el-form-item>
+                                        <el-form-item prop="timeMin">
                                             <el-select v-model="stuform.timeMin" placeholder="请选择分钟">
                                                 <el-option label="0" :disabled="formDisabled" value="0"></el-option>
                                                 <el-option label="10" value="10"></el-option>
@@ -464,6 +464,9 @@ export default {
             ],
             timeHour: [
                 { required: true, message: '请选择考试小时', trigger: 'change' },
+            ],
+            timeMin: [
+                { required: true, message: '请选择考试分钟', trigger: 'change' },
             ],
             num: [
               { validator: checkNum, trigger: 'blur' }

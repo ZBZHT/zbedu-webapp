@@ -22,7 +22,7 @@
 
             <ul class="grandson2-box" v-show="(open2 && currentOpenIndex2 === index2)" v-if="item2">
               <li class="grandsonListItem2" v-for="(item3,index3) in item2.children" @click="enter3(index3)">
-                <span :class="{'addBgcolor': isChange && (index3 === currentIndex2)}" :label="item3.label" @click="toggle3(index3);sendMsg(item3)">
+                <span :class="{'addBgcolor': isChange && (index3 === currentIndex2)}" :label="item3.label" @click="toggle3(index3);sendMsgNew(item3)">
                 <i v-if="item2 && item3"></i>
                 <a href="javascript:void(0)" >{{item3.label}}</a>
                 </span>
@@ -89,6 +89,9 @@
         }
       },
       sendMsg(item){
+        this.$store.commit('noTreeTitle',item);
+      },
+      sendMsgNew(item){
         this.$store.commit('noTreeTitle',item);
       },
       enter1(index) {
