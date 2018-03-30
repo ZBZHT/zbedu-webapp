@@ -14,11 +14,13 @@
     "cookies": "^0.7.1",
     "debug": "~2.6.9",
     "errorhandler": "^1.5.0",
+    "excel-as-json": "^2.0.1",
     "excel-to-json": "^1.0.0",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "formidable": "^1.1.1",
     "fs": "^0.0.1-security",
+    "glob": "^7.1.2",
     "js-md5": "^0.7.3",
     "lodash": "^4.17.4",
     "method-override": "^2.3.10",
@@ -32,9 +34,12 @@
     "serve-favicon": "^2.4.5",
     "swig": "^1.4.2",
     "xlsx-2-json": "^1.0.2",
+    "xlsx-to-json": "^0.3.0",
+    "xlsx-to-json-plus": "^1.0.1",
     "xlsx2json": "^1.0.0"
   },
   "devDependencies": {
+    "excel-as-json": "^2.0.1",
     "json-schema-generator": "^2.0.6"
   }
 }

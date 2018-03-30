@@ -252,8 +252,9 @@
 
                     <el-form-item label="专业" prop="major">
                       <el-select v-model="form.major" placeholder="请选择专业">
-                        <el-option label="汽车专业" value="汽车专业"></el-option>
-                        <el-option label="机电专业" value="机电专业"></el-option>
+                        <el-option label="汽车维修" value="汽车维修"></el-option>
+                        <el-option label="汽车维护" value="汽车维护"></el-option>
+                        <el-option label="汽车电气" value="汽车电气"></el-option>
                       </el-select>
                     </el-form-item>
 
@@ -271,7 +272,7 @@
             </el-tabs>
           </div>
         </div>
-
+        <!--成绩管理-->
         <div class="userMessage" v-show="currIndex === 1">
           <div class="titleB">
             <div>
@@ -457,7 +458,7 @@
         historyTestData: [],
         scoreM: [],
         currentPage: 1,
-        pagesize: 10,
+        pagesize: 8,
         total: '',
         dialogTableVisible: false,
         scoreData: [],
@@ -465,6 +466,23 @@
     },
 
     methods: {
+      //教师创建考试后重新请求待考试数据
+      toTestDataReq() {
+        axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
+          params: {
+            user: this.user,
+          }
+        }).then((res) => {
+          //console.log(res.data);
+          let resData = res.data;
+          for (let i = 0; i < resData.length; i++) {
+            resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+          }
+          this.toTestData = resData;
+          this.total = this.toTestData.length;
+        });
+      },
+
       handleSizeChange(val) {
         //console.log(`每页 ${val} 条`);
       },
@@ -517,7 +535,7 @@
       },
 
       isMin() {
-        if (this.form.timeHour == "0") {
+        if (this.form.timeHour == "zero") {
           this.formDisabled = !this.formDisabled;
         }
       },
@@ -551,9 +569,10 @@
             newData: this.form.newData,
           }
         }).then((res) => {
-            this.Success('考试创建成功');
-            //console.log(res.data);
-            this.toTestData = res.data;
+          this.toTestDataReq();
+          this.Success('考试创建成功');
+          //console.log(res.data);
+          this.toTestData = res.data;
 
           }
         );

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Question = require('../schemas/testQuestionSingle');
+const Question = require('./question');
 
 //定义testQuestion
 module.exports = new Schema({

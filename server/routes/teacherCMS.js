@@ -2,12 +2,18 @@ const express = require('express');
 const router = express.Router();
 const _ = require('lodash');
 const fs = require("fs");
+const path = require('path');
+const glob = require('glob');
 const formidable = require('formidable');
 const uploadsPath = "../app/uploads/addUser/";
 const addTestPath = "../app/uploads/addTest/";
-const User = require('../app/models/User');
+const Students = require('../app/models/Students');
+const Teacher = require('../app/models/Teacher');
 const xlsx2j = require('xlsx-2-json');
-const excel2json = require('excel-to-json');
+const xlsx = require('../utils/xlsx-to-json');
+const magic = require('xlsx-to-json-plus');
+const convertExcel = require('excel-as-json').processFile;
+
 const md5 = require('js-md5');
 
 //设置跨域请求
@@ -165,7 +171,7 @@ router.post('/labelTree', function (req, res) {
 /* 获取用户管理数据 */
 {
   router.post('/userManager', findUser, function (req, res) {
-    User.find().then(function (users) {
+    Students.find().then(function (users) {
       res.status(200).send({
         userInfo: users
       });
@@ -176,7 +182,7 @@ router.post('/labelTree', function (req, res) {
     //console.log(req.body.data);
     if (req.body.data.username) {
       let username = req.body.data.username;
-      User.findOne({
+      Students.findOne({
         user: username,
       }).then(function (userType) {
         //console.log(userType.userType);
@@ -206,7 +212,7 @@ router.post('/delChecked', function (req, res) {
     let reqData = req.body.data;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
       for (let i = 0; i < reqData.msg.length; i++) {
-        User.remove({userID: reqData.msg[i].userID}, function (err) {
+        Students.remove({userID: reqData.msg[i].userID}, function (err) {
           if (err) {
             return res.status(404).send({err: err,});
           } else {
@@ -237,7 +243,7 @@ router.post('/addUser', function (req, res) {
     let reqData = req.body.data;
     let addUsers = reqData.addUser;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
-      let addUserData = new User({
+      let addUserData = new Students({
         user: addUsers.user,
         n_name: addUsers.n_name,
         pwd: addUsers.pwd,
@@ -286,7 +292,7 @@ router.post('/addExcelUsers', function(req, res) {
     form.parse(req, function (err, fields, files) {
       //旧名字
       let fileName = files.file.name;
-      console.log(fileName);
+      //console.log(fileName);
       //新名字
       let oldPath = files.file.path;
       let newPath = uploadsPath + fileName;
@@ -315,8 +321,9 @@ router.post('/addExcelUsers', function(req, res) {
                 if (result[i].n_name == '') {
                   result[i].n_name = result[i].user
                 }
+
                 userInfo = result;
-                let addUserData = new User({
+                let addUserData = new Students({
                   n_name: result[i].n_name,
                   user: result[i].user,
                   pwd: result[i].pwd,
@@ -329,14 +336,38 @@ router.post('/addExcelUsers', function(req, res) {
                   major: result[i].major,
                   classGrade: result[i].classGrade
                 });
-                //保存到数据库
-                addUserData.save(function (err) {
-                  if (err) {
-                    console.log(err)
-                  } else {
-                    console.log('Save success');
-                  }
+                let teacherData = new Teacher({
+                  n_name: result[i].n_name,
+                  user: result[i].user,
+                  pwd: result[i].pwd,
+                  userID: result[i].userID,
+                  IDNo: result[i].IDNo,
+                  MoNo: result[i].MoNo,
+                  userType: result[i].userType,
+                  gender: result[i].gender,
+                  entryTime: result[i].entryTime,
+                  major: result[i].major,
                 });
+
+                //保存到数据库
+                if (fileName == 'student.xlsx') {
+                  addUserData.save(function (err) {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      console.log('student Save success');
+                    }
+                  });
+                } else if (fileName == 'teacher.xlsx') {
+                  teacherData.save(function (err) {
+                    if (err) {
+                      console.log(err)
+                    } else {
+                      console.log('teacher Save success');
+                    }
+                  });
+                }
+
               }
               res.status(200).send({
                 userInfo: userInfo,
@@ -365,7 +396,7 @@ router.post('/updateUser', function (req, res) {
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
       console.log(reqUser);
       //查找userID来更新数据
-      User.findOneAndUpdate({
+      Students.findOneAndUpdate({
         userID: reqUser.userID
       }, {
         n_name: reqUser.n_name,
@@ -382,7 +413,7 @@ router.post('/updateUser', function (req, res) {
         if (err) {
           console.log(err);
           //查找IDNo来更新数据
-          User.findOneAndUpdate({
+          Students.findOneAndUpdate({
             IDNo: reqUser.IDNo
           }, {
             n_name: reqUser.n_name,
@@ -429,7 +460,7 @@ router.post('/myDataMst', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     let username = req.body.data.username;
-    User.find().then(function (users) {
+    Students.find().then(function (users) {
       res.status(200).send({
         userInfo: users
       });
@@ -446,7 +477,7 @@ router.post('/myDataMst', function (req, res) {
 router.post('/addExcelTest', function(req, res) {
   try {
     let form = new formidable.IncomingForm();
-    form.uploadDir = uploadsPath;//设置文件上传存放地址
+    form.uploadDir = addTestPath;//设置文件上传存放地址
     form.maxFieldsSize = 10 * 1024 * 1024; //设置最大10M
     form.keepExtensions = true;
 
@@ -456,14 +487,54 @@ router.post('/addExcelTest', function(req, res) {
       console.log(fileName);
       //新名字
       let oldPath = files.file.path;
-      let newPath = uploadsPath + fileName;
+      let newPath = addTestPath + fileName;
       //改名
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
           throw  Error("改名失败");
         }
-        //xlsx转换为json
-        xlsx2j({
+  /*      //xlsx转换为json
+        options ={
+          sheet:'0',
+          isColOriented: true,
+          omitEmtpyFields: true
+        };
+
+
+        convertExcel(newPath,newPath + ".json", options, function (err, data) {
+          console.log(data);
+        });*/
+
+          /*xlsx.toJson(
+            path.join(newPath),  //excell file
+            path.join(newPath + ".json"), //json dir
+            2,  //excell head line number
+            "," //array separator
+          );*/
+
+
+
+
+        /*glob(newPath, function (err, files) {
+          if (err) {
+            console.error("exportJson error:", err);
+            throw err;
+          }
+          files.forEach(function (element, index, array) {
+            console.log(element);
+            console.log(index);
+            console.log(array);
+            xlsx.toJson(
+              path.join(element),  //excell file
+              path.join(element + ".json"), //json dir
+              2,  //excell head line number
+              "," //array separator
+            );
+          });
+
+        });*/
+
+        /*x2j({
           input: newPath,
           output: newPath + "-output.json"
         }, function(err, result) {
@@ -474,7 +545,7 @@ router.post('/addExcelTest', function(req, res) {
               console.log((result));
               let userInfo = [];
               //格式化数据
-              /*for (let i = 0; i < result.length; i++) {
+              /!*for (let i = 0; i < result.length; i++) {
                 if (result[i].pwd == '') {
                   result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
                 } else {
@@ -484,7 +555,7 @@ router.post('/addExcelTest', function(req, res) {
                   result[i].n_name = result[i].user
                 }
                 userInfo = result;
-                let addUserData = new User({
+                let addUserData = new Students({
                   n_name: result[i].n_name,
                   user: result[i].user,
                   pwd: result[i].pwd,
@@ -505,7 +576,7 @@ router.post('/addExcelTest', function(req, res) {
                     console.log('Save success');
                   }
                 });
-              }*/
+              }*!/
               res.status(200).send({
                 userInfo: userInfo,
               });
@@ -513,7 +584,7 @@ router.post('/addExcelTest', function(req, res) {
               console.log('文件读取错误');
             }
           }
-        });
+        });*/
       });
     });
   }

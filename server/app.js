@@ -36,12 +36,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //设置session
 app.use(session({
-    secret: '12345',          //session ID cookie进行签名
-    name: 'user',          //是cookie的name，默认：connect.sid
-    cookie: { maxAge: 1000*60*180 }, //设置maxAge是30分钟
-    resave: false,
-    saveUninitialized: false,      // 是否自动保存未初始化的会话
-    store: new MongoStore({ url: 'mongodb://127.0.0.1/db' })//设置数据库
+  secret: '12345',          //session ID cookie进行签名
+  name: 'user',          //是cookie的name，默认：connect.sid
+  cookie: {maxAge: 1000 * 60 * 180}, //设置maxAge是30分钟
+  resave: false,  //每次请求都自动更新session
+  saveUninitialized: false,      // 是否设置session在存储容器中可以给修改
+  store: new MongoStore({ url: 'mongodb://127.0.0.1/db' })//设置数据库
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));

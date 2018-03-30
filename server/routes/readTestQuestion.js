@@ -3,6 +3,8 @@ const router = express.Router();
 const TestQuestion = require('../app/models/TestQuestion');
 const TestQuestionInfo = require('../app/models/TestQuestionInfo');
 const TeachNewTestQ = require('../app/models/TeachNewTestQ');
+const Question = require('../app/models/Question');
+const core = require('../utils/core');
 
 //设置跨域请求
 router.all('*', function (req, res, next) {
@@ -78,7 +80,13 @@ function newTestQuestion(req, res, next) {
         "name":"que1",
         "forId":["que1A","que1B","que1C","que1D"],
         "answer": "A",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 2,
@@ -88,7 +96,13 @@ function newTestQuestion(req, res, next) {
         "name":"que2",
         "forId":["que2A","que2B","que2C","que2D"],
         "answer": "D",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 3,
@@ -98,7 +112,13 @@ function newTestQuestion(req, res, next) {
         "name":"que3",
         "forId":["que3A","que3B","que3C","que3D"],
         "answer": "A",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 4,
@@ -108,7 +128,13 @@ function newTestQuestion(req, res, next) {
         "name":"que4",
         "forId":["que4A","que4B","que4C","que4D"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 5,
@@ -118,7 +144,13 @@ function newTestQuestion(req, res, next) {
         "name":"que5",
         "forId":["que5A","que5B","que5C","que5D"],
         "answer": "C",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 6,
@@ -128,7 +160,13 @@ function newTestQuestion(req, res, next) {
         "name":"que6",
         "forId":["que6A","que6B","que6C","que6D"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 7,
@@ -138,7 +176,13 @@ function newTestQuestion(req, res, next) {
         "name":"que7",
         "forId":["que7A","que7B","que7C","que7D"],
         "answer": "C",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 8,
@@ -148,7 +192,13 @@ function newTestQuestion(req, res, next) {
         "name":"que8",
         "forId":["que8A","que8B","que8C","que8D"],
         "answer": "A",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 9,
@@ -158,7 +208,13 @@ function newTestQuestion(req, res, next) {
         "name":"que9",
         "forId":["que9A","que9B","que9C","que9D"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 10,
@@ -168,7 +224,13 @@ function newTestQuestion(req, res, next) {
         "name":"que10",
         "forId":["que10A","que10B","que10C","que10D"],
         "answer": "D",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 11,
@@ -178,7 +240,13 @@ function newTestQuestion(req, res, next) {
         "name":"que11",
         "forId":["que11A","que11B"],
         "answer": "A",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 12,
@@ -188,7 +256,13 @@ function newTestQuestion(req, res, next) {
         "name":"que12",
         "forId":["que12A","que12B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 13,
@@ -198,7 +272,13 @@ function newTestQuestion(req, res, next) {
         "name":"que13",
         "forId":["que13A","que13B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 14,
@@ -208,7 +288,13 @@ function newTestQuestion(req, res, next) {
         "name":"que14",
         "forId":["que14A","que14B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 15,
@@ -218,7 +304,13 @@ function newTestQuestion(req, res, next) {
         "name":"que15",
         "forId":["que15A","que15B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 16,
@@ -228,7 +320,13 @@ function newTestQuestion(req, res, next) {
         "name":"que16",
         "forId":["que16A","que16B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 17,
@@ -238,7 +336,13 @@ function newTestQuestion(req, res, next) {
         "name":"que17",
         "forId":["que17A","que17B"],
         "answer": "A",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 18,
@@ -248,7 +352,13 @@ function newTestQuestion(req, res, next) {
         "name":"que18",
         "forId":["que18A","que18B"],
         "answer": "A",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 19,
@@ -258,7 +368,13 @@ function newTestQuestion(req, res, next) {
         "name":"que19",
         "forId":["que19A","que19B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       },
       {
         "num": 20,
@@ -268,7 +384,13 @@ function newTestQuestion(req, res, next) {
         "name":"que20",
         "forId":["que20A","que20B"],
         "answer": "B",
-        "type": "radio"
+        "type": "radio",
+        "major": "汽车专业",
+        "title1": '新能源汽车',
+        "title2": '纯电动汽车',
+        "title3": '纯电动汽车高压安全操作与保养维护',
+        "title4": '纯电动汽车基本信息收集与介绍',
+        "title5": '',
       }
     );
 
@@ -328,6 +450,22 @@ function addNewTestQuestion(req, res, next) {
   });
 }
 
+//教师发题
+function disTestQuestion(req, res, next) {
+  let reqQ = req.query;
+  //console.log(reqQ);
+
+  Question.find(
+
+  ).then(function (result) {
+    //console.log(result[0].id);
+    let ee = core.getArrayItems(result, reqQ.num);
+    console.log(ee);
+
+  });
+  next()
+}
+
 //刷新查询整个文档
 router.get('/all', function (req, res) {
   let reqCurrTestNum = req.query.currTestNum;
@@ -384,8 +522,8 @@ router.get('/submitQuestionInfo', function (req, res) {
   });
 });
 
-//老师创建考试
-router.get('/addTestQuestion', addNewTestQuestion, function (req, res) {
+//教师,创建考试
+router.get('/addTestQuestion', addNewTestQuestion, disTestQuestion, function (req, res) {
   let reqQ = req.query;
   let reqUser = reqQ.user;
   TeachNewTestQ.find({
@@ -396,33 +534,43 @@ router.get('/addTestQuestion', addNewTestQuestion, function (req, res) {
   });
 });
 
-//待考试请求
+//教师,待考试请求
 router.get('/toTestData', function (req, res) {
   let reqUser = req.query.user;
-  console.log(reqUser);
   TeachNewTestQ.find({
     user: reqUser,
     state: 0,
   }).then(function (result) {
-    console.log(result);
+    //console.log(result);
     res.end(JSON.stringify(result));
   });
 });
 
-//历史考试请求
+//教师,历史考试请求
 router.get('/historyTestData', function (req, res) {
   let reqUser = req.query.user;
-  console.log(reqUser);
   TeachNewTestQ.find({
     user: reqUser,
     state: 2,
   }).then(function (result) {
-    console.log(result);
+    //console.log(result);
     res.end(JSON.stringify(result));
   });
 });
 
-//删除创建的考试
+//教师,成绩管理
+router.get('/scoreManData', function (req, res) {
+  let reqUser = req.query;
+  TestQuestionInfo.find({
+    classGrade: reqUser.classGrade,
+    major: reqUser.major
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
+
+//教师,删除创建的考试
 router.get('/dellNewTestQ', function (req, res) {
   let reqId = req.query.id;
   TeachNewTestQ.remove({id: reqId}, function (err) {

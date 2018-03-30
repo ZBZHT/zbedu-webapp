@@ -1,7 +1,7 @@
 //添加公司内部用户信息
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://127.0.0.1:27017/db');
-const User = require('../app/models/User');
+const Students = require('../app/models/Students');
 
 const db = mongoose.connection;
 db.once('open', function (callback) {
@@ -9,7 +9,7 @@ db.once('open', function (callback) {
 });
 
 //实例化几个学生
-let a8 = new User({
+let a8 = new Students({
   user: '路晓东',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000001',
@@ -21,7 +21,7 @@ let a8 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a6 = new User({
+let a6 = new Students({
   user: '谢佳芯',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000002',
@@ -33,7 +33,7 @@ let a6 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let g = new User({
+let g = new Students({
   user: '杜伟',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000009',
@@ -45,7 +45,7 @@ let g = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let t = new User({
+let t = new Students({
   user: '杨暕',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000022',
@@ -57,7 +57,7 @@ let t = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a3 = new User({
+let a3 = new Students({
   user: '王莹莹',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000030',
@@ -69,7 +69,7 @@ let a3 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a = new User({
+let a = new Students({
   user: '孙骏',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000003',
@@ -82,7 +82,7 @@ let a = new User({
   classGrade: '03'
 
 });
-let b = new User({
+let b = new Students({
   user: '侯妍妍',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000004',
@@ -94,7 +94,7 @@ let b = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let c = new User({
+let c = new Students({
   user: '彭滨川',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000005',
@@ -106,7 +106,7 @@ let c = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let d = new User({
+let d = new Students({
   user: '李伟',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000006',
@@ -118,7 +118,7 @@ let d = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let e = new User({
+let e = new Students({
   user: '江海洁',
   pwd: '698d51a19d8a121ce581499d7b701668',
   admin: false,
@@ -131,7 +131,7 @@ let e = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let f = new User({
+let f = new Students({
   user: '吴正林',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000008',
@@ -143,7 +143,7 @@ let f = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let h = new User({
+let h = new Students({
   user: '陈景',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000010',
@@ -155,7 +155,7 @@ let h = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let i = new User({
+let i = new Students({
   user: '侯为东',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000011',
@@ -167,7 +167,7 @@ let i = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let j = new User({
+let j = new Students({
   user: '刘志勇',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000012',
@@ -179,7 +179,7 @@ let j = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let k = new User({
+let k = new Students({
   user: '程叔亮',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000013',
@@ -191,7 +191,7 @@ let k = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let l = new User({
+let l = new Students({
   user: '何宗军',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000014',
@@ -203,7 +203,7 @@ let l = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let m = new User({
+let m = new Students({
   user: '万林伟',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000015',
@@ -215,7 +215,7 @@ let m = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let n = new User({
+let n = new Students({
   user: '马凌',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000016',
@@ -227,7 +227,7 @@ let n = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let o = new User({
+let o = new Students({
   user: '续向阳',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000017',
@@ -239,7 +239,7 @@ let o = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let p = new User({
+let p = new Students({
   user: '陈香琴',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000018',
@@ -251,7 +251,7 @@ let p = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let q = new User({
+let q = new Students({
   user: '徐冰瑶',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000019',
@@ -263,7 +263,7 @@ let q = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let r = new User({
+let r = new Students({
   user: '曹岚',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000020',
@@ -275,7 +275,7 @@ let r = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let s = new User({
+let s = new Students({
   user: '黄青蓝',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000021',
@@ -287,7 +287,7 @@ let s = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let u = new User({
+let u = new Students({
   user: '金建永',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000023',
@@ -299,7 +299,7 @@ let u = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let v = new User({
+let v = new Students({
   user: '于帆',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000024',
@@ -311,7 +311,7 @@ let v = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let w = new User({
+let w = new Students({
   user: '王骏',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000025',
@@ -323,7 +323,7 @@ let w = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let y = new User({
+let y = new Students({
   user: '尹东阳',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000026',
@@ -335,7 +335,7 @@ let y = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let z = new User({
+let z = new Students({
   user: '朱鸿飞',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000027',
@@ -347,7 +347,7 @@ let z = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a1 = new User({
+let a1 = new Students({
   user: '吕浩',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000028',
@@ -359,7 +359,7 @@ let a1 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a2 = new User({
+let a2 = new Students({
   user: '姜琳晖',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000029',
@@ -371,7 +371,7 @@ let a2 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a4 = new User({
+let a4 = new Students({
   user: '李佳',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000031',
@@ -383,7 +383,7 @@ let a4 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a5 = new User({
+let a5 = new Students({
   user: '贺林',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000032',
@@ -395,7 +395,7 @@ let a5 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a7 = new User({
+let a7 = new Students({
   user: '马聪',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000033',
@@ -407,7 +407,7 @@ let a7 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a9 = new User({
+let a9 = new Students({
   user: '毛耀辉',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000034',
@@ -419,7 +419,7 @@ let a9 = new User({
   major: '汽车维修',
   classGrade: '03'
 });
-let a10 = new User({
+let a10 = new Students({
   user: '李俊',
   pwd: '698d51a19d8a121ce581499d7b701668',
   userID: '00000035',

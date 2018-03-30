@@ -1,95 +1,95 @@
 {
   "slides":[
     {
-      "src":"手机app下载.jpg"
+      "src":"src/assets/手机app下载.jpg"
     },
     {
-      "src":"case.jpg"
+      "src":"src/assets/case.jpg"
     },
     {
-      "src":"Congratulate.jpg"
+      "src":"src/assets/Congratulate.jpg"
     },
     {
-      "src":"platform.jpg"
+      "src":"src/assets/platform.jpg"
     },
     {
-      "src":"platform2.jpg"
+      "src":"src/assets/platform2.jpg"
     }
   ],
   "bestClassData":[
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"标题",
       "courseId": 61
 
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"标题",
       "courseId": 62
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"标题",
       "courseId": 63
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"标题",
       "courseId": 64
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"标题",
       "courseId": 65
     }
   ],
   "pageData":[
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介1",
       "courseId": 81
 
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介2",
       "courseId": 82
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介3",
       "courseId": 83
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介4",
       "courseId": 84
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介5",
       "courseId": 85
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介6",
       "courseId": 86
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介7",
       "courseId": 87
     },
     {
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"检测",
       "intro":"简介1",
       "courseId": 88
@@ -97,17 +97,17 @@
   ],
   "bottomLeftData":[
     {
-      "url":"left.png",
+      "url":"src/assets/left.png",
       "title":"DC-DC检测",
       "courseId": 71
     },
     {
-      "url":"left.png",
+      "url":"src/assets/left.png",
       "title":"DC-DC检测",
       "courseId": 72
     },
     {
-      "url":"left.png",
+      "url":"src/assets/left.png",
       "title":"DC-DC检测",
       "courseId": 73
     }
@@ -203,66 +203,66 @@
   "hotTest":[
     {
       "testId":"101",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"汽车电气"
     },
     {
       "testId":"106",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"全国汽车维修工中级培训"
     },
     {
       "testId":"107",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"全国汽车维修电工中级"
     },
     {
       "testId":"104",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"新能源"
     },
     {
       "testId":"105",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"汽车底盘"
     }
   ],
   "gradeTest":[
     {
       "testId":"106",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"全国汽车维修工中级培训"
     },
     {
       "testId":"107",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"全国汽车维修电工中级"
     }
   ],
   "contentTest":[
     {
       "testId":"101",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"汽车电气"
     },
     {
       "testId":"102",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"汽车发动机"
     },
     {
       "testId":"103",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"汽车变速器"
     },
     {
       "testId":"104",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"新能源"
     },
     {
       "testId":"105",
-      "url":"img.png",
+      "url":"src/assets/img.png",
       "title":"汽车底盘"
     }
   ]

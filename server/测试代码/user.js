@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../app/models/User');
+const User = require('../app/models/Students');
 const Session = require('../app/models/Session');
 
 //定义返回格式

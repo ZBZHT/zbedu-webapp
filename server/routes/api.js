@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../app/models/User');
+const Students = require('../app/models/Students');
+const Teacher = require('../app/models/Teacher');
 const Session = require('../app/models/Session');
 const _ = require('lodash');
 
@@ -67,6 +68,7 @@ router.use(function (req, res, next) {
 router.post('/user/login', checkLogin, function (req, res) {
   let username = req.body.username;
   let password = req.body.password;
+  console.log(username);
 
   let userID = /^\d{8}$/;  //只能是8为数字
   let MoNo = /^[1][3,4,5,7,8][0-9]{9}$/;  //是否为11位有效手机号码
@@ -76,22 +78,40 @@ router.post('/user/login', checkLogin, function (req, res) {
   //判断是否是学号
   if (userID.test(username)) {
     //console.log('true');
-    User.findOne({
+    Students.findOne({
       userID: username,
       pwd: password
-    }).then(function (user) {
-      if (!user) {
-        console.log('用户名或密码错误,code : 2');
-        userInfo.code = 2;
-        res.end(JSON.stringify(userInfo));
+    }).then(function (student) {
+      if (!student) {
+        //教师登录
+        Teacher.findOne({
+          userID: username,
+          pwd: password
+        }).then(function (teacher) {
+          //console.log(teacher);
+          if (!teacher) {
+            console.log('用户名或密码错误,code : 2');
+            userInfo.code = 2;
+            res.end(JSON.stringify(userInfo));
+          } else {
+            //返回用户名和ID
+            console.log('登录成功');
+            userInfo = {
+              code: 0,
+              userID: teacher.userID,
+              username: teacher.user,
+              userType: teacher.userType
+            };
+          }
+        });
       } else {
         //返回用户名和ID
         console.log('登录成功');
         userInfo = {
           code: 0,
-          userID: user.userID,
-          username: user.user,
-          userType: user.userType
+          userID: student.userID,
+          username: student.user,
+          userType: student.userType
         };
         req.session.users = userInfo;
         //sessDada = sess.responseData;
@@ -101,22 +121,41 @@ router.post('/user/login', checkLogin, function (req, res) {
 
     //判断是否是手机号
   } else if (MoNo.test(username)) {
-    User.findOne({
+    //学生登录
+    Students.findOne({
       MoNo: username,
       pwd: password
-    }).then(function (user) {
-      if (!user) {
-        console.log('用户名或密码错误,code : 2');
-        userInfo.code = 2;
-        res.end(JSON.stringify(userInfo));
+    }).then(function (student) {
+      if (!student) {
+        //教师登录
+        Teacher.findOne({
+          MoNo: username,
+          pwd: password
+        }).then(function (teacher) {
+          //console.log(teacher);
+          if (!teacher) {
+            console.log('用户名或密码错误,code : 2');
+            userInfo.code = 2;
+            res.end(JSON.stringify(userInfo));
+          } else {
+            //返回用户名和ID
+            console.log('登录成功');
+            userInfo = {
+              code: 0,
+              userID: teacher.userID,
+              username: teacher.user,
+              userType: teacher.userType
+            };
+          }
+        });
       } else {
         //返回用户名和ID
         console.log('登录成功');
         userInfo = {
           code: 0,
-          userID: user.userID,
-          username: user.user,
-          userType: user.userType
+          userID: student.userID,
+          username: student.user,
+          userType: student.userType
         };
         req.session.users = userInfo;
         //sessDada = sess.responseData;
@@ -126,22 +165,45 @@ router.post('/user/login', checkLogin, function (req, res) {
 
     //判断是否是身份证号
   } else if (IDNo.test(username)) {
-    User.findOne({
+    Students.findOne({
       IDNo: username,
       pwd: password
-    }).then(function (user) {
-      if (!user) {
-        console.log('用户名或密码错误,code : 2');
-        userInfo.code = 2;
-        res.end(JSON.stringify(userInfo));
+    }).then(function (student) {
+      //console.log(student);
+      if (!student) {
+        //教师登录
+        console.log(username);
+        console.log(password);
+        Teacher.findOne({
+          IDNo: username,
+          pwd: password
+        }).then(function (teacher) {
+          console.log(teacher);
+          if (!teacher) {
+            console.log('用户名或密码错误,code : 2');
+            userInfo.code = 2;
+            res.end(JSON.stringify(userInfo));
+          } else {
+            //返回教师和ID
+            console.log('登录成功');
+            userInfo = {
+              code: 0,
+              userID: teacher.userID,
+              username: teacher.user,
+              userType: teacher.userType
+            };
+            req.session.users = userInfo;
+            res.end(JSON.stringify(req.session.users));
+          }
+        });
       } else {
         //返回用户名和ID
         console.log('登录成功');
         userInfo = {
           code: 0,
-          userID: user.userID,
-          username: user.user,
-          userType: user.userType
+          userID: student.userID,
+          username: student.user,
+          userType: student.userType
         };
         req.session.users = userInfo;
         //sessDada = sess.responseData;
@@ -149,24 +211,44 @@ router.post('/user/login', checkLogin, function (req, res) {
       }
     });
 
-    //判断是否是身用户名
+    //判断是否是用户名
   } else if (user.test(username)) {
-    User.findOne({
+    Students.findOne({
       user: username,
       pwd: password
-    }).then(function (user) {
-      if (!user) {
-        console.log('用户名或密码错误,code : 2');
-        userInfo.code = 2;
-        res.end(JSON.stringify(userInfo));
+    }).then(function (student) {
+      if (!student) {
+        //教师登录
+        Teacher.findOne({
+          user: username,
+          pwd: password
+        }).then(function (teacher) {
+          //console.log(teacher);
+          if (!teacher) {
+            console.log('用户名或密码错误,code : 2');
+            userInfo.code = 2;
+            res.end(JSON.stringify(userInfo));
+          } else {
+            //返回教师和ID
+            console.log('登录成功');
+            userInfo = {
+              code: 0,
+              userID: teacher.userID,
+              username: teacher.user,
+              userType: teacher.userType
+            };
+            req.session.users = userInfo;
+            res.end(JSON.stringify(req.session.users));
+          }
+        });
       } else {
-        //返回用户名和ID
+        //返回学生和ID
         console.log('登录成功');
         userInfo = {
           code: 0,
-          userID: user.userID,
-          username: user.user,
-          userType: user.userType
+          userID: student.userID,
+          username: student.user,
+          userType: student.userType
         };
         req.session.users = userInfo;
         //sessDada = sess.responseData;
@@ -225,6 +307,8 @@ function checkLogin(req, res, next) {
 router.post('/user/logout', function (req, res) {
 
   let ID = req.sessionID;
+  console.log('11');
+  console.log(ID);
   let conditions = {_id: ID};
   Session.remove(conditions, function (error) {
     if (error) {

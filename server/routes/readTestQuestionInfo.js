@@ -33,15 +33,17 @@ router.get('/update', function (req, res) {
   let QuestionInfo = req.query;
   let reqTestQuestion = QuestionInfo.testQuestion;
   let code = '';
-  console.log(QuestionInfo.currAnswer);
-  //console.log(QuestionInfo.currTestType);
+  console.log(QuestionInfo);
+  console.log(QuestionInfo.currTestType);
+
+  //console.log( (QuestionInfo.startTime));
 
   TestQuestionInfo.findOneAndUpdate({
       testQuestion: reqTestQuestion
     }, {
       state:QuestionInfo.state,
       user: QuestionInfo.user,
-
+      currTestType: QuestionInfo.currTestType,
       startTime: QuestionInfo.startTime,
       currAnswer: QuestionInfo.currAnswer,
       currState: QuestionInfo.currState,
@@ -128,5 +130,29 @@ router.get('/testManagement', function (req, res) {
   });
 });
 
+//学生,待考试请求
+router.get('/stuToTestData', function (req, res) {
+  let reqUser = req.query.user;
+  TeachNewTestQ.find({
+    user: reqUser,
+    state: 0,
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
+
+//学生,历史考试请求
+router.get('/stuHistoryTestData', function (req, res) {
+  let reqUser = req.query.user;
+  TeachNewTestQ.find({
+    user: reqUser,
+    state: 2,
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
+
+
 module.exports = router;
-//Model.findOneAndUpdate([conditions], [update], [options], [callback])
