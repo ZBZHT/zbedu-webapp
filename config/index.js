@@ -11,7 +11,7 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/api/*": 'http://localhost:3000'
+      "/api": 'http://192.168.2.251:8000'   //代理到开发服务器
       /*
       "/menu/header": {
         target: "http://localhost:8080",

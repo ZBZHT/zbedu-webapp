@@ -214,7 +214,7 @@ router.beforeEach((to,from,next) => {
 //判断是否退出
 axios({
   method: 'post',
-  url: 'http://'+ url +':8000/api/user/loginState',
+  url: '/api/user/loginState',
   data: {
   //    username: this.username,
    //   password: md5(this.password)
@@ -229,5 +229,5 @@ axios({
       store.commit('username','');
   }
   })
-  
+
 export default router;
