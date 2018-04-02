@@ -532,11 +532,13 @@ function distTestQuestion(req, res, next) {
   next()
 }
 
-//刷新查询整个文档
-router.get('/all', function (req, res) {
-  let reqCurrTestNum = req.query.currTestNum;
-  let reqUser = req.query.user;
-  //console.log(reqUser);
+//学生,开始考试 获取考试题
+router.get('/getTestQ', function (req, res) {
+  if (req.query.currTestNum != '') {
+
+    let reqCurrTestNum = req.query.currTestNum;
+    let reqUser = req.query.user;
+    //console.log(reqUser);
     TestQuestion.findOne({
       currTestNum: reqCurrTestNum
     }).then(function (msgOne) {
@@ -551,20 +553,53 @@ router.get('/all', function (req, res) {
         res.end(JSON.stringify(testResult));
       });
     });
+  } else {
+    res.end(JSON.stringify({code : 1}));
+  }
 });
 
-//点击查询整个文档
-router.get('/clickQuery', newTestQuestion, function (req, res) {
-  let reqCurrTestNum = testResult.testLength + 1 ;
-
-  console.log(reqCurrTestNum);
-      TestQuestion.findOne({
-        currTestNum: reqCurrTestNum
-      }).then(function (msg) {
-        //console.log(msg);
-        result = msg;
-        res.end(JSON.stringify(result));
+//学生,获取正在考试的题
+router.get('/getTestQing', function (req, res) {
+  //console.log(reqUser);
+  TestQuestion.findOne({
+    user: req.query.user,
+    state: 1,
+  }).then(function (msgOne) {
+    //console.log(msgOne);
+    res.end(JSON.stringify(msgOne));
   });
+});
+
+//开始考试后, 改变考试状态
+router.get('/clickQuery', function (req, res) {
+  let reqQ = req.query;
+  //console.log(reqQ);
+
+  TestQuestion.findOneAndUpdate({  //改变考试题状态为1
+      user: reqQ.user,
+      currTestNum: reqQ.currTestNum,
+    }, {
+      state: reqQ.state,
+    },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        TestQuestionInfo.findOneAndUpdate({  //改变考试答案状态为1
+            user: reqQ.user,
+            testQuestion: reqQ.currTestNum,
+          }, {
+            state: reqQ.state,
+          },
+          function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              res.end(JSON.stringify({code: 0}));
+            }
+          });
+      }
+    });
 });
 
 //提交答案QuestionInfo
@@ -615,15 +650,28 @@ router.get('/toTestData', function (req, res) {
 //学生,待考试请求
 router.get('/stuToTestData', function (req, res) {
   let reqUser = req.query.user;
-  console.log(reqUser);
+  //console.log(reqUser);
   TestQuestion.find({
     user: reqUser,
     state: 0,
   }).then(function (result) {
-    console.log(result);
+    //console.log(result);
     res.end(JSON.stringify(result));
   });
 });
+
+//学生,待考试中 ,开始考试 请求
+/*router.get('/stuStartData', function (req, res) {
+  let reqUser = req.query.user;
+  console.log(reqUser);
+  TestQuestion.find({
+    user: reqUser,
+    currTestNum: reqUser.currTestNum,
+  }).then(function (result) {
+    console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});*/
 
 //教师,历史考试请求
 router.get('/historyTestData', function (req, res) {

@@ -13,13 +13,14 @@ router.all('*', function (req, res, next) {
   else next();
 });
 
-//查询整个答案文档
-router.get('/all', function (req, res) {
-  let reqQestQuestion = req.query.currTestNum;
+//学生开始考试 ,  获取考试答案信息
+router.get('/getTestQuesInfo', function (req, res) {
+  let reqQ = req.query;
   //console.log(req.query);
 
   TestQuestionInfo.findOne({
-    testQuestion: reqQestQuestion
+    user: reqQ.user,
+    state: 1,
   }).then(function (msg) {
     console.log('请求答案成功');
     //console.log(msg);
