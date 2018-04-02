@@ -3,7 +3,7 @@
         <el-row :gutter="75">
             <el-col :span="8"  v-for="(item,index) in navData" :key = "index">
                 <a @click="fobLink(index)">
-                    <div class="grid-content" 
+                    <div class="grid-content"
                          :style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"
                          >
                         <p class="p">{{item.label}}</p>
@@ -24,7 +24,7 @@ export default {
   props:['navData'],
   data () {
     return {
-      
+
     }
   },
   computed:{
@@ -33,7 +33,7 @@ export default {
   mounted(){
     var _this = this;
     window.onresize = function(){
-        _this.$router.go(0);
+       // _this.$router.go(0);
     }
 
   },
@@ -50,7 +50,7 @@ export default {
         }else if(index == 2 && this.$store.state.userType == "S"){
             this.$router.push('/test');
         }else if(index == 2 && this.$store.state.userType == "E"){
-            this.$router.push('/test');
+            this.$router.push('/teachTest');
         }else if(index == 2 && this.$store.state.userType == "T"){
             this.$router.push('/teachTest');
         }else if(index == 3){
@@ -103,7 +103,7 @@ a:hover{
     }
     .contentui .introduce{
         width:100%;
-        font-size:14px;
+        font-size:12px;
         font-weight:normal;
         position:absolute;
         left:0;
@@ -171,7 +171,7 @@ a:hover{
     .contentui .introduce{
         width:100%;
         height:0px;
-        font-size:14px;
+        font-size:12px;
         font-weight:normal;
         position:absolute;
         left:0;
@@ -240,7 +240,7 @@ a:hover{
     .contentui .introduce{
         width:100%;
         height:0px;
-        font-size:13px;
+        font-size:11px;
         font-weight:normal;
         position:absolute;
         left:0;
@@ -309,7 +309,7 @@ a:hover{
     .contentui .introduce{
         width:100%;
         height:0px;
-        font-size:12px;
+        font-size:11px;
         font-weight:normal;
         position:absolute;
         left:0;

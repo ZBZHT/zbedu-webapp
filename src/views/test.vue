@@ -75,6 +75,8 @@
                     </div>
                 </div>
                 <el-tabs type="border-card">
+
+                    <!--待考试-->
                     <el-tab-pane label="待考试">
                             <el-table :data="toTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%">
 
@@ -83,11 +85,11 @@
 
                                 <el-table-column label="考试题目" width="150">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px">{{ scope.row.theme }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.title }}</span>
                                 </template>
                                 </el-table-column>
 
-                                <el-table-column label="考试时间" width="150">
+                                <el-table-column label="考试开始时间" width="180">
                                 <template slot-scope="scope">
                                     <span style="margin-left: 10px">{{ scope.row.newData }}</span>
                                 </template>
@@ -101,16 +103,8 @@
 
                                 <el-table-column label="考题数目" width="150">
                                 <template slot-scope="scope">
-                                    <span style="margin-left: 10px">{{ scope.row.num }}</span>
+                                    <span style="margin-left: 10px">{{ scope.row.question.length }}</span>
                                 </template>
-                                </el-table-column>
-
-                                <el-table-column label="详细信息" width="120">
-                                    <template slot-scope="scope">
-                                    <el-button size="mini" type="primary">
-                                        查看
-                                    </el-button>
-                                    </template>
                                 </el-table-column>
 
                                 <el-table-column label="操作">
@@ -135,111 +129,118 @@
                             </div>
 
                     </el-tab-pane>
-                    <el-tab-pane label="历史考试">
-                        <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
-                            <el-table-column label="序号" type="index" width="60">
-                            </el-table-column>
+                    <!--历史考试-->
+                  <el-tab-pane label="历史考试">
+                    <el-table style="width: 100%"
+                              :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
-                            <el-table-column label="考试题目" width="100">
-                                <template slot-scope="scope">
-                                <span>{{ scope.row.theme }}</span>
-                                </template>
-                            </el-table-column>
+                      <el-table-column label="序号" type="index" width="60">
+                      </el-table-column>
 
-                            <el-table-column label="创建时间" width="200">
-                                <template slot-scope="scope">
-                                <span>{{ scope.row.newData }}</span>
-                                </template>
-                            </el-table-column>
+                      <el-table-column label="考试题目" width="100">
+                        <template slot-scope="scope">
+                          <span>{{ scope.row.theme }}</span>
+                        </template>
+                      </el-table-column>
 
-                            <el-table-column label="考试类型" width="120">
-                                <template slot-scope="scope">
-                                <span>{{ scope.row.currTestType }}</span>
-                                </template>
-                            </el-table-column>
+                      <el-table-column label="创建时间" width="200">
+                        <template slot-scope="scope">
+                          <span>{{ scope.row.newData }}</span>
+                        </template>
+                      </el-table-column>
 
-                            <el-table-column label="考试数目" width="120">
-                                <template slot-scope="scope">
-                                <span>{{ scope.row.num }}</span>
-                                </template>
-                            </el-table-column>
+                      <el-table-column label="考试类型" width="120">
+                        <template slot-scope="scope">
+                          <span>{{ scope.row.currTestType }}</span>
+                        </template>
+                      </el-table-column>
 
-                            <el-table-column label="详细信息">
-                                <template slot-scope="scope">
-                                <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
-                                    查看
-                                </el-button>
-                                </template>
-                            </el-table-column>
+                      <el-table-column label="考试数目" width="120">
+                        <template slot-scope="scope">
+                          <span>{{ scope.row.num }}</span>
+                        </template>
+                      </el-table-column>
 
-                        </el-table>
+                      <el-table-column label="详细信息">
+                        <template slot-scope="scope">
+                          <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                            查看
+                          </el-button>
+                        </template>
+                      </el-table-column>
 
-                            <!--分页显示-->
-                            <div class="block">
-                                <el-pagination
-                                    @size-change="handleSizeChange"
-                                    @current-change="handleCurrentChange"
-                                    :current-page.sync="currentPage"
-                                    :page-size="pagesize"
-                                    layout="prev, pager, next, jumper"
-                                    :total=parseInt(total)>
-                                </el-pagination>
+                    </el-table>
+
+                    <!--分页显示-->
+                    <div class="block">
+                      <el-pagination
+                        @size-change="handleSizeChange"
+                        @current-change="handleCurrentChange"
+                        :current-page.sync="currentPage"
+                        :page-size="pagesize"
+                        layout="prev, pager, next, jumper"
+                        :total=parseInt(total)>
+                      </el-pagination>
+                    </div>
+                  </el-tab-pane>
+
+                    <!--历史考试-->
+                  <el-tab-pane label="正在考试">
+                    <el-table :data="tableData" style="width: 100%">
+
+                      <el-table-column label="考试题目" width="150">
+                        <template slot-scope="scope">
+                          <i class="el-icon-time"></i>
+                          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                        </template>
+                      </el-table-column>
+
+                      <el-table-column label="考试时间" width="150">
+                        <template slot-scope="scope">
+                          <i class="el-icon-time"></i>
+                          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                        </template>
+                      </el-table-column>
+
+                      <el-table-column label="考试类型" width="150">
+                        <template slot-scope="scope">
+                          <i class="el-icon-time"></i>
+                          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                        </template>
+                      </el-table-column>
+
+                      <el-table-column label="考题数目" width="150">
+                        <template slot-scope="scope">
+                          <i class="el-icon-time"></i>
+                          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                        </template>
+                      </el-table-column>
+
+                      <el-table-column label="创建人" width="150">
+                        <template slot-scope="scope">
+                          <i class="el-icon-time"></i>
+                          <span style="margin-left: 10px">{{ scope.row.date }}</span>
+                        </template>
+                      </el-table-column>
+
+                      <el-table-column label="考试范围" width="150">
+                        <template slot-scope="scope">
+                          <el-popover trigger="hover" placement="top">
+                            <p>姓名: {{ scope.row.name }}</p>
+                            <p>住址: {{ scope.row.address }}</p>
+                            <div slot="reference" class="name-wrapper">
+                              <el-tag size="medium">{{ scope.row.name }}</el-tag>
                             </div>
-                    </el-tab-pane>
-                    <el-tab-pane label="正在考试">
-                            <el-table :data="tableData" style="width: 100%">
+                          </el-popover>
+                        </template>
+                      </el-table-column>
 
-                                <el-table-column label="考试题目" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
+                    </el-table>
+                  </el-tab-pane>
 
-                                <el-table-column label="考试时间" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试类型" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考题数目" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="创建人" width="150">
-                                <template slot-scope="scope">
-                                    <i class="el-icon-time"></i>
-                                    <span style="margin-left: 10px">{{ scope.row.date }}</span>
-                                </template>
-                                </el-table-column>
-
-                                <el-table-column label="考试范围" width="150">
-                                <template slot-scope="scope">
-                                    <el-popover trigger="hover" placement="top">
-                                    <p>姓名: {{ scope.row.name }}</p>
-                                    <p>住址: {{ scope.row.address }}</p>
-                                    <div slot="reference" class="name-wrapper">
-                                        <el-tag size="medium">{{ scope.row.name }}</el-tag>
-                                    </div>
-                                    </el-popover>
-                                </template>
-                                </el-table-column>
-
-                            </el-table>
-                    </el-tab-pane>
                 </el-tabs>
+
             </div>
             <div class="exerciseOnline" v-show="currIndex === 2">
                 <div class="title">
@@ -813,19 +814,19 @@ export default {
         //请求待考试数据
             testManagenWait(){
                 this.url = document.domain;
-                    axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
+                    axios.get("http://" + this.url + ":8000/readTestQuestion/stuToTestData", {
                         params: {
                         user: this.user,
                         }
                     }).then((res) => {
-                        console.log("AAAA")
-                        console.log(res);
-                        let resData = res.data;
-                        for (let i = 0; i < resData.length; i++) {
-                        resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
-                        }
-                        this.toTestData = resData;
-                        this.total = this.toTestData.length;
+                      console.log("AAAA");
+                      let resData = res.data;
+                      console.log(resData[0].date1);
+                      for (let i = 0; i < resData.length; i++) {
+                        resData[i].newData = moment(resData[0].date1).format("YYYY-MM-DD hh:mm:ss")
+                      }
+                      this.toTestData = resData;
+                      this.total = this.toTestData.length;
                     });
             },
             testManageNow(){
@@ -834,12 +835,12 @@ export default {
         //请求历史考试数据
             testManagenHistory(){
                 this.url = document.domain;
-                axios.get("http://" + this.url + ":8000/readTestQuestion/historyTestData", {
+                axios.get("http://" + this.url + ":8000/readTestQuestion/stuHistoryTestData", {
                     params: {
                     user: this.user,
                     }
                 }).then((res) => {
-                    console.log("BBBB")
+                    console.log("BBBB");
                     console.log(res);
                     let resData = res.data;
                     for (let i = 0; i < resData.length; i++) {

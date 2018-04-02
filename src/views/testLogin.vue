@@ -85,7 +85,7 @@ import core from '../../server/utils/core.js'
                                     }else if(this.$store.state.userType == "S"){
                                         this.$router.push('/test');
                                     }else if(this.$store.state.userType == "E"){
-                                        this.$router.push('/test');
+                                        this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == "T"){
                                         
                                         this.$router.push('/teachTest');
@@ -107,7 +107,7 @@ import core from '../../server/utils/core.js'
                                     }else if(this.$store.state.userType == "S"){
                                         this.$router.push('/test');
                                     }else if(this.$store.state.userType == "E"){
-                                        this.$router.push('/test');
+                                        this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == "T"){
                                         this.$router.push('/teachTest');
                                     }
