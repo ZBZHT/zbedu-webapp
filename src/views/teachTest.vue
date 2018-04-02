@@ -660,7 +660,6 @@
           console.log("error init." + error)
         });
       },
-
     },
 
     mounted() {

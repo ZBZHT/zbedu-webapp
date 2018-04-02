@@ -230,12 +230,9 @@ export default {
         _this.currentdate = _this.nowTime.getFullYear() + seperator1 + month + seperator1 + strDate
         + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
 
-
-
-
-
-
-      axios.get("http://" + url + ":8000/readTestQuestion/all",{
+     this.getTestQ();
+     this.getTestQuesInfo();
+      /*axios.get("http://" + url + ":8000/readTestQuestion/all",{
             params:{
                 user:this.user,
                 currTestNum:allTestNum
@@ -249,7 +246,7 @@ export default {
             console.log(this.TestNum+"LLL")
         }).catch(function(error){
             console.log("error init." + error)
-        });
+        });*/
 
     axios.get("http://" + url + ":8000/readTestQuestionInfo/all",{
         params:{
@@ -265,18 +262,7 @@ export default {
                this.picked = res.data.currAnswer;
                this.isCheckArr = res.data.currState;
 
-                console.log("bbbbccccc");
                 window.addEventListener("popstate",this.myFunction);
-
-        //        window.onpopstate=function(e){
-        //                var e = window.event||e;
-        //                e.returnValue=("确定离开当前页面吗？");
-        //        }
-        //        window.onbeforeunload=function(e){
-        //                var e = window.event||e;
-        //               e.returnValue=("确定离开当前页面吗？");
-        //        }
-
                this.hours = res.data.startTimeHours;
                this.minute = res.data.startTimeMinutes;
                this.second = res.data.startTimeSeconds;
@@ -305,6 +291,54 @@ export default {
         }
     },
   methods:{
+    getTestQ() {
+      //console.log(this.toTestData[0]);
+      axios.get("http://" + this.url + ":8000/readTestQuestion/getTestQing", {
+        params: {
+          user: this.user,
+        }
+      }).then((res) => {
+        if (res.data.state == 1) {
+          this.textQuestionData = res.data;
+        } else {
+          //console.log(res.data);
+          this.TestNum = res.data.testLength;
+          //console.log(this.TestNum+"LLL")
+        }
+      }).catch(function (error) {
+        console.log("error init." + error)
+      });
+    },
+
+    /*获取考试题*/
+    getTestQuesInfo() {
+      axios.get("http://" + this.url + ":8000/readTestQuestionInfo/getTestQuesInfo", {
+        params: {
+          user: this.user,
+        }
+      }).then((res) => {
+        console.log('11');
+        console.log(res.data.currState);
+        this.$store.commit('vuexState',res.data.state);
+        if(res.data.state == 1){
+          this.picked = res.data.currAnswer;
+          this.isCheckArr = res.data.currState;
+
+          window.addEventListener("popstate",this.myFunction);
+          this.hours = res.data.startTimeHours;
+          this.minute = res.data.startTimeMinutes;
+          this.second = res.data.startTimeSeconds;
+          this.minutes = res.data.testTimeMinutes;
+          this.seconds = res.data.testTimeSeconds;
+          this.isCheckNum = res.data.isCheckNum;
+          console.log(this.isCheckNum+"qqqqqqq");
+          console.log(this.isCheckArr+"wwwww");
+        }
+      }).catch(function (error) {
+        console.log("错误")
+      });
+    },
+
             submit:function () {
                 setTimeout(function(){
                     window.clearInterval(this.interval);
@@ -388,7 +422,7 @@ export default {
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
             },
-            getTest(e){
+            /*getTest(e){
                 axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery",{
                     params:{
                         //state默认为0未开始考试，开始后为1
@@ -418,7 +452,7 @@ export default {
                 });
 
 
-            },
+            },*/
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
