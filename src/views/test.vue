@@ -1265,7 +1265,7 @@ p{
 }
 .buttons .el-button{
     width:100%;
-    height:60px;
+    height:50px;
     position:absolute;
     left:0;
     bottom:0;
