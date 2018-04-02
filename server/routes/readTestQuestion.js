@@ -4,6 +4,8 @@ const TestQuestion = require('../app/models/TestQuestion');
 const TestQuestionInfo = require('../app/models/TestQuestionInfo');
 const TeachNewTestQ = require('../app/models/TeachNewTestQ');
 const Question = require('../app/models/Question');
+const Student = require('../app/models/Student');
+const Teacher = require('../app/models/Teacher');
 const core = require('../utils/core');
 
 //设置跨域请求
@@ -23,13 +25,13 @@ let testResult;
 router.use(function (req, res, next) {
   testResult = {
     testLength: '',
-    testQuestion: '',
-    resId : 100
+    testQuestion: 0,
+    resId : 0
   };
   next();
 });
 
-//新增testQuestion的方法
+//新增考试题
 function newTestQuestion(req, res, next) {
   let reqQ = req.query;
   let reqUser = reqQ.user;
@@ -404,19 +406,21 @@ function newTestQuestion(req, res, next) {
       console.log('Success!');
       next()
     });
+
   });
 }
 
-//老师创建考试新增考题
+//老师创建考试
 function addNewTestQuestion(req, res, next) {
   let reqQ = req.query;
 
   TeachNewTestQ.find().sort({id:-1}).then(function (result) {
-    //console.log(result[0].id);
+    //console.log(result[0].user);
+
     if (result.length != 0) {
       testResult.resId = Number(result[0].id) + 1;
     } else {
-      testResult.resId = 100;
+      testResult.resId = 1;
     }
     //console.log(testResult.resId);
     let teachNewTestQ = new TeachNewTestQ({
@@ -451,17 +455,79 @@ function addNewTestQuestion(req, res, next) {
 }
 
 //教师发题
-function disTestQuestion(req, res, next) {
+function distTestQuestion(req, res, next) {
   let reqQ = req.query;
   //console.log(reqQ);
 
   Question.find(
 
-  ).then(function (result) {
-    //console.log(result[0].id);
-    let ee = core.getArrayItems(result, reqQ.num);
-    console.log(ee);
+  ).then(function (question) {
+    let testItems = core.getArrayItems(question, reqQ.num);
+    //testItems = JSON.stringify(testItems);
 
+    Student.find({
+      classGrade: reqQ.classGrade
+    }).then(function (stu) {
+
+      TestQuestion.find({
+      }).sort({currTestNum:-1}).then(function (testQ) {
+        if (testQ.length <= 0) {
+          testResult.testLength = 0;
+        } else {
+          testResult.testLength = testQ[0].currTestNum;
+        }
+
+      for (let i=0; i<stu.length; i++) {
+
+        testResult.testLength = Number(testResult.testLength) + 1;
+        //console.log(testResult.testLength);
+        //创建所有学生试题
+        let testQ = new TestQuestion({
+          user: stu[i].user,
+          currTestType : reqQ.currTestType,
+          currTestNum: testResult.testLength,
+          msg: "error parameter",
+          testId: 1,
+          state: 0,
+          status: 0,
+          title: reqQ.theme,
+          desc: "biansuqi test",
+          date1: reqQ.date1,
+          date2: reqQ.date2,
+          timeHour: reqQ.timeHour,
+        });
+        testQ.question = testItems;
+
+        testQ.save(function (err) {
+          if (err) console.log(err);
+          console.log('Success!');
+        });
+        //创建所有学生试题记录
+        let testQuestionInfo = new TestQuestionInfo({
+          user: stu[i].user,
+          currTestType: reqQ.currTestType,
+          testQuestion: testResult.testLength,
+          state: 0,
+          startTime: '',
+          currAnswer: '',
+          currState: '',
+          error: '',
+          sorce: 2,
+          startTimeHours: 0,
+          startTimeMinutes: 0,
+          startTimeSeconds: 0,
+          testTimeMinutes: 0,
+          testTimeSeconds: 0,
+          isCheckNum: 0
+        });
+
+        testQuestionInfo.save(function (err) {
+          if (err) console.log(err);
+          console.log('Success!');
+        });
+      }
+      });
+    });
   });
   next()
 }
@@ -523,7 +589,7 @@ router.get('/submitQuestionInfo', function (req, res) {
 });
 
 //教师,创建考试
-router.get('/addTestQuestion', addNewTestQuestion, disTestQuestion, function (req, res) {
+router.get('/addTestQuestion', addNewTestQuestion, distTestQuestion, function (req, res) {
   let reqQ = req.query;
   let reqUser = reqQ.user;
   TeachNewTestQ.find({
@@ -546,8 +612,33 @@ router.get('/toTestData', function (req, res) {
   });
 });
 
+//学生,待考试请求
+router.get('/stuToTestData', function (req, res) {
+  let reqUser = req.query.user;
+  console.log(reqUser);
+  TestQuestion.find({
+    user: reqUser,
+    state: 0,
+  }).then(function (result) {
+    console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
+
 //教师,历史考试请求
 router.get('/historyTestData', function (req, res) {
+  let reqUser = req.query.user;
+  TeachNewTestQ.find({
+    user: reqUser,
+    state: 2,
+  }).then(function (result) {
+    //console.log(result);
+    res.end(JSON.stringify(result));
+  });
+});
+
+//学生,历史考试请求
+router.get('/stuHistoryTestData', function (req, res) {
   let reqUser = req.query.user;
   TeachNewTestQ.find({
     user: reqUser,

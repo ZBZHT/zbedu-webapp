@@ -7,12 +7,9 @@ const glob = require('glob');
 const formidable = require('formidable');
 const uploadsPath = "../app/uploads/addUser/";
 const addTestPath = "../app/uploads/addTest/";
-const Students = require('../app/models/Students');
+const Students = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const xlsx2j = require('xlsx-2-json');
-const xlsx = require('../utils/xlsx-to-json');
-const magic = require('xlsx-to-json-plus');
-const convertExcel = require('excel-as-json').processFile;
 
 const md5 = require('js-md5');
 

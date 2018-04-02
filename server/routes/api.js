@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Students = require('../app/models/Students');
+const Students = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const Session = require('../app/models/Session');
 const _ = require('lodash');
