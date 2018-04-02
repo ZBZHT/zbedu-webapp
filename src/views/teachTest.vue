@@ -27,7 +27,12 @@
               <el-tab-pane label="待考试">
                 <el-table style="width: 100%" :data="toTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
-                  <el-table-column label="序号" type="index" width="60">
+                  <el-table-column label="序号" width="60">
+                    <template slot-scope="scope">
+                      <span v-for="(item,index) in toTestDataIndex">
+                        <span >{{ index +1 }}</span>
+                      </span>
+                    </template>
                   </el-table-column>
 
                   <el-table-column label="考试题目" width="100">
@@ -154,7 +159,7 @@
                             <span class="el-dropdown-link">
                                 <div class="elinput">
                                     <ul>
-                                        <li v-for="item in form.name">{{item}}/</li>
+                                        <li v-for="item in form.name">{{item}} |&nbsp</li>
                                     </ul>
                                 </div>
                             </span>
@@ -169,9 +174,11 @@
                               @node-click="handleClick">
                             </el-tree>
                           </div>
-                          <div class="buttons">
-                            <el-button @click="getCheckedNodes">确定</el-button>
-                          </div>
+                          <el-dropdown-item>
+                              <div class="buttons">
+                                  <el-button @click="getCheckedNodes">确定</el-button>
+                              </div>
+                          </el-dropdown-item>
                         </el-dropdown-menu>
                       </el-dropdown>
                     </el-form-item>
@@ -203,7 +210,7 @@
                       <el-col :span="11">
                         <el-form-item prop="date4">
                           <el-time-picker type="fixed-time" placeholder="选择结束时间" v-model="form.date4"
-                                          style="width: 100%;"></el-time-picker>
+                                          style="width: 100%;"  @blur="compareTime"></el-time-picker>
                         </el-form-item>
                       </el-col>
                     </el-form-item>
@@ -211,7 +218,7 @@
                     <el-form-item label="考试时长">
                       <el-col :span="8">
                         <el-form-item prop="timeHour">
-                          <el-select v-model="form.timeHour" placeholder="请选择小时">
+                          <el-select v-model="form.timeHour" placeholder="请选择小时" @change="isMin">
                             <el-option label="0" value="0"></el-option>
                             <el-option label="1" value="1"></el-option>
                             <el-option label="2" value="2"></el-option>
@@ -222,7 +229,7 @@
                       <el-col class="line" :span="3">小时</el-col>
                       <el-col :span="8">
                         <el-form-item>
-                          <el-select v-model="form.timeMin" placeholder="请选择分钟" @visible-change="isMin">
+                          <el-select v-model="form.timeMin" placeholder="请选择分钟">
                             <el-option label="0" :disabled="formDisabled" value="0"></el-option>
                             <el-option label="10" value="10"></el-option>
                             <el-option label="20" value="20"></el-option>
@@ -243,6 +250,8 @@
                         <el-option label="期末考试" value="101"></el-option>
                         <el-option label="期中考试" value="102"></el-option>
                         <el-option label="随堂练习" value="103"></el-option>
+                        <el-option label="单元测试" value="102"></el-option>
+                        <el-option label="资格考试" value="103"></el-option>
                       </el-select>
                     </el-form-item>
 
@@ -411,8 +420,8 @@
           date3: '',
           date4: '',
           num: '',
-          timeHour: '',
-          timeMin: '',
+          timeHour: 2,
+          timeMin: 0,
           major: '',
           classGrade: '',
           newData: moment().format("YYYY-MM-DD hh:mm:ss")
@@ -455,7 +464,9 @@
           ]
         },
         toTestData: [],
+        toTestDataIndex:[],
         historyTestData: [],
+        historyTestDataIndex:[],
         scoreM: [],
         currentPage: 1,
         pagesize: 8,
@@ -534,12 +545,25 @@
       handleClick(data) {
       },
 
-      isMin() {
-        if (this.form.timeHour == "zero") {
-          this.formDisabled = !this.formDisabled;
+      //考试时长小时是0时分钟禁用0
+            isMin(){
+                if(this.form.timeHour == "0"){
+                    this.formDisabled = !this.formDisabled;
+                    this.form.timeMin = '';
+                }else{
+                    this.form.timeMin = 0;
+                    this.formDisabled = false;
+                }
+            },
+      //判断时长
+      compareTime(){
+        if(moment(this.form.date1).format("YYYY-MM-DD hh:mm:ss") == moment(this.form.date2).format("YYYY-MM-DD hh:mm:ss")){
+          var a = core.formatDate("hh", new Date(this.form.date3))*3600 + core.formatDate("mm", new Date(this.form.date3))*60 + core.formatDate("ss", new Date(this.form.date3))
+          var b = core.formatDate("hh", new Date(this.form.date4))*3600 + core.formatDate("mm", new Date(this.form.date4))*60 + core.formatDate("ss", new Date(this.form.date4))
+          this.form.timeHour = parseInt((b-a)/360000);
+          this.form.timeMin = ((b-a)-this.form.timeHour*360000)/6000;
         }
       },
-
       //创建考试方法
       onSubmit() {
         //console.log()
@@ -636,6 +660,7 @@
           console.log("error init." + error)
         });
       },
+
     },
 
     mounted() {
@@ -650,8 +675,10 @@
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
           resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+          this.toTestData.push(i);
         }
         this.toTestData = resData;
+        console.log(this.toTestData)
         this.total = this.toTestData.length;
       });
 
@@ -665,6 +692,7 @@
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
           resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+          this.historyTestDataIndex.push(i);
         }
         this.historyTestData = resData;
         this.total = this.historyTestData.length;
@@ -797,9 +825,13 @@
     overflow: auto;
   }
 
-  .buttons .el-button {
-    width: 100%;
-  }
+  .buttons .el-button{
+    width:100%;
+    height:50px;
+    position:absolute;
+    left:0;
+    bottom:0;
+}
 
   .teach_Test .el-tabs--border-card > .el-tabs__content {
     text-align: left;
