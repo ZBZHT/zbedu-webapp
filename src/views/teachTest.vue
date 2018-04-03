@@ -250,13 +250,17 @@
                         <el-option label="期末考试" value="101"></el-option>
                         <el-option label="期中考试" value="102"></el-option>
                         <el-option label="随堂练习" value="103"></el-option>
-                        <el-option label="单元测试" value="102"></el-option>
-                        <el-option label="资格考试" value="103"></el-option>
+                        <el-option label="单元测试" value="104"></el-option>
+                        <el-option label="资格考试" value="105"></el-option>
                       </el-select>
                     </el-form-item>
 
                     <el-form-item label="考题数目" prop="num" required>
-                      <el-input v-model.number="form.num" placeholder="请输入考试题数(0 —— 1000)"></el-input>
+                      <el-input v-model.number="form.num" placeholder="请输入考试题数(0 — 100)"></el-input>
+                    </el-form-item>
+
+                    <el-form-item label="考试总分" prop="allScore" required>
+                      <el-input v-model.number="form.allScore" placeholder="请输入考试总分(0 — 200)"></el-input>
                     </el-form-item>
 
                     <el-form-item label="专业" prop="major">
@@ -392,8 +396,24 @@
           if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
           } else {
-            if (value <= 0 || value > 1000) {
-              callback(new Error('题数必须大于0且小于1000'));
+            if (value <= 0 || value > 100) {
+              callback(new Error('题数必须大于0且小于100'));
+            } else {
+              callback();
+            }
+          }
+        }, 1000);
+      };
+      let checkScore = (rule, value, callback) => {
+        if (!value) {
+          return callback(new Error('题数不能为空'));
+        }
+        setTimeout(() => {
+          if (!Number.isInteger(value)) {
+            callback(new Error('请输入数字值'));
+          } else {
+            if (value <= 0 || value > 200) {
+              callback(new Error('题数必须大于0且小于200'));
             } else {
               callback();
             }
@@ -424,7 +444,8 @@
           timeMin: 0,
           major: '',
           classGrade: '',
-          newData: moment().format("YYYY-MM-DD hh:mm:ss")
+          newData: moment().format("YYYY-MM-DD hh:mm:ss"),
+          allScore:''
         },
         rules: {
           theme: [
@@ -461,7 +482,10 @@
           classGrade: [
             {required: true, message: '请输入班级', trigger: 'blur'},
             {min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur'}
-          ]
+          ],
+          allScore: [
+            {validator: checkScore, trigger: 'blur'}
+          ],
         },
         toTestData: [],
         toTestDataIndex:[],
