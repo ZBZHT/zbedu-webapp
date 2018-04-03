@@ -8,7 +8,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const bodyParser = require('body-parser');//处理post请求
-const swig = require('swig');
+//const swig = require('swig');
 
 const teacherCMS = require('./routes/teacherCMS');
 //var login = require('./routes/login');
@@ -23,10 +23,10 @@ const fileUpDown = require('./routes/fileUpDown');
 const app = express();
 
 //设置swig模板
-app.set('views', path.join(__dirname, 'views'));
+/*app.set('views', path.join(__dirname, 'views'));
 app.engine('html', swig.renderFile);
 app.set('views', '../views');
-app.set('view engine', 'html');
+app.set('view engine', 'html');*/
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -46,9 +46,7 @@ app.use(session({
 
 app.use(express.static(path.join(__dirname, 'public')));
 //静态文件托管
-app.use('/public', express.static( __dirname + 'public' ));
-
-
+// app.use('/public', express.static( __dirname + 'public' ));
 
 //app.use('/api', proxy('localhost:8080'));
 //app.use('/api', proxy({ target: 'http://localhost:8080', changeOrigin: true ,}));
