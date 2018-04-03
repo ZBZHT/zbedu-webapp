@@ -24,15 +24,15 @@
             <div class="data">
               <p class="data-p">
                 <span class="data-p-title">考试题目:</span>
-                <span class="data-p-desc">{{$route.params.title}}</span>
+                <span class="data-p-desc">{{testOnlineData.title}}</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时间:</span>
-                <span class="data-p-desc">{{currentdate}}——{{currentdate}}</span>
+                <span class="data-p-desc">{{testOnlineData.newData}}——{{testOnlineData.date2}}</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时长:</span>
-                <span class="data-p-desc">120分钟</span>
+                <span class="data-p-desc">{{testOnlineData.timeHour * 60 }}分钟</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考题数目:</span>
@@ -48,7 +48,7 @@
               <p> 2. 考生只准携带必要的考试文具（如钢笔，圆珠笔等）入场，不得携带任何书籍资料、通讯设备、数据存储设备、智能电子设备等辅助工具及其它未经允许的物品。</p>
               <p> 3. 考生请核验屏幕上显示的姓名、如有不符，请重新登录</p>
               <p> 4. 在自己核验无误后，等待监考人员统一指令开始进行正式考试。</p>
-              <p> 5. 考试开始————分钟后，迟到考生不得进入考场。</p>
+              <p> 5. 考试开始30分钟后，迟到考生不得进入考场。</p>
               <p> 6. 考试时间由系统自动控制，计时结束后系统将自动退出作答界面。</p>
               <p> 7. 考生在考场内应保持安静，严格遵守考场纪律，对于违反考场规定、不服从监考人员管理和作弊者将按按规定给予处罚。</p>
               <p> 8. 考试过程中，如出现死机或系统错误等，应立刻停止操作，举手与监考人员联系。</p>
@@ -62,7 +62,7 @@
               <el-button type="danger" :disabled="!Iagree" plain @click='add();getTest()'>
                 <p>开始考试</p>
               </el-button>
-              <el-button type="danger" class="still_btn" v-if="still_btn" plain @click="sendInfor()">
+              <el-button type="danger" class="still_btn" v-if="still_btn" plain @click="jumpOther()">
                 <p>继续考试</p>
               </el-button>
             </div>
@@ -275,7 +275,7 @@
 
                   <el-form-item label="考题数目" prop="num" required>
                     <el-input class="exerciseNum" v-model.number="stuform.num"
-                              placeholder="请输入考试题数(0 —— 1000)"></el-input>
+                              placeholder="请输入考试题数(0 —— 100)"></el-input>
                   </el-form-item>
 
                   <el-form-item label="考试时长">
@@ -433,8 +433,8 @@
           if (!Number.isInteger(value)) {
             callback(new Error('请输入数字值'));
           } else {
-            if (value <= 0 || value > 1000) {
-              callback(new Error('题数必须大于0且小于1000'));
+            if (value <= 0 || value > 100) {
+              callback(new Error('题数必须大于0且小于100'));
             } else {
               callback();
             }
@@ -517,7 +517,8 @@
         historyTestData: [],
         total: '',
         currentPage: 1,
-        pagesize: 10
+        pagesize: 10,
+        testOnlineData:[]
       }
     },
     created() {
@@ -576,25 +577,6 @@
       handleCurrentChange(val) {
         //console.log(`当前页: ${val}`);
       },
-
-      /*获取正在考试的题*/
-      testNow() {
-        axios.get("/readTestQuestion/getTestQing", {
-          params: {
-            user: this.user,
-            state: 1,
-          }
-        }).then((res) => {
-          if (res.data.state == 1) {
-            this.testNowData = res.data;
-          } else {
-            console.log('错误');
-          }
-          //console.log(this.TestNum+"LLL")
-          console.log(this.testNowData);
-        });
-      },
-
       /*获取考试题*/
       getTestQ() {
         let reqCurrTestNum = '';
@@ -633,10 +615,12 @@
           console.log(resData);
           this.toTestData = resData;
           this.total = this.toTestData.length;
+          this.jumpOther();
         });
-
-        //    this.$router.push('/realyTest');
-        const {href} = this.$router.resolve({
+      },
+      //跳转页面
+      jumpOther(){
+          const {href} = this.$router.resolve({
           name: 'realyTest'
         });
         window.open(href, '_blank', "channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
@@ -673,7 +657,7 @@
           window.clearInterval(this.interval);
           axios({
             method: 'get',
-            url: "/readTestQuestionInfo/submitQuestionInfo",
+            url: "http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
             params: {
               state: 2,
               user: this.user,
@@ -699,7 +683,7 @@
         }.bind(this), 0.1);
         axios({
           method: 'get',
-          url: "/readTestQuestion/submitQuestionInfo",
+          url: "http://" + this.url + ":8000/readTestQuestion/submitQuestionInfo",
           params: {
             state: 2,
             testQuestion: this.$store.state.allTestNum
@@ -735,7 +719,7 @@
       },
       //点击开始考试后继续考试
       add: function () {
-        this.still_btn = true;
+
       },
 
       //开始考试时获取考试题目
@@ -751,7 +735,7 @@
         }).then((res) => {
           console.log(res.data.code);
           if (res.data.code == 0) {
-            this.sendInfor()
+            this.jumpOther();
           } else {
             console.log('请求出错');
           }
@@ -771,13 +755,37 @@
         this.currIndex = index;
         if (index == 1) {
           this.testManagenHistory();
-          this.testManagenWait();
-          this.testManageNow();
         } else if (index == 2) {
           this.exerciseHistory();
         }
       },
+       /*获取正在考试的题*/
+      testNow() {
+        axios.get("/readTestQuestion/getTestQing", {
+          params: {
+            user: this.user,
+            state: 1,
+          }
+        }).then((res) => {
+          if (res.data.state == 1) {
 
+            this.testNowData.push(res.data);
+            //console.log(res.data.date1);
+            res.data.newData = moment(res.data.date1).format("YYYY-MM-DD hh:mm:ss")
+            res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD hh:mm:ss")
+            if(this.testNowData){
+              this.still_btn = true;
+              this.testOnlineData = this.testNowData[0];
+            //  console.log(this.testOnlineData)
+            }
+          } else {
+            console.log('错误');
+          }
+          //console.log(this.TestNum+"LLL")
+          //console.log(res.data)
+          //console.log(this.testNowData);
+        });
+      },
       //请求待考试数据
       testManagenWait() {
         this.url = document.domain;
@@ -789,16 +797,15 @@
           let resData = res.data;
           for (let i = 0; i < resData.length; i++) {
             resData[i].newData = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
+            resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss")
           }
           this.toTestData = resData;
+          this.testOnlineData = this.toTestData[0];
           this.total = this.toTestData.length;
           this.getTestQ();
           //this.getTestQuesInfo();
         });
       },
-      testManageNow() {
-      },
-
       //请求历史考试数据
       testManagenHistory() {
         this.url = document.domain;
@@ -807,7 +814,7 @@
             user: this.user,
           }
         }).then((res) => {
-          console.log("BBBB");
+        //  console.log("BBBB");
           console.log(res);
           let resData = res.data;
           for (let i = 0; i < resData.length; i++) {
@@ -822,7 +829,7 @@
       exerciseHistory() {
         axios({
           method: 'get',
-          url: "/testManagement/testManagement",
+          url: "http://" + this.url + ":8000/testManagement/testManagement",
           params: {
             user: this.user
           }
@@ -844,7 +851,7 @@
       onSubmit() {
         axios({
           method: 'get',
-          url: "/readTestQuestionInfo/submitQuestionInfo",
+          url: "http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
           params: {
             user: this.user,
             testData: this.stuform

@@ -29,9 +29,7 @@
 
                   <el-table-column label="序号" width="60">
                     <template slot-scope="scope">
-                      <span v-for="(item,index) in toTestDataIndex">
-                        <span >{{ index +1 }}</span>
-                      </span>
+                      <span >{{ scope.row.toTestDataIndex + 1 }}</span>
                     </template>
                   </el-table-column>
 
@@ -94,7 +92,10 @@
               <el-tab-pane label="历史考试">
                 <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
-                  <el-table-column label="序号" type="index" width="60">
+                  <el-table-column label="序号" width="60">
+                    <template slot-scope="scope">
+                      <span >{{ scope.row.historyTestDataIndex + 1 }}</span>
+                    </template>
                   </el-table-column>
 
                   <el-table-column label="考试题目" width="100">
@@ -615,6 +616,7 @@
             major: this.form.major,
             classGrade: this.form.classGrade,
             newData: this.form.newData,
+            allScore:this.form.allScore
           }
         }).then((res) => {
           this.toTestDataReq();
@@ -698,7 +700,7 @@
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
           resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
-          this.toTestData.push(i);
+          resData[i].toTestDataIndex = i;
         }
         this.toTestData = resData;
         console.log(this.toTestData)
@@ -715,7 +717,7 @@
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
           resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
-          this.historyTestDataIndex.push(i);
+          resData[i].historyTestDataIndex = i;
         }
         this.historyTestData = resData;
         this.total = this.historyTestData.length;

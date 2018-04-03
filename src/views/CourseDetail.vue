@@ -39,8 +39,7 @@
             </div>
 
             <div class="" v-show="this.currentIndex === 3">
-              <video id="video-box" controls @click="videstop">
-                <source :src="videoTitle">
+              <video id="video-box" controls @click="videstop" :src="videoTitle">
               </video>
             </div>
 

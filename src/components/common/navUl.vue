@@ -33,7 +33,7 @@ export default {
   mounted(){
     var _this = this;
     window.onresize = function(){
-       // _this.$router.go(0);
+        _this.$router.go(0);
     }
 
   },
@@ -171,7 +171,7 @@ a:hover{
     .contentui .introduce{
         width:100%;
         height:0px;
-        font-size:12px;
+        font-size:14px;
         font-weight:normal;
         position:absolute;
         left:0;
@@ -240,7 +240,7 @@ a:hover{
     .contentui .introduce{
         width:100%;
         height:0px;
-        font-size:11px;
+        font-size:9px;
         font-weight:normal;
         position:absolute;
         left:0;
@@ -309,7 +309,7 @@ a:hover{
     .contentui .introduce{
         width:100%;
         height:0px;
-        font-size:11px;
+        font-size:8px;
         font-weight:normal;
         position:absolute;
         left:0;
