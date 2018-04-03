@@ -248,7 +248,7 @@ export default {
             console.log("error init." + error)
         });*/
 
-    axios.get("http://" + url + ":8000/readTestQuestionInfo/all",{
+    axios.get("/readTestQuestionInfo/all",{
         params:{
           user:this.user,
           currTestId:this.$route.params.testId,
@@ -293,7 +293,7 @@ export default {
   methods:{
     getTestQ() {
       //console.log(this.toTestData[0]);
-      axios.get("http://" + this.url + ":8000/readTestQuestion/getTestQing", {
+      axios.get("/readTestQuestion/getTestQing", {
         params: {
           user: this.user,
         }
@@ -312,7 +312,7 @@ export default {
 
     /*获取考试题*/
     getTestQuesInfo() {
-      axios.get("http://" + this.url + ":8000/readTestQuestionInfo/getTestQuesInfo", {
+      axios.get("/readTestQuestionInfo/getTestQuesInfo", {
         params: {
           user: this.user,
         }
@@ -344,7 +344,7 @@ export default {
                     window.clearInterval(this.interval);
                     axios({
                         method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+                        url:"/readTestQuestionInfo/submitQuestionInfo",
                         params:{
                             state:2,
                             user:this.user,
@@ -370,7 +370,7 @@ export default {
                 }.bind(this),0.1);
                 axios({
                         method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestion/submitQuestionInfo",
+                        url:"/readTestQuestion/submitQuestionInfo",
                         params:{
                             state:2,
                             testQuestion:this.$store.state.allTestNum
@@ -468,7 +468,7 @@ export default {
 
                 axios({
                         method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestionInfo/update",
+                        url:"/readTestQuestionInfo/update",
                         params:{
                             state:1,
                             user:this.user,
@@ -508,7 +508,7 @@ export default {
             testManagen(){
                 axios({
                         method:'get',
-                        url:"http://" + this.url + ":8000/testManagement/testManagement",
+                        url:"/testManagement/testManagement",
                         params:{
                             user:this.user
                         }

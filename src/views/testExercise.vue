@@ -12,7 +12,7 @@
                     <div>
                         <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
                     </div>
-                
+
                     <div class="inforItem"  v-show="textQuestionData">
                         <div class="infor">
                             <p>开始时间</p>
@@ -83,7 +83,7 @@
                     </div>
                 </div>
             </div>
-            
+
         </div>
     </div>
     <div class="footer">
@@ -234,29 +234,29 @@ export default {
 
 
 
-      axios.get("http://" + url + ":8000/readTestQuestion/all",{
+      axios.get("/readTestQuestion/all",{
             params:{
                 user:this.user,
                 currTestNum:allTestNum
             }
         }).then((res)=>{
-            
+
         }).catch(function(error){
             console.log("error init." + error)
         });
 
-    axios.get("http://" + url + ":8000/readTestQuestionInfo/all",{
+    axios.get("/readTestQuestionInfo/all",{
         params:{
           user:this.user,
           currTestId:this.$route.params.testId,
           currTestNum:allTestNum
         }
       }).then((res)=>{
-          
+
       }).catch(function(error){
         console.log("错误")
       });
-    }.bind(this),500)   
+    }.bind(this),500)
 
     },
   watch: {
@@ -277,7 +277,7 @@ export default {
                     window.clearInterval(this.interval);
                     axios({
                         method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+                        url:"/readTestQuestionInfo/submitQuestionInfo",
                         params:{
                             state:2,
                             user:this.user,
@@ -303,7 +303,7 @@ export default {
                 }.bind(this),0.1);
                 axios({
                         method:'get',
-                        url:"http://" + this.url + ":8000/readTestQuestion/submitQuestionInfo",
+                        url:"/readTestQuestion/submitQuestionInfo",
                         params:{
                             state:2,
                             testQuestion:this.$store.state.allTestNum
@@ -331,7 +331,7 @@ export default {
                         this.null.push(i+1);
                     }
                 }
-               this.$store.commit('stillBtn',false); 
+               this.$store.commit('stillBtn',false);
 
             //    alert(this.sorce + "==" + this.error + "==" + this.null);
             //    this.$router.go(0);
@@ -583,7 +583,7 @@ a{
     height: 100%;
 }
 .el-row {
-    
+
 }
 .el-col {
     border-radius: 4px;
@@ -595,7 +595,7 @@ a{
     font-weight:bolder;
 }
 .bg-purple-light {
-    
+
 }
 .grid-content {
     border-radius: 4px;

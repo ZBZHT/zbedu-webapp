@@ -5,14 +5,14 @@
             <img src="../../assets/imgs/user.png">
         </div>
         <a v-text="nickName + '(' + userId + ')'" v-if="nickName" class="username" :value="nickName"></a>
-    </router-link>    
+    </router-link>
         <div class="userhover">
             <router-link :to="{path:'/teacherCMS'}">
                 <span class="usermine">我的</span>
             </router-link>
             <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
         </div>
-    
+
 </div>
 </template>
 
@@ -58,7 +58,7 @@ export default {
           /*删除cookie*/
            axios({
                 method: 'post',
-                url: 'http://' + this.url + ':8000/api/user/logout',
+                url: '/api/user/logout',
                 withCredentials: true
                 }).then((res)=>{
 
@@ -74,7 +74,7 @@ export default {
                         this.$router.push('/');
                         //   this.$router.go(0);
                   });
-           
+
       },
       prompt: function(message, title, callback, options) {
             if (typeof title === 'function') {

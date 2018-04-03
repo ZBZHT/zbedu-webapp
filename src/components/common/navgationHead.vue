@@ -27,7 +27,7 @@
                             </div>
                             <a v-text="nickName+ '(' + $store.state.userTypeC + ')'" v-if="nickName" class="username" :value="nickName"></a>
                         </router-link>
-                        
+
                         <div class="userhover" v-if="nickName">
                             <router-link :to="{path:'/teacherCMS'}">
                                 <span class="usermine">我的</span>
@@ -73,6 +73,7 @@ export default {
     }
   },
   mounted(){
+      /*
       this.url = document.domain;
       axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
                 params:{
@@ -84,6 +85,7 @@ export default {
             }).catch(function(error){
                 console.log("error init." + error)
             });
+      */
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
 
         setTimeout(function(){
@@ -188,7 +190,7 @@ a:hover{
     width:366px;
     padding-top:11px;
     padding-left:16px;
-} 
+}
 .collapse p{
     font-size:30px;
     font-weight:bolder;
@@ -259,7 +261,7 @@ a:hover{
     z-index:1000;
     border-radius:24px;
     display:none;
-    
+
 }
 .user_bn:hover .userhover{
     display:block;

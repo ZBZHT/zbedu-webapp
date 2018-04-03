@@ -503,7 +503,7 @@
     methods: {
       //教师创建考试后重新请求待考试数据
       toTestDataReq() {
-        axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
+        axios.get("/readTestQuestion/toTestData", {
           params: {
             user: this.user,
           }
@@ -598,7 +598,7 @@
         //console.log(this.form.date3);
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/readTestQuestion/addTestQuestion",
+          url: "/readTestQuestion/addTestQuestion",
           params: {
             user: this.user,
             theme: this.form.theme,
@@ -642,7 +642,7 @@
         //console.log(row.id);
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/readTestQuestion/dellNewTestQ",
+          url: "/readTestQuestion/dellNewTestQ",
           params: {
             user : this.user,
             id : row.id
@@ -671,7 +671,7 @@
       scoreManData(index, row) {
         this.dialogTableVisible = true;
         console.log(row);
-        axios.get("http://" + this.url + ":8000/readTestQuestion/scoreManData",{
+        axios.get("/readTestQuestion/scoreManData",{
           params:{
             user:this.user,
             classGrade: this.classGrade,
@@ -689,7 +689,7 @@
     mounted() {
 
       //请求待考试数据
-      axios.get("http://" + this.url + ":8000/readTestQuestion/toTestData", {
+      axios.get("/readTestQuestion/toTestData", {
         params: {
           user: this.user,
         }
@@ -706,7 +706,7 @@
       });
 
       //请求历史考试数据
-      axios.get("http://" + this.url + ":8000/readTestQuestion/historyTestData", {
+      axios.get("/readTestQuestion/historyTestData", {
         params: {
           user: this.user,
         }
@@ -722,7 +722,7 @@
       });
 
       //请求data数据
-      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
+      axios.get("/readJson/bannerLeftData",{
         params:{
           user:234
         }

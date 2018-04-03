@@ -522,7 +522,7 @@
     },
     created() {
 
-      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData", {
+      axios.get("/readJson/bannerLeftData", {
         params: {
           user: 234
         }
@@ -579,7 +579,7 @@
 
       /*获取正在考试的题*/
       testNow() {
-        axios.get("http://" + this.url + ":8000/readTestQuestion/getTestQing", {
+        axios.get("/readTestQuestion/getTestQing", {
           params: {
             user: this.user,
             state: 1,
@@ -603,7 +603,7 @@
         } else {
           reqCurrTestNum  = '';
         }
-        axios.get("http://" + this.url + ":8000/readTestQuestion/getTestQ", {
+        axios.get("/readTestQuestion/getTestQ", {
           params: {
             user: this.user,
             currTestNum: reqCurrTestNum,
@@ -622,7 +622,7 @@
       //开始考试,跳转
       sendInfor(row) {
         console.log(row.currTestNum);
-        axios.get("http://" + this.url + ":8000/readTestQuestion/stuStartData", {
+        axios.get("/readTestQuestion/stuStartData", {
           params: {
             user: this.user,
             currTestNum: row.currTestNum,
@@ -673,7 +673,7 @@
           window.clearInterval(this.interval);
           axios({
             method: 'get',
-            url: "http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+            url: "/readTestQuestionInfo/submitQuestionInfo",
             params: {
               state: 2,
               user: this.user,
@@ -699,7 +699,7 @@
         }.bind(this), 0.1);
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/readTestQuestion/submitQuestionInfo",
+          url: "/readTestQuestion/submitQuestionInfo",
           params: {
             state: 2,
             testQuestion: this.$store.state.allTestNum
@@ -740,7 +740,7 @@
 
       //开始考试时获取考试题目
       getTest() {
-        axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery", {
+        axios.get("/readTestQuestion/clickQuery", {
           params: {
             //state默认为0未开始考试，开始后为1
             //考试状态: currTestType 101 : 期末考试    102: 期中考试   103：随堂练习   104：在线练习
@@ -781,7 +781,7 @@
       //请求待考试数据
       testManagenWait() {
         this.url = document.domain;
-        axios.get("http://" + this.url + ":8000/readTestQuestion/stuToTestData", {
+        axios.get("/readTestQuestion/stuToTestData", {
           params: {
             user: this.user,
           }
@@ -802,7 +802,7 @@
       //请求历史考试数据
       testManagenHistory() {
         this.url = document.domain;
-        axios.get("http://" + this.url + ":8000/readTestQuestion/stuHistoryTestData", {
+        axios.get("/readTestQuestion/stuHistoryTestData", {
           params: {
             user: this.user,
           }
@@ -822,7 +822,7 @@
       exerciseHistory() {
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/testManagement/testManagement",
+          url: "/testManagement/testManagement",
           params: {
             user: this.user
           }
@@ -844,7 +844,7 @@
       onSubmit() {
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+          url: "/readTestQuestionInfo/submitQuestionInfo",
           params: {
             user: this.user,
             testData: this.stuform

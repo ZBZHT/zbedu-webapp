@@ -185,7 +185,7 @@
       },
     },
     mounted() {
-      axios.post('http://' + this.url + ':8000/teacherCMS/labelTree', {
+      axios.post('/teacherCMS/labelTree', {
         data: {
           username: this.username,
           userType: this.userType

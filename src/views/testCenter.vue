@@ -1,7 +1,7 @@
 <template>
 <div class="testCenter">
     <div class="nav">
-    
+
         <navgation-head></navgation-head>
 
     </div>
@@ -104,11 +104,11 @@ export default {
     }
   },
   created(){
-     
+
   },
   mounted(){
       this.url = document.domain;
-      axios.get("http://" + this.url + ":8000/readJson/index",{
+      axios.get("/readJson/index",{
                 params:{
                      user:123
                 }
@@ -126,14 +126,14 @@ export default {
             });
     },
   methods:{
-      
-  },  
+
+  },
   watch:{
       '$route' (to,from) {
           alert(to);
           alert(from);
       }
-  },  
+  },
   components:{swipe,navgationHead}
 }
 </script>

@@ -61,7 +61,7 @@ export default {
  //     console.log(_this.windowHeight);
       document.querySelector(".index-list").style.height = _this.windowHeight + "px";
 
-      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
+      axios.get("/readJson/bannerLeftData",{
                 params:{
                      user:234
                 }
@@ -72,7 +72,7 @@ export default {
                 console.log("error init." + error)
             });
 
-      axios.get("http://" + this.url + ":8000/readJson/index",{
+      axios.get("/readJson/index",{
                 params:{
                      user:123
                 }

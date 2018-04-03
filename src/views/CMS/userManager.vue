@@ -423,7 +423,7 @@
           type: 'warning',
           center: true
         }).then(() => {
-          axios.post('http://' + this.url + ':8000/teacherCMS/delChecked', {
+          axios.post('/teacherCMS/delChecked', {
             data: {
               username: this.username,
               userType: this.userType,
@@ -504,7 +504,7 @@
 
           let resData = resUserData(this.addUserForm);
           //console.log(this.addUserForm);
-          axios.post('http://' + this.url + ':8000/teacherCMS/addUser', {
+          axios.post('/teacherCMS/addUser', {
             data: {
               username: this.username,
               userType: this.userType,
@@ -534,7 +534,7 @@
         }
 
         let resData = resUserData1(this.addUserForm1);
-          axios.post('http://' + this.url + ':8000/teacherCMS/updateUser', {
+          axios.post('/teacherCMS/updateUser', {
             data: {
               username: this.username,
               userType: this.userType,
@@ -593,7 +593,7 @@
       },
     },
     mounted() {
-      axios.post('http://' + this.url + ':8000/teacherCMS/userManager', {
+      axios.post('/teacherCMS/userManager', {
         data: {
           username: this.username,
           userType: this.userType

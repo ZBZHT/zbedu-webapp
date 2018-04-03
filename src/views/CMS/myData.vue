@@ -88,7 +88,7 @@
         }
 
         let resData = resUserData1(this.addUserForm);*/
-        axios.post('http://' + this.url + ':8000/teacherCMS/updateUser', {
+        axios.post('/teacherCMS/updateUser', {
           data: {
             username: this.username,
             userType: this.userType,
@@ -108,7 +108,7 @@
     },
     mounted() {
 
-      axios.post('http://' + this.url + ':8000/teacherCMS/myDataMst', {
+      axios.post('/teacherCMS/myDataMst', {
         data: {
           username: this.username,
           userType: this.userType,
