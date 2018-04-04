@@ -9,12 +9,12 @@ const uploadsPath = "../app/uploads/addUser/";
 const addTestPath = "../app/uploads/addTest/";
 const Students = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
+const Question = require('../app/models/Question');
 const xlsx2j = require('xlsx-2-json');
-
 const md5 = require('js-md5');
 
 //设置跨域请求
-{
+/*{
 // 判断origin是否在域名白名单列表中
   function isOriginAllowed(origin, allowedOrigin) {
     if (_.isArray(allowedOrigin)) {
@@ -54,8 +54,8 @@ const md5 = require('js-md5');
       res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
       res.header("Access-Control-Allow-Credentials", "true");
       res.header("X-Powered-By", ' 3.2.1');
-      /*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
-      else next();*/
+      /!*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
+      else next();*!/
     } else {
       res.send({code: -2, msg: '非法请求'});
     }
@@ -76,7 +76,7 @@ const md5 = require('js-md5');
     };
     next();
   });
-}
+}*/
 
 //删除数组中指定元素  方法
 {
@@ -104,13 +104,14 @@ const md5 = require('js-md5');
 }
 
 /* 获取目录tree */
-router.post('/labelTree', function (req, res) {
+router.post('/cms/labelTree', function (req, res) {
   if (req.body.data) {
     let reqBody = req.body.data;
     res.setHeader("Content-Type", "application/json");
+    console.log('11');
+    console.log(reqBody.userType);
 
     if (reqBody.userType == 'S' || reqBody.userType == 'O') {
-      //console.log('O');
       fs.readFile("../app/mock/CMSlabelTree.json", 'utf-8', function (err, data) {
         if (err) {
           console.log(err);
@@ -130,10 +131,9 @@ router.post('/labelTree', function (req, res) {
           console.log(err);
         } else {
           let labelTree = JSON.parse(data);
-          let childrenE = labelTree[0].children;
+          let childrenE = labelTree[1].children;
           children = removeChildren(childrenE, 101);  //传入要删除的Children id
-          labelTree[0].children = children;
-          //console.log(labelTree);
+          labelTree[1].children = children;
           res.status(200).send({
             result: labelTree
           });
@@ -168,7 +168,7 @@ router.post('/labelTree', function (req, res) {
 /* 获取用户管理数据 */
 {
   router.post('/userManager', findUser, function (req, res) {
-    Students.find().then(function (users) {
+    Teacher.find().then(function (users) {
       res.status(200).send({
         userInfo: users
       });
@@ -179,9 +179,10 @@ router.post('/labelTree', function (req, res) {
     //console.log(req.body.data);
     if (req.body.data.username) {
       let username = req.body.data.username;
-      Students.findOne({
+      Teacher.findOne({
         user: username,
       }).then(function (userType) {
+        //console.log(userType);
         //console.log(userType.userType);
         if (userType.userType == 'admin' || userType.userType == 'E') {
 
@@ -456,12 +457,55 @@ router.post('/updateUser', function (req, res) {
 router.post('/myDataMst', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
-    let username = req.body.data.username;
+    //let username = req.body.data.username;
     Students.find().then(function (users) {
       res.status(200).send({
         userInfo: users
       });
     });
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+
+//题库管理--显示全部题
+router.get('/getAllTest', function (req, res) {
+  let reqQ = req.query.userType;
+  console.log(reqQ);
+  if (reqQ == 'T' || reqQ == 'E' || reqQ == 'admin') {
+    Question.find({
+    }).then(function (result) {
+      res.status(200).send(result);
+    });
+  }
+});
+
+//题库管理--删除选中题
+router.post('/delCheckedQ', function (req, res) {
+  //console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    if (reqData.userType == 'admin' || reqData.userType == 'E') {
+      for (let i = 0; i < reqData.msg.length; i++) {
+        Students.remove({userID: reqData.msg[i].userID}, function (err) {
+          if (err) {
+            return res.status(404).send({err: err,});
+          } else {
+            console.log('删除数据成功');
+          }
+        })
+      }
+      res.status(200).send({
+        success: 0,
+      });
+    }else {
+      res.status(404).send({
+        Msg: '该用户无权限',
+      });
+    }
   } else {
     res.status(404).send({
       Msg: '无法获取请求数据',

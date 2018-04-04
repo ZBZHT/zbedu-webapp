@@ -12,7 +12,7 @@ const test = require('../app/mock/test.json');
 
 
 //设置跨域请求
-{
+/*{
 // 判断origin是否在域名白名单列表中
   function isOriginAllowed(origin, allowedOrigin) {
     if (_.isArray(allowedOrigin)) {
@@ -58,7 +58,7 @@ const test = require('../app/mock/test.json');
       res.send({code: -2, msg: '非法请求'});
     }
   });
-}
+}*/
 
 /* GET index.json */
 router.get('/config', function (req, res) {

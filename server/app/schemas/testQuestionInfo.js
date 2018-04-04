@@ -18,9 +18,10 @@ module.exports = new Schema({
   currState: Array,
   error: Array,
   sorce: Number,
-  startTimeHours:Number,
-  startTimeMinutes:Number,
-  startTimeSeconds:Number,
+  startTestTime: Date,
+  //startTimeHours:Number,
+  //startTimeMinutes:Number,
+  //startTimeSeconds:Number,
   testTimeMinutes:Number,
   testTimeSeconds:Number,
   isCheckNum:Number

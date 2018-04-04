@@ -23,6 +23,7 @@ module.exports = new Schema({
   timeMin: String,
   major: String,
   classGrade: Number,
-  newData: Date
+  newData: Date,
+  allScore: Number,
 });
 

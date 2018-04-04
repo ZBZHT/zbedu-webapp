@@ -1,17 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const TestQuestionInfo = require('../app/models/TestQuestionInfo');
+const TestQuestion = require('../app/models/TestQuestion');
 
 //设置跨域请求
-router.all('*', function (req, res, next) {
+/*router.all('*', function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
   res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
   res.header("X-Powered-By", ' 3.2.1');
-  if (req.method == "OPTIONS") res.sendStatus(204);/*让options请求快速返回*/
+  if (req.method == "OPTIONS") res.sendStatus(204);/!*让options请求快速返回*!/
   else next();
-});
+});*/
 
 //学生开始考试 ,  获取考试答案信息
 router.get('/getTestQuesInfo', function (req, res) {
@@ -34,28 +35,21 @@ router.get('/update', function (req, res) {
   let QuestionInfo = req.query;
   let reqTestQuestion = QuestionInfo.testQuestion;
   let code = '';
-  console.log(QuestionInfo);
-  console.log(QuestionInfo.currTestType);
-
-  //console.log( (QuestionInfo.startTime));
+  console.log(reqTestQuestion);
+  //console.log(QuestionInfo.currTestType);
 
   TestQuestionInfo.findOneAndUpdate({
       testQuestion: reqTestQuestion
     }, {
-      state:QuestionInfo.state,
       user: QuestionInfo.user,
-      currTestType: QuestionInfo.currTestType,
       startTime: QuestionInfo.startTime,
       currAnswer: QuestionInfo.currAnswer,
       currState: QuestionInfo.currState,
       error: QuestionInfo.error,
       sorce: QuestionInfo.sorce,
-      startTimeHours:QuestionInfo.startTimeHours,
-      startTimeMinutes:QuestionInfo.startTimeMinutes,
-      startTimeSeconds:QuestionInfo.startTimeSeconds,
-      testTimeMinutes:QuestionInfo.testTimeMinutes,
-      testTimeSeconds:QuestionInfo.testTimeSeconds,
-      isCheckNum:QuestionInfo.isCheckNum
+      testTimeMinutes: QuestionInfo.testTimeMinutes,
+      testTimeSeconds: QuestionInfo.testTimeSeconds,
+      isCheckNum: QuestionInfo.isCheckNum
     }, //{upsert: true},
     function (err) {
       if (err) {
@@ -68,44 +62,98 @@ router.get('/update', function (req, res) {
     });
 });
 
-//提交考试答案
+// 提交
 router.get('/submitQuestionInfo', function (req, res) {
-  let QuestionInfo = req.query;
-  let reqTestQuestion = QuestionInfo.testQuestion;
-  let code = '';
-  console.log('11');
-  console.log(QuestionInfo.startTime);
-
-  TestQuestionInfo.findOneAndUpdate({
-      testQuestion: reqTestQuestion
+  let reqQ = req.query;
+  let reqTestQuestion = reqQ.testQuestion;
+  //console.log(reqTestQuestion);
+  TestQuestion.findOneAndUpdate({
+      currTestNum: reqTestQuestion
     }, {
-      user: QuestionInfo.user,
-      currTestId: QuestionInfo.currTestId,
-      startTime: QuestionInfo.startTime,
-      state:QuestionInfo.state,
-      currAnswer: QuestionInfo.currAnswer,
-      currState: QuestionInfo.currState,
-      error: QuestionInfo.error,
-      sorce: QuestionInfo.sorce,
-      startTimeHours:QuestionInfo.startTimeHours,
-      startTimeMinutes:QuestionInfo.startTimeMinutes,
-      startTimeSeconds:QuestionInfo.startTimeSeconds,
-      testTimeMinutes:QuestionInfo.testTimeMinutes,
-      testTimeSeconds:QuestionInfo.testTimeSeconds,
-      isCheckNum:QuestionInfo.isCheckNum
+      state: 2,
     },
     function (err) {
       if (err) {
         console.log(err);
       } else {
+        TestQuestionInfo.findOneAndUpdate({
+            testQuestion: reqTestQuestion
+          }, {
+            user: reqQ.user,
+            state: 2,
+            startTime: reqQ.startTime,
+            currAnswer: reqQ.currAnswer,
+            currState: reqQ.currState,
+            error: reqQ.error,
+            sorce: reqQ.sorce,
+            testTimeMinutes: reqQ.testTimeMinutes,
+            testTimeSeconds: reqQ.testTimeSeconds,
+            isCheckNum: reqQ.isCheckNum
+          }, //{upsert: true},
+          function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('提交成功');
+              res.end(JSON.stringify({code: 0}));
+            }
+          });
+      }
+    });
+});
+
+//提交考试答案
+router.get('/submitQuestion', function (req, res) {
+  let reqQ = req.query;
+  let reqTestQuestion = reqQ.testQuestion;
+  let code = '';
+  console.log('11');
+  console.log(reqQ.startTime);
+  TestQuestion.findOneAndUpdate({
+      currTestNum: reqTestQuestion
+    }, {
+      state: 2,
+    },
+    function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        TestQuestionInfo.findOneAndUpdate({
+            testQuestion: reqTestQuestion
+          }, {
+            user: reqQ.user,
+            currTestId: reqQ.currTestId,
+            startTime: reqQ.startTime,
+            state: 2,
+            currAnswer: reqQ.currAnswer,
+            currState: reqQ.currState,
+            error: reqQ.error,
+            sorce: reqQ.sorce,
+            startTimeHours: reqQ.startTimeHours,
+            startTimeMinutes: reqQ.startTimeMinutes,
+            startTimeSeconds: reqQ.startTimeSeconds,
+            testTimeMinutes: reqQ.testTimeMinutes,
+            testTimeSeconds: reqQ.testTimeSeconds,
+            isCheckNum: reqQ.isCheckNum
+          },
+          function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('更新答案成功');
+              code = 0;
+              res.end(JSON.stringify(code));
+            }
+          });
         console.log('更新答案成功');
         code = 0;
         res.end(JSON.stringify(code));
       }
     });
+
 });
 
-//查询整个答案文档
+//查询所有答案
 router.get('/testManagement', function (req, res) {
   let reqQestQuestion = req.query.currTestNum;
   let reqUser = req.query.user;

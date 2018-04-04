@@ -3,7 +3,7 @@ const router = express.Router();
 const Comments = require('../app/models/Comments');
 
 //设置跨域请求
-router.all('*', function (req, res, next) {
+/*router.all('*', function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
@@ -15,7 +15,7 @@ router.all('*', function (req, res, next) {
   else {
     next();
   }
-});
+});*/
 
 //添加新comment
 router.get('/addComment', function (req, res) {

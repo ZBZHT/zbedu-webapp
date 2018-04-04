@@ -18,7 +18,7 @@ const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
 const zipName = "moreFiles.zip";
 
 //设置跨域请求
-{
+/*{
 // 判断origin是否在域名白名单列表中
   function isOriginAllowed(origin, allowedOrigin) {
     if (_.isArray(allowedOrigin)) {
@@ -58,14 +58,14 @@ const zipName = "moreFiles.zip";
       res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
       res.header("Access-Control-Allow-Credentials", "true");
       res.header("X-Powered-By", ' 3.2.1');
-      /*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
-      else next();*/
+      /!*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
+      else next();*!/
     } else {
       res.send({code: -2, msg: '非法请求'});
     }
     next()
   });
-}
+}*/
 
 //文件上传
 router.post('/upload', function(req, res) {
