@@ -62,7 +62,7 @@ import core from '../../server/utils/core.js'
                 }else{
                     axios({
                         method: 'post',
-                        url: 'http://' + this.url + ':8000/api/user/login',
+                        url: '/api/user/login',
                         data: {
                             username: this.username,
                             password: md5(this.password)
@@ -140,7 +140,7 @@ import core from '../../server/utils/core.js'
             no(){
                 axios({
                         method: 'post',
-                        url: 'http://' + this.url + ':8000/api/user/logout',
+                        url: '/api/user/logout',
                         withCredentials: true
                         }).then((res)=>{
                                 if(res.data.code == 3){
