@@ -296,94 +296,62 @@
                   <el-button type="default" @click="resetForm('stuForm')" value="Reset">重置</el-button>
                 </el-form>
               </el-tab-pane>
+
+              <!--历史练习-->
               <el-tab-pane label="历史练习">
+                <el-table style="width: 100%"
+                          :data="historyPracticeData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
-                <ul class="testLine">
-                  <li class="testNumber">NO.</li>
-                  <li class="testTime">时间</li>
-                  <li class="testTitle">项目</li>
-                  <li class="testState">状态</li>
-                  <li class="testGrade">分数</li>
-                </ul>
-                <ul class="testLine" v-for="(item,index) in userMessageData.testQuestion">
-                  <ul v-for="(item4,index4) in userMessageData.testQuestionInfo" v-if="index4 == index">
-                    <li class="testNumber">{{index + 1}}</li>
-                    <li class="testTime">{{item4.startTime}}</li>
-                    <li class="testTitle">
-                      <a id="show-modal" @click="showModal=true">
-                        <p @click="myNum(index)">{{item.currTestNum}}</p>
-                      </a>
-                      <modal v-if="showModal" @close="showModal = false">
-                        <h3 slot="header">custom header</h3>
-                        <div slot="body">
-                          <div v-for="(item2,index2) in userMessageData.testQuestion[myNumber].question">
-                              <span class="desctitle">
-                                  {{item2.num}}.{{item2.desc}}
-                              </span>
-                            <ul class="ans">
-                              <li>
-                                <label for="11" v-if="item2.options[0]">
-                                  <input id="11" :type="item2.type" value="A" :name="item2.name"
-                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                  {{item2.options[0]}}
-                                </label>
-                                <label for="22" v-if="item2.options[1]">
-                                  <input id="22" :type="item2.type" value="B" :name="item2.name"
-                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                  {{item2.options[1]}}
-                                </label>
-                                <label for="33" v-if="item2.options[2]">
-                                  <input id="33" :type="item2.type" value="C" :name="item2.name"
-                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                  {{item2.options[2]}}
-                                </label>
-                                <label for="44" v-if="item2.options[3]">
-                                  <input id="44" :type="item2.type" value="D" :name="item2.name"
-                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
-                                  {{item2.options[3]}}
-                                </label>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </modal>
-                    </li>
-                    <li class="testState">已结束</li>
-                    <li class="testGrade">{{item4.sorce}}</li>
-                    <li class="errAnalysis">
-                      <a id="show-modal1" @click="showModal1=true">
-                        <p @click="myNum(index)">错题分析</p>
-                      </a>
-                      <modal v-if="showModal1" @close="showModal1 = false">
-                        <h3 slot="header">custom2333 header</h3>
-                        <div slot="body">
-                          <div v-for="(item5,index5) in userMessageData.testQuestionInfo[myNumber].error">
-                            <div v-for="(item6,index6) in userMessageData.testQuestion[myNumber].question"
-                                 v-if="index6 == 0">
-                                    <span class="desctitle">
-                                        <img src="../assets/imgs/err.jpg">
-                                        {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
-                                    </span>
-                              <ul class="ans">
-                                <li>
-                                  {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[0]}}
-                                  {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[1]}}
-                                  {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[2]}}
-                                  {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[3]}}
-                                </li>
-                              </ul>
-                              <span>
-                                  正确答案：{{userMessageData.testQuestion[myNumber].question[item5 - 1].answer}}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </modal>
-                    </li>
-                  </ul>
-                </ul>
+                  <el-table-column label="序号" type="index" width="60">
+                  </el-table-column>
 
+                  <el-table-column label="考试题目" width="100">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.title }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="创建时间" width="200">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.date1 }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="考试类型" width="120">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.currTestType }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="考试数目" width="120">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.question.length }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="详细信息">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                        查看详情
+                      </el-button>
+                    </template>
+                  </el-table-column>
+
+                </el-table>
+
+                <!--分页显示-->
+                <div class="block">
+                  <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page.sync="currentPage"
+                    :page-size="pagesize"
+                    layout="prev, pager, next, jumper"
+                    :total=parseInt(total)>
+                  </el-pagination>
+                </div>
               </el-tab-pane>
+
             </el-tabs>
 
           </div>
@@ -497,7 +465,8 @@
         still_btn: false,
         testNowData: [], //正在考试
         toTestData: [], //待考试
-        historyTestData: [],
+        historyTestData: [], //历史考试
+        historyPracticeData:[],  //历史练习
         total: '',
         currentPage: 1,
         pagesize: 10,
@@ -582,7 +551,7 @@
         }).then((res) => {
           if (res.data.state == 1) {
             this.textQuestionData = res.data;
-               
+
           }
           //console.log(res.data);
           //console.log(this.TestNum+"LLL")
@@ -744,7 +713,7 @@
         if (index == 1) {
           this.testManagenHistory();
         } else if (index == 2) {
-          this.exerciseHistory();
+          this.historyPractice();
         }
       },
        /*获取正在考试的题*/
@@ -777,28 +746,30 @@
       },
       //请求待考试数据
       testManagenWait() {
-        this.url = document.domain;
         axios.get("/readTestQuestion/stuToTestData", {
           params: {
             user: this.user,
           }
         }).then((res) => {
           let resData = res.data;
-          for (let i = 0; i < resData.length; i++) {
-            resData[i].newData = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
-            resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss")
-          }
-          this.toTestData = resData;
-          if(this.isTesting == 0){
-            this.testOnlineData.title = this.toTestData[0].title;
-            console.log("::::")
-            console.log(this.toTestData[0].title)
-            this.testOnlineData.date1 = this.toTestData[0].date1;
-            this.testOnlineData.date2 = this.toTestData[0].date2;
-            this.testOnlineData.timeHour = this.toTestData[0].timeHour;
-            this.testOnlineData.allTestNum = this.toTestData[0].question.length;
-          }else{
-            
+          if (resData) {
+            for (let i = 0; i < resData.length; i++) {
+              resData[i].newData = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
+              resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss")
+            }
+            this.toTestData = resData;
+            if(this.isTesting == 0){
+              this.testOnlineData.title = this.toTestData[0].title;
+              //console.log("::::");
+              //console.log(this.toTestData[0].title);
+              this.testOnlineData.date1 = this.toTestData[0].date1;
+              this.testOnlineData.date2 = this.toTestData[0].date2;
+              this.testOnlineData.timeHour = this.toTestData[0].timeHour;
+              this.testOnlineData.allTestNum = this.toTestData[0].question.length;
+            }else{
+            }
+          } else {
+            console.log('stuToTestData请求无数据');
           }
           this.total = this.toTestData.length;
           this.getTestQ();
@@ -807,7 +778,6 @@
       },
       //请求历史考试数据
       testManagenHistory() {
-        this.url = document.domain;
         axios.get("/readTestQuestion/stuHistoryTestData", {
           params: {
             user: this.user,
@@ -893,8 +863,24 @@
         }
       },
       handleClick(data) {
+      },
+      //在线练习,--历史练习
+      historyPractice() {
+        axios.get("/readTestQuestion/stuHistoryPractice", {
+          params: {
+            user: this.user,
+          }
+        }).then((res) => {
+          let resData = res.data;
+          for (let i = 0; i < resData.length; i++) {
+            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
+            this.historyPracticeData.push(resData[i]);
+          }
+          //this.total = this.historyPracticeData.length;
+          console.log(this.historyPracticeData[0]);
+        });
+      },
 
-      }
     },
     components: {Modal, navUser, footFooter}
 
