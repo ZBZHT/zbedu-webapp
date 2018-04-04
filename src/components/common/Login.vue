@@ -89,7 +89,7 @@ import core from '../../../server/utils/core.js'
                     /*请求存有用户账号的json文件*/
                     axios({
                         method: 'post',
-                        url: 'http://' + this.url + ':8000/api/user/login',
+                        url: '/api/user/login',
                         data: {
                             username: this.username,
                             password: md5(this.password)
