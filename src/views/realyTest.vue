@@ -16,13 +16,13 @@
                     <div class="inforItem"  v-show="textQuestionData">
                         <div class="infor">
                             <p>开始时间</p>
-                            <span>{{hours}}:{{minute}}:{{second}}</span>
+                            <span>{{startTestTime}}</span>
                         </div>
-                        <div class="infor notSt">
-                            <p>状态</p>
-                            <p class="notStart" v-show="!textQuestionData">未考</p>
-                            <p>正在考试</p>
-                        </div>
+                        <!--<div class="infor notSt">-->
+                            <!--<p>状态</p>-->
+                            <!--<p class="notStart" v-show="!textQuestionData">未考</p>-->
+                            <!--<p>正在考试</p>-->
+                        <!--</div>-->
                         <div class="infor">
                             <p>倒计时</p>
                             <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
@@ -98,62 +98,59 @@ import axios from 'axios'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
 import navUser from '@/components/common/navUser';
-
+import core from '../../server/utils/core.js';
 
 export default {
   name: 'test',
   data () {
     return {
-        textQuestionData:'',
-        minutes:120,
-        seconds:0,
-        dispear:true,
-        answer:true,
-        myAns:'',
-        myNumber:'',
-        questionIndex:'',
-        errorIndex:[],
-        sorce:0,
-        error:[],
-        setRed:false,
-        submits:false,
-        nowTime:'',
-        currentdate:'',
-        hours:'',
-        minute:'',
-        second:'',
-        currIndex:0,
-        user:this.$store.state.username,
-        time:0,
-        isCheck:'',
-        isCheckNum:0,
-        isCheckArr:[],
-        length:20,
-        classItem:{},
-        QidArr:[],
-        null:[],
-        userMessageData:'',
-        picked:[],
-        Display:false,
-        lengthData:'',
-        url:document.domain,
-        showModal:false,
-        showModal1:false,
-        currTestInfor:[],
-        currTestRes:[],
-        currTestId:'',
-        interval:{},
-        TestNum:0,
-        fullscreenLoading: false
+      textQuestionData: '',
+      minutes: 120,
+      seconds: 0,
+      dispear: true,
+      answer: true,
+      myAns: '',
+      myNumber: '',
+      questionIndex: '',
+      errorIndex: [],
+      sorce: 0,
+      error: [],
+      setRed: false,
+      submits: false,
+      nowTime: '',
+      currentdate: '',
+      startTestTime:'',
+      hours: '',
+      minute: '',
+      second: '',
+      currIndex: 0,
+      user: this.$store.state.username,
+      time: 0,
+      isCheck: '',
+      isCheckNum: 0,
+      isCheckArr: [],
+      length: 20,
+      classItem: {},
+      QidArr: [],
+      null: [],
+      userMessageData: '',
+      picked: [],
+      Display: false,
+      lengthData: '',
+      url: document.domain,
+      showModal: false,
+      showModal1: false,
+      currTestInfor: [],
+      currTestRes: [],
+      currTestId: '',
+      interval: {},
+      TestNum: 0,
+      fullscreenLoading: false,
+      testQuestion: '',
 
     }
   },
   created(){
- //   document.onkeydown = function(e){
-      //  if(window.event.keyCode === 27){
-      //      alert("...")
-     //   }
- //   };
 
     window.onkeydown = function(){
         if(checkFull()){
@@ -162,21 +159,21 @@ export default {
               event.preventDefault();
           }
         }
+    };
+
+    function checkFull(){
+    var isFull =  document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
+
+    //to fix : false || undefined == undefined
+    if(isFull === undefined) isFull = false;
+    return isFull;
     }
-
-        function checkFull(){
-        var isFull =  document.fullscreenEnabled || window.fullScreen || document.webkitIsFullScreen || document.msFullscreenEnabled;
-
-        //to fix : false || undefined == undefined
-        if(isFull === undefined) isFull = false;
-        return isFull;
-        }
 
   },
   mounted(){
    setTimeout(function(){
-    var allTestNum = this.$store.state.allTestNum ;
-    var url = document.domain;
+    //var allTestNum = this.$store.state.allTestNum ;
+    //var url = document.domain;
     var _this = this;
     //倒计时
     var time = window.setInterval(function () {
@@ -232,49 +229,6 @@ export default {
 
      this.getTestQ();
      this.getTestQuesInfo();
-      /*axios.get("http://" + url + ":8000/readTestQuestion/all",{
-            params:{
-                user:this.user,
-                currTestNum:allTestNum
-            }
-        }).then((res)=>{
-            if(res.data.testQuestion.state == 1){
-                this.textQuestionData = res.data.testQuestion;
-            }
-            console.log(res.data);
-            this.TestNum = res.data.testLength;
-            console.log(this.TestNum+"LLL")
-        }).catch(function(error){
-            console.log("error init." + error)
-        });*/
-
-    axios.get("/readTestQuestionInfo/all",{
-        params:{
-          user:this.user,
-          currTestId:this.$route.params.testId,
-          currTestNum:allTestNum
-        }
-      }).then((res)=>{
-          console.log('11');
-          console.log(res.data.currState);
-          this.$store.commit('vuexState',res.data.state);
-            if(res.data.state == 1){
-               this.picked = res.data.currAnswer;
-               this.isCheckArr = res.data.currState;
-
-                window.addEventListener("popstate",this.myFunction);
-               this.hours = res.data.startTimeHours;
-               this.minute = res.data.startTimeMinutes;
-               this.second = res.data.startTimeSeconds;
-               this.minutes = res.data.testTimeMinutes;
-               this.seconds = res.data.testTimeSeconds;
-               this.isCheckNum = res.data.isCheckNum;
-               console.log(this.isCheckNum+"qqqqqqq");
-               console.log(this.isCheckArr+"wwwww");
-            }
-      }).catch(function(error){
-        console.log("错误")
-      });
     }.bind(this),500)
 
     },
@@ -300,10 +254,11 @@ export default {
       }).then((res) => {
         if (res.data.state == 1) {
           this.textQuestionData = res.data;
+          console.log("2222")
+          console.log(res.data)
+          this.minutes = res.data.timeHour *60;
         } else {
-          //console.log(res.data);
           this.TestNum = res.data.testLength;
-          //console.log(this.TestNum+"LLL")
         }
       }).catch(function (error) {
         console.log("error init." + error)
@@ -317,13 +272,14 @@ export default {
           user: this.user,
         }
       }).then((res) => {
-        console.log('11');
-        console.log(res.data.currState);
+        //console.log(res.data.currState);
+        //考试题的唯一编号
+        this.testQuestion = res.data.testQuestion;
+        this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTestTime));
         this.$store.commit('vuexState',res.data.state);
         if(res.data.state == 1){
           this.picked = res.data.currAnswer;
           this.isCheckArr = res.data.currState;
-
           window.addEventListener("popstate",this.myFunction);
           this.hours = res.data.startTimeHours;
           this.minute = res.data.startTimeMinutes;
@@ -331,8 +287,6 @@ export default {
           this.minutes = res.data.testTimeMinutes;
           this.seconds = res.data.testTimeSeconds;
           this.isCheckNum = res.data.isCheckNum;
-          console.log(this.isCheckNum+"qqqqqqq");
-          console.log(this.isCheckArr+"wwwww");
         }
       }).catch(function (error) {
         console.log("错误")
@@ -346,38 +300,24 @@ export default {
                         method:'get',
                         url:"/readTestQuestionInfo/submitQuestionInfo",
                         params:{
-                            state:2,
                             user:this.user,
-                            currTestId:this.$route.params.testId,
-                            testQuestion:this.$store.state.allTestNum,
+                            testQuestion:this.testQuestion,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currState:this.isCheckArr,
                             error:this.error,
                             sorce:this.sorce,
-                            startTimeHours:this.hours,
-                            startTimeMinutes:this.minute,
-                            startTimeSeconds:this.second,
                             testTimeMinutes:this.minutes,
                             testTimeSeconds:this.seconds,
                             isCheckNum:this.isCheckNum
                         }
                     }).then(
                         function (res) {
-                        console.log(res.data)
+                        console.log(res.data.code)
                         }
                     );
                 }.bind(this),0.1);
-                axios({
-                        method:'get',
-                        url:"/readTestQuestion/submitQuestionInfo",
-                        params:{
-                            state:2,
-                            testQuestion:this.$store.state.allTestNum
-                        }
-                    }).then((res)=>{
-                            this.$store.commit('vuexState',res.data.state);
-                        });
+
                 this.sorce=0;
                 this.error = [];
                 console.log(this.QidArr.length+"===this.QidArr.length");
@@ -422,37 +362,7 @@ export default {
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
             },
-            /*getTest(e){
-                axios.get("http://" + this.url + ":8000/readTestQuestion/clickQuery",{
-                    params:{
-                        //state默认为0未开始考试，开始后为1
-                        user:this.user,
-                        state:1,
-                    //    testId: e,
-                    //    num: 20,
-                    //    currTestNum: 1 + this.$store.state.allTestNum,
-                    //    startTime:this.currentdate,
-                    //    startTimeHours:this.hours,
-                    //    startTimeMinutes:this.minute,
-                    //    startTimeSeconds:this.second,
-                    //    testTimeMinutes:this.minutes,
-                    //   testTimeSeconds:this.seconds
-                    }
-                }).then((res)=>{
-                    if(res.data.status !== 0) {
-                        return;
-                    }
-                    console.log(res.data.currTestNum+"currTestNum");
-                    this.$store.commit('allTestNum',res.data.currTestNum);
-                    this.$store.commit('vuexState',res.data.state);
-                    this.textQuestionData = res.data;
-                    this.currTestId = e;
-                }).catch(function(error){
-                    console.log("error init." + error)
-                });
 
-
-            },*/
             myAnswer:function(id,index){
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
@@ -470,10 +380,9 @@ export default {
                         method:'get',
                         url:"/readTestQuestionInfo/update",
                         params:{
-                            state:1,
                             user:this.user,
                             currTestId:this.$route.params.testId,
-                            testQuestion:this.$store.state.allTestNum,
+                            testQuestion:this.testQuestion,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currState:this.isCheckArr,
@@ -573,35 +482,34 @@ a{
 .title{
     width:100%;
     height:15%;
-    text-align:left;
     font-size:16px;
     padding:10px;
     box-sizing:border-box;
     display:flex;
 }
 .inforItem{
-    margin-left:50%;
+    margin-left:48%;
     display:flex;
 }
 .infor{
-    margin-right:14px;
-    margin-top:20px;
+    margin-right:25px;
+    margin-top:28px;
 }
 .infor p{
     font-size:17px;
     margin-top:-2px;
 }
-.notSt{
-    position:relative;
-}
-.notStart{
-    display:block;
-    width:70px;
-    background:#fff;
-    position:absolute;
-    top:21px;
-    left:0;
-}
+/*.notSt{*/
+    /*position:relative;*/
+/*}*/
+/*.notStart{*/
+    /*display:block;*/
+    /*width:70px;*/
+    /*background:#fff;*/
+    /*position:absolute;*/
+    /*top:21px;*/
+    /*left:0;*/
+/*}*/
 .content{
     width:100%;
     height:85%;

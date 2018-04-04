@@ -28,15 +28,15 @@
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时间:</span>
-                <span class="data-p-desc">{{testOnlineData.newData}}——{{testOnlineData.date2}}</span>
+                <span class="data-p-desc">{{testOnlineData.date1}}——{{testOnlineData.date2}}</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时长:</span>
-                <span class="data-p-desc">{{testOnlineData.timeHour * 60 }}分钟</span>
+                <span class="data-p-desc">{{testOnlineData.timeHour * 60}}分钟</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考题数目:</span>
-                <span class="data-p-desc">{{length - isCheckNum}}</span>
+                <span class="data-p-desc">{{testOnlineData.allTestNum}}</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试总分:</span>
@@ -79,7 +79,7 @@
 
             <!--待考试-->
             <el-tab-pane label="待考试">
-              <el-table :data="toTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)" style="width: 100%">
+              <el-table :data="toTestData" style="width: 100%">
 
                 <el-table-column label="序号" type="index" width="60">
                 </el-table-column>
@@ -118,17 +118,6 @@
 
               </el-table>
 
-              <div class="block">
-                <el-pagination
-                  @size-change="handleSizeChange"
-                  @current-change="handleCurrentChange"
-                  :current-page.sync="currentPage"
-                  :page-size="pagesize"
-                  layout="prev, pager, next, jumper"
-                  :total=parseInt(total)>
-                </el-pagination>
-              </div>
-
             </el-tab-pane>
 
             <!--历史考试-->
@@ -141,7 +130,7 @@
 
                 <el-table-column label="考试题目" width="100">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.theme }}</span>
+                    <span>{{ scope.row.title }}</span>
                   </template>
                 </el-table-column>
 
@@ -159,14 +148,14 @@
 
                 <el-table-column label="考试数目" width="120">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.num }}</span>
+                    <span>{{ scope.row.question.length }}</span>
                   </template>
                 </el-table-column>
 
                 <el-table-column label="详细信息">
                   <template slot-scope="scope">
                     <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
-                      查看
+                      查看详情
                     </el-button>
                   </template>
                 </el-table-column>
@@ -219,8 +208,8 @@
 
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button size="mini" type="danger" >
-                      正在考试
+                    <el-button size="mini" type="danger" @click="jumpOther()">
+                      继续考试
                     </el-button>
                   </template>
                 </el-table-column>
@@ -245,15 +234,13 @@
                          label-width="80px">
                   <el-form-item label="练习内容" prop="name">
                     <el-dropdown>
-                                        <span class="el-dropdown-link">
-
-                                            <div class="elinput">
-                                                <ul>
-                                                    <li v-for="item in stuform.name">{{item}}/</li>
-                                                </ul>
-                                            </div>
-
-                                        </span>
+                        <span class="el-dropdown-link">
+                            <div class="elinput">
+                                <ul>
+                                    <li v-for="item in stuform.name">{{item}}/</li>
+                                </ul>
+                            </div>
+                        </span>
                       <el-dropdown-menu slot="dropdown" class="dropdown">
                         <div class="treeModle">
                           <el-tree
@@ -311,7 +298,6 @@
               </el-tab-pane>
               <el-tab-pane label="历史练习">
 
-
                 <ul class="testLine">
                   <li class="testNumber">NO.</li>
                   <li class="testTime">时间</li>
@@ -331,29 +317,29 @@
                         <h3 slot="header">custom header</h3>
                         <div slot="body">
                           <div v-for="(item2,index2) in userMessageData.testQuestion[myNumber].question">
-                                                    <span class="desctitle">
-                                                        {{item2.num}}.{{item2.desc}}
-                                                    </span>
+                              <span class="desctitle">
+                                  {{item2.num}}.{{item2.desc}}
+                              </span>
                             <ul class="ans">
                               <li>
                                 <label for="11" v-if="item2.options[0]">
                                   <input id="11" :type="item2.type" value="A" :name="item2.name"
-                                         v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
                                   {{item2.options[0]}}
                                 </label>
                                 <label for="22" v-if="item2.options[1]">
                                   <input id="22" :type="item2.type" value="B" :name="item2.name"
-                                         v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
                                   {{item2.options[1]}}
                                 </label>
                                 <label for="33" v-if="item2.options[2]">
                                   <input id="33" :type="item2.type" value="C" :name="item2.name"
-                                         v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
                                   {{item2.options[2]}}
                                 </label>
                                 <label for="44" v-if="item2.options[3]">
                                   <input id="44" :type="item2.type" value="D" :name="item2.name"
-                                         v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
+                                     v-model="userMessageData.testQuestionInfo[myNumber].currAnswer[index2]">
                                   {{item2.options[3]}}
                                 </label>
                               </li>
@@ -374,10 +360,10 @@
                           <div v-for="(item5,index5) in userMessageData.testQuestionInfo[myNumber].error">
                             <div v-for="(item6,index6) in userMessageData.testQuestion[myNumber].question"
                                  v-if="index6 == 0">
-                                                    <span class="desctitle">
-                                                        <img src="../assets/imgs/err.jpg">
-                                                        {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
-                                                    </span>
+                                    <span class="desctitle">
+                                        <img src="../assets/imgs/err.jpg">
+                                        {{item5}}.{{userMessageData.testQuestion[myNumber].question[item5 - 1].desc}}
+                                    </span>
                               <ul class="ans">
                                 <li>
                                   {{userMessageData.testQuestion[myNumber].question[item5 - 1].options[0]}}
@@ -387,8 +373,8 @@
                                 </li>
                               </ul>
                               <span>
-                                                        正确答案：{{userMessageData.testQuestion[myNumber].question[item5 - 1].answer}}
-                                                    </span>
+                                  正确答案：{{userMessageData.testQuestion[myNumber].question[item5 - 1].answer}}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -396,9 +382,6 @@
                     </li>
                   </ul>
                 </ul>
-
-
-                <!--分页显示-->
 
               </el-tab-pane>
             </el-tabs>
@@ -518,7 +501,14 @@
         total: '',
         currentPage: 1,
         pagesize: 10,
-        testOnlineData:[]
+        isTesting:0,
+        testOnlineData:{
+          title:"暂无",
+          date1:"暂无",
+          date2:"暂无",
+          timeHour:0,
+          allTestNum:"暂无"
+        }
       }
     },
     created() {
@@ -553,7 +543,6 @@
 
     },
     mounted() {
-      this.testManagenWait();
       this.testNow();
     },
     watch: {
@@ -577,7 +566,7 @@
       handleCurrentChange(val) {
         //console.log(`当前页: ${val}`);
       },
-      /*获取考试题*/
+      /*获取待考试的考试题（待考试的开始）*/
       getTestQ() {
         let reqCurrTestNum = '';
         if (this.toTestData.length >= 1) {
@@ -593,6 +582,7 @@
         }).then((res) => {
           if (res.data.state == 1) {
             this.textQuestionData = res.data;
+               
           }
           //console.log(res.data);
           //console.log(this.TestNum+"LLL")
@@ -601,18 +591,19 @@
         });
       },
 
-      //开始考试,跳转
+      //待考试 ,, 开始考试,跳转
       sendInfor(row) {
         console.log(row.currTestNum);
-        axios.get("/readTestQuestion/stuStartData", {
+        axios.get("/readTestQuestion/clickStartTest", {
           params: {
             user: this.user,
             currTestNum: row.currTestNum,
+            startTestTime:new Date()
           }
         }).then((res) => {
-          console.log("AAAA");
+          //console.log("AAAA");
           let resData = res.data;
-          console.log(resData);
+          //console.log(resData);
           this.toTestData = resData;
           this.total = this.toTestData.length;
           this.jumpOther();
@@ -624,9 +615,6 @@
           name: 'realyTest'
         });
         window.open(href, '_blank', "channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
-        //    var elem = document.getElementById("content");
-        //    console.log(elem);
-        //    this.requestFullScreen(elem);
       },
       //本来类似F11的全屏
       requestFullScreen(element) {
@@ -724,13 +712,13 @@
 
       //开始考试时获取考试题目
       getTest() {
-        axios.get("/readTestQuestion/clickQuery", {
+        axios.get("/readTestQuestion/clickStartTest", {
           params: {
             //state默认为0未开始考试，开始后为1
             //考试状态: currTestType 101 : 期末考试    102: 期中考试   103：随堂练习   104：在线练习
             user: this.user,
-            state: 1,
             currTestNum: this.toTestData[0].currTestNum,
+            startTestTime:new Date()
           }
         }).then((res) => {
           console.log(res.data.code);
@@ -768,22 +756,23 @@
           }
         }).then((res) => {
           if (res.data.state == 1) {
-
             this.testNowData.push(res.data);
             //console.log(res.data.date1);
-            res.data.newData = moment(res.data.date1).format("YYYY-MM-DD hh:mm:ss")
-            res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD hh:mm:ss")
+            res.data.newData = moment(res.data.date1).format("YYYY-MM-DD hh:mm:ss");
+            res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD hh:mm:ss");
             if(this.testNowData){
               this.still_btn = true;
-              this.testOnlineData = this.testNowData[0];
-            //  console.log(this.testOnlineData)
+              this.isTesting = 1;
+              this.testOnlineData.title = this.testNowData[0].title;
+              this.testOnlineData.date1 = this.testNowData[0].date1;
+              this.testOnlineData.date2 = this.testNowData[0].date2;
+              this.testOnlineData.timeHour = this.testNowData[0].timeHour;
+              this.testOnlineData.allTestNum = this.testNowData[0].question.length;
+              this.testManagenWait();
             }
           } else {
-            console.log('错误');
+            this.testManagenWait();
           }
-          //console.log(this.TestNum+"LLL")
-          //console.log(res.data)
-          //console.log(this.testNowData);
         });
       },
       //请求待考试数据
@@ -800,7 +789,17 @@
             resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss")
           }
           this.toTestData = resData;
-          this.testOnlineData = this.toTestData[0];
+          if(this.isTesting == 0){
+            this.testOnlineData.title = this.toTestData[0].title;
+            console.log("::::")
+            console.log(this.toTestData[0].title)
+            this.testOnlineData.date1 = this.toTestData[0].date1;
+            this.testOnlineData.date2 = this.toTestData[0].date2;
+            this.testOnlineData.timeHour = this.toTestData[0].timeHour;
+            this.testOnlineData.allTestNum = this.toTestData[0].question.length;
+          }else{
+            
+          }
           this.total = this.toTestData.length;
           this.getTestQ();
           //this.getTestQuesInfo();
@@ -829,7 +828,7 @@
       exerciseHistory() {
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/testManagement/testManagement",
+          url: "/testManagement/testManagement",
           params: {
             user: this.user
           }
@@ -851,7 +850,7 @@
       onSubmit() {
         axios({
           method: 'get',
-          url: "http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
+          url: "/readTestQuestionInfo/submitQuestionInfo",
           params: {
             user: this.user,
             testData: this.stuform
