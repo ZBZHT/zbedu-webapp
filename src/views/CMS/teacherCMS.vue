@@ -15,22 +15,6 @@
             @node-click="handleNodeClick"></el-tree>
         </el-col>
 
-        <!--显示的首页-->
-        <el-col class="cont_page" :span="16">
-          <el-card v-show="isShow000">
-            <h1>欢迎使用中邦智慧教学</h1><br>
-            <h1>后台管理系统</h1>
-          </el-card>
-        </el-col>
-
-        <!--用户管理-->
-        <div v-show="isShow101">
-          <user-manager></user-manager>
-        </div>
-        <!--题库管理-->
-        <div v-show="isShow102">
-          <test-base-m></test-base-m>
-        </div>
         <!--我的资料-->
         <div v-show="isShow201">
           <my-data></my-data>
@@ -38,6 +22,14 @@
         <!--我的足迹-->
         <div v-show="isShow202">
           <my-footprint></my-footprint>
+        </div>
+        <!--用户管理-->
+        <div v-show="isShow101">
+          <user-manager></user-manager>
+        </div>
+        <!--题库管理-->
+        <div v-show="isShow102">
+          <test-base-m></test-base-m>
         </div>
         <!--课程管理-->
         <div v-show="isShow300">
@@ -88,10 +80,9 @@
         url: document.domain,
         username: this.$store.state.username,
         userType: this.$store.state.userType,
-        isShow000: true,
         isShow101: false,
         isShow102: false,
-        isShow201: false,
+        isShow201: true,
         isShow202: false,
         isShow300: false,
         isShow301: false,
@@ -107,7 +98,6 @@
         //console.log(data.id);
         //点击用户管理
         if (data.id == 101) {
-          this.isShow000 = false;
           this.isShow101 = true;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -118,7 +108,6 @@
         }
         //点击题库管理
         if (data.id == 102) {
-          this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = true;
           this.isShow201 = false;
@@ -129,7 +118,6 @@
         }
         //点击我的资料
         if (data.id == 201) {
-          this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = true;
@@ -140,7 +128,6 @@
         }
         //点击我的足迹
         if (data.id == 202) {
-          this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -151,7 +138,6 @@
         }
         //点击我的课程
         if (data.id == 300) {
-          this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -162,7 +148,6 @@
         }
         //点击我的课程
         if (data.id == 301) {
-          this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -173,7 +158,6 @@
         }
         //点击我的课程
         if (data.id == 400) {
-          this.isShow000 = false;
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -211,6 +195,9 @@
     padding: 0;
   }
 
+  .CMS_cont .el-row {
+    padding-top: 20px;
+  }
   .CMS_cont .cont_page {
     margin-top: 20px;
   }
@@ -238,7 +225,7 @@
   }
   .CMS_cont .el-col-4 {
     margin: 10px;
-    margin-top: 20px;
+    margin-top: 0;
   }
 
   .CMS_cont .el-table .cell {

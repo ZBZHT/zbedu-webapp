@@ -88,7 +88,7 @@
 
     },
     mounted() {
-     /* axios.post('http://' + this.url + ':8000/teacherCMS/userManager', {
+     /* axios.post('/teacherCMS/userManager', {
         data: {
           username: this.username,
           userType: this.userType

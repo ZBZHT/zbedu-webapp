@@ -4,14 +4,14 @@
     <!--题库管理-->
     <el-col :span="19">
       <!--头部按钮-->
-        <span>
-          <el-button size="small" type="primary" @click="" >显示全部试题</el-button>
-        </span>
+      <span class="userM_But1">
+        <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+      </span>
 
-        <span>
+        <span class="userM_But2">
           <el-upload
             class="upload-demo"
-            action="http://192.168.2.251:8000/teacherCMS/addExcelTest"
+            action="/teacherCMS/addExcelTest"
             :onError="uploadError"
             :beforeUpload="beforeAvatarUpload"
             :onSuccess="uploadSuccess"
@@ -47,36 +47,25 @@
         </el-dropdown-menu>
       </el-dropdown>
 
-      <!--列表-->
+      <!--显示所有题-->
       <el-table
-        ref="singleTable"
-        :data="testBaseMTableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
-        highlight-current-row
-        @current-change="handleCurrentChange"
+        class="userM_el-table"
+        :data="testAllData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+        @selection-change="changeFun"
         style="width: 99%; margin-top: 10px">
 
-        <el-table-column label="序号" type="index" width="60">
+        <el-table-column type="selection" width="40"></el-table-column>
+
+        <el-table-column prop="num" label="序号" width="60">
         </el-table-column>
 
-        <el-table-column prop="user" label="用户名" width="100">
+        <el-table-column prop="desc" label="序号" width="500">
         </el-table-column>
 
-        <el-table-column prop="userID" label="用户ID" width="130">
+        <el-table-column prop="options" label="用户ID" width="360">
         </el-table-column>
 
-        <el-table-column prop="IDNo" label="身份证号" width="200">
-        </el-table-column>
-
-        <el-table-column prop="MoNo" label="手机号" width="136">
-        </el-table-column>
-
-        <el-table-column prop="userType" label="用户类型" width="90">
-        </el-table-column>
-
-        <el-table-column prop="gender" label="性别" width="70">
-        </el-table-column>
-
-        <el-table-column prop="AdmDate" label="入学时间" width="130">
+        <el-table-column prop="major" label="专业" width="100">
         </el-table-column>
 
         <el-table-column label="操作">
@@ -84,13 +73,22 @@
             <el-button
               size="mini" type="warning"
               @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
-            <el-button
-              size="mini" type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删 除</el-button>
           </template>
         </el-table-column>
 
       </el-table>
+
+      <!--分页显示-->
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pagesize"
+          layout="prev, pager, next, jumper"
+          :total=parseInt(total)>
+        </el-pagination>
+      </div>
 
     </el-col>
   </div>
@@ -122,14 +120,27 @@
         },
         currentPage: 1,
         pagesize: 12,
+        total: '',
         username: this.$store.state.username,
         userType: this.$store.state.userType,
         testBaseMTableData: [],
+        testAllData: [],  //全部题
         currentRow: null,
+        multipleSelection: [],  //复选框
       }
     },
     computed: {},
     methods: {
+      changeFun(val) { //复选框状态改变
+        this.multipleSelection = val;
+        //console.log(this.multipleSelection);
+      },
+      handleSizeChange(val) {
+        //console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        //console.log(`当前页: ${val}`);
+      },
       // 上传前判断是不是Excel文件
       beforeAvatarUpload(file) {
         let index = file.name.split(".");
@@ -156,7 +167,6 @@
       handleCheckChange(data, checked, indeterminate) {
         console.log(data, checked, indeterminate);
         if(checked == true){
-          //    console.log(this.form.name+"AAAA");
           //    this.form.name.push(data.label);
         }else{
           for(var i = 0;i < this.form.name.length;i++){
@@ -193,32 +203,70 @@
         console.log(index, row);
       },
 
+      //删除用户信息方法
+      delChecked() {
+        this.$confirm('此操作将永久删除用户信息, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          axios.post('/teacherCMS/delCheckedQ', {
+            data: {
+              username: this.username,
+              userType: this.userType,
+              msg: this.multipleSelection
+            }
+          }).then((res) => {
+            if (res.data.success == 0) {
+              //删除单个
+              if (this.multipleSelection.length == 1) {
+                for (let j=0; j<this.dataManager.length; j++){
+                  if (this.multipleSelection[0].userID == this.dataManager[j].userID) {
+                    let ee = core.remove(this.dataManager, this.dataManager[j]);
+                    this.dataManager = ee;
+                    //console.log(this.dataManager);
+                  }
+                }
+              }else {
+                //删除多个
+                for (let i=0; i<this.multipleSelection.length; i++) {
+                  for (let j=0; j<this.dataManager.length; j++){
+                    if (this.multipleSelection[i].userID == this.dataManager[j].userID) {
+                      let ee = core.remove(this.dataManager, this.dataManager[j]);
+                      this.dataManager = ee;
+                    }
+                  }
+                  //console.log(this.dataManager);
+                }
+              }
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+            }else {
+              console.log('返回错误')
+            }
+          });
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+
     },
     mounted() {
-      axios.get("/readJson/bannerLeftData", {
+      axios.get('/teacherCMS/getAllTest', {
         params: {
-          user: 234
-        }
-      }).then((res) => {
-        this.data = res.data[0].children;
-      }).catch(function (error) {
-        console.log("error init." + error)
-      });
-
-      axios.post('/teacherCMS/userManager', {
-        data: {
-          username: this.username,
+          user: this.username,
           userType: this.userType
         }
       }).then((res) => {
-        let resUserInfo = res.data.userInfo;
-        if (resUserInfo.length > 0) {
-          for (let i = 0; i < resUserInfo.length; i++) {
-            resUserInfo[i].AdmDate = core.formatDate("yyyy-MM-dd", new Date(resUserInfo[i].AdmDate));
-          }
-          this.testBaseMTableData = resUserInfo;
-          this.total = this.testBaseMTableData.length;
-        }
+        this.testAllData = res.data;
+        this.total = this.testAllData.length;
+        //console.log(this.testAllData);
       });
     },
     components: {}
@@ -264,9 +312,14 @@
   .block .el-button {
     float: left;
   }
-
   .testBaseM_cont span {
     display: inline-block;
+  }
+  .testBaseM_cont .userM_But1,.userM_But2 {
+    float: left;
+  }
+  .testBaseM_cont .userM_But1 {
+    margin-right: 10px;
   }
 
   .testBaseM_cont .el-dialog {

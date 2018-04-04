@@ -12,7 +12,7 @@
         <span class="userM_But3">
           <el-upload
             class="upload-demo"
-            action="http://192.168.2.251:8000/teacherCMS/addExcelUsers"
+            action="/teacherCMS/addExcelUsers"
             :onError="uploadError"
             :beforeUpload="beforeAvatarUpload"
             :onSuccess="uploadSuccess"
@@ -255,6 +255,7 @@
         }],
         total: '',
         pagesize: 12,
+        currentPage: 1,
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -262,7 +263,6 @@
         url: document.domain,
         username: this.$store.state.username,
         userType: this.$store.state.userType,
-        currentPage: 1,
         dialogVisible: false,
         multipleSelection: [],
         dialogFormVisible: false,
