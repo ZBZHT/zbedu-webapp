@@ -113,6 +113,8 @@ a:hover{
         display: -webkit-box;
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
+        text-align: left;
+        text-indent: 1em;
     }
     .contentui .introduce p{
         color:#000;
@@ -181,6 +183,8 @@ a:hover{
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        text-align: left;
+        text-indent: 1em;
     }
     .contentui .introduce p{
         color:#000;
@@ -250,6 +254,8 @@ a:hover{
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        text-align: left;
+        text-indent: 1em;
     }
     .contentui .introduce p{
         color:#000;
@@ -319,6 +325,8 @@ a:hover{
         display: -webkit-box;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        text-align: left;
+        text-indent: 1em;
     }
     .contentui .introduce p{
         color:#000;
