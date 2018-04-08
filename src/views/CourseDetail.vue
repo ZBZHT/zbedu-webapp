@@ -18,15 +18,18 @@
               </li>
             </ul>
 
-            <div class="teaching-box" v-show="this.currentIndex === 0">
-              <p class="teaching" >待上传</p>
-            </div>
+            <!--教材-->
+            <!--<div class="teaching-box" v-show="this.currentIndex === 0">-->
+              <!--<p class="teaching" >待上传</p>-->
+            <!--</div>-->
 
-            <div class="course-box" v-show="this.currentIndex === 1">
+            <!--简介-->
+            <div class="course-box" v-show="this.currentIndex === 0">
               <p class="courseDescribe" >{{ noTree.describe }}{{ noTree.title }}</p>
             </div>
 
-            <div class="contentSmallCourse" v-show="this.currentIndex === 2">
+            <!--课件-->
+            <div id="courseppt" class="contentSmallCourse" v-show="this.currentIndex === 1">
               <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                 <param name="_Version" value="65539">
                 <param name="_ExtentX" value="20108">
@@ -36,17 +39,43 @@
                 <object :data="noTree.teachingMaterial" type="application/pdf" class="pdf-box">
                 </object>
               </object>
+              <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
             </div>
 
-            <div class="" v-show="this.currentIndex === 3">
-              <video id="video-box" controls @click="videstop" :src="videoTitle">
+            <!--微课-->
+            <div class="" v-show="this.currentIndex === 2">
+              <video id="video-box" controls @click="videostop" :src="videoTitle">
               </video>
             </div>
 
-            <div class="homework-box" v-show="this.currentIndex === 4">
-              <p class="homework">待上传</p>
+            <!--工作页-->
+            <div id="courseWorkPage" class="contentSmallCourse" v-show="this.currentIndex === 3">
+              <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                <param name="_Version" value="65539">
+                <param name="_ExtentX" value="20108">
+                <param name="_ExtentY" value="10866">
+                <param name="_StockProps" value="0">
+                <param name="SRC" value="teachingMaterial">
+                <object :data="noTree.workPage" type="application/pdf" class="pdf-box">
+                </object>
+              </object>
+              <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
             </div>
 
+            <!--课后作业-->
+            <div v-show="this.currentIndex === 4">
+              <div class="homework-box">
+                <div class="homework" v-for="(item,index) in noTree.homeWorkData">
+                  <p class="homeworkTitle">{{index + 1}}. {{item.title}}</p>
+                  <p class="homeworkDesc">{{item.desc}}</p>
+                    <span class="homework_Answer">正确答案：</span>
+                    <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
+                </div>
+              </div>
+              <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
+            </div>
+
+            <!--评论-->
             <div class="appraise-box" v-show="this.currentIndex === 5">
               <p class="appraiseTitle">{{ appraiseMsg }}</p>
               <p v-show="!commentArr.length">暂无评价</p>
@@ -153,12 +182,10 @@
               </div>
             </div>
 
-            <div class="teaching-box" v-show="this.currentIndex === 6">
-              <p class="teaching" >待上传</p>
-            </div>
-            <div class="teaching-box" v-show="this.currentIndex === 7">
-              <p class="teaching" >待上传</p>
-            </div>
+            <!--二维动画-->
+            <!--<div class="teaching-box" v-show="this.currentIndex === 7">-->
+              <!--<p class="teaching" >待上传</p>-->
+            <!--</div>-->
 
           </div>
         </div>
@@ -181,7 +208,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         currentCourseMsg:'',
         currentCourseTitle:'',
         aa:'',
-        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价","工作页","二维动画"],
+//        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价","工作页","二维动画"],
+        detailNavData:["本节简介","教学课件","教学微课","工作页","课后作业","课程评价"],
         commentAllObj:[],
         commentArr:[],
         replyArr:[],
@@ -200,7 +228,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         replyToReplyTime:'',
         currentReplyOpen:-1,
         currentReplyToReply:-1,
-        url:''
+        url:'',
+        appAnswer:false
       }
     },
     computed:{
@@ -230,7 +259,8 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     },
     methods: {
       onclick: function (index) {
-        this.currentIndex = index
+        this.currentIndex = index;
+        this.appAnswer = false;
     //    console.log(this.currentCourseMsg)
     //    if (this.currentIndex === 2) {
     //      this.$router.push('/playPdf/'+this.currentCourseMsg.courseId + '/pdf/' + this.currentCourseMsg.label)
@@ -489,8 +519,41 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
         }
       },
       //点击视频暂停开始
-      videstop(){
-
+      videostop(){
+        var myVideo =document.getElementById("courseppt");
+        if (myVideo.paused){
+            myVideo.play()
+        }else {
+          myVideo.pause()
+        }
+      },
+      //点击显示正确答案
+      appearAnswer(){
+        this.appAnswer = true;
+      },
+      //点击显示课件全屏
+      appFullScreen(){
+        var elem = document.getElementById("courseppt");
+        console.log(elem);   
+        this.requestFullScreen(elem);
+      },
+      workPageFullScreen(){
+        var elem = document.getElementById("courseWorkPage");
+        console.log(elem);   
+        this.requestFullScreen(elem);
+      },
+      //类似F11的全屏
+      requestFullScreen(element) {
+        var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+        if (requestMethod) {
+          requestMethod.call(element);
+        } else if (typeof window.ActiveXObject !== "undefined") {
+          var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript !== null) {
+            wscript.SendKeys(122);
+          }
+        }
+        console.log("2221")
       }
     },
     mounted(){
@@ -636,17 +699,34 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       width: 80%;
       font-size: 16px;
       margin: 0 10% 0 10%;
-      padding-top: 200px;
+      padding-top: 110px;
       font-weight: normal;
       /*background: red;*/
       word-wrap: break-word;
+      text-align: left;
+      text-indent: 2em;
     }
     .right-box .homework-box{
       width: 90%;
-      height: 400px;
+      height:400px;
+      overflow:auto;
+    }
+    .right-box .homework{
       margin:0 5%;
       position: relative;
       background: #F3F3F3;
+      text-align:left;
+    }
+    .right-box .homework-box .homeworkTitle{
+      font-weight:bolder;
+      margin-top:20px;
+    }
+    .right-box .homework-box .homeworkDesc{
+      margin-left:20px;
+    }
+    .right-box .homework-box .homework_Answer{
+      margin-left:20px;
+      margin-top:10px;
     }
     .right-box .appraise-box{
       width: 90%;
@@ -656,12 +736,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       top: 20px;
       /*background: lightyellow;*/
     }
-  
-
-
-
-
-
   .right-box .courseTitle{
     font-size: 16px;
     /*font-weight: bold;*/
@@ -701,8 +775,6 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     /*background: red;*/
     /*border-bottom: 1px solid #ccc;*/
   }
-
-
   .right-box .design-box{
     width: 560px;
     height: 400px;
@@ -869,5 +941,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
   .appraise-box .all>input:checked~span{color:#666;}
 
   .appraise-box .all>input:checked+span{color:gold;}
-
+  #courseppt:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+  }
+  #courseWorkPage:-webkit-full-screen {
+    width: 100%;
+    height: 100%;
+  }
 </style>

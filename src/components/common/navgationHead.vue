@@ -101,7 +101,7 @@ export default {
           /*删除cookie*/
            axios({
                 method: 'post',
-                url: 'http://' + this.url + ':8000/api/user/logout',
+                url: '/api/user/logout',
                 withCredentials: true
                 }).then((res)=>{
                         if(res.data.code == 3){
