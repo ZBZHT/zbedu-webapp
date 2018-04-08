@@ -25,7 +25,7 @@
             <div class="course-box" v-show="this.currentIndex === 1">
               <p class="courseDescribe" >{{ noTree.describe }}{{ noTree.title }}</p>
             </div>
-{{noTree}}
+
             <div class="contentSmallCourse" v-show="this.currentIndex === 2">
               <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                 <param name="_Version" value="65539">
@@ -300,7 +300,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
             axios({
               method:'get',
-              url:"http://192.168.2.250:8000/readComments/update",
+              url:"/readComments/update",
               params:{
                 type:1,
                 num:this.commentAllObj.length + 1,
@@ -384,7 +384,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
           })
           axios({
             method:'get',
-            url:"http://192.168.2.250:8000/readComments/update",
+            url:"/readComments/update",
             params:{
               type:2,
               num:this.commentAllObj.length + 1,
@@ -465,7 +465,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 
           axios({
             method:'get',
-            url:"http://192.168.2.250:8000/readComments/update",
+            url:"/readComments/update",
             params:{
               type:3,
               num:this.commentAllObj.length+1,
@@ -497,9 +497,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       this.url = document.domain;
       this.user = this.$store.state.username;
       // console.log(this.user)
-      // axios.get("/api/menu/comments",{
-      axios.get("http://192.168.2.250:8000/readComments/all",{
-      // axios.get("http://"+this.url+":8000/readComments/all",{
+      axios.get("/readComments/all",{
         params:{
           user:6666
         }

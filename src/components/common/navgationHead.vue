@@ -51,7 +51,7 @@ import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import modalEventBind from '../../assets/js/ModalEventBind';
 import EventBus from '../../assets/js/EventBus';
 import bus from '../../assets/js/Bus';
-import core from '../../../server/utils/core.js'
+import core from '../../assets/js/core.js'
 
 
 export default {

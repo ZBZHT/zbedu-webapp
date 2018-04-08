@@ -98,7 +98,7 @@ import axios from 'axios'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
 import navUser from '@/components/common/navUser';
-import core from '../../server/utils/core.js';
+import core from '../assets/js/core.js';
 
 export default {
   name: 'test',

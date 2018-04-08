@@ -21,7 +21,7 @@
 import axios from 'axios'
 import md5 from 'js-md5'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
-import core from '../../server/utils/core.js'
+import core from '../assets/js/core.js'
 
     export default {
         name: 'v-modal',

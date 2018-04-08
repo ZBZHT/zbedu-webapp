@@ -367,7 +367,7 @@
 <script>
   import axios from 'axios'
   import moment from 'moment'
-  import core from '../../server/utils/core.js';
+  import core from '../assets/js/core.js';
   import footFooter from '@/components/common/footFooter'
   import Modal from '@/components/testCenter/modal';
   import navUser from '@/components/common/navUser';

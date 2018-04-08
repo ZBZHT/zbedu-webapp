@@ -383,7 +383,7 @@
   import moment from 'moment'
   import footFooter from '@/components/common/footFooter'
   import Modal from '@/components/testCenter/modal';
-  import core from '../../server/utils/core.js';
+  import core from '../assets/js/core.js';
   import navUser from '@/components/common/navUser';
 
   export default {

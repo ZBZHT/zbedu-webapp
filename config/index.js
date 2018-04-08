@@ -14,7 +14,15 @@ module.exports = {
       "/api": 'http://192.168.2.251:8000' ,  //代理到开发服务器
       "/readJson": 'http://192.168.2.251:8000',
       "/readTestQuestion": 'http://192.168.2.251:8000',
-      "/testManagement": 'http://192.168.2.251:8000'
+      "/testManagement": 'http://192.168.2.251:8000',
+      "/readComments": 'http://192.168.2.251:8000',
+      "/teacherCMS": {
+        target: 'http://192.168.2.251:8000',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/teacherCMS': ''
+        }
+      }
       /*
       "/menu/header": {
         target: "http://localhost:8080",

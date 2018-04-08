@@ -9,9 +9,9 @@
                             <p> <img class="unm" src="../../assets/imgs/unm.png"> </p>
                                 <input name="fname" type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号" autocomplete="on" autofocus="autofocus">
                             <p> <img class="psw" src="../../assets/imgs/psw.png"> </p>
-                                
+
                                 <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
-                                
+
                         </form>
                     </template>
                 </div>
@@ -29,7 +29,7 @@
 import axios from 'axios'
 import md5 from 'js-md5'
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
-import core from '../../../server/utils/core.js'
+import core from '../../assets/js/core.js'
     export default {
         name: 'v-modal',
         data: function() {
@@ -48,7 +48,7 @@ import core from '../../../server/utils/core.js'
                 url:''
             }
         },
-        
+
         mounted(){
             this.url = document.domain;
         },

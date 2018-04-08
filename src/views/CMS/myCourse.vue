@@ -51,7 +51,7 @@
 
 <script>
   import axios from 'axios'
-  import core from '../../../server/utils/core.js'
+  import core from '../../assets/js/core.js'
 
   export default {
     name: 'myCourse',

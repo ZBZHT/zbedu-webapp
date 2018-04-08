@@ -292,7 +292,7 @@
             // console.log(this.commentAllObj.length)
             axios({
               method:'get',
-              url:"http://192.168.2.250:8000/readComments/update",
+              url:"/readComments/update",
               params:{
                 type:1,
                 num:this.commentAllObj.length + 1,
@@ -372,7 +372,7 @@
             })
             axios({
               method:'get',
-              url:"http://192.168.2.250:8000/readComments/update",
+              url:"/readComments/update",
               params:{
                 type:2,
                 num:this.commentAllObj.length +1 ,
@@ -456,7 +456,7 @@
 
           axios({
             method:'get',
-            url:"http://192.168.2.250:8000/readComments/update",
+            url:"/readComments/update",
             params:{
               type:3,
               num:this.commentAllObj.length+1,
@@ -487,9 +487,7 @@
       console.log('9999')
 
       console.log(this.user)
-      // axios.get("/api/menu/comments",{
-      // axios.get("http://"+this.url+":8000/readComments/all",{
-        axios.get("http://192.168.2.250:8000/readComments/all",{
+        axios.get("/readComments/all",{
         params:{
           user:6666
         }
