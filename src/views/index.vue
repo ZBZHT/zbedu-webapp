@@ -58,15 +58,9 @@ export default {
     }
   },
   beforeDestroy: function () {
-
     window.removeEventListener('resize', this.handleResize)
   },
   mounted(){
-      this.url = document.domain;
-      let _this = this;
-  //    _this.windowHeight = window.innerHeight;
-  //    _this.windowHeight -= 152;
-  //    document.querySelector(".index-list").style.height = _this.windowHeight + "px";
    
     window.addEventListener('resize', this.handleResize)
 

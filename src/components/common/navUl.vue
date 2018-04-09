@@ -31,11 +31,7 @@ export default {
 
   },
   mounted(){
-    var _this = this;
-    window.onresize = function(){
-        //_this.$router.go(0);
-    }
-
+      
   },
   methods: {
       fobLink(index){

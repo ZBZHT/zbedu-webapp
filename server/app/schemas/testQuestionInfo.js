@@ -6,6 +6,7 @@ module.exports = new Schema({
     type: String,
     required: true, //设定是否必填
   },
+  theme: String,
   currTestType: Number,
   state:Number,   //0:表示未开始考试,不显示  1:表示已开始考试,显示  2:表示已经考试结束
   testQuestion: {

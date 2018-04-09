@@ -13,73 +13,7 @@ const Question = require('../app/models/Question');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
 
-//设置跨域请求
-/*{
-// 判断origin是否在域名白名单列表中
-  function isOriginAllowed(origin, allowedOrigin) {
-    if (_.isArray(allowedOrigin)) {
-      for (let i = 0; i < allowedOrigin.length; i++) {
-        if (isOriginAllowed(origin, allowedOrigin[i])) {
-          return true;
-        }
-      }
-      return false;
-    } else if (_.isString(allowedOrigin)) {
-      return origin === allowedOrigin;
-    } else if (allowedOrigin instanceof RegExp) {
-      return allowedOrigin.test(origin);
-    } else {
-      return !!allowedOrigin;
-    }
-  }
-
-  const ALLOW_ORIGIN = [ // 域名白名单
-    'http://192.168.2.251:8080',
-    'http://192.168.2.251:8000',
-    'http://192.168.2.250:8080',
-    'http://192.168.2.250:8000',
-    'http://localhost:8080',
-    'http://localhost:8000',
-    'http://127.0.0.1:8080',
-    'http://127.0.0.1:8000',
-  ];
-
-  router.all('*', function (req, res, next) {
-    let reqOrigin = req.headers.origin; // request响应头的origin属性
-    // 判断请求是否在域名白名单内
-    if (isOriginAllowed(reqOrigin, ALLOW_ORIGIN)) {
-      // 设置CORS为请求的Origin值
-      res.header("Access-Control-Allow-Origin", reqOrigin);
-      res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
-      res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
-      res.header("Access-Control-Allow-Credentials", "true");
-      res.header("X-Powered-By", ' 3.2.1');
-      /!*if (req.method == "OPTIONS") res.sendStatus(204);// 让options请求快速返回
-      else next();*!/
-    } else {
-      res.send({code: -2, msg: '非法请求'});
-    }
-    next()
-  });
-
-//定义返回格式
-  let userInfo;
-  router.use(function (req, res, next) {
-    userInfo = {
-      user: [],
-      pwd: [],
-      admin: [],
-      userID: [],
-      IDNo: [],
-      MoNo: [],
-      userType: []
-    };
-    next();
-  });
-}*/
-
 //删除数组中指定元素  方法
-{
   function removeChildren(arr, id) {
     let result = [];
     for (let i = 0; i < arr.length; i++) {
@@ -101,10 +35,9 @@ const md5 = require('js-md5');
     }
     return result;
   }
-}
 
 /* 获取目录tree */
-router.post('/cms/labelTree', function (req, res) {
+router.post('/labelTree', function (req, res) {
   if (req.body.data) {
     let reqBody = req.body.data;
     res.setHeader("Content-Type", "application/json");
@@ -166,7 +99,6 @@ router.post('/cms/labelTree', function (req, res) {
 });
 
 /* 获取用户管理数据 */
-{
   router.post('/userManager', findUser, function (req, res) {
     Teacher.find().then(function (users) {
       res.status(200).send({
@@ -201,7 +133,6 @@ router.post('/cms/labelTree', function (req, res) {
     }
     next();
   }
-}
 
 /*删除所选用户*/
 router.post('/delChecked', function (req, res) {

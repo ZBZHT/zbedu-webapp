@@ -3,17 +3,6 @@ const router = express.Router();
 const TestQuestionInfo = require('../app/models/TestQuestionInfo');
 const TestQuestion = require('../app/models/TestQuestion');
 
-//设置跨域请求
-/*router.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("X-Powered-By", ' 3.2.1');
-  if (req.method == "OPTIONS") res.sendStatus(204);/!*让options请求快速返回*!/
-  else next();
-});*/
-
 //定义返回格式
 let testManageResult;
 router.use(function (req, res, next) {

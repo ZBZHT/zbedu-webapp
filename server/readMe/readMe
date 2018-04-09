@@ -1,13 +1,13 @@
 说明:
 1 . 运行addUsers.js  //添加公司内部用户信息
     权限:
-    路晓东:aimin  谢佳芯:E(教务管理)  杜伟:T(教师)  杨暕:S(学生)  王莹莹:O(外来考生)  其他人均是:E
+    路晓东:aimin  谢佳芯:E(教务管理)  杜伟:T(教师)  杨暕:S(学生)  王莹莹:O(外来学生)  其他人均是:E
 2 . 运行addComments.js  //添加comment评论数据
 5 . 运行addTestQuestionInfo.js  //添加TestQuestionInfo考试信息
  . 运行www启动服务
 
 
-考试题考试状态: currTestType
+考试题类型: currTestType
 101 : 期末考试  102 : 期中考试  103 : 随堂练习  104: 单元测试  105: 资格考试  106: 在线练习
 
 新建考试考试状态: state

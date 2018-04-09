@@ -3,17 +3,6 @@ const router = express.Router();
 const TestQuestionInfo = require('../app/models/TestQuestionInfo');
 const TestQuestion = require('../app/models/TestQuestion');
 
-//设置跨域请求
-/*router.all('*', function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept,X-Requested-With");
-  res.header("Access-Control-Allow-Methods", "POST,GET,DELETE,OPTIONS");
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("X-Powered-By", ' 3.2.1');
-  if (req.method == "OPTIONS") res.sendStatus(204);/!*让options请求快速返回*!/
-  else next();
-});*/
-
 //学生开始考试 ,  获取考试答案信息
 router.get('/getTestQuesInfo', function (req, res) {
   let reqQ = req.query;
@@ -202,6 +191,25 @@ router.get('/stuHistoryTestData', function (req, res) {
     res.end(JSON.stringify(result));
   });
 });
+
+//学生开始考试 ,  获取考试答案信息getTestExercise
+router.get('/getTestExerciseInfo', function (req, res) {
+  let reqQ = req.query;
+  //console.log(req.query);
+
+  TestQuestionInfo.findOne({
+    user: reqQ.user,
+    state: 1,
+    currTestType: 106,
+  }).then(function (msg) {
+    console.log('请求答案成功');
+    //console.log(msg);
+    result = msg;
+    res.end(JSON.stringify(result));
+  });
+});
+
+
 
 
 module.exports = router;

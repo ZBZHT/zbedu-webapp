@@ -213,5 +213,31 @@ module.exports = {
     }
     return return_array;
   },
+  /**
+   * currTestType(Type)
+   * 返会考试题类型的汉字
+   */
+  getCurrTestType : function (Type) {
+    let currTestType ='';
+    if (Type == '101') {
+      currTestType = '期末考试';
+      return currTestType;
+    }else if(Type == '102'){
+      currTestType = '期中考试';
+      return currTestType;
+    }else if(Type == '103'){
+      currTestType = '随堂练习';
+      return currTestType;
+    }else if(Type == '104'){
+      currTestType = '单元测试';
+      return currTestType;
+    }else if(Type == '105'){
+      currTestType = '资格考试';
+      return currTestType;
+    }else if(Type == '106'){
+      currTestType = '在线练习';
+      return currTestType;
+    }
+  },
 
 };
