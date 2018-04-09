@@ -16,13 +16,7 @@ module.exports = {
       "/readTestQuestion": 'http://192.168.2.251:8000',
       "/testManagement": 'http://192.168.2.251:8000',
       "/readComments": 'http://192.168.2.251:8000',
-      "/teacherCMS": {
-        target: 'http://192.168.2.251:8000',
-        changeOrigin: true,
-        pathRewrite: {
-          '^/teacherCMS': ''
-        }
-      }
+      "/teacherCMS": 'http://192.168.2.251:8000'
       /*
       "/menu/header": {
         target: "http://localhost:8080",

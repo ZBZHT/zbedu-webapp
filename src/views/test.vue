@@ -173,6 +173,7 @@
                   :total=parseInt(total)>
                 </el-pagination>
               </div>
+
             </el-tab-pane>
 
             <!--正在考试-->
@@ -481,7 +482,6 @@
       }
     },
     created() {
-
       axios.get("/readJson/bannerLeftData", {
         params: {
           user: 234
@@ -562,7 +562,7 @@
 
       //待考试 ,, 开始考试,跳转
       sendInfor(row) {
-        console.log(row.currTestNum);
+       // console.log(row.currTestNum);
         axios.get("/readTestQuestion/clickStartTest", {
           params: {
             user: this.user,
@@ -608,69 +608,6 @@
         }
       },
 
-      //本来提交
-      submit: function () {
-        setTimeout(function () {
-          window.clearInterval(this.interval);
-          axios({
-            method: 'get',
-            url: "http://" + this.url + ":8000/readTestQuestionInfo/submitQuestionInfo",
-            params: {
-              state: 2,
-              user: this.user,
-              currTestId: this.$route.params.testId,
-              testQuestion: this.$store.state.allTestNum,
-              startTime: this.currentdate,
-              currAnswer: this.picked,
-              currState: this.isCheckArr,
-              error: this.error,
-              sorce: this.sorce,
-              startTimeHours: this.hours,
-              startTimeMinutes: this.minute,
-              startTimeSeconds: this.second,
-              testTimeMinutes: this.minutes,
-              testTimeSeconds: this.seconds,
-              isCheckNum: this.isCheckNum
-            }
-          }).then(
-            function (res) {
-              console.log(res.data.code)
-            }
-          );
-        }.bind(this), 0.1);
-        axios({
-          method: 'get',
-          url: "http://" + this.url + ":8000/readTestQuestion/submitQuestionInfo",
-          params: {
-            state: 2,
-            testQuestion: this.$store.state.allTestNum
-          }
-        }).then((res) => {
-          this.$store.commit('vuexState', res.data.state);
-        });
-        this.sorce = 0;
-        this.error = [];
-        console.log(this.QidArr.length + "===this.QidArr.length");
-        for (var i = 0; i < this.QidArr.length; i++) {
-          if (this.QidArr[i] != null && this.QidArr[i] != '') {
-            console.log(this.QidArr[i] - 1 + "==========this.QidArr[i]-1");
-            console.log("asd" + this.picked[i])
-            console.log(this.textQuestionData)
-            if (this.textQuestionData.question[this.QidArr[i] - 1].answer == this.picked[i]) {
-
-              this.sorce += 5;
-            } else {
-              console.log(this.picked[i]);
-              this.error.push(i + 1);
-            }
-          } else {
-            console.log(i + "123456");
-            this.null.push(i + 1);
-          }
-        }
-        alert(this.sorce + "==" + this.error + "==" + this.null);
-        //    this.$router.go(0);
-      },
       num: function (n) {
         return n < 10 ? "0" + n : "" + n
       },
@@ -690,7 +627,7 @@
             startTestTime:new Date()
           }
         }).then((res) => {
-          console.log(res.data.code);
+          //console.log(res.data.code);
           if (res.data.code == 0) {
             this.jumpOther();
           } else {
@@ -703,7 +640,7 @@
 
       myNum: function (index2) {
         this.myNumber = index2;
-        console.log(this.myNumber)
+        //console.log(this.myNumber)
       },
       tip(index) {
         this.$set(this.classItem, index, true)
@@ -727,7 +664,7 @@
           if (res.data.state == 1) {
             this.testNowData.push(res.data);
             //console.log(res.data.date1);
-            res.data.newData = moment(res.data.date1).format("YYYY-MM-DD hh:mm:ss");
+            res.data.date1 = moment(res.data.date1).format("YYYY-MM-DD hh:mm:ss");
             res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD hh:mm:ss");
             if(this.testNowData){
               this.still_btn = true;
@@ -754,7 +691,7 @@
           let resData = res.data;
           if (resData) {
             for (let i = 0; i < resData.length; i++) {
-              resData[i].newData = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
+              resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
               resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss")
             }
             this.toTestData = resData;
@@ -764,6 +701,7 @@
               //console.log(this.toTestData[0].title);
               this.testOnlineData.date1 = this.toTestData[0].date1;
               this.testOnlineData.date2 = this.toTestData[0].date2;
+              console.log(this.toTestData[0])
               this.testOnlineData.timeHour = this.toTestData[0].timeHour;
               this.testOnlineData.allTestNum = this.toTestData[0].question.length;
             }else{
@@ -804,7 +742,7 @@
           }
         }).then((res) => {
           this.userMessageData = res.data;
-          console.log(res.data)
+          //console.log(res.data)
         })
       },
 
@@ -816,30 +754,38 @@
           type: 'success'
         });
       },
-
-      onSubmit() {
-        axios({
-          method: 'get',
-          url: "/readTestQuestionInfo/submitQuestionInfo",
-          params: {
-            user: this.user,
-            testData: this.stuform
-          }
-        }).then((res) => {
-          this.Success('创建成功');
-          console.log(res + "1111111111")
-        });
+      // 错误信息提示
+      errorMsg(msg) {
+        this.$message.error(msg);
       },
 
       //提交创建练习结果并跳转
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
+          console.log(this.stuform);
           if (valid) {
-            this.onSubmit();
-            const {href} = this.$router.resolve({
-              name: 'testExercise'
+            axios({
+              method: 'get',
+              url: "/readTestQuestion/stuNewExercise",
+              params: {
+                user: this.user,
+                name: this.stuform.name,
+                nameId: this.stuform.nameId,
+                timeHour: this.stuform.timeHour,
+                timeMin: this.stuform.timeMin,
+                num: this.stuform.num,
+              }
+            }).then((res) => {
+              if (res.data.code == 0) {
+                //console.log(res.data.code);
+                  const {href} = this.$router.resolve({
+                  name: 'testExercise'
+                });
+                window.open(href, '_blank', "channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
+              } else {
+                this.errorMsg('未创建成功')
+              }
             });
-            window.open(href, '_blank', "channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
           } else {
             console.log('error submit!!');
             return false;

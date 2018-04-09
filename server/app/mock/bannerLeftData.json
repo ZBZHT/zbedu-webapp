@@ -924,68 +924,262 @@
           "courseId": 200,
           "children":[
               {
-                "label":"机械系统",
+                "label":"结构认识",
                 "courseId": 210,
                 "children":[
                     {
-                      "label":"认识发动机总体",
-                      "describe":"describe",
+                      "label":"概述",
+                      "describe":"",
                       "courseId": 211
                     },
                     {
-                      "label":"认识发动机拆装检修工量具",
-                      "describe":"describe",
+                      "label":"总体结构认识",
+                      "describe":"",
                       "courseId": 212
                     },
                     {
-                      "label":"发动机附件拆装",
-                      "describe":"describe",
+                      "label":"大众EA111发动机",
+                      "describe":"",
                       "courseId": 213
                     },
                     {
-                      "label":"发动机配气机构拆装",
-                      "describe":"describe",
+                      "label":"配气机构拆装与检修",
+                      "describe":"",
                       "courseId": 214
                     },
                     {
-                      "label":"发动机曲柄连杆机构拆装及检测",
-                      "describe":"describe",
+                      "label":"曲柄连杆机构拆装与检修",
+                      "describe":"",
                       "courseId": 215
                     },
                     {
-                      "label":"发动机冷却系统及润滑系统检测",
-                      "describe":"describe",
+                      "label":"附件拆装与检修",
+                      "describe":"",
+                      "courseId": 216
+                    },
+                    {
+                      "label":"冷却系统检修",
+                      "describe":"",
+                      "courseId": 214
+                    },
+                    {
+                      "label":"认识发动机拆装检修工量具",
+                      "describe":"",
+                      "courseId": 215
+                    },
+                    {
+                      "label":"润滑系统检修",
+                      "describe":"",
                       "courseId": 216
                     }
                 ]
               },
               {
-                "label":"电控系统",
+                "label":"电控发动机",
                 "courseId": 220,
                 "children":[
                     {
-                      "label":"认识发动机电控系统总体",
-                      "describe":"describe",
+                      "label":"电控发动机",
+                      "describe":"",
                       "courseId": 221
                     },
                     {
-                      "label":"燃油供给系统检修",
-                      "describe":"describe",
+                      "label":"电路图的识读",
+                      "describe":"",
                       "courseId": 222
                     },
                     {
-                      "label":"燃油喷射系统检修",
-                      "describe":"describe",
+                      "label":"故障自诊断检修",
+                      "describe":"",
+                      "courseId": 223
+                    }
+                ]
+              },
+              {
+                "label":"电控发动机不着车故障检修",
+                "courseId": 220,
+                "children":[
+                    {
+                      "label":"ECM电源控制系统检修",
+                      "describe":"",
+                      "courseId": 221
+                    },
+                    {
+                      "label":"电动油泵电机检修",
+                      "describe":"",
+                      "courseId": 222
+                    },
+                    {
+                      "label":"电磁式喷油器故障检修",
+                      "describe":"",
                       "courseId": 223
                     },
                     {
-                      "label":"怠速控制系统检修",
-                      "describe":"describe",
+                      "label":"曲轴位置传感器故障检修",
+                      "describe":"",
                       "courseId": 224
                     },
                     {
-                      "label":"进气增压系统检修",
-                      "describe":"describe",
+                      "label":"点火模块故障检修",
+                      "describe":"",
+                      "courseId": 225
+                    },
+                    {
+                      "label":"燃油压力传感器及调节阀故障检修",
+                      "describe":"",
+                      "courseId": 223
+                    },
+                    {
+                      "label":"主继电器故障检修",
+                      "describe":"",
+                      "courseId": 224
+                    }
+                ]
+              },
+              {
+                "label":"电控发动机怠速不稳故障检修",
+                "courseId": 220,
+                "children":[
+                    {
+                      "label":"电子节气门检修",
+                      "describe":"",
+                      "courseId": 221
+                    },
+                    {
+                      "label":"热线式空气流量计故障检修",
+                      "describe":"",
+                      "courseId": 222
+                    },
+                    {
+                      "label":"水温传感器故障检修",
+                      "describe":"",
+                      "courseId": 223
+                    },
+                    {
+                      "label":"氧传感器检修",
+                      "describe":"",
+                      "courseId": 224
+                    },
+                    {
+                      "label":"加热型氧传感器故障检修",
+                      "describe":"",
+                      "courseId": 225
+                    },
+                    {
+                      "label":"燃油排气系统检修",
+                      "describe":"",
+                      "courseId": 223
+                    },
+                    {
+                      "label":"节气门位置传感器故障检修",
+                      "describe":"",
+                      "courseId": 224
+                    },
+                    {
+                      "label":"进气压力传感器故障检测",
+                      "describe":"",
+                      "courseId": 225
+                    }
+                ]
+              },
+              {
+                "label":"电控发动机加速不良故障检修",
+                "courseId": 220,
+                "children":[
+                    {
+                      "label":"油门踏板位置传感器故障检修",
+                      "describe":"",
+                      "courseId": 221
+                    },
+                    {
+                      "label":"凸轮轴位置传感器故障检修",
+                      "describe":"",
+                      "courseId": 222
+                    },
+                    {
+                      "label":"进排气凸轮轴调节阀",
+                      "describe":"",
+                      "courseId": 223
+                    },
+                    {
+                      "label":"爆震传感器故障检修",
+                      "describe":"",
+                      "courseId": 224
+                    },
+                    {
+                      "label":"可变气门正时系统故障检修",
+                      "describe":"",
+                      "courseId": 225
+                    },
+                    {
+                      "label":"增压压力传感器故障检修",
+                      "describe":"",
+                      "courseId": 225
+                    }
+                ]
+              },
+              {
+                "label":"电控发动机综合故障检修能力训练",
+                "courseId": 220,
+                "children":[
+                    {
+                      "label":"喷油系统闭环控制检修",
+                      "describe":"",
+                      "courseId": 221
+                    },
+                    {
+                      "label":"怠速系统闭环控制检修",
+                      "describe":"",
+                      "courseId": 222
+                    },
+                    {
+                      "label":"废气涡轮增压故障检修",
+                      "describe":"",
+                      "courseId": 223
+                    },
+                    {
+                      "label":"数据流检测与分析",
+                      "describe":"",
+                      "courseId": 224
+                    },
+                    {
+                      "label":"传感器与执行器波形分析",
+                      "describe":"",
+                      "courseId": 225
+                    },
+                    {
+                      "label":"综合故障分析",
+                      "describe":"",
+                      "courseId": 221
+                    },
+                    {
+                      "label":"发动机怠速不稳工况详解",
+                      "describe":"",
+                      "courseId": 222
+                    },
+                    {
+                      "label":"发动机加速无力工况详解",
+                      "describe":"",
+                      "courseId": 223
+                    },
+                    {
+                      "label":"发动机控制模块介绍",
+                      "describe":"",
+                      "courseId": 224
+                    },
+                    {
+                      "label":"发动机无法起动故障详解",
+                      "describe":"",
+                      "courseId": 225
+                    },
+                    {
+                      "label":"活性碳罐及碳罐电磁阀",
+                      "describe":"",
+                      "courseId": 224
+                    },
+                    {
+                      "label":"发动机冷却装置拆装",
+                      "describe":"",
                       "courseId": 225
                     }
                 ]
@@ -993,109 +1187,145 @@
           ]
         },
         {
-          "label":"汽车底盘",
+          "label":"底盘检修",
           "courseId": 300,
           "children":[
               {
-                "label":"传动系",
+                "label":"汽车底盘维修基本知识",
                 "courseId": 310,
                 "children":[
                     {
-                      "label":"自动变速器识别",
-                      "describe":"describe",
+                      "label":"汽车底盘维修常用工具与设备的使用",
+                      "describe":"",
                       "courseId": 311
                     },
                     {
-                      "label":"自动变速器组成",
-                      "describe":"describe",
+                      "label":"汽车维修车间的基本操作规程",
+                      "describe":"",
                       "courseId": 312
                     },
                     {
-                      "label":"自动变速器结构认知、挡位正确使用",
-                      "describe":"describe",
+                      "label":"认识汽车底盘系统",
+                      "describe":"",
                       "courseId": 313
-                    },
-                    {
-                      "label":"自动变速器基本检查",
-                      "describe":"describe",
-                      "courseId": 314
-                    },
-                    {
-                      "label":"离合器工作原理",
-                      "describe":"describe",
-                      "courseId": 315
-                    },
-                    {
-                      "label":"离合器拆装检修",
-                      "describe":"describe",
-                      "courseId": 316
                     }
                 ]
               },
               {
-                "label":"行驶系",
+                "label":"变速器故障检修",
                 "courseId": 320,
                 "children":[
                     {
-                      "label":"轮胎构造及规格",
-                      "describe":"describe",
+                      "label":"认识速腾双离合变速器",
+                      "describe":"",
                       "courseId": 321
                     },
                     {
-                      "label":"轮胎换位及保养",
-                      "describe":"describe",
+                      "label":"DSG变速器拆装",
+                      "describe":"",
                       "courseId": 322
                     },
                     {
-                      "label":"车架与车桥功用和组成",
-                      "describe":"describe",
+                      "label":"DSG电控单元",
+                      "describe":"",
                       "courseId": 323
                     },
                     {
-                      "label":"四轮定位",
-                      "describe":"describe",
+                      "label":"DSG离合器拆装检修",
+                      "describe":"",
                       "courseId": 324
-                    },
-                    {
-                      "label":"悬架工作原理及拆装检修",
-                      "describe":"describe",
-                      "courseId": 325
                     }
                 ]
               },
               {
-                "label":"制动系",
+                "label":"转向沉重故障检修",
                 "courseId": 330,
                 "children":[
                     {
-                      "label":"制动系统构造与原理",
-                      "describe":"describe",
+                      "label":"认识大众速腾转向系统",
+                      "describe":"",
                       "courseId": 331
                     },
                     {
-                      "label":"浮钳盘式制动器拆装",
-                      "describe":"describe",
+                      "label":"转向器横拉杆球头故障检修",
+                      "describe":"",
                       "courseId": 332
                     },
                     {
-                      "label":"鼓式制动器拆装及检修",
-                      "describe":"describe",
+                      "label":"ESP",
+                      "describe":"",
+                      "courseId": 333
+                    },
+                    {
+                      "label":"EPS",
+                      "describe":"",
+                      "courseId": 332
+                    },
+                    {
+                      "label":"换挡杆",
+                      "describe":"",
                       "courseId": 333
                     }
                 ]
               },
               {
-                "label":"转向系",
+                "label":"速腾行驶系统故障检修",
                 "courseId": 340,
                 "children":[
                     {
-                      "label":"转向系统构造与原理",
-                      "describe":"describe",
+                      "label":"悬架系统部件检修",
+                      "describe":"",
                       "courseId": 341
                     },
                     {
-                      "label":"齿轮齿条式、循环球式、蜗杆曲柄指销式转向器拆装",
-                      "describe":"describe",
+                      "label":"四轮定位检测与调整",
+                      "describe":"",
+                      "courseId": 342
+                    },
+                    {
+                      "label":"轮胎拆装与更换",
+                      "describe":"",
+                      "courseId": 342
+                    },
+                    {
+                      "label":"轮速传感器故障检修",
+                      "describe":"",
+                      "courseId": 342
+                    },
+                    {
+                      "label":"行驶跑偏故障检修",
+                      "describe":"",
+                      "courseId": 342
+                    }
+                ]
+              },
+              {
+                "label":"制动失灵故障检修",
+                "courseId": 340,
+                "children":[
+                    {
+                      "label":"认识制动系统",
+                      "describe":"",
+                      "courseId": 341
+                    },
+                    {
+                      "label":"液压制动总泵及真空助力器检修",
+                      "describe":"",
+                      "courseId": 342
+                    },
+                    {
+                      "label":"盘式制动片检修（包括拆卸和安装）",
+                      "describe":"",
+                      "courseId": 342
+                    },
+                    {
+                      "label":"鼓式制动器检修（包括拆卸和安装）",
+                      "describe":"",
+                      "courseId": 342
+                    },
+                    {
+                      "label":"制动灯故障",
+                      "describe":"",
                       "courseId": 342
                     }
                 ]
@@ -1107,238 +1337,221 @@
           "courseId": 400,
           "children":[
               {
-                "label":"电源系统",
+                "label":"电源系统检修",
                 "courseId": 410,
                 "children":[
                     {
-                      "label":"蓄电池技术状况检修",
-                      "describe":"describe",
+                      "label":"蓄电池充电",
+                      "describe":"",
                       "courseId": 411
                     },
                     {
-                      "label":"发电机拆装与电路检修",
-                      "describe":"describe",
+                      "label":"蓄电池检测维护",
+                      "describe":"",
+                      "courseId": 412
+                    },
+                    {
+                      "label":"发电机故障检修",
+                      "describe":"",
+                      "courseId": 411
+                    },
+                    {
+                      "label":"充电指示灯常亮故障检修",
+                      "describe":"",
                       "courseId": 412
                     }
                 ]
               },
               {
-                "label":"点火系统",
+                "label":"起动系统检修",
                 "courseId": 420,
                 "children":[
                     {
-                      "label":"点火线圈初级线圈故障检修",
-                      "describe":"describe",
+                      "label":"起动系统",
+                      "describe":"",
                       "courseId": 421
                     },
                     {
-                      "label":"点火线圈次级线圈故障检修",
-                      "describe":"describe",
+                      "label":"起动机故障检修",
+                      "describe":"",
                       "courseId": 422
                     }
                 ]
               },
               {
-                "label":"启动系统",
+                "label":"照明与信号系统故障检修",
                 "courseId": 430,
                 "children":[
                     {
-                      "label":"起动机拆装及电路检修",
-                      "describe":"describe",
+                      "label":"灯光照明系统",
+                      "describe":"",
                       "courseId": 431
                     },
                     {
-                      "label":"点火系电路分析及点火系统检修",
-                      "describe":"describe",
+                      "label":"前照灯故障检修",
+                      "describe":"",
+                      "courseId": 432
+                    },
+                    {
+                      "label":"雾灯不亮故障检修",
+                      "describe":"",
+                      "courseId": 432
+                    },
+                    {
+                      "label":"转向灯工作异常故障检修",
+                      "describe":"",
+                      "courseId": 432
+                    },
+                    {
+                      "label":"近光灯不亮故障检测",
+                      "describe":"",
+                      "courseId": 432
+                    },
+                    {
+                      "label":"远光灯不亮故障检修",
+                      "describe":"",
+                      "courseId": 432
+                    },
+                    {
+                      "label":"车内顶灯故障检修",
+                      "describe":"",
                       "courseId": 432
                     }
                 ]
               },
               {
-                "label":"照明系统",
+                "label":"汽车辅助系统检修",
                 "courseId": 440,
                 "children":[
                     {
-                      "label":"照明系统装置的检修",
-                      "describe":"describe",
+                      "label":"雨刮器检查与更换",
+                      "describe":"",
+                      "courseId": 441
+                    },
+                    {
+                      "label":"雨刮器不工作故障检修",
+                      "describe":"",
+                      "courseId": 441
+                    },
+                    {
+                      "label":"电动车窗故障检修",
+                      "describe":"",
+                      "courseId": 441
+                    },
+                    {
+                      "label":"电动后视镜无法调节故障检修",
+                      "describe":"",
+                      "courseId": 441
+                    },
+                    {
+                      "label":"汽车中控门锁故障检修",
+                      "describe":"",
+                      "courseId": 441
+                    },
+                    {
+                      "label":"多功能方向盘故障检修",
+                      "describe":"",
+                      "courseId": 441
+                    },
+                    {
+                      "label":"双音喇叭故障检修",
+                      "describe":"",
                       "courseId": 441
                     }
                 ]
               },
               {
-                "label":"辅助电器系统",
+                "label":"仪表系统工作异常故障检修",
                 "courseId": 450,
                 "children":[
                     {
-                      "label":"汽车总线路检修",
-                      "describe":"describe",
+                      "label":"仪表综述",
+                      "describe":"",
                       "courseId": 451
                     },
                     {
-                      "label":"中央控制门锁故障检修",
-                      "describe":"describe",
+                      "label":"仪表系统工作异常故障检修",
+                      "describe":"",
                       "courseId": 452
-                    },
-                    {
-                      "label":"汽车防盗装置故障检修",
-                      "describe":"describe",
-                      "courseId": 453
-                    },
-                    {
-                      "label":"雨刮故障检修与更换修",
-                      "describe":"describe",
-                      "courseId": 454
-                    },
-                    {
-                      "label":"电动车窗故障检修",
-                      "describe":"describe",
-                      "courseId": 455
-                    },
-                    {
-                      "label":"电动后视镜故障检修",
-                      "describe":"describe",
-                      "courseId": 456
-                    },
-                    {
-                      "label":"多媒体系统故障检测与更换",
-                      "describe":"describe",
-                      "courseId": 457
                     }
                 ]
               },
               {
-                "label":"仪表系统",
+                "label":"汽车整车电路",
                 "courseId": 460,
                 "children":[
                     {
-                      "label":"汽车仪表结构原理",
-                      "describe":"describe",
+                      "label":"can-bus综述",
+                      "describe":"",
                       "courseId": 461
                     },
                     {
-                      "label":"汽车仪常见故障与排除",
-                      "describe":"describe",
+                      "label":"典型车型整车电气故障检修",
+                      "describe":"",
                       "courseId": 462
-                    }
-                ]
-              },
-              {
-                "label":"空调系统",
-                "courseId": 470,
-                "children":[
-                    {
-                      "label":"汽车空调结构",
-                      "describe":"describe",
-                      "courseId": 471
                     },
                     {
-                      "label":"汽车空调冷媒充注及回收",
-                      "describe":"describe",
-                      "courseId": 472
-                    },
-                    {
-                      "label":"汽车空调系统检漏",
-                      "describe":"describe",
-                      "courseId": 473
-                    },
-                    {
-                      "label":"汽车空调拆装",
-                      "describe":"describe",
-                      "courseId": 474
-                    },
-                    {
-                      "label":"汽车空调维护与保养",
-                      "describe":"describe",
-                      "courseId": 475
-                    },
-                    {
-                      "label":"汽车手动空调常见故障诊断与排除",
-                      "describe":"describe",
-                      "courseId": 476
-                    }
-                ]
-              },
-              {
-                "label":"信号系统",
-                "courseId": 480,
-                "children":[
-                    {
-                      "label":"喇叭故障检修",
-                      "describe":"describe",
-                      "courseId": 481
-                    }
-                ]
-              },
-              {
-                "label":"电子控制系统",
-                "courseId": 490,
-                "children":[
-                    {
-                      "label":"电控燃油喷射装置故障检修",
-                      "describe":"describe",
-                      "courseId": 491
-                    },
-                    {
-                      "label":"电子点火装置故障检修",
-                      "describe":"describe",
-                      "courseId": 492
+                      "label":"多媒体主机拆装",
+                      "describe":"",
+                      "courseId": 462
                     }
                 ]
               }
           ]
         },
         {
-          "label":"车身结构",
+          "label":"汽车空调",
           "courseId": 500,
           "children":[
               {
-                "label":"车身结构",
-                "courseId": 510,
-                "children":[
-                    {
-                      "label":"车身结构",
-                      "describe":"describe",
-                      "courseId": 511
-                    }
-                ]
+                "label":"汽车空调",
+                "describe":"",
+                "courseId": 510
               },
               {
-                "label":"车身结构",
-                "courseId": 520,
-                "children":[
-                    {
-                      "label":"车身结构",
-                      "describe":"describe",
-                      "courseId": 521
-                    }
-                ]
+                "label":"汽车空调异味故障检修",
+                "describe":"",
+                "courseId": 520
+              },
+              {
+                "label":"汽车空调不制冷故障检修",
+                "describe":"",
+                "courseId": 520
+              },
+              {
+                "label":"汽车空调鼓风机不工作故障检修",
+                "describe":"",
+                "courseId": 520
               }
           ]
         },{
-          "label":"车身结构",
+          "label":"汽车维护",
           "courseId": 500,
           "children":[
               {
-                "label":"车身结构",
-                "courseId": 510,
-                "children":[
-                    {
-                      "label":"车身结构",
-                      "describe":"describe",
-                      "courseId": 511
-                    }
-                ]
+                "label":"新车交接",
+                "describe":"",
+                "courseId": 510
               },
               {
-                "label":"车身结构",
-                "courseId": 520,
-                "children":[
-                    {
-                      "label":"车身结构",
-                      "describe":"describe",
-                      "courseId": 521
-                    }
-                ]
+                "label":"机油机滤",
+                "describe":"",
+                "courseId": 520
+              },
+              {
+                "label":"汽车首次维护",
+                "describe":"",
+                "courseId": 520
+              },
+              {
+                "label":"汽车4万公里维护",
+                "describe":"",
+                "courseId": 520
+              },
+              {
+                "label":"汽车换季维护",
+                "describe":"",
+                "courseId": 520
               }
           ]
         }

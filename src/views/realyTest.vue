@@ -25,7 +25,7 @@
                         <!--</div>-->
                         <div class="infor">
                             <p>倒计时</p>
-                            <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>''</p>
+                            <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>
                         </div>
                     </div>
                 </div>
@@ -80,11 +80,10 @@
                                 <p>标记题</p>
                             </div>
                         </div>
-                        <button @click='submit();openFullScreen()' class="btn" :class="{answer : !answer}" v-show="textQuestionData">提交</button>
+                        <button @click='submit()' class="btn" :class="{answer : !answer}" v-show="textQuestionData">提交</button>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
     <div class="footer">
@@ -265,6 +264,11 @@ export default {
       });
     },
 
+    // 错误信息提示
+    errorMsg(msg) {
+      this.$message.error(msg);
+    },
+
     /*获取考试题*/
     getTestQuesInfo() {
       axios.get("/readTestQuestionInfo/getTestQuesInfo", {
@@ -275,17 +279,14 @@ export default {
         //console.log(res.data.currState);
         //考试题的唯一编号
         this.testQuestion = res.data.testQuestion;
+        //console.log("12121212121");
+        //console.log(res.data)
         this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTestTime));
         this.$store.commit('vuexState',res.data.state);
         if(res.data.state == 1){
           this.picked = res.data.currAnswer;
           this.isCheckArr = res.data.currState;
           window.addEventListener("popstate",this.myFunction);
-          this.hours = res.data.startTimeHours;
-          this.minute = res.data.startTimeMinutes;
-          this.second = res.data.startTimeSeconds;
-          this.minutes = res.data.testTimeMinutes;
-          this.seconds = res.data.testTimeSeconds;
           this.isCheckNum = res.data.isCheckNum;
         }
       }).catch(function (error) {
@@ -313,28 +314,34 @@ export default {
                         }
                     }).then(
                         function (res) {
-                        console.log(res.data.code)
+                        console.log(res.data.code);
+                          if (res.data.code == 0) {
+                            alert("提交成功");
+                            window.close();
+                          } else {
+                            this.errorMsg('未提交成功')
+                          }
                         }
                     );
-                }.bind(this),0.1);
+                }.bind(this),100);
 
                 this.sorce=0;
                 this.error = [];
-                console.log(this.QidArr.length+"===this.QidArr.length");
+                //console.log(this.QidArr.length+"===this.QidArr.length");
                 for(var i = 0;i < this.QidArr.length;i++){
                     if(this.QidArr[i] != null && this. QidArr[i] != ''){
-                        console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
-                        console.log("asd"+this.picked[i])
-                        console.log(this.textQuestionData)
+                        //console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
+                        //console.log("asd"+this.picked[i])
+                        //console.log(this.textQuestionData)
                         if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
 
                             this.sorce += 5;
                         }else{
-                            console.log(this.picked[i])
+                            //console.log(this.picked[i])
                             this.error.push(i+1);
                         }
                     }else{
-                        console.log(i+"123456");
+                        //console.log(i+"123456");
                         this.null.push(i+1);
                     }
                 }
@@ -342,22 +349,6 @@ export default {
 
             //    alert(this.sorce + "==" + this.error + "==" + this.null);
             //    this.$router.go(0);
-            },
-            openFullScreen() {
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    spinner: 'el-icon-loading',
-                    background: 'rgba(0, 0, 0, 0.7)'
-                    });
-                    setTimeout(() => {
-                        loading.close();
-                    }, 2000);
-                    setTimeout(() => {
-                        alert("提交成功");
-                        window.close();
-                    }, 2001);
-
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
@@ -416,15 +407,15 @@ export default {
             },
             testManagen(){
                 axios({
-                        method:'get',
-                        url:"/testManagement/testManagement",
-                        params:{
-                            user:this.user
-                        }
-                        }).then((res)=>{
-                            this.userMessageData = res.data;
-                            console.log(res.data)
-                        })
+                  method:'get',
+                  url:"/testManagement/testManagement",
+                  params:{
+                      user:this.user
+                  }
+                  }).then((res)=>{
+                      this.userMessageData = res.data;
+                      console.log(res.data)
+                  })
             }
     },
   components:{Modal,navUser,footFooter}
@@ -602,7 +593,7 @@ a{
 .userMessage{
     width:1048px;
     height:100%;
-    background:#fff;s
+    background:#fff;
     position:absolute;
     top:0;
     left:0;
