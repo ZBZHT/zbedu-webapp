@@ -445,7 +445,7 @@
         isCheck: '',
         isCheckNum: 0,
         isCheckArr: [],
-        length: 20,
+        length: '',
         classItem: {},
         QidArr: [],
         null: [],

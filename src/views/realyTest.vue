@@ -72,7 +72,7 @@
                                 <p>已答题</p>
                             </div>
                             <div class="do">
-                                <p class="doP">{{length - isCheckNum}}</p>
+                                <p class="doP">{{AllLength - isCheckNum}}</p>
                                 <p>未答题</p>
                             </div>
                             <div class="do">
@@ -128,7 +128,7 @@ export default {
       isCheck: '',
       isCheckNum: 0,
       isCheckArr: [],
-      length: 20,
+      AllLength: '',
       classItem: {},
       QidArr: [],
       null: [],
@@ -256,6 +256,7 @@ export default {
           console.log("2222")
           console.log(res.data)
           this.minutes = res.data.timeHour *60;
+          this.AllLength = res.data.question.length;
         } else {
           this.TestNum = res.data.testLength;
         }
