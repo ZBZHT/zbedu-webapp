@@ -1,6 +1,6 @@
 <template>
     <div class="contentui">
-        <el-row :gutter="75">
+        <el-row :gutter="5">
             <el-col :span="8"  v-for="(item,index) in navData" :key = "index">
                 <a @click="fobLink(index)">
                     <div class="grid-content"
@@ -33,7 +33,7 @@ export default {
   mounted(){
     var _this = this;
     window.onresize = function(){
-        _this.$router.go(0);
+        //_this.$router.go(0);
     }
 
   },
@@ -44,15 +44,30 @@ export default {
         }else if(index == 1){
             this.$router.push('/exerciseCenter');
         }else if(index == 2 && this.$store.state.userType == "admin"){
-            this.$router.push('/teachTest');
+            const {href} = this.$router.resolve({
+                name: 'teachTest'
+            });
+            window.open(href, '_blank')
         }else if(index == 2 && this.$store.state.userType == ""){
-            this.$router.push('/test');
+            const {href} = this.$router.resolve({
+                name: 'test'
+            });
+            window.open(href, '_blank')
         }else if(index == 2 && this.$store.state.userType == "S"){
-            this.$router.push('/test');
+            const {href} = this.$router.resolve({
+                name: 'test'
+            });
+            window.open(href, '_blank')
         }else if(index == 2 && this.$store.state.userType == "E"){
-            this.$router.push('/teachTest');
+            const {href} = this.$router.resolve({
+                name: 'teachTest'
+            });
+            window.open(href, '_blank')
         }else if(index == 2 && this.$store.state.userType == "T"){
-            this.$router.push('/teachTest');
+            const {href} = this.$router.resolve({
+                name: 'teachTest'
+            });
+            window.open(href, '_blank')
         }else if(index == 3){
             this.$router.push('/resourceCenter');
         }else if(index == 4){
@@ -89,7 +104,7 @@ a:hover{
 @media screen and (min-width:1800px){
     .contentui{
         width:100%;
-        padding: 22% 5% 5% 5%;
+        padding: 5% 5% 5% 5%;
         box-sizing:border-box;
     }
     .contentui .el-row {
@@ -133,8 +148,7 @@ a:hover{
     .contentui .grid-content {
         border-radius: 4px;
         min-height: 0;
-        margin-top: 7.5px;
-        margin-bottom: 68.5px;
+        margin-top: 5.5px;
         padding: 50px;
         box-sizing: border-box;
         position:relative;
@@ -155,7 +169,7 @@ a:hover{
         background-color: #f9fafc;
     }
 }
-@media screen and (min-width: 1420px) and (max-width: 1799px) {
+@media screen and (min-width: 1600px) and (max-width: 1799px) {
     .contentui{
         width:100%;
         padding: 28% 11% 0% 1%;
@@ -201,11 +215,10 @@ a:hover{
         background-color:rgba(0,0,0,0.5);
     }
     .contentui .grid-content {
-        width:114%;
+        width:100%;
         border-radius: 4px;
         min-height: 0;
-        margin-top: 7.5px;
-        margin-bottom: 46.5px;
+        margin-top: 5.5px;
         padding: 38px;
         box-sizing: border-box;
         position:relative;
@@ -226,9 +239,9 @@ a:hover{
         background-color: #f9fafc;
     }
 }
-@media screen and (min-width: 1270px) and (max-width: 1419px) {
+@media screen and (min-width: 1480px) and (max-width: 1599px) {
     .contentui{
-        width:93%;
+        width:100%;
         padding: 26% 7% 5% 1%;
         box-sizing:border-box;
     }
@@ -272,12 +285,11 @@ a:hover{
         background-color:rgba(0,0,0,0.5);
     }
     .contentui .grid-content {
-        width:135%;
+        width:100%;
         border-radius: 4px;
         min-height: 0;
-        margin-top: 7.5px;
-        margin-bottom: 28.5px;
-        padding: 34px;
+        margin-top: 5.5px;
+        padding: 28px;
         box-sizing: border-box;
         position:relative;
         transition:0.5s ease;
@@ -289,7 +301,7 @@ a:hover{
         box-shadow:0 10px 30px rgba(0,0,0,0.4);
     }
     .contentui .grid-content .p{
-        font-size:18px;
+        font-size:16px;
         font-weight:bolder;
     }
     .contentui .row-bg {
@@ -297,9 +309,9 @@ a:hover{
         background-color: #f9fafc;
     }
 }
-@media screen and (min-width: 960px) and (max-width: 1269px) {
+@media screen and (min-width: 1280px) and (max-width: 1479px) {
     .contentui{
-        width:91%;
+        width:100%;
         padding: 30% 7% 5% 1%;
         box-sizing:border-box;
     }
@@ -343,11 +355,80 @@ a:hover{
         background-color:rgba(0,0,0,0.5);
     }
     .contentui .grid-content {
-        width:150%;
+        width:100%;
         border-radius: 4px;
         min-height: 0;
-        margin-top: 7.5px;
-        margin-bottom: 15.5px;
+        margin-top: 6.5px;
+        padding: 28px;
+        box-sizing: border-box;
+        position:relative;
+        transition:0.5s ease;
+        overflow:hidden;
+        border: 1px solid #ccc;
+    }
+    .contentui .grid-content:hover{
+        transform:scale(1.05);
+        box-shadow:0 10px 30px rgba(0,0,0,0.4);
+    }
+    .contentui .grid-content .p{
+        font-size:15px;
+        font-weight:bolder;
+    }
+    .contentui .row-bg {
+        padding: 10px 0;
+        background-color: #f9fafc;
+    }
+}
+@media screen and (min-width: 960px) and (max-width: 1279px) {
+    .contentui{
+        width:100%;
+        padding: 30% 7% 5% 1%;
+        box-sizing:border-box;
+    }
+    .contentui .el-row {
+        margin-bottom: 20px;
+        &:last-child {
+        margin-bottom: 0;
+        }
+    }
+    .contentui .el-col {
+        border-radius: 4px;
+    }
+    .contentui .introduce{
+        width:100%;
+        height:0px;
+        font-size:8px;
+        font-weight:normal;
+        position:absolute;
+        left:0;
+        bottom:0;
+        background:rgba(200,200,200,0.5);
+        transition:height 0.5s;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        text-align: left;
+        text-indent: 1em;
+    }
+    .contentui .introduce p{
+        color:#000;
+        display:none;
+    }
+    .contentui .el-col:hover .introduce{
+        height:18px;
+    }
+    .contentui .el-col:hover .introduce p{
+        display:block;
+        color:#000;
+    }
+    .contentui .bg-purple {
+        background-color:rgba(0,0,0,0.5);
+    }
+    .contentui .grid-content {
+        width:100%;
+        border-radius: 4px;
+        min-height: 0;
+        margin-top: 5.5px;
         padding: 23px;
         box-sizing: border-box;
         position:relative;

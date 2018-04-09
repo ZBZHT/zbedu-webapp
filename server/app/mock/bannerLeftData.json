@@ -928,48 +928,48 @@
                 "courseId": 210,
                 "children":[
                     {
-                      "label":"概述",
-                      "describe":"",
+                      "label":"发动机概述",
+                      "describe":"简述发动机的基本组成、发动机发展由来和发展的历史。",
                       "courseId": 211
                     },
                     {
                       "label":"总体结构认识",
-                      "describe":"",
+                      "describe":"简述发动机的基本组成、各部件结构功能以及其工作原理，各部件的相互关联及联系",
                       "courseId": 212
                     },
                     {
                       "label":"大众EA111发动机",
-                      "describe":"",
+                      "describe":"详细介绍了大众EA111发动机的组成及其特点，发动机的结构原理及EA111发动机的优缺点.",
                       "courseId": 213
                     },
                     {
                       "label":"配气机构拆装与检修",
-                      "describe":"",
+                      "describe":"介绍大众速腾配气机构的组成、拆装步骤以及如何对速腾配气机构进行检修。",
                       "courseId": 214
                     },
                     {
                       "label":"曲柄连杆机构拆装与检修",
-                      "describe":"",
+                      "describe":"介绍大众速腾曲柄连杆机构的组成、拆装步骤以及如何对速腾曲柄连杆机构进行检修。",
                       "courseId": 215
                     },
                     {
                       "label":"附件拆装与检修",
-                      "describe":"",
+                      "describe":"简述发动机上的附件（发电机、起动机、水泵等）拆装步骤以及故障检修的过程。",
                       "courseId": 216
                     },
                     {
                       "label":"冷却系统检修",
-                      "describe":"",
+                      "describe":"大众速腾冷却系统的组成、系统及部件的功能以及对其故障检修的过程。",
                       "courseId": 214
                     },
                     {
                       "label":"认识发动机拆装检修工量具",
-                      "describe":"",
+                      "describe":"介绍发动机拆装所需要的工具，各工具使用要求及使用说明。",
                       "courseId": 215
                     },
                     {
                       "label":"润滑系统检修",
-                      "describe":"",
+                      "describe":"大众速腾润滑系统的组成、系统及部件的功能以及对其故障检修的过程。",
                       "courseId": 216
                     }
                 ]
@@ -980,17 +980,17 @@
                 "children":[
                     {
                       "label":"电控发动机",
-                      "describe":"",
+                      "describe":"介绍大众速腾电控发动机的功能，工作方式及原理。",
                       "courseId": 221
                     },
                     {
                       "label":"电路图的识读",
-                      "describe":"",
+                      "describe":"介绍如何读懂大众电路图，线路故障诊断以及如何运用电路图来对故障进行查找检修。",
                       "courseId": 222
                     },
                     {
                       "label":"故障自诊断检修",
-                      "describe":"",
+                      "describe":"简述发动机自诊断原理及如何利用故障码进行故障诊断及排除",
                       "courseId": 223
                     }
                 ]
@@ -1001,37 +1001,37 @@
                 "children":[
                     {
                       "label":"ECM电源控制系统检修",
-                      "describe":"",
+                      "describe":"简述汽车ECM供电原理以及电源控制系统故障检修",
                       "courseId": 221
                     },
                     {
-                      "label":"电动油泵电机检修",
-                      "describe":"",
+                      "label":"电动油泵检修",
+                      "describe":"大众速腾油泵工作原理以及如何对电动油泵故障进行检修，检修的流程及维修思路。",
                       "courseId": 222
                     },
                     {
                       "label":"电磁式喷油器故障检修",
-                      "describe":"",
+                      "describe":"简介喷油器的类别，电磁式喷油器工作原理和大众速腾喷油器的故障检修流程。",
                       "courseId": 223
                     },
                     {
                       "label":"曲轴位置传感器故障检修",
-                      "describe":"",
+                      "describe":"曲轴位置传感器工作原理、信号波形及如何对速腾曲轴位置传感器故障进行检修",
                       "courseId": 224
                     },
                     {
                       "label":"点火模块故障检修",
-                      "describe":"",
+                      "describe":"大众速腾点火模块的组成、部件功能和工作原理以及如何对速腾点火模块故障进行检修。",
                       "courseId": 225
                     },
                     {
                       "label":"燃油压力传感器及调节阀故障检修",
-                      "describe":"",
+                      "describe":"大众速腾燃油压力传感器工作原理、调节阀工作流程以及其故障检修流程及方式。",
                       "courseId": 223
                     },
                     {
                       "label":"主继电器故障检修",
-                      "describe":"",
+                      "describe":"简述主继电器工作原理及当主继电器发生故障所可能有的故障现象，故障检修流程。",
                       "courseId": 224
                     }
                 ]
@@ -1042,42 +1042,42 @@
                 "children":[
                     {
                       "label":"电子节气门检修",
-                      "describe":"",
+                      "describe":"大众速腾电子节气门的组成、部件功能及电子节气门工作原理，如何对电子节气门故障进行检修。",
                       "courseId": 221
                     },
                     {
                       "label":"热线式空气流量计故障检修",
-                      "describe":"",
+                      "describe":"热线式空气流量计的工作原理，故障现象及对空气流量计故障的检修流程。",
                       "courseId": 222
                     },
                     {
                       "label":"水温传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾水温传感器的特点、系统的组成、部件功能及故障检修流程。",
                       "courseId": 223
                     },
                     {
                       "label":"氧传感器检修",
-                      "describe":"",
+                      "describe":"大众速腾氧传感器工作特点、工作原理及故障检修的流程。",
                       "courseId": 224
                     },
                     {
                       "label":"加热型氧传感器故障检修",
-                      "describe":"",
+                      "describe":"简述加热型的氧传感器工作原理，加热条件及要求，如何对加热型氧传感器的故障进行检修。",
                       "courseId": 225
                     },
                     {
                       "label":"燃油排气系统检修",
-                      "describe":"",
+                      "describe":"燃油排气系统的组成、如何利用专用工具进行燃油排气以及如何对燃油排气系统故障进行检修。",
                       "courseId": 223
                     },
                     {
                       "label":"节气门位置传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾节气门工作原理，节气门传感器功能及对节气门传感器故障进行检修。",
                       "courseId": 224
                     },
                     {
                       "label":"进气压力传感器故障检测",
-                      "describe":"",
+                      "describe":"大众速腾进气压力传感器功能，如何对进气压力传感器故障进行检修。",
                       "courseId": 225
                     }
                 ]
@@ -1088,32 +1088,32 @@
                 "children":[
                     {
                       "label":"油门踏板位置传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾油门踏板组成、油门踏板传感器工作原理及如何对油门踏板传感器故障进行检修。",
                       "courseId": 221
                     },
                     {
                       "label":"凸轮轴位置传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾凸轮轴位置传感器功能和工作原理，故障现象表现和如何对凸轮轴位置传感器故障进行检修。",
                       "courseId": 222
                     },
                     {
                       "label":"进排气凸轮轴调节阀",
-                      "describe":"",
+                      "describe":"大众速腾进排气凸轮调节阀工作原理，如何调节及调节阀故障如何检修。",
                       "courseId": 223
                     },
                     {
                       "label":"爆震传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾爆震传感器工作原理，传感器组成及如何对爆震传感器故障进行检修。",
                       "courseId": 224
                     },
                     {
                       "label":"可变气门正时系统故障检修",
-                      "describe":"",
+                      "describe":"可变气门正时含义、工作原理及如何对可变气门正时故障进行检修。",
                       "courseId": 225
                     },
                     {
                       "label":"增压压力传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾增压压力传感器工作原理，传感器故障案例及检修流程。",
                       "courseId": 225
                     }
                 ]
@@ -1124,62 +1124,62 @@
                 "children":[
                     {
                       "label":"喷油系统闭环控制检修",
-                      "describe":"",
+                      "describe":"喷油系统闭环控制原理以及故障检修案例和流程",
                       "courseId": 221
                     },
                     {
                       "label":"怠速系统闭环控制检修",
-                      "describe":"",
+                      "describe":"喷怠速系统闭环控制原理以及故障检修案例和流程",
                       "courseId": 222
                     },
                     {
                       "label":"废气涡轮增压故障检修",
-                      "describe":"",
+                      "describe":"大众速腾废气涡轮增压工作原理、部件功能、组成及故障检修。",
                       "courseId": 223
                     },
                     {
                       "label":"数据流检测与分析",
-                      "describe":"",
+                      "describe":"大众速腾故障码及数据流读取，判断并且根据判断的结果来排除故障。",
                       "courseId": 224
                     },
                     {
                       "label":"传感器与执行器波形分析",
-                      "describe":"",
+                      "describe":"大众速腾各传感器的波形和执行器的波形形状，学会判断波形是否正常。",
                       "courseId": 225
                     },
                     {
                       "label":"综合故障分析",
-                      "describe":"",
+                      "describe":"大众速腾上一些综合性故障维修方法及维修流程。",
                       "courseId": 221
                     },
                     {
                       "label":"发动机怠速不稳工况详解",
-                      "describe":"",
+                      "describe":"怠速不稳的起因、判断方式方法、如何对怠速不稳进行检修。",
                       "courseId": 222
                     },
                     {
                       "label":"发动机加速无力工况详解",
-                      "describe":"",
+                      "describe":"发动机加速无力的起因，分析过程及解决问题。",
                       "courseId": 223
                     },
                     {
                       "label":"发动机控制模块介绍",
-                      "describe":"",
+                      "describe":"大众速腾各控制模块的功能、名称、工作原理及发生故障时检修流程。",
                       "courseId": 224
                     },
                     {
                       "label":"发动机无法起动故障详解",
-                      "describe":"",
+                      "describe":"大众速腾发动机无法启动的原因、判断方法及对故障进行检修方法。",
                       "courseId": 225
                     },
                     {
                       "label":"活性碳罐及碳罐电磁阀",
-                      "describe":"",
+                      "describe":"大众速腾活性炭罐及电磁阀的工作原理、安装位置、起什么作用和发生故障时的检修流程。",
                       "courseId": 224
                     },
                     {
                       "label":"发动机冷却装置拆装",
-                      "describe":"",
+                      "describe":"如何拆装冷却系统装置，冷却装置的安装位置及拆解流程。",
                       "courseId": 225
                     }
                 ]
@@ -1217,22 +1217,22 @@
                 "children":[
                     {
                       "label":"认识速腾双离合变速器",
-                      "describe":"",
+                      "describe":"大众速腾双离合变速器的组成、部件功能及工作原理。",
                       "courseId": 321
                     },
                     {
                       "label":"DSG变速器拆装",
-                      "describe":"",
+                      "describe":"如何拆解DSG变速器、拆解的流程及注意事项。",
                       "courseId": 322
                     },
                     {
                       "label":"DSG电控单元",
-                      "describe":"",
+                      "describe":"简述DSG电控单元的组成、功能、控制原理等",
                       "courseId": 323
                     },
                     {
                       "label":"DSG离合器拆装检修",
-                      "describe":"",
+                      "describe":"DSG变速器的故障判断及检修流程方式方法。",
                       "courseId": 324
                     }
                 ]
@@ -1243,27 +1243,27 @@
                 "children":[
                     {
                       "label":"认识大众速腾转向系统",
-                      "describe":"",
+                      "describe":"大众速腾转向系统的组成、部件功能及工作原理。",
                       "courseId": 331
                     },
                     {
                       "label":"转向器横拉杆球头故障检修",
-                      "describe":"",
+                      "describe":"大众速腾转向横拉杆工作原理、球头更换流程。",
                       "courseId": 332
                     },
                     {
                       "label":"ESP",
-                      "describe":"",
+                      "describe":"大众速腾ESP系统组成、部件的功能及工作原理。",
                       "courseId": 333
                     },
                     {
                       "label":"EPS",
-                      "describe":"",
+                      "describe":"大众速腾EPS系统组成、部件的功能及工作原理。",
                       "courseId": 332
                     },
                     {
                       "label":"换挡杆",
-                      "describe":"",
+                      "describe":"大众速腾换挡杆的作用、工作原理和控制原理以及互相之间的同信。",
                       "courseId": 333
                     }
                 ]
@@ -1274,27 +1274,27 @@
                 "children":[
                     {
                       "label":"悬架系统部件检修",
-                      "describe":"",
+                      "describe":"大众速腾悬架系统的组成、各个部件的功能以及对悬架检修的方法。",
                       "courseId": 341
                     },
                     {
                       "label":"四轮定位检测与调整",
-                      "describe":"",
+                      "describe":"四轮定位的作用、四轮定位仪的使用和如何进行四轮定位的检测与调整",
                       "courseId": 342
                     },
                     {
                       "label":"轮胎拆装与更换",
-                      "describe":"",
+                      "describe":"轮胎拆装的流程及方法，扒胎机的使用及注意事项。",
                       "courseId": 342
                     },
                     {
                       "label":"轮速传感器故障检修",
-                      "describe":"",
+                      "describe":"大众速腾轮速传感器的工作原理及控制原理，如何对轮速传感器进行检修，检修的流程等。",
                       "courseId": 342
                     },
                     {
                       "label":"行驶跑偏故障检修",
-                      "describe":"",
+                      "describe":"简述行驶跑偏现象，跑偏的原因及排除行驶跑偏的方法流程。",
                       "courseId": 342
                     }
                 ]
@@ -1305,27 +1305,27 @@
                 "children":[
                     {
                       "label":"认识制动系统",
-                      "describe":"",
+                      "describe":"简述传统汽车制动系统的组成以及和大众速腾制动系统之间的区别",
                       "courseId": 341
                     },
                     {
                       "label":"液压制动总泵及真空助力器检修",
-                      "describe":"",
+                      "describe":"制动总泵及真空助力器的组成、实现的功能及工作原理，如何对总泵或真空助力器故障进行检修。",
                       "courseId": 342
                     },
                     {
                       "label":"盘式制动片检修（包括拆卸和安装）",
-                      "describe":"",
+                      "describe":"盘式制动器的组成、拆装流程及注意事项，以及盘式制动器工作原理。",
                       "courseId": 342
                     },
                     {
                       "label":"鼓式制动器检修（包括拆卸和安装）",
-                      "describe":"",
+                      "describe":"鼓式制动器的组成、拆装流程及注意事项，以及鼓式制动器工作原理。",
                       "courseId": 342
                     },
                     {
                       "label":"制动灯故障",
-                      "describe":"",
+                      "describe":"大众速腾制动灯系统的组成及控制原理，如何对制动灯故障进行检修。",
                       "courseId": 342
                     }
                 ]
@@ -1342,22 +1342,22 @@
                 "children":[
                     {
                       "label":"蓄电池充电",
-                      "describe":"",
+                      "describe":"大众速腾蓄电池充电概述，如何充电，充电的方法方法。",
                       "courseId": 411
                     },
                     {
                       "label":"蓄电池检测维护",
-                      "describe":"",
+                      "describe":"大众速腾蓄电池电压的检测以及对蓄电池好坏检测。",
                       "courseId": 412
                     },
                     {
                       "label":"发电机故障检修",
-                      "describe":"",
+                      "describe":"大众速腾发电机工作原理及控制原理，如何检修发电机故障。",
                       "courseId": 411
                     },
                     {
                       "label":"充电指示灯常亮故障检修",
-                      "describe":"",
+                      "describe":"大众速腾充电指示灯亮起的原因，电路原理及对故障灯点亮维修的过程和方法。",
                       "courseId": 412
                     }
                 ]
@@ -1368,12 +1368,12 @@
                 "children":[
                     {
                       "label":"起动系统",
-                      "describe":"",
+                      "describe":"大众速腾启动系统组成、如何对启动系统故障进行检修，包含机械检修及电路检修。",
                       "courseId": 421
                     },
                     {
                       "label":"起动机故障检修",
-                      "describe":"",
+                      "describe":"大众速腾起动机工作原理及控制原理，如何判断起动机故障及对起动机故障进行检修。",
                       "courseId": 422
                     }
                 ]
@@ -1384,37 +1384,37 @@
                 "children":[
                     {
                       "label":"灯光照明系统",
-                      "describe":"",
+                      "describe":"大众速腾灯光照明系统的组成、各部件的功能及工作原理。",
                       "courseId": 431
                     },
                     {
                       "label":"前照灯故障检修",
-                      "describe":"",
+                      "describe":"大众速腾前照灯电路控制原理和对前照灯故障检修的流程。",
                       "courseId": 432
                     },
                     {
                       "label":"雾灯不亮故障检修",
-                      "describe":"",
+                      "describe":"大众速腾雾灯电路控制原理和对雾灯故障检修的流程。",
                       "courseId": 432
                     },
                     {
                       "label":"转向灯工作异常故障检修",
-                      "describe":"",
+                      "describe":"大众速腾转向灯电路控制原理和对转向灯故障检修的流程。",
                       "courseId": 432
                     },
                     {
                       "label":"近光灯不亮故障检测",
-                      "describe":"",
+                      "describe":"大众速腾近光灯电路控制原理和对近光灯故障检修的流程。",
                       "courseId": 432
                     },
                     {
                       "label":"远光灯不亮故障检修",
-                      "describe":"",
+                      "describe":"大众速腾远光灯电路控制原理和对远光灯故障检修的流程。",
                       "courseId": 432
                     },
                     {
                       "label":"车内顶灯故障检修",
-                      "describe":"",
+                      "describe":"大众速腾顶灯电路控制原理和对顶灯故障检修的流程。",
                       "courseId": 432
                     }
                 ]
@@ -1425,37 +1425,37 @@
                 "children":[
                     {
                       "label":"雨刮器检查与更换",
-                      "describe":"",
+                      "describe":"大众速腾雨刮器拆卸及更换流程、操作时候的注意事项等",
                       "courseId": 441
                     },
                     {
                       "label":"雨刮器不工作故障检修",
-                      "describe":"",
+                      "describe":"大众速腾雨刮器工作原理、系统组成及对雨刮器不工作故障进行检修的流程。",
                       "courseId": 441
                     },
                     {
                       "label":"电动车窗故障检修",
-                      "describe":"",
+                      "describe":"大众速腾车窗的系统组成，部件工作原理和控制原理以及如何对车窗无法升降故障进行检修。",
                       "courseId": 441
                     },
                     {
                       "label":"电动后视镜无法调节故障检修",
-                      "describe":"",
+                      "describe":"大众速腾电动后视镜系统组成、电路控制原理及对无法调节故障进行检修流程。",
                       "courseId": 441
                     },
                     {
                       "label":"汽车中控门锁故障检修",
-                      "describe":"",
+                      "describe":"大众速腾中空门锁系统组成、电路控制原理及对中空门锁故障判断和检修流程。",
                       "courseId": 441
                     },
                     {
                       "label":"多功能方向盘故障检修",
-                      "describe":"",
+                      "describe":"大众速腾多功能方向盘作用、电路控制原理及对多功能方向盘故障判断和检修流程。",
                       "courseId": 441
                     },
                     {
                       "label":"双音喇叭故障检修",
-                      "describe":"",
+                      "describe":"大众速腾双音喇叭电路控制原理及对多功能方向盘故障判断和检修流程。",
                       "courseId": 441
                     }
                 ]
@@ -1466,12 +1466,12 @@
                 "children":[
                     {
                       "label":"仪表综述",
-                      "describe":"",
+                      "describe":"大众速腾仪表组成、作用及功能，仪表上有哪些故障提示灯。",
                       "courseId": 451
                     },
                     {
                       "label":"仪表系统工作异常故障检修",
-                      "describe":"",
+                      "describe":"大众速腾仪表系统电路控制原理及对仪表系统工作异常故障判断和检修流程。",
                       "courseId": 452
                     }
                 ]
@@ -1482,17 +1482,17 @@
                 "children":[
                     {
                       "label":"can-bus综述",
-                      "describe":"",
+                      "describe":"简述什么是CAN-BUS，总线组成、工作原理及控制原理等。",
                       "courseId": 461
                     },
                     {
                       "label":"典型车型整车电气故障检修",
-                      "describe":"",
+                      "describe":"整车电气组成、电路控制原理、线路如何连接及故障维修诊断流程。",
                       "courseId": 462
                     },
                     {
                       "label":"多媒体主机拆装",
-                      "describe":"",
+                      "describe":"大众速腾多媒体工作原理、系统组成，如何拆装并且对故障进行检修。",
                       "courseId": 462
                     }
                 ]
@@ -1505,22 +1505,22 @@
           "children":[
               {
                 "label":"汽车空调",
-                "describe":"",
+                "describe":"汽车空调的组成及作用，各部件的介绍简介。",
                 "courseId": 510
               },
               {
                 "label":"汽车空调异味故障检修",
-                "describe":"",
+                "describe":"简介汽车空调吹风带有异味，判断问题在哪及如何解决空调异味流程。",
                 "courseId": 520
               },
               {
                 "label":"汽车空调不制冷故障检修",
-                "describe":"",
+                "describe":"大众速腾空调工作原理及电路控制原理，如何对空调不制冷进行故障诊断及排除。",
                 "courseId": 520
               },
               {
                 "label":"汽车空调鼓风机不工作故障检修",
-                "describe":"",
+                "describe":"大众速腾空调鼓风机工作及电路控制原理，如何对鼓风机不工作进行判断并且排除故障。",
                 "courseId": 520
               }
           ]
@@ -1530,27 +1530,27 @@
           "children":[
               {
                 "label":"新车交接",
-                "describe":"",
+                "describe":"简述新车交接的注意事项，交接过程中应该做哪些事情和交接的流程。",
                 "courseId": 510
               },
               {
                 "label":"机油机滤",
-                "describe":"",
+                "describe":"简述更换机油机滤的流程，更换时候的注意事项、机油及机滤的作用及功能。",
                 "courseId": 520
               },
               {
                 "label":"汽车首次维护",
-                "describe":"",
+                "describe":"简述新车首次维护应做的哪些检查和哪些保养。",
                 "courseId": 520
               },
               {
                 "label":"汽车4万公里维护",
-                "describe":"",
+                "describe":"简述汽车4万公里保养时候应做哪些检查和更换内容。",
                 "courseId": 520
               },
               {
                 "label":"汽车换季维护",
-                "describe":"",
+                "describe":"简述汽车换季时候应对汽车进行哪些方面的保养，保养的内容及保养方法。",
                 "courseId": 520
               }
           ]
