@@ -33,7 +33,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="考试题目" width="100">
+                  <el-table-column label="考试题目" width="150">
                     <template slot-scope="scope">
                       <span>{{ scope.row.theme }}</span>
                     </template>
@@ -59,7 +59,7 @@
 
                   <el-table-column label="详细信息" width="120">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary">
+                      <el-button size="mini" type="primary" @click="getToMoreData(scope.$index, scope.row)">
                         查看
                       </el-button>
                     </template>
@@ -82,9 +82,28 @@
                     :current-page.sync="currentPage"
                     :page-size="pagesize"
                     layout="prev, pager, next, jumper"
-                    :total=parseInt(total)>
+                    :total=parseInt(total1)>
                   </el-pagination>
                 </div>
+
+                <!--查看对话框-->
+                <el-dialog title="查看详情"
+                           width="59%"
+                           :before-close="handleClose"
+                           :visible.sync="dialogTableVisible1">
+                  <el-table :data="toMoreData">
+                    <el-table-column property="user" label="创建人" width="80"></el-table-column>
+                    <el-table-column property="theme" label="名称" width="120"></el-table-column>
+                    <el-table-column property="currTestType" label="试题类型" width="100"></el-table-column>
+                    <el-table-column property="num" label="总题数" width="70"></el-table-column>
+                    <el-table-column property="major" label="专业" width="100"></el-table-column>
+                    <el-table-column property="classGrade" label="班级" width="60"></el-table-column>
+                    <el-table-column property="allScore" label="总分" width="60"></el-table-column>
+                    <el-table-column property="date1" label="开始时间" width="100"></el-table-column>
+                    <el-table-column property="date2" label="结束时间" width="100"></el-table-column>
+                    <el-table-column property="newData" label="创建时间" width="100"></el-table-column>
+                  </el-table>
+                </el-dialog>
 
               </el-tab-pane>
 
@@ -98,7 +117,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="考试题目" width="100">
+                  <el-table-column label="考试题目" width="150">
                     <template slot-scope="scope">
                       <span>{{ scope.row.theme }}</span>
                     </template>
@@ -124,7 +143,7 @@
 
                   <el-table-column label="详细信息">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary">
+                      <el-button size="mini" type="primary" @click="getToHistoryData(scope.$index, scope.row)">
                         查看
                       </el-button>
                     </template>
@@ -140,9 +159,28 @@
                     :current-page.sync="currentPage"
                     :page-size="pagesize"
                     layout="prev, pager, next, jumper"
-                    :total=parseInt(total)>
+                    :total=parseInt(total2)>
                   </el-pagination>
                 </div>
+
+                <!--查看对话框-->
+                <el-dialog title="查看详情"
+                           width="59%"
+                           :before-close="handleClose"
+                           :visible.sync="dialogTableVisible2">
+                  <el-table :data="toHistoryData">
+                    <el-table-column property="user" label="创建人" width="80"></el-table-column>
+                    <el-table-column property="theme" label="名称" width="120"></el-table-column>
+                    <el-table-column property="currTestType" label="试题类型" width="100"></el-table-column>
+                    <el-table-column property="num" label="总题数" width="70"></el-table-column>
+                    <el-table-column property="major" label="专业" width="100"></el-table-column>
+                    <el-table-column property="classGrade" label="班级" width="60"></el-table-column>
+                    <el-table-column property="allScore" label="总分" width="60"></el-table-column>
+                    <el-table-column property="date1" label="开始时间" width="100"></el-table-column>
+                    <el-table-column property="date2" label="结束时间" width="100"></el-table-column>
+                    <el-table-column property="newData" label="创建时间" width="100"></el-table-column>
+                  </el-table>
+                </el-dialog>
 
               </el-tab-pane>
 
@@ -151,8 +189,8 @@
                 <div>
                   <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px">
 
-                    <el-form-item label="考试题目" prop="theme">
-                      <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme" style="width: 54.8%"></el-input>
+                    <el-form-item label="考试题目" prop="theme" width="150">
+                      <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme" style="width: 100%"></el-input>
                     </el-form-item>
 
                     <el-form-item label="考试范围" prop="name">
@@ -286,6 +324,7 @@
             </el-tabs>
           </div>
         </div>
+
         <!--成绩管理-->
         <div class="userMessage" v-show="currIndex === 1">
           <div class="titleB">
@@ -294,9 +333,15 @@
             </div>
           </div>
 
-          <el-table style="width: 97%; margin-left: 16px" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+          <el-table style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
             <el-table-column label="序号" type="index" width="60">
+            </el-table-column>
+
+            <el-table-column label="姓名" width="80">
+              <template slot-scope="scope">
+                <span>{{ scope.row.user }}</span>
+              </template>
             </el-table-column>
 
             <el-table-column label="考试题目" width="100">
@@ -307,7 +352,7 @@
 
             <el-table-column label="创建时间" width="200">
               <template slot-scope="scope">
-                <span>{{ scope.row.newData }}</span>
+                <span>{{ scope.row.startTime }}</span>
               </template>
             </el-table-column>
 
@@ -317,15 +362,15 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="专业" width="120">
+            <el-table-column label="成绩" width="120">
               <template slot-scope="scope">
-                <span>{{ scope.row.major }}</span>
+                <span>{{ scope.row.sorce }}</span>
               </template>
             </el-table-column>
 
-            <el-table-column label="班级" width="120">
+            <el-table-column label="用时" width="120">
               <template slot-scope="scope">
-                <span>{{ scope.row.classGrade }}</span>
+                <span>{{ scope.row.testTimeMinutes }}:{{ scope.row.testTimeSeconds }}</span>
               </template>
             </el-table-column>
 
@@ -347,14 +392,14 @@
               :current-page.sync="currentPage"
               :page-size="pagesize"
               layout="prev, pager, next, jumper"
-              :total=parseInt(total)>
+              :total=parseInt(total3)>
             </el-pagination>
           </div>
 
           <!--查看成绩对话框-->
           <el-dialog title="成绩列表"
                      width="70%"
-                     :visible.sync="dialogTableVisible">
+                     :visible.sync="dialogTableVisible3">
             <el-table :data="scoreData">
               <el-table-column label="序号" type="index" width="60"></el-table-column>
               <el-table-column property="name" label="姓名" width="120"></el-table-column>
@@ -491,12 +536,19 @@
         toTestData: [],
         toTestDataIndex:[],
         historyTestData: [],
+        checkGradesData: [],
         historyTestDataIndex:[],
         scoreM: [],
         currentPage: 1,
-        pagesize: 8,
-        total: '',
-        dialogTableVisible: false,
+        pagesize: 10,
+        total1: '',
+        total2: '',
+        total3: '',
+        dialogTableVisible1: false,
+        dialogTableVisible2: false,
+        dialogTableVisible3: false,
+        toMoreData: [],
+        toHistoryData: [],
         scoreData: [],
       };
     },
@@ -512,10 +564,12 @@
           //console.log(res.data);
           let resData = res.data;
           for (let i = 0; i < resData.length; i++) {
-            resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+            resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+            console.log(resData[i].currTestType);
+            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType)
           }
           this.toTestData = resData;
-          this.total = this.toTestData.length;
+          this.total1 = this.toTestData.length;
         });
       },
 
@@ -543,12 +597,9 @@
       handleCheckChange(data, checked, indeterminate) {
         console.log(data, checked, indeterminate);
         if (checked == true) {
-          //    console.log(this.form.name+"AAAA");
-          //    this.form.name.push(data.label);
         } else {
           for (var i = 0; i < this.form.name.length; i++) {
             if (this.form.name[i] == data.label) {
-              //    core.remove(this.form.name, i);
             }
           }
         }
@@ -571,15 +622,15 @@
       },
 
       //考试时长小时是0时分钟禁用0
-            isMin(){
-                if(this.form.timeHour == "0"){
-                    this.formDisabled = !this.formDisabled;
-                    this.form.timeMin = '';
-                }else{
-                    this.form.timeMin = 0;
-                    this.formDisabled = false;
-                }
-            },
+      isMin() {
+        if (this.form.timeHour == "0") {
+          this.formDisabled = !this.formDisabled;
+          this.form.timeMin = '';
+        } else {
+          this.form.timeMin = 0;
+          this.formDisabled = false;
+        }
+      },
       //判断时长
       compareTime(){
         if(moment(this.form.date1).format("YYYY-MM-DD hh:mm:ss") == moment(this.form.date2).format("YYYY-MM-DD hh:mm:ss")){
@@ -639,7 +690,7 @@
         });
       },
 
-      //修改按钮
+      //删除按钮
       handleDelete(index, row) {
         //console.log(row.id);
         axios({
@@ -660,7 +711,7 @@
                 this.toTestData = e;
               }
             }
-            this.total = this.toTestData.length;
+            this.total1 = this.toTestData.length;
             this.Success('删除成功');
           } else if (res.data.code == 1) {
             this.Success('删除成功');
@@ -669,22 +720,38 @@
         });
       },
 
-      //查看成绩请求
+      //考试管理,待考试,查看
+      getToMoreData(index, row) {
+        this.dialogTableVisible1 = true;
+        row.date1 = moment(row.date1).format("YYYY-MM-DD hh:mm:ss");
+        row.date2 = moment(row.date2).format("YYYY-MM-DD hh:mm:ss");
+        this.toMoreData.push(row);
+        //console.log(this.toMoreData);
+      },
+      //考试管理,历史考试,查看
+      getToHistoryData(index, row) {
+        this.dialogTableVisible2 = true;
+        row.date1 = moment(row.date1).format("YYYY-MM-DD hh:mm:ss");
+        row.date2 = moment(row.date2).format("YYYY-MM-DD hh:mm:ss");
+        this.toHistoryData.push(row);
+        console.log(this.toHistoryData);
+
+      },
+      //成绩管理, 查看成绩
       scoreManData(index, row) {
-        this.dialogTableVisible = true;
-        console.log(row);
-        axios.get("/readTestQuestion/scoreManData",{
-          params:{
-            user:this.user,
-            classGrade: this.classGrade,
-            major: this.major
-          }
-        }).then((res)=>{
-          console.log(res.data);
-          //    console.log((res.data[0].children));
-        }).catch(function(error){
-          console.log("error init." + error)
-        });
+        this.dialogTableVisible3 = true;
+        row.date1 = moment(row.date1).format("YYYY-MM-DD hh:mm:ss");
+        row.date2 = moment(row.date2).format("YYYY-MM-DD hh:mm:ss");
+        this.toHistoryData.push(row);
+        console.log(this.toHistoryData);
+
+      },
+      //关闭三个弹窗,清空数组
+      handleClose(done) {
+        done();
+        this.toMoreData = [];
+        this.toHistoryData = [];
+
       },
     },
 
@@ -699,12 +766,13 @@
         //console.log(res.data);
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
-          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+          resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
           resData[i].toTestDataIndex = i;
         }
         this.toTestData = resData;
-        console.log(this.toTestData)
-        this.total = this.toTestData.length;
+        //console.log(this.toTestData)
+        this.total1 = this.toTestData.length;
       });
 
       //请求历史考试数据
@@ -716,11 +784,30 @@
         //console.log(res.data);
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
-          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+          resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
           resData[i].historyTestDataIndex = i;
         }
         this.historyTestData = resData;
-        this.total = this.historyTestData.length;
+        this.total2 = this.historyTestData.length;
+      });
+
+      //请求成绩管理数据
+      axios.get("/readTestQuestion/checkGradesData", {
+        params: {
+          user: this.user,
+        }
+      }).then((res) => {
+        console.log(res.data);
+        let resData = res.data;
+        for (let i = 0; i < resData.length; i++) {
+          resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
+          resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
+          resData[i].historyTestDataIndex = i;
+        }
+        this.checkGradesData = resData;
+        this.total3 = this.checkGradesData.length;
+        //console.log(this.checkGradesData);
       });
 
       //请求data数据
