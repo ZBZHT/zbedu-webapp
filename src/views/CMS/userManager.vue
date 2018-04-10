@@ -3,6 +3,7 @@
 
     <!--用户管理-->
     <el-col :span="19" class="el-Col">
+      <div class="headBut">
         <span class="userM_But1">
           <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
         </span>
@@ -21,6 +22,7 @@
           <el-button size="small" type="primary">Excel导入用户</el-button>
         </el-upload>
         </span>
+      </div>
 
       <!--添加用户对话框-->
       <el-dialog title="请填写资料"
@@ -95,135 +97,202 @@
         </div>
       </el-dialog>
 
-      <!--列表-->
-      <el-table class="userM_el-table" :data="dataManager.slice((currentPage-1)*pagesize,currentPage*pagesize)"
-                @selection-change="changeFun"
-                stripe style="width: 98%;">
+      <el-tabs v-model="activeName" type="card">
 
-        <el-table-column type="selection" width="40"></el-table-column>
+        <el-tab-pane label="学生列表" name="first">
 
-        <el-table-column label="序号" type="index" width="60">
-        </el-table-column>
+          <!--学生列表-->
+          <el-table class="userM_el-table" :data="stuData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+                    @selection-change="changeFun"
+                    stripe style="width: 98%;">
 
-        <el-table-column prop="user" label="用户名" width="100">
-        </el-table-column>
+            <el-table-column type="selection" width="40"></el-table-column>
 
-        <el-table-column prop="userID" label="用户ID" width="120">
-        </el-table-column>
+            <el-table-column prop="num" label="序号" width="60">
+            </el-table-column>
 
-        <el-table-column prop="IDNo" label="身份证号" width="190">
-        </el-table-column>
+            <el-table-column prop="user" label="用户名" width="100">
+            </el-table-column>
 
-        <el-table-column prop="MoNo" label="手机号" width="130">
-        </el-table-column>
+            <el-table-column prop="userID" label="用户ID" width="120">
+            </el-table-column>
 
-        <el-table-column prop="userType" label="用户类型" width="90">
-        </el-table-column>
+            <el-table-column prop="IDNo" label="身份证号" width="190">
+            </el-table-column>
 
-        <el-table-column prop="gender" label="性别" width="70">
-        </el-table-column>
+            <el-table-column prop="MoNo" label="手机号" width="130">
+            </el-table-column>
 
-        <el-table-column prop="AdmDate" label="入学时间" width="130">
-        </el-table-column>
+            <el-table-column prop="userType" label="用户类型" width="90">
+            </el-table-column>
 
-        <el-table-column prop="major" label="专业" width="100">
-        </el-table-column>
+            <el-table-column prop="gender" label="性别" width="70">
+            </el-table-column>
 
-        <el-table-column prop="classGrade" label="班级" width="70">
-        </el-table-column>
+            <el-table-column prop="AdmDate" label="入学时间" width="130">
+            </el-table-column>
 
-        <el-table-column label="操作" style="width: 100px">
-          <template slot-scope="scope">
-            <el-button size="small" class="userM_el-tableBut" type="warning"
-              @click="handleEdit(scope.$index, scope.row)">修 改
-            </el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+            <el-table-column prop="major" label="专业" width="100">
+            </el-table-column>
 
-      <!--修改用户对话框-->
-      <el-dialog title="修改资料"
-                 :visible.sync="dialogFormVisible1"
-                 :before-close="handleClose"
-                 :close-on-click-modal="false">
-        <el-form :model="addUserForm1" :rules="rules" ref="addUserForm1" label-width="80px" class="demo-addUserForm">
+            <el-table-column prop="classGrade" label="班级" width="70">
+            </el-table-column>
 
-          <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-            <el-form-item label="姓名" prop="name" >
-              <el-input v-model="addUserForm1.user" placeholder="姓名为2-4个汉字"></el-input>
-            </el-form-item>
-            <el-form-item label="昵称" prop="n_name">
-              <el-input v-model="addUserForm1.n_name" placeholder="昵称为2-12个字符"></el-input>
-            </el-form-item>
-          </el-form>
+            <el-table-column label="操作" style="width: 100px">
+              <template slot-scope="scope">
+                <el-button size="small" class="userM_el-tableBut" type="warning"
+                           @click="handleEdit(scope.$index, scope.row)">修 改
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
 
-          <el-form-item label="性别" prop="gender" style="width: 48%">
-            <el-radio-group v-model="addUserForm1.gender">
-              <el-radio v-model="radio2" label="1">男</el-radio>
-              <el-radio v-model="radio2" label="2">女</el-radio>
-            </el-radio-group>
-          </el-form-item>
+          <!--修改用户对话框-->
+          <el-dialog title="修改资料"
+                     :visible.sync="dialogFormVisible1"
+                     :before-close="handleClose"
+                     :close-on-click-modal="false">
+            <el-form :model="addUserForm1" :rules="rules" ref="addUserForm1" label-width="80px" class="demo-addUserForm">
 
-          <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-            <el-form-item label="学号" prop="userID">
-              <el-input v-model="addUserForm1.userID" placeholder="学号为8位数字"></el-input>
-            </el-form-item>
-            <el-form-item label="手机号" prop="MoNo">
-              <el-input v-model="addUserForm1.MoNo" placeholder="手机号码位11位"></el-input>
-            </el-form-item>
-          </el-form>
+              <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
+                <el-form-item label="姓名" prop="name" >
+                  <el-input v-model="addUserForm1.user" placeholder="姓名为2-4个汉字"></el-input>
+                </el-form-item>
+                <el-form-item label="昵称" prop="n_name">
+                  <el-input v-model="addUserForm1.n_name" placeholder="昵称为2-12个字符"></el-input>
+                </el-form-item>
+              </el-form>
 
-          <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
-            <el-input v-model="addUserForm1.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
-          </el-form-item>
+              <el-form-item label="性别" prop="gender" style="width: 48%">
+                <el-radio-group v-model="addUserForm1.gender">
+                  <el-radio v-model="radio2" label="1">男</el-radio>
+                  <el-radio v-model="radio2" label="2">女</el-radio>
+                </el-radio-group>
+              </el-form-item>
 
-          <el-form-item label="用户类别" prop="userType" style="width: 92%">
-            <el-radio-group v-model="addUserForm1.userType">
-              <el-radio v-model="radio1" label="E">教务管理员</el-radio>
-              <el-radio v-model="radio1" label="T">教师</el-radio>
-              <el-radio v-model="radio1" label="S">学生</el-radio>
-              <el-radio v-model="radio1" label="O">外来学生</el-radio>
-            </el-radio-group>
-          </el-form-item>
+              <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
+                <el-form-item label="学号" prop="userID">
+                  <el-input v-model="addUserForm1.userID" placeholder="学号为8位数字"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号" prop="MoNo">
+                  <el-input v-model="addUserForm1.MoNo" placeholder="手机号码位11位"></el-input>
+                </el-form-item>
+              </el-form>
 
-          <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1" style="width: 98%">
-            <el-form-item label="专业" prop="major">
-              <el-select v-model="addUserForm1.major" placeholder="请选择专业">
-                <el-option label="汽车专业" value="汽车专业"></el-option>
-                <el-option label="机电专业" value="机电专业"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="班级" prop="classGrade">
-              <el-input v-model="addUserForm1.classGrade" placeholder="请输入班级"></el-input>
-            </el-form-item>
-          </el-form>
+              <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
+                <el-input v-model="addUserForm1.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+              </el-form-item>
 
-          <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-            <el-form-item prop="AdmDate" label="入学时间">
-              <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.AdmDate"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="密码" prop="pwd">
-              <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位"></el-input>
-            </el-form-item>
-          </el-form>
-        </el-form>
+              <el-form-item label="用户类别" prop="userType" style="width: 92%">
+                <el-radio-group v-model="addUserForm1.userType">
+                  <el-radio v-model="radio1" label="E">教务管理员</el-radio>
+                  <el-radio v-model="radio1" label="T">教师</el-radio>
+                  <el-radio v-model="radio1" label="S">学生</el-radio>
+                  <el-radio v-model="radio1" label="O">外来学生</el-radio>
+                </el-radio-group>
+              </el-form-item>
 
-        <div slot="footer" class="dialog-footer" style="width: 93%">
-          <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
-        </div>
-      </el-dialog>
+              <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1" style="width: 98%">
+                <el-form-item label="专业" prop="major">
+                  <el-select v-model="addUserForm1.major" placeholder="请选择专业">
+                    <el-option label="汽车专业" value="汽车专业"></el-option>
+                    <el-option label="机电专业" value="机电专业"></el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="班级" prop="classGrade">
+                  <el-input v-model="addUserForm1.classGrade" placeholder="请输入班级"></el-input>
+                </el-form-item>
+              </el-form>
 
-      <!--分页显示-->
-      <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage"
-          :page-size="pagesize"
-          layout="prev, pager, next, jumper"
-          :total=parseInt(total)>
-        </el-pagination>
-      </div>
+              <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
+                <el-form-item prop="AdmDate" label="入学时间">
+                  <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.AdmDate"></el-date-picker>
+                </el-form-item>
+                <el-form-item label="密码" prop="pwd">
+                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位"></el-input>
+                </el-form-item>
+              </el-form>
+            </el-form>
+
+            <div slot="footer" class="dialog-footer" style="width: 93%">
+              <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
+            </div>
+          </el-dialog>
+
+          <!--分页显示-->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="pagesize"
+              layout="prev, pager, next, jumper"
+              :total=parseInt(total1)>
+            </el-pagination>
+          </div>
+
+        </el-tab-pane>
+        <el-tab-pane label="教师列表" name="second">
+
+          <!--教师列表-->
+          <el-table class="userM_el-table" :data="teachData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+                    @selection-change="changeFun"
+                    stripe style="width: 98%;">
+
+            <el-table-column type="selection" width="40"></el-table-column>
+
+            <el-table-column label="序号" prop="num" width="60">
+            </el-table-column>
+
+            <el-table-column prop="user" label="用户名" width="100">
+            </el-table-column>
+
+            <el-table-column prop="userID" label="用户ID" width="120">
+            </el-table-column>
+
+            <el-table-column prop="IDNo" label="身份证号" width="190">
+            </el-table-column>
+
+            <el-table-column prop="MoNo" label="手机号" width="130">
+            </el-table-column>
+
+            <el-table-column prop="userType" label="用户类型" width="90">
+            </el-table-column>
+
+            <el-table-column prop="gender" label="性别" width="70">
+            </el-table-column>
+
+            <el-table-column prop="entryTime" label="入职时间" width="130">
+            </el-table-column>
+
+            <el-table-column prop="major" label="专业" width="100">
+            </el-table-column>
+
+            <el-table-column label="操作" style="width: 100px">
+              <template slot-scope="scope">
+                <el-button size="small" class="userM_el-tableBut" type="warning"
+                           @click="handleEdit(scope.$index, scope.row)">修 改
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+
+          <!--分页显示-->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="pagesize"
+              layout="prev, pager, next, jumper"
+              :total=parseInt(total2)>
+            </el-pagination>
+          </div>
+
+        </el-tab-pane>
+      </el-tabs>
+
+
 
     </el-col>
 
@@ -240,7 +309,8 @@
     name: 'userManager',
     data() {
       return {
-        dataManager: [{
+        teachData: [{
+          num: '',
           n_name: '',
           user: '',
           pwd: '',
@@ -253,8 +323,24 @@
           major: '',
           classGrade: ''
         }],
-        total: '',
-        pagesize: 12,
+        stuData: [{
+          num: '',
+          n_name: '',
+          user: '',
+          pwd: '',
+          userID: '',
+          IDNo: '',
+          MoNo: '',
+          userType: '',
+          gender: '',
+          entryTime: '',
+          major: '',
+          classGrade: ''
+        }],
+        total1: '',
+        total2: '',
+        activeName: 'first',
+        pagesize: 10,
         currentPage: 1,
         defaultProps: {
           children: 'children',
@@ -347,7 +433,7 @@
         if (res.userInfo) {
           let userInfo = res.userInfo;
           for (let i=0; i<userInfo.length; i++) {
-            this.dataManager.push(userInfo[i])
+            this.teachData.push(userInfo[i])
           }
           this.$message({
             message: '用户信息已存入数据库',
@@ -433,23 +519,23 @@
             if (res.data.success == 0) {
               //删除单个
               if (this.multipleSelection.length == 1) {
-                for (let j=0; j<this.dataManager.length; j++){
-                  if (this.multipleSelection[0].userID == this.dataManager[j].userID) {
-                    let ee = core.remove(this.dataManager, this.dataManager[j]);
-                    this.dataManager = ee;
-                    //console.log(this.dataManager);
+                for (let j=0; j<this.teachData.length; j++){
+                  if (this.multipleSelection[0].userID == this.teachData[j].userID) {
+                    let ee = core.remove(this.teachData, this.teachData[j]);
+                    this.teachData = ee;
+                    //console.log(this.teachData);
                   }
                 }
               }else {
                 //删除多个
                 for (let i=0; i<this.multipleSelection.length; i++) {
-                  for (let j=0; j<this.dataManager.length; j++){
-                    if (this.multipleSelection[i].userID == this.dataManager[j].userID) {
-                      let ee = core.remove(this.dataManager, this.dataManager[j]);
-                      this.dataManager = ee;
+                  for (let j=0; j<this.teachData.length; j++){
+                    if (this.multipleSelection[i].userID == this.teachData[j].userID) {
+                      let ee = core.remove(this.teachData, this.teachData[j]);
+                      this.teachData = ee;
                     }
                   }
-                  //console.log(this.dataManager);
+                  //console.log(this.teachData);
                 }
               }
               this.$message({
@@ -511,10 +597,12 @@
               addUser: resData
             }
           }).then((res) => {
-            console.log(res);
+
             if (res.data.userInfo) {
-              this.dataManager.push(res.data.userInfo);
-              this.total = this.dataManager.length;
+              this.teachData.push(res.data.userInfo);
+              this.total2 = this.teachData.length;
+              console.log('11');
+              console.log(this.total2);
               this.addUserSuccess('用户信息已存入数据库');
               this.resetUser();
             }
@@ -542,9 +630,9 @@
             }
           }).then((res) => {
             if (res.data.userInfo) {
-              console.log(res.data.userInfo);
-              /*this.dataManager = res.data.userInfo;
-              this.total = this.dataManager.length;*/
+              //console.log(res.data.userInfo);
+              //this.teachData = res.data.userInfo;
+              //this.total = this.teachData.length;
               this.addUserSuccess();
               this.resetUser1();
             }
@@ -593,22 +681,33 @@
       },
     },
     mounted() {
-      axios.post('/teacherCMS/userManager', {
+      axios.post('/teacherCMS/getUserData', {
         data: {
           username: this.username,
           userType: this.userType
         }
       }).then((res) => {
-        let resUserInfo = res.data.userInfo;
-        if (resUserInfo.length > 0) {
-          for (let i = 0; i < resUserInfo.length; i++) {
-            resUserInfo[i].AdmDate = moment(new Date(resUserInfo[i].AdmDate)).format("YYYY-MM-DD");
+        //学生
+        let studentData = res.data.student;
+        if (studentData.length > 0) {
+          for (let i = 0; i < studentData.length; i++) {
+            studentData[i].AdmDate = moment(new Date(studentData[i].AdmDate)).format("YYYY-MM-DD");
+            studentData[i].num = i + 1;
           }
-          this.dataManager = resUserInfo;
-          this.total = this.dataManager.length;
+          this.stuData = studentData;
+          this.total1 = this.stuData.length;
+        }
+        //教师
+        let teacherData = res.data.teacher;
+        if (teacherData.length > 0) {
+          for (let i = 0; i < teacherData.length; i++) {
+            teacherData[i].entryTime = moment(new Date(teacherData[i].entryTime)).format("YYYY-MM-DD");
+            teacherData[i].num = i + 1;
+          }
+          this.teachData = teacherData;
+          this.total2 = this.teachData.length;
         }
       });
-
     },
     components: {}
   }
@@ -620,16 +719,24 @@
     margin: 0;
     padding: 0;
   }
+  .userManager_cont .headBut {
+    float: right;
+  }
   .userManager_cont .userM_el-table .userM_el-tableBut {
     margin-top: 0;
   }
   .userManager_cont .el-dialog {
     border-radius: 16px;
   }
-  .userManager_cont .el-Col .userM_But1,.userM_But2,.userM_But3 {
+  .userManager_cont .el-Col .userM_But1,.userM_But2 {
     float: left;
     margin-bottom: 6px;
-    margin-right: 10px;
+    margin-right: 16px;
+  }
+  .userManager_cont .el-Col .userM_But3 {
+    float: left;
+    margin-bottom: 6px;
+    margin-right: 70px;
   }
   .userManager_cont .el-tree-node__expand-icon {
     font-size: 16px;
@@ -679,5 +786,22 @@
   }
   .userManager_cont .el-dialog{
     width: 650px;
+  }
+  .userManager_cont .el-tabs--card>.el-tabs__header .el-tabs__nav{
+    border-width: 1px 1px 0 0;
+    border-color: #9f5355;
+    border-style: solid;
+  }
+  .userManager_cont .el-tabs--card>.el-tabs__header{
+    border-width: 0 0 1px 0;
+    border-color: #9f5355;
+    border-style: solid;
+    margin: 0;
+  }
+  .userManager_cont .el-tabs--card>.el-tabs__header .el-tabs__item{
+    border-left: 1px solid #9f5355;
+  }
+  .userManager_cont .el-table td, .el-table th {
+    height: 40px;
   }
 </style>

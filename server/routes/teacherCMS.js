@@ -7,7 +7,7 @@ const glob = require('glob');
 const formidable = require('formidable');
 const uploadsPath = "../app/uploads/addUser/";
 const addTestPath = "../app/uploads/addTest/";
-const Students = require('../app/models/Student');
+const Student = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const Question = require('../app/models/Question');
 const xlsx2j = require('xlsx-2-json');
@@ -98,41 +98,42 @@ router.post('/labelTree', function (req, res) {
   }
 });
 
-/* 获取用户管理数据 */
-  router.post('/userManager', findUser, function (req, res) {
-    Teacher.find().then(function (users) {
-      res.status(200).send({
-        userInfo: users
-      });
+/* 获取所有教师数据 */
+router.post('/getUserData', function (req, res) {
+
+  if (req.body.data.username) {
+    let username = req.body.data.username;
+    Teacher.findOne({
+      user: username,
+    }).then(function (userType) {
+      //console.log(userType);
+      if (userType.userType == 'admin' || userType.userType == 'E') {
+        Teacher.find().then(function (teacher) {
+          if (teacher) {
+            Student.find().then(function (student) {
+              if (student) {
+                res.status(200).send({
+                  teacher: teacher,
+                  student: student,
+                });
+              }
+            });
+          }
+        });
+      } else {
+        res.status(404).send({
+          Msg: '该用户无权限',
+          success: 1,
+        });
+      }
     });
-  });
-
-  function findUser(req, res, next) {
-    //console.log(req.body.data);
-    if (req.body.data.username) {
-      let username = req.body.data.username;
-      Teacher.findOne({
-        user: username,
-      }).then(function (userType) {
-        //console.log(userType);
-        //console.log(userType.userType);
-        if (userType.userType == 'admin' || userType.userType == 'E') {
-
-        } else {
-          res.status(404).send({
-            Msg: '找不到此用户',
-            success: 1,
-          });
-        }
-      });
-    } else {
-      res.status(404).send({
-        Msg: '未获取到用户名',
-        success: 1,
-      });
-    }
-    next();
+  } else {
+    res.status(404).send({
+      Msg: '未获取到用户名',
+      success: 1,
+    });
   }
+});
 
 /*删除所选用户*/
 router.post('/delChecked', function (req, res) {
@@ -141,7 +142,7 @@ router.post('/delChecked', function (req, res) {
     let reqData = req.body.data;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
       for (let i = 0; i < reqData.msg.length; i++) {
-        Students.remove({userID: reqData.msg[i].userID}, function (err) {
+        Student.remove({userID: reqData.msg[i].userID}, function (err) {
           if (err) {
             return res.status(404).send({err: err,});
           } else {
@@ -172,7 +173,7 @@ router.post('/addUser', function (req, res) {
     let reqData = req.body.data;
     let addUsers = reqData.addUser;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
-      let addUserData = new Students({
+      let addUserData = new Student({
         user: addUsers.user,
         n_name: addUsers.n_name,
         pwd: addUsers.pwd,
@@ -252,7 +253,7 @@ router.post('/addExcelUsers', function(req, res) {
                 }
 
                 userInfo = result;
-                let addUserData = new Students({
+                let addUserData = new Student({
                   n_name: result[i].n_name,
                   user: result[i].user,
                   pwd: result[i].pwd,
@@ -325,7 +326,7 @@ router.post('/updateUser', function (req, res) {
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
       console.log(reqUser);
       //查找userID来更新数据
-      Students.findOneAndUpdate({
+      Student.findOneAndUpdate({
         userID: reqUser.userID
       }, {
         n_name: reqUser.n_name,
@@ -342,7 +343,7 @@ router.post('/updateUser', function (req, res) {
         if (err) {
           console.log(err);
           //查找IDNo来更新数据
-          Students.findOneAndUpdate({
+          Student.findOneAndUpdate({
             IDNo: reqUser.IDNo
           }, {
             n_name: reqUser.n_name,
@@ -389,7 +390,7 @@ router.post('/myDataMst', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     //let username = req.body.data.username;
-    Students.find().then(function (users) {
+    Student.find().then(function (users) {
       res.status(200).send({
         userInfo: users
       });
@@ -421,7 +422,7 @@ router.post('/delCheckedQ', function (req, res) {
     let reqData = req.body.data;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
       for (let i = 0; i < reqData.msg.length; i++) {
-        Students.remove({userID: reqData.msg[i].userID}, function (err) {
+        Student.remove({userID: reqData.msg[i].userID}, function (err) {
           if (err) {
             return res.status(404).send({err: err,});
           } else {
@@ -449,64 +450,24 @@ router.post('/delCheckedQ', function (req, res) {
 router.post('/addExcelTest', function(req, res) {
   try {
     let form = new formidable.IncomingForm();
-    form.uploadDir = addTestPath;//设置文件上传存放地址
+    form.uploadDir = uploadsPath;//设置文件上传存放地址
     form.maxFieldsSize = 10 * 1024 * 1024; //设置最大10M
     form.keepExtensions = true;
 
     form.parse(req, function (err, fields, files) {
       //旧名字
       let fileName = files.file.name;
-      console.log(fileName);
+      //console.log(fileName);
       //新名字
       let oldPath = files.file.path;
-      let newPath = addTestPath + fileName;
+      let newPath = uploadsPath + fileName;
       //改名
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
           throw  Error("改名失败");
         }
-  /*      //xlsx转换为json
-        options ={
-          sheet:'0',
-          isColOriented: true,
-          omitEmtpyFields: true
-        };
-
-
-        convertExcel(newPath,newPath + ".json", options, function (err, data) {
-          console.log(data);
-        });*/
-
-          /*xlsx.toJson(
-            path.join(newPath),  //excell file
-            path.join(newPath + ".json"), //json dir
-            2,  //excell head line number
-            "," //array separator
-          );*/
-
-
-
-
-        /*glob(newPath, function (err, files) {
-          if (err) {
-            console.error("exportJson error:", err);
-            throw err;
-          }
-          files.forEach(function (element, index, array) {
-            console.log(element);
-            console.log(index);
-            console.log(array);
-            xlsx.toJson(
-              path.join(element),  //excell file
-              path.join(element + ".json"), //json dir
-              2,  //excell head line number
-              "," //array separator
-            );
-          });
-
-        });*/
-
-        /*x2j({
+        //xlsx转换为json
+        xlsx2j({
           input: newPath,
           output: newPath + "-output.json"
         }, function(err, result) {
@@ -514,49 +475,17 @@ router.post('/addExcelTest', function(req, res) {
             console(err);
           }else {
             if (result) {
-              console.log((result));
-              let userInfo = [];
+              let fJson = formatExcel(result);
+              console.log(fJson);
               //格式化数据
-              /!*for (let i = 0; i < result.length; i++) {
-                if (result[i].pwd == '') {
-                  result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
-                } else {
-                  result[i].pwd = md5(result[i].pwd);
-                }
-                if (result[i].n_name == '') {
-                  result[i].n_name = result[i].user
-                }
-                userInfo = result;
-                let addUserData = new Students({
-                  n_name: result[i].n_name,
-                  user: result[i].user,
-                  pwd: result[i].pwd,
-                  userID: result[i].userID,
-                  IDNo: result[i].IDNo,
-                  MoNo: result[i].MoNo,
-                  userType: result[i].userType,
-                  gender: result[i].gender,
-                  AdmDate: result[i].AdmDate,
-                  major: result[i].major,
-                  classGrade: result[i].classGrade
-                });
-                //保存到数据库
-                addUserData.save(function (err) {
-                  if (err) {
-                    console.log(err)
-                  } else {
-                    console.log('Save success');
-                  }
-                });
-              }*!/
               res.status(200).send({
-                userInfo: userInfo,
+                userInfo: fJson,
               });
             } else {
               console.log('文件读取错误');
             }
           }
-        });*/
+        });
       });
     });
   }
@@ -568,6 +497,64 @@ router.post('/addExcelTest', function(req, res) {
   }
 });
 
+//格式化Excel里的数组为json
+function formatExcel(arr) {
+  let result = [];
+  let arrSingle = {
+    num: '',
+    desc: '',
+    options: [],
+    answer: '',
+    difficulty: '',
+    major: '',
+    title1: '',
+    title2: '',
+    title3: '',
+    title4: '',
+    title5: '',
+    title6: '',
+    forId: [],
+  };
+  for (let i=0; i<arr.length; i++) {
+      arrSingle.num = arr[i].num;
+      arrSingle.desc = arr[i].desc;
+      arrSingle.options.push(arr[i].options0);
+      arrSingle.options.push(arr[i].options1);
+      arrSingle.options.push(arr[i].options2);
+      arrSingle.options.push(arr[i].options3);
+      arrSingle.answer = arr[i].answer;
+      arrSingle.difficulty = arr[i].difficulty;
+      arrSingle.major = arr[i].major;
+      arrSingle.title1 = arr[i].title1;
+      arrSingle.title2 = arr[i].title2;
+      arrSingle.title3 = arr[i].title3;
+      arrSingle.title4 = arr[i].title4;
+      arrSingle.title5 = arr[i].title5;
+      arrSingle.title6 = arr[i].title6;
+      arrSingle.forId.push(arr[i].forId0);
+      arrSingle.forId.push(arr[i].forId1);
+      arrSingle.forId.push(arr[i].forId2);
+      arrSingle.forId.push(arr[i].forId3);
 
+      result.push(arrSingle);
+
+      arrSingle = {
+        num: '',
+        desc: '',
+        options: [],
+        answer: '',
+        difficulty: '',
+        major: '',
+        title1: '',
+        title2: '',
+        title3: '',
+        title4: '',
+        title5: '',
+        title6: '',
+        forId: [],
+      };
+  }
+  return result
+}
 
 module.exports = router;
