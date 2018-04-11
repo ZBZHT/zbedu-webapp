@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 
 // Module dependencies.
-var app = require('../app');
-var debug = require('debug')('login2:server');
-var http = require('http');
-var mongoose = require('mongoose');
+const app = require('../app');
+const debug = require('debug')('login2:server');
+const http = require('http');
+const mongoose = require('mongoose');
 
 // Get port from environment and store in Express.
 var port = normalizePort(process.env.PORT || '80');

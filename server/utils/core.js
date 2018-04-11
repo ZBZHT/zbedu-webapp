@@ -182,7 +182,7 @@ module.exports = {
       userT = '教务管理员';
       return userT;
     }else if(user == 'admin'){
-      userT = '超级管理员';
+      userT = '管理员';
       return userT;
     }
   },

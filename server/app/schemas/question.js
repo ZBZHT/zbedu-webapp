@@ -21,5 +21,6 @@ module.exports = new Schema({
   title3: String,
   title4: String,
   title5: String,
+  title6: String,
 });
 

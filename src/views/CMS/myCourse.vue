@@ -3,6 +3,7 @@
 
     <!--我的课程-->
     <el-col :span="19">
+
         <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
           <el-tab-pane label="我的课程列表" name="first">
 

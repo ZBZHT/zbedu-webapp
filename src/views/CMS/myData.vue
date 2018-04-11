@@ -19,7 +19,7 @@
             <span>账户类型 : </span><span style="color: #ff6700;">{{userT}}</span>
             <br>
             <span class="nameMsg_3">绑定手机 :</span><br>
-            <span class="">下午好</span><br>
+            <span class="nameMsg_4">绑定邮箱 :</span><br>
           </el-col>
 
         </el-card>

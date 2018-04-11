@@ -470,18 +470,61 @@ router.post('/addExcelTest', function(req, res) {
         xlsx2j({
           input: newPath,
           output: newPath + "-output.json"
-        }, function(err, result) {
+        }, function(err, jsonResult) {
           if(err) {
             console(err);
           }else {
-            if (result) {
-              let fJson = formatExcel(result);
-              console.log(fJson);
+            if (jsonResult) {
               //格式化数据
-              res.status(200).send({
-                userInfo: fJson,
+              let fJson = formatExcel(jsonResult);
+              //console.log(fJson);
+              let numID = '';
+              //查找数据库中
+              Question.find().sort({id:-1}).then(function (ques) {
+
+                if (ques.length != 0) {
+                  numID = Number(ques[0].num);
+                } else {
+                  numID = 1;
+                }
+                for (let i=0; i<fJson.length; i++) {
+                  numID = Number(numID) + 1;
+                  //console.log(numID);
+
+                  let question = new Question({
+                    num: numID,
+                    desc: fJson[i].desc,
+                    options: fJson[i].options,
+                    value:fJson[i].value,
+                    name:fJson[i].name,
+                    forId:fJson[i].forId,
+                    answer: fJson[i].answer,
+                    type: fJson[i].type,
+                    major: fJson[i].major,
+                    title1: fJson[i].title1,
+                    title2: fJson[i].title2,
+                    title3: fJson[i].title3,
+                    title4: fJson[i].title4,
+                    title5: fJson[i].title5,
+                    title6: fJson[i].title6,
+                  });
+
+                  //保存到数据库
+                  //if (fileName == '发动机考试题.xlsx') {
+                  question.save(function (err) {
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log('question Save success');
+                    }
+                  });
+                  //}
+                }
               });
+
+              res.status(200).send({ code: 0 });
             } else {
+              res.status(404).send({ code: 1 });
               console.log('文件读取错误');
             }
           }
@@ -491,7 +534,7 @@ router.post('/addExcelTest', function(req, res) {
   }
   catch (e) {
     res.status(404).send({
-      err: 1,
+      code: 1,
       msg: e,
     });
   }

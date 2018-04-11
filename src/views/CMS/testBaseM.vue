@@ -3,11 +3,107 @@
 
     <!--题库管理-->
     <el-col :span="19">
+
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="选择题" name="first">
+
+          <!--显示所有选择题-->
+          <el-table
+            class="userM_el-table"
+            :data="choiceData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+            @selection-change="changeFun"
+            style="width: 99%; margin-top: 10px">
+
+            <el-table-column type="selection" width="40"></el-table-column>
+
+            <el-table-column prop="num" label="序号" width="60">
+            </el-table-column>
+
+            <el-table-column prop="desc" label="试题内容" width="500">
+            </el-table-column>
+
+            <el-table-column prop="options" label="选项" width="360">
+            </el-table-column>
+
+            <el-table-column prop="major" label="专业" width="130">
+            </el-table-column>
+
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini" type="warning"
+                  @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
+              </template>
+            </el-table-column>
+
+          </el-table>
+
+          <!--分页显示-->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="pagesize"
+              layout="prev, pager, next, jumper"
+              :total=parseInt(total1)>
+            </el-pagination>
+          </div>
+
+        </el-tab-pane>
+        <el-tab-pane label="判断题" name="second">
+
+          <!--显示所有判断题-->
+          <el-table
+            class="userM_el-table"
+            :data="checkingData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+            @selection-change="changeFun"
+            style="width: 99%; margin-top: 10px">
+
+            <el-table-column type="selection" width="40"></el-table-column>
+
+            <el-table-column prop="num" label="序号" width="60">
+            </el-table-column>
+
+            <el-table-column prop="desc" label="试题内容" width="500">
+            </el-table-column>
+
+            <el-table-column prop="options" label="选项" width="360">
+            </el-table-column>
+
+            <el-table-column prop="major" label="专业" width="130">
+            </el-table-column>
+
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini" type="warning"
+                  @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
+              </template>
+            </el-table-column>
+
+          </el-table>
+
+          <!--分页显示-->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage"
+              :page-size="pagesize"
+              layout="prev, pager, next, jumper"
+              :total=parseInt(total2)>
+            </el-pagination>
+          </div>
+
+        </el-tab-pane>
+      </el-tabs>
+
       <!--头部按钮-->
+      <div class="headBut">
       <span class="userM_But1">
         <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
       </span>
-
         <span class="userM_But2">
           <el-upload
             class="upload-demo"
@@ -16,12 +112,12 @@
             :beforeUpload="beforeAvatarUpload"
             :onSuccess="uploadSuccess"
             :show-file-list=false
-            :on-exceed="handleExceed">
+            :on-exceed="handleExceed"
+            accept=".xlsx">
           <el-button size="small" type="primary">Excel导入试题</el-button>
         </el-upload>
         </span>
-
-      <el-dropdown>
+        <el-dropdown>
         <span class="el-dropdown-link">
 
            <span class="elinput">
@@ -30,64 +126,23 @@
               </ul>
           </span>
         </span>
-        <el-dropdown-menu slot="dropdown" class="dropdown">
-          <div class="treeModle">
-            <el-tree
-              :data="data"
-              ref="tree"
-              show-checkbox
-              node-key="id"
-              @check-change="handleCheckChange"
-              @node-click="handleClick">
-            </el-tree>
-          </div>
-          <div class="buttons">
-            <el-button type="primary" @click="getCheckedNodes">确定</el-button>
-          </div>
-        </el-dropdown-menu>
-      </el-dropdown>
+          <el-dropdown-menu slot="dropdown" class="dropdown">
+            <div class="treeModle">
+              <el-tree
+                :data="data"
+                ref="tree"
+                show-checkbox
+                node-key="id"
+                @check-change="handleCheckChange"
+                @node-click="handleClick">
+              </el-tree>
+            </div>
+            <div class="buttons">
+              <el-button type="primary" @click="getCheckedNodes">确定</el-button>
+            </div>
+          </el-dropdown-menu>
+        </el-dropdown>
 
-      <!--显示所有题-->
-      <el-table
-        class="userM_el-table"
-        :data="testAllData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
-        @selection-change="changeFun"
-        style="width: 99%; margin-top: 10px">
-
-        <el-table-column type="selection" width="40"></el-table-column>
-
-        <el-table-column prop="num" label="序号" width="60">
-        </el-table-column>
-
-        <el-table-column prop="desc" label="序号" width="500">
-        </el-table-column>
-
-        <el-table-column prop="options" label="用户ID" width="360">
-        </el-table-column>
-
-        <el-table-column prop="major" label="专业" width="100">
-        </el-table-column>
-
-        <el-table-column label="操作">
-          <template slot-scope="scope">
-            <el-button
-              size="mini" type="warning"
-              @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
-          </template>
-        </el-table-column>
-
-      </el-table>
-
-      <!--分页显示-->
-      <div class="block">
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page.sync="currentPage"
-          :page-size="pagesize"
-          layout="prev, pager, next, jumper"
-          :total=parseInt(total)>
-        </el-pagination>
       </div>
 
     </el-col>
@@ -119,14 +174,17 @@
           time:''
         },
         currentPage: 1,
-        pagesize: 12,
-        total: '',
+        pagesize: 10,
+        total1: '',
+        total2: '',
+        activeName: 'first',
         username: this.$store.state.username,
         userType: this.$store.state.userType,
         testBaseMTableData: [],
-        testAllData: [],  //全部题
         currentRow: null,
         multipleSelection: [],  //复选框
+        choiceData: [],  //选择题
+        checkingData: [],  //判断题
       }
     },
     computed: {},
@@ -145,16 +203,21 @@
       beforeAvatarUpload(file) {
         let index = file.name.split(".");
         let isxls = index[index.length - 1];
-        if (isxls == 'xlsx' || isxls == 'xls') {
+        if (isxls == 'xlsx') {
           return true;
         } else {
-          this.$message.error('只能导入是 xls 或者 xlsx格式!');
+          this.$message.error('只能导入xlsx格式!');
         }
       },
+
       // 上传成功后的回调
       uploadSuccess(res, file) {
-
+        //console.log(res.code);
+        if (res.code == 0) {
+          this.Success('试题导入成功')
+        }
       },
+
       // 上传错误
       uploadError(res, file, fileList) {
         console.log('上传失败，请重试！')
@@ -191,7 +254,6 @@
         }
       },
       handleClick(data){
-
       },
       handleCurrentChange(val) {
         this.currentRow = val;
@@ -201,6 +263,18 @@
       },
       handleDelete(index, row) {
         console.log(index, row);
+      },
+      // 成功后提示信息
+      Success(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      // 错误信息提示
+      errorMsg(msg) {
+        this.$message.error(msg);
       },
 
       //删除用户信息方法
@@ -264,9 +338,16 @@
           userType: this.userType
         }
       }).then((res) => {
-        this.testAllData = res.data;
-        this.total = this.testAllData.length;
-        //console.log(this.testAllData);
+        if (res.data) {
+          let resData = res.data;
+          for (let i=0; i<resData.length; i++) {
+            resData[i].num = i + 1;
+          }
+          this.choiceData = resData;
+          this.total1 = this.choiceData.length;
+        }
+
+        //console.log(this.choiceData);
       });
     },
     components: {}
@@ -278,9 +359,9 @@
     margin: 0;
     padding: 0;
   }
-
+  .testBaseM_cont .headBut {
+  }
   .testBaseM_cont .el-table .cell {
-    text-align: left;
     margin-left: 14px
   }
   .testBaseM_cont .elinput{
@@ -301,29 +382,45 @@
   .testBaseM_cont .buttons .el-button{
     margin-top:22px;
   }
+  .testBaseM_cont .headBut{
+    float: left;
+  }
   .dropdown{
     width:488px;
   }
-
-  .el-table-column--selection .cell {
+  .testBaseM_cont .el-table-column--selection .cell {
     padding-left: 0;
   }
 
-  .block .el-button {
+  .testBaseM_cont .block .el-button {
     float: left;
   }
   .testBaseM_cont span {
     display: inline-block;
   }
   .testBaseM_cont .userM_But1,.userM_But2 {
-    float: left;
+    margin-right: 16px;
   }
-  .testBaseM_cont .userM_But1 {
-    margin-right: 10px;
-  }
-
   .testBaseM_cont .el-dialog {
     width: 650px;
+  }
+  .testBaseM_cont .el-tabs--card>.el-tabs__header .el-tabs__nav{
+    border-width: 1px 1px 0 0;
+    border-color: #9f5355;
+    border-style: solid;
+  }
+  .testBaseM_cont .el-tabs--card>.el-tabs__header{
+    border-width: 0 0 1px 0;
+    border-color: #9f5355;
+    border-style: solid;
+    margin: 0;
+  }
+  .testBaseM_cont .el-tabs--card>.el-tabs__header .el-tabs__item{
+    border-left: 1px solid #9f5355;
+    font-size: 16px;
+  }
+  .testBaseM_cont .el-table td, .el-table th {
+    height: 40px;
   }
 
 </style>

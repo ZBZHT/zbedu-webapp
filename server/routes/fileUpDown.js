@@ -22,7 +22,7 @@ router.post('/upload', function(req, res) {
   try {
     let form = new formidable.IncomingForm();
     form.uploadDir = "../app/uploads/";//设置文件上传存放地址
-    form.maxFieldsSize = 100 * 1024 * 1024; //设置最大100M
+    form.maxFieldsSize = 600 * 1024 * 1024; //设置最大600M
     form.keepExtensions = true;
 
     form.parse(req, function (err, fields, files) {

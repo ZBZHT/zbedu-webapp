@@ -3,26 +3,6 @@
 
     <!--用户管理-->
     <el-col :span="19" class="el-Col">
-      <div class="headBut">
-        <span class="userM_But1">
-          <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
-        </span>
-        <span  class="userM_But2">
-          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加单个用户</el-button>
-        </span>
-        <span class="userM_But3">
-          <el-upload
-            class="upload-demo"
-            action="/teacherCMS/addExcelUsers"
-            :onError="uploadError"
-            :beforeUpload="beforeAvatarUpload"
-            :onSuccess="uploadSuccess"
-            :show-file-list=false
-            :on-exceed="handleExceed">
-          <el-button size="small" type="primary">Excel导入用户</el-button>
-        </el-upload>
-        </span>
-      </div>
 
       <!--添加用户对话框-->
       <el-dialog title="请填写资料"
@@ -292,7 +272,27 @@
         </el-tab-pane>
       </el-tabs>
 
-
+      <span class="headBut">
+        <span class="userM_But1">
+          <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+        </span>
+        <span  class="userM_But2">
+          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加单个用户</el-button>
+        </span>
+        <span class="userM_But3">
+          <el-upload
+            class="upload-demo"
+            action="/teacherCMS/addExcelUsers"
+            :onError="uploadError"
+            :beforeUpload="beforeAvatarUpload"
+            :onSuccess="uploadSuccess"
+            :show-file-list=false
+            :on-exceed="handleExceed"
+            accept=".xlsx">
+          <el-button size="small" type="primary">Excel导入用户</el-button>
+        </el-upload>
+        </span>
+      </span>
 
     </el-col>
 
@@ -658,13 +658,6 @@
 
       // 上传前判断是不是Excel文件
       beforeAvatarUpload(file) {
-        let index = file.name.split(".");
-        let isxls = index[index.length-1];
-        if (isxls == 'xlsx' || isxls == 'xls') {
-          return true;
-        } else {
-          this.$message.error('只能导入是 xls 或者 xlsx格式!');
-        }
       },
 
       handleClose(done) {  //对话框关闭确认
@@ -720,7 +713,7 @@
     padding: 0;
   }
   .userManager_cont .headBut {
-    float: right;
+    float: left;
   }
   .userManager_cont .userM_el-table .userM_el-tableBut {
     margin-top: 0;
@@ -729,14 +722,12 @@
     border-radius: 16px;
   }
   .userManager_cont .el-Col .userM_But1,.userM_But2 {
-    float: left;
     margin-bottom: 6px;
     margin-right: 16px;
   }
   .userManager_cont .el-Col .userM_But3 {
-    float: left;
     margin-bottom: 6px;
-    margin-right: 70px;
+    margin-right: 16px;
   }
   .userManager_cont .el-tree-node__expand-icon {
     font-size: 16px;
@@ -756,7 +747,6 @@
   .userManager_cont .el-table .cell {
     text-align: left;
     margin-left: 14px
-
   }
 
   .userManager_cont .CMS_cont {
@@ -775,9 +765,6 @@
     padding-left: 0;
   }
 
-  .userManager_cont .block .el-button {
-    float: left;
-  }
   .userManager_cont .el-dialog{
     width: 40.5%;
   }
@@ -800,6 +787,7 @@
   }
   .userManager_cont .el-tabs--card>.el-tabs__header .el-tabs__item{
     border-left: 1px solid #9f5355;
+    font-size: 16px;
   }
   .userManager_cont .el-table td, .el-table th {
     height: 40px;

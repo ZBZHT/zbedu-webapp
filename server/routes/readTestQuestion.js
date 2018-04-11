@@ -302,7 +302,7 @@ router.get('/getTestQing', function (req, res) {
     user: req.query.user,
     state: 1,
   }).then(function (msgOne) {
-    console.log(msgOne.currTestType);
+    //console.log(msgOne);
     if (msgOne && msgOne.currTestType != 106) {
       res.end(JSON.stringify(msgOne));
     } else {
@@ -318,9 +318,24 @@ router.get('/stuHistoryTestData', function (req, res) {
   TestQuestion.find({
     user: reqUser,
     state: 2,
-  }).then(function (result) {
-    //console.log(result);
-    res.end(JSON.stringify(result));
+  }).then(function (testQuestion) {
+    if (testQuestion) {
+      TestQuestionInfo.find({
+        user: reqUser,
+        state: 2,
+      }).then(function (testQuestionInfo) {
+        if (testQuestionInfo) {
+          res.end(JSON.stringify({
+            testQuestion: testQuestion,
+            testQuestionInfo: testQuestionInfo
+          }));
+        } else {
+          res.status(404).send({err: err,});
+        }
+      });
+    } else {
+      res.status(404).send({err: err,});
+    }
   });
 });
 
