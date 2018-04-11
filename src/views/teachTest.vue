@@ -344,7 +344,7 @@
               </template>
             </el-table-column>
 
-            <el-table-column label="考试题目" width="100">
+            <el-table-column label="考试题目" width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.theme }}</span>
               </template>

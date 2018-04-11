@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div id="app" class="resourceCenter">
     <div class="nav">
       <navgation-head></navgation-head>
     </div>
@@ -7,13 +7,14 @@
     <div class="fileList-box">
       <el-upload
         class="upload-demo"
-        action="http://192.168.2.251:8000/FileUpDown/upload"
+        action="/fileUpDown/upload"
         :onError="uploadError"
         :beforeUpload="beforeAvatarUpload"
         :onSuccess="uploadSuccess"
-        :on-exceed="handleExceed">
+        :on-exceed="handleExceed"
+        accept=".xlsx">
         <el-button class="uploadBut" size="medium " type="primary">点击上传</el-button>
-        <div slot="tip" class="el-upload__tip">温馨提示: 上传的文件不可超过100M</div>
+        <div slot="tip" class="el-upload__tip">温馨提示: 上传的文件不可超过600M</div>
       </el-upload>
       <!--对话框-->
       <el-dialog
@@ -219,8 +220,9 @@
       /*上传方法*/
       // 上传成功后的回调
       uploadSuccess (res, file) {
-        let resFileMsg = res.fileMsg[0];
-        this.msgArr.push(resFileMsg);
+        if (res.fileMsg[0]) {
+          this.msgArr.push(res.fileMsg[0]);
+        }
       },
       // 上传错误
       uploadError (res, file, fileList) {
@@ -268,7 +270,7 @@
       sendName(item){
         axios({
           method:'get',
-          url:'http://' + this.url + ':8000/FileUpDown/download',
+          url:'/fileUpDown/download',
           responseType: 'blob',
           params:{
             downloadName:item
@@ -293,7 +295,7 @@
       fileDelete(item){
         axios({
           method:'get',
-          url:'http://' + this.url + ':8000/FileUpDown/fileDelete',
+          url:'/fileUpDown/fileDelete',
           params:{
             downloadName:item
           }
@@ -320,7 +322,7 @@
       },
     },
     mounted(){
-      axios.get('http://' + this.url + ':8000/FileUpDown/loadFile',{
+      axios.get('/fileUpDown/loadFile',{
         params:{
           user:6666
         }
@@ -330,6 +332,7 @@
               this.msgArr.push(res.data.var[i])
             }
           }
+          //
           for ( let j = 0; j < this.msgArr.length; j++){
             let index = this.msgArr[j].name.split(".");
             let suffix = index[index.length-1];
@@ -354,20 +357,24 @@
     padding: 0;
   }
 
-  .fileList-box {
+  .resourceCenter .fileList-box {
     width: 1200px;
     margin: 0 auto;
   }
 
-  .el-table .cell{
+  .resourceCenter .el-table .cell{
     text-align: left;
   }
 
-  .el-upload__tip {
+  .resourceCenter .el-upload__tip {
     text-align: left;
   }
 
-  .container .fileList-box .uploadBut {
+  .resourceCenter .fileList-box .uploadBut {
+    margin-top: 10px;
     margin-left: -68.5rem;
+  }
+  .resourceCenter .fileList-box {
+    height: 60%;
   }
 </style>

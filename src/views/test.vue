@@ -24,7 +24,7 @@
             <div class="data">
               <p class="data-p">
                 <span class="data-p-title">考试题目:</span>
-                <span class="data-p-desc">{{testOnlineData.title}}</span>
+                <span class="data-p-desc">{{testOnlineData.theme}}</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时间:</span>
@@ -128,7 +128,7 @@
                 <el-table-column label="序号" type="index" width="60">
                 </el-table-column>
 
-                <el-table-column label="考试题目" width="100">
+                <el-table-column label="考试题目" width="150">
                   <template slot-scope="scope">
                     <span>{{ scope.row.theme }}</span>
                   </template>
@@ -146,15 +146,21 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column label="考试数目" width="120">
+                <el-table-column label="考试题数" width="120">
                   <template slot-scope="scope">
                     <span>{{ scope.row.question.length }}</span>
                   </template>
                 </el-table-column>
 
+                <el-table-column label="分数" width="100">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.question.sorce }}</span>
+                  </template>
+                </el-table-column>
+
                 <el-table-column label="详细信息">
                   <template slot-scope="scope">
-                    <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
+                    <el-button size="mini" type="primary">
                       查看详情
                     </el-button>
                   </template>
@@ -473,7 +479,7 @@
         pagesize: 10,
         isTesting:0,
         testOnlineData:{
-          title:"暂无",
+          theme:"暂无",
           date1:"暂无",
           date2:"暂无",
           timeHour:0,
@@ -613,7 +619,6 @@
       },
       //点击开始考试后继续考试
       add: function () {
-
       },
 
       //开始考试时获取考试题目
@@ -669,7 +674,7 @@
             if(this.testNowData){
               this.still_btn = true;
               this.isTesting = 1;
-              this.testOnlineData.title = this.testNowData[0].title;
+              this.testOnlineData.theme = this.testNowData[0].theme;
               this.testOnlineData.date1 = this.testNowData[0].date1;
               this.testOnlineData.date2 = this.testNowData[0].date2;
               this.testOnlineData.timeHour = this.testNowData[0].timeHour;
@@ -691,17 +696,15 @@
           let resData = res.data;
           if (resData) {
             for (let i = 0; i < resData.length; i++) {
-              resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
-              resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss")
+              resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss");
+              resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss");
+              resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             }
             this.toTestData = resData;
             if(this.isTesting == 0){
-              this.testOnlineData.title = this.toTestData[0].title;
-              //console.log("::::");
-              //console.log(this.toTestData[0].title);
+              this.testOnlineData.theme = this.toTestData[0].theme;
               this.testOnlineData.date1 = this.toTestData[0].date1;
               this.testOnlineData.date2 = this.toTestData[0].date2;
-              console.log(this.toTestData[0])
               this.testOnlineData.timeHour = this.toTestData[0].timeHour;
               this.testOnlineData.allTestNum = this.toTestData[0].question.length;
             }else{
@@ -721,13 +724,15 @@
             user: this.user,
           }
         }).then((res) => {
-        //  console.log("BBBB");
-          console.log(res);
-          let resData = res.data;
-          for (let i = 0; i < resData.length; i++) {
-            resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss")
+          let resTestData = res.data.testQuestion;
+          let resTestInfoData = res.data.testQuestionInfo;
+          for (let i = 0; i < resTestData.length; i++) {
+            resTestData[i].newData = moment(resTestData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+            resTestData[i].currTestType = core.getCurrTestType(resTestData[i].currTestType);
+            resTestData[i].sorce = resTestInfoData[i].sorce;
           }
-          this.historyTestData = resData;
+          this.historyTestData = resTestData;
+          //console.log(this.historyTestData);
           this.total = this.historyTestData.length;
         });
       },
@@ -819,11 +824,10 @@
         }).then((res) => {
           let resData = res.data;
           for (let i = 0; i < resData.length; i++) {
-            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss")
+            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss");
+            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             this.historyPracticeData.push(resData[i]);
           }
-          //this.total = this.historyPracticeData.length;
-          console.log(this.historyPracticeData[0]);
         });
       },
 
@@ -852,7 +856,6 @@
   }
 
   .test_T .question {
-    min-width: 1200px;
     min-width: 700px;
     width: 1200px;
     height: 700px;
@@ -1255,6 +1258,9 @@
 
   .test_T .exerciseNum {
     width: 23%;
+  }
+  .test_T .el-table td, .el-table th {
+    padding: 6px 0;
   }
 
   /*.test_T .footer{*/

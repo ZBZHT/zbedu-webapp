@@ -8,7 +8,7 @@
         <el-row>
             <el-col :span="6">
             <el-tree
-                :data="data[0]"
+                :data="data"
                 :props="defaultProps"
                 accordion
                 node-key="id"
@@ -19,15 +19,32 @@
                 <!--教学设备-->
                 <div>
                     <el-tabs type="border-card">
-                        <el-tab-pane label="设备展示">设备展示</el-tab-pane>
-                        <el-tab-pane label="设备参数">设备参数</el-tab-pane>
+                        <el-tab-pane label="设备展示">
+                            <div class="exerEngImg" v-for="item in exerEngImg">
+                                <img :src=" 'src/assets/imgs/' + item.engImage">
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="设备参数">
+                        {{exerEngRule}}
+                            <div class="exerEngRule">
+                                <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                    <param name="_Version" value="65539">
+                                    <param name="_ExtentX" value="20108">
+                                    <param name="_ExtentY" value="10866">
+                                    <param name="_StockProps" value="0">
+                                    <param name="SRC" value="teachingMaterial">
+                                    <object :data="'src/assets/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                    </object>
+                                </object>
+                            </div>
+                        </el-tab-pane>
                         <el-tab-pane label="设备说明">设备说明</el-tab-pane>
                     </el-tabs>
                 </div>
 
                 <!--实训中心-->
                 <div>
-                
+
                 </div>
             </el-col>
         </el-row>
@@ -50,9 +67,13 @@ export default {
     return {
       defaultProps: {
         children: 'children',
-        label: 'label'
+        label: 'label',
+        engImg:'engImg',
+        engRule:'engRule'
       },
-      data:[]
+      data:[],
+      exerEngImg:[],
+      exerEngRule:''
     }
   },
   computed:{
@@ -60,12 +81,12 @@ export default {
       },
   methods:{
     handleNodeClick(data) {
-        //console.log(data.id);
-        if (data.id == 101) {
-
-        }
+        console.log(data);
+        this.exerEngImg = data.engImg;
+        this.exerEngRule = data.engRule;
+        console.log(data.engRule);
     }
-  
+
   },
   mounted(){
     axios.get("/readJson/bannerLeftData",{
@@ -73,9 +94,8 @@ export default {
                      user:234
                 }
             }).then((res)=>{
-                console.log(res.data[1])
-                this.data.push(res.data[1].children);
-                console.log(this.data)
+                this.data = res.data[1].children;
+                //console.log(this.data[0].label)
             }).catch(function(error){
                 console.log("error init." + error)
             });
@@ -143,6 +163,7 @@ hr{
     margin-left:20px;
     border:1px solid #9f5355;
     border-radius:3px;
+    height:600px;
 }
 .exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
     border-right-color: #9f5355;
@@ -153,5 +174,19 @@ hr{
 }
 .exerciseCenter-content .el-tabs__nav{
     float:none;
+}
+.exerciseCenter-content .exerEngImg{
+    width:595px;
+    height:395px;
+    margin:0 auto;
+    margin-bottom:20px;
+}
+.exerciseCenter-content .exerEngImg img{
+    width:100%;
+    height:100%;
+}
+.exerciseCenter-content .pdf-box{
+    width:100%;
+    height:100%;
 }
 </style>
