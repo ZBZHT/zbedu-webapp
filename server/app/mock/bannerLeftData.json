@@ -35,7 +35,7 @@
                             },
                             {
                               "label":"总体结构认知",
-                              "describe":"",
+                              "describe":"北汽EV160整车控制器、电机控制器、电动空调等结构的工作原理及工作条件。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -50,7 +50,7 @@
                             },
                             {
                               "label":"高压安全操作",
-                              "describe":"describe",
+                              "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -65,7 +65,7 @@
                             },
                             {
                               "label":"高压危害与救助方法",
-                              "describe":"describe",
+                              "describe":"简述用电操作不当遇到危险时候的一些急救方法以及如何正确安全的操作纯电动汽车。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -80,7 +80,7 @@
                             },
                             {
                               "label":"新车PDI检查",
-                              "describe":"describe",
+                              "describe":"纯电动汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -95,7 +95,7 @@
                             },
                             {
                               "label":"常规保养与维护",
-                              "describe":"describe",
+                              "describe":"纯电动汽车如何保养、保养哪些方面和保养维护的时候应当注意的地方有哪些。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -132,9 +132,9 @@
                             {
                               "label":"BMS系统拆装",
                               "describe":"BMS的功能原理和作用，更换BMS控制器步骤及电动汽车高压安全操作注意事项。",
-                              "teachingMaterial":"/src/assets/pdf/EV系列-2-3-电机继电器故障检测.pdf",
-                              "videoTitle":"/src/assets/video/拆装动力电池BMS-10.24.mp4",
-                              "workPage":"/src/assets/pdf/学习任务二 更换动力电池内部组件.pdf",
+                              "teachingMaterial":"EV系列-2-3-电机继电器故障检测.pdf",
+                              "videoTitle":"拆装动力电池BMS-10.24.mp4",
+                              "workPage":"学习任务二 更换动力电池内部组件.pdf",
                               "homeWorkData":[
                                 {
                                   "title":"磷酸铁锂动力电池由：()、()、()、() 这些部件组成。",
@@ -223,8 +223,8 @@
                             {
                               "label":"继电器模组故障检修",
                               "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
-                              "teachingMaterial":"/src/assets/pdf/EV系列-2-2-拆装BMS系统.pdf",
-                              "videoTitle":"/src/assets/video/右近光灯故障检测-11.14.mp4",
+                              "teachingMaterial":"",
+                              "videoTitle":"",
                               "workPage":"",
                               "homeWorkData":[
                                 {
@@ -237,7 +237,7 @@
                             },
                             {
                               "label":"动力电池故障检修",
-                              "describe":"",
+                              "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -258,7 +258,7 @@
                       "children":[
                             {
                               "label":"驱动电机拆装",
-                              "describe":"",
+                              "describe":"详述驱动电机是什么，作用及原理，如何从整车上拆下驱动电机以及拆卸步骤和注意事项。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -273,7 +273,7 @@
                             },
                             {
                               "label":"电机控制器拆装",
-                              "describe":"",
+                              "describe":"详述电机控制器是什么，作用及原理，如何从整车上拆下电机控制器以及拆卸步骤和注意事项。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",     
@@ -288,7 +288,7 @@
                             },
                             {
                               "label":"MCU IGBT过温故障检修",
-                              "describe":"describe",
+                              "describe":"详述 IBGT作用及温度过高时可能发生的故障现象及排除故障步骤。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -303,7 +303,7 @@
                             },
                             {
                               "label":"MCU与VCU通讯丢失故障",
-                              "describe":"describe",
+                              "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -384,7 +384,7 @@
                             },
                             {
                               "label":"加速踏板信号故障检修",
-                              "describe":"describe",
+                              "describe":"详述加速踏板的控制及工作原理，与VCU之间是怎么通讯的，丢失信号时候会是怎样的反应。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -399,7 +399,7 @@
                             },
                             {
                               "label":"新能源can线系统故障检修",
-                              "describe":"describe",
+                              "describe":"新能源CAN线的作用，及哪些模块需要通过新能源CAN线来实现通信的以及发生故障排故的流程。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -429,7 +429,7 @@
                             },
                             {
                               "label":"整车供断电控制故障",
-                              "describe":"describe",
+                              "describe":"详述低压唤醒及高、低压控制原理，充电模式下唤醒的方式是怎样的。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -495,7 +495,7 @@
                             },
                             {
                               "label":"低压蓄电池警示灯点亮故障检修",
-                              "describe":"describe",
+                              "describe":"详述DC/DC作用，低压蓄电池报警有哪些条件，排除故障的流程等。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -510,7 +510,7 @@
                             },
                             {
                               "label":"充电桩结构原理及性能介绍",
-                              "describe":"describe",
+                              "describe":"充电桩的结构是怎样的，其工作原理和控制原理是怎样的，如何与车辆之间实现充电。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -531,7 +531,7 @@
                       "children":[
                             {
                               "label":"冷却系统故障检修",
-                              "describe":"",
+                              "describe":"详述北汽冷却系统结构原理、控制原理、部件功能及排除冷却系统故障方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -546,7 +546,7 @@
                             },
                             {
                               "label":"电动助力转向系统故障检修",
-                              "describe":"",
+                              "describe":"详述北汽电动助力转向系统结构原理、控制原理、部件功能及排除转向系统故障方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -561,7 +561,7 @@
                             },
                             {
                               "label":"制动系统故障检修",
-                              "describe":"describe",
+                              "describe":"详述北汽制动系统结构原理、控制原理、部件功能及排除制动系统故障方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -576,7 +576,7 @@
                             },
                             {
                               "label":"电动空调系统故障检修",
-                              "describe":"describe",
+                              "describe":"详述北汽电动空调系统结构原理、控制原理、部件功能及排除电动空调系统故障方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -603,7 +603,7 @@
                       "children":[
                             {
                               "label":"混合动力汽车概述",
-                              "describe":"",
+                              "describe":"详述什么是混合动力汽车，有哪些部件结构组成，其基本工作原理是什么？",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -633,7 +633,7 @@
                             },
                             {
                               "label":"新车交接检查（PDI）",
-                              "describe":"describe",
+                              "describe":"混合动力汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -648,7 +648,7 @@
                             },
                             {
                               "label":"常规保养与维护",
-                              "describe":"describe",
+                              "describe":"混合动力汽车如何保养、保养哪些方面和保养维护时候应当注意的地方有哪些。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -705,7 +705,7 @@
                       "children":[
                             {
                               "label":"发动机故障灯常亮的故障检修",
-                              "describe":"",
+                              "describe":"混合动力汽车发动机构造及工作原理，故障灯点亮维修的流程及方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -741,7 +741,7 @@
                       "children":[
                             {
                               "label":"变速驱动桥异响故障检修",
-                              "describe":"",
+                              "describe":"混合动力汽车驱动桥结构原理、工作原理和发生异响时候故障检修的流程及方法。",
                               "teachingMaterial":"",
                               "videoTitle":"",
                               "workPage":"",
@@ -1553,6 +1553,7 @@
       "children":[
         {
           "label":"教学设备展示",
+          "id":101,
           "children":[
               {
                 "label":"新能源纯电动汽车教学设备",
@@ -1571,7 +1572,7 @@
                       "label":"北汽EC180整车解剖实训车",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"北汽EC180整车解剖实训车.png"
                         }
                       ],
                       "engRule":"",
@@ -1594,7 +1595,10 @@
                       "label":"北汽EV160动力电池实验台 (6)",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"北汽EV160动力电池实验台 (6).png"
+                        },
+                        {
+                          "engImage":"北汽EV160动力电池实验台 (7).png"
                         }
                       ],
                       "engRule":"",
@@ -1604,7 +1608,7 @@
                       "label":"北汽新能源EV160空调防抱死系统教学平台 (1)",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"北汽新能源EV160空调防抱死系统教学平台 (1).png"
                         }
                       ],
                       "engRule":"",
@@ -1614,7 +1618,7 @@
                       "label":"电动汽车动力系统实训台（英博尔类型）",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"电动汽车动力系统实训台（英博尔类型）.png"
                         }
                       ],
                       "engRule":"",
@@ -1624,7 +1628,7 @@
                       "label":"江淮新能源IEV6E驱动系统检测台架",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"江淮新能源IEV6E驱动系统检测台架.png"
                         }
                       ],
                       "engRule":"",
@@ -1634,7 +1638,7 @@
                       "label":"新能源交流汽车动力系统实验台架",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"新能源交流汽车动力系统实验台架-(2).png"
                         }
                       ],
                       "engRule":"",
@@ -1644,7 +1648,7 @@
                       "label":"新能源空调系统检测实训台",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"新能源EV160空调系统实验台 .png"
                         }
                       ],
                       "engRule":"",
@@ -1654,7 +1658,7 @@
                       "label":"新能源-控制系统",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"新能源-控制系统 (2).png"
                         }
                       ],
                       "engRule":"",
@@ -1664,7 +1668,7 @@
                       "label":"新能源汽车动力电池检测台江淮IEV6E",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"江淮新能源IEV6E动力电池检测台架.png"
                         }
                       ],
                       "engRule":"",
@@ -1674,7 +1678,7 @@
                       "label":"新能源汽车控制系统检测实训台",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"新能源汽车控制系统检测实训台.JPG"
                         }
                       ],
                       "engRule":"",
@@ -1684,7 +1688,7 @@
                       "label":"新能源汽车驱动系统实训台",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"新能源汽车驱动系统实训台.JPG"
                         }
                       ],
                       "engRule":"",
@@ -1694,7 +1698,7 @@
                       "label":"新能源直流电机控制系统实验台架",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"新能源直流电机控制系统实验台架-(8).png"
                         }
                       ],
                       "engRule":"",
@@ -1709,7 +1713,7 @@
                       "label":"比亚迪秦系列教学设备",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"比亚迪秦整车电器检测实训设备.png"
                         }
                       ],
                       "engRule":"",
@@ -1739,7 +1743,7 @@
                       "label":"雷凌双擎系列教学设备",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"雷凌双擎HV动力电池检测台 (1).png"
                         }
                       ],
                       "engRule":"",
@@ -1749,7 +1753,7 @@
                       "label":"普锐斯系列教学设备",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"普锐斯混合动力系统实训台 (1).png"
                         }
                       ],
                       "engRule":"",
@@ -1767,7 +1771,7 @@
                             "label":"大众帕萨特点火喷油示教板",
                             "engImg":[
                               {
-                                "engImage":"IMG_0839.JPG"
+                                "engImage":"大众帕萨特点火喷油示教板.JPG"
                               }
                             ],
                             "engRule":"大众帕萨特点火喷油示教板.pdf",
@@ -1777,30 +1781,30 @@
                             "label":"丰田5A点火系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田5A点火系统示教板.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"丰田5A点火系统示教板.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"六种点火系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"六种点火系统示教板.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"6种点火系统示教板.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"四种点火系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"四种点火系统示教板.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"四种点火系统示教板.pdf",
                             "engIntor":""
                           }
                       ]
@@ -1812,200 +1816,200 @@
                             "label":"5A发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"5A发动机检修实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"8A发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"8A发动机检修实训台架.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"polo1.4发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"polo1.4发动机检修实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"POLO波罗发动机实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"POLO波罗发动机实验台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"TDI柴油共轨发动机实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"TDI柴油共轨发动机实验台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"TOYOTA缸内直喷FSE发动机",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"TOYOTA缸内直喷FSE发动机.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众 FSI发动机实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众 FSI发动机实验台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众1.4TSI发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众1.4TSI发动机检修实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"花冠发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"花冠发动机检修实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"吉利发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"吉利发动机检修实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉1.6发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉1.6发动机检修实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"凯越发动机",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"凯越发动机.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"康明斯高压共轨发动机实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"康明斯高压共轨发动机实验台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"帕萨特电控发动机实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"帕萨特电控发动机实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳2000",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳2000.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"五菱发动机检修实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"五菱发动机检修实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"新玉柴发动机检修实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"新玉柴发动机检修实验台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"玉柴4F发动机",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"玉柴4F发动机.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"玉柴高压共轨发动机",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"玉柴高压共轨发动机.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"长城哈弗柴油共轨",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"长城哈弗柴油共轨.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机实验台架.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2017,7 +2021,10 @@
                             "label":"67种积木",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"67种积木 (1).JPG"
+                              },
+                              {
+                                "engImage":"67种积木 (2).JPG"
                               }
                             ],
                             "engRule":"",
@@ -2027,7 +2034,13 @@
                             "label":"大众系列积木板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众系列积木板 (1).JPG"
+                              },
+                              {
+                                "engImage":"大众系列积木板 (2).JPG"
+                              },
+                              {
+                                "engImage":"大众系列积木板 (3).JPG"
                               }
                             ],
                             "engRule":"",
@@ -2037,7 +2050,10 @@
                             "label":"多功能平板电脑+积木板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"多功能平板电脑+积木板 (1).JPG"
+                              },
+                              {
+                                "engImage":"多功能平板电脑+积木板 (2).JPG"
                               }
                             ],
                             "engRule":"",
@@ -2047,7 +2063,7 @@
                             "label":"卡罗拉发动机积木板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉发动机积木板.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2057,7 +2073,10 @@
                             "label":"整车控制积木板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"整车控制积木板 (1).JPG"
+                              },
+                              {
+                                "engImage":"整车控制积木板 (2).JPG"
                               }
                             ],
                             "engRule":"",
@@ -2067,7 +2086,7 @@
                             "label":"中控及门锁积木板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"中控门锁.png"
                               }
                             ],
                             "engRule":"",
@@ -2077,7 +2096,10 @@
                             "label":"组合开关电器积木板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"组合开关电器积木板 (1).png"
+                              },
+                              {
+                                "engImage":"组合开关电器积木板 (2).png"
                               }
                             ],
                             "engRule":"",
@@ -2092,7 +2114,7 @@
                             "label":"1NZ电子燃油喷射系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"1NZ  示教板.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2102,7 +2124,7 @@
                             "label":"柴油机喷油演示台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"柴油机喷油演示台.png"
                               }
                             ],
                             "engRule":"",
@@ -2112,7 +2134,7 @@
                             "label":"发动机传感器执行器实训台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"发动机传感器执行器实训台.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2122,7 +2144,7 @@
                             "label":"发动机防盗系统实训台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"发动机防盗系统实训台.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2132,7 +2154,7 @@
                             "label":"卡罗拉传感器执行器示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉传感器执行器示教板.png"
                               }
                             ],
                             "engRule":"",
@@ -2142,7 +2164,7 @@
                             "label":"卡罗拉发动机电控系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉发动机电控系统示教板.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2152,7 +2174,7 @@
                             "label":"马自达转子发动机示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"马自达转子发动机示教板.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2162,7 +2184,7 @@
                             "label":"帕萨特发动机防盗系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"帕萨特发动机防盗系统示教板.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2182,7 +2204,7 @@
                             "label":"桑塔纳3000电控发动机示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳3000电控发动机示教板.png"
                               }
                             ],
                             "engRule":"",
@@ -2197,70 +2219,70 @@
                             "label":"8A发动机运行台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"8A发动机运行台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众polo发动机运行台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众polo发动机运行台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田8A-FE发动机实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田8A-FE发动机实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"技能大赛指定发动机翻转运行架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"技能大赛指定发动机翻转运行架.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳2000发动机运行台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳2000发动机运行台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"五菱发动机运行台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"五菱发动机运行台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"五十铃发动机拆装翻转运行架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"五十铃发动机拆装翻转运行架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"发动机运行.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2272,40 +2294,40 @@
                             "label":"JEEP润滑示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"JEEP润滑示教板.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"润滑系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众润滑",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众润滑.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"润滑系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田润滑示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田润滑示教板.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"润滑系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"润滑系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"润滑系统示教板.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"润滑系统教学设备.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2322,190 +2344,190 @@
                             "label":"01M工作台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"01M工作台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"01M自动变速器考核实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"01M自动变速器考核实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"01N",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"01N.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"01V",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"01V.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"A340自动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"A340自动变速器.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"DSG",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"DSG.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"LS400",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"LS400.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"本田",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架本田.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"本田版本2",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架本田版本2.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"本田飞度CBT自动变速器运行台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"本田飞度CBT自动变速器运行台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"别克",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架别克.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众01M",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众01M.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
-                            "label":"大众01N自动变速去",
+                            "label":"大众01N自动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众01N自动变速去.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众自动变速器实训台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众自动变速器实训台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"飞度",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架飞度.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架卡罗拉变速器.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"凯越自动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架凯越自动变速器.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"三菱",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"变速器检测实训台架三菱.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"无极自动变速",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"无极自动变速.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"变速器检测实训台架.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2517,7 +2539,7 @@
                             "label":"差速器1",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"差速器1.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2527,7 +2549,7 @@
                             "label":"差速器2",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"差速器2.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2537,7 +2559,7 @@
                             "label":"差速器3",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"差速器3.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2547,7 +2569,7 @@
                             "label":"减速器拆装",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"减速器拆装.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2562,20 +2584,20 @@
                             "label":"丰田金杯后驱传动系统实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田金杯后驱传动系统实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"传动系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田卡罗拉传动系统实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田卡罗拉传动系统实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"传动系统教学设备.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2587,80 +2609,70 @@
                             "label":"别克凯越",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"底盘系统教学车别克凯越.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众polo底盘教学台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众捷达整车底盘教学台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众捷达整车底盘教学台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众捷达整车底盘教学台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田凯美瑞整车底盘实训台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田凯美瑞整车底盘实训台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"捷达整车底盘教学车",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"捷达整车底盘教学车.JPG"
                               }
                             ],
-                            "engRule":"",
-                            "engIntor":""
-                          },
-                          {
-                            "label":"卡罗拉整车底盘实训台",
-                            "engImg":[
-                              {
-                                "engImage":""
-                              }
-                            ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"帕萨特整车底盘教学台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"帕萨特整车底盘教学台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"三菱吉普整车底盘实训台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"三菱吉普整车底盘实训台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"底盘系统教学车.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2672,7 +2684,7 @@
                             "label":"奥迪后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"奥迪后桥.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2682,7 +2694,7 @@
                             "label":"北京后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"北京后桥.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2692,7 +2704,7 @@
                             "label":"丰田3Y后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田3Y后桥.png"
                               }
                             ],
                             "engRule":"",
@@ -2702,7 +2714,7 @@
                             "label":"高尔夫后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"高尔夫后桥.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2712,7 +2724,7 @@
                             "label":"马自达6后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"马自达6后桥.png"
                               }
                             ],
                             "engRule":"",
@@ -2722,7 +2734,7 @@
                             "label":"千里马后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"千里马后桥.png"
                               }
                             ],
                             "engRule":"",
@@ -2732,7 +2744,7 @@
                             "label":"天籁后桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"天籁后桥.png"
                               }
                             ],
                             "engRule":"",
@@ -2747,7 +2759,7 @@
                             "label":"拉线离合器实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"拉线离合器实验台架.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2757,7 +2769,7 @@
                             "label":"拉线离合器实验台架2",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"拉线离合器实验台架2.png"
                               }
                             ],
                             "engRule":"",
@@ -2767,7 +2779,7 @@
                             "label":"液压离合器实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"液压离合器实验台架.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2777,7 +2789,7 @@
                             "label":"液压离合器实验台架2",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"液压离合器实验台架 2.png"
                               }
                             ],
                             "engRule":"",
@@ -2792,7 +2804,7 @@
                             "label":"奥迪前桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"奥迪前桥.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2802,7 +2814,7 @@
                             "label":"北京前桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"北京前桥.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2812,7 +2824,7 @@
                             "label":"丰田3Y前桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田3Y前桥.png"
                               }
                             ],
                             "engRule":"",
@@ -2822,7 +2834,7 @@
                             "label":"马自达6前桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"马自达6前桥.png"
                               }
                             ],
                             "engRule":"",
@@ -2832,7 +2844,7 @@
                             "label":"前桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"前桥.jpg"
                               }
                             ],
                             "engRule":"",
@@ -2842,7 +2854,7 @@
                             "label":"天籁前桥",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"天籁前桥.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2857,27 +2869,27 @@
                             "label":"大众捷达手动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众捷达手动变速器.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众前驱手动变速器实验台架新",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众前驱手动变速器实验台架新.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田海狮手动变速器解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田海狮手动变速器.JPG"
                               }
                             ],
                             "engRule":"",
@@ -2887,100 +2899,100 @@
                             "label":"丰田海狮手动变速器实验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田海狮手动变速器.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉手动变速器拆装翻转架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉手动变速器拆装翻转架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉手动变速器解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉手动变速器解剖.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"帕萨特手动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"帕萨特手动变速器.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳手动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳手动变速器.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳手动变速器2",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳手动变速器（2）.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"手动变速器解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"手动变速器解剖.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"手动变速器维修性能试验台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"手动变速器维修性能试验台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"手动变速器装配性能试验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"手动变速器装配性能试验台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"五菱手动变速器解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"五菱手动变速器解剖.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"手动变速器解剖台架.pdf",
                             "engIntor":""
                           }
                       ]
@@ -2992,70 +3004,70 @@
                             "label":"esp",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"esp.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"SUTENG",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"SUTENG.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田佳美",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"佳美.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田卡罗拉",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"制动系统实训台架丰田卡罗拉.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"捷达ABS",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"制动系统实训台架捷达ABS.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"帕萨特esp",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"制动系统实训台架帕萨特esp.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳3000ABS",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"制动系统实训台架桑塔纳3000ABS.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"制动系统实训台架.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3067,60 +3079,60 @@
                             "label":"LS400 电控转向",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"LS400 电控转向.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"转向系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"LS400电动液压转向系统实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"LS400电动液压转向系统实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"转向系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"转向系统教学设备大众.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"转向系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众POLO动力转向",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众POLO动力转向.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"转向系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田悬挂与液压动力转向",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田悬挂与液压动力转向.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"转向系统教学设备.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"转向系统教学设备卡罗拉.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"转向系统教学设备.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3132,130 +3144,130 @@
                             "label":"01M",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖台架01M.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"01m变速器解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"01m变速器解剖.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"01N",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖台架01N.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"01Q自动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"01Q自动变速器.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
-                            "label":"201308四川自动变速器解剖",
+                            "label":"自动变速器解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"DSG",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖台架DSG.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"U340自动变速器",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"U340自动变速器.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"飞度",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖台架飞度.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田A340",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田A340A340解剖运行台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田金杯海狮3Y",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田金杯海狮3Y.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"捷达",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖台架捷达.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"凯美瑞",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"自动变速器解剖台架凯美瑞.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"油路试教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"油路试教板.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"自动变速器解剖台架.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3272,10 +3284,10 @@
                             "label":"ls400 双气囊",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"ls400 双气囊.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"安全气囊.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3287,140 +3299,140 @@
                             "label":"sangtana 2000",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"sangtana 2000.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田氙气大灯随动转向系统试验台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田氙气大灯随动转向系统试验台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"吉利自动大灯",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"吉利自动大灯.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"捷达全车",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"捷达全车.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉全车电器实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉全车电器实训台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"科鲁兹全车电器实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"科鲁兹全车电器实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"迈腾AFS随动灯光系统示教板",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"迈腾AFS随动灯光系统示教板.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"帕萨特全车",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"帕萨特全车.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳3000",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳3000.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"桑塔纳全车电器实训台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"桑塔纳全车电器实训台架.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"速腾",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"速腾.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"威驰整车",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"威驰整车.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"五菱全车",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"五菱全车.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"现代整车",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"现代整车.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"灯光.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3432,110 +3444,110 @@
                             "label":"3000手动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"3000手动空调.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"奥迪C5自动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"奥迪C5自动空调.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众空调部件解剖",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众空调解剖.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田花冠自动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田花冠自动空调.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田手动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田手动空调.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田威驰手动",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田威驰手动.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"吉利手动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"吉利手动空调.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉手动",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉手动.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"卡罗拉自动",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"卡罗拉自动.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"凌志400自动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"凌志400自动空调.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"帕萨特B5自动空调",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"帕萨特B5自动空调2.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"空调.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3547,7 +3559,7 @@
                             "label":"3000雨刮",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"3000雨刮.png"
                               }
                             ],
                             "engRule":"",
@@ -3557,7 +3569,7 @@
                             "label":"奥迪雨刮",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"奥迪雨刮.jpg"
                               }
                             ],
                             "engRule":"",
@@ -3567,7 +3579,7 @@
                             "label":"大众雨刮后视镜（板式）",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众雨刮后视镜（板式）.png"
                               }
                             ],
                             "engRule":"",
@@ -3577,7 +3589,7 @@
                             "label":"丰田",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田.png"
                               }
                             ],
                             "engRule":"",
@@ -3587,17 +3599,10 @@
                             "label":"帕萨特雨刮板式",
                             "engImg":[
                               {
-                                "engImage":""
-                              }
-                            ],
-                            "engRule":"",
-                            "engIntor":""
-                          },
-                          {
-                            "label":"雨刮后视镜（板式跨线）",
-                            "engImg":[
+                                "engImage":"帕萨特雨刮板式 (1).JPG"
+                              },
                               {
-                                "engImage":""
+                                "engImage":"帕萨特雨刮板式 (2).JPG"
                               }
                             ],
                             "engRule":"",
@@ -3607,7 +3612,7 @@
                             "label":"雨刮后视镜（跨线实验台架）",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"雨刮后视镜（跨线实验台架）.png"
                               }
                             ],
                             "engRule":"",
@@ -3622,70 +3627,70 @@
                             "label":"3000中控门锁接线台架",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"3000中控门锁接线台架.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"奥迪中控防盗",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"奥迪中控防盗.jpg"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众舒适can中控门窗带车门实训台",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众舒适can中控门窗带车门实训台.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"大众中控门锁",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"大众中控门锁.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"丰田电动天窗",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"丰田电动天窗.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"凌志电动天窗",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"凌志电动天窗.JPG"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           },
                           {
                             "label":"汽车电动车窗不带门",
                             "engImg":[
                               {
-                                "engImage":""
+                                "engImage":"汽车电动车窗不带门.png"
                               }
                             ],
-                            "engRule":"",
+                            "engRule":"中控门窗.pdf",
                             "engIntor":""
                           }
                       ]
@@ -3694,10 +3699,10 @@
                       "label":"座椅",
                       "engImg":[
                         {
-                          "engImage":""
+                          "engImage":"帕萨特B5电动座椅实训台.JPG"
                         }
                       ],
-                      "engRule":"",
+                      "engRule":"座椅.pdf",
                       "engIntor":""
                     }
                 ]
@@ -3705,10 +3710,50 @@
           ]
         },
         {
-          "label":"教学设备说明"
-        },
-        {
-          "label":"实训中心设计"
+          "label":"实训中心设计",
+          "id":102,
+          "children":[
+            {
+              "label":"综合实训中心设计（南昌职业学院）",
+              "engImg":"综合实训中心设计（南昌职业学院）.png",
+              "engRule":"设计1.pdf"
+            },
+            {
+              "label":"发动机实训室设计",
+              "engImg":"发动机实训室设计.png",
+              "engRule":"设计2.pdf"
+            }
+            ,
+            {
+              "label":"新能汽车源动力电池实训室",
+              "engImg":"新能汽车源动力电池实训室.png",
+              "engRule":"设计3.pdf"
+            }
+            ,
+            {
+              "label":"新能源汽车电机与控制实训室",
+              "engImg":"新能源汽车电机与控制实训室.png",
+              "engRule":"设计4.pdf"
+            }
+            ,
+            {
+              "label":"新能源汽车低压电器与底盘实训室",
+              "engImg":"新能源汽车低压电器与底盘实训室.png",
+              "engRule":"设计5.pdf"
+            }
+            ,
+            {
+              "label":"纯电动汽车整车实训室",
+              "engImg":"纯电动汽车整车实训室.png",
+              "engRule":"设计6.pdf"
+            }
+            ,
+            {
+              "label":"信息化智慧教室设计",
+              "engImg":"信息化智慧教室设计.png",
+              "engRule":"设计7.pdf"
+            }
+          ]
         }
       ]
     },

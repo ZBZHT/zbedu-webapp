@@ -17,15 +17,15 @@
 
             <el-col :span="18">
                 <!--教学设备-->
-                <div>
+                <div v-show="is697">
+                    <p class="exerP">{{exerLabel}}</p>
                     <el-tabs type="border-card">
                         <el-tab-pane label="设备展示">
                             <div class="exerEngImg" v-for="item in exerEngImg">
-                                <img :src=" 'src/assets/imgs/' + item.engImage">
+                                <img :src=" '/resource/imgs/' + item.engImage">
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="设备参数">
-                        {{exerEngRule}}
                             <div class="exerEngRule">
                                 <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                                     <param name="_Version" value="65539">
@@ -33,7 +33,7 @@
                                     <param name="_ExtentY" value="10866">
                                     <param name="_StockProps" value="0">
                                     <param name="SRC" value="teachingMaterial">
-                                    <object :data="'src/assets/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
                                     </object>
                                 </object>
                             </div>
@@ -42,9 +42,29 @@
                     </el-tabs>
                 </div>
 
-                <!--实训中心-->
-                <div>
-
+                <!--实训中心设计-->
+                <div v-show="is926">
+                <p class="exerP">{{exerLabel}}</p>
+                    <el-tabs type="border-card">
+                        <el-tab-pane label="实训中心效果图">
+                            <div class="exerEngImg">
+                                <img :src=" '/resource/imgs/' + exerEngImg">
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="实训中心配置">
+                            <div class="exerEngRule">
+                                <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                    <param name="_Version" value="65539">
+                                    <param name="_ExtentX" value="20108">
+                                    <param name="_ExtentY" value="10866">
+                                    <param name="_StockProps" value="0">
+                                    <param name="SRC" value="teachingMaterial">
+                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                    </object>
+                                </object>
+                            </div>
+                        </el-tab-pane>
+                    </el-tabs>
                 </div>
             </el-col>
         </el-row>
@@ -69,11 +89,15 @@ export default {
         children: 'children',
         label: 'label',
         engImg:'engImg',
-        engRule:'engRule'
+        engRule:'engRule',
+        id:'id'
       },
       data:[],
       exerEngImg:[],
-      exerEngRule:''
+      exerEngRule:'',
+      exerLabel:'实训中心',
+      is697:true,
+      is926:false
     }
   },
   computed:{
@@ -81,10 +105,17 @@ export default {
       },
   methods:{
     handleNodeClick(data) {
-        console.log(data);
+        console.log(data.id);
+        if(data.id == 101){
+            this.is697 = true;
+            this.is926 = false;
+        }else if(data.id == 102){
+            this.is697 = false;
+            this.is926 = true;
+        }
         this.exerEngImg = data.engImg;
         this.exerEngRule = data.engRule;
-        console.log(data.engRule);
+        this.exerLabel = data.label;
     }
 
   },
@@ -138,10 +169,13 @@ hr{
     margin-top:80px;
     margin-bottom:80px;
 }
+.exerciseCenter-content .exerP{
+    font-size:20px;
+    margin-bottom:20px;
+}
 .exerciseCenter-content .el-tree-node__expand-icon {
     font-size: 16px;
 }
-
 .exerciseCenter-content .el-tree-node__label {
     font-size: 16px;
 }
@@ -151,7 +185,10 @@ hr{
     border-radius: 3px;
     border: 1px solid #9f5355;
 }
-.exerciseCenter-content .el-tree-node:focus>.el-tree-node__content, .el-tree-node__content:hover{
+.exerciseCenter-content .el-tree-node:focus>.el-tree-node__content {
+    background-color: #d9d9d9;
+}
+.exerciseCenter-content .el-tree-node__content:hover{
     background-color: #d9d9d9;
 }
 .exerciseCenter-content .el-tree-node__label{
@@ -163,7 +200,6 @@ hr{
     margin-left:20px;
     border:1px solid #9f5355;
     border-radius:3px;
-    height:600px;
 }
 .exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
     border-right-color: #9f5355;
@@ -177,16 +213,14 @@ hr{
 }
 .exerciseCenter-content .exerEngImg{
     width:595px;
-    height:395px;
     margin:0 auto;
     margin-bottom:20px;
 }
 .exerciseCenter-content .exerEngImg img{
     width:100%;
-    height:100%;
 }
 .exerciseCenter-content .pdf-box{
     width:100%;
-    height:100%;
+    height:500px;
 }
 </style>

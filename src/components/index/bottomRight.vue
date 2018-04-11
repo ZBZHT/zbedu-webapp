@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import navs from '@/assets/index-data.js'
 export default {
   name: 'bottomRight',
   props :['bottomRightData'],
