@@ -14,7 +14,7 @@
                     <div v-for="item3 in item2.children">
                         <b class="hd-label" @click="setMsg(item3)">
                           <!--<router-link :to="{path:'/course' + '/label/'+ item3.label}">-->
-                            {{item3.label}}
+                            <a>{{item3.label}}</a>
                           <!--</router-link>-->
 
                             <!--<a @click="qqq(item3.label)">{{item3.label}}</a>-->
@@ -24,7 +24,7 @@
                             <li class="hd-desc" v-for="item4 in item3.children" @click="setMsg(item4)">
 
                               <!--<router-link :to="{path:'/courseNoTree/'+ item4.courseId + '/label/' + item4.label}">-->
-                                {{item4.label}}
+                                <a>{{item4.label}}</a>
                               <!--</router-link>-->
 
                             </li>

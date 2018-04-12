@@ -19,29 +19,29 @@
   "bestClassData":[
     {
       "url":"img.png",
-      "title":"标题",
-      "courseId": 61
+      "title":"纯电动汽车总体结构认知",
+      "courseId": 1122
 
     },
     {
       "url":"img.png",
-      "title":"标题",
-      "courseId": 62
+      "title":"纯电动汽车动力电池拆装",
+      "courseId": 1122
     },
     {
       "url":"img.png",
-      "title":"标题",
-      "courseId": 63
+      "title":"混合动力汽车新车交接检查",
+      "courseId": 1122
     },
     {
       "url":"img.png",
-      "title":"标题",
-      "courseId": 64
+      "title":"纯电动汽车BMS系统拆装",
+      "courseId": 1122
     },
     {
       "url":"img.png",
-      "title":"标题",
-      "courseId": 65
+      "title":"混合动力汽车高压安全操作",
+      "courseId": 1122
     }
   ],
   "pageData":[

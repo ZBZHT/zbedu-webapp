@@ -10,6 +10,7 @@ const addTestPath = "../app/uploads/addTest/";
 const Student = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const Question = require('../app/models/Question');
+const TechCosCou = require('../app/models/TechCosCou');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
 
@@ -35,6 +36,66 @@ const md5 = require('js-md5');
     }
     return result;
   }
+
+//格式化Excel里的数组为json
+function formatExcel(arr) {
+  let result = [];
+  let arrSingle = {
+    num: '',
+    desc: '',
+    options: [],
+    answer: '',
+    difficulty: '',
+    major: '',
+    title1: '',
+    title2: '',
+    title3: '',
+    title4: '',
+    title5: '',
+    title6: '',
+    forId: [],
+  };
+  for (let i=0; i<arr.length; i++) {
+    arrSingle.num = arr[i].num;
+    arrSingle.desc = arr[i].desc;
+    arrSingle.options.push(arr[i].options0);
+    arrSingle.options.push(arr[i].options1);
+    arrSingle.options.push(arr[i].options2);
+    arrSingle.options.push(arr[i].options3);
+    arrSingle.answer = arr[i].answer;
+    arrSingle.difficulty = arr[i].difficulty;
+    arrSingle.major = arr[i].major;
+    arrSingle.title1 = arr[i].title1;
+    arrSingle.title2 = arr[i].title2;
+    arrSingle.title3 = arr[i].title3;
+    arrSingle.title4 = arr[i].title4;
+    arrSingle.title5 = arr[i].title5;
+    arrSingle.title6 = arr[i].title6;
+    arrSingle.forId.push(arr[i].forId0);
+    arrSingle.forId.push(arr[i].forId1);
+    arrSingle.forId.push(arr[i].forId2);
+    arrSingle.forId.push(arr[i].forId3);
+
+    result.push(arrSingle);
+
+    arrSingle = {
+      num: '',
+      desc: '',
+      options: [],
+      answer: '',
+      difficulty: '',
+      major: '',
+      title1: '',
+      title2: '',
+      title3: '',
+      title4: '',
+      title5: '',
+      title6: '',
+      forId: [],
+    };
+  }
+  return result
+}
 
 /* 获取目录tree */
 router.post('/labelTree', function (req, res) {
@@ -540,64 +601,51 @@ router.post('/addExcelTest', function(req, res) {
   }
 });
 
-//格式化Excel里的数组为json
-function formatExcel(arr) {
-  let result = [];
-  let arrSingle = {
-    num: '',
-    desc: '',
-    options: [],
-    answer: '',
-    difficulty: '',
-    major: '',
-    title1: '',
-    title2: '',
-    title3: '',
-    title4: '',
-    title5: '',
-    title6: '',
-    forId: [],
-  };
-  for (let i=0; i<arr.length; i++) {
-      arrSingle.num = arr[i].num;
-      arrSingle.desc = arr[i].desc;
-      arrSingle.options.push(arr[i].options0);
-      arrSingle.options.push(arr[i].options1);
-      arrSingle.options.push(arr[i].options2);
-      arrSingle.options.push(arr[i].options3);
-      arrSingle.answer = arr[i].answer;
-      arrSingle.difficulty = arr[i].difficulty;
-      arrSingle.major = arr[i].major;
-      arrSingle.title1 = arr[i].title1;
-      arrSingle.title2 = arr[i].title2;
-      arrSingle.title3 = arr[i].title3;
-      arrSingle.title4 = arr[i].title4;
-      arrSingle.title5 = arr[i].title5;
-      arrSingle.title6 = arr[i].title6;
-      arrSingle.forId.push(arr[i].forId0);
-      arrSingle.forId.push(arr[i].forId1);
-      arrSingle.forId.push(arr[i].forId2);
-      arrSingle.forId.push(arr[i].forId3);
+//教师, 添加自定义课程
+router.post('/teacherCustomCourse', function (req, res) {
+  //console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    if (reqData.userType == 'admin' || reqData.userType == 'E' || reqData.userType == 'T') {
+      TechCosCou.find({
+        userID : reqData.userID,
+      }).then(function (techCosCou) {
+        if (techCosCou) {
+          res.status(200).send({ techCosCou: techCosCou, });
+        } else {
+          res.status(404).send({ Msg: '无法获取请求数据', success: 1, });
+        }
 
-      result.push(arrSingle);
-
-      arrSingle = {
-        num: '',
-        desc: '',
-        options: [],
-        answer: '',
-        difficulty: '',
-        major: '',
-        title1: '',
-        title2: '',
-        title3: '',
-        title4: '',
-        title5: '',
-        title6: '',
-        forId: [],
-      };
+      });
+      /*       let techCosCou = new TechCosCou({
+              user: addUsers.user,
+              userID: addUsers.userID,
+              AdmDate: addUsers.Aate,
+            });
+           techCosCou.save(function (err) {
+              if (err) {
+                console.log(err)
+              } else {
+                console.log('Save success');
+                res.status(200).send({
+                  userInfo: addUsers,
+                  success: 0,
+                });
+              }
+            });*/
+    }else {
+      res.status(404).send({
+        Msg: '用户无添加权限',
+        success: 1,
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
   }
-  return result
-}
+});
+
 
 module.exports = router;

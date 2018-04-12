@@ -648,7 +648,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       margin-bottom: -0px;
     }
     .right-box .nav-box .nav-item{
-      /*height: 40px;*/
+      cursor: pointer;
       line-height: 40px;
       width: 12%;
       background: linen;

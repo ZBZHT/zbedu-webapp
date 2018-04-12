@@ -676,6 +676,7 @@
     margin-bottom: -1px;
   }
   .right-box .nav-box .line{
+    cursor: pointer;
     border-bottom: 1px solid #000;
     color: #000;
 
