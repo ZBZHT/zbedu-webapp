@@ -10,7 +10,7 @@
         <div class="right-box">
 
           <h2>{{currentTitle.label}}</h2>
-          <p class="courseTitle">{{ noTree.label }}</p>
+          <!--<p class="courseTitle">{{ noTree.label }}</p>-->
           <div class="detail-box">
             <ul class="nav-box">
               <li class="nav-item" v-for="(item,index) in detailNavData" @click="onclick(index)" :class="{'line': index !== currentIndex}">
@@ -25,38 +25,42 @@
 
             <!--简介-->
             <div class="course-box" v-show="this.currentIndex === 0">
-              <p class="courseDescribe" >{{ noTree.describe }}{{ noTree.title }}</p>
+              <p class="courseDescribe" >{{ noTree.describe }}</p>
             </div>
-
+            
             <!--课件-->
             <div id="courseppt" class="contentSmallCourse" v-show="this.currentIndex === 1">
+              <p class="devDownload"></p>
               <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                 <param name="_Version" value="65539">
                 <param name="_ExtentX" value="20108">
                 <param name="_ExtentY" value="10866">
                 <param name="_StockProps" value="0">
                 <param name="SRC" value="teachingMaterial">
-                <object :data="noTree.teachingMaterial" type="application/pdf" class="pdf-box">
+                <object :data="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" type="application/pdf" class="pdf-box">
                 </object>
               </object>
               <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
             </div>
 
             <!--微课-->
-            <div class="" v-show="this.currentIndex === 2">
-              <video id="video-box" controls @click="videostop" :src="videoTitle">
-              </video>
+            <div class="courseVideo" v-show="this.currentIndex === 2">
+              <div  v-for="item in noTree.videoTitle">
+                <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
+                </video>
+              </div>
             </div>
 
             <!--工作页-->
             <div id="courseWorkPage" class="contentSmallCourse" v-show="this.currentIndex === 3">
+            <p class="devDownload"></p>
               <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                 <param name="_Version" value="65539">
                 <param name="_ExtentX" value="20108">
                 <param name="_ExtentY" value="10866">
                 <param name="_StockProps" value="0">
                 <param name="SRC" value="teachingMaterial">
-                <object :data="noTree.workPage" type="application/pdf" class="pdf-box">
+                <object :data="'/resource/pdf/coursePdfData/' + noTree.workPage" type="application/pdf" class="pdf-box">
                 </object>
               </object>
               <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
@@ -80,7 +84,7 @@
               <p class="appraiseTitle">{{ appraiseMsg }}</p>
               <p v-show="!commentArr.length">暂无评价</p>
               <div class="comment-box">
-                <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.title">
+                <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.label">
                   <div class="text-box">
                     <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
                     <p >{{commentItem.text}}</p>
@@ -103,7 +107,7 @@
                   </div>
                   <div class="reply-msg-box">
                     <ul v-show="replyArr.length">
-                      <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.title && replyItem.targetId == commentItem.num">
+                      <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.label && replyItem.targetId == commentItem.num">
                         <span>{{replyItem.user}}：</span>
                         <span>{{replyItem.text}}</span>
                         <div class="replyTime-box">
@@ -113,7 +117,7 @@
 
                         <div class="replyToReply-box">
                           <ul v-show="replyToReplyArr.length">
-                            <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.title && replytoReplyItem.targetId == replyItem.num">
+                            <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.label && replytoReplyItem.targetId == replyItem.num">
                               <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
                               <span>{{replytoReplyItem.text}}</span>
                               <p>{{replytoReplyItem.time}}</p>
@@ -235,7 +239,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
     computed:{
       noTree(){
         this.currentCourseMsg = this.$store.state.noTree
-        this.currentCourseTitle = this.$store.state.noTree.title
+        this.currentCourseTitle = this.$store.state.noTree.label
         return this.$store.state.noTree;
       },
       currentTitle(){
@@ -520,7 +524,7 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       },
       //点击视频暂停开始
       videostop(){
-        var myVideo =document.getElementById("courseppt");
+        var myVideo =document.getElementById("video-box");
         if (myVideo.paused){
             myVideo.play()
         }else {
@@ -534,12 +538,12 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       //点击显示课件全屏
       appFullScreen(){
         var elem = document.getElementById("courseppt");
-        console.log(elem);   
+        console.log(elem);
         this.requestFullScreen(elem);
       },
       workPageFullScreen(){
         var elem = document.getElementById("courseWorkPage");
-        console.log(elem);   
+        console.log(elem);
         this.requestFullScreen(elem);
       },
       //类似F11的全屏
@@ -625,12 +629,9 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       height: 500px;
       width: auto;
       text-align: center;
-      /*background: pink;*/
     }
     .content-box .right-box{
       width: 80%;
-      /*background: aliceblue;*/
-      /*position: absolute;*/
       margin:0 0% 0 0%;
     }
 
@@ -676,6 +677,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       position: relative;
       background: #F3F3F3;
     }
+    .right-box .courseVideo{
+      height:525px;
+      width:100%;
+    }
+    .right-box .courseVideo #video-box{
+      width:100%;
+      height:525px;
+    }
     .right-box .course-box{
       width: 80%;
       height: 400px;
@@ -690,6 +699,14 @@ import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
       width: 100%;
       height: 450px;
       position: relative;
+    }
+    .right-box .devDownload{
+      width:100%;
+      height:53px;
+      position:absolute;
+      top:0;
+      left:0;
+      background:rgb(82,86,89);
     }
     .right-box .contentSmallCourse .pdf-box{
       width: 100%;

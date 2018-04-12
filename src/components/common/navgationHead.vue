@@ -73,19 +73,7 @@ export default {
     }
   },
   mounted(){
-      /*
-      this.url = document.domain;
-      axios.get("http://" + this.url + ":8000/readJson/bannerLeftData",{
-                params:{
-                     user:234
-                }
-            }).then((res)=>{
-                this.indexData = res.data;
-                this.navData = this.indexData;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-      */
+      
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
 
         setTimeout(function(){
@@ -133,17 +121,7 @@ export default {
             },
       modal:function(nickName){
           this.nickName = nickName;
-      },
-      fromChild (somedata) {
-        this.fromData = somedata
-      console.log(somedata)
-    },
-    receiveFromNavData (currentNavData){
-      this.currentNavData = currentNavData
-      this.$emit('sendNavData',currentNavData)
-      bus.$emit('passHeaderNavData',currentNavData)
-      // console.log(currentNavData)
-    }
+      }
   },
   components:{Modal}
 }

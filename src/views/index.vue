@@ -6,13 +6,13 @@
 
 
     <div class="index-list" :style="{height: height - 152 + 'px'}">
-        <div class="index-list-topline">{{height}}</div>
+        <div class="index-list-topline"></div>
         <div class="index-list-main">
             <div>
                 <img src="../assets/imgs/index-bg.png">
             </div>
             <div class="index-list-nav">
-                <nav-ul :navData = "navData"></nav-ul>
+                <nav-ul></nav-ul>
             </div>
         </div>
         <!--<div class="index-list-middleline"></div>-->
@@ -28,7 +28,6 @@
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
-import swipe from '@/components/testCenter/swipe'
 import navUl from '@/components/common/navUl'
 import footFooter from '@/components/common/footFooter'
 
@@ -36,17 +35,8 @@ export default {
   name: 'index',
 
   data () {
-    return {
-      windowHeight:'',
-      windowWidth:'',
-      navData:'',
-      slides: [],
-      inv: 3000,
-        styleObject: {
-          width: '100%',
-          height: '100%'
-        },
-        height:window.innerHeight
+    return { 
+      height:window.innerHeight
     }
   },
   computed:{
@@ -64,29 +54,8 @@ export default {
    
     window.addEventListener('resize', this.handleResize)
 
-      axios.get("/readJson/bannerLeftData",{
-                params:{
-                     user:234
-                }
-            }).then((res)=>{
-                this.indexData = res.data;
-                this.navData = this.indexData;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-
-      axios.get("/readJson/index",{
-                params:{
-                     user:123
-                }
-            }).then((res)=>{
-                console.log(res)
-                this.slides = res.data.slides;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-    },
-  components:{navgationHead,swipe,navUl,footFooter}
+  },
+  components:{navgationHead,navUl,footFooter}
 }
 </script>
 

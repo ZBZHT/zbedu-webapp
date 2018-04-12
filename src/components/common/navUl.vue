@@ -21,17 +21,52 @@
 import axios from 'axios'
 export default {
   name: 'navUl',
-  props:['navData'],
+//  props:['navData'],
   data () {
     return {
-
+        navData:[
+            {
+                'label':'教学中心',
+                'background':'#6d6d6d'
+            },
+            {
+                'label':'实训中心',
+                'background':'#64181a'
+            },
+            {
+                'label':'考试中心',
+                'background':'#730714'
+            },
+            {
+                'label':'资源中心',
+                'background':'#9f5355'
+            },
+            {
+                'label':'大赛中心',
+                'background':'#aeafb1'
+            },
+            {
+                'label':'互动中心',
+                'background':'#60000c'
+            }
+        ]
     }
   },
   computed:{
 
   },
   mounted(){
-      
+    axios.get("/readJson/bannerLeftData",{
+                params:{
+                     user:234
+                }
+            }).then((res)=>{
+                    this.navData = res.data;
+                
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
+
   },
   methods: {
       fobLink(index){

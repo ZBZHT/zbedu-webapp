@@ -2,14 +2,14 @@
   <li class="listItem">
     <span  >
      <i v-if="!isInclude" class="icon"></i>
-     <a href="javascript:void(0)">{{course.label}}</a>
+     <a href="javascript:void(0)" :title="course.label">{{course.label}}</a>
     </span>
     <ul class="son-box" v-show="open">
       <li v-for="(item,index) in course.children" v-if="item" class="sonListItem" @click="enter1(index)">
-        <span @click="toggle1(index)" :label="item.label" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
+        <span @click="toggle1(index);sendMsg(item)" :label="item.label" :class="{'addBgcolor': isChange && (index === currentIndex) && !item.children}">
          <i v-if="item.children" class="icon" :class="[(open1 && currentOpenIndex === index) ? 'folder-open': 'folder']"></i>
          <i v-if="!item.children">&nbsp;&nbsp;&nbsp;</i>
-         <a href="javascript:void(0)" >{{item.label}}</a>
+         <a href="javascript:void(0)" :title="item.label">{{item.label}}</a>
         </span>
 
         <ul class="grandson-box" v-show="(open1 && currentOpenIndex === index)" v-if="item">
@@ -17,14 +17,14 @@
             <span :class="{'addBgcolor': isChange && (index2 === currentIndex1)}" :label="item2.label" @click="toggle2(index2);sendMsg(item2)">
              <i v-if="item2.children" class="icon" :class="[(open2 && currentOpenIndex2 === index2) ? 'folder-open': 'folder']"></i>
              <i v-if="item && item2"></i>
-             <a href="javascript:void(0)" >{{item2.label}}</a>
+             <a href="javascript:void(0)" :title="item2.label">{{item2.label}}</a>
             </span>
 
             <ul class="grandson2-box" v-show="(open2 && currentOpenIndex2 === index2)" v-if="item2">
               <li class="grandsonListItem2" v-for="(item3,index3) in item2.children" @click="enter3(index3)">
-                <span :class="{'addBgcolor': isChange && (index3 === currentIndex2)}" :label="item3.label" @click="toggle3(index3);sendMsgNew(item3)">
+                <span :class="{'addBgcolor': isChange && (index3 === currentIndex2)}" :label="item3.label" @click="toggle3(index3);sendMsg(item3)">
                 <i v-if="item2 && item3"></i>
-                <a href="javascript:void(0)" >{{item3.label}}</a>
+                <a href="javascript:void(0)" :title="item3.label">{{item3.label}}</a>
                 </span>
               </li>
             </ul>
@@ -89,9 +89,6 @@
         }
       },
       sendMsg(item){
-        this.$store.commit('noTreeTitle',item);
-      },
-      sendMsgNew(item){
         this.$store.commit('noTreeTitle',item);
       },
       enter1(index) {

@@ -6,47 +6,84 @@
       </div>
       <div class="content-box">
         <div class="right-box">
-          <p class="courseTitle">{{ noTree.title }}</p>
+          <p class="courseTitle">{{ noTree1.label }}</p>
           <div class="detail-box">
             <ul class="nav-box">
-              <li v-for="(item,index) in detailNavData" @click="onclick(noTree,index)" :class="{'line': index !== currentIndex}">
+              <li v-for="(item,index) in detailNavData" @click="onclick(noTree1,index)" :class="{'line': index !== currentIndex}">
                 {{ item}}
               </li>
             </ul>
-            <div class="teaching-box" v-show="this.currentIndex === 0">
 
-              <p class="teaching" >待上传</p>
-            </div>
-            <div class="course-box" v-show="this.currentIndex === 1">
-              <p class="introduce">{{ noTree.describe }}</p>
-            </div>
-            <div class="homework-box" v-show="this.currentIndex === 4">
-
-              <p class="homework">待上传</p>
-            </div>
-            <!--<div class="design-box" v-show="this.currentIndex === 5">-->
-
-            <!--<p class="design">待上传</p>-->
+            <!--教材-->
+            <!--<div class="teaching-box" v-show="this.currentIndex === 0">-->
+              <!--<p class="teaching" >待上传</p>-->
             <!--</div>-->
+
+            <!--简介-->
+            <div class="course-box" v-show="this.currentIndex === 0">
+              <p class="introduce">{{ noTree1.describe }}</p>
+            </div>
+
+            <!--课件-->
+            <div id="courseppt" class="contentSmallCourse" v-show="this.currentIndex === 1">
+              <p class="devDownload"></p>
+              <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                <param name="_Version" value="65539">
+                <param name="_ExtentX" value="20108">
+                <param name="_ExtentY" value="10866">
+                <param name="_StockProps" value="0">
+                <param name="SRC" value="teachingMaterial">
+                <object :data="'/resource/pdf/coursePdfData/' + noTree1.teachingMaterial" type="application/pdf" class="pdf-box">
+                </object>
+              </object>
+              <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
+            </div>
+
+            <!--微课-->
+            <div class="courseVideo" v-show="this.currentIndex === 2">
+              <div  v-for="item in noTree1.videoTitle">
+                <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
+                </video>
+              </div>
+            </div>
+
+            <!--工作页-->
+            <div id="courseWorkPage" class="contentSmallCourse" v-show="this.currentIndex === 3">
+            <p class="devDownload"></p>
+              <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                <param name="_Version" value="65539">
+                <param name="_ExtentX" value="20108">
+                <param name="_ExtentY" value="10866">
+                <param name="_StockProps" value="0">
+                <param name="SRC" value="teachingMaterial">
+                <object :data="'/resource/pdf/coursePdfData/' + noTree1.workPage" type="application/pdf" class="pdf-box">
+                </object>
+              </object>
+              <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
+            </div>
+
+            <!--课后作业-->
+            <div v-show="this.currentIndex === 4">
+              <div class="homework-box">
+                <div class="homework" v-for="(item,index) in noTree1.homeWorkData">
+                  <p class="homeworkTitle">{{index + 1}}. {{item.title}}</p>
+                  <p class="homeworkDesc">{{item.desc}}</p>
+                    <span class="homework_Answer">正确答案：</span>
+                    <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
+                </div>
+              </div>
+              <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
+            </div>
+
+            <!--评论-->
             <div class="appraise-box" v-show="this.currentIndex === 5">
-
-              <!--<div>-->
-              <!--<p v-for="bb in commentArr">{{bb}}</p>-->
-              <!--<hr>-->
-              <!--<p v-for="cc in replyArr">{{cc}}</p>-->
-              <!--<hr>-->
-              <!--<p v-for="dd in replyToReplyArr">{{dd}}</p>-->
-              <!--</div>-->
-
-              <!--<p>{{this.commentObjArr}}</p>-->
               <p class="appraiseTitle">{{ appraiseMsg }}</p>
               <p v-show="!commentArr.length">暂无评价</p>
               <div class="comment-box">
-                <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.title">
-                  <div class="text-box" >
-                    <p @click="enterUserManagement" >用户名：<a href="">{{ commentItem.user  }}</a></p>
+                <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree1.label">
+                  <div class="text-box">
+                    <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
                     <p >{{commentItem.text}}</p>
-                    <!--<p>{{// commentItem.title}}</p>-->
                   </div>
                   <div class="msg-box">
                     <p class="time-box">时间：{{ commentItem.time }}</p>
@@ -63,21 +100,20 @@
                       </span>
                     </p>
                     <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
-
                   </div>
                   <div class="reply-msg-box">
                     <ul v-show="replyArr.length">
-                      <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title == noTree.title && replyItem.targetId == commentItem.num">
-                        <!--<li v-for="(replyItem,index) in replyArr" v-show="replyItem.target === commentItem.user && replyItem.title === noTree.title && replyItem.targetId === commentItem.num">-->
+                      <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree1.label && replyItem.targetId == commentItem.num">
                         <span>{{replyItem.user}}：</span>
                         <span>{{replyItem.text}}</span>
                         <div class="replyTime-box">
                           <p>{{replyItem.time}}</p>
                           <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
                         </div>
+
                         <div class="replyToReply-box">
                           <ul v-show="replyToReplyArr.length">
-                            <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title ==noTree.title && replytoReplyItem.targetId == replyItem.num">
+                            <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree1.label && replytoReplyItem.targetId == replyItem.num">
                               <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
                               <span>{{replytoReplyItem.text}}</span>
                               <p>{{replytoReplyItem.time}}</p>
@@ -94,16 +130,16 @@
                     </ul>
                   </div>
                   <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
-
                     <textarea type="text" v-model="replyText"></textarea>
-
                     <button @click="submitReply(commentItem,index)">提交回复</button>
                   </div>
-                  <hr >
+                  <hr>
                 </div>
               </div>
               <p class="appraiseTitle">我要评价</p>
+
               <textarea type="text" v-model="text"/>
+
               <div class="shopList">
                 <p>请评价：</p>
                 <p class="all">
@@ -144,15 +180,12 @@
                 <br>
                 <button class="commit-btn" @click="submitComments">提交评论</button>
               </div>
-            </div>
-            <div class="teaching-box" v-show="this.currentIndex === 6">
+            </div>  
 
-              <p class="teaching" >待上传</p>
-            </div>
-            <div class="teaching-box" v-show="this.currentIndex === 7">
-
-              <p class="teaching" >待上传</p>
-            </div>
+            <!--二维动画-->
+            <!--<div class="teaching-box" v-show="this.currentIndex === 7">-->
+              <!--<p class="teaching" >待上传</p>-->
+            <!--</div>-->
           </div>
         </div>
       </div>
@@ -177,7 +210,8 @@
         appraiseMsg: '全部评价',
         line: true,
         msg: '',
-        detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价","工作页","二维动画"],
+      //  detailNavData:["本节教材","本节简介","教学课件","教学微课","课后作业","课程评价","工作页","二维动画"],
+        detailNavData:["本节简介","教学课件","教学微课","工作页","课后作业","课程评价"],
         commentAllObj:[],
         currentPageCommentObj:[],
         qqqqArr:[],
@@ -197,13 +231,14 @@
         replyToReplyText:'',
         currentReplyOpen:-1,
         currentReplyToReply:-1,
-        url:''
+        url:'',
+        appAnswer:false
       }
     },
     computed:{
-      noTree(){
-        this.currentCoursrTitle = this.$store.state.noTree.title
-        return this.$store.state.noTree;
+      noTree1(){
+        this.currentCoursrTitle = this.$store.state.noTree1.label
+        return this.$store.state.noTree1;
       },
       itemClasses () {
 
@@ -222,15 +257,15 @@
     },
     methods: {
       onclick: function (courseMsg,index) {
-        this.currentIndex = index
-        // console.log(courseMsg)
-        if (this.currentIndex === 2) {
-           this.$router.push('/playPdf/'+this.$route.params.courseId + '/pdf/' + this.$route.params.title)
-        }
-        if (this.currentIndex === 3) {
-          this.$route.params.title
-          this.$router.push('/playVideo/'+ this.$route.params.courseId + '/video/' + this.$route.params.title)
-        }
+        this.currentIndex = index;
+        this.appAnswer = false;
+  //      if (this.currentIndex === 2) {
+  //         this.$router.push('/playPdf/'+this.$route.params.courseId + '/pdf/' + this.$route.params.label)
+  //      }
+  //      if (this.currentIndex === 3) {
+  //        this.$route.params.title
+  //        this.$router.push('/playVideo/'+ this.$route.params.courseId + '/video/' + this.$route.params.label)
+  //      }
       },
       dele: function (index) {
         this.replyArr.splice(index, 1)
@@ -478,6 +513,43 @@
           // console.log(item)
           this.currentReplyToReply = -1
         }
+      },
+      //点击视频暂停开始
+      videostop(){
+        var myVideo =document.getElementById("video-box");
+        if (myVideo.paused){
+            myVideo.play()
+        }else {
+          myVideo.pause()
+        }
+      },
+      //点击显示正确答案
+      appearAnswer(){
+        this.appAnswer = true;
+      },
+      //点击显示课件全屏
+      appFullScreen(){
+        var elem = document.getElementById("courseppt");
+        console.log(elem);
+        this.requestFullScreen(elem);
+      },
+      workPageFullScreen(){
+        var elem = document.getElementById("courseWorkPage");
+        console.log(elem);
+        this.requestFullScreen(elem);
+      },
+      //类似F11的全屏
+      requestFullScreen(element) {
+        var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+        if (requestMethod) {
+          requestMethod.call(element);
+        } else if (typeof window.ActiveXObject !== "undefined") {
+          var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript !== null) {
+            wscript.SendKeys(122);
+          }
+        }
+        console.log("2221")
       }
     },
     mounted(){
@@ -587,7 +659,6 @@
     width: 100%;
     border-bottom: 1px solid #333;
     text-align: center;
-    padding-right:44px;
   }
   .right-box .nav-box li{
     /*height: 40px;*/
@@ -613,7 +684,7 @@
     color: red;
   }
   .right-box .nav-box li:first-child{
-    margin-left: 8%;
+    margin-left: 16%;
   }
   .right-box .course-box{
     /*width: 700px;*/
@@ -626,12 +697,13 @@
   }
 
   .right-box .course-box .introduce{
-    width: 60%;
+    width: 95%;
     font-size: 16px;
-    padding: 200px 20% 0 20%;
+    padding: 100px 0 0 14%;
     font-weight: normal;
-    /*background: red;*/
     word-wrap: break-word;
+    text-align: left;
+    text-indent: 2em;
   }
 
   .right-box .appraise-box{
@@ -665,22 +737,36 @@
     background: #F3F3F3;
     padding: 130px 100px;
   }
-  .right-box .homework-box{
-    width: 60%;
-    height: 200px;
-    margin: 20px 10%;
-    background: #F3F3F3;
-    padding: 130px 100px;
+  .right-box .contentSmallCourse{
+    width:100%;
+    height:570px;
   }
-  /*.right-box .design-box{*/
-    /*width: 750px;*/
-    /*height: 200px;*/
-    /*margin-left: 8%;*/
-    /*position: relative;*/
-    /*background: #F3F3F3;*/
-    /*padding: 130px 100px;*/
-    /*margin-top: 20px;*/
-  /*}*/
+  .right-box .contentSmallCourse .pdf-box{
+    width:100%;
+    height:100%;
+  }
+  .right-box .homework-box{
+      width: 100%;
+      height:400px;
+      overflow:auto;
+    }
+    .right-box .homework{
+      margin:0 5%;
+      position: relative;
+      background: #F3F3F3;
+      text-align:left;
+    }
+    .right-box .homework-box .homeworkTitle{
+      font-weight:bolder;
+      margin-top:20px;
+    }
+    .right-box .homework-box .homeworkDesc{
+      margin-left:20px;
+    }
+    .right-box .homework-box .homework_Answer{
+      margin-left:20px;
+      margin-top:10px;
+    }
   .detail-box .appraise-box .comment-box{
     margin: 0 50px 0 50px;
     /*background: hotpink;*/

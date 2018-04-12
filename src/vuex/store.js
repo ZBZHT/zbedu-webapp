@@ -12,10 +12,12 @@ export default new Vuex.Store({
     userTypeC:'',
     course:'',
     noTree:{},
+    noTree1:{},
     session:{},
     allTestNum:'',
     vuexState:'',
-    stillBtn:false
+    stillBtn:false,
+    userID:''
 },
  mutations : {
     newTitle(state,item){
@@ -23,6 +25,9 @@ export default new Vuex.Store({
     },
     noTreeTitle(state,item){
         state.noTree = item;
+    },
+    noTreeTitle1(state,item){
+        state.noTree1 = item;
     },
     sessionTitle(state,item){
         state.session = item;
@@ -44,6 +49,9 @@ export default new Vuex.Store({
     },
     stillBtn(state,item){
         state.stillBtn = item;
+    },
+    userID(state,item){
+        state.userID = item;
     }
 },
  plugins: [createPersistedState()]
