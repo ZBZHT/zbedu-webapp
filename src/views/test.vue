@@ -28,11 +28,11 @@
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时间:</span>
-                <span class="data-p-desc">{{testOnlineData.date1}}——{{testOnlineData.date2}}</span>
+                <span class="data-p-desc">{{testOnlineData.date1}}  {{testOnlineData.date3}}——{{testOnlineData.date2}}  {{testOnlineData.date4}}</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试时长:</span>
-                <span class="data-p-desc">{{testOnlineData.timeHour * 60}}分钟</span>
+                <span class="data-p-desc">{{testOnlineData.theTestTime}}分钟</span>
               </p>
               <p class="data-p">
                 <span class="data-p-title">考题数目:</span>
@@ -40,7 +40,7 @@
               </p>
               <p class="data-p">
                 <span class="data-p-title">考试总分:</span>
-                <span class="data-p-desc">100</span>
+                <span class="data-p-desc">{{testOnlineData.allScore}}</span>
               </p>
               <p>
                 <span class="data-p-title">考试说明:</span>
@@ -59,7 +59,7 @@
             </div>
             <div class="sureBtn">
               <el-checkbox v-model="Iagree" v-if="!still_btn">我已阅读以上内容，点击进入考试开始倒计时</el-checkbox>
-              <el-button type="danger" :disabled="!Iagree" plain @click='add();getTest()'>
+              <el-button type="danger" :disabled="!Iagree" plain @click='add()'>
                 <p>开始考试</p>
               </el-button>
               <el-button type="danger" class="still_btn" v-if="still_btn" plain @click="jumpOther()">
@@ -482,8 +482,13 @@
           theme:"暂无",
           date1:"暂无",
           date2:"暂无",
+          date3:"暂无",
+          date4:"暂无",
           timeHour:0,
-          allTestNum:"暂无"
+          timeMin:0,
+          theTestTime:'',
+          allTestNum:"暂无",
+          allScore:0
         }
       }
     },
@@ -617,8 +622,23 @@
       num: function (n) {
         return n < 10 ? "0" + n : "" + n
       },
-      //点击开始考试后继续考试
+      //判断是否到考试时间，能否考试
       add: function () {
+        //将指定时间转成时间戳
+        var time1 = this.testOnlineData.date1 + " " +this.testOnlineData.date3
+        var time2 = this.testOnlineData.date2 + " " +this.testOnlineData.date4
+        //console.log(time2)
+        var tc1 = new Date(time1).getTime()
+        var tc2 = new Date(time2).getTime()
+        var tcn = new Date()
+        //console.log(new Date(time1).getTime())
+        //console.log(new Date().getTime())
+        //console.log(new Date(time2).getTime())
+        if(tc1 <= tcn && tcn <= tc2){
+          this.getTest();
+        }else{
+          alert("请在考试时间范围内开始考试")
+        }
       },
 
       //开始考试时获取考试题目
@@ -669,16 +689,23 @@
           if (res.data.state == 1) {
             this.testNowData.push(res.data);
             //console.log(res.data.date1);
-            res.data.date1 = moment(res.data.date1).format("YYYY-MM-DD hh:mm:ss");
-            res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD hh:mm:ss");
+            res.data.date1 = moment(res.data.date1).format("YYYY-MM-DD");
+            res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD");
             if(this.testNowData){
               this.still_btn = true;
               this.isTesting = 1;
+              
               this.testOnlineData.theme = this.testNowData[0].theme;
               this.testOnlineData.date1 = this.testNowData[0].date1;
               this.testOnlineData.date2 = this.testNowData[0].date2;
+              this.testOnlineData.date3 = this.testNowData[0].date3;
+              console.log(this.testNowData[0].date4)
+              this.testOnlineData.date4 = this.testNowData[0].date4;
               this.testOnlineData.timeHour = this.testNowData[0].timeHour;
+              this.testOnlineData.timeMin = this.testNowData[0].timeMin;
+              this.testOnlineData.theTestTime = parseInt(this.testOnlineData.timeHour * 60) + parseInt(this.testOnlineData.timeMin);
               this.testOnlineData.allTestNum = this.testNowData[0].question.length;
+              this.testOnlineData.allScore = this.testNowData[0].allScore;
               this.testManagenWait();
             }
           } else {
@@ -694,19 +721,28 @@
           }
         }).then((res) => {
           let resData = res.data;
+          console.log(resData[0].date1)
+          console.log( resData[0].date1.valueOf() )
           if (resData) {
             for (let i = 0; i < resData.length; i++) {
-              resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss");
-              resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD hh:mm:ss");
+              resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
+              resData[i].date2 = moment(resData[i].date2).format("YYYY-MM-DD");
               resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             }
             this.toTestData = resData;
+            console.log(this.toTestData)
             if(this.isTesting == 0){
               this.testOnlineData.theme = this.toTestData[0].theme;
               this.testOnlineData.date1 = this.toTestData[0].date1;
               this.testOnlineData.date2 = this.toTestData[0].date2;
+              this.testOnlineData.date3 = this.toTestData[0].date3;
+              this.testOnlineData.date4 = this.toTestData[0].date4;
               this.testOnlineData.timeHour = this.toTestData[0].timeHour;
+              this.testOnlineData.timeMin = this.toTestData[0].timeMin;
+              this.testOnlineData.theTestTime = parseInt(this.testOnlineData.timeHour * 60) + parseInt(this.testOnlineData.timeMin);
+            //  console.log(this.testOnlineData.theTestTime);
               this.testOnlineData.allTestNum = this.toTestData[0].question.length;
+              this.testOnlineData.allScore = this.toTestData[0].allScore;
             }else{
             }
           } else {

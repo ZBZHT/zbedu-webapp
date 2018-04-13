@@ -25,12 +25,15 @@
 
               <!--待考试-->
               <el-tab-pane label="待考试">
-                <el-table style="width: 100%" :data="toTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+                <el-table style="width: 100%" :data="toTestData">
 
-                  <el-table-column label="序号" width="60">
-                    <template slot-scope="scope">
-                      <span >{{ scope.row.toTestDataIndex + 1 }}</span>
-                    </template>
+                  <!--<el-table-column label="序号" width="60">-->
+                    <!--<template slot-scope="scope">-->
+                      <!--<span >{{ scope.row.toTestDataIndex + 1 }}</span>-->
+                    <!--</template>-->
+                  <!--</el-table-column>-->
+
+                  <el-table-column label="序号" type="index" width="60">
                   </el-table-column>
 
                   <el-table-column label="考试题目" width="150">
@@ -109,12 +112,14 @@
 
               <!--历史考试-->
               <el-tab-pane label="历史考试">
-                <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+                <el-table style="width: 100%" :data="historyTestData">
 
-                  <el-table-column label="序号" width="60">
-                    <template slot-scope="scope">
-                      <span >{{ scope.row.historyTestDataIndex + 1 }}</span>
-                    </template>
+                  <!--<el-table-column label="序号" width="60">-->
+                    <!--<template slot-scope="scope">-->
+                      <!--<span >{{ scope.row.historyTestDataIndex + 1 }}</span>-->
+                    <!--</template>-->
+                  <!--</el-table-column>-->
+                  <el-table-column label="序号" type="index" width="60">
                   </el-table-column>
 
                   <el-table-column label="考试题目" width="150">
@@ -187,7 +192,8 @@
               <!--创建考试-->
               <el-tab-pane label="创建考试">
                 <div>
-                  <el-form ref="form" :model="form" status-icon :rules="rules" label-width="80px">
+                  <el-form :inline="true" class="demo-form-inline" ref="form" :model="form" status-icon :rules="rules"
+                           label-width="80px">
 
                     <el-form-item label="考试题目" prop="theme" width="150">
                       <el-input class="numberClass" placeholder="请创建考试题目" v-model.theme="form.theme" style="width: 100%"></el-input>
@@ -223,35 +229,33 @@
                     </el-form-item>
 
                     <el-form-item label="开始时间" required>
-                      <el-col :span="11">
-                        <el-form-item prop="date1">
-                          <el-date-picker type="date" placeholder="选择开始日期" v-model="form.date1"
-                                          style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                      </el-col>
-                      <el-col class="line" :span="2">-</el-col>
-                      <el-col :span="11">
-                        <el-form-item prop="date3">
-                          <el-time-picker type="fixed-time" placeholder="选择开始时间" v-model="form.date3"
-                                          style="width: 100%;"></el-time-picker>
-                        </el-form-item>
-                      </el-col>
-                    </el-form-item>
+                      <el-date-picker
+                        v-model="form.date1"
+                        type="daterange"
+                        range-separator="至"
+                        start-placeholder="开始日期"
+                        end-placeholder="结束日期">
+                      </el-date-picker>
 
-                    <el-form-item label="结束时间" required>
-                      <el-col :span="11">
-                        <el-form-item prop="date2">
-                          <el-date-picker type="date" placeholder="选择结束日期" v-model="form.date2"
-                                          style="width: 100%;"></el-date-picker>
-                        </el-form-item>
-                      </el-col>
-                      <el-col class="line" :span="2">-</el-col>
-                      <el-col :span="11">
-                        <el-form-item prop="date4">
-                          <el-time-picker type="fixed-time" placeholder="选择结束时间" v-model="form.date4"
-                                          style="width: 100%;"  @blur="compareTime"></el-time-picker>
-                        </el-form-item>
-                      </el-col>
+                      <el-time-select
+                        placeholder="起始时间"
+                        v-model="form.date3"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:30'
+                        }">
+                      </el-time-select>
+                      <el-time-select
+                        placeholder="结束时间"
+                        v-model="form.date4"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '24:30',
+                          minTime: form.date3
+                        }">
+                      </el-time-select>{{form.date3}}..{{form.date4}}
                     </el-form-item>
 
                     <el-form-item label="考试时长">
@@ -280,10 +284,8 @@
                       </el-col>
                       <el-col class="line" :span="4">分钟</el-col>
                     </el-form-item>
-                  </el-form>
 
-                  <el-form :inline="true" class="demo-form-inline" ref="form" :model="form" status-icon :rules="rules"
-                           label-width="80px">
+
                     <el-form-item label="考试类型" prop="currTestType">
                       <el-select v-model="form.currTestType" placeholder="请选择考试类型">
                         <el-option label="期末考试" value="101"></el-option>
@@ -553,6 +555,15 @@
       };
     },
 
+    computed:{
+      date1(){
+        return core.formatDate("yyyy-MM-dd", new Date(this.form.date1[0]));
+      },
+      date2(){
+        return core.formatDate("yyyy-MM-dd", new Date(this.form.date1[1]));
+      }
+    },
+
     methods: {
       //教师创建考试后重新请求待考试数据
       toTestDataReq() {
@@ -643,11 +654,11 @@
       //创建考试方法
       onSubmit() {
         //console.log()
-        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
-        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
-        this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
-        this.form.date4 = core.formatDate("hh:mm:ss", new Date(this.form.date4));
-        //console.log(this.form.date3);
+      //  this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+      //  this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
+      //  this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
+      //  this.form.date4 = core.formatDate("hh:mm:ss", new Date(this.form.date4));
+        console.log(this.form.date3);
         axios({
           method: 'get',
           url: "/readTestQuestion/addTestQuestion",
@@ -657,8 +668,8 @@
             name: this.form.name,
             nameId: this.form.nameId,
             currTestType: this.form.currTestType,
-            date1: this.form.date1,
-            date2: this.form.date2,
+            date1: this.date1,
+            date2: this.date2,
             date3: this.form.date3,
             date4: this.form.date4,
             num: this.form.num,
