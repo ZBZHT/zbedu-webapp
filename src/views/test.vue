@@ -92,13 +92,13 @@
 
                 <el-table-column label="考试开始时间" width="180">
                   <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.newData }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.date1 }} {{ scope.row.date3 }}</span>
                   </template>
                 </el-table-column>
 
-                <el-table-column label="考试类型" width="150">
+                <el-table-column label="考试时长" width="150">
                   <template slot-scope="scope">
-                    <span style="margin-left: 10px">{{ scope.row.currTestType }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.timeHour }}小时{{scope.row.timeMin}}分钟</span>
                   </template>
                 </el-table-column>
 
@@ -492,6 +492,19 @@
         }
       }
     },
+    computed:{
+      stillBtn:{
+        get:function () {
+          if(this.$store.state.stillBtn == false){
+            return this.$store.state.stillBtn
+          }
+        },
+        set:function (val) {
+          this.still_btn = val
+        }
+      }
+      
+    },
     created() {
       axios.get("/readJson/bannerLeftData", {
         params: {
@@ -637,7 +650,11 @@
         if(tc1 <= tcn && tcn <= tc2){
           this.getTest();
         }else{
-          alert("请在考试时间范围内开始考试")
+          this.$message({
+            showClose: true,
+            message: '请在考试时间范围内开始考试',
+            type: 'error'
+          });
         }
       },
 
@@ -655,6 +672,8 @@
           //console.log(res.data.code);
           if (res.data.code == 0) {
             this.jumpOther();
+            this.testNow();
+            this.testManagenWait();
           } else {
             console.log('请求出错');
           }
@@ -673,7 +692,9 @@
       rightAppear(index) {
         this.currIndex = index;
         if (index == 1) {
+          this.testManagenWait();
           this.testManagenHistory();
+          this.testNow();
         } else if (index == 2) {
           this.historyPractice();
         }
@@ -693,6 +714,7 @@
             res.data.date2 = moment(res.data.date2).format("YYYY-MM-DD");
             if(this.testNowData){
               this.still_btn = true;
+              this.$store.commit('stillBtn',true);
               this.isTesting = 1;
               
               this.testOnlineData.theme = this.testNowData[0].theme;
@@ -730,6 +752,7 @@
               resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             }
             this.toTestData = resData;
+            console.log("xjxj")
             console.log(this.toTestData)
             if(this.isTesting == 0){
               this.testOnlineData.theme = this.toTestData[0].theme;

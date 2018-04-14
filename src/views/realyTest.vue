@@ -36,7 +36,7 @@
                                 <a @click="tip(index)">
                                     <img src="../assets/imgs/tip.png">
                                 </a>
-                                {{item.num}}.{{item.desc}}
+                                {{ index + 1 }}.{{item.desc}}
                             </span>
                             <ul class="ans">
                                 <li>
@@ -255,7 +255,7 @@ export default {
           this.textQuestionData = res.data;
           console.log("2222")
           console.log(res.data)
-          this.minutes = res.data.timeHour *60;
+          this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
           this.AllLength = res.data.question.length;
         } else {
           this.TestNum = res.data.testLength;
@@ -318,6 +318,7 @@ export default {
                         console.log(res.data.code);
                           if (res.data.code == 0) {
                             alert("提交成功");
+                            window.opener.location.reload(); 
                             window.close();
                           } else {
                             this.errorMsg('未提交成功')

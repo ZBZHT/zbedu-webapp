@@ -77,18 +77,6 @@
                   </el-table-column>
                 </el-table>
 
-                <!--分页显示-->
-                <div class="block">
-                  <el-pagination
-                    @size-change="handleSizeChange"
-                    @current-change="handleCurrentChange"
-                    :current-page.sync="currentPage"
-                    :page-size="pagesize"
-                    layout="prev, pager, next, jumper"
-                    :total=parseInt(total1)>
-                  </el-pagination>
-                </div>
-
                 <!--查看对话框-->
                 <el-dialog title="查看详情"
                            width="59%"
@@ -112,7 +100,7 @@
 
               <!--历史考试-->
               <el-tab-pane label="历史考试">
-                <el-table style="width: 100%" :data="historyTestData">
+                <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
                   <!--<el-table-column label="序号" width="60">-->
                     <!--<template slot-scope="scope">-->
@@ -239,6 +227,7 @@
 
                       <el-time-select
                         placeholder="起始时间"
+                        @blur="writeEnd();compareTime()"
                         v-model="form.date3"
                         :picker-options="{
                           start: '00:00',
@@ -248,6 +237,7 @@
                       </el-time-select>
                       <el-time-select
                         placeholder="结束时间"
+                        @blur="compareTime()"
                         v-model="form.date4"
                         :picker-options="{
                           start: '00:00',
@@ -255,13 +245,13 @@
                           end: '24:30',
                           minTime: form.date3
                         }">
-                      </el-time-select>{{form.date3}}..{{form.date4}}
+                      </el-time-select>
                     </el-form-item>
 
                     <el-form-item label="考试时长">
                       <el-col :span="8">
-                        <el-form-item prop="timeHour">
-                          <el-select v-model="form.timeHour" placeholder="请选择小时" @change="isMin">
+                        <el-form-item>
+                          <el-select v-model="form.timeHour" placeholder="请选择小时" @change="isMin" @blur="compareTime0()">
                             <el-option label="0" value="0"></el-option>
                             <el-option label="1" value="1"></el-option>
                             <el-option label="2" value="2"></el-option>
@@ -272,13 +262,9 @@
                       <el-col class="line" :span="3">小时</el-col>
                       <el-col :span="8">
                         <el-form-item>
-                          <el-select v-model="form.timeMin" placeholder="请选择分钟">
+                          <el-select v-model="form.timeMin" placeholder="请选择分钟" @blur="compareTime0()">
                             <el-option label="0" :disabled="formDisabled" value="0"></el-option>
-                            <el-option label="10" value="10"></el-option>
-                            <el-option label="20" value="20"></el-option>
                             <el-option label="30" value="30"></el-option>
-                            <el-option label="40" value="40"></el-option>
-                            <el-option label="50" value="50"></el-option>
                           </el-select>
                         </el-form-item>
                       </el-col>
@@ -317,7 +303,7 @@
                     </el-form-item>
 
                     <p>
-                      <el-button type="primary" @click="submitForm('form')">立即创建</el-button>
+                      <el-button type="primary" @click="compareTime1()">立即创建</el-button>
                     </p>
                   </el-form>
                 </div>
@@ -493,7 +479,7 @@
           major: '',
           classGrade: '',
           newData: moment().format("YYYY-MM-DD hh:mm:ss"),
-          allScore:''
+          allScore:100
         },
         rules: {
           theme: [
@@ -645,14 +631,83 @@
       //判断时长
       compareTime(){
         if(moment(this.form.date1).format("YYYY-MM-DD hh:mm:ss") == moment(this.form.date2).format("YYYY-MM-DD hh:mm:ss")){
-          var a = core.formatDate("hh", new Date(this.form.date3))*3600 + core.formatDate("mm", new Date(this.form.date3))*60 + core.formatDate("ss", new Date(this.form.date3))
-          var b = core.formatDate("hh", new Date(this.form.date4))*3600 + core.formatDate("mm", new Date(this.form.date4))*60 + core.formatDate("ss", new Date(this.form.date4))
-          this.form.timeHour = parseInt((b-a)/360000);
-          this.form.timeMin = ((b-a)-this.form.timeHour*360000)/6000;
+          var a = parseInt(this.form.date3.split(":")[1]) 
+          var a0 = parseInt(this.form.date3.split(":")[0]) 
+            console.log(a)
+          var b = parseInt(this.form.date4.split(":")[1]) 
+          var b0 = parseInt(this.form.date4.split(":")[0]) 
+            console.log(b)
+          if(b >= a){
+            this.form.timeHour = parseInt(b0) - parseInt(a0);
+            this.form.timeMin = parseInt(b) - parseInt(a);
+          }else{
+            this.form.timeHour = parseInt(b0) - parseInt(a0) - 1;
+            this.form.timeMin = 30;
+          }
         }
       },
+      //考试时长不能超过时间选择器
+      compareTime0(){
+        var a = parseInt(this.form.date3.split(":")[1]) 
+        var a0 = parseInt(this.form.date3.split(":")[0]) 
+        var b = parseInt(this.form.date4.split(":")[1]) 
+        var b0 = parseInt(this.form.date4.split(":")[0]) 
+        if(b >= a){
+            var timeHour = parseInt(b0) - parseInt(a0);
+            var timeMin = parseInt(b) - parseInt(a);
+            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+          }else{
+            var timeHour = parseInt(b0) - parseInt(a0) - 1;
+            var timeMin = 30;
+            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+          }
+          var realyTime = parseInt(this.form.timeHour *3600) + parseInt(this.form.timeMin *60);
+          if(realyTime > sureTime){
+            this.$message({
+              showClose: true,
+              message: '考试时长有误，请核对后重新输入',
+              type: 'error'
+            });
+          }
+      },
+      //考试时长不能超过时间选择器并提交
+      compareTime1(){
+        var a = parseInt(this.form.date3.split(":")[1]) 
+        var a0 = parseInt(this.form.date3.split(":")[0]) 
+        var b = parseInt(this.form.date4.split(":")[1]) 
+        var b0 = parseInt(this.form.date4.split(":")[0]) 
+        if(b >= a){
+            var timeHour = parseInt(b0) - parseInt(a0);
+            var timeMin = parseInt(b) - parseInt(a);
+            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+          }else{
+            var timeHour = parseInt(b0) - parseInt(a0) - 1;
+            var timeMin = 30;
+            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+          }
+          var realyTime = parseInt(this.form.timeHour *3600) + parseInt(this.form.timeMin *60);
+          if(realyTime > sureTime){
+            this.$message({
+              showClose: true,
+              message: '考试时长有误，请核对后重新输入',
+              type: 'error'
+            });
+          }else{
+            this.submitForm('form');
+          }
+      },
+      //选择开始时间默认结束时间是两个小时后
+      writeEnd(){
+        var str = this.form.date3.split(":");
+        var newStr = parseInt(str[0]) + parseInt(2)
+        if(newStr < 10){
+          newStr = "0" + newStr; 
+        }
+        //console.log( newStr )
+        this.form.date4 = newStr + ":" + str[1]
+      },
       //创建考试方法
-      onSubmit() {
+      onSubmit(formName) {
         //console.log()
       //  this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
       //  this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
@@ -685,15 +740,25 @@
           this.Success('考试创建成功');
           //console.log(res.data);
           this.toTestData = res.data;
-
+          this.cleanAllData(formName);
           }
         );
       },
-
+      //创建考试后清空数据
+      cleanAllData(formName){
+        this.$refs[formName].resetFields();
+        this.form.date1 = '';
+        this.form.date2 = '';
+        this.form.date3 = '';
+        this.form.date4 = '';
+        this.form.timeHour = 2;
+        this.form.timeMin = 0;
+        this.form.allScore = 100;
+      },
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.onSubmit();
+            this.onSubmit(formName);
           } else {
             console.log('error submit!!');
             return false;

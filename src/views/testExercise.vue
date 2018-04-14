@@ -250,7 +250,7 @@
             this.textQuestionData = res.data;
             console.log("2222")
             console.log(res.data)
-            this.minutes = res.data.timeHour *60;
+            this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
             this.AllLength = res.data.question.length;
           } else {
             this.TestNum = res.data.testLength;
