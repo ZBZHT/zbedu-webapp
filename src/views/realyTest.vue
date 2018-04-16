@@ -68,11 +68,11 @@
                         </ul>
                         <div class="status">
                             <div class="do">
-                                <p class="doP isCheck">{{isCheckNum}}</p>
+                                <p class="doP isCheck">{{isCheckNumA}}</p>
                                 <p>已答题</p>
                             </div>
                             <div class="do">
-                                <p class="doP">{{AllLength - isCheckNum}}</p>
+                                <p class="doP">{{AllLength - isCheckNumA}}</p>
                                 <p>未答题</p>
                             </div>
                             <div class="do">
@@ -146,6 +146,7 @@ export default {
       TestNum: 0,
       fullscreenLoading: false,
       testQuestion: '',
+      isCheckNumA:0
 
     }
   },
@@ -291,6 +292,12 @@ export default {
           for(var i = 0; i < this.isCheckArr.length;i++){
             if(this.isCheckArr[i] == "undefined"){
                 this.isCheckArr[i] = '';
+            }else if(this.isCheckArr[i] == "true"){ 
+                console.log(this.isCheckArr[i])
+                this.isCheckNumA += 1;
+                console.log(this.isCheckNumA)
+                this.isCheckNum = this.isCheckNumA;
+                console.log(this.isCheckNum)
             }
           //  console.log(this.isCheckArr)
           }
@@ -367,13 +374,19 @@ export default {
                 this.lengthData = this.textQuestionData.question.length;
                 this.QidArr[index] = id;
                 console.log(this.QidArr);
-                var a = 0;
-                for(var i = 0;i < this.QidArr.length;i++){
-                    if(this.QidArr[i] != null){
-                        a+=1;
-                        this.isCheckNum = a ;
-                    }
+                if(this.isCheckArr[index] != true){
+                    this.isCheckNumA += 1;
                 }
+                
+            //    var a = 0;
+            //    for(var i = 0;i < this.QidArr.length;i++){
+            //        if(this.QidArr[i] != null){
+            //            a+=1;
+            //            this.isCheckNum = this.isCheckNum + a ;
+            //        }else{
+            //           console.log(this.QidArr[i])
+            //        }
+            //    }
                 this.$set(this.isCheckArr,index,true);
 
                 axios({

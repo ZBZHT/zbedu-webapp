@@ -486,7 +486,7 @@
           date4:"暂无",
           timeHour:0,
           timeMin:0,
-          theTestTime:'',
+          theTestTime:0,
           allTestNum:"暂无",
           allScore:0
         }
