@@ -35,8 +35,8 @@
         return '/video/'+this.$route.params.courseId+'.mp4'
       },
       videoTitle(){
-        console.log('/video/'+this.$route.params.title+'.mp4'+'======')
-        return '/video/'+this.$route.params.title+'.mp4'
+        console.log('/video/'+this.$route.params.label+'.mp4'+'======')
+        return this.$route.params.label+'.mp4'
       }
     },
     methods:{

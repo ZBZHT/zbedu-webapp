@@ -253,8 +253,8 @@ export default {
       }).then((res) => {
         if (res.data.state == 1) {
           this.textQuestionData = res.data;
-          console.log("2222")
-          console.log(res.data)
+        //  console.log("2222")
+        //  console.log(res.data)
           this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
           this.AllLength = res.data.question.length;
         } else {
@@ -277,6 +277,7 @@ export default {
           user: this.user,
         }
       }).then((res) => {
+        //console.log(res.data)
         //console.log(res.data.currState);
         //考试题的唯一编号
         this.testQuestion = res.data.testQuestion;
@@ -287,6 +288,12 @@ export default {
         if(res.data.state == 1){
           this.picked = res.data.currAnswer;
           this.isCheckArr = res.data.currState;
+          for(var i = 0; i < this.isCheckArr.length;i++){
+            if(this.isCheckArr[i] == "undefined"){
+                this.isCheckArr[i] = '';
+            }
+          //  console.log(this.isCheckArr)
+          }
           window.addEventListener("popstate",this.myFunction);
           this.isCheckNum = res.data.isCheckNum;
         }
