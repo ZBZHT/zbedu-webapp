@@ -108,7 +108,11 @@ function distTestQuestion(req, res, next) {
           desc: "biansuqi test",
           date1: reqQ.date1,
           date2: reqQ.date2,
+          date3: reqQ.date3,
+          date4: reqQ.date4,
           timeHour: reqQ.timeHour,
+          timeMin: reqQ.timeMin,
+          allScore: reqQ.allScore,
         });
         testQuestion.question = testItems;
 
@@ -129,6 +133,7 @@ function distTestQuestion(req, res, next) {
           startTime: '',
           currAnswer: '',
           currState: '',
+          currIsId: [],
           error: '',
           sorce: 2,
           startTimeHours: 0,
@@ -228,7 +233,7 @@ router.get('/checkGradesData', function (req, res) {
   TestQuestionInfo.find({
     state: 2,
   }).then(function (result) {
-    console.log(result);
+    //console.log(result);
     res.end(JSON.stringify(result));
   });
 });
@@ -383,9 +388,10 @@ router.get('/stuNewExercise', function (req, res) {
           title: reqQ.nameId,
           desc: "biansuqi test",
           date1: new Date(),
-          date2: '',
           timeHour: reqQ.timeHour,
+          timeMin: reqQ.timeMin,
         });
+        /*allScore: reqQ.allScore,*/
       testQuestion.question = testItems;
 
       testQuestion.save(function (err) {

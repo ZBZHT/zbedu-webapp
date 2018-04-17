@@ -46,7 +46,7 @@ app.use(session({
   cookie: {maxAge: 1000 * 60 * 180}, //设置maxAge是30分钟
   resave: false,  //每次请求都自动更新session
   saveUninitialized: false,      // 是否设置session在存储容器中可以给修改
-  store: new MongoStore({ url: 'mongodb://127.0.0.1/db' })//设置数据库
+  store: new MongoStore({ url: 'mongodb://127.0.0.1/zbt' })//设置数据库
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));

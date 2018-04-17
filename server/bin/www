@@ -16,7 +16,7 @@ var server = http.createServer(app, function (req, res) {
 
 //Listen on provided port, on all network interfaces.
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1:27017/db',function (err,db) {
+mongoose.connect('mongodb://127.0.0.1:27017/zbt',function (err,zbt) {
     if (err) {
         console.log('数据库连接失败');
     }else {

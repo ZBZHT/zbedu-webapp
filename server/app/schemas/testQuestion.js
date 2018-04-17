@@ -22,7 +22,11 @@ module.exports = new Schema({
   desc: String,
   date1: Date,
   date2: Date,
+  date3: String,
+  date4: String,
   timeHour: Number,
+  timeMin: String,
   question: Array,
+  allScore: Number,
 });
 

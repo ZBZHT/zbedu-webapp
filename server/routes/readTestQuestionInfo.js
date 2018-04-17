@@ -34,6 +34,7 @@ router.get('/update', function (req, res) {
       startTime: QuestionInfo.startTime,
       currAnswer: QuestionInfo.currAnswer,
       currState: QuestionInfo.currState,
+      currIsId: QuestionInfo.currIsId,
       error: QuestionInfo.error,
       sorce: QuestionInfo.sorce,
       testTimeMinutes: QuestionInfo.testTimeMinutes,

@@ -1,9 +1,9 @@
 //往数据库中添加comments记录
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/db');
+mongoose.connect('mongodb://127.0.0.1:27017/zbt');
 
-const db = mongoose.connection;
-db.once('open', function (callback) {
+const zbt = mongoose.connection;
+zbt.once('open', function (callback) {
   console.log("数据库成功打开");
 });
 

@@ -17,6 +17,7 @@ module.exports = new Schema({
   startTime: Date,
   currAnswer: Array,
   currState: Array,
+  currIsId: Array,
   error: Array,
   sorce: Number,
   startTestTime: Date,

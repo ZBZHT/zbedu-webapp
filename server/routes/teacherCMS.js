@@ -45,6 +45,7 @@ function formatExcel(arr) {
     desc: '',
     options: [],
     answer: '',
+    type: '',
     difficulty: '',
     major: '',
     title1: '',
@@ -63,6 +64,7 @@ function formatExcel(arr) {
     arrSingle.options.push(arr[i].options2);
     arrSingle.options.push(arr[i].options3);
     arrSingle.answer = arr[i].answer;
+    arrSingle.type = arr[i].type;
     arrSingle.difficulty = arr[i].difficulty;
     arrSingle.major = arr[i].major;
     arrSingle.title1 = arr[i].title1;
@@ -83,6 +85,7 @@ function formatExcel(arr) {
       desc: '',
       options: [],
       answer: '',
+      type: '',
       difficulty: '',
       major: '',
       title1: '',
@@ -112,7 +115,8 @@ router.post('/labelTree', function (req, res) {
         } else {
           let labelTree = JSON.parse(data);
           labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
-          console.log(labelTree);
+          labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
+          //console.log(labelTree);
           res.status(200).send({
             result: labelTree
           });
@@ -126,8 +130,12 @@ router.post('/labelTree', function (req, res) {
         } else {
           let labelTree = JSON.parse(data);
           let childrenE = labelTree[1].children;
+          let children1 = labelTree[2].children;
           children = removeChildren(childrenE, 101);  //传入要删除的Children id
+          children2 = removeChildren(children1, 302);  //传入要删除的Children id
           labelTree[1].children = children;
+          labelTree[2].children = children2;
+          //console.log(labelTree[2]);
           res.status(200).send({
             result: labelTree
           });
@@ -538,11 +546,11 @@ router.post('/addExcelTest', function(req, res) {
             if (jsonResult) {
               //格式化数据
               let fJson = formatExcel(jsonResult);
-              //console.log(fJson);
+              console.log(fJson);
               let numID = '';
               //查找数据库中
-              Question.find().sort({id:-1}).then(function (ques) {
-
+              Question.find().sort({num:-1}).then(function (ques) {
+                //console.log(ques);
                 if (ques.length != 0) {
                   numID = Number(ques[0].num);
                 } else {
@@ -550,7 +558,7 @@ router.post('/addExcelTest', function(req, res) {
                 }
                 for (let i=0; i<fJson.length; i++) {
                   numID = Number(numID) + 1;
-                  //console.log(numID);
+                  console.log(numID);
 
                   let question = new Question({
                     num: numID,
@@ -601,8 +609,8 @@ router.post('/addExcelTest', function(req, res) {
   }
 });
 
-//教师, 添加自定义课程
-router.post('/teacherCustomCourse', function (req, res) {
+//教师, 获取自定义课程
+router.post('/getTeacherCustomCourse', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
@@ -613,36 +621,53 @@ router.post('/teacherCustomCourse', function (req, res) {
         if (techCosCou) {
           res.status(200).send({ techCosCou: techCosCou, });
         } else {
-          res.status(404).send({ Msg: '无法获取请求数据', success: 1, });
+          res.status(404).send({ Msg: '无法获取请求数据', code: 1, });
         }
 
       });
-      /*       let techCosCou = new TechCosCou({
-              user: addUsers.user,
-              userID: addUsers.userID,
-              AdmDate: addUsers.Aate,
-            });
-           techCosCou.save(function (err) {
-              if (err) {
-                console.log(err)
-              } else {
-                console.log('Save success');
-                res.status(200).send({
-                  userInfo: addUsers,
-                  success: 0,
-                });
-              }
-            });*/
     }else {
       res.status(404).send({
         Msg: '用户无添加权限',
-        success: 1,
+        code: 1,
       });
     }
   } else {
     res.status(404).send({
       Msg: '无法获取请求数据',
-      success: 1,
+      code: 1,
+    });
+  }
+});
+
+//教师, 添加自定义课程
+router.post('/addCustomCourse', function (req, res) {
+  //console.log(req.body.data.tab);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    if (reqData.userType == 'admin' || reqData.userType == 'E' || reqData.userType == 'T') {
+      TechCosCou.findOneAndUpdate({
+        userID : reqData.userID,
+      }, {
+        tab: reqData.tab,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(404).send({ Msg: '更新失败', code: 1, });
+        } else {
+          console.log('修改成功course');
+          res.status(200).send({ Msg: '更新成功', code: 0, });
+        }
+      });
+    } else {
+      res.status(404).send({
+        Msg: '用户无添加权限',
+        code: 1,
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      code: 1,
     });
   }
 });
