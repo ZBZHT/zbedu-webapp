@@ -38,31 +38,41 @@ const routes = [
     {
       path:'/',
       name:'index',
+      meta:{
+        title: 'zbt首页'
+      },
       component:index
     },
     {
       path:'/courseIndex',
       name:'courseIndex',
-  //    meta:{
-  //      requireAuth:true
-  //    },
+      meta:{
+        title: 'zbt教学中心'
+      },
       component:courseIndex
     },
     {
       path:'/testCenter',
       name:'testCenter',
+      meta:{
+        title: 'zbt考试中心'
+      },
       component:testCenter
     },
     {
       path:'/teachTest',
       name:'teachTest',
+      meta:{
+        title: 'zbt考试中心'
+      },
       component:teachTest
     },
     {
       path:'/exerciseCenter',
       name:'exerciseCenter',
       meta:{
-        require:true
+        require:true,
+        title: 'zbt实训中心'
       },
       component:exerciseCenter
     },
@@ -70,7 +80,8 @@ const routes = [
       path:'/appraiseCenter',
       name:'appraiseCenter',
       meta:{
-        require:true
+        require:true,
+        title: 'zbt评价中心'
       },
       component:appraiseCenter
     },
@@ -78,7 +89,8 @@ const routes = [
       path:'/sourceCenter',
       name:'sourceCenter',
       meta:{
-        require:true
+        require:true,
+        title: 'zbt资源中心'
       },
       component:sourceCenter
     },
@@ -86,78 +98,92 @@ const routes = [
       path:'/test',
       name:'test',
       meta:{
-        requireTest:true
+        requireTest:true,
+        title: 'zbt考试中心'
       },
       component:test
     },
     {
       path:'/realyTest',
       name:'realyTest',
+      meta:{
+        title: 'zbt考试中心'
+      },
       component:realyTest
     },
     {
       path:'/testExercise',
       name:'testExercise',
+      meta:{
+        title: 'zbt考试中心'
+      },
       component:testExercise
     },
-    // {
-    //   path:'/testQuestion/:testId/title/:title',
-    //   name:'testQuestion',
-    //   component:testQuestion,
-    //   meta:{
-    //     requireTest:true,
-    //     requireQues:true
-    //   }
-    // },
     {
       path: '/course/label/:label',
       name: 'course',
       meta:{
-        requireAuth:true
+        requireAuth:true,
+        title: 'zbt教学中心'
       },
       component: course
     },
     {
       path: '/courseNoTree/:courseId/label/:label',
       name: 'courseNoTree',
+      meta:{
+        title: 'zbt教学中心'
+      },
       component: courseNoTree
     },
     {
       path: '/playPdf/:courseId/pdf/:label',
       name: 'playPdf',
+      meta:{
+        title: 'zbt教学中心'
+      },
       component: playPdf
     },
     {
       path: '/playVideo/:courseId/video/:label',
       name: 'playVideo',
+      meta:{
+        title: 'zbt教学中心'
+      },
       component: playVideo
     },
     {
       path: '/loginPage',
       name: 'loginPage',
+      meta:{
+        title: 'zbt登录'
+      },
       component: loginPage
     },
     {
       path: '/testLogin',
       name: 'testLogin',
+      meta:{
+        title: 'zbt考试登录'
+      },
       component: testLogin
     },
     {
       path:'/resourceCenter',
       name:'resourceCenter',
+      meta:{
+        title: 'zbt资源中心'
+      },
       component: resourceCenter
     },
     {
       path:'/teacherCMS',
       name:'teacherCMS',
+      meta:{
+        title: 'zbt我的信息'
+      },
       component: teacherCMS
     }
-    // ,
-    // {
-    //   path:'/userManagement',
-    //   name:'userManagement',
-    //   component: userManagement
-    // }
 ];
 
 const router = new Router({
@@ -169,6 +195,10 @@ var a = 0;
 var url = document.domain;
 
 router.beforeEach((to,from,next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
   if (to.matched.some(res => res.meta.requireAuth)) {
       if (!store.state.username){
             var con = confirm("请登录");

@@ -50,7 +50,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'index.html',
-      inject: true
+      inject: true,
+      favicon:'./logo.ico'
     }),
     new MockWebpackPlugin({
       //mock config content
