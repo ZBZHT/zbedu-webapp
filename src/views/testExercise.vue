@@ -31,7 +31,7 @@
                       <a @click="tip(index)">
                           <img src="../assets/imgs/tip.png">
                       </a>
-                      {{item.num}}.{{item.desc}}
+                      {{index + 1}}.{{item.desc}}
                   </span>
                 <ul class="ans">
                   <li>
@@ -251,6 +251,9 @@
             console.log("2222")
             console.log(res.data)
             this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
+            console.log(this.minutes)
+            console.log(res.data.timeHour)
+            console.log(res.data.timeMin)
             this.AllLength = res.data.question.length;
           } else {
             this.TestNum = res.data.testLength;
@@ -271,8 +274,7 @@
           this.testQuestion = res.data.testQuestion;
           this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTime));
           console.log("333333")
-          console.log(this.startTestTime)
-            console.log(res.data.startTestTime)
+          console.log(res.data)
           if(res.data.state == 1 && res.data.currTestType == 106){
             this.picked = res.data.currAnswer;
             this.isCheckArr = res.data.currState;

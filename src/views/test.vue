@@ -154,7 +154,7 @@
 
                 <el-table-column label="分数" width="100">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.question.sorce }}</span>
+                    <span>{{ scope.row.sorce }}</span>
                   </template>
                 </el-table-column>
 
@@ -235,7 +235,7 @@
             </div>
           </div>
           <div class="test-exercise">
-            <el-tabs type="border-card">
+            <el-tabs type="border-card" @tab-click="rightAppear2()">
               <el-tab-pane label="创建练习">
                 <el-form class="test-exercise-form" ref="stuform" :model="stuform" status-icon :rules="rules"
                          label-width="80px">
@@ -343,9 +343,8 @@
                       </el-button>
                     </template>
                   </el-table-column>
-
                 </el-table>
-
+                
                 <!--分页显示-->
                 <div class="block">
                   <el-pagination
@@ -455,7 +454,6 @@
         classItem: {},
         QidArr: [],
         null: [],
-        userMessageData: '',
         picked: [],
         Display: false,
         lengthData: '',
@@ -587,20 +585,38 @@
       //待考试 ,, 开始考试,跳转
       sendInfor(row) {
        // console.log(row.currTestNum);
-        axios.get("/readTestQuestion/clickStartTest", {
-          params: {
-            user: this.user,
-            currTestNum: row.currTestNum,
-            startTestTime:new Date()
-          }
-        }).then((res) => {
-          //console.log("AAAA");
-          let resData = res.data;
-          //console.log(resData);
-          this.toTestData = resData;
-          this.total = this.toTestData.length;
-          this.jumpOther();
-        });
+       var time1 = row.date1 + " " + row.date3
+        var time2 = row.date2 + " " + row.date4
+        var tc1 = new Date(time1).getTime()
+        var tc2 = new Date(time2).getTime()
+        var tcn = new Date()
+        //console.log(new Date(time1).getTime())
+        //console.log(new Date().getTime())
+        //console.log(new Date(time2).getTime())
+        if(tc1 <= tcn && tcn <= tc2){
+          axios.get("/readTestQuestion/clickStartTest", {
+            params: {
+              user: this.user,
+              currTestNum: row.currTestNum,
+              startTestTime:new Date()
+            }
+          }).then((res) => {
+            //console.log("AAAA");
+            let resData = res.data;
+            //console.log(resData);
+            this.toTestData = resData;
+            this.total = this.toTestData.length;
+            this.jumpOther();
+          });
+        }else{
+          this.$message({
+            showClose: true,
+            message: '请在考试时间范围内开始考试',
+            type: 'error'
+          });
+        }
+
+        
       },
       //跳转页面
       jumpOther(){
@@ -695,9 +711,12 @@
           this.testManagenWait();
           this.testManagenHistory();
           this.testNow();
-        } else if (index == 2) {
-          this.historyPractice();
         }
+      },
+      //点击历史练习获取数据
+      rightAppear2(tab, event){
+          this.historyPracticeData = [];
+          this.historyPractice();
       },
        /*获取正在考试的题*/
       testNow() {
@@ -721,7 +740,7 @@
               this.testOnlineData.date1 = this.testNowData[0].date1;
               this.testOnlineData.date2 = this.testNowData[0].date2;
               this.testOnlineData.date3 = this.testNowData[0].date3;
-              console.log(this.testNowData[0].date4)
+            //  console.log(this.testNowData[0].date4)
               this.testOnlineData.date4 = this.testNowData[0].date4;
               this.testOnlineData.timeHour = this.testNowData[0].timeHour;
               this.testOnlineData.timeMin = this.testNowData[0].timeMin;
@@ -743,8 +762,8 @@
           }
         }).then((res) => {
           let resData = res.data;
-          console.log(resData[0].date1)
-          console.log( resData[0].date1.valueOf() )
+        //  console.log(resData[0].date1)
+        //  console.log( resData[0].date1.valueOf() )
           if (resData) {
             for (let i = 0; i < resData.length; i++) {
               resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
@@ -752,8 +771,8 @@
               resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             }
             this.toTestData = resData;
-            console.log("xjxj")
-            console.log(this.toTestData)
+          //  console.log("xjxj")
+          //  console.log(this.toTestData)
             if(this.isTesting == 0){
               this.testOnlineData.theme = this.toTestData[0].theme;
               this.testOnlineData.date1 = this.toTestData[0].date1;
@@ -791,25 +810,10 @@
             resTestData[i].sorce = resTestInfoData[i].sorce;
           }
           this.historyTestData = resTestData;
-          //console.log(this.historyTestData);
+          console.log(this.historyTestData);
           this.total = this.historyTestData.length;
         });
       },
-
-      //请求历史练习数据
-      exerciseHistory() {
-        axios({
-          method: 'get',
-          url: "/testManagement/testManagement",
-          params: {
-            user: this.user
-          }
-        }).then((res) => {
-          this.userMessageData = res.data;
-          //console.log(res.data)
-        })
-      },
-
       // 成功后提示信息
       Success(msg) {
         this.$message({
@@ -846,6 +850,7 @@
                   name: 'testExercise'
                 });
                 window.open(href, '_blank', "channelmode=yes,toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, copyhistory=yes, width=3000, height=2000")
+                this.cleanAllData(formName);
               } else {
                 this.errorMsg('未创建成功')
               }
@@ -856,7 +861,12 @@
           }
         });
       },
-
+      //创建考试后清空数据
+      cleanAllData(formName){
+        this.$refs[formName].resetFields();
+        this.form.timeHour = 2;
+        this.form.timeMin = 0;
+      },
       //手动重置
       resetForm(formName) {
         this.stuform = {};
@@ -886,6 +896,7 @@
             resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss");
             resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             this.historyPracticeData.push(resData[i]);
+            //console.log(resData[i])
           }
         });
       },

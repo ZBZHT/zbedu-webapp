@@ -254,8 +254,8 @@ export default {
       }).then((res) => {
         if (res.data.state == 1) {
           this.textQuestionData = res.data;
-        //  console.log("2222")
-        //  console.log(res.data)
+          console.log("2222")
+          console.log(res.data)
           this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
           this.AllLength = res.data.question.length;
         } else {
@@ -282,22 +282,23 @@ export default {
         //console.log(res.data.currState);
         //考试题的唯一编号
         this.testQuestion = res.data.testQuestion;
-        //console.log("12121212121");
-        //console.log(res.data)
+        console.log("12121212121");
+        console.log(res.data)
         this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTestTime));
         this.$store.commit('vuexState',res.data.state);
         if(res.data.state == 1){
           this.picked = res.data.currAnswer;
+          this.QidArr = res.data.currIsId;
           this.isCheckArr = res.data.currState;
           for(var i = 0; i < this.isCheckArr.length;i++){
             if(this.isCheckArr[i] == "undefined"){
                 this.isCheckArr[i] = '';
-            }else if(this.isCheckArr[i] == "true"){ 
-                console.log(this.isCheckArr[i])
+            }else if(this.isCheckArr[i] == "true"){
+            //    console.log(this.isCheckArr[i])
                 this.isCheckNumA += 1;
-                console.log(this.isCheckNumA)
+            //    console.log(this.isCheckNumA)
                 this.isCheckNum = this.isCheckNumA;
-                console.log(this.isCheckNum)
+            //    console.log(this.isCheckNum)
             }
           //  console.log(this.isCheckArr)
           }
@@ -329,11 +330,12 @@ export default {
                         }
                     }).then(
                         function (res) {
-                        console.log(res.data.code);
+                        //console.log(res.data.code);
                           if (res.data.code == 0) {
-                            alert("提交成功");
-                            window.opener.location.reload(); 
-                            window.close();
+                            alert(this.sorce);
+                            //alert("提交成功");
+                            window.opener.location.reload();
+                        //    window.close();
                           } else {
                             this.errorMsg('未提交成功')
                           }
@@ -377,7 +379,7 @@ export default {
                 if(this.isCheckArr[index] != true){
                     this.isCheckNumA += 1;
                 }
-                
+
             //    var a = 0;
             //    for(var i = 0;i < this.QidArr.length;i++){
             //        if(this.QidArr[i] != null){
@@ -398,6 +400,7 @@ export default {
                             testQuestion:this.testQuestion,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
+                            currIsId:this.QidArr,
                             currState:this.isCheckArr,
                             error:this.error,
                             sorce:this.sorce,

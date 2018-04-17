@@ -90,8 +90,10 @@
                     <el-table-column property="major" label="专业" width="100"></el-table-column>
                     <el-table-column property="classGrade" label="班级" width="60"></el-table-column>
                     <el-table-column property="allScore" label="总分" width="60"></el-table-column>
-                    <el-table-column property="date1" label="开始时间" width="100"></el-table-column>
-                    <el-table-column property="date2" label="结束时间" width="100"></el-table-column>
+                    <el-table-column property="date1" label="开始日期" width="100"></el-table-column>
+                    <el-table-column property="date3" label="开始时间" width="100"></el-table-column>
+                    <el-table-column property="date2" label="结束日期" width="100"></el-table-column>
+                    <el-table-column property="date4" label="结束时间" width="100"></el-table-column>
                     <el-table-column property="newData" label="创建时间" width="100"></el-table-column>
                   </el-table>
                 </el-dialog>
@@ -169,8 +171,10 @@
                     <el-table-column property="major" label="专业" width="100"></el-table-column>
                     <el-table-column property="classGrade" label="班级" width="60"></el-table-column>
                     <el-table-column property="allScore" label="总分" width="60"></el-table-column>
-                    <el-table-column property="date1" label="开始时间" width="100"></el-table-column>
-                    <el-table-column property="date2" label="结束时间" width="100"></el-table-column>
+                    <el-table-column property="date1" label="开始日期" width="100"></el-table-column>
+                    <el-table-column property="date3" label="开始时间" width="100"></el-table-column>
+                    <el-table-column property="date2" label="结束日期" width="100"></el-table-column>
+                    <el-table-column property="date4" label="结束时间" width="100"></el-table-column>
                     <el-table-column property="newData" label="创建时间" width="100"></el-table-column>
                   </el-table>
                 </el-dialog>
@@ -216,17 +220,18 @@
                       </el-dropdown>
                     </el-form-item>
 
-                    <el-form-item label="开始时间" required>
+                    <el-form-item label="开始日期" required>
                       <el-date-picker
                         v-model="form.date1"
-                        type="daterange"
-                        range-separator="至"
-                        start-placeholder="开始日期"
-                        end-placeholder="结束日期">
+                        type="date"
+                        placeholder="开始日期"
+                        :picker-options="startDatePicker">
                       </el-date-picker>
+                    </el-form-item>
 
+                    <el-form-item label="开始时间" required>
                       <el-time-select
-                        placeholder="起始时间"
+                        placeholder="开始时间"
                         @blur="writeEnd();compareTime()"
                         v-model="form.date3"
                         :picker-options="{
@@ -235,6 +240,19 @@
                           end: '23:30'
                         }">
                       </el-time-select>
+                    </el-form-item>
+
+                    <el-form-item label="结束日期" required>
+                      <el-date-picker
+                        v-model="form.date2"
+                        type="date"
+                        placeholder="结束日期"
+                        @blur="writeEnd();compareTime()"
+                        :picker-options="endDatePicker">
+                      </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item label="结束时间" required>
                       <el-time-select
                         placeholder="结束时间"
                         @blur="compareTime()"
@@ -242,8 +260,7 @@
                         :picker-options="{
                           start: '00:00',
                           step: '00:30',
-                          end: '24:30',
-                          minTime: form.date3
+                          end: '23:30'
                         }">
                       </el-time-select>
                     </el-form-item>
@@ -478,7 +495,7 @@
           timeMin: 0,
           major: '',
           classGrade: '',
-          newData: moment().format("YYYY-MM-DD hh:mm:ss"),
+          newData: core.formatDate("yyyy-MM-dd hh:mm:ss", new Date()),
           allScore:100
         },
         rules: {
@@ -538,19 +555,34 @@
         toMoreData: [],
         toHistoryData: [],
         scoreData: [],
+        startDatePicker:this.beginDate(),
+        endDatePicker:this.processDate(),
       };
     },
 
     computed:{
-      date1(){
-        return core.formatDate("yyyy-MM-dd", new Date(this.form.date1[0]));
-      },
-      date2(){
-        return core.formatDate("yyyy-MM-dd", new Date(this.form.date1[1]));
-      }
+
     },
 
     methods: {
+      //创建考试开始时间不能选择历史日期
+      beginDate(){
+        let self = this
+        return {
+          disabledDate(time){
+            return time.getTime() < Date.now() - 8.64e7;
+          }
+        }
+      },
+      //创建考试结束时间不能大于开始时间
+      processDate(){
+        let self = this
+        return {
+          disabledDate(time){
+            return time.getTime() < self.form.date1;
+          }
+        }
+      },
       //教师创建考试后重新请求待考试数据
       toTestDataReq() {
         axios.get("/readTestQuestion/toTestData", {
@@ -630,20 +662,32 @@
       },
       //判断时长
       compareTime(){
-        if(moment(this.form.date1).format("YYYY-MM-DD hh:mm:ss") == moment(this.form.date2).format("YYYY-MM-DD hh:mm:ss")){
-          var a = parseInt(this.form.date3.split(":")[1]) 
-          var a0 = parseInt(this.form.date3.split(":")[0]) 
-            console.log(a)
-          var b = parseInt(this.form.date4.split(":")[1]) 
-          var b0 = parseInt(this.form.date4.split(":")[0]) 
-            console.log(b)
-          if(b >= a){
-            this.form.timeHour = parseInt(b0) - parseInt(a0);
-            this.form.timeMin = parseInt(b) - parseInt(a);
+        var a = parseInt(this.form.date3.split(":")[1]) 
+        var a0 = parseInt(this.form.date3.split(":")[0]) 
+            //console.log(a)
+        var b = parseInt(this.form.date4.split(":")[1]) 
+        var b0 = parseInt(this.form.date4.split(":")[0]) 
+            //console.log(b)
+        if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+          if((a == 0 && b0 < a0) || (a == 30 && b0 <= a0) || (a == b && a0 == b0)){
+            this.$message({
+                showClose: true,
+                message: '考试时长有误，请核对后重新输入',
+                type: 'error'
+              });
+            this.form.date4 = '';
           }else{
-            this.form.timeHour = parseInt(b0) - parseInt(a0) - 1;
-            this.form.timeMin = 30;
+            if(b >= a){
+              this.form.timeHour = parseInt(b0) - parseInt(a0);
+              this.form.timeMin = parseInt(b) - parseInt(a);
+            }else if(b < a){
+              this.form.timeHour = parseInt(b0) - parseInt(a0) - 1;
+              this.form.timeMin = 30;
+            }
           }
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
+          this.form.timeHour = 2;
+          this.form.timeMin = 0;
         }
       },
       //考试时长不能超过时间选择器
@@ -652,23 +696,27 @@
         var a0 = parseInt(this.form.date3.split(":")[0]) 
         var b = parseInt(this.form.date4.split(":")[1]) 
         var b0 = parseInt(this.form.date4.split(":")[0]) 
-        if(b >= a){
-            var timeHour = parseInt(b0) - parseInt(a0);
-            var timeMin = parseInt(b) - parseInt(a);
-            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
-          }else{
-            var timeHour = parseInt(b0) - parseInt(a0) - 1;
-            var timeMin = 30;
-            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
-          }
-          var realyTime = parseInt(this.form.timeHour *3600) + parseInt(this.form.timeMin *60);
-          if(realyTime > sureTime){
-            this.$message({
-              showClose: true,
-              message: '考试时长有误，请核对后重新输入',
-              type: 'error'
-            });
-          }
+        if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+          if(b >= a){
+              var timeHour = parseInt(b0) - parseInt(a0);
+              var timeMin = parseInt(b) - parseInt(a);
+              var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+            }else{
+              var timeHour = parseInt(b0) - parseInt(a0) - 1;
+              var timeMin = 30;
+              var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+            }
+            var realyTime = parseInt(this.form.timeHour *3600) + parseInt(this.form.timeMin *60);
+            if(realyTime > sureTime){
+              this.$message({
+                showClose: true,
+                message: '考试时长有误，请核对后重新输入',
+                type: 'error'
+              });
+            }
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+
+        }
       },
       //考试时长不能超过时间选择器并提交
       compareTime1(){
@@ -676,41 +724,53 @@
         var a0 = parseInt(this.form.date3.split(":")[0]) 
         var b = parseInt(this.form.date4.split(":")[1]) 
         var b0 = parseInt(this.form.date4.split(":")[0]) 
-        if(b >= a){
-            var timeHour = parseInt(b0) - parseInt(a0);
-            var timeMin = parseInt(b) - parseInt(a);
-            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
-          }else{
-            var timeHour = parseInt(b0) - parseInt(a0) - 1;
-            var timeMin = 30;
-            var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
-          }
-          var realyTime = parseInt(this.form.timeHour *3600) + parseInt(this.form.timeMin *60);
-          if(realyTime > sureTime){
-            this.$message({
-              showClose: true,
-              message: '考试时长有误，请核对后重新输入',
-              type: 'error'
-            });
-          }else{
-            this.submitForm('form');
-          }
+        if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+          if(b >= a){
+              var timeHour = parseInt(b0) - parseInt(a0);
+              var timeMin = parseInt(b) - parseInt(a);
+              var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+            }else{
+              var timeHour = parseInt(b0) - parseInt(a0) - 1;
+              var timeMin = 30;
+              var sureTime = parseInt(timeHour *3600) + parseInt(timeMin *60)
+            }
+            var realyTime = parseInt(this.form.timeHour *3600) + parseInt(this.form.timeMin *60);
+            if(realyTime > sureTime){
+              this.$message({
+                showClose: true,
+                message: '考试时长有误，请核对后重新输入',
+                type: 'error'
+              });
+            }else{
+              this.submitForm('form');
+            }
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+
+        }
       },
       //选择开始时间默认结束时间是两个小时后
       writeEnd(){
-        var str = this.form.date3.split(":");
-        var newStr = parseInt(str[0]) + parseInt(2)
-        if(newStr < 10){
-          newStr = "0" + newStr; 
+        if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+          var str = this.form.date3.split(":");
+          var newStr = parseInt(str[0]) + parseInt(2)
+          if(newStr < 10){
+            newStr = "0" + newStr; 
+          }
+          //console.log( newStr )
+          this.form.date4 = newStr + ":" + str[1];
+          if(parseInt(str[0]) >= "22"){
+            this.form.date4 = "23" + ":" + 30;
+          }
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
+          this.form.date4 = '';
         }
-        //console.log( newStr )
-        this.form.date4 = newStr + ":" + str[1]
       },
       //创建考试方法
       onSubmit(formName) {
-        //console.log()
-      //  this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
-      //  this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
+        console.log(this.form.date1)
+        console.log(this.form.date2)
       //  this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
       //  this.form.date4 = core.formatDate("hh:mm:ss", new Date(this.form.date4));
         console.log(this.form.date3);
@@ -723,8 +783,8 @@
             name: this.form.name,
             nameId: this.form.nameId,
             currTestType: this.form.currTestType,
-            date1: this.date1,
-            date2: this.date2,
+            date1: this.form.date1,
+            date2: this.form.date2,
             date3: this.form.date3,
             date4: this.form.date4,
             num: this.form.num,
@@ -740,7 +800,7 @@
           this.Success('考试创建成功');
           //console.log(res.data);
           this.toTestData = res.data;
-          this.cleanAllData(formName);
+//          this.cleanAllData(formName);
           }
         );
       },
@@ -799,16 +859,18 @@
       //考试管理,待考试,查看
       getToMoreData(index, row) {
         this.dialogTableVisible1 = true;
-        row.date1 = moment(row.date1).format("YYYY-MM-DD hh:mm:ss");
-        row.date2 = moment(row.date2).format("YYYY-MM-DD hh:mm:ss");
+        row.date1 = moment(row.date1).format("YYYY-MM-DD");
+        row.date2 = moment(row.date2).format("YYYY-MM-DD");
+        row.newData = core.formatDate("yyyy-MM-dd", new Date(row.newData));
         this.toMoreData.push(row);
         //console.log(this.toMoreData);
       },
       //考试管理,历史考试,查看
       getToHistoryData(index, row) {
         this.dialogTableVisible2 = true;
-        row.date1 = moment(row.date1).format("YYYY-MM-DD hh:mm:ss");
-        row.date2 = moment(row.date2).format("YYYY-MM-DD hh:mm:ss");
+        row.date1 = moment(row.date1).format("YYYY-MM-DD");
+        row.date2 = moment(row.date2).format("YYYY-MM-DD");
+        row.newData = core.formatDate("yyyy-MM-dd", new Date(row.newData));
         this.toHistoryData.push(row);
         console.log(this.toHistoryData);
 
@@ -816,8 +878,9 @@
       //成绩管理, 查看成绩
       scoreManData(index, row) {
         this.dialogTableVisible3 = true;
-        row.date1 = moment(row.date1).format("YYYY-MM-DD hh:mm:ss");
-        row.date2 = moment(row.date2).format("YYYY-MM-DD hh:mm:ss");
+        row.date1 = moment(row.date1).format("YYYY-MM-DD");
+        row.date2 = moment(row.date2).format("YYYY-MM-DD");
+        row.newData = core.formatDate("yyyy-MM-dd", new Date(row.newData));
         this.toHistoryData.push(row);
         console.log(this.toHistoryData);
 
@@ -1037,7 +1100,9 @@
   .teach_Test .el-form-item__content .el-select-dropdown {
     min-width: 38%;
   }
-
+  .teach_Test .el-tabs--border-card>.el-tabs__content{
+    padding: 15px 110px 15px 15px;
+  }
   .teach_Test .testOnline {
     width: 100%;
     height: 100%;
