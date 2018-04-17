@@ -31,8 +31,8 @@
         <div v-show="isShow102">
           <test-base-m></test-base-m>
         </div>
-        <!--课程管理-->
-        <div v-show="isShow300">
+        <!--课程设置-->
+        <div v-show="isShow302">
           <course-m></course-m>
         </div>
         <!--我的课程-->
@@ -41,7 +41,7 @@
         </div>
         <!--我的考试-->
         <div v-show="isShow401">
-          <my-course></my-course>
+          <my-exam></my-exam>
         </div>
 
       </el-row>
@@ -64,6 +64,8 @@
   import MyData from './myData'
   import MyFootprint from './myFootprint'
   import MyCourse from './myCourse'
+  import MyExam from './myExam'
+  import TeacherCMS from './teacherCMS'
 
   export default {
     name: 'index',
@@ -86,6 +88,7 @@
         isShow202: false,
         isShow300: false,
         isShow301: false,
+        isShow302: false,
         isShow401: false,
         currentPage: 1,
         dialogVisible: false,
@@ -102,7 +105,7 @@
           this.isShow102 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow300 = false;
+          this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
         }
@@ -112,7 +115,7 @@
           this.isShow102 = true;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow300 = false;
+          this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
         }
@@ -122,7 +125,7 @@
           this.isShow102 = false;
           this.isShow201 = true;
           this.isShow202 = false;
-          this.isShow300 = false;
+          this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
         }
@@ -132,17 +135,17 @@
           this.isShow102 = false;
           this.isShow201 = false;
           this.isShow202 = true;
-          this.isShow300 = false;
+          this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
         }
-        //点击我的课程
-        if (data.id == 300) {
+        //点击课程设置
+        if (data.id == 302) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow300 = true;
+          this.isShow302 = true;
           this.isShow301 = false;
           this.isShow401 = false;
         }
@@ -152,17 +155,17 @@
           this.isShow102 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow300 = false;
+          this.isShow302 = false;
           this.isShow301 = true;
           this.isShow401 = false;
         }
-        //点击我的课程
-        if (data.id == 400) {
+        //点击我的考试
+        if (data.id == 401) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
           this.isShow202 = false;
-          this.isShow300 = false;
+          this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = true;
         }
@@ -183,6 +186,8 @@
       MyFootprint,
       MyData,
       MyCourse,
+      TeacherCMS,
+      MyExam,
       GameM,
       navgationHead, navUl, footFooter, userManager, TestBaseM, CourseM}
   }

@@ -712,14 +712,14 @@
     margin: 0;
     padding: 0;
   }
-  .userManager_cont .headBut {
-    float: left;
-  }
   .userManager_cont .userM_el-table .userM_el-tableBut {
     margin-top: 0;
   }
   .userManager_cont .el-dialog {
     border-radius: 16px;
+  }
+  .userManager_cont .el-pagination {
+    text-align: center;
   }
   .userManager_cont .el-Col .userM_But1,.userM_But2 {
     margin-bottom: 6px;
@@ -791,5 +791,8 @@
   }
   .userManager_cont .el-table td, .el-table th {
     height: 40px;
+  }
+  .userManager_cont .el-col-19 {
+    text-align: left;
   }
 </style>

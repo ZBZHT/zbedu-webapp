@@ -96,7 +96,7 @@
           }
         }).then((res) => {
           if (res.data.userInfo) {
-            console.log(res.data.userInfo);
+            //console.log(res.data.userInfo);
             /*this.dataManager = res.data.userInfo;
             this.total = this.dataManager.length;*/
             this.addUserSuccess();
@@ -115,7 +115,7 @@
         }
       }).then((res) => {
         if (res.data.userInfo) {
-          console.log(res.data.userInfo);
+          //console.log(res.data.userInfo);
           /*this.dataManager = res.data.userInfo;
           this.total = this.dataManager.length;*/
         }
