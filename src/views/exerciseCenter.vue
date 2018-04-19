@@ -184,6 +184,7 @@ hr{
     padding: 10px;
     border-radius: 3px;
     border: 1px solid #9f5355;
+    text-align:left;
 }
 .exerciseCenter-content .el-tree-node:focus>.el-tree-node__content {
     background-color: #d9d9d9;

@@ -246,17 +246,17 @@
             user: this.user,
           }
         }).then((res) => {
-          if (res.data.state == 1 && res.data.currTestType == 106) {
-            this.textQuestionData = res.data;
             console.log("2222")
-            console.log(res.data)
-            this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
+            console.log(res.data.testQuestion)
+          if (res.data.testQuestion.state == 1 && res.data.testQuestion.currTestType == 106) {
+            this.textQuestionData = res.data.testQuestion;
+            this.minutes = parseInt(res.data.testQuestion.timeHour *60) + parseInt(res.data.testQuestion.timeMin);
             console.log(this.minutes)
-            console.log(res.data.timeHour)
-            console.log(res.data.timeMin)
-            this.AllLength = res.data.question.length;
+            console.log(res.data.testQuestion.timeHour)
+            console.log(res.data.testQuestion.timeMin)
+            this.AllLength = res.data.testQuestion.question.length;
           } else {
-            this.TestNum = res.data.testLength;
+            this.TestNum = res.data.testQuestion.testLength;
           }
         }).catch(function (error) {
           console.log("error init." + error)
@@ -277,6 +277,7 @@
           console.log(res.data)
           if(res.data.state == 1 && res.data.currTestType == 106){
             this.picked = res.data.currAnswer;
+            this.QidArr = res.data.currIsId;
             this.isCheckArr = res.data.currState;
             this.isCheckNum = res.data.isCheckNum;
           }
@@ -305,11 +306,12 @@
               sorce:this.sorce,
               testTimeMinutes:this.minutes,
               testTimeSeconds:this.seconds,
+              currIsId:this.QidArr,
               isCheckNum:this.isCheckNum
             }
           }).then(
             function (res) {
-              console.log(res.data.code);
+              //console.log(res.data.code);
               if (res.data.code == 0) {
                 alert("提交成功");
                 window.close();
@@ -319,17 +321,17 @@
 
             }
           );
-        }.bind(this),0.1);
+        }.bind(this),200);
 
         this.sorce=0;
         this.error = [];
-        //console.log(this.QidArr.length+"===this.QidArr.length");
+        console.log(this.QidArr);
         for(var i = 0;i < this.QidArr.length;i++){
           if(this.QidArr[i] != null && this. QidArr[i] != ''){
             //console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
             //console.log("asd"+this.picked[i])
             //console.log(this.textQuestionData)
-            if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
+            if(this.textQuestionData.question[i].answer == this.picked[i]){
 
               this.sorce += 5;
             }else{

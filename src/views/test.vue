@@ -158,10 +158,18 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column label="详细信息">
+                <el-table-column label="查看试卷">
                   <template slot-scope="scope">
-                    <el-button size="mini" type="primary">
-                      查看详情
+                    <el-button size="mini" type="primary" @click="getOriginPaper(scope.$index, scope.row)">
+                      查看
+                    </el-button>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="错题分析">
+                  <template slot-scope="scope">
+                    <el-button size="mini" type="primary" @click="getErrorPaper(scope.$index, scope.row)">
+                      查看
                     </el-button>
                   </template>
                 </el-table-column>
@@ -179,6 +187,62 @@
                   :total=parseInt(total)>
                 </el-pagination>
               </div>
+
+              <!--查看试卷弹出框-->
+                <el-dialog title="查看试卷"
+                           width="39%"
+                           :before-close="handleClose"
+                           :visible.sync="dialogTableVisible1">
+                  <div v-for="(item2,index2) in originPaper.question">
+                    <span class="desctitle">
+                        {{index2 + 1}}.{{item2.desc}}
+                    </span>
+                    <ul class="ans">
+                      <li>
+                          <label for="11" v-if="item2.options[0]">
+                              <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[0]}}
+                          </label>
+                          <label for="22" v-if="item2.options[1]">
+                              <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[1]}}
+                          </label>
+                          <label for="33" v-if="item2.options[2]">
+                              <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[2]}}
+                          </label>
+                          <label for="44" v-if="item2.options[3]">
+                              <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[3]}}
+                          </label>
+                      </li>
+                    </ul>
+                  </div>
+                </el-dialog>
+
+                <!--查看错题分析-->
+                <el-dialog title="错题分析"
+                           width="39%"
+                           :before-close="handleClose"
+                           :visible.sync="dialogTableVisible2">
+                  <div v-for="(item3,index3) in ErrorPaper">
+                    <span class="desctitle">
+                      <img src="../assets/imgs/err.jpg">
+                      {{index3 + 1}}.{{item3.num}}{{item3.desc}}
+                    </span>
+                    <ul class="ans">
+                      <li>
+                          {{item3.options[0]}}
+                          {{item3.options[1]}}
+                          {{item3.options[2]}}
+                          {{item3.options[3]}}
+                      </li>
+                    </ul>
+                    <span>
+                        正确答案：{{item3.answer}}
+                    </span>
+                  </div>          
+                </el-dialog>
 
             </el-tab-pane>
 
@@ -312,7 +376,7 @@
                   <el-table-column label="序号" type="index" width="60">
                   </el-table-column>
 
-                  <el-table-column label="考试题目" width="100">
+                  <el-table-column label="练习题目" width="100">
                     <template slot-scope="scope">
                       <span>{{ scope.row.theme }}</span>
                     </template>
@@ -330,16 +394,24 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="考试数目" width="120">
+                  <el-table-column label="练习数目" width="120">
                     <template slot-scope="scope">
                       <span>{{ scope.row.question.length }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="详细信息">
+                  <el-table-column label="查看练习试卷">
                     <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="handleDelete(scope.$index, scope.row)">
-                        查看详情
+                      <el-button size="mini" type="primary" @click="getExercisePaper(scope.$index, scope.row)">
+                        查看
+                      </el-button>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="练习错题分析">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="primary" @click="getExerciseError(scope.$index, scope.row)">
+                        查看
                       </el-button>
                     </template>
                   </el-table-column>
@@ -356,8 +428,64 @@
                     :total=parseInt(total)>
                   </el-pagination>
                 </div>
-              </el-tab-pane>
 
+                <!--查看练习试卷弹出框-->
+                <el-dialog title="查看练习试卷"
+                           width="39%"
+                           :before-close="handleClose"
+                           :visible.sync="dialogTableVisible3">
+                  <div v-for="(item2,index2) in exerciseOriginPaper.question">
+                    <span class="desctitle">
+                        {{index2 + 1}}.{{item2.desc}}
+                    </span>
+                    <ul class="ans">
+                      <li>
+                          <label for="11" v-if="item2.options[0]">
+                              <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[0]}}
+                          </label>
+                          <label for="22" v-if="item2.options[1]">
+                              <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[1]}}
+                          </label>
+                          <label for="33" v-if="item2.options[2]">
+                              <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[2]}}
+                          </label>
+                          <label for="44" v-if="item2.options[3]">
+                              <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="item2.currAnswer">
+                                  {{item2.options[3]}}
+                          </label>
+                      </li>
+                    </ul>
+                  </div>
+                </el-dialog>
+
+                <!--查看错题分析-->
+                <el-dialog title="错题分析"
+                           width="39%"
+                           :before-close="handleClose"
+                           :visible.sync="dialogTableVisible4">
+                  <div v-for="(item3,index3) in exerciseErrorPaper">
+                    <span class="desctitle">
+                      <img src="../assets/imgs/err.jpg">
+                      {{index3 + 1}}.{{item3.num}}{{item3.desc}}
+                    </span>
+                    <ul class="ans">
+                      <li>
+                          {{item3.options[0]}}
+                          {{item3.options[1]}}
+                          {{item3.options[2]}}
+                          {{item3.options[3]}}
+                      </li>
+                    </ul>
+                    <span>
+                        正确答案：{{item3.answer}}
+                    </span>
+                  </div>          
+                </el-dialog>
+
+              </el-tab-pane>
             </el-tabs>
 
           </div>
@@ -487,7 +615,16 @@
           theTestTime:0,
           allTestNum:"暂无",
           allScore:0
-        }
+        },
+        originPaper:[],
+        dialogTableVisible1: false,
+        ErrorPaper:[],
+        dialogTableVisible2: false,
+        exerciseOriginPaper:[],
+        dialogTableVisible3: false,
+        exerciseErrorPaper:[],
+        dialogTableVisible4: false,
+        exerciseInfo:[]
       }
     },
     computed:{
@@ -551,6 +688,52 @@
 
 
     methods: {
+      //查看试卷弹出框
+      getOriginPaper(index, row){
+        this.dialogTableVisible1 = true;
+        console.log(row);
+        this.originPaper = row;
+      },
+      //查看错题分析弹出框
+      getErrorPaper(index, row){
+        this.dialogTableVisible2 = true;
+        this.ErrorPaper = [];
+        console.log(row.question);
+        console.log(row.error);
+        for(var i = 0; i < row.error.length; i++){
+          for(var j = 0; j < row.question.length; j++)
+            if(row.error[i] == row.question[j].num){
+              this.ErrorPaper.push(row.question[j])
+            }
+        }
+        console.log(this.ErrorPaper)
+      },
+      //查看练习试卷弹出框
+      getExercisePaper(index, row){
+        this.dialogTableVisible3 = true;
+        console.log(row);
+        this.exerciseOriginPaper = row;
+      },
+      //查看练习错题分析弹出框
+      getExerciseError(index, row){
+        this.dialogTableVisible4 = true;
+        this.exerciseErrorPaper = [];
+        console.log(row);
+        console.log(row.error);
+        for(var i = 0; i < row.error.length; i++){
+          for(var j = 0; j < row.question.length; j++)
+          //  if(row.error[i] == row.question[j].num){
+            if(row.error[i] == j + 1){
+              this.exerciseErrorPaper.push(row.question[j])
+            }
+        }
+        console.log(this.exerciseErrorPaper)
+      },
+      //关闭弹窗
+      handleClose(done) {
+        done();
+
+      },
       handleSizeChange(val) {
         //console.log(`每页 ${val} 条`);
       },
@@ -607,6 +790,9 @@
             this.toTestData = resData;
             this.total = this.toTestData.length;
             this.jumpOther();
+            this.testNowData = [];
+            this.testNow();
+            this.testManagenWait();
           });
         }else{
           this.$message({
@@ -665,6 +851,12 @@
         //console.log(new Date(time2).getTime())
         if(tc1 <= tcn && tcn <= tc2){
           this.getTest();
+        }else if(this.testOnlineData.date1 == "暂无"){
+          this.$message({
+            showClose: true,
+            message: '最近没有考试哦',
+            type: 'error'
+          });
         }else{
           this.$message({
             showClose: true,
@@ -710,6 +902,7 @@
         if (index == 1) {
           this.testManagenWait();
           this.testManagenHistory();
+          this.testNowData = [];
           this.testNow();
         }
       },
@@ -805,12 +998,20 @@
           let resTestData = res.data.testQuestion;
           let resTestInfoData = res.data.testQuestionInfo;
           for (let i = 0; i < resTestData.length; i++) {
+            if(resTestData[i].currTestType == "106"){
+              resTestData[i] = [];
+            }
             resTestData[i].newData = moment(resTestData[i].newData).format("YYYY-MM-DD hh:mm:ss");
             resTestData[i].currTestType = core.getCurrTestType(resTestData[i].currTestType);
             resTestData[i].sorce = resTestInfoData[i].sorce;
+            for (let j = 0; j < resTestData[i].question.length; j++){
+              resTestData[i].question[j].currAnswer = resTestInfoData[i].currAnswer[j];
+            };
+            resTestData[i].error = resTestInfoData[i].error;
           }
           this.historyTestData = resTestData;
-          console.log(this.historyTestData);
+          console.log(resTestData);
+          console.log(resTestInfoData);
           this.total = this.historyTestData.length;
         });
       },
@@ -864,8 +1065,8 @@
       //创建考试后清空数据
       cleanAllData(formName){
         this.$refs[formName].resetFields();
-        this.form.timeHour = 2;
-        this.form.timeMin = 0;
+        this.stuform.timeHour = 2;
+        this.stuform.timeMin = 0;
       },
       //手动重置
       resetForm(formName) {
@@ -891,13 +1092,20 @@
             user: this.user,
           }
         }).then((res) => {
-          let resData = res.data;
-          for (let i = 0; i < resData.length; i++) {
-            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD hh:mm:ss");
-            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
-            this.historyPracticeData.push(resData[i]);
-            //console.log(resData[i])
+          let resTestData = res.data.testQuestion;
+          let resTestInfoData = res.data.testQuestionInfo;
+          for (let i = 0; i < resTestData.length; i++) {
+            resTestData[i].date1 = moment(resTestData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+            resTestData[i].currTestType = core.getCurrTestType(resTestData[i].currTestType);
+            resTestData[i].sorce = resTestInfoData[i].sorce;
+            for (let j = 0; j < resTestData[i].question.length; j++){
+              resTestData[i].question[j].currAnswer = resTestInfoData[i].currAnswer[j];
+            };
+            resTestData[i].error = resTestInfoData[i].error;
           }
+          this.historyPracticeData = resTestData;
+          this.total = this.historyPracticeData.length;
+          console.log(this.historyPracticeData)
         });
       },
 
@@ -1332,11 +1540,8 @@
   .test_T .el-table td, .el-table th {
     padding: 6px 0;
   }
-
-  /*.test_T .footer{*/
-  /*position: fixed;*/
-  /*left: 0;*/
-  /*bottom: 0;*/
-  /*width: 100%;*/
-  /*}*/
+  .test_T .el-dialog{
+    height:61%;
+    overflow:auto;
+  }
 </style>

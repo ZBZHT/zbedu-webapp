@@ -225,6 +225,7 @@
                         v-model="form.date1"
                         type="date"
                         placeholder="开始日期"
+                        @blur="outOfTime()"
                         :picker-options="startDatePicker">
                       </el-date-picker>
                     </el-form-item>
@@ -232,7 +233,7 @@
                     <el-form-item label="开始时间" required>
                       <el-time-select
                         placeholder="开始时间"
-                        @blur="writeEnd();compareTime()"
+                        @blur="writeEnd();compareTime();outOfTime()"
                         v-model="form.date3"
                         :picker-options="{
                           start: '00:00',
@@ -660,6 +661,29 @@
           this.formDisabled = false;
         }
       },
+      //判断考试开始时间过期不允许
+      outOfTime(){
+        if(core.formatDate("yyyy-MM-dd hh:mm:ss", new Date()).split(" ")[0] == core.formatDate("yyyy-MM-dd", new Date(this.form.date1)) ){
+          var newDateHourAll = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date()).split(" ")[1];
+          var newDateHour = parseInt(newDateHourAll.split(":")[0]);
+          var chooseHour = parseInt(this.form.date3.split(":")[0]);
+          var shouldTime = newDateHour + 1;
+          if(chooseHour <= newDateHour) {
+            this.$message({
+                  showClose: true,
+                  message: '来不及啦！创建考试开始时间请至少在今日' + shouldTime + '点及之后',
+                  type: 'error'
+                });
+            this.form.date3 = '';
+          }else if(newDateHour == "23"){
+            this.$message({
+                  showClose: true,
+                  message: '今天来不及考试啦！',
+                  type: 'error'
+                });
+          }
+        }
+      },
       //判断时长
       compareTime(){
         var a = parseInt(this.form.date3.split(":")[1]) 
@@ -801,8 +825,13 @@
           //console.log(res.data);
           this.toTestData = res.data;
 //          this.cleanAllData(formName);
-          }
-        );
+          }).catch(function (error) {
+            this.$message({
+                showClose: true,
+                message: '考试提交失败',
+                type: 'error'
+              });
+          });
       },
       //创建考试后清空数据
       cleanAllData(formName){

@@ -1,3 +1,4 @@
+<!--Copyright © 2016 南京中邦智慧教育科技有限公司-->
 <template>
 <div>
     <div class="question" id="content">
@@ -311,6 +312,27 @@ export default {
     },
 
             submit:function () {
+                this.sorce = 0;
+                this.error = [];
+                var everyScore = parseInt(this.textQuestionData.allScore  / this.textQuestionData.question.length);
+                console.log(everyScore);
+                //console.log(this.picked)
+                for(var i = 0;i < this.QidArr.length;i++){
+                    if(this.QidArr[i] != null && this. QidArr[i] != ''){
+                        //console.log(this.QidArr[i]-1);
+                        //console.log("asd"+this.picked[i])
+                        //console.log(this.textQuestionData.question[this.QidArr[i]-1].answer)
+                        if(this.textQuestionData.question[i].answer == this.picked[i]){
+                            this.sorce += everyScore;
+                        }else{
+                            //console.log(this.picked[i])
+                            this.error.push(i+1);
+                        }
+                    }else{
+                        //console.log(i+"123456");
+                        this.null.push(i+1);
+                    }
+                }
                 setTimeout(function(){
                     window.clearInterval(this.interval);
                     axios({
@@ -332,41 +354,17 @@ export default {
                         function (res) {
                         //console.log(res.data.code);
                           if (res.data.code == 0) {
-                            alert(this.sorce);
-                            //alert("提交成功");
+                            //alert(this.sorce);
+                            alert("提交成功");
                             window.opener.location.reload();
-                        //    window.close();
+                            window.close();
                           } else {
                             this.errorMsg('未提交成功')
                           }
                         }
                     );
-                }.bind(this),100);
-
-                this.sorce=0;
-                this.error = [];
-                //console.log(this.QidArr.length+"===this.QidArr.length");
-                for(var i = 0;i < this.QidArr.length;i++){
-                    if(this.QidArr[i] != null && this. QidArr[i] != ''){
-                        //console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
-                        //console.log("asd"+this.picked[i])
-                        //console.log(this.textQuestionData)
-                        if(this.textQuestionData.question[this.QidArr[i]-1].answer == this.picked[i]){
-
-                            this.sorce += 5;
-                        }else{
-                            //console.log(this.picked[i])
-                            this.error.push(i+1);
-                        }
-                    }else{
-                        //console.log(i+"123456");
-                        this.null.push(i+1);
-                    }
-                }
-               this.$store.commit('stillBtn',false);
-
-            //    alert(this.sorce + "==" + this.error + "==" + this.null);
-            //    this.$router.go(0);
+                }.bind(this),200);
+                //alert(this.sorce + "==" + this.error + "==" + this.null);
             },
             num:function (n) {
                 return n<10 ? "0" + n : "" + n
