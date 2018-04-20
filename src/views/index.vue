@@ -44,7 +44,10 @@ export default {
   },
   methods:{
     handleResize (event) {
-        this.height = window.innerHeight
+        this.height = window.innerHeight;
+        if(this.height <= "620"){
+            this.height = 620;
+        }
     }
   },
   beforeDestroy: function () {
@@ -86,7 +89,7 @@ hr{
 }
 .index-container{
     min-width:1160px;
-    min-height:680px;
+    min-height:600px;
 }
 .index-list{
     width:100%;
@@ -241,7 +244,7 @@ hr{
         padding:6%;
     }
 }
-@media screen and (min-width: 960px) and (max-width: 1279px) {
+@media screen and (max-width: 1279px) {
     .index-list-topline{
         width:100%;
         height:2%;

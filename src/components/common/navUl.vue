@@ -343,7 +343,7 @@ a:hover{
 @media screen and (min-width: 1280px) and (max-width: 1479px) {
     .contentui{
         width:100%;
-        padding: 30% 7% 5% 1%;
+        padding: 21% 7% 5% 1%;
         box-sizing:border-box;
     }
     .contentui .el-row {
@@ -410,10 +410,10 @@ a:hover{
         background-color: #f9fafc;
     }
 }
-@media screen and (min-width: 960px) and (max-width: 1279px) {
+@media screen and (max-width: 1279px) {
     .contentui{
         width:100%;
-        padding: 30% 7% 5% 1%;
+        padding: 21% 7% 5% 1%;
         box-sizing:border-box;
     }
     .contentui .el-row {
