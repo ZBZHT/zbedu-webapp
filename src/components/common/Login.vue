@@ -105,6 +105,7 @@ import core from '../../assets/js/core.js'
                                     this.$store.commit('username',res.data.username);
                                     this.$store.commit('userType',res.data.userType);
                                     this.$store.commit('userTypeC',core.userType(res.data.userType));
+                                    this.$store.commit('userID',res.data.userID);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
                                 //    this.$router.go(0);
@@ -116,6 +117,7 @@ import core from '../../assets/js/core.js'
                                     this.$store.commit('username',res.data.username);
                                     this.$store.commit('userType',res.data.userType);
                                     this.$store.commit('userTypeC',core.userType(res.data.userType));
+                                    this.$store.commit('userID',res.data.userID);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
                                 //   this.$router.go(0);

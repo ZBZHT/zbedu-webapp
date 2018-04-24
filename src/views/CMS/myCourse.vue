@@ -11,94 +11,195 @@
       </div>
       <!--课程, 目录-->
       <el-dialog
-        title="选择创建类型"
+        class="dialog3"
+        title="选择已有课程或者新建目录"
+        width="35%"
+        :close-on-click-modal="false"
+        style="height: 430px;"
         :visible.sync="dialogVisible"
-        width="30%"
         :before-close="handleClose">
-        <el-form label-width="80px" style="text-align: center" class="demo-ruleForm">
-          <el-button type="primary" @click="dialogVisible3 = true">课程</el-button>
-          <el-button type="primary" style="margin-left:30px;" @click="dialogVisible1 = true">目录</el-button>
+        <el-form label-width="80px" style="margin-bottom: 10px;" class="demo-ruleForm">
+          <span>已有目录：</span>
+          <el-select v-model="value1" filterable placeholder="请选择已有课程">
+            <el-option
+              v-for="item in resDataForm"
+              :key="item.label"
+              :label="item.label"
+              :value="item.label">
+            </el-option>
+          </el-select>
         </el-form>
-        <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="last5" >新建目录</el-button>
+        <span slot="footer" class="dialog-footer" style="padding: 10px 0 20px 20px;">
+          <el-button type="primary" @click="selectCourse(value1)">下一步</el-button>
         </span>
       </el-dialog>
 
-      <!--添加, 课程, 选择课程-->
+      <!--创建目录-->
       <el-dialog
-        title="选择已有课程"
-        :visible.sync="dialogVisible3"
-        width="32%"
-        :before-close="handleClose">
-        <el-form label-width="80px" style="margin-left:150px;margin-bottom:10px;" class="demo-ruleForm"
-                 v-for="(item, index) in resDataTree">
-          <el-button size="medium" @click="selectCourse(index)">{{item.label}}</el-button>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-        </span>
-      </el-dialog>
-
-      <!--添加, 课程名称-->
-      <el-dialog
-        title="输入课程名称"
-        :visible.sync="dialogVisible4"
-        width="30%"
-        :before-close="handleClose">
-        <el-form :model="courseForm" :rules="rules" ref="courseForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="课程名称" prop="name">
-            <el-input v-model="courseForm.name"></el-input>
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="resetForm('courseForm')">重置</el-button>
-          <el-button type="primary" @click="dialogVisible4 = false">上一步</el-button>
-          <el-button type="primary" @click="addCourse('courseForm')">立刻创建</el-button>
-        </span>
-      </el-dialog>
-
-      <!--添加, 目录-->
-      <el-dialog
+        class="dialog3"
         title="请输入目录"
+        width="35%"
+        :close-on-click-modal="false"
+        style="height: 430px;"
         :visible.sync="dialogVisible1"
-        width="30%"
         :before-close="handleClose">
         <el-form :model="form" :rules="rules" ref="form" label-width="100px" class="demo-ruleForm">
           <el-form-item label="目录名称" prop="name">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.name" autofocus="autofocus"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="resetForm('form')">重置</el-button>
-          <el-button type="primary" @click="dialogVisible1 = false">上一步</el-button>
-          <el-button type="primary" @click="addTab('form')">立刻创建</el-button>
+          <el-button type="primary" @click="last6" style="float:left;">上一步</el-button>
+          <el-button type="primary" @click="addTab('form')">下一步</el-button>
         </span>
       </el-dialog>
 
-      <!--添加课程简介对话框-->
+      <!--目录, 课程名称-->
       <el-dialog
-        title="课程简介"
-        :visible.sync="dialogVisible2"
-        width="30%"
+        class="dialog3"
+        title="输入课程名称"
+        width="35%"
+        :close-on-click-modal="false"
+        style="height: 430px;"
+        :visible.sync="dialogVisible8"
         :before-close="handleClose">
-        <el-form :model="describeNode" :rules="rules1" ref="describeNode" class="demo-ruleForm">
-          <el-form-item prop="name">
-            <el-input type="textarea"
-                      v-model="describeNode.name"
-                      :autosize="{ minRows: 2, maxRows: 6}"
-                      placeholder="请输入课程简介">
-            </el-input>
+        <el-form :model="courseForm1" :rules="rules" ref="course1Form" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="课程名称" prop="name">
+            <el-input v-model="courseForm1.name" autofocus="autofocus"></el-input>
           </el-form-item>
         </el-form>
         <span slot="footer" class="dialog-footer">
-          <el-button @click="resetForm('describeNode')">重置</el-button>
-          <el-button type="primary" @click="addDescribe1('describeNode')">立即创建</el-button>
+          <el-button type="primary" @click="last7" style="float:left;">上一步</el-button>
+          <el-button type="primary" @click="addCourse1()">下一步</el-button>
+        </span>
+      </el-dialog>
+
+      <!--目录, 课程简介-->
+      <el-dialog
+        class="dialog3"
+        width="35%"
+        title="请输入课程简介"
+        :close-on-click-modal="false"
+        style="height: 430px;padding-bottom: 0"
+        :visible.sync="dialogVisible9"
+        :before-close="handleClose">
+        <el-form :model="describeNode1" :rules="rules" ref="describeNode1" class="demo-ruleForm">
+          <el-form-item prop="describe">
+            <el-input type="textarea"
+                      autofocus="autofocus"
+                      v-model="describeNode1.describe"
+                      :autosize="{ minRows: 2, maxRows: 2}">
+            </el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer" style="padding-top: 0">
+          <el-button type="primary" @click="last8" style="float:left;">上一步</el-button>
+          <el-button type="primary" @click="addDescribe1('describeNode')">下一步</el-button>
+        </span>
+      </el-dialog>
+
+      <!--课程名称   @keyup.enter="addCourse"-->
+      <el-dialog
+        class="dialog3"
+        title="输入课程名称"
+        width="35%"
+        :close-on-click-modal="false"
+        style="height: 430px;"
+        :visible.sync="dialogVisible4"
+        :before-close="handleClose">
+        <el-form :model="courseForm" :rules="rules" ref="courseForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="课程名称" prop="name">
+            <el-input v-model="courseForm.name" autofocus="autofocus"></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="last1" style="float:left;">上一步</el-button>
+          <el-button type="primary" @click="addCourse()">下一步</el-button>
+        </span>
+      </el-dialog>
+
+      <!--课程简介-->
+      <el-dialog
+        class="dialog3"
+        width="35%"
+        title="请输入课程简介"
+        :close-on-click-modal="false"
+        style="height: 430px;padding-bottom: 0"
+        :visible.sync="dialogVisible2"
+        :before-close="handleClose">
+        <el-form :model="describeNode" :rules="rules" ref="describeNode" class="demo-ruleForm">
+          <el-form-item prop="describe">
+            <el-input type="textarea"
+                      autofocus="autofocus"
+                      v-model="describeNode.describe"
+                      :autosize="{ minRows: 2, maxRows: 2}">
+            </el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer" style="padding-top: 0">
+          <el-button type="primary" @click="last2" style="float:left;">上一步</el-button>
+          <el-button type="primary" @click="addDescribe('describeNode')">下一步</el-button>
+        </span>
+      </el-dialog>
+
+      <!--上传课件-->
+      <el-dialog
+        class="dialog3"
+        title="请上传课件"
+        width="35%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogVisible5"
+        style="height: 430px;text-align: center"
+        :before-close="handleClose">
+        <el-upload
+          class="upload-demo"
+          action="/teacherCMS/uploadCourse"
+          :on-success="uploadSuccess1"
+          :before-upload="beforeUpload1"
+          :show-file-list="false"
+          :multiple="false"
+          accept=".ppt,.pdf">
+          <el-button type="primary" style="margin-bottom: 40px;">点击上传课件</el-button>
+        </el-upload>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="last3"  style="float:left;">上一步</el-button>
+          <el-button @click="skip1()">跳&#8195;过</el-button>
+        </span>
+      </el-dialog>
+
+      <!--上传微课-->
+      <el-dialog
+        class="dialog4"
+        title="请上传微课"
+        width="35%"
+        :close-on-click-modal="false"
+        :visible.sync="dialogVisible6"
+        style="height: 430px;text-align: center"
+        :before-close="handleClose">
+        <el-upload
+          class="upload-demo"
+          action="/teacherCMS/uploadCourse"
+          :on-success="uploadSuccess2"
+          :before-upload="beforeUpload2"
+          :show-file-list="false"
+          :multiple="false"
+          accept=".mp4,.rmvb,.avi">
+          <el-button type="primary" style="margin-bottom: 40px;">点击上传微课</el-button>
+        </el-upload>
+
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="last4" style="float:left;">上一步</el-button>
+          <el-button type="primary" @click="skip2()">跳&#8195;过</el-button>
         </span>
       </el-dialog>
 
       <!--课程标签-->
-      <el-tabs v-model="editableTabsValue2" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
+      <el-tabs v-model="editableTabsValue" type="card" closable @tab-remove="removeTab" @tab-click="tabClick">
         <el-tab-pane
-          v-for="(item, index) in resDataTree"
-          :key="item.name"
+          v-for="(item, index) in resDataForm"
+          :key="item.label"
           :label="item.label"
           :name="item.label"
           :closable="false">
@@ -107,17 +208,12 @@
             <div class="block">
 
               <el-table
-                :data="dataTree"
+                :data="dataForm"
                 style="width: 100%">
-                <el-table-column label="课程名称"
-                  width="180">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.label }}</span>
-                  </template>
-                </el-table-column>
+
                 <el-table-column
-                  label="课程简介"
-                  width="180">
+                  label="课程名称"
+                  width="200">
                   <template slot-scope="scope">
                     <el-popover trigger="hover" placement="top">
                       <p>课程简介: {{ scope.row.describe }}</p>
@@ -128,17 +224,22 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column label="课件名称">
+                <el-table-column prop="teachingMaterial" label="课件名称" width="360"></el-table-column>
+
+                <el-table-column
+                  label="微课名称"
+                  width="360">
                   <template slot-scope="scope">
+                    <span>
+                      {{ scope.row.videoTitle }}</span>
                   </template>
                 </el-table-column>
 
-
                 <el-table-column label="操作">
                   <template slot-scope="scope">
-                    <el-button
-                      size="mini"
-                      type="danger"
+                    <el-button size="mini"
+                               @click="editCourse(scope.$index, scope.row)">编辑</el-button>
+                    <el-button size="mini" type="danger"
                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
                   </template>
                 </el-table-column>
@@ -150,6 +251,60 @@
         </el-tab-pane>
       </el-tabs>
 
+      <!--编辑  :disabled="true"-->
+      <el-dialog
+        class="dialog3 dialog7"
+        title="编辑课程"
+        width="35%"
+        style="height: 626px;"
+        :close-on-click-modal="false"
+        :visible.sync="dialogVisible7"
+        :before-close="handleClose">
+        <el-form :model="editForm" :rules="rules" ref="editForm" label-width="100px" class="demo-ruleForm">
+          <el-form-item label="课程名称" prop="label">
+            <el-input v-model="editForm.label"></el-input>
+          </el-form-item>
+          <el-form-item label="课程简介" prop="describe">
+            <el-input type="textarea"
+                      v-model="editForm.describe"
+                      :autosize="{ minRows: 2, maxRows: 2}">
+            </el-input>
+          </el-form-item>
+          <el-form-item label="课件名称" prop="teachingMaterial">
+            <el-input v-model="editForm.teachingMaterial" style="width:70%;"></el-input>
+            <el-upload
+              class="upload-demo"
+              style="float:right;"
+              action="/teacherCMS/uploadCourse"
+              :on-success="uploadSuccess1"
+              :before-upload="editBeforeUpload1"
+              :show-file-list="false"
+              :multiple="false"
+              accept=".ppt,.pdf">
+              <el-button type="primary">上传课件</el-button>
+            </el-upload>
+          </el-form-item>
+          <el-form-item label="微课名称" prop="videoTitle">
+            <el-input v-model="editForm.videoTitle" style="width:70%;"></el-input>
+            <el-upload
+              class="upload-demo"
+              style="float:right;"
+              action="/teacherCMS/uploadCourse"
+              :on-success="uploadSuccess2"
+              :before-upload="editBeforeUpload2"
+              :show-file-list="false"
+              :multiple="false"
+              accept=".mp4,.rmvb,.avi">
+              <el-button type="primary">上传微课</el-button>
+            </el-upload>
+          </el-form-item>
+
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="closeEdit">取消</el-button>
+          <el-button type="primary" @click="editCourse1('editForm')">确定</el-button>
+        </span>
+      </el-dialog>
 
     </el-col>
 
@@ -161,15 +316,14 @@
   import core from '../../assets/js/core.js'
 
   export default {
-
     name: 'myCourse',
     data() {
       return {
-        resDataTree: [],
-        dataTree: [],
-        courseName: '',  //新增课程的名字
-        editableTabsValue2: '0',
-        tabIndex: 2,
+        resDataForm: [],
+        dataForm: [],
+        courseIndex: 0,  //新增课程的index
+        editableTabsValue: '',
+        tabIndex: 0,
         dialogVisible: false,
         dialogVisible1: false,
         dialogVisible2: false,
@@ -177,104 +331,140 @@
         dialogVisible4: false,
         dialogVisible5: false,
         dialogVisible6: false,
+        dialogVisible7: false,
+        dialogVisible8: false,
+        dialogVisible9: false,
+        editForm: [],
         form: { name: '', },
         courseForm: { name: '', },
+        courseForm1: { name: '', },
         formNode: { name: '', },
-        describeNode: { name: '', },
+        describeNode: { describe: '', },
+        describeNode1: { describe: '', },
         rules: {
           name: [
             { required: true, message: '请输入课程名称', trigger: 'blur' },
             { min: 2, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
           ],
-        },
-        rules1: {
-          name: [
+          label: [
             { required: true, message: '请输入课程名称', trigger: 'blur' },
+            { min: 2, max: 20, message: '长度在 1 到 20 个字符', trigger: 'blur' }
+          ],
+          describe: [
+            { required: true, message: '请输入课程简介', trigger: 'blur' },
             { min: 2, max: 200, message: '长度在 1 到 200 个字符', trigger: 'blur' }
+          ],
+          teachingMaterial: [
+            { required: true, message: '请上传课件', trigger: 'blur' },
+            { min: 2, max: 30, message: '长度在 1 到 30 个字符', trigger: 'blur' }
+          ],
+          videoTitle: [
+            { required: true, message: '请上传微课', trigger: 'blur' },
           ],
         },
         userID: this.$store.state.userID,
         userType: this.$store.state.userType,
-        courseIndex: '',
+        courseItem: '', //点击课程目录的名称
         appendData: '',
         appendNode: '',
+        value1: ''
       }
     },
     computed: {},
     methods: {
       //删除
       handleDelete(index, row) {
-        console.log(index, row);
-      },
-      //创建,课程
-      addCourse() {
-        //修改页面数据
-        if (this.courseForm.name != '') {
-          if (this.courseIndex != '') {
-              let newCourse = { label : this.courseForm.name };
-            this.resDataTree[this.courseIndex].course.push(newCourse)
-          }
-          console.log(this.resDataTree);
-          this.updateCustomCourse(0);
-          this.dialogVisible2 = true
-        } else {
-          this.warningMsg('名称不能为空')
-        }
-      },
-      //点击标签
-      tabClick(tab, event){
-        //console.log(tab.label);
-        this.dataTree = [];
-        for (let i=0; i<this.resDataTree.length; i++) {
-          if (this.resDataTree[i].label == tab.label) {
-            this.dataTree = (this.resDataTree[i].course);
-          }
-        }
-        //console.log(this.dataTree);
-      },
-      //添加课程,目录
-      addTab(targetName) {
-          //修改页面数据
-        console.log(this.form.name);
-          if (this.form.name != '') {
-            this.resDataTree.push({
-              label: this.form.name,
-              course: [],
-            });
-            this.updateCustomCourse(0);
-            this.dialogVisible = false;
-            this.dialogVisible1 = false;
-          } else {
-            this.warningMsg('名称不能为空')
-          }
-      },
-      //确认关闭
-      handleClose(done) {
-        done();
-        /*this.$confirm('确认关闭？')
-         .then(_ => {
-
-         })
-         .catch(_ => {});*/
-      },
-     //重置
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
-      //删除课程
-      removeTab(targetName) {
+        //console.log(row.label);
         this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          //console.log(targetName);
-          for(let i=0; i<this.resDataTree.length; i++) {
-            if (this.resDataTree[i].label == targetName) {
-              this.resDataTree = core.remove(this.resDataTree, this.resDataTree[i]);
+          for (let i=0; i<=this.dataForm.length; i++) {
+            if (this.dataForm[i].label === row.label) {
+              let resultEE = core.remove(this.dataForm, this.dataForm[i]);
+              this.dataForm = resultEE;
             }
           }
-          //console.log(this.resDataTree);
+          this.resDataForm[this.tabIndex].course = this.dataForm;
+          //console.log(this.resDataForm[this.tabIndex].course);
+          this.updateCustomCourse();
+          this.successMsg('删除成功!')
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+      //点击标签
+      tabClick(tab, event){
+          //console.log(tab.label);
+        //this.dataForm = [];
+        for (let i=0; i<this.resDataForm.length; i++) {
+          if (this.resDataForm[i].label == tab.label) {
+            this.dataForm = (this.resDataForm[i].course);
+            this.tabIndex = i;
+            this.editableTabsValue = (this.resDataForm[i].label);
+          }
+        }
+      },
+      //确认关闭
+      handleClose(done) {
+        done();
+      },
+     //重置
+      resetForm(formName) {
+        this.$refs[formName].resetFields();
+      },
+      //编辑
+      editCourse(index, row) {
+        this.courseIndex = index;
+        this.editForm = this.dataForm[index];
+        this.dialogVisible7 = true;
+        //console.log(this.editForm);
+      },
+      //编辑, 取消
+      closeEdit() {
+        this.dialogVisible7 = false;
+        this.getCustomCourse();
+      },
+      //编辑, 确定
+      editCourse1(form) {
+          console.log(this.resDataForm[this.tabIndex].course);
+        this.dialogVisible7 = false;
+      },
+      //编辑, 上传课件前
+      editBeforeUpload1(file) {
+        if (file.name != '') {
+            if (this.value1 === this.resDataForm[this.resDataForm.length - 1].label) {
+
+            }
+          this.dataForm[this.courseIndex].teachingMaterial = file.name;
+          //console.log(this.editForm);
+        }
+      },
+      //编辑, 上传微课前
+      editBeforeUpload2(file) {
+        if (file.name != '') {
+          this.dataForm[this.courseIndex].videoTitle[0].videoTitle = file.name;
+          this.successMsg('正在上传,上传完成将会有提示信息!');
+        }
+      },
+      //删除课程标签
+      removeTab(targetName) {
+        this.$confirm('此操作将永久删除该目录, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          //console.log(targetName);
+          for(let i=0; i<this.resDataForm.length; i++) {
+            if (this.resDataForm[i].label == targetName) {
+              this.resDataForm = core.remove(this.resDataForm, this.resDataForm[i]);
+            }
+          }
+          //console.log(this.resDataForm);
           this.updateCustomCourse();
           this.$message({
             type: 'success',
@@ -288,104 +478,205 @@
         });
       },
       //选择课程
-      selectCourse(index) {
+      selectCourse(value) {
+        if (value) {
+          this.dialogVisible = false;
           this.dialogVisible4 = true;
-          this.courseIndex = index;
-      },
-
-
-      //立刻创建
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            console.log('error submit!!');
-            return false;
+          for (let i=0; i<=this.resDataForm.length; i++) {
+            if (this.resDataForm[i].label === value) {
+                //console.log(this.resDataForm[i]);
+              this.courseIndex = i;
+              //console.log(this.value1);
+            }
           }
-        });
-      },
-      //添加子课程
-      append(node, data) {
-        this.dialogVisible1 = true;
-        this.appendData = data;
-        this.appendNode = node;
-      },
-      append1() {
-        if (this.formNode.name != '') {
-          this.dialogVisible1 = false;
-          let newChild = { label: this.formNode.name, children: [] };
-          if (!this.appendData.children) {
-            this.$set(this.appendData, 'children', []);
-          }
-          this.appendData.children.push(newChild);
         }
-        this.updateCustomCourse(1);
+      },
+      //课程目录
+      addTab(targetName) {
+        if (this.form.name != '') {
+          if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
+            this.dialogVisible1 = false;
+            this.dialogVisible8 = true;
+          } else {
+            this.resDataForm.push({ label: this.form.name, course: [], });
+            this.courseIndex = Number(this.resDataForm.length-1);
+            this.dialogVisible1 = false;
+            this.dialogVisible8 = true;
+          }
+        } else {
+          this.warningMsg('名称不能为空')
+        }
+      },
+      //目录,课程名称
+      addCourse1() {
+        if (this.courseForm1.name != '') {
+            let EE = this.resDataForm[this.resDataForm.length-1].course;
+            if (EE.length === 0) {
+              let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
+              this.resDataForm[this.courseIndex].course.push(newCourse);
+            } else if (EE[EE.length-1].label != this.courseForm1.name) {
+              let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
+              this.resDataForm[this.courseIndex].course.push(newCourse);
+            }
+            this.dialogVisible8 = false;
+            this.dialogVisible9 = true;
+        } else {
+          this.warningMsg('名称不能为空')
+        }
+      },
+      //目录,课程简介
+      addDescribe1() {
+        if (this.describeNode1.describe != '') {
+          let EE = this.resDataForm[this.resDataForm.length-1].course;
+          EE[EE.length-1].describe = this.describeNode1.describe;
+          this.dialogVisible9 = false;
+          this.dialogVisible5 = true;
+          console.log(EE);
+        } else {
+          this.warningMsg('课程简介不能为空')
+        }
+      },
+      //创建,课程
+      addCourse() {
+        if (this.courseForm.name != '') {
+          if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
+            let EE = this.resDataForm[this.resDataForm.length-1];
+            if (EE.label != this.courseForm.name) {
+                if (EE.course.length === 0) {
+                  let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
+                  this.resDataForm[this.resDataForm.length-1].course.push(newCourse);
+                  this.dialogVisible4 = false;
+                  this.dialogVisible2 = true;
+                  console.log(EE);
+                } else if (EE.course[EE.course.length-1].label != this.courseForm.name) {
+                  let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
+                  this.resDataForm[this.resDataForm.length-1].course.push(newCourse);
+                  this.dialogVisible4 = false;
+                  this.dialogVisible2 = true;
+                  console.log(EE);
+                }else if (EE.course[EE.course.length-1].label === this.courseForm.name) {
+                  this.dialogVisible4 = false;
+                  this.dialogVisible2 = true;
+                  console.log(EE);
+                }
+            } else {
+              this.dialogVisible4 = false;
+              this.dialogVisible2 = true;
+            }
+          } else {
+            let EE = this.resDataForm[this.courseIndex].course;
+            console.log(this.resDataForm[this.courseIndex]);
+            if (EE[EE.length-1].label != this.courseForm.name) {
+              let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
+              this.resDataForm[this.courseIndex].course.push(newCourse);
+            }
+            this.dialogVisible4 = false;
+            this.dialogVisible2 = true;
+          }
+        } else {
+          this.warningMsg('名称不能为空')
+        }
       },
       //添加课程简介
-      addDescribe(node, data) {
-        this.dialogVisible2 = true;
-        this.appendData = data;
-        this.appendNode = node;
-      },
-      addDescribe1(data) {
-        if (this.describeNode.name != '') {
-          this.dialogVisible2 = false;
-          this.$set(this.appendData, 'describe', this.describeNode.name);
-          //console.log(this.appendData);
+      addDescribe() {
+        if (this.describeNode.describe != '') {
+          if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
+            let EE = this.resDataForm[this.resDataForm.length-1].course;
+            EE[EE.length-1].describe = this.describeNode.describe;
+            this.dialogVisible2 = false;
+            this.dialogVisible5 = true;
+            console.log(EE);
+            } else {
+            let EE = this.resDataForm[this.courseIndex].course;
+            EE[EE.length-1].describe = this.describeNode.describe;
+            this.dialogVisible2 = false;
+            this.dialogVisible5 = true;
+          }
+        } else {
+          this.warningMsg('课程简介不能为空')
         }
-        this.updateCustomCourse(2);
       },
-      //删除子节点
-      remove(node, data) {
-
-        this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-
-          const parent = node.parent;
-          const children = parent.data.children || parent.data;
-          const index = children.findIndex(d => d.id === data.id);
-          children.splice(index, 1);
-
+      //上一步
+      last1() {
+        this.dialogVisible4 = false;
+        this.dialogVisible = true;
+      },
+      last2() {
+        this.dialogVisible2 = false;
+        this.dialogVisible4 = true;
+      },
+      last3() {
+        this.dialogVisible5 = false;
+        this.dialogVisible2 = true;
+      },
+      last4() {
+        this.dialogVisible6 = false;
+        this.dialogVisible5 = true;
+      },
+      last5() {
+        this.dialogVisible = false;
+        this.dialogVisible1 = true;
+      },
+      last6() {
+        this.dialogVisible1 = false;
+        this.dialogVisible = true;
+      },
+      last7() {
+        this.dialogVisible8 = false;
+        this.dialogVisible1 = true;
+      },
+      last8() {
+        this.dialogVisible9 = false;
+        this.dialogVisible8 = true;
+      },
+      //跳过
+      skip1() {
+        this.dialogVisible5 = false;
+        this.dialogVisible6 = true;
+      },
+      skip1() {
+        this.dialogVisible6 = false;
+        this.updateCustomCourse();
+      },
+      //上传课件成功
+      uploadSuccess1(response, file, fileList) {
+          //console.log(response.code);
+          if (response.code === 0) {
+            this.successMsg(file.name + '已上传成功!');
+          }
+      },
+      //上传课件前
+      beforeUpload1(file) {
+        if (file.name != '') {
+          let EE = this.resDataForm[this.courseIndex].course;
+          EE[EE.length-1].teachingMaterial = file.name;
+          this.dialogVisible6 = true;
+        }
+      },
+     //上传微课成功
+      uploadSuccess2(response, file, fileList) {
+        if (response.code === 0) {
           this.updateCustomCourse();
-
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });
-        });
-
+          this.successMsg(file.name + '已上传成功!');
+        }
       },
-
-
-      //上传课件
-      uploadCourse(node, data) {
-          this.dialogVisible3 = true;
-
+      //上传微课前
+      beforeUpload2(file) {
+        if (file.name != '') {
+          let EE = this.resDataForm[this.courseIndex].course;
+          let newCourse = { videoTitle : file.name, };
+          EE[EE.length-1].videoTitle.push(newCourse);
+          console.log(this.resDataForm);
+          this.successMsg('正在上传,上传完成将会有提示信息!');
+          this.dialogVisible6 = false;
+          this.dialogVisible5 = false;
+          this.dialogVisible4 = false;
+          this.dialogVisible3 = false;
+          this.dialogVisible2 = false;
+          this.dialogVisible1 = false;
+          this.dialogVisible = false;
+        }
       },
-      handleRemove(file, fileList) {
-        console.log(file, fileList);
-      },
-      handlePreview(file) {
-        console.log(file);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
-      },
-      beforeRemove(file, fileList) {
-        return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-
-
-
       //成功信息
       successMsg(msg) {
         this.$message({
@@ -401,28 +692,20 @@
         });
       },
       //更新到服务器
-      updateCustomCourse(d) {
+      updateCustomCourse() {
         axios.post('/teacherCMS/addCustomCourse', {
           data: {
             userID: this.userID,
             userType: this.userType,
-            tab: this.resDataTree,
+            tab: this.resDataForm,
           }
         }).then((res) => {
           let resD = res.data;
-          if (resD.code == 0) {
-            if (d == 0) {
-              this.successMsg('添加课程成功')
-            } else if (d == 1) {
-              this.successMsg('添加子课程成功')
-            } else if (d == 2) {
-              this.successMsg('添加课程简介成功')
-            }
-          } else {
-            this.warningMsg('服务器返回错误')
+          if (resD.code != 0) {
+            this.warningMsg('服务器返回错误');
           }
-          //console.log(this.resDataTree[0]);
-          this.dataTree.push(this.resDataTree[0]);
+          //console.log(this.resDataForm[0]);
+          //this.dataForm.push(this.resDataForm[0]);
         });
       },
       //获取我的课程数据
@@ -435,13 +718,14 @@
         }).then((res) => {
           if (res.data) {
             let resD = res.data.techCosCou[0].tab;
-            this.resDataTree = resD;
-            //console.log(resD);
+            this.resDataForm = resD;
+            if (this.dataForm == '') {
+              this.dataForm = (this.resDataForm[0].course);
+            }
+            this.editableTabsValue = (this.resDataForm[0].label);
           } else {
             this.warningMsg('服务器返回错误')
           }
-          this.dataTree = (this.resDataTree[0].course);
-          //console.log(this.dataTree[0]);
         });
       },
     },
@@ -500,6 +784,5 @@
   .myCourse_cont .dialog3 {
     display: flex;
   }
-
 
 </style>

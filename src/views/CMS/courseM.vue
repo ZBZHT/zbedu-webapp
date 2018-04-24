@@ -4,35 +4,42 @@
     <!--课程管理-->
     <el-col :span="19">
 
-      <div class="custom-tree-container">
-        <div class="block">
-          <p>使用 scoped slot</p>
-          <el-tree
-            :data="dataTree"
-            show-checkbox
-            node-key="id"
-            default-expand-all
-            :expand-on-click-node="false">
-      <span class="custom-tree-node" slot-scope="{ node, data }">
-        <span>{{ node.label }}</span>
-        <span>
-          <el-button
-            type="text"
-            size="mini"
-            @click="() => append(data)">
-            Append
-          </el-button>
-          <el-button
-            type="text"
-            size="mini"
-            @click="() => remove(node, data)">
-            Delete
-          </el-button>
-        </span>
-      </span>
-          </el-tree>
-        </div>
-      </div>
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+        <el-tab-pane label="历史浏览" name="first">
+
+          <el-table
+            :data="tableData"
+            style="width: 100%">
+
+            <el-table-column label="序号" type="index" width="60">
+            </el-table-column>
+
+            <el-table-column prop="date" label="浏览日期" width="180">
+            </el-table-column>
+
+            <el-table-column prop="name" label="课程名称" width="180">
+            </el-table-column>
+
+            <el-table-column prop="address" label="课程简介">
+            </el-table-column>
+
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button
+                  size="mini"
+                  @click="handleEdit(scope.$index, scope.row)">进入课程</el-button>
+                <el-button
+                  size="mini"
+                  type="danger"
+                  @click="handleDelete(scope.$index, scope.row)">删除记录</el-button>
+              </template>
+            </el-table-column>
+
+          </el-table>
+
+        </el-tab-pane>
+        <!--<el-tab-pane label="备用标签" name="second">备用标签</el-tab-pane>-->
+      </el-tabs>
 
     </el-col>
 
@@ -49,45 +56,15 @@
 
     data() {
       return {
-        dataTree: [{
-          id: 1,
-          label: '一级 1',
-          children: [{
-            id: 4,
-            label: '二级 1-1',
-            children: [{
-              id: 9,
-              label: '三级 1-1-1'
-            }, {
-              id: 10,
-              label: '三级 1-1-2'
-            }]
-          }]
-        }, {
-          id: 2,
-          label: '一级 2',
-          children: [{
-            id: 5,
-            label: '二级 2-1'
-          }, {
-            id: 6,
-            label: '二级 2-2'
-          }]
-        }, {
-          id: 3,
-          label: '一级 3',
-          children: [{
-            id: 7,
-            label: '二级 3-1'
-          }, {
-            id: 8,
-            label: '二级 3-2'
-          }]
-        }],
+        tableData: [],
+        activeName: 'first'
       }
     },
     computed: {},
     methods: {
+      handleClick(tab, event) {
+        console.log(tab, event);
+      },
 
       append(data) {
         const newChild = { id: id++, label: 'testtest', children: [] };
@@ -96,7 +73,6 @@
         }
         data.children.push(newChild);
       },
-
       remove(node, data) {
         const parent = node.parent;
         const children = parent.data.children || parent.data;
@@ -142,6 +118,12 @@
     font-size: 14px;
     padding-right: 8px;
   }
-
-
+  .CMS_cont .el-tree-node:focus>.el-tree-node__content {
+     background-color: white;
+  }
+/*
+  .CMS_cont .el-tree-node:focus>.el-tree-node__content, .el-tree-node__content:hover {
+     background-color: #d9d9d9;
+  }
+*/
 </style>

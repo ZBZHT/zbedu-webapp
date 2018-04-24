@@ -3,6 +3,7 @@
 
     <!--我的足迹-->
     <el-col :span="19">
+
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="历史浏览" name="first">
 
