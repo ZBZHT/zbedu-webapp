@@ -5,7 +5,7 @@
     </div>
 
 
-    <div class="index-list" :style="{height: height - 152 + 'px'}">
+    <div class="index-list" :style="{height: height - 141 + 'px'}">
         <div class="index-list-topline"></div>
         <div class="index-list-main">
             <div>
@@ -46,7 +46,7 @@ export default {
     handleResize (event) {
         this.height = window.innerHeight;
         if(this.height <= "620"){
-            this.height = 620;
+            this.height = 598;
         }
     }
   },

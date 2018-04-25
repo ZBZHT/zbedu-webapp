@@ -246,7 +246,7 @@
       handleResize (event) {
         this.height = window.innerHeight;
         if(this.height <= "620"){
-            this.height = 620;
+            this.height = 598;
         }
       },
       getTestQ() {

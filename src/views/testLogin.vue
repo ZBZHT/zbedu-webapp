@@ -75,7 +75,7 @@ import footFooter from '@/components/common/footFooter'
             handleResize (event) {
                 this.height = window.innerHeight;
                 if(this.height <= "620"){
-                    this.height = 620;
+                    this.height = 598;
                 }
             },
             myFunction(){
@@ -101,6 +101,7 @@ import footFooter from '@/components/common/footFooter'
                             this.$store.commit('username',res.data.username);
                             this.$store.commit('userType',res.data.userType);
                             this.$store.commit('userTypeC',core.userType(res.data.userType));
+                            this.$store.commit('userID',res.data.userID);
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
                                     if(this.$store.state.userType == "admin"){
@@ -175,10 +176,12 @@ import footFooter from '@/components/common/footFooter'
                                     this.password = '';
                                     this.nickName = '';
                                 }
+
                         });
                 this.$store.commit('username','');
+                this.$store.commit('userType','');
                 this.$router.push('/testLogin');
-                this.$router.go(0);
+            //    this.$router.go(0);
             }
         }
     }

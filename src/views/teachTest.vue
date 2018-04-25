@@ -19,7 +19,7 @@
       </div>
       <div class="rightBox">
         <div class="testOnline" v-show="currIndex === 0">
-          
+
           <div class="contentBox">
             <el-tabs type="border-card" style="float:none;">
 
@@ -42,9 +42,15 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="创建时间" width="200">
+                  <el-table-column label="开始日期" width="200">
                     <template slot-scope="scope">
-                      <span>{{ scope.row.newData }}</span>
+                      <span>{{ scope.row.date1 }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="开始时间" width="200">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.date3 }}</span>
                     </template>
                   </el-table-column>
 
@@ -192,11 +198,11 @@
                     </el-form-item>
 
                     <el-form-item label="考试范围" prop="name">
-                      <el-dropdown>
+                      <el-dropdown trigger="click">
                             <span class="el-dropdown-link">
                                 <div class="elinput">
                                     <ul>
-                                        <li v-for="item in form.name">{{item}} |&nbsp</li>
+                                        <li v-for="(item,index) in form.name">{{item}} <span v-if="index != indexSpan"> |&nbsp </span> </li>
                                     </ul>
                                 </div>
                             </span>
@@ -421,7 +427,7 @@
   <div class="footer">
     <foot-footer></foot-footer>
   </div>
-</div>  
+</div>
 </template>
 
 <script>
@@ -478,6 +484,7 @@
         currIndex: 0,
         data: [],
         formDisabled: false,
+        indexSpan:'',
         form: {
           theme: '',
           name: [],
@@ -566,7 +573,7 @@
       handleResize (event) {
         this.height = window.innerHeight;
         if(this.height <= "620"){
-            this.height = 620;
+            this.height = 598;
         }
       },
       //创建考试开始时间不能选择历史日期
@@ -598,6 +605,7 @@
           let resData = res.data;
           for (let i = 0; i < resData.length; i++) {
             resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
             console.log(resData[i].currTestType);
             resData[i].currTestType = core.getCurrTestType(resData[i].currTestType)
           }
@@ -644,11 +652,13 @@
         console.log(this.$refs.tree.getCheckedNodes());
         var arr = this.$refs.tree.getCheckedNodes();
         for (var i = 0; i < arr.length; i++) {
-          console.log(arr[i].label);
+        //  console.log(arr[i].label);
           this.form.name.push(arr[i].label);
           this.form.nameId.push(arr[i].courseId);
-          console.log(arr[i].courseId);
-          console.log(this.form.nameId);
+          this.indexSpan = i;
+        //  console.log(this.indexSpan)
+        //  console.log(arr[i].courseId);
+        //  console.log(this.form.nameId);
         }
       },
       handleClick(data) {
@@ -689,11 +699,11 @@
       },
       //判断时长
       compareTime(){
-        var a = parseInt(this.form.date3.split(":")[1]) 
-        var a0 = parseInt(this.form.date3.split(":")[0]) 
+        var a = parseInt(this.form.date3.split(":")[1])
+        var a0 = parseInt(this.form.date3.split(":")[0])
             //console.log(a)
-        var b = parseInt(this.form.date4.split(":")[1]) 
-        var b0 = parseInt(this.form.date4.split(":")[0]) 
+        var b = parseInt(this.form.date4.split(":")[1])
+        var b0 = parseInt(this.form.date4.split(":")[0])
             //console.log(b)
         if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
           if((a == 0 && b0 < a0) || (a == 30 && b0 <= a0) || (a == b && a0 == b0)){
@@ -719,10 +729,10 @@
       },
       //考试时长不能超过时间选择器
       compareTime0(){
-        var a = parseInt(this.form.date3.split(":")[1]) 
-        var a0 = parseInt(this.form.date3.split(":")[0]) 
-        var b = parseInt(this.form.date4.split(":")[1]) 
-        var b0 = parseInt(this.form.date4.split(":")[0]) 
+        var a = parseInt(this.form.date3.split(":")[1])
+        var a0 = parseInt(this.form.date3.split(":")[0])
+        var b = parseInt(this.form.date4.split(":")[1])
+        var b0 = parseInt(this.form.date4.split(":")[0])
         if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
           if(b >= a){
               var timeHour = parseInt(b0) - parseInt(a0);
@@ -747,10 +757,10 @@
       },
       //考试时长不能超过时间选择器并提交
       compareTime1(){
-        var a = parseInt(this.form.date3.split(":")[1]) 
-        var a0 = parseInt(this.form.date3.split(":")[0]) 
-        var b = parseInt(this.form.date4.split(":")[1]) 
-        var b0 = parseInt(this.form.date4.split(":")[0]) 
+        var a = parseInt(this.form.date3.split(":")[1])
+        var a0 = parseInt(this.form.date3.split(":")[0])
+        var b = parseInt(this.form.date4.split(":")[1])
+        var b0 = parseInt(this.form.date4.split(":")[0])
         if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
           if(b >= a){
               var timeHour = parseInt(b0) - parseInt(a0);
@@ -781,7 +791,7 @@
           var str = this.form.date3.split(":");
           var newStr = parseInt(str[0]) + parseInt(2)
           if(newStr < 10){
-            newStr = "0" + newStr; 
+            newStr = "0" + newStr;
           }
           //console.log( newStr )
           this.form.date4 = newStr + ":" + str[1];
@@ -940,6 +950,7 @@
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
           resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+          resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
           resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
           resData[i].toTestDataIndex = i;
         }
@@ -1099,6 +1110,7 @@
     border: 1px solid #dcdfe6;
     border-radius: 4px;
     overflow: auto;
+    cursor: pointer;
   }
 
   .teach_Test .elinput ul li {

@@ -218,7 +218,7 @@ a:hover{
 
 }
 .user .login{
-  border: 1px solid #f00;
+  border: 1px solid rgb(106,21,24);
   border-radius: 20px;
 }
 .user p{

@@ -1,17 +1,18 @@
 <template>
-  <div id="app" class="exerciseCenter-container">
-    <div class="nav">
+  <div class="exerciseCenter-container">
+    <div>
         <navgation-head></navgation-head>
     </div>
 
     <div class="exerciseCenter-content">
         <el-row>
             <el-col :span="6">
-            <el-tree
-                :data="data"
+              <el-tree
+                node-key="courseId"
+                :default-expanded-keys="[1000,1100]"
                 :props="defaultProps"
+                :data="data"
                 accordion
-                node-key="id"
                 @node-click="handleNodeClick"></el-tree>
             </el-col>
 
@@ -85,14 +86,11 @@ export default {
   name: 'exerciseCenter',
   data () {
     return {
-      defaultProps: {
-        children: 'children',
-        label: 'label',
-        engImg:'engImg',
-        engRule:'engRule',
-        id:'id'
-      },
       data:[],
+      defaultProps: {
+       children: 'children',
+       label: 'label',
+       },
       exerEngImg:[],
       exerEngRule:'',
       exerLabel:'实训中心',
@@ -105,31 +103,34 @@ export default {
       },
   methods:{
     handleNodeClick(data) {
-        console.log(data.id);
-        if(data.id == 101){
-            this.is697 = true;
-            this.is926 = false;
-        }else if(data.id == 102){
-            this.is697 = false;
-            this.is926 = true;
-        }
+      console.log(data);
+      if(data.label == "教学设备展示"){
+          this.is697 = true;
+          this.is926 = false;
+      }else if(data.label == "实训中心设计"){
+          this.is697 = false;
+          this.is926 = true;
+      }
+      if (data.engImg) {
         this.exerEngImg = data.engImg;
         this.exerEngRule = data.engRule;
         this.exerLabel = data.label;
+      }
     }
+
 
   },
   mounted(){
     axios.get("/readJson/bannerLeftData",{
-                params:{
-                     user:234
-                }
-            }).then((res)=>{
-                this.data = res.data[1].children;
-                //console.log(this.data[0].label)
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
+        params:{
+             user:234
+        }
+      }).then((res)=>{
+          this.data = res.data[1].children;
+          //console.log(this.data[0].label)
+      }).catch(function(error){
+          console.log("error init." + error)
+      });
     },
   components:{navgationHead,footFooter}
 }
@@ -160,13 +161,13 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.exerciseCenter-container{
+.exerciseCenter-content .exerciseCenter-container{
     min-width:960px;
 }
 .exerciseCenter-content{
-    width:960px;
+    width:100%;
     margin:0 auto;
-    margin-top:80px;
+    margin-top:6px;
     margin-bottom:80px;
 }
 .exerciseCenter-content .exerP{
@@ -174,9 +175,6 @@ hr{
     margin-bottom:20px;
 }
 .exerciseCenter-content .el-tree-node__expand-icon {
-    font-size: 16px;
-}
-.exerciseCenter-content .el-tree-node__label {
     font-size: 16px;
 }
 .exerciseCenter-content .el-tree{
@@ -187,27 +185,50 @@ hr{
     text-align:left;
 }
 .exerciseCenter-content .el-tree-node:focus>.el-tree-node__content {
-    background-color: #d9d9d9;
+    background-color: #9f5355;
+  color: white;
 }
 .exerciseCenter-content .el-tree-node__content:hover{
-    background-color: #d9d9d9;
+    background-color: #9f5355;
+    color: white;
 }
 .exerciseCenter-content .el-tree-node__label{
     text-overflow:ellipsis;
     white-space:nowrap;
     overflow:hidden;
+    font-size: 16px;
+    color: #212529;
+}
+.exerciseCenter-content .el-tree-node__label:hover {
+    color: white;
 }
 .exerciseCenter-content .el-tabs--border-card{
     margin-left:20px;
-    border:1px solid #9f5355;
-    border-radius:3px;
+    border: 0;
+    border-top: 4px solid #9f5355;
+    box-shadow: none;
 }
 .exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
-    border-right-color: #9f5355;
-    border-left-color: #9f5355;
+    background-color: #9f5355;
+    color: #ffffff;
+}
+.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
+  border: 3px solid #9f5355;
+  padding:0 60px;
+  border-top: none;
+  color: #212529;
+}
+.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+  color: #212529;
+}
+.exerciseCenter-content .el-tabs__item {
+  padding:0 60px;
+  font-size: 18px;
+  line-height: 36px;
 }
 .exerciseCenter-content .el-tabs--border-card>.el-tabs__header{
-    border-bottom: 1px solid #9f5355;
+  border: none;
+  background-color: #ffffff;
 }
 .exerciseCenter-content .el-tabs__nav{
     float:none;
@@ -222,6 +243,22 @@ hr{
 }
 .exerciseCenter-content .pdf-box{
     width:100%;
-    height:500px;
+  height: 800px;
+}
+.exerciseCenter-content .el-col-6{
+  width: 16%;
+}
+.exerciseCenter-content .el-tree{
+  padding: 0;
+  border: 0;
+}
+.exerciseCenter-content .el-tree-node{
+  background-color: #d2d2d2;
+}
+.exerciseCenter-content .el-tree-node__content{
+  border-bottom: 3px solid #ffffff;
+}
+.el-tree-node__expand-icon{
+  color: #ffffff;
 }
 </style>
