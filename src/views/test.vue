@@ -1,10 +1,16 @@
 <template>
+<div>
   <div class="test_T">
+    <div class="title">
+      <div>
+        <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
+      </div>
+    </div>
     <div class="question" id="content">
       <div class="leftBox">
-        <p>
+        <div class="userPicFont">
           <nav-user></nav-user>
-        </p>
+        </div>
         <ul class="leftItem">
           <li class="leftLi" v-for="(item,index) in leftBox"
               @click="rightAppear(index)"
@@ -15,11 +21,7 @@
       </div>
       <div class="rightBox">
         <div class="testOnline" v-show="currIndex === 0">
-          <div class="title">
-            <div>
-              <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-            </div>
-          </div>
+
           <div class="Tecontent">
             <div class="data">
               <p class="data-p">
@@ -241,7 +243,7 @@
                     <span>
                         正确答案：{{item3.answer}}
                     </span>
-                  </div>          
+                  </div>
                 </el-dialog>
 
             </el-tab-pane>
@@ -416,7 +418,7 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                
+
                 <!--分页显示-->
                 <div class="block">
                   <el-pagination
@@ -482,7 +484,7 @@
                     <span>
                         正确答案：{{item3.answer}}
                     </span>
-                  </div>          
+                  </div>
                 </el-dialog>
 
               </el-tab-pane>
@@ -492,10 +494,11 @@
         </div>
       </div>
     </div>
-    <div class="footer">
-      <foot-footer></foot-footer>
-    </div>
   </div>
+  <div class="footer">
+    <foot-footer></foot-footer>
+  </div>
+</div>
 </template>
 
 <script>
@@ -638,7 +641,7 @@
           this.still_btn = val
         }
       }
-      
+
     },
     created() {
       axios.get("/readJson/bannerLeftData", {
@@ -802,7 +805,7 @@
           });
         }
 
-        
+
       },
       //跳转页面
       jumpOther(){
@@ -928,7 +931,7 @@
               this.still_btn = true;
               this.$store.commit('stillBtn',true);
               this.isTesting = 1;
-              
+
               this.testOnlineData.theme = this.testNowData[0].theme;
               this.testOnlineData.date1 = this.testNowData[0].date1;
               this.testOnlineData.date2 = this.testNowData[0].date2;
@@ -1132,8 +1135,7 @@
   p {
     margin: 0;
   }
-
-  .test_T .question {
+  .test_T{
     min-width: 700px;
     width: 1200px;
     height: 700px;
@@ -1141,39 +1143,42 @@
     margin-top: 40px;
     margin-bottom: 40px;
     border: 1px solid #6a1518;
+  }
+  .test_T .question {
+    width: 100%;
+    height: 87%;
+    margin: 0 auto;
     display: flex;
   }
 
   .test_T .leftBox {
-    width: 12.5%;
+    width: 18%;
     height: 100%;
   }
 
-  .test_T .leftBox > p {
-    font-size: 20px;
-    margin-top: 110px;
-  }
-
-  .test_T .leftBox .leftItem {
-    margin-top: 57px;
+  .test_T .leftBox .userPicFont {
+    height: 19%;
+    padding-top: 94px;
+    background: rgb(150,150,150);
   }
 
   .test_T .leftLi {
     line-height: 56px;
-    background: #2b333b;
+    background: rgb(210,210,210);
     margin-top: 10px;
     font-weight: bolder;
     font-size: 20px;
     cursor: pointer;
-    color: #fff;
+    color: #000;
   }
 
   .test_T .active {
-    color: #f00;
+    color: #fff;
+    background:rgb(106,21,24)
   }
 
   .test_T .rightBox {
-    width: 87.5%;
+    width: 82%;
     height: 100%;
     position: relative;
     border-left: 1px solid #6a1518;
@@ -1190,7 +1195,7 @@
 
   .test_T .title {
     width: 100%;
-    height: 15%;
+    height: 13%;
     text-align: left;
     font-weight: bolder;
     font-size: 20px;
@@ -1198,6 +1203,7 @@
     box-sizing: border-box;
     display: flex;
     border-bottom: 1px solid #6a1518;
+    background:url("../assets/imgs/header.png") no-repeat;
   }
 
   .test_T .inforItem {
@@ -1235,7 +1241,7 @@
 
   .test_T .data {
     width: 100%;
-    height: 91%;
+    height: 107%;
     overflow: hidden;
     text-align: left;
     padding: 30px 40px 4px 40px;
@@ -1260,7 +1266,6 @@
   .test_T .sureBtn {
     position: relative;
     width: 100%;
-    height: 9%;
     border-top: 1px solid #6a1518;
     text-align: right;
   }
@@ -1443,7 +1448,7 @@
 
   .el-button--danger.is-plain {
     padding: 15px 40px 15px 40px;
-    color: #fef0f0;
+    color: #000;
     background: #f56c6c;
   }
 

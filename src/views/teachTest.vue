@@ -1,10 +1,16 @@
 <template>
+<div>
   <div class="teach_Test">
+    <div class="titleB">
+      <div>
+        <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
+      </div>
+    </div>
     <div class="question">
       <div class="leftBox">
-        <p>
+        <div class="userPicFont">
           <nav-user></nav-user>
-        </p>
+        </div>
         <ul class="leftItem">
           <li class="leftLi" v-for="(item,index) in leftBox"
               @click="rightAppear(index)"
@@ -15,11 +21,7 @@
       </div>
       <div class="rightBox">
         <div class="testOnline" v-show="currIndex === 0">
-          <div class="titleB">
-            <div>
-              <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-            </div>
-          </div>
+          
           <div class="contentBox">
             <el-tabs type="border-card" style="float:none;">
 
@@ -423,10 +425,11 @@
       </div>
 
     </div>
-    <div class="footer">
-      <foot-footer></foot-footer>
-    </div>
   </div>
+  <div class="footer">
+    <foot-footer></foot-footer>
+  </div>
+</div>  
 </template>
 
 <script>
@@ -1010,47 +1013,58 @@
     color: inherit;
     cursor: pointer;
   }
-
-  .teach_Test .question {
+  .teach_Test{
     min-width: 700px;
     width: 1200px;
     height: 700px;
     margin: 0 auto;
     margin-top: 40px;
+    margin-bottom: 40px;
     border: 1px solid #6a1518;
+  }
+  .teach_Test .question {
+    width: 100%;
+    height: 87%;
+    margin: 0 auto;
     display: flex;
   }
 
   .teach_Test .leftBox {
-    width: 12.5%;
+    width: 18%;
     height: 100%;
   }
 
-  .teach_Test .leftBox > p {
-    font-size: 20px;
-    margin-top: 110px;
+  .teach_Test .leftBox .userPicFont {
+    height: 19%;
+    padding-top: 94px;
+    background: rgb(150,150,150);
+  }
+
+  .teach_Test .leftBox .userPicFont .user_bn .userPic{
+
   }
 
   .teach_Test .leftBox .leftItem {
-    margin-top: 57px;
+
   }
 
   .teach_Test .leftLi {
     line-height: 56px;
-    background: #2b333b;
+    background: rgb(210,210,210);
     margin-top: 10px;
     font-weight: bolder;
     font-size: 20px;
     cursor: pointer;
-    color: #fff;
+    color: #000;
   }
 
   .teach_Test .active {
-    color: #f00;
+    color: #fff;
+    background:rgb(106,21,24)
   }
 
   .teach_Test .rightBox {
-    width: 87.5%;
+    width: 82%;
     height: 100%;
     position: relative;
     border-left: 1px solid #6a1518;
@@ -1130,7 +1144,7 @@
     min-width: 38%;
   }
   .teach_Test .el-tabs--border-card>.el-tabs__content{
-    padding: 15px 110px 15px 15px;
+    padding: 15px 60px 15px 15px;
   }
   .teach_Test .testOnline {
     width: 100%;
@@ -1143,7 +1157,7 @@
 
   .teach_Test .titleB {
     width: 100%;
-    height: 15%;
+    height: 13%;
     border-bottom: 1px solid #6a1518;
     text-align: left;
     font-weight: bolder;
@@ -1151,11 +1165,12 @@
     padding: 10px;
     box-sizing: border-box;
     display: flex;
+    background:url("../assets/imgs/header.png") no-repeat;
   }
 
   .teach_Test .contentBox {
     width: 100%;
-    height: 79%;
+    height: 100%;
     display: flex;
   }
 

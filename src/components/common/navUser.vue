@@ -135,7 +135,7 @@ a:hover{
     background:#ddd;
     position:absolute;
     top:80px;
-    right:3px;
+    right:35px;
     z-index:1000;
     border-radius:24px;
     display:none;

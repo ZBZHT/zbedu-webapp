@@ -1,24 +1,31 @@
 <template>
-    <div class="user">
+<div class="testLogin">
+    <div class="user" :style="{height: height - 44 + 'px'}">
         <router-link :to="{path:'/'}">
-                <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+                <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
             </router-link>
+
                 <div class="login" v-show="!this.$store.state.username">
-                    <p>考试系统登录</p>
-                    <div class="userBox">
-                        <p> <img class="unm" src="../assets/imgs/unm.png"> </p>
-                        <input name="fname" type="text" placeholder="学号/ID/身份证号/手机号" v-model="username" autocomplete="on" autofocus="autofocus">
+                    <div class="userFont">
+                        <p>考试系统登录</p>
                     </div>
-                    <div class="passwordBox">
-                        <p> <img class="psw" src="../assets/imgs/psw.png"> </p>
-                        <input name="fpassword" type="password" placeholder="密码"  @keyup.enter="login" autocomplete="new-password" v-model="password">
+                    <div class="userOther">
+                        <div class="userBox">
+                          <img class="unm" src="../assets/imgs/unm.png">
+                          <input name="fname" type="text" placeholder="学号/ID/身份证号/手机号" v-model="username" autocomplete="on" autofocus="autofocus">
+                        </div>
+                        <div class="passwordBox">
+                          <img class="psw" src="../assets/imgs/psw.png">
+                          <input name="fpassword" type="password" placeholder="密码"  @keyup.enter="login" autocomplete="new-password" v-model="password">
+                        </div>
+                        <div class="btn">
+                          <button class="btnOk" @click="login">确定</button>
+                          <button class="btnCancel" @click="cancel">返回</button>
+                        </div>
                     </div>
-                    <div class="btn">
-                        <button class="btnOk" @click="login">确定</button>
-                        <button class="btnCancel" @click="cancel">返回</button>
-                    </div>
+
                 </div>
-                <div class="login" v-show="this.$store.state.username">
+                <div class="loginSure" v-show="this.$store.state.username">
                     <p>{{this.$store.state.username}},欢迎进入考试系统</p>
                     <div class="userBox">
                         <p>确定用此账号进入考试系统吗？</p>
@@ -29,6 +36,10 @@
                     </div>
                 </div>
     </div>
+    <div class="footer">
+        <foot-footer></foot-footer>
+    </div>
+</div>
 </template>
 
 <script>
@@ -36,6 +47,8 @@ import axios from 'axios'
 import md5 from 'js-md5'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 import core from '../assets/js/core.js'
+import footFooter from '@/components/common/footFooter'
+
 
     export default {
         name: 'v-modal',
@@ -45,14 +58,26 @@ import core from '../assets/js/core.js'
                 username: '',
                 password:'',
                 nickName:'',
-                url:''
+                url:'',
+                height:window.innerHeight
             }
         },
+        beforeDestroy: function () {
+            window.removeEventListener('resize', this.handleResize)
+        },
+        components:{footFooter},
         mounted(){
             this.url = document.domain;
           //  window.addEventListener("popstate",this.myFunction);
+          window.addEventListener('resize', this.handleResize)
         },
         methods: {
+            handleResize (event) {
+                this.height = window.innerHeight;
+                if(this.height <= "620"){
+                    this.height = 620;
+                }
+            },
             myFunction(){
                 this.$router.push('/');
             },
@@ -159,67 +184,97 @@ import core from '../assets/js/core.js'
     }
 </script>
 
-<style scoped>
-.user{
+<style>
+body{
+    margin:0;
+    padding:0;
+}
+.testLogin {
     min-width:960px;
+}
+.testLogin .user{
+    width:100%;
     margin:0 auto;
     min-height:700px;
-    height: auto  !important;
+    background:url("../assets/imgs/testBg.png") no-repeat;
     background-size:100% 100%;
     position:relative;
-    box-shadow:0 300px 400px -100px #e4393c inset;
     text-align:left;
     padding:10px;
 }
-.login{
-    width:278px;
-    height:200px;
+.testLogin .login{
+    width:410px;
+    height:325px;
+    border:3px solid #aaa;
     position:absolute;
-    top:50%;
-    right:50%;
-    transform: translate(34%, -50%);
-    text-align:left;
+    top:32%;
+    right:38%;
+    box-shadow:0 0 30px #000;
 }
-.userBox{
-    position:relative;
-}
-.passwordBox{
-    margin-top:30px;
-    position:relative;
-}
-.unm{
+.testLogin .loginSure{
+    width:410px;
+    height:325px;
+    border:3px solid #aaa;
     position:absolute;
-    top:0;
-    left:-43px;
+    top:32%;
+    right:38%;
+    box-shadow:0 0 30px #000;
+    padding: 62px;
 }
-.psw{
-    position:absolute;
-    top:0;
-    left:-43px;
+.testLogin .userBox{
+    display:flex;
+    margin-bottom:20px;
 }
-p{
+.testLogin .userFont{
+    text-align:center;
+    margin-bottom:0;
+    height: 50px;
+    background:rgb(210,210,210);
+}
+.testLogin .userOther{
+    width:100%;
+    height:85%;
+    background:rgb(122,18,19);
+    padding: 60px;
+}
+.testLogin .userFont p{
+    margin-bottom:0;
+    line-height: 2.5;
+}
+.testLogin .passwordBox{
+    display:flex;
+}
+.testLogin .unm{
+
+}
+.testLogin .psw{
+
+}
+.testLogin .user p{
     font-size:20px;
     font-weight:bolder;
     color:#000;
 }
-input{
+.testLogin input{
     width:270px;
-    height:37px;
+    height:43px;
+   
 }
-.btn{
+.testLogin .btn{
     display:flex;
+    margin-left: 16px;
 }
 .btn :active{
     background:transparents;
 }
-.btnOk{
+.testLogin .btnOk{
     width:80px;
     margin-top:30px;
     padding:8px;
     border-radius:5px;
     cursor:pointer;
 }
-.btnCancel{
+.testLogin .btnCancel{
     width:80px;
     margin-top:30px;
     margin-left:23%;

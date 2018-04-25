@@ -1,20 +1,20 @@
 <template>
-<div class="nav">
+<div class="zbt-nav">
     <div class='headHr'></div>
     <div class="navbar">
         <div class="navbar-header">
             <router-link :to="{path:'/'}">
-                <img class="brand" alt="Brand" src="../../assets/imgs/zb_logo.png">
+                <img class="brand" alt="Brand" src="../../assets/imgs/zbtLogo.png">
             </router-link>
         </div>
         <div class="collapse">
-            <div class="collapse-title">
-                <span>ZBT</span>
-                <span>INTELLGENT TEACHING SYSTEM</span>
-                <p>
-                        中    邦    智    慧    教    学    系    统
-                </p>
-            </div>
+            <!--<div class="collapse-title">-->
+                <!--<span>ZBT</span>-->
+                <!--<span>INTELLGENT TEACHING SYSTEM</span>-->
+                <!--<p>-->
+                        <!--中    邦    智    慧    教    学    系    统-->
+                <!--</p>-->
+            <!--</div>-->
             <ul class="user">
                 <li>
                     <div class="phoneApp">
@@ -35,7 +35,7 @@
                             <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
                         </div>
                     </div>
-                    <a class="login" v-if="!nickName" @click="simplePrompt">登录</a>
+                    <a class="login" v-if="!nickName" @click="simplePrompt">请登录</a>
                             <modal ref="modal" @receive="modal"></modal>
                 </li>
             </ul>
@@ -73,7 +73,7 @@ export default {
     }
   },
   mounted(){
-      
+
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
 
         setTimeout(function(){
@@ -148,17 +148,25 @@ a:hover{
     height:5px;
     background:#7a2020;
 }
-.nav{
+.zbt-nav{
     min-width:960px;
+    width:100%;
+    background:url("../../assets/imgs/header.png") no-repeat;
 }
 .navbar{
     width:100%;
-    height:100px;
+    height:94px;
     box-shadow:0 0 10px #000;
     padding:20px;
     box-sizing: border-box;
     display:flex;
     position:relative;
+}
+.navbar .brand{
+    position:absolute;
+    left:15px;
+    top:15px;
+    height:65%;
 }
 .collapse{
     width:800px;
@@ -191,22 +199,27 @@ a:hover{
 .collapse .phoneApp{
   position:absolute;
   top:5px;
-  left:-121px;
+  left:-140px;
 }
 .username{
     position:absolute;
     top:60px;
-    right:31px;
+    right:42px;
 }
 .user a{
   font-size:16px;
   color:inherit;
   /*background: pink;*/
   display: inline-block;
-  height: 50px;
-  width: 155px;
+  height: 23px;
+  width: 140px;
   /*text-align: right;*/
   margin-top:5px;
+
+}
+.user .login{
+  border: 1px solid #f00;
+  border-radius: 20px;
 }
 .user p{
   margin-top:6px;
@@ -225,7 +238,7 @@ a:hover{
 }
 .user_bn{
     position:relative;
-    width: 230px;
+    width: 155px;
     height: 84px;
     margin-top: -50px;
 }

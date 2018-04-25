@@ -1,87 +1,84 @@
 <!--Copyright © 2016 南京中邦智慧教育科技有限公司-->
 <template>
 <div>
-    <div class="question" id="content">
-        <div class="leftBox">
-            <p>
-                <nav-user></nav-user>
-            </p>
+    <div class="realyTest">
+        <div class="title">
+            <div>
+                <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
+            </div>
         </div>
-        <div class="rightBox">
-            <div class="testOnline" v-show="currIndex === 0">
-                <div class="title">
-                    <div>
-                        <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
+        <div class="question" id="content">
+            <div class="leftBox">
+                <div class="userPicFont">
+                    <nav-user></nav-user>
+                </div>
+                <div v-show="textQuestionData">
+                    <div class="leftItem">
+                        <p>开始时间</p>
+                        <span>{{startTestTime}}</span>
                     </div>
-
-                    <div class="inforItem"  v-show="textQuestionData">
-                        <div class="infor">
-                            <p>开始时间</p>
-                            <span>{{startTestTime}}</span>
-                        </div>
-                        <!--<div class="infor notSt">-->
-                            <!--<p>状态</p>-->
-                            <!--<p class="notStart" v-show="!textQuestionData">未考</p>-->
-                            <!--<p>正在考试</p>-->
-                        <!--</div>-->
-                        <div class="infor">
-                            <p>倒计时</p>
-                            <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>
-                        </div>
+                    <div class="leftItem">
+                        <p>倒计时</p>
+                        <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>
                     </div>
                 </div>
-                <div class="content">
-                    <div class="data">
-                        <div class="desc" v-for="(item,index) in textQuestionData.question">
-                            <span class="desctitle">
-                                <a @click="tip(index)">
-                                    <img src="../assets/imgs/tip.png">
-                                </a>
-                                {{ index + 1 }}.{{item.desc}}
-                            </span>
-                            <ul class="ans">
-                                <li>
-                                    <label :for="item.forId[0]" v-if="item.options[0]">
-                                        <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[0]}}
-                                    </label>
-                                    <label :for="item.forId[1]" v-if="item.options[1]">
-                                        <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[1]}}
-                                    </label>
-                                    <label :for="item.forId[2]" v-if="item.options[2]">
-                                        <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[2]}}
-                                    </label>
-                                    <label :for="item.forId[3]" v-if="item.options[3]">
-                                        <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
-                                            {{item.options[3]}}
-                                    </label>
+            </div>
+            <div class="rightBox">
+                <div class="testOnline" v-show="currIndex === 0">
+                    
+                    <div class="content">
+                        <div class="data">
+                            <div class="desc" v-for="(item,index) in textQuestionData.question">
+                                <span class="desctitle">
+                                    <a @click="tip(index)">
+                                        <img src="../assets/imgs/tip.png">
+                                    </a>
+                                    {{ index + 1 }}.{{item.desc}}
+                                </span>
+                                <ul class="ans">
+                                    <li>
+                                        <label :for="item.forId[0]" v-if="item.options[0]">
+                                            <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                                {{item.options[0]}}
+                                        </label>
+                                        <label :for="item.forId[1]" v-if="item.options[1]">
+                                            <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                                {{item.options[1]}}
+                                        </label>
+                                        <label :for="item.forId[2]" v-if="item.options[2]">
+                                            <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                                {{item.options[2]}}
+                                        </label>
+                                        <label :for="item.forId[3]" v-if="item.options[3]">
+                                            <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
+                                                {{item.options[3]}}
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="number">
+                            <ul>
+                                <li v-for="(item,index) in textQuestionData.question">
+                                    <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                                 </li>
                             </ul>
+                            <div class="status">
+                                <div class="do">
+                                    <p class="doP isCheck">{{isCheckNumA}}</p>
+                                    <p>已答题</p>
+                                </div>
+                                <div class="do">
+                                    <p class="doP">{{AllLength - isCheckNumA}}</p>
+                                    <p>未答题</p>
+                                </div>
+                                <div class="do">
+                                    <p class="doP tip"></p>
+                                    <p>标记题</p>
+                                </div>
+                            </div>
+                            <button @click='submit()' class="btn" :class="{answer : !answer}" v-show="textQuestionData">提交</button>
                         </div>
-                    </div>
-                    <div class="number">
-                        <ul>
-                            <li v-for="(item,index) in textQuestionData.question">
-                                <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
-                            </li>
-                        </ul>
-                        <div class="status">
-                            <div class="do">
-                                <p class="doP isCheck">{{isCheckNumA}}</p>
-                                <p>已答题</p>
-                            </div>
-                            <div class="do">
-                                <p class="doP">{{AllLength - isCheckNumA}}</p>
-                                <p>未答题</p>
-                            </div>
-                            <div class="do">
-                                <p class="doP tip"></p>
-                                <p>标记题</p>
-                            </div>
-                        </div>
-                        <button @click='submit()' class="btn" :class="{answer : !answer}" v-show="textQuestionData">提交</button>
                     </div>
                 </div>
             </div>
@@ -458,30 +455,49 @@ a{
     color: inherit;
     cursor: pointer;
 }
-.question{
+.realyTest{
     min-width:1200px;
-    min-width:700px;
     width:1200px;
     height:700px;
     margin:0 auto;
     margin-top: 40px;
     border:1px solid #000;
+}
+.question{
+    width:100%;
+    height:87%;
+    margin:0 auto;
     display:flex;
 }
 .leftBox{
-    width:12.5%;
+    width:18%;
     height:100%;
     border-right:1px solid #000;
+    border-top:1px solid #000;
 }
-.leftBox > p{
-    font-size:20px;
-    margin-top:110px;
+.leftBox .userPicFont{
+    height: 19%;
+    padding-top: 94px;
+    background: rgb(150,150,150);
 }
 .leftBox .leftItem{
-    margin-top:57px;
+    background: rgb(210,210,210);
+    margin-top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000;
+    padding-top:10px;
+}
+.leftBox .leftItem p{
+    width:90px;
+    height:25px;
+    margin:0 auto;
+    background:rgb(140,61,61);
+    color:#fff;
+    font-size:16px;
 }
 .rightBox{
-    width:87.5%;
+    width:82%;
     height:100%;
     position:relative;
 }
@@ -495,38 +511,16 @@ a{
 }
 .title{
     width:100%;
-    height:15%;
+    height:13%;
     font-size:16px;
     padding:10px;
     box-sizing:border-box;
     display:flex;
+    background:url("../assets/imgs/header.png") no-repeat;
 }
-.inforItem{
-    margin-left:48%;
-    display:flex;
-}
-.infor{
-    margin-right:25px;
-    margin-top:28px;
-}
-.infor p{
-    font-size:17px;
-    margin-top:-2px;
-}
-/*.notSt{*/
-    /*position:relative;*/
-/*}*/
-/*.notStart{*/
-    /*display:block;*/
-    /*width:70px;*/
-    /*background:#fff;*/
-    /*position:absolute;*/
-    /*top:21px;*/
-    /*left:0;*/
-/*}*/
 .content{
     width:100%;
-    height:85%;
+    height:100%;
     display:flex;
 }
 .data{
@@ -542,7 +536,7 @@ a{
     display:none;
 }
 .tip{
-    background:yellow;
+    background:rgb(194,0,0);
     height:18px;
 }
 .number{
@@ -551,6 +545,7 @@ a{
     border-top:1px solid #000;
     border-left:1px solid #000;
     position:relative;
+    background:rgb(140,61,61);
 }
 .number li{
     display:inline-block;
@@ -564,10 +559,11 @@ a{
     margin-top:16%;
     padding-top:36%;
     box-sizing:border-box;
+    background:#fff;
 }
 .isCheck{
-    background:#953033;
-    color:#fff;
+    background:#bbb;
+    color:#000;
 }
 .status{
     display:flex;
@@ -606,7 +602,7 @@ a{
     width:85%;
     height: 78px;
     margin-top:10px;
-    background-color:#e4393c;
+    background-color:rgb(253,96,96);
     padding:8px;
     position:absolute;
     bottom:48px;

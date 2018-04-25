@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container">
+  <div>
     <div class="nav">
         <navgation-head></navgation-head>
     </div>
