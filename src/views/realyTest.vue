@@ -1,12 +1,10 @@
 <!--Copyright © 2016 南京中邦智慧教育科技有限公司-->
 <template>
 <div>
-    <div class="realyTest">
-        <div class="title">
-            <div>
-                <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
-            </div>
-        </div>
+    <div class="title">
+        <test-head></test-head>
+    </div>
+    <div class="realyTest" :style="{height: height - 138 + 'px'}">
         <div class="question" id="content">
             <div class="leftBox">
                 <div class="userPicFont">
@@ -92,6 +90,7 @@
 
 <script>
 import axios from 'axios'
+import testHead from '@/components/common/testHead'
 import footFooter from '@/components/common/footFooter'
 import Modal from '@/components/testCenter/modal';
 import navUser from '@/components/common/navUser';
@@ -144,8 +143,8 @@ export default {
       TestNum: 0,
       fullscreenLoading: false,
       testQuestion: '',
-      isCheckNumA:0
-
+      isCheckNumA:0,
+      height:window.innerHeight
     }
   },
   created(){
@@ -168,7 +167,11 @@ export default {
     }
 
   },
+  beforeDestroy: function () {
+    window.removeEventListener('resize', this.handleResize)
+  },
   mounted(){
+   window.addEventListener('resize', this.handleResize)
    setTimeout(function(){
     //var allTestNum = this.$store.state.allTestNum ;
     //var url = document.domain;
@@ -243,6 +246,12 @@ export default {
         }
     },
   methods:{
+    handleResize (event) {
+        this.height = window.innerHeight;
+        if(this.height <= "620"){
+            this.height = 620;
+        }
+    },
     getTestQ() {
       //console.log(this.toTestData[0]);
       axios.get("/readTestQuestion/getTestQing", {
@@ -438,7 +447,7 @@ export default {
                   })
             }
     },
-  components:{Modal,navUser,footFooter}
+  components:{testHead,Modal,navUser,footFooter}
 
 }
 </script>
@@ -456,16 +465,15 @@ a{
     cursor: pointer;
 }
 .realyTest{
-    min-width:1200px;
-    width:1200px;
-    height:700px;
+    min-width:960px;
+    width:100%;
     margin:0 auto;
-    margin-top: 40px;
     border:1px solid #000;
+    margin-bottom:40px;
 }
 .question{
     width:100%;
-    height:87%;
+    height:100%;
     margin:0 auto;
     display:flex;
 }
@@ -509,15 +517,6 @@ a{
     top:0;
     left:0;
 }
-.title{
-    width:100%;
-    height:13%;
-    font-size:16px;
-    padding:10px;
-    box-sizing:border-box;
-    display:flex;
-    background:url("../assets/imgs/header.png") no-repeat;
-}
 .content{
     width:100%;
     height:100%;
@@ -536,7 +535,7 @@ a{
     display:none;
 }
 .tip{
-    background:rgb(194,0,0);
+    background:rgb(194,0,0) !important;
     height:18px;
 }
 .number{
@@ -554,26 +553,27 @@ a{
 .number a{
     display:block;
     width:50px;
-    height:50px;
+    height:40px;
     border:1px solid #000;
     margin-top:16%;
-    padding-top:36%;
+    padding-top:20%;
     box-sizing:border-box;
     background:#fff;
 }
 .isCheck{
-    background:#bbb;
-    color:#000;
+    background:#bbb !important;
+    color:#000 !important;
 }
 .status{
     display:flex;
     margin-top:30px;
 }
 .do{
-    margin-left:30px;
+    margin-left:23px;
 }
 .doP{
     border:1px solid #000;
+    background:#fff;
 }
 .desc{
     margin-top:15px;
@@ -608,6 +608,7 @@ a{
     bottom:48px;
     left:18px;
     cursor:pointer;
+    color:#fff;
 }
 .userMessage{
     width:1048px;
@@ -657,9 +658,6 @@ a{
 #content:-webkit-full-screen {
     width: 100%;
     height: 100%;
-}
-.el-row {
-
 }
 .el-col {
     border-radius: 4px;

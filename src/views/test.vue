@@ -1,11 +1,9 @@
 <template>
 <div>
-  <div class="test_T">
-    <div class="title">
-      <div>
-        <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
-      </div>
-    </div>
+  <div class="title">
+    <test-head></test-head>
+  </div>
+  <div class="test_T" :style="{height: height - 138 + 'px'}">
     <div class="question" id="content">
       <div class="leftBox">
         <div class="userPicFont">
@@ -71,12 +69,6 @@
           </div>
         </div>
         <div class="userMessage" v-show="currIndex === 1">
-          <div class="title">
-            <div>
-              <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-            </div>
-          </div>
-
           <el-tabs type="border-card">
 
             <!--待考试-->
@@ -295,11 +287,6 @@
 
         </div>
         <div class="exerciseOnline" v-show="currIndex === 2">
-          <div class="title">
-            <div>
-              <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-            </div>
-          </div>
           <div class="test-exercise">
             <el-tabs type="border-card" @tab-click="rightAppear2()">
               <el-tab-pane label="创建练习">
@@ -505,6 +492,7 @@
   import axios from 'axios'
   import moment from 'moment'
   import core from '../assets/js/core.js';
+  import testHead from '@/components/common/testHead'
   import footFooter from '@/components/common/footFooter'
   import Modal from '@/components/testCenter/modal';
   import navUser from '@/components/common/navUser';
@@ -627,7 +615,8 @@
         dialogTableVisible3: false,
         exerciseErrorPaper:[],
         dialogTableVisible4: false,
-        exerciseInfo:[]
+        exerciseInfo:[],
+        height:window.innerHeight
       }
     },
     computed:{
@@ -673,7 +662,11 @@
       }
 
     },
+    beforeDestroy: function () {
+      window.removeEventListener('resize', this.handleResize)
+    },
     mounted() {
+      window.addEventListener('resize', this.handleResize)
       this.testNow();
     },
     watch: {
@@ -691,6 +684,13 @@
 
 
     methods: {
+      //监听浏览器高度
+      handleResize (event) {
+        this.height = window.innerHeight;
+        if(this.height <= "620"){
+            this.height = 620;
+        }
+      },
       //查看试卷弹出框
       getOriginPaper(index, row){
         this.dialogTableVisible1 = true;
@@ -1113,7 +1113,7 @@
       },
 
     },
-    components: {Modal, navUser, footFooter}
+    components: {testHead,Modal, navUser, footFooter}
 
   }
 </script>
@@ -1136,17 +1136,15 @@
     margin: 0;
   }
   .test_T{
-    min-width: 700px;
-    width: 1200px;
-    height: 700px;
+    min-width: 960px;
+    width: 100%;
     margin: 0 auto;
-    margin-top: 40px;
     margin-bottom: 40px;
     border: 1px solid #6a1518;
   }
   .test_T .question {
     width: 100%;
-    height: 87%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
   }
@@ -1191,19 +1189,6 @@
     position: absolute;
     top: 0;
     left: 0;
-  }
-
-  .test_T .title {
-    width: 100%;
-    height: 13%;
-    text-align: left;
-    font-weight: bolder;
-    font-size: 20px;
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    border-bottom: 1px solid #6a1518;
-    background:url("../assets/imgs/header.png") no-repeat;
   }
 
   .test_T .inforItem {

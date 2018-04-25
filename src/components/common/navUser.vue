@@ -135,7 +135,7 @@ a:hover{
     background:#ddd;
     position:absolute;
     top:80px;
-    right:35px;
+    right:29%;
     z-index:1000;
     border-radius:24px;
     display:none;
@@ -148,7 +148,7 @@ a:hover{
     font-size:16px;
     position:absolute;
     top:60px;
-    right:30px;
+    right:16%;
 }
 .user a{
   font-size:16px;
@@ -176,6 +176,7 @@ a:hover{
     position:absolute;
     top:6px;
     right:30px;
+    cursor: pointer;
 }
 .usermine{
     position:absolute;

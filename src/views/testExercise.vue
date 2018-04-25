@@ -1,29 +1,27 @@
 <template>
   <div>
-    <div class="question" id="content">
+    <div class="title">
+        <test-head></test-head>
+    </div>
+    <div class="question" id="content" :style="{height: height - 138 + 'px'}">
       <div class="leftBox">
-        <p>
-          <nav-user></nav-user>
-        </p>
+        <div class="userPicFont">
+            <nav-user></nav-user>
+        </div>
+        <div v-show="textQuestionData">
+            <div class="leftItem">
+                <p>开始时间</p>
+                <span>{{startTestTime}}</span>
+            </div>
+            <div class="leftItem">
+                <p>倒计时</p>
+                <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>
+            </div>
+        </div>
       </div>
       <div class="rightBox">
         <div class="testOnline" v-show="currIndex === 0">
-          <div class="title">
-            <div>
-              <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-            </div>
-
-            <div class="inforItem"  v-show="textQuestionData">
-              <div class="infor">
-                <p>开始时间</p>
-                <span>{{startTestTime}}</span>
-              </div>
-              <div class="infor">
-                <p>倒计时</p>
-                <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>
-              </div>
-            </div>
-          </div>
+          
           <div class="content">
             <div class="data">
               <div class="desc" v-for="(item,index) in textQuestionData.question">
@@ -89,6 +87,7 @@
 
 <script>
   import axios from 'axios'
+  import testHead from '@/components/common/testHead'
   import footFooter from '@/components/common/footFooter'
   import Modal from '@/components/testCenter/modal';
   import navUser from '@/components/common/navUser';
@@ -141,6 +140,7 @@
         TestNum: 0,
         fullscreenLoading: false,
         testQuestion: '',
+        height:window.innerHeight
 
       }
     },
@@ -164,7 +164,11 @@
       }
 
     },
+    beforeDestroy: function () {
+      window.removeEventListener('resize', this.handleResize)
+    },
     mounted(){
+      window.addEventListener('resize', this.handleResize)
       setTimeout(function(){
         //var allTestNum = this.$store.state.allTestNum ;
         //var url = document.domain;
@@ -239,6 +243,12 @@
       }
     },
     methods:{
+      handleResize (event) {
+        this.height = window.innerHeight;
+        if(this.height <= "620"){
+            this.height = 620;
+        }
+      },
       getTestQ() {
         //console.log(this.toTestData[0]);
         axios.get("/readTestQuestion/getTestExercise", {
@@ -393,7 +403,7 @@
         })
       }
     },
-    components:{Modal,navUser,footFooter}
+    components:{testHead,Modal,navUser,footFooter}
 
   }
 </script>
@@ -411,29 +421,40 @@
     cursor: pointer;
   }
   .question{
-    min-width:1200px;
-    min-width:700px;
-    width:1200px;
-    height:700px;
+    min-width:960px;
+    width:100%;
     margin:0 auto;
-    margin-top: 40px;
     border:1px solid #000;
     display:flex;
   }
   .leftBox{
-    width:12.5%;
+    width:18%;
     height:100%;
     border-right:1px solid #000;
   }
-  .leftBox > p{
-    font-size:20px;
-    margin-top:110px;
+  .leftBox .userPicFont{
+    height: 19%;
+    padding-top: 94px;
+    background: rgb(150,150,150);
   }
   .leftBox .leftItem{
-    margin-top:57px;
+    background: rgb(210,210,210);
+    margin-top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #000;
+    padding-top:10px;
+  }
+  .leftBox .leftItem p{
+    width:90px;
+    height:25px;
+    margin:0 auto;
+    background:rgb(140,61,61);
+    color:#fff;
+    font-size:16px;
   }
   .rightBox{
-    width:87.5%;
+    width:82%;
     height:100%;
     position:relative;
   }
@@ -445,40 +466,9 @@
     top:0;
     left:0;
   }
-  .title{
-    width:100%;
-    height:15%;
-    font-size:16px;
-    padding:10px;
-    box-sizing:border-box;
-    display:flex;
-  }
-  .inforItem{
-    margin-left:48%;
-    display:flex;
-  }
-  .infor{
-    margin-right:25px;
-    margin-top:28px;
-  }
-  .infor p{
-    font-size:17px;
-    margin-top:-2px;
-  }
-  /*.notSt{*/
-  /*position:relative;*/
-  /*}*/
-  /*.notStart{*/
-  /*display:block;*/
-  /*width:70px;*/
-  /*background:#fff;*/
-  /*position:absolute;*/
-  /*top:21px;*/
-  /*left:0;*/
-  /*}*/
   .content{
     width:100%;
-    height:85%;
+    height:100%;
     display:flex;
   }
   .data{
@@ -494,7 +484,7 @@
     display:none;
   }
   .tip{
-    background:yellow;
+    background:rgb(194,0,0) !important;
     height:18px;
   }
   .number{
@@ -503,6 +493,7 @@
     border-top:1px solid #000;
     border-left:1px solid #000;
     position:relative;
+    background:rgb(140,61,61);
   }
   .number li{
     display:inline-block;
@@ -511,15 +502,16 @@
   .number a{
     display:block;
     width:50px;
-    height:50px;
+    height:40px;
     border:1px solid #000;
     margin-top:16%;
-    padding-top:36%;
+    padding-top:20%;
     box-sizing:border-box;
+    background:#fff;
   }
   .isCheck{
-    background:#953033;
-    color:#fff;
+    background:#bbb !important;
+    color:#000 !important;
   }
   .status{
     display:flex;
@@ -530,6 +522,7 @@
   }
   .doP{
     border:1px solid #000;
+    background:#fff;
   }
   .desc{
     margin-top:15px;
@@ -558,12 +551,13 @@
     width:85%;
     height: 78px;
     margin-top:10px;
-    background-color:#e4393c;
+    background-color:rgb(253,96,96);
     padding:8px;
     position:absolute;
     bottom:48px;
     left:18px;
     cursor:pointer;
+    color:#fff;
   }
   .userMessage{
     width:1048px;
@@ -613,9 +607,6 @@
   #content:-webkit-full-screen {
     width: 100%;
     height: 100%;
-  }
-  .el-row {
-
   }
   .el-col {
     border-radius: 4px;

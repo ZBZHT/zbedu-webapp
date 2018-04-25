@@ -1,11 +1,9 @@
 <template>
 <div>
-  <div class="teach_Test">
-    <div class="titleB">
-      <div>
-        <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
-      </div>
-    </div>
+  <div class="titleB">
+    <test-head></test-head>
+  </div>
+  <div class="teach_Test" :style="{height: height - 138 + 'px'}">
     <div class="question">
       <div class="leftBox">
         <div class="userPicFont">
@@ -335,12 +333,6 @@
 
         <!--成绩管理-->
         <div class="userMessage" v-show="currIndex === 1">
-          <div class="titleB">
-            <div>
-              <img class="brand" alt="Brand" src="../assets/imgs/zb_logo.png">
-            </div>
-          </div>
-
           <el-table style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
 
             <el-table-column label="序号" type="index" width="60">
@@ -435,6 +427,7 @@
 <script>
   import axios from 'axios'
   import moment from 'moment'
+  import testHead from '@/components/common/testHead'
   import footFooter from '@/components/common/footFooter'
   import Modal from '@/components/testCenter/modal';
   import core from '../assets/js/core.js';
@@ -561,6 +554,7 @@
         scoreData: [],
         startDatePicker:this.beginDate(),
         endDatePicker:this.processDate(),
+        height:window.innerHeight
       };
     },
 
@@ -569,6 +563,12 @@
     },
 
     methods: {
+      handleResize (event) {
+        this.height = window.innerHeight;
+        if(this.height <= "620"){
+            this.height = 620;
+        }
+      },
       //创建考试开始时间不能选择历史日期
       beginDate(){
         let self = this
@@ -925,9 +925,11 @@
 
       },
     },
-
+    beforeDestroy: function () {
+      window.removeEventListener('resize', this.handleResize)
+    },
     mounted() {
-
+      window.addEventListener('resize', this.handleResize)
       //请求待考试数据
       axios.get("/readTestQuestion/toTestData", {
         params: {
@@ -994,7 +996,7 @@
       });
     },
 
-    components: {Modal, navUser, footFooter}
+    components: {testHead,Modal, navUser, footFooter}
 
   }
 </script>
@@ -1014,17 +1016,15 @@
     cursor: pointer;
   }
   .teach_Test{
-    min-width: 700px;
-    width: 1200px;
-    height: 700px;
+    min-width: 960px;
+    width: 100%;
     margin: 0 auto;
-    margin-top: 40px;
     margin-bottom: 40px;
     border: 1px solid #6a1518;
   }
   .teach_Test .question {
     width: 100%;
-    height: 87%;
+    height: 100%;
     margin: 0 auto;
     display: flex;
   }
@@ -1153,19 +1153,6 @@
     position: absolute;
     top: 0;
     left: 0;
-  }
-
-  .teach_Test .titleB {
-    width: 100%;
-    height: 13%;
-    border-bottom: 1px solid #6a1518;
-    text-align: left;
-    font-weight: bolder;
-    font-size: 20px;
-    padding: 10px;
-    box-sizing: border-box;
-    display: flex;
-    background:url("../assets/imgs/header.png") no-repeat;
   }
 
   .teach_Test .contentBox {
