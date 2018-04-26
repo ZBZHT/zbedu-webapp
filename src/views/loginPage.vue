@@ -77,7 +77,11 @@ import core from '../assets/js/core.js'
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
-                            alert("用户名或密码错误");
+                            this.$message({
+                                showClose: true,
+                                message: '用户名或密码错误',
+                                type: 'error'
+                            });
                         }
                   })
               };
@@ -134,7 +138,7 @@ p{
 }
 input{
     width:270px;
-    height:37px;
+    height:43px;
 }
 .btn{
     display:flex;

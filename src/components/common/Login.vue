@@ -11,7 +11,7 @@
                             <p> <img class="psw" src="../../assets/imgs/psw.png"> </p>
 
                                 <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
-
+                                <span class="checkPassword" v-show="checkPassword">用户名或密码错误</span>
                         </form>
                     </template>
                 </div>
@@ -45,7 +45,8 @@ import core from '../../assets/js/core.js'
                 username: '',
                 password:'',
                 nickName:'',
-                url:''
+                url:'',
+                checkPassword:false
             }
         },
 
@@ -81,6 +82,7 @@ import core from '../../assets/js/core.js'
                         self.callback(self.type == 'prompt' ? undefined : false);
                     }
                 }, 0);
+                this.checkPassword = false;
             },
             login(){
                 if(this.username == "" || this.password == ""){
@@ -108,6 +110,7 @@ import core from '../../assets/js/core.js'
                                     this.$store.commit('userID',res.data.userID);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
+                                    this.show = false;
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 1){
@@ -120,21 +123,22 @@ import core from '../../assets/js/core.js'
                                     this.$store.commit('userID',res.data.userID);
                                     this.$emit("receive",this.nickName);
                                     this.$router.push('/');
+                                    this.show = false;
                                 //   this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
-                            alert("用户名或密码错误");
+                            this.checkPassword = true;
                         }
                   })
               };
-              this.show = false;
+              
             }
         }
     }
 </script>
 
 <style>
-   #v-modal-wrap {
+#v-modal-wrap {
   position: fixed;
   top: 0;
   left: 0;
@@ -274,5 +278,12 @@ import core from '../../assets/js/core.js'
 }
 .modal-enter, .modal-leave-active {
   opacity: 0
+}
+.checkPassword{
+    font-size:12px;
+    color:#f00;
+    position:absolute;
+    left:43px;
+    bottom:-21px;
 }
 </style>

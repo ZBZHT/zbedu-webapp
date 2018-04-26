@@ -101,7 +101,7 @@ a:focus {
 }
 .item-a{
     width:110%;
-    height:50px;
+    height:71px;
     line-height:46px;
     font-size:12px;
     cursor:pointer;

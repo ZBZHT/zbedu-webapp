@@ -1,10 +1,10 @@
 <template>
 <div class="testLogin">
-    <div class="user" :style="{height: height - 44 + 'px'}">
-        <router-link :to="{path:'/'}">
-                <img class="brand" alt="Brand" src="../assets/imgs/zbtLogo.png">
-            </router-link>
-
+    <div class="title">
+        <test-head></test-head>
+    </div>
+    <div class="user" :style="{height: height - 138 + 'px'}">
+        
                 <div class="login" v-show="!this.$store.state.username">
                     <div class="userFont">
                         <p>考试系统登录</p>
@@ -45,6 +45,7 @@
 <script>
 import axios from 'axios'
 import md5 from 'js-md5'
+import testHead from '@/components/common/testHead'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 import core from '../assets/js/core.js'
 import footFooter from '@/components/common/footFooter'
@@ -65,7 +66,7 @@ import footFooter from '@/components/common/footFooter'
         beforeDestroy: function () {
             window.removeEventListener('resize', this.handleResize)
         },
-        components:{footFooter},
+        components:{testHead,footFooter},
         mounted(){
             this.url = document.domain;
           //  window.addEventListener("popstate",this.myFunction);
@@ -140,7 +141,11 @@ import footFooter from '@/components/common/footFooter'
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
                         }else if(res.data.code == 2){
-                            alert("用户名或密码错误");
+                            this.$message({
+                                showClose: true,
+                                message: '用户名或密码错误',
+                                type: 'error'
+                            });
                         }
                   })
               };
@@ -210,7 +215,7 @@ body{
     height:325px;
     border:3px solid #aaa;
     position:absolute;
-    top:32%;
+    top:25%;
     right:38%;
     box-shadow:0 0 30px #000;
 }
