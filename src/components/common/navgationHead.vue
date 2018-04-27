@@ -7,7 +7,7 @@
                 <img class="brand" alt="Brand" src="../../assets/imgs/zbtLogo.png">
             </router-link>
         </div>
-        <div class="collapse">
+        <div class="nav-collapse">
             <!--<div class="collapse-title">-->
                 <!--<span>ZBT</span>-->
                 <!--<span>INTELLGENT TEACHING SYSTEM</span>-->
@@ -168,16 +168,16 @@ a:hover{
     top:15px;
     height:65%;
 }
-.collapse{
+.nav-collapse{
     width:800px;
     display:flex;
 }
-.collapse .collapse-title{
+.nav-collapse .collapse-title{
     width:366px;
     padding-top:11px;
     padding-left:16px;
 }
-.collapse p{
+.nav-collapse p{
     font-size:30px;
     font-weight:bolder;
 }
@@ -196,7 +196,7 @@ a:hover{
   top:59px;
   right:20px;
 }
-.collapse .phoneApp{
+.nav-collapse .phoneApp{
   position:absolute;
   top:5px;
   left:-140px;

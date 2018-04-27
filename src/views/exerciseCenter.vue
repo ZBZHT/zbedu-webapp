@@ -13,6 +13,7 @@
                 :props="defaultProps"
                 :data="data"
                 accordion
+                highlight-current
                 @node-click="handleNodeClick"></el-tree>
             </el-col>
 
@@ -177,6 +178,13 @@ hr{
 .exerciseCenter-content .el-tree-node__expand-icon {
     font-size: 16px;
 }
+.exerciseCenter-content .el-tree-node__label{
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  overflow:hidden;
+  font-size: 16px;
+  color: #212529;
+}
 .exerciseCenter-content .el-tree{
     background-color: #ffffff;
     padding: 10px;
@@ -186,21 +194,20 @@ hr{
 }
 .exerciseCenter-content .el-tree-node:focus>.el-tree-node__content {
     background-color: #9f5355;
-  color: white;
+    color: white;
 }
 .exerciseCenter-content .el-tree-node__content:hover{
     background-color: #9f5355;
     color: white;
 }
-.exerciseCenter-content .el-tree-node__label{
-    text-overflow:ellipsis;
-    white-space:nowrap;
-    overflow:hidden;
-    font-size: 16px;
-    color: #212529;
+.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+  color: #212529;
 }
-.exerciseCenter-content .el-tree-node__label:hover {
-    color: white;
+.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
+  border: 3px solid #9f5355;
+  padding:0 60px;
+  border-top: none;
+  color: #212529;
 }
 .exerciseCenter-content .el-tabs--border-card{
     margin-left:20px;
@@ -212,14 +219,9 @@ hr{
     background-color: #9f5355;
     color: #ffffff;
 }
-.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
-  border: 3px solid #9f5355;
-  padding:0 60px;
-  border-top: none;
-  color: #212529;
-}
-.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
-  color: #212529;
+.exerciseCenter-content .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+    background-color: #9f5355;
+    color: white;
 }
 .exerciseCenter-content .el-tabs__item {
   padding:0 60px;

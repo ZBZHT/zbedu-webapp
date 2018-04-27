@@ -14,6 +14,7 @@ import testExercise from '@/views/testExercise'
 import teachTest from '@/views/teachTest'
 import course from '@/views/CourseDetail'
 import courseNoTree from '@/views/CourseDetailNoTree'
+import newCourse from '@/views/newCourse'
 import playPdf from '@/views/playPdf'
 import playVideo from '@/views/playVideo'
 import loginPage from '@/views/loginPage'
@@ -127,6 +128,15 @@ const routes = [
         title: 'zbt教学中心'
       },
       component: course
+    },
+    {
+      path: '/newCourse',
+      name: 'newCourse',
+      meta:{
+        requireAuth:true,
+        title: 'zbt教学中心'
+      },
+      component: newCourse
     },
     {
       path: '/courseNoTree/:courseId/label/:label',

@@ -226,7 +226,7 @@
                       </el-dropdown>
                     </el-form-item>
 
-                    <el-form-item label="开始日期" required>
+                    <el-form-item label="开始日期" prop="date1">
                       <el-date-picker
                         v-model="form.date1"
                         type="date"
@@ -236,7 +236,7 @@
                       </el-date-picker>
                     </el-form-item>
 
-                    <el-form-item label="开始时间" required>
+                    <el-form-item label="开始时间" prop="date3">
                       <el-time-select
                         placeholder="开始时间"
                         @blur="writeEnd();compareTime();outOfTime()"
@@ -249,7 +249,7 @@
                       </el-time-select>
                     </el-form-item>
 
-                    <el-form-item label="结束日期" required>
+                    <el-form-item label="结束日期" prop="date2">
                       <el-date-picker
                         v-model="form.date2"
                         type="date"
@@ -259,7 +259,7 @@
                       </el-date-picker>
                     </el-form-item>
 
-                    <el-form-item label="结束时间" required>
+                    <el-form-item label="结束时间">
                       <el-time-select
                         placeholder="结束时间"
                         @blur="compareTime()"
@@ -323,7 +323,11 @@
                     </el-form-item>
 
                     <el-form-item label="班级" prop="classGrade">
-                      <el-input v-model="form.classGrade" placeholder="请输入班级"></el-input>
+                      <el-select v-model="form.classGrade" placeholder="请选择班级">
+                        <el-option label="16" value="16"></el-option>
+                        <el-option label="17" value="17"></el-option>
+                        <el-option label="18" value="18"></el-option>
+                      </el-select>
                     </el-form-item>
 
                     <p>
@@ -507,36 +511,34 @@
             {required: true, message: '请输入考试题目', trigger: 'blur'},
           ],
           name: [
-            {required: true, message: '请输入考试范围', trigger: 'blur'},
+            {required: true, message: '请输入考试范围', trigger: 'change'},
           ],
           currTestType: [
             {required: true, message: '请选择考试类型', trigger: 'change'}
           ],
           date1: [
-            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+            {required: true, message: '请选择日期', trigger: 'change'}
           ],
           date2: [
-            {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
+            {required: true, message: '请选择日期', trigger: 'change'}
           ],
           date3: [
-            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+            {required: true, message: '请选择时间', trigger: 'change'}
           ],
           date4: [
-            {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
+            {required: true, message: '请选择时间', trigger: 'change'}
           ],
           num: [
             {validator: checkNum, trigger: 'blur'}
           ],
           timeHour: [
-            {required: true, message: '请选择考试小时', trigger: 'change'},
+            {required: true, message: '请选择考试小时', trigger: 'change'}
           ],
           major: [
-            {required: true, message: '请输入专业', trigger: 'blur'},
-            {min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur'}
+            {required: true, message: '请输入专业', trigger: 'change'}
           ],
           classGrade: [
-            {required: true, message: '请输入班级', trigger: 'blur'},
-            {min: 2, max: 12, message: '长度在 2 到 12 位', trigger: 'blur'}
+            {required: true, message: '请输入班级', trigger: 'change'}
           ],
           allScore: [
             {validator: checkScore, trigger: 'blur'}
@@ -699,6 +701,7 @@
       },
       //判断时长
       compareTime(){
+        
         var a = parseInt(this.form.date3.split(":")[1])
         var a0 = parseInt(this.form.date3.split(":")[0])
             //console.log(a)
@@ -717,9 +720,17 @@
             if(b >= a){
               this.form.timeHour = parseInt(b0) - parseInt(a0);
               this.form.timeMin = parseInt(b) - parseInt(a);
+              if(this.form.timeHour * 60 + this.form.timeMin > 120){
+                this.form.timeHour = 2;
+                this.form.timeMin = 0;
+              }
             }else if(b < a){
               this.form.timeHour = parseInt(b0) - parseInt(a0) - 1;
               this.form.timeMin = 30;
+              if(this.form.timeHour * 60 + this.form.timeMin > 120){
+                this.form.timeHour = 2;
+                this.form.timeMin = 0;
+              }
             }
           }
         }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
@@ -781,8 +792,8 @@
             }else{
               this.submitForm('form');
             }
-        }else if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
-
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
+          this.submitForm('form');
         }
       },
       //选择开始时间默认结束时间是两个小时后

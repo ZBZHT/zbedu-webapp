@@ -54,10 +54,12 @@ export default {
       // console.log(item)
       if(item.children){
           this.$store.commit('newTitle',item);
-          this.$router.push('/course' + '/label/'+ item.label);
+      //    this.$router.push('/course' + '/label/'+ item.label);
+          this.$router.push('/newCourse');
       }else{
           this.$store.commit('noTreeTitle1',item);
-          window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
+      //    window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
+          this.$router.push('/newCourse');
       }
     }
   }
