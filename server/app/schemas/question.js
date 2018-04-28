@@ -15,6 +15,7 @@ module.exports = new Schema({
   forId:Array,
   answer: String,
   type: String,
+  genre: String,
   major: String,
   title1: String,
   title2: String,

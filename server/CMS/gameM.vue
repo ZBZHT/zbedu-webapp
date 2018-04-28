@@ -1,0 +1,55 @@
+<template>
+  <div class="gameM_cont">
+
+    <!--大赛管理-->
+    <el-col :span="19">
+      完善中...
+
+    </el-col>
+
+  </div>
+</template>
+
+<script>
+  import axios from 'axios'
+  import core from '../../assets/js/core.js'
+
+  export default {
+    name: 'gameM',
+    data() {
+      return {
+        data: [],
+      }
+    },
+    computed: {},
+    methods: {
+      //删除用户信息方法
+
+
+    },
+    mounted() {
+     /* axios.post('/teacherCMS/userManager', {
+        data: {
+          username: this.username,
+          userType: this.userType
+        }
+      }).then((res) => {
+        if (res.data.userInfo.length > 0) {
+          this.dataManager = res.data.userInfo;
+          this.total = this.dataManager.length
+        }
+      });*/
+
+    },
+    components: {}
+  }
+</script>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+
+</style>

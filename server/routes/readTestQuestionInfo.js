@@ -78,7 +78,8 @@ router.get('/submitQuestionInfo', function (req, res) {
             sorce: reqQ.sorce,
             testTimeMinutes: reqQ.testTimeMinutes,
             testTimeSeconds: reqQ.testTimeSeconds,
-            isCheckNum: reqQ.isCheckNum
+            isCheckNum: reqQ.isCheckNum,
+            currIsId: reqQ.currIsId,
           }, //{upsert: true},
           function (err) {
             if (err) {

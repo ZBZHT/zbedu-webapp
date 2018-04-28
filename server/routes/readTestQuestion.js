@@ -58,9 +58,10 @@ function addNewTestQuestion(req, res, next) {
     teachNewTestQ.save(function (err) {
       if (err) {
         console.log(err);
-        res.end(JSON.stringify({code : 1 }));
+        res.end(JSON.stringify({code : 1, Msg: '创建考试失败'}));
       } else {
         console.log('Success! teachNewTestQ');
+        res.end(JSON.stringify({code : 0, Msg: '创建考试成功'}));
         next();
       }
     });
@@ -71,17 +72,13 @@ function addNewTestQuestion(req, res, next) {
 function distTestQuestion(req, res, next) {
   let reqQ = req.query;
   //console.log(reqQ);
-
   Question.find(
-
   ).then(function (question) {
     let testItems = core.getArrayItems(question, reqQ.num);
     //testItems = JSON.stringify(testItems);
-
     Student.find({
       classGrade: reqQ.classGrade
     }).then(function (stu) {
-
       TestQuestion.find({
       }).sort({currTestNum:-1}).then(function (testQ) {
         if (testQ.length <= 0) {
@@ -89,9 +86,7 @@ function distTestQuestion(req, res, next) {
         } else {
           testResult.testLength = testQ[0].currTestNum;
         }
-
       for (let i=0; i<stu.length; i++) {
-
         testResult.testLength = Number(testResult.testLength) + 1;
         //console.log(testResult.testLength);
         //创建所有学生试题
@@ -115,7 +110,6 @@ function distTestQuestion(req, res, next) {
           allScore: reqQ.allScore,
         });
         testQuestion.question = testItems;
-
         testQuestion.save(function (err) {
           if (err) {
             console.log(err);
@@ -143,7 +137,6 @@ function distTestQuestion(req, res, next) {
           testTimeSeconds: 0,
           isCheckNum: 0
         });
-
         testQuestionInfo.save(function (err) {
           if (err) {
             console.log(err);
@@ -323,12 +316,12 @@ router.get('/stuHistoryTestData', function (req, res) {
   TestQuestion.find({
     user: reqUser,
     state: 2,
-  }).then(function (testQuestion) {
+  }).sort({currTestNum:-1}).then(function (testQuestion) {
     if (testQuestion) {
       TestQuestionInfo.find({
         user: reqUser,
         state: 2,
-      }).then(function (testQuestionInfo) {
+      }).sort({testQuestion:-1}).then(function (testQuestionInfo) {
         if (testQuestionInfo) {
           res.end(JSON.stringify({
             testQuestion: testQuestion,
@@ -362,13 +355,10 @@ router.get('/stuNewExercise', function (req, res) {
   let reqQ = req.query;
   //console.log(reqQ);
   Question.find(
-
   ).then(function (question) {
     let testItems = core.getArrayItems(question, reqQ.num);
-
     TestQuestion.find({
     }).sort({currTestNum:-1}).then(function (testQ) {
-
       if (testQ.length <= 0) {
         testResult.testLength = 0;
       } else {
@@ -390,6 +380,7 @@ router.get('/stuNewExercise', function (req, res) {
           date1: new Date(),
           timeHour: reqQ.timeHour,
           timeMin: reqQ.timeMin,
+
         });
         /*allScore: reqQ.allScore,*/
       testQuestion.question = testItems;
@@ -419,7 +410,8 @@ router.get('/stuNewExercise', function (req, res) {
           startTimeSeconds: 0,
           testTimeMinutes: 0,
           testTimeSeconds: 0,
-          isCheckNum: 0
+          isCheckNum: 0,
+          currIsId: [],
         });
 
         testQuestionInfo.save(function (err) {
@@ -438,16 +430,18 @@ router.get('/stuNewExercise', function (req, res) {
 //学生,获取练习题和答案
 router.get('/getTestExercise', function (req, res) {
   //console.log(reqUser);
+  let reqUser = req.query.user;
   TestQuestion.findOne({
-    user: req.query.user,
+    user: reqUser,
     state: 1,
     currTestType: 106,
-  }).then(function (msgOne) {
-    //console.log(msgOne);
-    if (msgOne) {
-      res.end(JSON.stringify(msgOne));
+  }).then(function (testQuestion) {
+    if (testQuestion) {
+      res.end(JSON.stringify({
+        testQuestion: testQuestion,
+      }));
     } else {
-      res.end(JSON.stringify({code: 1}));
+      res.status(404).send({err: err,});
     }
   })
 });
@@ -460,13 +454,23 @@ router.get('/stuHistoryPractice', function (req, res) {
     user: reqUser,
     state: 2,
     currTestType: 106,
-  }).then(function (result) {
-    //console.log(result);
-    res.end(JSON.stringify(result));
-  });
+  }).sort({testQuestion:-1}).then(function (testQuestion) {
+    TestQuestionInfo.find({
+      user: reqUser,
+      state: 2,
+      currTestType: 106,
+    }).sort({testQuestion:-1}).then(function (testQuestionInfo) {
+      if (testQuestionInfo) {
+        res.end(JSON.stringify({
+          testQuestion: testQuestion,
+          testQuestionInfo: testQuestionInfo
+        }));
+      } else {
+        res.status(404).send({err: err,});
+      }
+    })
+  })
 });
-
-
 
 
 module.exports = router;

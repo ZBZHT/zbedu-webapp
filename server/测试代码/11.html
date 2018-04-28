@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input type="button" id="btnShow" onclick="openWindow();"  value="显示子窗口"/>
+</body>
+
+<script language="javascript" type="text/javascript">
+  var wd;
+  var winTimer;//计时器变量, 监听窗口关闭
+  function openWindow() {
+    wd = window.open("22.html",null," height=300,width=450,  Left=300px,Top=20px, menubar=no,titlebar=no,scrollbar=no,toolbar=no, status=no,location=no");
+    if (wd) {
+      winTimer = window.setInterval("wisclosed()");
+    }
+  }
+  function wisclosed(){
+    if(wd.closed){
+      alert(window.returnVaule);//子窗体返回值
+      //这里可以做赋值操作
+      window.clearInterval(winTimer);
+    }
+  }
+</script>
+</html>

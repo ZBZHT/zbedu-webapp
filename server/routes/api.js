@@ -188,6 +188,7 @@ router.post('/user/login', checkLogin, function (req, res) {
               userType: teacher.userType
             };
             req.session.users = userInfo;
+            //console.log(userInfo);
             res.end(JSON.stringify(req.session.users));
           }
         });
@@ -255,7 +256,6 @@ function checkLogin(req, res, next) {
 
 // 退出
 router.post('/user/logout', function (req, res) {
-
   let ID = req.sessionID;
   //console.log('11');
   //console.log(ID);

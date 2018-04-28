@@ -13,6 +13,8 @@ const Question = require('../app/models/Question');
 const TechCosCou = require('../app/models/TechCosCou');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
+const uploadCoursePath = "../app/uploads/pdf/";
+const uploadVideoPath = "../app/uploads/video/";
 
 //删除数组中指定元素  方法
   function removeChildren(arr, id) {
@@ -36,69 +38,6 @@ const md5 = require('js-md5');
     }
     return result;
   }
-
-//格式化Excel里的数组为json
-function formatExcel(arr) {
-  let result = [];
-  let arrSingle = {
-    num: '',
-    desc: '',
-    options: [],
-    answer: '',
-    type: '',
-    difficulty: '',
-    major: '',
-    title1: '',
-    title2: '',
-    title3: '',
-    title4: '',
-    title5: '',
-    title6: '',
-    forId: [],
-  };
-  for (let i=0; i<arr.length; i++) {
-    arrSingle.num = arr[i].num;
-    arrSingle.desc = arr[i].desc;
-    arrSingle.options.push(arr[i].options0);
-    arrSingle.options.push(arr[i].options1);
-    arrSingle.options.push(arr[i].options2);
-    arrSingle.options.push(arr[i].options3);
-    arrSingle.answer = arr[i].answer;
-    arrSingle.type = arr[i].type;
-    arrSingle.difficulty = arr[i].difficulty;
-    arrSingle.major = arr[i].major;
-    arrSingle.title1 = arr[i].title1;
-    arrSingle.title2 = arr[i].title2;
-    arrSingle.title3 = arr[i].title3;
-    arrSingle.title4 = arr[i].title4;
-    arrSingle.title5 = arr[i].title5;
-    arrSingle.title6 = arr[i].title6;
-    arrSingle.forId.push(arr[i].forId0);
-    arrSingle.forId.push(arr[i].forId1);
-    arrSingle.forId.push(arr[i].forId2);
-    arrSingle.forId.push(arr[i].forId3);
-
-    result.push(arrSingle);
-
-    arrSingle = {
-      num: '',
-      desc: '',
-      options: [],
-      answer: '',
-      type: '',
-      difficulty: '',
-      major: '',
-      title1: '',
-      title2: '',
-      title3: '',
-      title4: '',
-      title5: '',
-      title6: '',
-      forId: [],
-    };
-  }
-  return result
-}
 
 /* 获取目录tree */
 router.post('/labelTree', function (req, res) {
@@ -169,7 +108,6 @@ router.post('/labelTree', function (req, res) {
 
 /* 获取所有教师数据 */
 router.post('/getUserData', function (req, res) {
-
   if (req.body.data.username) {
     let username = req.body.data.username;
     Teacher.findOne({
@@ -205,23 +143,38 @@ router.post('/getUserData', function (req, res) {
 });
 
 /*删除所选用户*/
-router.post('/delChecked', function (req, res) {
+router.post('/delUserData', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
-      for (let i = 0; i < reqData.msg.length; i++) {
-        Student.remove({userID: reqData.msg[i].userID}, function (err) {
-          if (err) {
-            return res.status(404).send({err: err,});
-          } else {
-            console.log('删除数据成功');
-          }
-        })
+      if (reqData.studentSelection.length != 0) {
+        for (let i = 0; i < reqData.studentSelection.length; i++) {
+          Student.remove({userID: reqData.studentSelection[i].userID}, function (err) {
+            if (err) {
+              return res.status(404).send({err: err,});
+            } else {
+              console.log('删除数据成功');
+              res.status(200).send({
+                code: 0,
+              });
+            }
+          })
+        }
+      } else if (reqData.teacherSelection.length != 0) {
+        for (let i = 0; i < reqData.teacherSelection.length; i++) {
+          Teacher.remove({userID: reqData.teacherSelection[i].userID}, function (err) {
+            if (err) {
+              return res.status(404).send({err: err,});
+            } else {
+              console.log('删除数据成功');
+              res.status(200).send({
+                code: 0,
+              });
+            }
+          })
+        }
       }
-      res.status(200).send({
-        success: 0,
-      });
     }else {
       res.status(404).send({
         Msg: '该用户无权限',
@@ -237,14 +190,13 @@ router.post('/delChecked', function (req, res) {
 
 //添加用户
 router.post('/addUser', function (req, res) {
-  console.log(req.body.data);
+  //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
     let addUsers = reqData.addUser;
     if (reqData.userType == 'admin' || reqData.userType == 'E') {
       let addUserData = new Student({
         user: addUsers.user,
-        n_name: addUsers.n_name,
         pwd: addUsers.pwd,
         userID: addUsers.userID,
         IDNo: addUsers.IDNo,
@@ -291,7 +243,6 @@ router.post('/addExcelUsers', function(req, res) {
     form.parse(req, function (err, fields, files) {
       //旧名字
       let fileName = files.file.name;
-      //console.log(fileName);
       //新名字
       let oldPath = files.file.path;
       let newPath = uploadsPath + fileName;
@@ -317,13 +268,9 @@ router.post('/addExcelUsers', function(req, res) {
                 } else {
                   result[i].pwd = md5(result[i].pwd);
                 }
-                if (result[i].n_name == '') {
-                  result[i].n_name = result[i].user
-                }
 
                 userInfo = result;
                 let addUserData = new Student({
-                  n_name: result[i].n_name,
                   user: result[i].user,
                   pwd: result[i].pwd,
                   userID: result[i].userID,
@@ -336,7 +283,6 @@ router.post('/addExcelUsers', function(req, res) {
                   classGrade: result[i].classGrade
                 });
                 let teacherData = new Teacher({
-                  n_name: result[i].n_name,
                   user: result[i].user,
                   pwd: result[i].pwd,
                   userID: result[i].userID,
@@ -398,7 +344,6 @@ router.post('/updateUser', function (req, res) {
       Student.findOneAndUpdate({
         userID: reqUser.userID
       }, {
-        n_name: reqUser.n_name,
         user: reqUser.user,
         pwd: reqUser.pwd,
         IDNo: reqUser.IDNo,
@@ -415,7 +360,6 @@ router.post('/updateUser', function (req, res) {
           Student.findOneAndUpdate({
             IDNo: reqUser.IDNo
           }, {
-            n_name: reqUser.n_name,
             user: reqUser.user,
             pwd: reqUser.pwd,
             userID: reqUser.userID,
@@ -453,17 +397,116 @@ router.post('/updateUser', function (req, res) {
     });
   }
 });
-
-//个人信息请求
-router.post('/myDataMst', function (req, res) {
-  //console.log(req.body.data);
+//修改密码
+router.post('/updatePass', function (req, res) {
   if (req.body.data) {
-    //let username = req.body.data.username;
-    Student.find().then(function (users) {
-      res.status(200).send({
-        userInfo: users
+    let reqData = req.body.data;
+    if (reqData.userType == 'O' || reqData.userType == 'S') {
+      Student.findOneAndUpdate({
+        userID: reqData.userID
+      }, {
+        pwd: reqData.form.checkPass,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(404).send({ code: 1, Msg: '更新失败', });
+        } else {
+          console.log('密码更新成功');
+          res.status(200).send({ code: 0, Msg: '更新成功', });
+        }
       });
+    } else if (reqData.userType == 'E' || reqData.userType == 'T' || reqData.userType == 'admin') {
+      Teacher.findOneAndUpdate({
+        userID: reqData.userID
+      }, {
+        pwd: reqData.form.checkPass,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(404).send({ code: 1, Msg: '更新失败', });
+        } else {
+          console.log('密码更新成功');
+          res.status(200).send({ code: 0, Msg: '更新成功', });
+        }
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '该用户无权限',
+      code: 1,
     });
+  }
+});
+//修改手机号
+router.post('/updateMoNo', function (req, res) {
+  if (req.body.data) {
+    let reqData = req.body.data;
+    if (reqData.userType == 'O' || reqData.userType == 'S') {
+      Student.findOneAndUpdate({
+        userID: reqData.userID
+      }, {
+        MoNo: reqData.form.newMoNo,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(404).send({ code: 1, Msg: '更新失败', });
+        } else {
+          console.log('手机号更新成功');
+          res.status(200).send({ code: 0, Msg: '更新成功', });
+        }
+      });
+    } else if (reqData.userType == 'E' || reqData.userType == 'T' || reqData.userType == 'admin') {
+      Teacher.findOneAndUpdate({
+        userID: reqData.userID
+      }, {
+        MoNo: reqData.form.newMoNo,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(404).send({ code: 1, Msg: '更新失败', });
+        } else {
+          console.log('手机号更新成功');
+          res.status(200).send({ code: 0, Msg: '更新成功', });
+        }
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '该用户无权限',
+      code: 1,
+    });
+  }
+});
+
+//获取个人信息请求
+router.post('/getMyMsg', function (req, res) {
+  if (req.body.data) {
+    let reqD = req.body.data;
+    if (reqD.userType === 'S' || reqD.userType === 'O') {
+      Student.findOne({
+        userID: reqD.userID,
+      }).then(function (users) {
+        if (users) {
+          res.status(200).send({
+            userInfo: users
+          });
+        } else {
+          res.status(404).send({ code: 0 });
+        }
+      });
+    } else if (reqD.userType === 'T' || reqD.userType === 'E' || reqD.userType === 'admin') {
+      Teacher.findOne({
+        userID: reqD.userID,
+      }).then(function (users) {
+        if (users) {
+          res.status(200).send({
+            userInfo: users
+          });
+        } else {
+          res.status(404).send({ code: 0 });
+        }
+      });
+    }
   } else {
     res.status(404).send({
       Msg: '无法获取请求数据',
@@ -545,53 +588,148 @@ router.post('/addExcelTest', function(req, res) {
           }else {
             if (jsonResult) {
               //格式化数据
-              let fJson = formatExcel(jsonResult);
-              console.log(fJson);
               let numID = '';
-              //查找数据库中
+              let result = [];
+              let arrSingle = {
+                num: '',
+                desc: '',
+                options: [],
+                value: [],
+                answer: '',
+                type: '',
+                genre: '',
+                difficulty: '',
+                major: '',
+                title1: '',
+                title2: '',
+                title3: '',
+                title4: '',
+                title5: '',
+                title6: '',
+                forId: [],
+              };
               Question.find().sort({num:-1}).then(function (ques) {
-                //console.log(ques);
                 if (ques.length != 0) {
                   numID = Number(ques[0].num);
                 } else {
                   numID = 1;
                 }
-                for (let i=0; i<fJson.length; i++) {
-                  numID = Number(numID) + 1;
-                  console.log(numID);
-
-                  let question = new Question({
-                    num: numID,
-                    desc: fJson[i].desc,
-                    options: fJson[i].options,
-                    value:fJson[i].value,
-                    name:fJson[i].name,
-                    forId:fJson[i].forId,
-                    answer: fJson[i].answer,
-                    type: fJson[i].type,
-                    major: fJson[i].major,
-                    title1: fJson[i].title1,
-                    title2: fJson[i].title2,
-                    title3: fJson[i].title3,
-                    title4: fJson[i].title4,
-                    title5: fJson[i].title5,
-                    title6: fJson[i].title6,
-                  });
-
-                  //保存到数据库
-                  //if (fileName == '发动机考试题.xlsx') {
-                  question.save(function (err) {
-                    if (err) {
-                      console.log(err);
+              }).then(function () {
+                for (let i=0; i<jsonResult.length; i++) {
+                  if (jsonResult[i].desc != '') {
+                    numID = Number(numID) + 1;
+                    arrSingle.num = numID;
+                    arrSingle.desc = jsonResult[i].desc;
+                    if (jsonResult[0].options0 === 'A、正确' && jsonResult[0].options1 === 'B、错误') {
+                      arrSingle.options.push(jsonResult[0].options0);
+                      arrSingle.options.push(jsonResult[0].options1);
+                      arrSingle.genre = 'judge';
                     } else {
-                      console.log('question Save success');
+                      arrSingle.options.push(jsonResult[i].options0);
+                      arrSingle.options.push(jsonResult[i].options1);
                     }
-                  });
-                  //}
-                }
-              });
+                    arrSingle.value.push('A');
+                    arrSingle.value.push('B');
+                    if (jsonResult[i].options2 !== '' && jsonResult[i].options2 !== undefined) {
+                      arrSingle.options.push(jsonResult[i].options2);
+                      arrSingle.value.push('C');
+                    }
+                    if (jsonResult[i].options3 !== '' && jsonResult[i].options3 !== undefined) {
+                      arrSingle.options.push(jsonResult[i].options3);
+                      arrSingle.value.push('D');
+                    }
+                    if (jsonResult[i].answer.length >=2) {
+                      arrSingle.genre = 'MultiSelect';
+                    } else {
+                      arrSingle.genre = 'select';
+                    }
+                    arrSingle.answer = jsonResult[i].answer;
+                    if (jsonResult[i].difficulty !== '') {
+                      arrSingle.difficulty = jsonResult[i].difficulty;
+                    } else {
+                      arrSingle.difficulty = '低';
+                    }
+                    if (jsonResult[i].major === '') {
+                      arrSingle.major = jsonResult[0].major;
+                    } else {
+                      arrSingle.major = jsonResult[i].major;
+                    }
+                    arrSingle.title1 = jsonResult[i].title1;
+                    arrSingle.title2 = jsonResult[i].title2;
+                    arrSingle.title3 = jsonResult[i].title3;
+                    arrSingle.title4 = jsonResult[i].title4;
+                    arrSingle.title5 = jsonResult[i].title5;
+                    arrSingle.title6 = jsonResult[i].title6;
+                    arrSingle.forId.push('A' + numID);
+                    arrSingle.forId.push('B' + numID);
+                    if (jsonResult[i].options2 !== '' && jsonResult[i].options2 !== undefined) {
+                      arrSingle.forId.push('C' + numID);
+                    }
+                    if (jsonResult[i].options3 !== '' && jsonResult[i].options3 !== undefined) {
+                      arrSingle.forId.push('D' + numID);
+                    }
+                    arrSingle.type = 'radio';
+                    result.push(arrSingle);
 
-              res.status(200).send({ code: 0 });
+                    arrSingle = {
+                      num: '',
+                      desc: '',
+                      options: [],
+                      value: [],
+                      answer: '',
+                      type: '',
+                      genre: '',
+                      difficulty: '',
+                      major: '',
+                      title1: '',
+                      title2: '',
+                      title3: '',
+                      title4: '',
+                      title5: '',
+                      title6: '',
+                      forId: [],
+                    };
+                  }
+                }
+              }).then(function () {
+                console.log(result);
+                for (let i=0; i<result.length; i++) {
+                  if (result[i].desc !== '') {
+                    let question = new Question({
+                      num: result[i].num,
+                      desc: result[i].desc,
+                      options: result[i].options,
+                      value:result[i].value,
+                      name:result[i].name,
+                      forId:result[i].forId,
+                      answer: result[i].answer,
+                      difficulty: result[0].difficulty,
+                      type: result[i].type,
+                      major: result[0].major,
+                      title1: result[i].title1,
+                      title2: result[i].title2,
+                      title3: result[i].title3,
+                      title4: result[i].title4,
+                      title5: result[i].title5,
+                      title6: result[i].title6,
+                    });
+                    //保存到数据库
+                    //if (fileName == '发动机考试题.xlsx') {
+                    //console.log(question);
+                    /*question.save(function (err) {
+                       if (err) {
+                       console.log(err);
+                       } else {
+                       console.log('question Save success');
+                       }
+                    });*/
+                    //}
+                  }
+                }
+              }).then(function () {
+                res.status(200).send({ code: 0 });
+                console.log('question Save success all')
+              })
             } else {
               res.status(404).send({ code: 1 });
               console.log('文件读取错误');
@@ -614,12 +752,33 @@ router.post('/getTeacherCustomCourse', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
+    console.log(reqData);
     if (reqData.userType == 'admin' || reqData.userType == 'E' || reqData.userType == 'T') {
       TechCosCou.find({
         userID : reqData.userID,
       }).then(function (techCosCou) {
-        if (techCosCou) {
+        console.log(techCosCou.length);
+        if (techCosCou.length !=0) {
           res.status(200).send({ techCosCou: techCosCou, });
+        } else if (techCosCou.length === 0) {
+          let techCosCou = new TechCosCou({
+            userID: reqData.userID,
+            newTime: new Date(),
+            tab: []
+          });
+          techCosCou.save(function (err) {
+            if (err) {
+              console.log(err)
+            } else {
+              console.log('Save success');
+              TechCosCou.find({
+                userID : reqData.userID,
+              }).then(function (techCosCou) {
+                res.status(200).send({ techCosCou: techCosCou, });
+              });
+
+            }
+          });
         } else {
           res.status(404).send({ Msg: '无法获取请求数据', code: 1, });
         }
@@ -668,6 +827,77 @@ router.post('/addCustomCourse', function (req, res) {
     res.status(404).send({
       Msg: '无法获取请求数据',
       code: 1,
+    });
+  }
+});
+
+//教师上传课件
+router.post('/uploadCourse', function(req, res) {
+  let reqUserType = req.session.users.userType;
+  if (reqUserType === 'T' || reqUserType === 'E' || reqUserType === 'admin') {
+
+    let form = new formidable.IncomingForm();
+    form.uploadDir = "../app/uploads/";//设置文件上传存放地址
+    form.maxFieldsSize = 1000 * 1024 * 1024; //设置最大1000M
+    form.keepExtensions = true;
+
+    form.parse(req, function (err, fields, files) {
+      //旧名字
+      let fileName = files.file.name;
+      console.log(fileName);
+      //新名字
+      let oldPath = files.file.path;
+      let newPath = '';
+      arr = fileName.split(".");
+      if (arr[arr.length-1] === 'pdf') {
+        newPath = uploadCoursePath + fileName;
+      } else {
+        newPath = uploadVideoPath + fileName;
+      }
+      fs.rename(oldPath, newPath, function (err) {
+        if (err) {
+          throw  Error("改名失败");
+        }
+        fs.stat(newPath, function(err,stats){  //获取文件信息
+          if(err){
+            return err;
+          }
+          res.status(200).send({
+            Msg : '上传成功',
+            code : 0,
+          });
+        });
+      });
+    });
+  } else {
+    res.status(404).send({
+      Msg : '用户无权限或未登录',
+      code : 1,
+    });
+  }
+});
+
+//获取课程树
+router.post('/getCenterTree', function(req, res) {
+  let reqUserType = req.session.users.userType;
+  if (reqUserType === 'E' || reqUserType === 'admin') {
+
+  } else {
+    res.status(404).send({
+      Msg : '用户无权限或未登录',
+      code : 1,
+    });
+  }
+});
+//更新课程树
+router.post('/updateCenterTree', function(req, res) {
+  let reqUserType = req.session.users.userType;
+  if (reqUserType === 'E' || reqUserType === 'admin') {
+
+  } else {
+    res.status(404).send({
+      Msg : '用户无权限或未登录',
+      code : 1,
     });
   }
 });

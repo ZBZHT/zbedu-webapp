@@ -8,6 +8,7 @@ const bannerLeftData = require('../app/mock/bannerLeftData.json');
 const login = require('../app/mock/login.json');
 const logOut = require('../app/mock/logOut.json');
 const test = require('../app/mock/test.json');
+const CenterTree = require('../app/models/CenterTree');
 
 /* GET index.json */
 router.get('/config', function (req, res) {
@@ -25,6 +26,21 @@ router.get('/index', function (req, res) {
 });
 router.get('/bannerLeftData', function (req, res) {
     res.setHeader("Content-Type", "application/json");
+    /*CenterTree.findOneAndUpdate({
+      name: 'centerTree'
+    }, {
+      newTime: new Date(),
+      children: bannerLeftData,
+    }, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(404).send({
+          Msg: '更新失败',
+        });
+      } else {
+        console.log('更新centerTree成功');
+      }
+    });*/
     res.end(JSON.stringify(bannerLeftData));
 });
 router.get('/login', function (req, res) {

@@ -2,9 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 //用户表结构
 module.exports = new Schema({
-  n_name: {
-    type: String,
-  },
   user: {
     type: String,
     required: true, //设定是否必填
