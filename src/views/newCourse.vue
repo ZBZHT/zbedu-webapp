@@ -12,7 +12,9 @@
                 :props="defaultProps"
                 :data="data"
                 accordion
+                :default-expanded-keys="[courseId1,courseId2]"
                 highlight-current
+                ref="vuetree"
                 @node-click="handleNodeClick"></el-tree>
             </el-col>
 
@@ -22,7 +24,7 @@
                     <p class="exerP">{{noTree.label}}</p>
                     <el-tabs type="border-card">
 
-                        <!--教材-->
+                        <!--简介-->
                         <el-tab-pane label="本节简介">
                             <div class="courseDescribe" >
                                 <p class="title">课程简介：</p>
@@ -30,9 +32,19 @@
                             </div>
                         </el-tab-pane>
 
-                        <!--简介-->
-                        <el-tab-pane label="本节教材">
-                            
+                        <!--教材-->
+                        <el-tab-pane label="本节教材" id="courseppt">
+                            <p class="devDownload" v-show="noTree.teachingBook"></p>
+                            <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                <param name="_Version" value="65539">
+                                <param name="_ExtentX" value="20108">
+                                <param name="_ExtentY" value="10866">
+                                <param name="_StockProps" value="0">
+                                <param name="SRC" value="teachingMaterial">
+                                <object :data="'/resource/pdf/coursePdfData/' + noTree.teachingBook" type="application/pdf" class="pdf-box">
+                                </object>
+                            </object>
+                            <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
                         </el-tab-pane>
 
                         <!--课件-->
@@ -244,15 +256,21 @@ export default {
       currentReplyOpen:-1,
       currentReplyToReply:-1,
       url:'',
-      appAnswer:false
+      appAnswer:false,
+      noTree11:'',
+      courseId1:'',
+      courseId2:''
     }
   },
   computed:{
     noTree(){
-        this.currentCourseMsg = this.$store.state.noTree
-        this.currentCourseTitle = this.$store.state.noTree.label
         return this.$store.state.noTree;
-      },
+    },
+    noTree1(){
+        this.noTree11 = this.$store.state.noTree1;
+        
+        return this.$store.state.noTree1;
+    },
       currentTitle(){
         // for (var  i= 0; i< this.$store.state.course.children.length; i++){
           // console.log(this.$store.state.course.children[i])
@@ -272,9 +290,133 @@ export default {
         return this.$store.state.noTree.videoTitle;
       }
   },
+  created(){
+        this.$nextTick(function(){
+            this.$refs.vuetree.setCurrentKey(100);  
+        })
+  },
+  mounted(){
+    
+
+      //从courseIndex页传值并默认展开
+        console.log("sjsjs");
+        console.log(this.$store.state.noTree1.courseId);
+        var data = this.$store.state.noTree1;
+        var id = this.$store.state.noTree1.courseId;
+        if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600){
+            this.courseId1 = id;
+            if(id == 100){
+                this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
+            }else if(id == 200 || id == 300 || id == 400){
+                this.$store.commit('noTreeTitle',data.children[0].children[0]);
+            }else if(id == 500 || id == 600){
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }
+        }else if(id > 100 && id < 200){
+            if(id > 110 && id < 120){
+                this.courseId1 = 100;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else if(id > 120 && id < 130){
+                this.courseId1 = 100;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else{
+                this.courseId1 = 100;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data.children[0].children[0]);
+            }
+        }else if(id > 200 && id < 300){
+            if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
+                this.courseId1 = 200;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else{
+                this.courseId1 = 200;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data);
+            }
+        }else if(id > 300 && id < 400){
+            if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
+                this.courseId1 = 300;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else{
+                this.courseId1 = 300;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data);
+            }
+        }else if(id > 400 && id < 500){
+            if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
+                this.courseId1 = 400;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else{
+                this.courseId1 = 400;
+                this.courseId2 = id;
+                this.$store.commit('noTreeTitle',data);
+            }
+        }else if(id > 500 && id < 600){
+            this.courseId1 = 500;
+            this.courseId2 = id;
+            this.$store.commit('noTreeTitle',data);
+        }else if(id > 600 && id < 700){
+            this.courseId1 = 600;
+            this.courseId2 = id;
+            this.$store.commit('noTreeTitle',data);
+        }
+    //获取树形数据
+    axios.get("/readJson/bannerLeftData",{
+        params:{
+             user:234
+        }
+      }).then((res)=>{
+          this.data = res.data[0].children;
+          //console.log(this.data[0].label)
+      }).catch(function(error){
+          console.log("error init." + error)
+      });
+    //评论一系列
+      this.user = this.$store.state.username;
+      // console.log(this.user)
+      axios.get("/readComments/all",{
+        params:{
+          user:6666
+        }
+      }).then((res)=>{
+        // console.log(res.data.msg)
+        // console.log(res.data.result)
+        this.commentAllObj = res.data.result
+        // console.log(this.commentAllObj)
+        for (var i=0;i<this.commentAllObj.length; i++){
+            // console.log(i)
+            if (this.commentAllObj[i].type == "1"){
+              // console.log(this.commentAllObj[i])
+              // console.log(i)
+              this.commentArr.push(this.commentAllObj[i])
+            }
+            if (this.commentAllObj[i].type == "2"){
+              // console.log(this.commentAllObj[i])
+              this.replyArr.push(this.commentAllObj[i])
+            }
+            if (this.commentAllObj[i].type == "3"){
+              // console.log(this.commentAllObj[i])
+              this.replyToReplyArr.push(this.commentAllObj[i])
+            }
+        }
+        // console.log(this.qqqq)
+      }).catch(function(error){
+        console.log("评论请求错误")
+      });
+    },
   methods:{
     handleNodeClick(data) {
-      //console.log(data);
+      console.log(data);
+      if(data.children){
+
+      }else{
+          this.$store.commit('noTreeTitle',data);
+      }
     },
     enterUserManagement () {
         this.$router.push('/userManagement')
@@ -565,50 +707,6 @@ export default {
 
 
   },
-  mounted(){
-    axios.get("/readJson/bannerLeftData",{
-        params:{
-             user:234
-        }
-      }).then((res)=>{
-          this.data = res.data[0].children;
-          //console.log(this.data[0].label)
-      }).catch(function(error){
-          console.log("error init." + error)
-      });
-
-      this.user = this.$store.state.username;
-      // console.log(this.user)
-      axios.get("/readComments/all",{
-        params:{
-          user:6666
-        }
-      }).then((res)=>{
-        // console.log(res.data.msg)
-        // console.log(res.data.result)
-        this.commentAllObj = res.data.result
-        // console.log(this.commentAllObj)
-        for (var i=0;i<this.commentAllObj.length; i++){
-            // console.log(i)
-            if (this.commentAllObj[i].type == "1"){
-              // console.log(this.commentAllObj[i])
-              // console.log(i)
-              this.commentArr.push(this.commentAllObj[i])
-            }
-            if (this.commentAllObj[i].type == "2"){
-              // console.log(this.commentAllObj[i])
-              this.replyArr.push(this.commentAllObj[i])
-            }
-            if (this.commentAllObj[i].type == "3"){
-              // console.log(this.commentAllObj[i])
-              this.replyToReplyArr.push(this.commentAllObj[i])
-            }
-        }
-        // console.log(this.qqqq)
-      }).catch(function(error){
-        console.log("评论请求错误")
-      });
-    },
   components:{navgationHead,footFooter}
 }
 </script>
@@ -747,7 +845,11 @@ hr{
 }
 .newCourse-content .pdf-box{
     width:100%;
-  height: 800px;
+    height: 800px;
+}
+.newCourse-content #video-box{
+    width:100%;
+    height: 700px;
 }
 .newCourse-content .el-col-6{
   width: 16%;

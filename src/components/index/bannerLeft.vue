@@ -51,15 +51,16 @@ export default {
   },
   methods: {
     setMsg: function (item) {
-      // console.log(item)
+       console.log(item)
       if(item.children){
-          this.$store.commit('newTitle',item);
+          this.$store.commit('noTreeTitle1',item);
       //    this.$router.push('/course' + '/label/'+ item.label);
           this.$router.push('/newCourse');
       }else{
           this.$store.commit('noTreeTitle1',item);
       //    window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
           this.$router.push('/newCourse');
+          
       }
     }
   }
