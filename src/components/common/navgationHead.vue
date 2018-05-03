@@ -7,6 +7,7 @@
                 <img class="brand" alt="Brand" src="../../assets/imgs/zbtLogo.png">
             </router-link>
         </div>
+        <img class="headerbg" src="../../assets/imgs/header.png">
         <div class="nav-collapse">
             <!--<div class="collapse-title">-->
                 <!--<span>ZBT</span>-->
@@ -151,7 +152,7 @@ a:hover{
 .zbt-nav{
     min-width:960px;
     width:100%;
-    background:url("../../assets/imgs/header.png") no-repeat;
+    background: linear-gradient(rgb(210,210,210), #fff);
 }
 .navbar{
     width:100%;
@@ -167,6 +168,13 @@ a:hover{
     left:15px;
     top:15px;
     height:65%;
+    z-index: 9999;
+}
+.zbt-nav .headerbg{
+    position:absolute;
+    left:140px;
+    top:0px;
+    height:94px;
 }
 .nav-collapse{
     width:800px;

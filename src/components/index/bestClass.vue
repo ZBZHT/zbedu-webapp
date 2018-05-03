@@ -10,7 +10,8 @@
             </div>
         </div>
         <p class="p" @click="sendBestTitle(item)">
-          <router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link>
+            {{item.title}}
+          <!--<router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link>-->
         </p>
     </div>
 </div>
@@ -30,9 +31,9 @@ export default {
   },
   methods: {
     sendBestTitle(item){
-      this.$store.commit('noTreeTitle',item);
-      // this.$emit('sendBestCourseData',item)
-      // alert(title)
+        console.log(item)
+      this.$store.commit('noTreeTitle1',item);
+    //  this.$router.push('/newCourse');
     },
     playBestVideo (item) {
       this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)

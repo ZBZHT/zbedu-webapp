@@ -31,7 +31,7 @@
   .footer-bigbox{
     width: 100%;
     height: 44px;
-    background-color: #6a1518;
+    background-color: #000;
     position:fixed;
     bottom:0;
   }

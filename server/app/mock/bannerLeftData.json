@@ -2,7 +2,7 @@
     {
       "label":"教学中心",
       "name":"courseIndex",
-      "background":"#6d6d6d",
+      "background":"courseIndex.png",
       "EName":"#6d6d6d",
       "introduce":"教师教，学生自学，相互补充;其中包含新能源、传统汽车的教学微课、课件、工作页等模块资源",
       "children":[
@@ -3382,7 +3382,7 @@
     {
       "label":"实训中心",
       "name":"exerciseCenter",
-      "background":"#64181a",
+      "background":"exerciseIndex.png",
       "introduce":"实训教室和实训设备管理，展示我们所用到的教室布置和一系列汽车设备的图片及大致介绍",
       "children":[
         {
@@ -5594,13 +5594,13 @@
     {
       "label":"考试中心",
       "introduce":"老师出题学生考试或学生课后自测，题库随机出题，多练习提高考试通过率",
-      "background":"#730714",
+      "background":"testIndex.png",
       "name":"testCenter"
     },
     {
       "label":"资源中心",
       "name":"resourceCenter",
-      "background":"#9f5355",
+      "background":"sourceIndex.png",
       "introduce":"与教学、实训相关资源管理，可通过这里上传下载自己满意的教学资源，达到资源共享，相互学习的目的",
       "children":[
         {
@@ -5614,7 +5614,7 @@
     {
       "label":"大赛中心",
       "name":"appraiseCenter",
-      "background":"#aeafb1",
+      "background":"competitionIndex.png",
       "introduce":"发布有关于汽车大赛的通知消息，注意事项等；通过这里掌握最新大赛动态",
       "children":[
         {
@@ -5631,7 +5631,7 @@
     {
       "label":"互动中心",
       "name":"interactiveCenter",
-      "background":"#60000c",
+      "background":"interactiveIndex.png",
       "introduce":"直接与我们交流，有什么意见建议欢迎随时沟通，我们将作出最大的努力来让您满意"
     }
 ]

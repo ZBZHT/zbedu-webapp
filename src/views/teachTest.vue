@@ -701,7 +701,7 @@
       },
       //判断时长
       compareTime(){
-        
+
         var a = parseInt(this.form.date3.split(":")[1])
         var a0 = parseInt(this.form.date3.split(":")[0])
             //console.log(a)
@@ -817,14 +817,14 @@
       onSubmit(formName) {
         this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
         this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
-        console.log(this.form.date1)
-        console.log(this.form.date2)
+        //console.log(this.form.date1)
+        //console.log(this.form.date2)
       //  this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
       //  this.form.date4 = core.formatDate("hh:mm:ss", new Date(this.form.date4));
-        console.log(this.form.date3);
+        //console.log(this.form.date3);
         axios({
           method: 'get',
-          url: "/readTestQuestion/addTestQuestion",
+          url: "/readTestQuestionInfo/addTestQuestion",
           params: {
             user: this.user,
             theme: this.form.theme,
@@ -844,11 +844,10 @@
             allScore:this.form.allScore
           }
         }).then((res) => {
-          this.toTestDataReq();
-          this.Success('考试创建成功');
-          //console.log(res.data);
-          this.toTestData = res.data;
-//          this.cleanAllData(formName);
+            if (res.data.code === 0) {
+              this.toTestDataReq();
+              this.Success('考试创建成功');
+            }
           }).catch(function (error) {
             this.$message({
                 showClose: true,

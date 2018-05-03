@@ -751,7 +751,7 @@
         } else {
           reqCurrTestNum  = '';
         }
-        axios.get("/readTestQuestion/getTestQ", {
+        axios.get("/readTestQuestionInfo/getTestQ", {
           params: {
             user: this.user,
             currTestNum: reqCurrTestNum,
@@ -759,8 +759,8 @@
         }).then((res) => {
           if (res.data.state == 1) {
             this.textQuestionData = res.data;
-
           }
+          //console.log("ddddddd")
           //console.log(res.data);
           //console.log(this.TestNum+"LLL")
         }).catch(function (error) {
@@ -952,7 +952,7 @@
       },
       //请求待考试数据
       testManagenWait() {
-        axios.get("/readTestQuestion/stuToTestData", {
+        axios.get("/readTestQuestionInfo/stuToTestData", {
           params: {
             user: this.user,
           }
@@ -998,23 +998,25 @@
             user: this.user,
           }
         }).then((res) => {
-          let resTestData = res.data.testQuestion;
-          let resTestInfoData = res.data.testQuestionInfo;
+        //  console.log("res.data")
+        //  console.log(res.data.testQuestionInfo)
+          let resTestData = res.data.testQuestionInfo;
+        //  let resTestInfoData = res.data.testQuestionInfo;
           for (let i = 0; i < resTestData.length; i++) {
             if(resTestData[i].currTestType == "106"){
               resTestData[i] = [];
             }
             resTestData[i].newData = moment(resTestData[i].newData).format("YYYY-MM-DD hh:mm:ss");
             resTestData[i].currTestType = core.getCurrTestType(resTestData[i].currTestType);
-            resTestData[i].sorce = resTestInfoData[i].sorce;
-            for (let j = 0; j < resTestData[i].question.length; j++){
-              resTestData[i].question[j].currAnswer = resTestInfoData[i].currAnswer[j];
-            };
-            resTestData[i].error = resTestInfoData[i].error;
+        //    resTestData[i].sorce = resTestInfoData[i].sorce;
+        //    for (let j = 0; j < resTestData[i].question.length; j++){
+        //      resTestData[i].question[j].currAnswer = resTestInfoData[i].currAnswer[j];
+        //    };
+        //    resTestData[i].error = resTestInfoData[i].error;
           }
           this.historyTestData = resTestData;
           console.log(resTestData);
-          console.log(resTestInfoData);
+        //  console.log(resTestInfoData);
           this.total = this.historyTestData.length;
         });
       },

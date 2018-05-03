@@ -1,11 +1,11 @@
 <template>
     <div class="contentui">
         <el-row :gutter="5">
-            <el-col :span="8"  v-for="(item,index) in navData" :key = "index">
+            <el-col :span="12"  v-for="(item,index) in navData" :key = "index">
                 <a @click="fobLink(index)">
-                    <div class="grid-content"
-                         :style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"
-                         >
+                    <div class="grid-content">
+                         <!--:style="{ 'background-color':item.background,'background-repeat':'no-repeat','background-size':'cover'}"-->
+                         <img class="indexPic" :src="'src/assets/imgs/'+item.background">
                         <p class="p">{{item.label}}</p>
                         <div class="introduce">
                             <p>{{item.introduce}}</p>
@@ -27,27 +27,27 @@ export default {
         navData:[
             {
                 'label':'教学中心',
-                'background':'#6d6d6d'
+                'background':'courseIndex.png'
             },
             {
                 'label':'实训中心',
-                'background':'#64181a'
+                'background':'exerciseIndex.png'
             },
             {
                 'label':'考试中心',
-                'background':'#730714'
+                'background':'testIndex.png'
             },
             {
                 'label':'资源中心',
-                'background':'#9f5355'
+                'background':'sourceIndex.png'
             },
             {
                 'label':'大赛中心',
-                'background':'#aeafb1'
+                'background':'competitionIndex.png'
             },
             {
                 'label':'互动中心',
-                'background':'#60000c'
+                'background':'interactiveIndex.png'
             }
         ]
     }
@@ -62,7 +62,7 @@ export default {
                 }
             }).then((res)=>{
                     this.navData = res.data;
-                
+
             }).catch(function(error){
                 console.log("error init." + error)
             });
@@ -138,6 +138,10 @@ a:hover{
         padding: 5% 5% 5% 5%;
         box-sizing:border-box;
     }
+    .contentui .indexPic{
+        width:35%;
+        height: 60px;
+    }
     .contentui .el-row {
         margin-bottom: 20px;
         &:last-child {
@@ -177,15 +181,16 @@ a:hover{
         background-color:rgba(0,0,0,0.5);
     }
     .contentui .grid-content {
-        border-radius: 4px;
+        border-radius: 17px;
         min-height: 0;
         margin-top: 5.5px;
-        padding: 50px;
+        padding: 8px;
         box-sizing: border-box;
         position:relative;
         transition:0.5s ease;
         overflow:hidden;
-        border: 1px solid #ccc;
+        border: 4px solid rgb(105,59,60);
+        background:rgb(181,135,136);
     }
     .contentui .grid-content:hover{
         transform:scale(1.05);
@@ -193,7 +198,9 @@ a:hover{
     }
     .contentui .grid-content .p{
         font-size:22px;
-        font-weight:bolder;
+        font-weight:normal;
+        color:#fff;
+        font-size:18px;
     }
     .contentui .row-bg {
         padding: 10px 0;
@@ -203,8 +210,12 @@ a:hover{
 @media screen and (min-width: 1600px) and (max-width: 1799px) {
     .contentui{
         width:100%;
-        padding: 28% 11% 0% 1%;
+        padding: 5% 11% 0% 1%;
         box-sizing:border-box;
+    }
+    .contentui .indexPic{
+        width:35%;
+        height: 60px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -247,15 +258,16 @@ a:hover{
     }
     .contentui .grid-content {
         width:100%;
-        border-radius: 4px;
+        border-radius: 17px;
         min-height: 0;
         margin-top: 5.5px;
-        padding: 38px;
+        padding: 8px;
         box-sizing: border-box;
         position:relative;
         transition:0.5s ease;
         overflow:hidden;
-        border: 1px solid #ccc;
+        border: 4px solid rgb(105,59,60);
+        background:rgb(181,135,136);
     }
     .contentui .grid-content:hover{
         transform:scale(1.05);
@@ -263,7 +275,9 @@ a:hover{
     }
     .contentui .grid-content .p{
         font-size:18px;
-        font-weight:bolder;
+        font-weight:normal;
+        color:#fff;
+        font-size:18px;
     }
     .contentui .row-bg {
         padding: 10px 0;
@@ -273,8 +287,12 @@ a:hover{
 @media screen and (min-width: 1480px) and (max-width: 1599px) {
     .contentui{
         width:100%;
-        padding: 26% 7% 5% 1%;
+        padding: 5% 7% 5% 1%;
         box-sizing:border-box;
+    }
+    .contentui .indexPic{
+        width:35%;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -317,15 +335,16 @@ a:hover{
     }
     .contentui .grid-content {
         width:100%;
-        border-radius: 4px;
+        border-radius: 17px;
         min-height: 0;
         margin-top: 5.5px;
-        padding: 28px;
+        padding: 8px;
         box-sizing: border-box;
         position:relative;
         transition:0.5s ease;
         overflow:hidden;
-        border: 1px solid #ccc;
+        border: 4px solid rgb(105,59,60);
+        background:rgb(181,135,136);
     }
     .contentui .grid-content:hover{
         transform:scale(1.05);
@@ -333,7 +352,9 @@ a:hover{
     }
     .contentui .grid-content .p{
         font-size:16px;
-        font-weight:bolder;
+        font-weight:normal;
+        color:#fff;
+        font-size:18px;
     }
     .contentui .row-bg {
         padding: 10px 0;
@@ -343,8 +364,12 @@ a:hover{
 @media screen and (min-width: 1280px) and (max-width: 1479px) {
     .contentui{
         width:100%;
-        padding: 21% 7% 5% 1%;
+        padding: 5% 7% 5% 1%;
         box-sizing:border-box;
+    }
+    .contentui .indexPic{
+        width:35%;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -387,23 +412,25 @@ a:hover{
     }
     .contentui .grid-content {
         width:100%;
-        border-radius: 4px;
+        border-radius: 17px;
         min-height: 0;
         margin-top: 6.5px;
-        padding: 28px;
+        padding: 8px;
         box-sizing: border-box;
         position:relative;
         transition:0.5s ease;
         overflow:hidden;
-        border: 1px solid #ccc;
+        border: 4px solid rgb(105,59,60);
+        background:rgb(181,135,136);
     }
     .contentui .grid-content:hover{
         transform:scale(1.05);
         box-shadow:0 10px 30px rgba(0,0,0,0.4);
     }
     .contentui .grid-content .p{
-        font-size:15px;
-        font-weight:bolder;
+        font-size:16px;
+        font-weight:normal;
+        color:#fff;
     }
     .contentui .row-bg {
         padding: 10px 0;
@@ -413,8 +440,12 @@ a:hover{
 @media screen and (max-width: 1279px) {
     .contentui{
         width:100%;
-        padding: 21% 7% 5% 1%;
+        padding: 5% 7% 5% 1%;
         box-sizing:border-box;
+    }
+    .contentui .indexPic{
+        width:35%;
+        height: 47px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -457,15 +488,16 @@ a:hover{
     }
     .contentui .grid-content {
         width:100%;
-        border-radius: 4px;
+        border-radius: 17px;
         min-height: 0;
         margin-top: 5.5px;
-        padding: 23px;
+        padding: 8px;
         box-sizing: border-box;
         position:relative;
         transition:0.5s ease;
         overflow:hidden;
-        border: 1px solid #ccc;
+        border: 4px solid rgb(105,59,60);
+        background:rgb(181,135,136);
     }
     .contentui .grid-content:hover{
         transform:scale(1.05);
@@ -473,7 +505,8 @@ a:hover{
     }
     .contentui .grid-content .p{
         font-size:15px;
-        font-weight:bolder;
+        font-weight:normal;
+        color:#fff;
     }
     .contentui .row-bg {
         padding: 10px 0;

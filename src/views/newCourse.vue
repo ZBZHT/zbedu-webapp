@@ -297,7 +297,6 @@ export default {
   },
   mounted(){
     
-
       //从courseIndex页传值并默认展开
         console.log("sjsjs");
         console.log(this.$store.state.noTree1.courseId);
@@ -410,12 +409,14 @@ export default {
       });
     },
   methods:{
+    //从树形传值到tabs
     handleNodeClick(data) {
       console.log(data);
       if(data.children){
 
       }else{
           this.$store.commit('noTreeTitle',data);
+          
       }
     },
     enterUserManagement () {

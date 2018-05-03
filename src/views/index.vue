@@ -4,19 +4,20 @@
         <navgation-head></navgation-head>
     </div>
 
-
     <div class="index-list" :style="{height: height - 141 + 'px'}">
+<!--<div class="study"></div>-->
+
         <div class="index-list-topline"></div>
         <div class="index-list-main">
-            <div>
-                <img src="../assets/imgs/index-bg.png">
-            </div>
+            <!--<div>-->
+                <!--<img src="../assets/imgs/index-bg.png">-->
+            <!--</div>-->
             <div class="index-list-nav">
                 <nav-ul></nav-ul>
             </div>
         </div>
         <!--<div class="index-list-middleline"></div>-->
-        <div class="index-list-bottomline"></div>
+        <!--<div class="index-list-bottomline"></div>-->
     </div>
 
     <div class="footer">
@@ -35,18 +36,18 @@ export default {
   name: 'index',
 
   data () {
-    return { 
+    return {
       height:window.innerHeight
     }
   },
   computed:{
-    
+
   },
   methods:{
     handleResize (event) {
         this.height = window.innerHeight;
         if(this.height <= "620"){
-            this.height = 598;
+            this.height = 620;
         }
     }
   },
@@ -54,7 +55,7 @@ export default {
     window.removeEventListener('resize', this.handleResize)
   },
   mounted(){
-   
+
     window.addEventListener('resize', this.handleResize)
 
   },
@@ -89,34 +90,43 @@ hr{
 }
 .index-container{
     min-width:1160px;
-    min-height:600px;
+    min-height:620px;
 }
 .index-list{
     width:100%;
     position:relative;
-    background:rgb(122,18,19);
+    background:url("../assets/imgs/newIndex.png") no-repeat;
+    background-size:100% 100%;
+}
+.index-list-topline{
+    width:100%;
+    height:2%;
+    background:rgb(59,59,59);
+}
+.index-list-middleline{
+    width:100%;
+    height:2%;
+    background:rgb(172,172,172);
+}
+.index-list-bottomline{
+    width:100%;
+    height:2%;
+    background:rgb(172,172,172);
+}
+.index-container .study{
+    width:110px;
+    height:40px;
+    border:1px solid #fff;
+    position:absolute;
+    left:16%;
+    bottom:6%;
 }
 @media screen and (min-width:1800px){
-    .index-list-topline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-middleline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-bottomline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
+
     .index-list-main{
         width:100%;
         height:96%;
         display:flex;
-        padding-left: 100px;
         box-sizing: border-box;
     }
     .index-list img{
@@ -124,36 +134,21 @@ hr{
         height:100%;
     }
     .index-list .index-list-nav{
-        width:36%;
+        width:22%;
         position:absolute;
-        right:0%;
-        top:25%;
+        left:1%;
+        top:8%;
     }
     .content{
         padding:6%;
     }
 }
 @media screen and (min-width: 1600px) and (max-width: 1799px) {
-    .index-list-topline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-middleline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-bottomline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
+
     .index-list-main{
         width:100%;
         height:96%;
         display:flex;
-        padding-left: 100px;
         box-sizing: border-box;
     }
     .index-list img{
@@ -161,36 +156,21 @@ hr{
         height:100%;
     }
     .index-list .index-list-nav{
-        width:33%;
+        width:22%;
         position:absolute;
-        right:0%;
-        top:11%;
+        left:2%;
+        top:9%;
     }
     .content{
         padding:6%;
     }
 }
 @media screen and (min-width: 1480px) and (max-width: 1599px) {
-    .index-list-topline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-middleline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-bottomline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
+
     .index-list-main{
         width:100%;
         height:96%;
         display:flex;
-        padding-left: 138px;
         box-sizing: border-box;
     }
     .index-list img{
@@ -198,36 +178,21 @@ hr{
         height:100%;
     }
     .index-list .index-list-nav{
-        width:30%;
+        width:22%;
         position:absolute;
-        right:1%;
-        top:18%;
+        left:2%;
+        top:9%;
     }
     .content{
         padding:6%;
     }
 }
 @media screen and (min-width: 1280px) and (max-width: 1479px) {
-    .index-list-topline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-middleline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-bottomline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
+
     .index-list-main{
         width:100%;
         height:96%;
         display:flex;
-        padding-left: 68px;
         box-sizing: border-box;
     }
     .index-list img{
@@ -235,31 +200,17 @@ hr{
         height:100%;
     }
     .index-list .index-list-nav{
-        width:32%;
+        width:22%;
         position:absolute;
-        right:1%;
-        top:16%;
+        left:2%;
+        top:8%;
     }
     .content{
         padding:6%;
     }
 }
 @media screen and (max-width: 1279px) {
-    .index-list-topline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-middleline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
-    .index-list-bottomline{
-        width:100%;
-        height:2%;
-        background:rgb(172,172,172);
-    }
+
     .index-list-main{
         width:100%;
         height:96%;
@@ -271,10 +222,10 @@ hr{
         height:100%;
     }
     .index-list .index-list-nav{
-        width:32%;
+        width:22%;
         position:absolute;
-        right:2%;
-        top:16%;
+        left:2%;
+        top:8%;
     }
     .content{
         padding:6%;

@@ -26,7 +26,7 @@
                     
                     <div class="content">
                         <div class="data">
-                            <div class="desc" v-for="(item,index) in textQuestionData.question">
+                            <div class="desc" v-for="(item,index) in textQuestionData">
                                 <span class="desctitle">
                                     <a @click="tip(index)">
                                         <img src="../assets/imgs/tip.png">
@@ -57,7 +57,7 @@
                         </div>
                         <div class="number">
                             <ul>
-                                <li v-for="(item,index) in textQuestionData.question">
+                                <li v-for="(item,index) in textQuestionData">
                                     <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                                 </li>
                             </ul>
@@ -144,7 +144,8 @@ export default {
       fullscreenLoading: false,
       testQuestion: '',
       isCheckNumA:0,
-      height:window.innerHeight
+      height:window.innerHeight,
+      testScore:''
     }
   },
   created(){
@@ -259,12 +260,10 @@ export default {
           user: this.user,
         }
       }).then((res) => {
-        if (res.data.state == 1) {
-          this.textQuestionData = res.data;
           console.log("2222")
           console.log(res.data)
-          this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
-          this.AllLength = res.data.question.length;
+        if (res.data.state == 1) {
+          
         } else {
           this.TestNum = res.data.testLength;
         }
@@ -288,12 +287,17 @@ export default {
         //console.log(res.data)
         //console.log(res.data.currState);
         //考试题的唯一编号
-        this.testQuestion = res.data.testQuestion;
+        this.testScore = res.data;
+        this.testQuestion = res.data.currTestNum;
+        console.log(this.testQuestion)
         console.log("12121212121");
         console.log(res.data)
         this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTestTime));
         this.$store.commit('vuexState',res.data.state);
         if(res.data.state == 1){
+          this.textQuestionData = res.data.question;
+          this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
+          this.AllLength = res.data.question.length;
           this.picked = res.data.currAnswer;
           this.QidArr = res.data.currIsId;
           this.isCheckArr = res.data.currState;
@@ -320,15 +324,14 @@ export default {
             submit:function () {
                 this.sorce = 0;
                 this.error = [];
-                var everyScore = parseInt(this.textQuestionData.allScore  / this.textQuestionData.question.length);
-                console.log(everyScore);
+                var everyScore = parseInt(this.testScore.allScore  / this.textQuestionData.length);
+                console.log(this.textQuestionData.length);
                 //console.log(this.picked)
                 for(var i = 0;i < this.QidArr.length;i++){
                     if(this.QidArr[i] != null && this. QidArr[i] != ''){
                         //console.log(this.QidArr[i]-1);
                         //console.log("asd"+this.picked[i])
-                        //console.log(this.textQuestionData.question[this.QidArr[i]-1].answer)
-                        if(this.textQuestionData.question[i].answer == this.picked[i]){
+                        if(this.textQuestionData[i].answer == this.picked[i]){
                             this.sorce += everyScore;
                         }else{
                             //console.log(this.picked[i])
@@ -346,7 +349,7 @@ export default {
                         url:"/readTestQuestionInfo/submitQuestionInfo",
                         params:{
                             user:this.user,
-                            testQuestion:this.testQuestion,
+                            currTestNum:this.testQuestion,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currState:this.isCheckArr,
@@ -358,7 +361,7 @@ export default {
                         }
                     }).then(
                         function (res) {
-                        //console.log(res.data.code);
+                        console.log(res);
                           if (res.data.code == 0) {
                             //alert(this.sorce);
                             alert("提交成功");
@@ -377,7 +380,7 @@ export default {
             },
 
             myAnswer:function(id,index){
-                this.lengthData = this.textQuestionData.question.length;
+                this.lengthData = this.textQuestionData.length;
                 this.QidArr[index] = id;
                 console.log(this.QidArr);
                 if(this.isCheckArr[index] != true){
@@ -401,7 +404,7 @@ export default {
                         params:{
                             user:this.user,
                             currTestId:this.$route.params.testId,
-                            testQuestion:this.testQuestion,
+                            currTestNum:this.testQuestion,
                             startTime:this.currentdate,
                             currAnswer:this.picked,
                             currIsId:this.QidArr,
