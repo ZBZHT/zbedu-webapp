@@ -17,9 +17,13 @@ export default new Vuex.Store({
     allTestNum:'',
     vuexState:'',
     stillBtn:false,
-    userID:''
+    userID:'',
+    homeworkData:[]
 },
  mutations : {
+    homework(state,item){
+        state.homeworkData = item;
+    },
     newTitle(state,item){
         state.course = item;
     },

@@ -3,7 +3,7 @@
     <div>
         <navgation-head></navgation-head>
     </div>
-
+<button @click="check()">.....</button>
     <div class="newCourse-content">
         <el-row>
             <el-col :span="6">
@@ -22,192 +22,176 @@
                 <!--教学中心-->
                 <div>
                     <p class="exerP">{{noTree.label}}</p>
-                    <el-tabs type="border-card">
+                    
+                          <el-tabs type="border-card">
 
-                        <!--简介-->
-                        <el-tab-pane label="本节简介">
-                            <div class="courseDescribe" >
-                                <p class="title">课程简介：</p>
-                                <p class="desc">{{ noTree.describe }}</p>
-                            </div>
-                        </el-tab-pane>
-
-                        <!--教材-->
-                        <el-tab-pane label="本节教材" id="courseppt">
-                            <p class="devDownload" v-show="noTree.teachingBook"></p>
-                            <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
-                                <param name="_Version" value="65539">
-                                <param name="_ExtentX" value="20108">
-                                <param name="_ExtentY" value="10866">
-                                <param name="_StockProps" value="0">
-                                <param name="SRC" value="teachingMaterial">
-                                <object :data="'/resource/pdf/coursePdfData/' + noTree.teachingBook" type="application/pdf" class="pdf-box">
-                                </object>
-                            </object>
-                            <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
-                        </el-tab-pane>
-
-                        <!--课件-->
-                        <el-tab-pane label="教学课件" id="courseppt">
-                            <p class="devDownload" v-show="noTree.teachingMaterial"></p>
-                            <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
-                                <param name="_Version" value="65539">
-                                <param name="_ExtentX" value="20108">
-                                <param name="_ExtentY" value="10866">
-                                <param name="_StockProps" value="0">
-                                <param name="SRC" value="teachingMaterial">
-                                <object :data="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" type="application/pdf" class="pdf-box">
-                                </object>
-                            </object>
-                            <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
-                        </el-tab-pane>
-
-                        <!--微课-->
-                        <el-tab-pane label="教学微课">
-                            <div  v-for="item in noTree.videoTitle">
-                                <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
-                                </video>
-                            </div>
-                        </el-tab-pane>
-
-                        <!--工作页-->
-                        <el-tab-pane label="工作页" id="courseWorkPage">
-                            <p class="devDownload" v-show="noTree.workPage"></p>
-                            <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
-                                <param name="_Version" value="65539">
-                                <param name="_ExtentX" value="20108">
-                                <param name="_ExtentY" value="10866">
-                                <param name="_StockProps" value="0">
-                                <param name="SRC" value="teachingMaterial">
-                                <object :data="'/resource/pdf/coursePdfData/' + noTree.workPage" type="application/pdf" class="pdf-box">
-                                </object>
-                            </object>
-                            <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
-                        </el-tab-pane>
-
-                        <!--课后作业-->
-                        <el-tab-pane label="课后作业">
-                            <div class="homework-box">
-                                <div class="homework" v-for="(item,index) in noTree.homeWorkData">
-                                <p class="homeworkTitle">{{index + 1}}. {{item.title}}</p>
-                                <p class="homeworkDesc">{{item.desc}}</p>
-                                    <span class="homework_Answer">正确答案：</span>
-                                    <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
+                            <!--简介-->
+                            <el-tab-pane label="本节简介">
+                                <div class="courseDescribe" >
+                                    <p class="title">课程简介：</p>
+                                    <p class="desc">{{ noTree.describe }}</p>
                                 </div>
-                            </div>
-                            <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
-                        </el-tab-pane>
+                            </el-tab-pane>
 
-                        <!--评论-->
-                        <el-tab-pane label="课程评价">
-                            <div class="appraise-box">
-                                <p class="appraiseTitle">{{ appraiseMsg }}</p>
-                                <p v-show="!commentArr.length">暂无评价</p>
-                                <div class="comment-box">
-                                    <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.label">
-                                    <div class="text-box">
-                                        <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
-                                        <p >{{commentItem.text}}</p>
-                                    </div>
-                                    <div class="msg-box">
-                                        <p class="time-box">时间：{{ commentItem.time }}</p>
-                                        <p class="star">
-                                        <span  :class="{'on': commentItem.score>=0}"class="star-item" >
-                                        </span>
-                                        <span  :class="{'on': commentItem.score>=1}" class="star-item" >
-                                        </span>
-                                        <span  :class="{'on': commentItem.score>=2}" class="star-item" >
-                                        </span>
-                                        <span  :class="{'on': commentItem.score>=3}" class="star-item" >
-                                        </span>
-                                        <span  :class="{'on': commentItem.score>=4}" class="star-item" >
-                                        </span>
-                                        </p>
-                                        <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
-                                    </div>
-                                    <div class="reply-msg-box">
-                                        <ul v-show="replyArr.length">
-                                        <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.label && replyItem.targetId == commentItem.num">
-                                            <span>{{replyItem.user}}：</span>
-                                            <span>{{replyItem.text}}</span>
-                                            <div class="replyTime-box">
-                                            <p>{{replyItem.time}}</p>
-                                            <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
-                                            </div>
+                            <!--教材-->
+                            <el-tab-pane label="本节教材">
+                              <div id="teachingBook">
+                                <p class="devDownload" v-show="noTree.teachingBook"></p>
+                                  <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></iframe>
+                                <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
+                              </div>    
+                            </el-tab-pane>
 
-                                            <div class="replyToReply-box">
-                                            <ul v-show="replyToReplyArr.length">
-                                                <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.label && replytoReplyItem.targetId == replyItem.num">
-                                                <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
-                                                <span>{{replytoReplyItem.text}}</span>
-                                                <p>{{replytoReplyItem.time}}</p>
-                                                </li>
+                            <!--课件-->
+                            <el-tab-pane label="教学课件">
+                              <div id="courseppt">
+                                <p class="devDownload" v-show="noTree.teachingMaterial"></p>
+                                  <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></iframe>
+                                <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
+                              </div>  
+                            </el-tab-pane>
+
+                            <!--微课-->
+                            <el-tab-pane label="教学微课">
+                                <div  v-for="item in noTree.videoTitle">
+                                    <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
+                                    </video>
+                                </div>
+                            </el-tab-pane>
+
+                            <!--工作页-->
+                            <el-tab-pane label="工作页">
+                              <div id="courseWorkPage">
+                                <p class="devDownload" v-show="noTree.workPage"></p>
+                                  <iframe :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></iframe>
+                                <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
+                              </div>  
+                            </el-tab-pane>
+
+                            <!--课后作业-->
+                            <el-tab-pane label="课后作业">
+                                <div class="homework-box">
+                                    <div class="homework" v-for="(item,index) in homeworkData">
+                                    <p class="homeworkTitle">{{index + 1}}. {{item.desc}}</p>
+                                    <p class="homeworkDesc" v-for="(item2,index2) in item.options">{{item2}}</p>
+                                        <span class="homework_Answer">正确答案：</span>
+                                        <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
+                                    </div>
+                                </div>
+                                <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
+                            </el-tab-pane>
+
+                            <!--评论-->
+                            <el-tab-pane label="课程评价">
+                                <div class="appraise-box">
+                                    <p class="appraiseTitle">{{ appraiseMsg }}</p>
+                                    <p v-show="!commentArr.length">暂无评价</p>
+                                    <div class="comment-box">
+                                        <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.label">
+                                        <div class="text-box">
+                                            <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
+                                            <p >{{commentItem.text}}</p>
+                                        </div>
+                                        <div class="msg-box">
+                                            <p class="time-box">时间：{{ commentItem.time }}</p>
+                                            <p class="star">
+                                            <span  :class="{'on': commentItem.score>=0}"class="star-item" >
+                                            </span>
+                                            <span  :class="{'on': commentItem.score>=1}" class="star-item" >
+                                            </span>
+                                            <span  :class="{'on': commentItem.score>=2}" class="star-item" >
+                                            </span>
+                                            <span  :class="{'on': commentItem.score>=3}" class="star-item" >
+                                            </span>
+                                            <span  :class="{'on': commentItem.score>=4}" class="star-item" >
+                                            </span>
+                                            </p>
+                                            <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
+                                        </div>
+                                        <div class="reply-msg-box">
+                                            <ul v-show="replyArr.length">
+                                            <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.label && replyItem.targetId == commentItem.num">
+                                                <span>{{replyItem.user}}：</span>
+                                                <span>{{replyItem.text}}</span>
+                                                <div class="replyTime-box">
+                                                <p>{{replyItem.time}}</p>
+                                                <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
+                                                </div>
+
+                                                <div class="replyToReply-box">
+                                                <ul v-show="replyToReplyArr.length">
+                                                    <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.label && replytoReplyItem.targetId == replyItem.num">
+                                                    <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
+                                                    <span>{{replytoReplyItem.text}}</span>
+                                                    <p>{{replytoReplyItem.time}}</p>
+                                                    </li>
+                                                </ul>
+                                                </div>
+                                                <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
+
+                                                <textarea type="text" v-model="replyToReplyText"></textarea>
+
+                                                <button @click="submitReplyToReply(replyItem)">回复他</button>
+                                                </div>
+                                            </li>
                                             </ul>
-                                            </div>
-                                            <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
-
-                                            <textarea type="text" v-model="replyToReplyText"></textarea>
-
-                                            <button @click="submitReplyToReply(replyItem)">回复他</button>
-                                            </div>
-                                        </li>
-                                        </ul>
+                                        </div>
+                                        <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
+                                            <textarea type="text" v-model="replyText"></textarea>
+                                            <button @click="submitReply(commentItem,index)">提交回复</button>
+                                        </div>
+                                        <hr>
+                                        </div>
                                     </div>
-                                    <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
-                                        <textarea type="text" v-model="replyText"></textarea>
-                                        <button @click="submitReply(commentItem,index)">提交回复</button>
-                                    </div>
-                                    <hr>
+                                    <p class="appraiseTitle">我要评价</p>
+
+                                    <textarea type="text" v-model="text"/>
+
+                                    <div class="shopList">
+                                        <p>请评价：</p>
+                                        <p class="all">
+
+                                        <input
+                                            type="radio"
+                                            name="b"
+                                            value="0" v-model="inputdata"/>
+                                        <span>★</span>
+                                        <input
+                                            type="radio"
+                                            name="b"
+                                            value="1" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input
+                                            type="radio"
+                                            name="b"
+                                            value="2" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input
+                                            type="radio"
+                                            name="b"
+                                            value="3" v-model="inputdata" />
+                                        <span>★</span>
+                                        <input
+                                            type="radio"
+                                            name="b"
+                                            value="4" v-model="inputdata" />
+                                        <span>★</span>
+                                        <!--<input-->
+                                        <!--type="radio"-->
+                                        <!--name="b"-->
+                                        <!--value="5" v-model="inputdata" />-->
+                                        <!--<span>★</span>-->
+
+                                        </p>
+                                        <p>{{ arrData[inputdata]}}</p>
+                                        <br>
+                                        <el-button type="success" round @click="submitComments()">提交评论</el-button>
                                     </div>
                                 </div>
-                                <p class="appraiseTitle">我要评价</p>
+                            </el-tab-pane>
 
-                                <textarea type="text" v-model="text"/>
-
-                                <div class="shopList">
-                                    <p>请评价：</p>
-                                    <p class="all">
-
-                                    <input
-                                        type="radio"
-                                        name="b"
-                                        value="0" v-model="inputdata"/>
-                                    <span>★</span>
-                                    <input
-                                        type="radio"
-                                        name="b"
-                                        value="1" v-model="inputdata" />
-                                    <span>★</span>
-                                    <input
-                                        type="radio"
-                                        name="b"
-                                        value="2" v-model="inputdata" />
-                                    <span>★</span>
-                                    <input
-                                        type="radio"
-                                        name="b"
-                                        value="3" v-model="inputdata" />
-                                    <span>★</span>
-                                    <input
-                                        type="radio"
-                                        name="b"
-                                        value="4" v-model="inputdata" />
-                                    <span>★</span>
-                                    <!--<input-->
-                                    <!--type="radio"-->
-                                    <!--name="b"-->
-                                    <!--value="5" v-model="inputdata" />-->
-                                    <!--<span>★</span>-->
-
-                                    </p>
-                                    <p>{{ arrData[inputdata]}}</p>
-                                    <br>
-                                    <el-button type="success" round @click="submitComments()">提交评论</el-button>
-                                </div>
-                            </div>
-                        </el-tab-pane>
-
-                    </el-tabs>
+                          </el-tabs>
+                    
                 </div>
             </el-col>
         </el-row>
@@ -259,10 +243,17 @@ export default {
       appAnswer:false,
       noTree11:'',
       courseId1:'',
-      courseId2:''
+      courseId2:'',
+      checkArr:[],
+      userId:this.$store.state.userID,
+      keyId:100,
+      
     }
   },
   computed:{
+    homeworkData(){
+        return this.$store.state.homeworkData;
+    },
     noTree(){
         return this.$store.state.noTree;
     },
@@ -291,28 +282,46 @@ export default {
       }
   },
   created(){
-        this.$nextTick(function(){
-            this.$refs.vuetree.setCurrentKey(100);  
-        })
+    
   },
   mounted(){
-    
+    console.log(this.$refs.vuetree);
+    this.$nextTick(() => {
+      this.$refs.vuetree.setCurrentKey(100)
+    })
       //从courseIndex页传值并默认展开
-        console.log("sjsjs");
-        console.log(this.$store.state.noTree1.courseId);
+      //  console.log("sjsjs");
+      //  console.log(this.$store.state.noTree1.courseId);
         var data = this.$store.state.noTree1;
         var id = this.$store.state.noTree1.courseId;
         if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600){
-            this.courseId1 = id;
+            
             if(id == 100){
+                this.courseId1 = id;
+                this.courseId2 = 111;
                 this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
-            }else if(id == 200 || id == 300 || id == 400){
+            }else if(id == 200){
+                this.courseId1 = id;
+                this.courseId2 = 211;
+                this.$store.commit('noTreeTitle',data.children[0].children[0]);
+            }else if(id == 300){
+                this.courseId1 = id;
+                this.courseId2 = 311;
+                this.$store.commit('noTreeTitle',data.children[0].children[0]);
+            }else if(id == 400){
+                this.courseId1 = id;
+                this.courseId2 = 411;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }else if(id == 500 || id == 600){
+                this.courseId1 = id;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }
         }else if(id > 100 && id < 200){
-            if(id > 110 && id < 120){
+            if(id == 110){
+                this.courseId1 = 100;
+                this.courseId2 = 111;
+                this.$store.commit('noTreeTitle',data.children[0].children[0]);
+            }else if(id > 110 && id < 120){
                 this.courseId1 = 100;
                 this.courseId2 = id;
                 this.$store.commit('noTreeTitle',data.children[0]);
@@ -320,9 +329,9 @@ export default {
                 this.courseId1 = 100;
                 this.courseId2 = id;
                 this.$store.commit('noTreeTitle',data.children[0]);
-            }else{
+            }else if(id == 120){
                 this.courseId1 = 100;
-                this.courseId2 = id;
+                this.courseId2 = 121;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }
         }else if(id > 200 && id < 300){
@@ -407,16 +416,58 @@ export default {
       }).catch(function(error){
         console.log("评论请求错误")
       });
+    
+    
+    
     },
   methods:{
+    check(){
+          this.$refs.vuetree.setCurrentKey(100)
+    },
+
     //从树形传值到tabs
-    handleNodeClick(data) {
-      console.log(data);
+    handleNodeClick(data,node) {
+    this.appAnswer = false;
+    //  console.log(node);
+    //  console.log(node.data.label);
+    //  console.log(node.parent.label);
+    //  console.log(node.parent.parent.label);
+    //  console.log(node.parent.parent.parent.label);
+
+      
       if(data.children){
 
       }else{
-          this.$store.commit('noTreeTitle',data);
+        this.checkArr = [];
+          if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){
+            this.checkArr.push(node.parent.label)
+            this.checkArr.push(node.label)
+          }else 
+          if(node.parent.parent.parent.label == '新能源汽车'){
+            this.checkArr.push(node.parent.parent.parent.label)
+            this.checkArr.push(node.parent.parent.label)
+            this.checkArr.push(node.parent.label)
+            this.checkArr.push(node.label)
+          }else if(node.parent.parent.parent){
+            this.checkArr.push(node.parent.parent.label)
+            this.checkArr.push(node.parent.label)
+            this.checkArr.push(node.label)
+          }
           
+          //console.log(this.checkArr);
+          this.$store.commit('noTreeTitle',data);
+          axios.get("/readTestQuestion/getHomeWork",{
+            params:{
+                userId:this.userId,
+                checkArr:this.checkArr
+            }
+          }).then((res)=>{
+              //console.log(res.data.result)
+              this.$store.commit('homework',res.data.result);
+              //console.log(this.homeworkData)
+          }).catch(function(error){
+              console.log("error init." + error)
+          });
       }
     },
     enterUserManagement () {
@@ -692,6 +743,11 @@ export default {
         console.log(elem);
         this.requestFullScreen(elem);
       },
+      teachingBookFullScreen(){
+        var elem = document.getElementById("teachingBook");
+        console.log(elem);
+        this.requestFullScreen(elem);
+      },
       //类似F11的全屏
       requestFullScreen(element) {
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
@@ -867,6 +923,28 @@ hr{
 }
 .el-tree-node__expand-icon{
   color: #ffffff;
+}
+.newCourse-content .homework-box{
+  width: 100%;
+  height:400px;
+  overflow:auto;
+}
+.newCourse-content .homework{
+  margin:0 5%;
+  position: relative;
+  background: #F3F3F3;
+  text-align:left;
+}
+.newCourse-content .homework-box .homeworkTitle{
+  font-weight:bolder;
+  margin-top:20px;
+}
+.newCourse-content .homework-box .homeworkDesc{
+  margin-left:20px;
+}
+.newCourse-content .homework-box .homework_Answer{
+  margin-left:20px;
+  margin-top:10px;
 }
 .newCourse-content .appraise-box{
       width: 90%;
@@ -1088,10 +1166,14 @@ hr{
       }
   #courseppt:-webkit-full-screen {
     width: 100%;
-    height: 100%;
+    height: 150%;
   }
   #courseWorkPage:-webkit-full-screen {
     width: 100%;
-    height: 100%;
+    height: 150%;
+  }
+  #teachingBook:-webkit-full-screen {
+    width: 100%;
+    height: 150%;
   }
 </style>

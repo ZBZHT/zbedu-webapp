@@ -175,6 +175,7 @@ a:hover{
     left:140px;
     top:0px;
     height:94px;
+    width: 80%;
 }
 .nav-collapse{
     width:800px;
