@@ -620,14 +620,8 @@ router.post('/addExcelTest', function(req, res) {
                     numID = Number(numID) + 1;
                     arrSingle.num = numID;
                     arrSingle.desc = jsonResult[i].desc;
-                    if (jsonResult[0].options0 === 'A、正确' && jsonResult[0].options1 === 'B、错误') {
-                      arrSingle.options.push(jsonResult[0].options0);
-                      arrSingle.options.push(jsonResult[0].options1);
-                      arrSingle.genre = 'judge';
-                    } else {
-                      arrSingle.options.push(jsonResult[i].options0);
-                      arrSingle.options.push(jsonResult[i].options1);
-                    }
+                    arrSingle.options.push(jsonResult[i].options0);
+                    arrSingle.options.push(jsonResult[i].options1);
                     arrSingle.value.push('A');
                     arrSingle.value.push('B');
                     if (jsonResult[i].options2 !== '' && jsonResult[i].options2 !== undefined) {
@@ -637,11 +631,6 @@ router.post('/addExcelTest', function(req, res) {
                     if (jsonResult[i].options3 !== '' && jsonResult[i].options3 !== undefined) {
                       arrSingle.options.push(jsonResult[i].options3);
                       arrSingle.value.push('D');
-                    }
-                    if (jsonResult[i].answer.length >=2) {
-                      arrSingle.genre = 'MultiSelect';
-                    } else {
-                      arrSingle.genre = 'select';
                     }
                     arrSingle.answer = jsonResult[i].answer;
                     if (jsonResult[i].difficulty !== '') {
@@ -654,12 +643,37 @@ router.post('/addExcelTest', function(req, res) {
                     } else {
                       arrSingle.major = jsonResult[i].major;
                     }
-                    arrSingle.title1 = jsonResult[i].title1;
-                    arrSingle.title2 = jsonResult[i].title2;
-                    arrSingle.title3 = jsonResult[i].title3;
-                    arrSingle.title4 = jsonResult[i].title4;
-                    arrSingle.title5 = jsonResult[i].title5;
-                    arrSingle.title6 = jsonResult[i].title6;
+                    if (jsonResult[i].title1 === '') {
+                      arrSingle.title1 = jsonResult[0].title1;
+                    } else {
+                      arrSingle.title1 = jsonResult[i].title1;
+                    }
+                    if (jsonResult[i].title2 === '') {
+                      arrSingle.title2 = jsonResult[0].title2;
+                    } else {
+                      arrSingle.title2 = jsonResult[i].title2;
+                    }
+                    if (jsonResult[i].title3 === '') {
+                      arrSingle.title3 = jsonResult[0].title3;
+                    } else {
+                      arrSingle.title3 = jsonResult[i].title3;
+
+                    }
+                    if (jsonResult[i].title4 === '') {
+                      arrSingle.title4 = jsonResult[0].title4;
+                    } else {
+                      arrSingle.title4 = jsonResult[i].title4;
+                    }
+                    if (jsonResult[i].title5 === '') {
+                      arrSingle.title5 = jsonResult[0].title5;
+                    } else {
+                      arrSingle.title5 = jsonResult[i].title5;
+                    }
+                    if (jsonResult[i].title6 === '') {
+                      arrSingle.title6 = jsonResult[0].title6;
+                    } else {
+                      arrSingle.title6 = jsonResult[i].title6;
+                    }
                     arrSingle.forId.push('A' + numID);
                     arrSingle.forId.push('B' + numID);
                     if (jsonResult[i].options2 !== '' && jsonResult[i].options2 !== undefined) {
@@ -669,6 +683,14 @@ router.post('/addExcelTest', function(req, res) {
                       arrSingle.forId.push('D' + numID);
                     }
                     arrSingle.type = 'radio';
+                    if ((jsonResult[i].options2 === '' || jsonResult[i].options2 === undefined) && (jsonResult[i].options3 === '' || jsonResult[i].options3 === undefined)) {
+                      arrSingle.genre = 'judge';
+                    }
+                    if (jsonResult[i].answer.length >= 2) {
+                      arrSingle.genre = 'MultiSelect';
+                    } else {
+                      arrSingle.genre = 'select';
+                    }
                     result.push(arrSingle);
 
                     arrSingle = {
@@ -692,7 +714,7 @@ router.post('/addExcelTest', function(req, res) {
                   }
                 }
               }).then(function () {
-                console.log(result);
+                //console.log(result);
                 for (let i=0; i<result.length; i++) {
                   if (result[i].desc !== '') {
                     let question = new Question({
@@ -703,6 +725,7 @@ router.post('/addExcelTest', function(req, res) {
                       name:result[i].name,
                       forId:result[i].forId,
                       answer: result[i].answer,
+                      genre: result[i].genre,
                       difficulty: result[0].difficulty,
                       type: result[i].type,
                       major: result[0].major,
@@ -714,16 +737,13 @@ router.post('/addExcelTest', function(req, res) {
                       title6: result[i].title6,
                     });
                     //保存到数据库
-                    //if (fileName == '发动机考试题.xlsx') {
-                    //console.log(question);
-                    /*question.save(function (err) {
+                    question.save(function (err) {
                        if (err) {
                        console.log(err);
                        } else {
                        console.log('question Save success');
                        }
-                    });*/
-                    //}
+                    });
                   }
                 }
               }).then(function () {
@@ -902,5 +922,46 @@ router.post('/updateCenterTree', function(req, res) {
   }
 });
 
+//上传头像
+router.post('/uploadAvatar', function(req, res) {
+  let form = new formidable.IncomingForm();
+  form.uploadDir = "../public/resource/myAvatar";//设置头像上传存放地址
+  form.maxFieldsSize = 2 * 1024 * 1024; //设置最大2M
+  form.keepExtensions = true;
+  let reqS = req.session.users;
+
+  form.parse(req, function (err, fields, files) {
+    let arr = files.file.path.split('\\');
+    fs.writeFileSync("../../resource/myAvatar/" + arr[arr.length-1], fs.readFileSync("../public/resource/myAvatar/" + arr[arr.length-1],'utf8'));
+    //console.log(arr[arr.length-1]);
+    if (reqS.userType === 'S' || reqS.userType === 'O') {
+      Student.findOneAndUpdate({
+        userID: reqS.userID
+      },{
+        avatar: arr[arr.length-1]
+      },function (err) {
+        if (err) {
+          res.status(404).send({ Msg : '上传成功', code : 0, });
+          console.log(err);
+        }else {
+          res.status(200).send({ Msg : '上传成功', code : 0, });
+        }
+      })
+    } else if (reqS.userType === 'T' || reqS.userType === 'E' || reqS.userType === 'admin') {
+      Teacher.findOneAndUpdate({
+        userID: reqS.userID
+      },{
+        avatar: arr[arr.length-1]
+      },function (err) {
+        if (err) {
+          res.status(404).send({ Msg : '上传成功', code : 0, });
+          console.log(err);
+        }else {
+          res.status(200).send({ Msg : '上传成功', code : 0, });
+        }
+      })
+    }
+  });
+});
 
 module.exports = router;

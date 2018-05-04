@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 //定义testQuestion
 module.exports = new Schema({
-  status: Number,
+  status: Number, //
   user: {
     type: String,
     required: true, //设定是否必填

@@ -191,7 +191,7 @@
 
         <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="last4" style="float:left;">上一步</el-button>
-          <el-button type="primary" @click="skip2()">跳&#8195;过</el-button>
+          <el-button @click="skip2()">跳&#8195;过</el-button>
         </span>
       </el-dialog>
 
@@ -406,6 +406,7 @@
             this.dataForm = (this.resDataForm[i].course);
             this.tabIndex = i;
             this.editableTabsValue = (this.resDataForm[i].label);
+            //console.log(this.dataForm);
           }
         }
       },
@@ -437,17 +438,26 @@
       //编辑, 上传课件前
       editBeforeUpload1(file) {
         if (file.name != '') {
-            if (this.value1 === this.resDataForm[this.resDataForm.length - 1].label) {
-
+            if (this.value1 === this.resDataForm[this.resDataForm.length-1].label) {
+                let EE = this.resDataForm[this.resDataForm.length-1].course;
+              EE[EE.length-1].teachingMaterial= file.name;
+              //console.log(EE);
+            } else {
+              this.dataForm[this.courseIndex].teachingMaterial = file.name;
             }
-          this.dataForm[this.courseIndex].teachingMaterial = file.name;
           //console.log(this.editForm);
+
         }
       },
       //编辑, 上传微课前
       editBeforeUpload2(file) {
         if (file.name != '') {
-          this.dataForm[this.courseIndex].videoTitle[0].videoTitle = file.name;
+          if (this.dataForm[this.courseIndex].videoTitle.length === 0) {
+            let EE = {videoTitle: file.name};
+            this.dataForm[this.courseIndex].videoTitle.push(EE);
+          } else {
+            this.dataForm[this.courseIndex].videoTitle[0].videoTitle = file.name;
+          }
           this.successMsg('正在上传,上传完成将会有提示信息!');
         }
       },
@@ -494,14 +504,21 @@
       //课程目录
       addTab(targetName) {
         if (this.form.name != '') {
-          if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
+          if (this.resDataForm.length === 0) {
+            this.resDataForm.push({ label: this.form.name, course: [], });
+            //this.dataForm = (this.resDataForm[0].course);
             this.dialogVisible1 = false;
             this.dialogVisible8 = true;
           } else {
-            this.resDataForm.push({ label: this.form.name, course: [], });
-            this.courseIndex = Number(this.resDataForm.length-1);
-            this.dialogVisible1 = false;
-            this.dialogVisible8 = true;
+            if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
+              this.dialogVisible1 = false;
+              this.dialogVisible8 = true;
+            } else {
+              this.resDataForm.push({ label: this.form.name, course: [], });
+              this.courseIndex = Number(this.resDataForm.length-1);
+              this.dialogVisible1 = false;
+              this.dialogVisible8 = true;
+            }
           }
         } else {
           this.warningMsg('名称不能为空')
@@ -510,16 +527,20 @@
       //目录,课程名称
       addCourse1() {
         if (this.courseForm1.name != '') {
-            let EE = this.resDataForm[this.resDataForm.length-1].course;
-            if (EE.length === 0) {
-              let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
-              this.resDataForm[this.courseIndex].course.push(newCourse);
-            } else if (EE[EE.length-1].label != this.courseForm1.name) {
-              let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
-              this.resDataForm[this.courseIndex].course.push(newCourse);
-            }
-            this.dialogVisible8 = false;
-            this.dialogVisible9 = true;
+            console.log(this.dataForm);
+          let EE = this.resDataForm[this.resDataForm.length-1].course;
+          if (EE.length === 0) {
+            let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
+            this.resDataForm[this.courseIndex].course.push(newCourse);
+            //this.dataForm = newCourse;
+          } else if (EE[EE.length-1].label != this.courseForm1.name) {
+            let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
+            this.resDataForm[this.courseIndex].course.push(newCourse);
+            //this.dataForm = newCourse;
+          }
+          console.log(this.dataForm);
+          this.dialogVisible8 = false;
+          this.dialogVisible9 = true;
         } else {
           this.warningMsg('名称不能为空')
         }
@@ -536,43 +557,20 @@
           this.warningMsg('课程简介不能为空')
         }
       },
-      //创建,课程
+      //添加课程
       addCourse() {
         if (this.courseForm.name != '') {
-          if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
-            let EE = this.resDataForm[this.resDataForm.length-1];
-            if (EE.label != this.courseForm.name) {
-                if (EE.course.length === 0) {
-                  let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
-                  this.resDataForm[this.resDataForm.length-1].course.push(newCourse);
-                  this.dialogVisible4 = false;
-                  this.dialogVisible2 = true;
-                  console.log(EE);
-                } else if (EE.course[EE.course.length-1].label != this.courseForm.name) {
-                  let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
-                  this.resDataForm[this.resDataForm.length-1].course.push(newCourse);
-                  this.dialogVisible4 = false;
-                  this.dialogVisible2 = true;
-                  console.log(EE);
-                }else if (EE.course[EE.course.length-1].label === this.courseForm.name) {
-                  this.dialogVisible4 = false;
-                  this.dialogVisible2 = true;
-                  console.log(EE);
-                }
-            } else {
-              this.dialogVisible4 = false;
-              this.dialogVisible2 = true;
-            }
-          } else {
-            let EE = this.resDataForm[this.courseIndex].course;
-            console.log(this.resDataForm[this.courseIndex]);
-            if (EE[EE.length-1].label != this.courseForm.name) {
-              let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
-              this.resDataForm[this.courseIndex].course.push(newCourse);
-            }
+          let EE = this.resDataForm[this.courseIndex].course;
+          if (EE[EE.length-1].label != this.courseForm.name) {
+            let newCourse = { label : this.courseForm.name, describe: '', teachingMaterial: '', videoTitle: [] };
+            this.resDataForm[this.courseIndex].course.push(newCourse);
+            this.dialogVisible4 = false;
+            this.dialogVisible2 = true;
+          } else if (EE[EE.length-1].label === this.courseForm.name) {
             this.dialogVisible4 = false;
             this.dialogVisible2 = true;
           }
+          console.log(this.resDataForm[this.courseIndex]);
         } else {
           this.warningMsg('名称不能为空')
         }
@@ -580,18 +578,11 @@
       //添加课程简介
       addDescribe() {
         if (this.describeNode.describe != '') {
-          if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
-            let EE = this.resDataForm[this.resDataForm.length-1].course;
-            EE[EE.length-1].describe = this.describeNode.describe;
-            this.dialogVisible2 = false;
-            this.dialogVisible5 = true;
-            console.log(EE);
-            } else {
-            let EE = this.resDataForm[this.courseIndex].course;
-            EE[EE.length-1].describe = this.describeNode.describe;
-            this.dialogVisible2 = false;
-            this.dialogVisible5 = true;
-          }
+          let EE = this.resDataForm[this.courseIndex].course;
+          EE[EE.length-1].describe = this.describeNode.describe;
+          this.dialogVisible2 = false;
+          this.dialogVisible5 = true;
+          console.log(EE);
         } else {
           this.warningMsg('课程简介不能为空')
         }
@@ -606,8 +597,15 @@
         this.dialogVisible4 = true;
       },
       last3() {
-        this.dialogVisible5 = false;
-        this.dialogVisible2 = true;
+        //console.log(this.resDataForm[this.resDataForm.length-1].label);
+        //console.log(this.form.name);
+        if (this.resDataForm[this.resDataForm.length-1].label === this.form.name) {
+          this.dialogVisible5 = false;
+          this.dialogVisible9 = true;
+        } else {
+          this.dialogVisible5 = false;
+          this.dialogVisible2 = true;
+        }
       },
       last4() {
         this.dialogVisible6 = false;
@@ -634,9 +632,10 @@
         this.dialogVisible5 = false;
         this.dialogVisible6 = true;
       },
-      skip1() {
+      skip2() {
         this.dialogVisible6 = false;
         this.updateCustomCourse();
+        this.form.name = '';
       },
       //上传课件成功
       uploadSuccess1(response, file, fileList) {
@@ -650,6 +649,7 @@
         if (file.name != '') {
           let EE = this.resDataForm[this.courseIndex].course;
           EE[EE.length-1].teachingMaterial = file.name;
+          this.dialogVisible5 = false;
           this.dialogVisible6 = true;
         }
       },
@@ -657,6 +657,7 @@
       uploadSuccess2(response, file, fileList) {
         if (response.code === 0) {
           this.updateCustomCourse();
+          this.form.name = '';
           this.successMsg(file.name + '已上传成功!');
         }
       },
@@ -666,15 +667,9 @@
           let EE = this.resDataForm[this.courseIndex].course;
           let newCourse = { videoTitle : file.name, };
           EE[EE.length-1].videoTitle.push(newCourse);
-          console.log(this.resDataForm);
+          //console.log(this.resDataForm);
           this.successMsg('正在上传,上传完成将会有提示信息!');
           this.dialogVisible6 = false;
-          this.dialogVisible5 = false;
-          this.dialogVisible4 = false;
-          this.dialogVisible3 = false;
-          this.dialogVisible2 = false;
-          this.dialogVisible1 = false;
-          this.dialogVisible = false;
         }
       },
       //成功信息

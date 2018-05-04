@@ -19,108 +19,29 @@
   "bestClassData":[
     {
       "url":"img.png",
-      "label":"高压安全操作",
-      "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
-      "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
-      "teachingBook":"",
-      "videoTitle":[
-        {
-          "videoTitle":"高压安全操作-11.10.mp4"
-        }
-      ],
-      "workPage":"纯电动汽车高压安全操作工作业.pdf",
-      "homeWorkData":[
-        {
-          "title":"",
-          "desc":"",
-          "answer":""
-        }
-      ],
-      "courseId": 1113
+      "title":"纯电动汽车总体结构认知",
+      "courseId": 1122
+
     },
     {
       "url":"img.png",
-      "label":"高压安全操作",
-      "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
-      "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
-      "teachingBook":"",
-      "videoTitle":[
-        {
-          "videoTitle":"高压安全操作-11.10.mp4"
-        }
-      ],
-      "workPage":"纯电动汽车高压安全操作工作业.pdf",
-      "homeWorkData":[
-        {
-          "title":"",
-          "desc":"",
-          "answer":""
-        }
-      ],
-      "courseId": 1113
+      "title":"纯电动汽车动力电池拆装",
+      "courseId": 1122
     },
     {
       "url":"img.png",
-      "label":"高压安全操作",
-      "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
-      "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
-      "teachingBook":"",
-      "videoTitle":[
-        {
-          "videoTitle":"高压安全操作-11.10.mp4"
-        }
-      ],
-      "workPage":"纯电动汽车高压安全操作工作业.pdf",
-      "homeWorkData":[
-        {
-          "title":"",
-          "desc":"",
-          "answer":""
-        }
-      ],
-      "courseId": 1113
+      "title":"混合动力汽车新车交接检查",
+      "courseId": 1122
     },
     {
       "url":"img.png",
-      "label":"高压安全操作",
-      "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
-      "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
-      "teachingBook":"",
-      "videoTitle":[
-        {
-          "videoTitle":"高压安全操作-11.10.mp4"
-        }
-      ],
-      "workPage":"纯电动汽车高压安全操作工作业.pdf",
-      "homeWorkData":[
-        {
-          "title":"",
-          "desc":"",
-          "answer":""
-        }
-      ],
-      "courseId": 1113
+      "title":"纯电动汽车BMS系统拆装",
+      "courseId": 1122
     },
     {
       "url":"img.png",
-      "label":"高压安全操作",
-      "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
-      "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
-      "teachingBook":"",
-      "videoTitle":[
-        {
-          "videoTitle":"高压安全操作-11.10.mp4"
-        }
-      ],
-      "workPage":"纯电动汽车高压安全操作工作业.pdf",
-      "homeWorkData":[
-        {
-          "title":"",
-          "desc":"",
-          "answer":""
-        }
-      ],
-      "courseId": 1113
+      "title":"混合动力汽车高压安全操作",
+      "courseId": 1122
     }
   ],
   "pageData":[

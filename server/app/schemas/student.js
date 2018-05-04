@@ -40,6 +40,7 @@ module.exports = new Schema({
     type: String,
     required: true, //设定是否必填
   },
+  avatar: String,  //头像
   classGrade: {  //班级
     type: String,
     required: true, //设定是否必填

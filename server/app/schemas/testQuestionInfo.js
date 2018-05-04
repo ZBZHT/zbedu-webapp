@@ -9,11 +9,13 @@ module.exports = new Schema({
   theme: String,
   currTestType: Number,
   state:Number,   //0:表示未开始考试,不显示  1:表示已开始考试,显示  2:表示已经考试结束
-  testQuestion: {
+  currTestNum: {
     type: Number,
     unique: true,  //索引值唯一
     required: true, //设定是否必填
   },
+  msg: String,
+  testId: Number, //有没有用到
   startTime: Date,
   currAnswer: Array,
   currState: Array,
@@ -21,10 +23,17 @@ module.exports = new Schema({
   error: Array,
   sorce: Number,
   startTestTime: Date,
-  //startTimeHours:Number,
-  //startTimeMinutes:Number,
-  //startTimeSeconds:Number,
   testTimeMinutes:Number,
   testTimeSeconds:Number,
-  isCheckNum:Number
+  isCheckNum:Number,
+  title: String,
+  desc: String,
+  date1: Date,
+  date2: Date,
+  date3: String,
+  date4: String,
+  timeHour: Number,
+  timeMin: String,
+  allScore: Number,
+  question: [],
 });

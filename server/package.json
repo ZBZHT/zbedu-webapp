@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "archiver": "^2.1.1",
+    "async": "^2.6.0",
+    "async-arr": "^1.0.0",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "connect-history-api-fallback": "^1.5.0",
@@ -32,6 +34,7 @@
     "querystring": "^0.2.0",
     "serve-favicon": "^2.4.5",
     "swig": "^1.4.2",
+    "thenjs": "^2.1.0",
     "xlsx-2-json": "^1.0.2",
     "xlsx2json": "^1.0.0"
   },

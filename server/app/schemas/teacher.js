@@ -39,5 +39,6 @@ module.exports = new Schema({
   major: {  //专业
     type: String,
     required: true, //设定是否必填
-  }
+  },
+  avatar: String  //头像
 });

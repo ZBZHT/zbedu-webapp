@@ -1,6 +1,6 @@
 <template>
-  <div id="app" class="container">
-    <div class="nav">
+  <div>
+    <div>
       <navgation-head></navgation-head>
     </div>
     <div class="CMS_cont">
@@ -9,9 +9,10 @@
         <el-col :span="4">
           <el-tree
             :data="data"
-            :props="defaultProps"
             default-expand-all
-            node-key="id"
+            ref="tree"
+            highlight-current
+            :props="defaultProps"
             @node-click="handleNodeClick"></el-tree>
         </el-col>
 
@@ -93,12 +94,12 @@
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
+        changeColor:{ backgroundColor: '#9f5355' }
       }
     },
     computed: {},
     methods: {
-      handleNodeClick(data) {
-        //console.log(data.id);
+      handleNodeClick(data,node,store) {
         //点击用户管理
         if (data.id == 101) {
           this.isShow101 = true;
@@ -225,9 +226,26 @@
     border-radius: 10px;
     border: 1px solid #9f5355;
   }
-  .CMS_cont .el-tree-node:focus>.el-tree-node__content, .el-tree-node__content:hover{
-    background-color: #d9d9d9;
+  .CMS_cont .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
+    background-color: #9f5355;
+    color: #ffffff;
   }
+  .CMS_cont .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+    background-color: #9f5355;
+    color: white;
+  }
+  .CMS_cont .el-tabs--border-card>.el-tabs__header .el-tabs__item {
+    border: 3px solid #9f5355;
+    padding:0 60px;
+    border-top: none;
+    color: #212529;
+  }
+/*  .CMS_cont .el-tree-node:focus>.el-tree-node__content, .el-tree-node__content:hover{
+    background-color: red;
+  }
+  .CMS_cont .el-tree-node:focus>.el-tree-node__content {
+    background-color: red;
+  }*/
   .CMS_cont .el-col-4 {
     margin: 10px;
     margin-top: 0;

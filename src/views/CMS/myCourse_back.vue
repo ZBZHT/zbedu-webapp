@@ -154,15 +154,6 @@
                 </el-table-column>
               </el-table>
 
-
-
-
-
-
-
-
-
-
               <el-tree
                 :data="dataTree"
                 show-checkbox
@@ -187,6 +178,7 @@
                   </span>
                 </span>
               </el-tree>
+
             </div>
           </div>
 
@@ -388,13 +380,11 @@
       },
       //删除子节点
       remove(node, data) {
-
         this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-
           const parent = node.parent;
           const children = parent.data.children || parent.data;
           const index = children.findIndex(d => d.id === data.id);
@@ -412,9 +402,7 @@
             message: '已取消删除'
           });
         });
-
       },
-
 
       //上传课件
       uploadCourse(node, data) {

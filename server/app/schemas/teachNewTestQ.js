@@ -25,5 +25,6 @@ module.exports = new Schema({
   classGrade: Number,
   newData: Date,
   allScore: Number,
+  question: [],
 });
 

@@ -5,18 +5,18 @@
     <el-col :span="19">
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
-        <el-tab-pane label="选择题" name="first">
+        <el-tab-pane label="题库列表" name="first">
 
-          <!--显示所有选择题-->
+          <!--显示所有题-->
           <el-table
             class="userM_el-table"
             :data="choiceData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
             @selection-change="changeFun"
             style="width: 99%; margin-top: 10px">
 
-            <el-table-column type="selection" width="40"></el-table-column>
+            <el-table-column type="selection" width="50"></el-table-column>
 
-            <el-table-column prop="num" label="序号" width="60">
+            <el-table-column prop="num" label="序号" width="80">
             </el-table-column>
 
             <el-table-column prop="desc" label="试题内容" width="500">
@@ -50,19 +50,67 @@
             </el-pagination>
           </div>
 
-        </el-tab-pane>
-        <el-tab-pane label="判断题" name="second">
+          <!--头部按钮-->
+          <div class="headBut">
+      <span class="userM_But1">
+        <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+      </span>
+            <span class="userM_But2">
+          <el-upload
+            class="upload-demo"
+            action="/teacherCMS/addExcelTest"
+            :onError="uploadError"
+            :beforeUpload="beforeAvatarUpload"
+            :onSuccess="uploadSuccess"
+            :show-file-list=false
+            :on-exceed="handleExceed"
+            accept=".xlsx">
+          <el-button size="small" type="primary">Excel导入试题</el-button>
+        </el-upload>
+        </span>
+            <el-dropdown>
+        <span class="el-dropdown-link">
 
-          <!--显示所有判断题-->
+           <span class="elinput">
+              <ul>
+                  <li v-for="item in form.name">{{item}}/</li>
+              </ul>
+          </span>
+        </span>
+              <el-dropdown-menu slot="dropdown" class="dropdown">
+                <div class="treeModle">
+                  <el-tree
+                    :data="data"
+                    ref="tree"
+                    show-checkbox
+                    node-key="id"
+                    @check-change="handleCheckChange"
+                    @node-click="handleClick">
+                  </el-tree>
+                </div>
+                <div class="buttons">
+                  <el-button type="primary" @click="getCheckedNodes">确定</el-button>
+                </div>
+              </el-dropdown-menu>
+            </el-dropdown>
+
+          </div>
+
+
+        </el-tab-pane>
+
+        <el-tab-pane label="查询" name="second">
+
+          <!--显示查询列表-->
           <el-table
             class="userM_el-table"
             :data="checkingData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
             @selection-change="changeFun"
             style="width: 99%; margin-top: 10px">
 
-            <el-table-column type="selection" width="40"></el-table-column>
+            <el-table-column type="selection" width="50"></el-table-column>
 
-            <el-table-column prop="num" label="序号" width="60">
+            <el-table-column prop="num" label="序号" width="80">
             </el-table-column>
 
             <el-table-column prop="desc" label="试题内容" width="500">
@@ -99,51 +147,7 @@
         </el-tab-pane>
       </el-tabs>
 
-      <!--头部按钮-->
-      <div class="headBut">
-      <span class="userM_But1">
-        <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
-      </span>
-        <span class="userM_But2">
-          <el-upload
-            class="upload-demo"
-            action="/teacherCMS/addExcelTest"
-            :onError="uploadError"
-            :beforeUpload="beforeAvatarUpload"
-            :onSuccess="uploadSuccess"
-            :show-file-list=false
-            :on-exceed="handleExceed"
-            accept=".xlsx">
-          <el-button size="small" type="primary">Excel导入试题</el-button>
-        </el-upload>
-        </span>
-        <el-dropdown>
-        <span class="el-dropdown-link">
 
-           <span class="elinput">
-              <ul>
-                  <li v-for="item in form.name">{{item}}/</li>
-              </ul>
-          </span>
-        </span>
-          <el-dropdown-menu slot="dropdown" class="dropdown">
-            <div class="treeModle">
-              <el-tree
-                :data="data"
-                ref="tree"
-                show-checkbox
-                node-key="id"
-                @check-change="handleCheckChange"
-                @node-click="handleClick">
-              </el-tree>
-            </div>
-            <div class="buttons">
-              <el-button type="primary" @click="getCheckedNodes">确定</el-button>
-            </div>
-          </el-dropdown-menu>
-        </el-dropdown>
-
-      </div>
 
     </el-col>
   </div>
@@ -214,7 +218,8 @@
       uploadSuccess(res, file) {
         //console.log(res.code);
         if (res.code == 0) {
-          this.Success('试题导入成功')
+          this.Success('试题导入成功');
+          this.getAllTest();
         }
       },
 
@@ -329,26 +334,30 @@
           });
         });
       },
+      getAllTest() {
+        axios.get('/teacherCMS/getAllTest', {
+          params: {
+            user: this.username,
+            userType: this.userType
+          }
+        }).then((res) => {
+          if (res.data) {
+            let resData = res.data;
+            for (let i=0; i<resData.length; i++) {
+              resData[i].num = i + 1;
+            }
+            this.choiceData = resData;
+            this.total1 = this.choiceData.length;
+          }
+
+          //console.log(this.choiceData);
+        });
+      },
 
     },
     mounted() {
-      axios.get('/teacherCMS/getAllTest', {
-        params: {
-          user: this.username,
-          userType: this.userType
-        }
-      }).then((res) => {
-        if (res.data) {
-          let resData = res.data;
-          for (let i=0; i<resData.length; i++) {
-            resData[i].num = i + 1;
-          }
-          this.choiceData = resData;
-          this.total1 = this.choiceData.length;
-        }
+        this.getAllTest()
 
-        //console.log(this.choiceData);
-      });
     },
     components: {}
   }
@@ -358,8 +367,6 @@
   * {
     margin: 0;
     padding: 0;
-  }
-  .testBaseM_cont .headBut {
   }
   .testBaseM_cont .el-table .cell {
     margin-left: 14px
