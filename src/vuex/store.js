@@ -19,7 +19,9 @@ export default new Vuex.Store({
     stillBtn:false,
     userID:'',
     homeworkData:[],
-    testCode:0
+    testCode:0,
+    exerciseData:'',
+    competitionData:''
 },
  mutations : {
     homework(state,item){
@@ -60,6 +62,12 @@ export default new Vuex.Store({
     },
     testCode(state,item){
         state.testCode = item;
+    },
+    exerciseData(state,item){
+        state.exerciseData = item;
+    },
+    competitionData(state,item){
+        state.competitionData = item;
     }
 },
  plugins: [createPersistedState()]

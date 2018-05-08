@@ -129,9 +129,15 @@ export default {
             console.log(val);
         },
           toPlayVideo(item) {
+            console.log(item)
+            this.$store.commit('noTreeTitle',item);
+            this.$store.commit('noTreeTitle1',item);
             this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
         },
           toPlayPdf(item) {
+            console.log(item)
+            this.$store.commit('noTreeTitle',item);
+            this.$store.commit('noTreeTitle1',item);
             this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
         },
     sendRecommendTitle(item){
@@ -370,7 +376,9 @@ hr{
     margin-top:15px;
     font-size: 18px;
 }
-
+.courseIndex .bb-middle .row-a .p:hover{
+    color:#f00;
+}
 
 .courseIndex .pageination_align {
             text-align: center

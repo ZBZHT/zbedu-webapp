@@ -27,6 +27,9 @@ export default {
   },
   methods: {
     playBottomLeftVideo(item) {
+      console.log(item)
+      this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
       this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
     },
     sendButtomLeftTitle(item) {
@@ -76,6 +79,9 @@ a:focus {
     font-size: 16px;
     width: 134px;
     cursor: pointer;
+}
+.bb-left .p:hover{
+    color:#f00;
 }
 .mask-play-right .play-right{
     position: relative;

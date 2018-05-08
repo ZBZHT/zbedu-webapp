@@ -1,10 +1,10 @@
 <template>
-  <div class="exerciseCenter-container">
+  <div class="competitionCenter-container">
     <div>
         <navgation-head></navgation-head>
     </div>
 
-    <div class="exerciseCenter-content">
+    <div class="competitionCenter-content">
         <el-row>
             <el-col :span="6">
               <el-tree
@@ -13,21 +13,21 @@
                 :props="defaultProps"
                 :data="data"
                 highlight-current
-                ref="extree"
+                ref="comtree"
                 @node-click="handleNodeClick"></el-tree>
             </el-col>
 
             <el-col :span="18">
-                <!--教学设备-->
+                <!--大赛资讯-->
                 <div v-show="is697">
                     <p class="exerP">{{exerLabel}}</p>
                     <el-tabs type="border-card">
-                        <el-tab-pane label="设备展示">
+                        <el-tab-pane label="通知文件">
                             <div class="exerEngImg" v-for="item in exerEngImg">
-                                <img :src=" '/resource/imgs/' + item.engImage">
+
                             </div>
                         </el-tab-pane>
-                        <el-tab-pane label="设备参数">
+                        <el-tab-pane label="大赛规程">
                             <div class="exerEngRule">
                                 <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                                     <param name="_Version" value="65539">
@@ -40,20 +40,20 @@
                                 </object>
                             </div>
                         </el-tab-pane>
-                        <el-tab-pane label="设备说明">设备说明</el-tab-pane>
+                        <el-tab-pane label="筹划·目标">筹划·目标</el-tab-pane>
                     </el-tabs>
                 </div>
 
-                <!--实训中心设计-->
-                <div v-show="is926">
-                <p class="exerP">{{exerLabel}}</p>
+                <!--历届回顾-->
+                <div v-show="is123">
+                    <p class="exerP">{{exerLabel}}</p>
                     <el-tabs type="border-card">
-                        <el-tab-pane label="实训中心效果图">
-                            <div class="exerEngImg">
-                                <img :src=" '/resource/imgs/' + exerEngImg">
+                        <el-tab-pane label="通知文件">
+                            <div class="exerEngImg" v-for="item in exerEngImg">
+                                
                             </div>
                         </el-tab-pane>
-                        <el-tab-pane label="实训中心配置">
+                        <el-tab-pane label="大赛规程">
                             <div class="exerEngRule">
                                 <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                                     <param name="_Version" value="65539">
@@ -64,6 +64,42 @@
                                     <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
                                     </object>
                                 </object>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="实况·硕果">实况·硕果</el-tab-pane>
+                    </el-tabs>
+                </div>
+
+                <!--实战专题-->
+                <div v-show="is926">
+                <p class="exerP">{{exerLabel}}</p>
+                    <el-tabs type="border-card">
+                        <el-tab-pane label="实战目标">
+                            <div class="exerEngImg">
+                                
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="教学资料">
+                            <div class="exerEngRule">
+                                <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                    <param name="_Version" value="65539">
+                                    <param name="_ExtentX" value="20108">
+                                    <param name="_ExtentY" value="10866">
+                                    <param name="_StockProps" value="0">
+                                    <param name="SRC" value="teachingMaterial">
+                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                    </object>
+                                </object>
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="大赛课件">
+                            <div class="exerEngImg">
+                                
+                            </div>
+                        </el-tab-pane>
+                        <el-tab-pane label="大赛视频">
+                            <div class="exerEngImg">
+                                <img :src=" '/resource/imgs/' + exerEngImg">
                             </div>
                         </el-tab-pane>
                     </el-tabs>
@@ -84,7 +120,7 @@ import navgationHead from '@/components/common/navgationHead'
 import footFooter from '@/components/common/footFooter'
 
 export default {
-  name: 'exerciseCenter',
+  name: 'competitionCenter',
   data () {
     return {
       data:[],
@@ -93,21 +129,22 @@ export default {
        label: 'label',
        },
       is697:true,
+      is123:false,
       is926:false,
-      courseId1:1000,
-      courseId2:1100,
+      courseId1:'',
+      courseId2:'',
       keyId:''
     }
   },
   computed:{
     exerEngImg(){
-        return this.$store.state.exerciseData.engImg
+        return this.$store.state.competitionData.engImg
     },
     exerEngRule(){
-        return this.$store.state.exerciseData.engRule
+        return this.$store.state.competitionData.engRule
     },
     exerLabel(){
-        return this.$store.state.exerciseData.label
+        return this.$store.state.competitionData.label
     },
   },
   methods:{
@@ -115,22 +152,35 @@ export default {
       //右侧显示不同页面
       console.log(data);
       var id = data.id;
-      if(id.toString() >= '1000' && id.toString() < '2000'){
+      if(id == 3110 || id == 3120 || id == 3130){
           //console.log(id)
           //console.log(id.toString()+1)
           this.is697 = true;
+          this.is123 = false;
           this.is926 = false;
-      }else if(id.toString() >= '2000'){
+      }else if(id == 3210 || id == 3220 || id == 3230){
           //console.log("aaaa")
           //console.log(id.toString())
           this.is697 = false;
-          this.is926 = true;
+          this.is926 = false;
+          this.is123 = true;
+      }else if(id > 4000){
+          if(id == 4100 || id == 4200 || id == 4300){
+
+          }else{
+            //console.log("aaaa")
+            //console.log(id.toString())
+            this.is697 = false;
+            this.is926 = true;
+            this.is123 = false;
+          }
+          
       }
       //刷新保存数据
       if(data.children){
 
       }else{
-        this.$store.commit('exerciseData',data)
+        this.$store.commit('competitionData',data)
       }
 
     }
@@ -143,22 +193,22 @@ export default {
              user:234
         }
       }).then((res)=>{
-          this.data = res.data[1].children;
+          this.data = res.data[4].children;
           //console.log(this.data[0].label);
           setTimeout(() => {
-            this.$refs.extree.setCurrentKey(this.keyId)
+            this.$refs.comtree.setCurrentKey(this.keyId)
           }, 20)
       }).catch(function(error){
           console.log("error init." + error)
       });
     //默认展开，标红
-    var id = this.$store.state.exerciseData.id;
-    if(id >= 1000 && id < 2000){
-        this.courseId1 = 1000;
+    var id = this.$store.state.competitionData.id;
+    if(id >= 3000 && id < 4000){
+        this.courseId1 = 3000;
         this.courseId2 = id;
         this.keyId = id;
-    }else if(id >= 2000){
-        this.courseId1 = 2000;
+    }else if(id >= 4000){
+        this.courseId1 = 4000;
         this.courseId2 = id;
         this.keyId = id;
     }
@@ -192,102 +242,102 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.exerciseCenter-content .exerciseCenter-container{
+.competitionCenter-content .competitionCenter-container{
     min-width:960px;
 }
-.exerciseCenter-content{
+.competitionCenter-content{
     width:100%;
     margin:0 auto;
     margin-top:6px;
     margin-bottom:80px;
 }
-.exerciseCenter-content .exerP{
+.competitionCenter-content .exerP{
     font-size:20px;
     margin-bottom:20px;
 }
-.exerciseCenter-content .el-tree-node__expand-icon {
+.competitionCenter-content .el-tree-node__expand-icon {
     font-size: 16px;
 }
-.exerciseCenter-content .el-tree-node__label{
+.competitionCenter-content .el-tree-node__label{
   text-overflow:ellipsis;
   white-space:nowrap;
   overflow:hidden;
   font-size: 16px;
   color: #212529;
 }
-.exerciseCenter-content .el-tree{
+.competitionCenter-content .el-tree{
     background-color: #ffffff;
     padding: 10px;
     border-radius: 3px;
     border: 1px solid #9f5355;
     text-align:left;
 }
-.exerciseCenter-content .el-tree-node:focus>.el-tree-node__content {
+.competitionCenter-content .el-tree-node:focus>.el-tree-node__content {
     background-color: #9f5355;
     color: white;
 }
-.exerciseCenter-content .el-tree-node__content:hover{
+.competitionCenter-content .el-tree-node__content:hover{
     background-color: #9f5355;
     color: white;
 }
-.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+.competitionCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
   color: #212529;
 }
-.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
+.competitionCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
   border: 3px solid #9f5355;
   padding:0 60px;
   border-top: none;
   color: #212529;
 }
-.exerciseCenter-content .el-tabs--border-card{
+.competitionCenter-content .el-tabs--border-card{
     margin-left:20px;
     border: 0;
     border-top: 4px solid #9f5355;
     box-shadow: none;
 }
-.exerciseCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
+.competitionCenter-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
     background-color: #9f5355;
     color: #ffffff;
 }
-.exerciseCenter-content .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+.competitionCenter-content .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
     background-color: #9f5355;
     color: white;
 }
-.exerciseCenter-content .el-tabs__item {
+.competitionCenter-content .el-tabs__item {
   padding:0 60px;
   font-size: 18px;
   line-height: 36px;
 }
-.exerciseCenter-content .el-tabs--border-card>.el-tabs__header{
+.competitionCenter-content .el-tabs--border-card>.el-tabs__header{
   border: none;
   background-color: #ffffff;
 }
-.exerciseCenter-content .el-tabs__nav{
+.competitionCenter-content .el-tabs__nav{
     float:none;
 }
-.exerciseCenter-content .exerEngImg{
+.competitionCenter-content .exerEngImg{
     width:595px;
     margin:0 auto;
     margin-bottom:20px;
 }
-.exerciseCenter-content .exerEngImg img{
+.competitionCenter-content .exerEngImg img{
     width:100%;
 }
-.exerciseCenter-content .pdf-box{
+.competitionCenter-content .pdf-box{
     width:100%;
   height: 800px;
 }
-.exerciseCenter-content .el-col-6{
+.competitionCenter-content .el-col-6{
   width: 16%;
 }
-.exerciseCenter-content .el-tree{
+.competitionCenter-content .el-tree{
   padding: 0;
   border: 0;
 }
-.exerciseCenter-content .el-tree-node{
+.competitionCenter-content .el-tree-node{
   background-color: #d2d2d2;
 }
-.exerciseCenter-content .el-tree-node__content{
+.competitionCenter-content .el-tree-node__content{
   border-bottom: 3px solid #ffffff;
 }
 .el-tree-node__expand-icon{

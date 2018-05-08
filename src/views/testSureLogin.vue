@@ -3,7 +3,7 @@
     <div class="title">
         <test-head></test-head>
     </div>
-    <div class="user" :style="{height: height - 138 + 'px'}">
+    <div class="user" :style="{height: height - 100 + 'px'}">
         
                 <div class="loginSure">
                     <p>{{this.$store.state.username}},欢迎进入考试系统</p>
@@ -179,36 +179,17 @@ body{
     padding:0;
 }
 .testLogin {
-    min-width:960px;
+    min-width:1160px;
+    min-height:620px;
 }
 .testLogin .user{
     width:100%;
     margin:0 auto;
-    min-height:700px;
     background:url("../assets/imgs/testBg.png") no-repeat;
     background-size:100% 100%;
     position:relative;
     text-align:left;
     padding:10px;
-}
-.testLogin .login{
-    width:410px;
-    height:325px;
-    border:3px solid #aaa;
-    position:absolute;
-    top:25%;
-    right:38%;
-    box-shadow:0 0 30px #000;
-}
-.testLogin .loginSure{
-    width:410px;
-    height:325px;
-    border:3px solid #aaa;
-    position:absolute;
-    top:32%;
-    right:38%;
-    box-shadow:0 0 30px #000;
-    padding: 62px;
 }
 .testLogin .userBox{
     display:flex;
@@ -270,5 +251,65 @@ body{
     padding:8px;
     border-radius:5px;
     cursor:pointer;
+}
+@media screen and (min-width:1800px){
+    .testLogin .loginSure{
+        width:410px;
+        height:325px;
+        border:3px solid #aaa;
+        position:absolute;
+        top:23%;
+        right:41%;
+        box-shadow:0 0 30px #000;
+        padding: 62px;
+    }
+}
+@media screen and (min-width: 1600px) and (max-width: 1799px) {
+    .testLogin .loginSure{
+        width:410px;
+        height:325px;
+        border:3px solid #aaa;
+        position:absolute;
+        top:23%;
+        right:39%;
+        box-shadow:0 0 30px #000;
+        padding: 62px;
+    }
+}
+@media screen and (min-width: 1480px) and (max-width: 1599px) {
+    .testLogin .loginSure{
+        width:410px;
+        height:325px;
+        border:3px solid #aaa;
+        position:absolute;
+        top:23%;
+        right:39%;
+        box-shadow:0 0 30px #000;
+        padding: 62px;
+    }
+}
+@media screen and (min-width: 1280px) and (max-width: 1479px) {
+    .testLogin .loginSure{
+        width:410px;
+        height:325px;
+        border:3px solid #aaa;
+        position:absolute;
+        top:23%;
+        right:37%;
+        box-shadow:0 0 30px #000;
+        padding: 62px;
+    }
+}
+@media screen and (max-width: 1279px) {
+    .testLogin .loginSure{
+        width:410px;
+        height:325px;
+        border:3px solid #aaa;
+        position:absolute;
+        top:17%;
+        right:33%;
+        box-shadow:0 0 30px #000;
+        padding: 62px;
+    }
 }
 </style>

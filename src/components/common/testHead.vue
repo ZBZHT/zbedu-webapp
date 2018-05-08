@@ -1,8 +1,9 @@
 <template>
-  <div class="title">
+  <div class="testHead-title">
     <router-link :to="{path:'/'}">
       <img class="brand" alt="Brand" src="../../assets/imgs/zbtLogo.png">
     </router-link>
+    <img class="testHead-headerbg" src="../../assets/imgs/header.png">
   </div>
 </template>
 
@@ -28,14 +29,20 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .title{
+  .testHead-title{
     width:100%;
     height:94px;
     font-size:16px;
     padding:10px;
     box-sizing:border-box;
     display:flex;
-    background:url("../../assets/imgs/header.png") no-repeat;
+    position:relative;
   }
-
+  .testHead-headerbg{
+    position:absolute;
+    left:140px;
+    top:0px;
+    height:94px;
+    width: 80%;
+}
 </style>

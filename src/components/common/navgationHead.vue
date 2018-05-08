@@ -20,6 +20,9 @@
                 <li>
                     <div class="phoneApp">
                         手机客户端
+                        <div class="phoneAppHover">
+                            <img class="phoneAppImg" src="../../assets/imgs/客户端.jpg">
+                        </div>
                     </div>
                     <div class="user_bn" v-if="nickName">
                         <router-link :to="{path:'/teacherCMS'}">
@@ -211,6 +214,21 @@ a:hover{
   top:5px;
   left:-140px;
   cursor: pointer;
+}
+.nav-collapse .phoneApp:hover .phoneAppHover{
+  display:block;
+}
+.nav-collapse .phoneAppHover{
+  box-shadow:0 0 30px #000;
+  position:absolute;
+  top:31px;
+  left:-35px;
+  z-index:9999;
+  width: 150px;
+  display:none;
+}
+.nav-collapse .phoneAppImg{
+  width:100%;
 }
 .username{
     position:absolute;

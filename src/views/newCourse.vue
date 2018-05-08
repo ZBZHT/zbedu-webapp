@@ -43,7 +43,7 @@
 
                             <!--课件-->
                             <el-tab-pane label="教学课件">
-                              <div id="courseppt" class="content-box">
+                              <div id="courseppt">
                                 <p class="devDownload" v-show="noTree.teachingMaterial"></p>
                                   <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></iframe>
                                 <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>

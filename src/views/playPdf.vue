@@ -50,10 +50,8 @@
   }
   .content-box{
     width: 100%;
-    min-width: 960px;
     margin-top: 105px;
     height: 700px;
-    /*background: lightgoldenrodyellow;*/
     position: relative;
     padding: 0 5%;
   }

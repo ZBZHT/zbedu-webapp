@@ -102,7 +102,7 @@ export default {
         }else if(index == 3){
             this.$router.push('/resourceCenter');
         }else if(index == 4){
-            this.$router.push('/appraiseCenter');
+            this.$router.push('/competitionCenter');
         }
     }
 

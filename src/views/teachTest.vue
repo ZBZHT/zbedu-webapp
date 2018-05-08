@@ -42,13 +42,13 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="开始日期" width="200">
+                  <el-table-column label="开始日期" width="120">
                     <template slot-scope="scope">
                       <span>{{ scope.row.date1 }}</span>
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="开始时间" width="200">
+                  <el-table-column label="开始时间" width="120">
                     <template slot-scope="scope">
                       <span>{{ scope.row.date3 }}</span>
                     </template>
@@ -66,7 +66,7 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="详细信息" width="120">
+                  <el-table-column label="详细信息" width="100">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" @click="getToMoreData(scope.$index, scope.row)">
                         查看
@@ -124,9 +124,15 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="创建时间" width="200">
+                  <el-table-column label="开始日期" width="120">
                     <template slot-scope="scope">
-                      <span>{{ scope.row.newData }}</span>
+                      <span>{{ scope.row.date1 }}</span>
+                    </template>
+                  </el-table-column>
+
+                  <el-table-column label="开始时间" width="120">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.date3 }}</span>
                     </template>
                   </el-table-column>
 
@@ -189,7 +195,7 @@
 
               <!--创建考试-->
               <el-tab-pane label="创建考试">
-                <div>
+                <div class="createTest">
                   <el-form :inline="true" class="demo-form-inline" ref="form" :model="form" status-icon :rules="rules"
                            label-width="80px">
 
@@ -1167,6 +1173,9 @@
   }
   .teach_Test .el-tabs--border-card>.el-tabs__content{
     padding: 15px 60px 15px 15px;
+  }
+  .teach_Test .createTest{
+    width:900px;
   }
   .teach_Test .testOnline {
     width: 100%;
