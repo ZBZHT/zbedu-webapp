@@ -106,6 +106,7 @@ export default {
            this.$store.commit('userTypeC','');
            this.$router.push('/');
         //   this.$router.go(0);
+        this.$store.commit('testCode',0);
       },
       prompt: function(message, title, callback, options) {
             if (typeof title === 'function') {
@@ -209,6 +210,7 @@ a:hover{
   position:absolute;
   top:5px;
   left:-140px;
+  cursor: pointer;
 }
 .username{
     position:absolute;
@@ -277,6 +279,7 @@ a:hover{
     position:absolute;
     top:14px;
     right:27px;
+    cursor: pointer;
 }
 .usermine:hover{
     color:#f00;

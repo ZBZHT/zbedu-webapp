@@ -5,27 +5,16 @@
     </div>
     <div class="user" :style="{height: height - 138 + 'px'}">
         
-                <div class="login" v-show="!this.$store.state.username">
-                    <div class="userFont">
-                        <p>考试系统登录</p>
+                <div class="loginSure">
+                    <p>{{this.$store.state.username}},欢迎进入考试系统</p>
+                    <div class="userBox">
+                        <p>确定用此账号进入考试系统吗？</p>
                     </div>
-                    <div class="userOther">
-                        <div class="userBox">
-                          <img class="unm" src="../assets/imgs/unm.png">
-                          <input name="fname" type="text" placeholder="学号/ID/身份证号/手机号" v-model="username" autocomplete="on" autofocus="autofocus">
-                        </div>
-                        <div class="passwordBox">
-                          <img class="psw" src="../assets/imgs/psw.png">
-                          <input name="fpassword" type="password" placeholder="密码"  @keyup.enter="login" autocomplete="new-password" v-model="password">
-                        </div>
-                        <div class="btn">
-                          <button class="btnOk" @click="login">确定</button>
-                          <button class="btnCancel" @click="cancel">返回</button>
-                        </div>
+                    <div class="btn">
+                        <button class="btnOk" @click="yes">确定</button>
+                        <button class="btnCancel" @click="no">更换账号</button>
                     </div>
-
                 </div>
-                
     </div>
     <div class="footer">
         <foot-footer></foot-footer>
@@ -101,7 +90,7 @@ import footFooter from '@/components/common/footFooter'
                                     }else if(this.$store.state.userType == ""){
                                         this.$router.push('/test');
                                     }else if(this.$store.state.userType == "S"){
-                                        this.$router.push('/testSureLogin');
+                                        this.$router.push('/test');
                                     }else if(this.$store.state.userType == "E"){
                                         this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == "T"){
@@ -111,7 +100,6 @@ import footFooter from '@/components/common/footFooter'
 
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
-                                this.$store.commit('testCode',1);
                         }else if(res.data.code == 1){
                             this.nickName = res.data.username;
                             this.$store.commit('username',res.data.username);
@@ -124,7 +112,7 @@ import footFooter from '@/components/common/footFooter'
                                     }else if(this.$store.state.userType == ""){
                                         this.$router.push('/test');
                                     }else if(this.$store.state.userType == "S"){
-                                        this.$router.push('/testSureLogin');
+                                        this.$router.push('/test');
                                     }else if(this.$store.state.userType == "E"){
                                         this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == "T"){
@@ -132,7 +120,6 @@ import footFooter from '@/components/common/footFooter'
                                     }
                                 //    this.$router.go(0);
                                 }.bind(this),0.1)
-                                this.$store.commit('testCode',1);
                         }else if(res.data.code == 2){
                             this.$message({
                                 showClose: true,
@@ -160,6 +147,7 @@ import footFooter from '@/components/common/footFooter'
                 }else if(this.$store.state.userType == "T"){
                     this.$router.push('/teachTest');
                 }
+                this.$store.commit('testCode',1);
             },
             no(){
                 axios({

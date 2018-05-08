@@ -12,17 +12,17 @@
                 <div id="content1" class="content" :class="{dispear : !dispear}">
                     <div class="bb-item" v-for="(item,index) in bottomRightData">
                         <span class="num" 
-                        :class="{top3 : index <= 2}">
+                        :class="{top3 : index <= 2}" v-show="item.title">
                             {{item.num}}
                         </span>
-                        <b>{{item.couse}}</b>
+                        <b @click="sendRecommendTitle(item)">{{item.title}}</b>
                     </div>
                 </div>
 
                 <div id="content2" class="content" :class="{dispear}">
-                    <div class="bb-item" v-for="(item,index) in bottomRightData">
+                    <div class="bb-itemName" v-for="(item,index) in bottomRightData">
                         <span class="num"
-                         :class="{top3 : index <= 2}">
+                         :class="{top3 : index <= 2}" v-show="item.name">
                             {{item.num}}
                          </span>
                         <b>{{item.name}}</b>
@@ -46,6 +46,14 @@ export default {
   },
   
   methods:{
+      sendRecommendTitle(item){
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        const {href} = this.$router.resolve({
+                name: 'newCourse'
+            });
+        window.open(href, '_blank')
+      },
       enter1:function(){
         return this.dispear = true
       },  
@@ -101,6 +109,8 @@ ul.tab li a{
     position: absolute;
     top: 0;
     left: -24px;
+    text-align:left;
+    margin-left: 23px;
 }
 #content2{
      width: 156px;
@@ -108,6 +118,8 @@ ul.tab li a{
     position: absolute;
     top: 0;
     left: -41px;
+    text-align:left;
+    margin-left: 40px;
 }
 .dispear{
     display:none;
@@ -133,13 +145,17 @@ ul.tab li a{
     background:#ccc;
 }
 .bb-right .bb-item{
-    margin-top:-2px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
 }
-.bb-right .bb-item .top3{
+.bb-right .bb-itemName{
+    margin-bottom: 37px;
+}
+.bb-right .bb-item .top3,
+.bb-right .bb-itemName .top3{
     background:#e4393c !important;
 }
-.bb-right .bb-item .num{
+.bb-right .bb-item .num,
+.bb-right .bb-itemName .num{
     display: inline-block;
     width: 16px;
     height: 16px;

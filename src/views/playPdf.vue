@@ -4,7 +4,7 @@
       <navgation-head></navgation-head>
     </div>
     <div class="content-box">
-      <iframe src="/src/assets/pdf/EV系列-2-3-电机继电器故障检测.pdf" class="pdf-box"></iframe>
+      <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></iframe>
     </div>
 
   </div>
@@ -17,6 +17,11 @@
     data () {
       return {
 
+      }
+    },
+    computed:{
+      noTree(){
+        return this.$store.state.noTree;
       }
     },
     mounted(){
@@ -53,7 +58,6 @@
     padding: 0 5%;
   }
   .content-box .pdf-box{
-    min-width: 1000px;
     width: 90%;
     height: 100%;
   }

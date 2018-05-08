@@ -7,9 +7,10 @@
       <!--<p>完整url:{{aa}}</p>-->
       <!--<p>路由路径:{{bb}}</p>-->
       <!--<p>路由路径参数:{{cc}}</p>-->
-      <video id="video-box" autoplay controls @click="stop">
-        <source :src="videoTitle" type="video/mp4">
-      </video>
+      <div v-for="item in noTree.videoTitle">
+        <video id="video-box" autoplay controls @click="stop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
+        </video>
+      </div>
     </div>
 
   </div>
@@ -17,8 +18,6 @@
 
 <script>
   import navgationHead from '@/components/common/navgationHead'
-
-
 
   export default {
     name: 'user',
@@ -30,6 +29,9 @@
       }
     },
     computed:{
+      noTree(){
+        return this.$store.state.noTree;
+      },
       videoId(){
         console.log('/video/'+this.$route.params.courseId+'.mp4'+'----')
         return '/video/'+this.$route.params.courseId+'.mp4'

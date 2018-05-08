@@ -18,7 +18,8 @@ export default new Vuex.Store({
     vuexState:'',
     stillBtn:false,
     userID:'',
-    homeworkData:[]
+    homeworkData:[],
+    testCode:0
 },
  mutations : {
     homework(state,item){
@@ -56,6 +57,9 @@ export default new Vuex.Store({
     },
     userID(state,item){
         state.userID = item;
+    },
+    testCode(state,item){
+        state.testCode = item;
     }
 },
  plugins: [createPersistedState()]

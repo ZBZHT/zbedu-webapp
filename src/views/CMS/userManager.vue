@@ -9,68 +9,77 @@
                  :visible.sync="dialogFormVisible"
                  :before-close="handleClose"
                  :close-on-click-modal="false">
-        <el-form :model="addUserForm" :rules="rules" ref="addUserForm" label-width="80px" class="demo-addUserForm">
+        <el-form :model="addStuForm" :rules="rules" ref="addStuForm" label-width="80px" class="demo-addUserForm">
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
+          <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
           <el-form-item label="姓名" prop="user">
-            <el-input v-model="addUserForm.user" placeholder="姓名为2-4个汉字"></el-input>
+            <el-input v-model="addStuForm.user" placeholder="姓名为2-4个汉字"></el-input>
           </el-form-item>
 
             <el-form-item label="性别" prop="gender" style="width: 48%">
-              <el-radio-group v-model="addUserForm.gender">
+              <el-radio-group v-model="addStuForm.gender">
                 <el-radio v-model="radio" label="1">男</el-radio>
                 <el-radio v-model="radio" label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-form>
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
+          <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
           <el-form-item label="学号" prop="userID">
-            <el-input v-model="addUserForm.userID" placeholder="学号为8位数字"></el-input>
+            <el-input v-model="addStuForm.userID" placeholder="学号为8位数字"></el-input>
           </el-form-item>
           <el-form-item label="手机号" prop="MoNo">
-            <el-input v-model="addUserForm.MoNo" placeholder="手机号码位11位"></el-input>
+            <el-input v-model="addStuForm.MoNo" placeholder="手机号码位11位"></el-input>
           </el-form-item>
           </el-form>
 
           <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
-            <el-input v-model="addUserForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+            <el-input v-model="addStuForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
           </el-form-item>
 
           <el-form-item label="用户类别" prop="userType" style="width: 92%">
-            <el-radio-group v-model="addUserForm.userType">
-              <el-radio v-model="radio1" label="E">教务管理员</el-radio>
-              <el-radio v-model="radio1" label="T">教师</el-radio>
+            <el-radio-group v-model="addStuForm.userType">
               <el-radio v-model="radio1" label="S">学生</el-radio>
               <el-radio v-model="radio1" label="O">外来学生</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm" style="width: 98%">
+          <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm" style="width: 98%">
             <el-form-item label="专业" prop="major">
-              <el-select v-model="addUserForm.major" placeholder="请选择专业">
-                <el-option label="汽车专业" value="汽车专业"></el-option>
-                <el-option label="机电专业" value="机电专业"></el-option>
+              <el-select v-model="label" placeholder="请选择专业">
+                <el-option
+                  v-for="item in majorM"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.label">
+                </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="班级" prop="classGrade" >
-              <el-input v-model="addUserForm.classGrade" placeholder="请输入班级"></el-input>
+              <el-select v-model="label" placeholder="请选择班级">
+                <el-option
+                  v-for="item in classM"
+                  :key="item.label"
+                  :label="item.label"
+                  :value="item.label">
+                </el-option>
+              </el-select>
             </el-form-item>
           </el-form>
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
-            <el-form-item prop="AdmDate" label="入学时间">
-              <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm.AdmDate"></el-date-picker>
+          <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
+            <el-form-item prop="time" label="入学时间">
+              <el-date-picker type="date" placeholder="选择日期" v-model="addStuForm.time"></el-date-picker>
             </el-form-item>
             <el-form-item label="密码" prop="pwd">
-              <el-input v-model="addUserForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
+              <el-input v-model="addStuForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
             </el-form-item>
           </el-form>
         </el-form>
 
         <div slot="footer" class="dialog-footer" style="width: 93%">
-          <el-button @click="resetUser">重&emsp;置</el-button>
-            <el-button :plain="true" type="primary" @click="addUser('addUserForm')">提&emsp;交</el-button>
+          <el-button @click="resetStu('addStuForm')">重&emsp;置</el-button>
+            <el-button :plain="true" type="primary" @click="addStu('addStuForm')">提&emsp;交</el-button>
         </div>
       </el-dialog>
       <!--添加教师对话框-->
@@ -78,68 +87,66 @@
                  :visible.sync="dialogFormVisible2"
                  :before-close="handleClose"
                  :close-on-click-modal="false">
-        <el-form :model="addUserForm" :rules="rules" ref="addUserForm" label-width="80px" class="demo-addUserForm">
+        <el-form :model="addTeachForm" :rules="rules" ref="addTeachForm" label-width="80px" class="demo-addUserForm">
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
+          <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
           <el-form-item label="姓名" prop="user">
-            <el-input v-model="addUserForm.user" placeholder="姓名为2-4个汉字"></el-input>
+            <el-input v-model="addTeachForm.user" placeholder="姓名为2-4个汉字"></el-input>
           </el-form-item>
 
             <el-form-item label="性别" prop="gender" style="width: 48%">
-              <el-radio-group v-model="addUserForm.gender">
+              <el-radio-group v-model="addTeachForm.gender">
                 <el-radio v-model="radio" label="1">男</el-radio>
                 <el-radio v-model="radio" label="2">女</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-form>
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
+          <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
           <el-form-item label="学号" prop="userID">
-            <el-input v-model="addUserForm.userID" placeholder="学号为8位数字"></el-input>
+            <el-input v-model="addTeachForm.userID" placeholder="学号为8位数字"></el-input>
           </el-form-item>
           <el-form-item label="手机号" prop="MoNo">
-            <el-input v-model="addUserForm.MoNo" placeholder="手机号码位11位"></el-input>
+            <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位"></el-input>
           </el-form-item>
           </el-form>
 
           <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
-            <el-input v-model="addUserForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+            <el-input v-model="addTeachForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
           </el-form-item>
 
           <el-form-item label="用户类别" prop="userType" style="width: 92%">
-            <el-radio-group v-model="addUserForm.userType">
+            <el-radio-group v-model="addTeachForm.userType">
               <el-radio v-model="radio1" label="E">教务管理员</el-radio>
               <el-radio v-model="radio1" label="T">教师</el-radio>
-              <el-radio v-model="radio1" label="S">学生</el-radio>
-              <el-radio v-model="radio1" label="O">外来学生</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm" style="width: 98%">
+          <!--<el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm" style="width: 98%">
             <el-form-item label="专业" prop="major">
-              <el-select v-model="addUserForm.major" placeholder="请选择专业">
+              <el-select v-model="addTeachForm.major" placeholder="请选择专业">
                 <el-option label="汽车专业" value="汽车专业"></el-option>
                 <el-option label="机电专业" value="机电专业"></el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="班级" prop="classGrade" >
-              <el-input v-model="addUserForm.classGrade" placeholder="请输入班级"></el-input>
+              <el-input v-model="addTeachForm.classGrade" placeholder="请输入班级"></el-input>
             </el-form-item>
-          </el-form>
+          </el-form>-->
 
-          <el-form :inline="true" :model="addUserForm" :rules="rules" ref="addUserForm">
-            <el-form-item prop="AdmDate" label="入学时间">
-              <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm.AdmDate"></el-date-picker>
+          <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
+            <el-form-item prop="time" label="入职时间">
+              <el-date-picker type="date" placeholder="选择日期" v-model="addTeachForm.time"></el-date-picker>
             </el-form-item>
             <el-form-item label="密码" prop="pwd">
-              <el-input v-model="addUserForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
+              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
             </el-form-item>
           </el-form>
         </el-form>
 
         <div slot="footer" class="dialog-footer" style="width: 93%">
-          <el-button @click="resetUser">重&emsp;置</el-button>
-            <el-button :plain="true" type="primary" @click="addUser('addUserForm')">提&emsp;交</el-button>
+          <el-button @click="resetTeach">重&emsp;置</el-button>
+            <el-button :plain="true" type="primary" @click="addTeach('addTeachForm')">提&emsp;交</el-button>
         </div>
       </el-dialog>
 
@@ -175,7 +182,7 @@
             <el-table-column prop="gender" label="性别" width="70">
             </el-table-column>
 
-            <el-table-column prop="AdmDate" label="入学时间" width="130">
+            <el-table-column prop="time" label="入学时间" width="130">
             </el-table-column>
 
             <el-table-column prop="major" label="专业" width="100">
@@ -248,8 +255,8 @@
               </el-form>
 
               <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-                <el-form-item prop="AdmDate" label="入学时间">
-                  <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.AdmDate"></el-date-picker>
+                <el-form-item prop="time" label="入学时间">
+                  <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.time"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="密码" prop="pwd">
                   <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位"></el-input>
@@ -305,7 +312,7 @@
             <el-table-column prop="gender" label="性别" width="70">
             </el-table-column>
 
-            <el-table-column prop="entryTime" label="入职时间" width="130">
+            <el-table-column prop="time" label="入职时间" width="130">
             </el-table-column>
 
             <el-table-column prop="major" label="专业" width="100">
@@ -340,7 +347,10 @@
           <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
         </span>
         <span  class="userM_But2">
-          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加单个用户</el-button>
+          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加学生</el-button>
+        </span>
+        <span  class="userM_But4">
+          <el-button size="small" type="primary" @click="dialogFormVisible2 = true">添加教师</el-button>
         </span>
         <span class="userM_But3">
           <el-upload
@@ -380,7 +390,7 @@
           MoNo: '',
           userType: '',
           gender: '',
-          AdmDate: '',
+          time: '',
           major: '',
           classGrade: ''
         }],
@@ -393,7 +403,7 @@
           MoNo: '',
           userType: '',
           gender: '',
-          entryTime: '',
+          time: '',
           major: '',
           classGrade: ''
         }],
@@ -415,15 +425,27 @@
         dialogFormVisible: false,
         dialogFormVisible1: false,
         dialogFormVisible2: false,
-        addUserForm: {
+        addStuForm: {
           user: '',
           pwd: '',
           userID: '',
           IDNo: '',
           MoNo: '',
-          userType: '',
-          gender: '',
-          AdmDate: '',
+          userType: 'S',
+          gender: '1',
+          time: '',
+          major: '',
+          classGrade: ''
+        },
+        addTeachForm: {
+          user: '',
+          pwd: '',
+          userID: '',
+          IDNo: '',
+          MoNo: '',
+          userType: 'T',
+          gender: '1',
+          time: '',
           major: '',
           classGrade: ''
         },
@@ -435,7 +457,7 @@
           MoNo: '',
           userType: '',
           gender: '',
-          AdmDate: '',
+          time: '',
           major: '',
           classGrade: ''
         },
@@ -465,7 +487,7 @@
           gender: [
             { required: true, message: '请选择性别', trigger: 'change'}
           ],
-          AdmDate: [
+          time: [
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
           ],
           major: [
@@ -478,8 +500,10 @@
           ],
         },
         radio: "1",
-        radio2: "1",
         radio1: "S",
+        majorM:[],
+        classM:[],
+
       }
     },
     computed: {},
@@ -487,13 +511,10 @@
       // Excel导入成功后的回调
       uploadSuccess (res, file) {
         //console.log(res.userInfo);
-        if (res.userInfo) {
-          let userInfo = res.userInfo;
-          for (let i=0; i<userInfo.length; i++) {
-            this.teachData.push(userInfo[i])
-          }
+        if (res.code === 0) {
+          this.getUserData();
           this.$message({
-            message: '用户信息已存入数据库',
+            message: '用户信息导入成功',
             type: 'success'
           });
         }else {
@@ -512,18 +533,31 @@
       addUserDefeat(msg) {
         this.$message.error(msg);
       },
-      //重置添加添加用户
-      resetUser() {
-        this.addUserForm.user = '';
-        this.addUserForm.pwd = '';
-        this.addUserForm.userID = '';
-        this.addUserForm.IDNo = '';
-        this.addUserForm.MoNo = '';
-        this.addUserForm.userType = '';
-        this.addUserForm.gender = '';
-        this.addUserForm.AdmDate = '';
-        this.addUserForm.major = '';
-        this.addUserForm.classGrade = '';
+      //重置添加添加学生
+      resetStu() {
+        this.addStuForm.user = '';
+        this.addStuForm.pwd = '';
+        this.addStuForm.userID = '';
+        this.addStuForm.IDNo = '';
+        this.addStuForm.MoNo = '';
+        this.addStuForm.userType = 'S';
+        this.addStuForm.gender = '1';
+        this.addStuForm.time = '';
+        this.addStuForm.major = '';
+        this.addStuForm.classGrade = '';
+      },
+      //重置添加添加教师
+      resetTeach() {
+        this.addTeachForm.user = '';
+        this.addTeachForm.pwd = '';
+        this.addTeachForm.userID = '';
+        this.addTeachForm.IDNo = '';
+        this.addTeachForm.MoNo = '';
+        this.addTeachForm.userType = 'T';
+        this.addTeachForm.gender = '1';
+        this.addTeachForm.time = '';
+        this.addTeachForm.major = '';
+        this.addTeachForm.classGrade = '';
       },
       //重置修改用户
       resetUser1() {
@@ -534,7 +568,7 @@
         this.addUserForm1.MoNo = '';
         this.addUserForm1.userType = '';
         this.addUserForm1.gender = '';
-        this.addUserForm1.AdmDate = '';
+        this.addUserForm1.time = '';
         this.addUserForm1.major = '';
         this.addUserForm1.classGrade = '';
       },
@@ -551,7 +585,7 @@
         } else if (row.gender === '女') {
           this.addUserForm1.gender = '2';
         }
-        this.addUserForm1.AdmDate = row.AdmDate;
+        this.addUserForm1.time = row.time;
         this.addUserForm1.major = row.major;
         this.addUserForm1.classGrade = row.classGrade;
         this.dialogFormVisible1 = true;
@@ -595,40 +629,56 @@
         });
       },
 
-      //添加单个用户
-      addUser() {
-          this.dialogFormVisible = false;
-          //处理发送的用户信息方法
-          function resUserData(data) {
-            if (data.pwd == '') {
-              data.pwd = md5(data.IDNo.substring(data.IDNo.length-6));
-            }
-            data.AdmDate = moment(data.AdmDate).format("YYY-MM-DD");
-            if (data.n_name == '') {
-              data.n_name = data.user
-            }
-            return data;
-          }
+      //处理发送的用户信息方法
+      resUserData(data) {
+          console.log(data);
+        if (data.pwd == '') {
+          data.pwd = md5(data.IDNo.substring(data.IDNo.length-6));
+        } else {
+          data.pwd = md5(data.pwd);
+        }
+        data.time = moment(data.time).format("YYYY-MM-DD");
+        return data;
+      },
 
-          let resData = resUserData(this.addUserForm);
-          //console.log(this.addUserForm);
-          axios.post('/teacherCMS/addUser', {
+      //添加学生
+      addStu() {
+          this.dialogFormVisible = false;
+          let resData = this.resUserData(this.addStuForm);
+          axios.post('/teacherCMS/addStu', {
             data: {
               username: this.username,
               userType: this.userType,
-              addUser: resData
+              stuForm: resData
             }
           }).then((res) => {
-            if (res.data.userInfo) {
-              this.teachData.push(res.data.userInfo);
-              this.total2 = this.teachData.length;
-              //console.log('11');
-              //console.log(this.total2);
+            if (res.data.code === 0) {
               this.addUserSuccess('用户信息已存入数据库');
-              this.resetUser();
+              this.resetStu();
+              this.getUserData();
             }
           });
       },
+      //添加教师
+      addTeach() {
+          this.dialogFormVisible2 = false;
+          let resData = this.resUserData(this.addTeachForm);
+          //console.log(this.addUserForm);
+          axios.post('/teacherCMS/addTeach', {
+            data: {
+              username: this.username,
+              userType: this.userType,
+              teachForm: resData
+            }
+          }).then((res) => {
+            if (res.data.code === 0) {
+              this.addUserSuccess('用户信息已存入数据库');
+              this.resetStu();
+              this.getUserData();
+            }
+          });
+      },
+
       //修改用户信息
       reUser() {
         this.dialogFormVisible1 = false;
@@ -655,6 +705,7 @@
               //this.total = this.teachData.length;
               this.addUserSuccess();
               this.resetUser1();
+              this.getUserData();
             }
           });
       },
@@ -709,7 +760,7 @@
           let studentData = res.data.student;
           if (studentData.length > 0) {
             for (let i = 0; i < studentData.length; i++) {
-              studentData[i].AdmDate = moment(new Date(studentData[i].AdmDate)).format("YYYY-MM-DD");
+              studentData[i].time = moment(new Date(studentData[i].time)).format("YYYY-MM-DD");
               studentData[i].gender = core.getGender(studentData[i].gender);
               studentData[i].num = i + 1;
             }
@@ -720,7 +771,7 @@
           let teacherData = res.data.teacher;
           if (teacherData.length > 0) {
             for (let i = 0; i < teacherData.length; i++) {
-              teacherData[i].entryTime = moment(new Date(teacherData[i].entryTime)).format("YYYY-MM-DD");
+              teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");
               teacherData[i].gender = core.getGender(teacherData[i].gender);
               teacherData[i].num = i + 1;
             }
@@ -728,10 +779,29 @@
             this.total2 = this.teachData.length;
           }
         });
+      },
+      getClass() {
+        axios.post('/teacherCMS/getClass', {
+          data: {
+            userType: this.userType
+          }
+        }).then((res) => {
+            console.log(res.data);
+            this.majorM = res.data.majorMsg;
+            this.classM = res.data.classMsg;
+          //学生
+          /*let studentData = res.data.student;
+          if (studentData.length > 0) {
+            this.stuData = studentData;
+            this.total1 = this.stuData.length;
+          }*/
+
+        });
       }
     },
     mounted() {
         this.getUserData();
+        this.getClass();
     },
     components: {}
   }
@@ -743,6 +813,9 @@
     margin: 0;
     padding: 0;
   }
+  .userManager_cont {
+    position: relative;
+  }
   .userManager_cont .userM_el-table .userM_el-tableBut {
     margin-top: 0;
   }
@@ -752,55 +825,48 @@
   .userManager_cont .el-pagination {
     text-align: center;
   }
-  .userManager_cont .el-Col .userM_But1,.userM_But2 {
-    margin-bottom: 6px;
-    margin-right: 16px;
+  .userManager_cont .userM_But1 .el-button--small, .el-button--small.is-round{
+    margin-bottom: 10px;
   }
-  .userManager_cont .el-Col .userM_But3 {
-    margin-bottom: 6px;
-    margin-right: 16px;
+  .userManager_cont .userM_But2 .el-button--small, .el-button--small.is-round{
+    margin-bottom: 10px;
+  }
+  .userManager_cont .userM_But4 .el-button--small, .el-button--small.is-round{
+    margin-bottom: 10px;
+  }
+  .userManager_cont .userM_But2 {
+    margin-right: 0;
   }
   .userManager_cont .el-tree-node__expand-icon {
     font-size: 16px;
   }
-
   .userManager_cont .el-tree-node__label {
     font-size: 16px;
   }
-
   .userManager_cont .el-tree {
     background-color: #dcdfe6;
   }
   .userManager_cont .el-table {
     margin-top: 6px;
   }
-
   .userManager_cont .el-table .cell {
     text-align: left;
     margin-left: 14px
   }
-
   .userManager_cont .CMS_cont {
     min-height: 34.3rem;
   }
-
   .userManager_cont .el-card__body {
     padding: 10rem;
   }
-
   .userManager_cont .el-table td, .el-table th {
     padding: 2px;
   }
-
   .userManager_cont .el-table-column--selection .cell {
     padding-left: 0;
   }
-
   .userManager_cont .el-dialog{
     width: 40.5%;
-  }
-  .userManager_cont span{
-    display: inline-block;
   }
   .userManager_cont .el-dialog{
     width: 650px;
@@ -825,5 +891,11 @@
   }
   .userManager_cont .el-col-19 {
     text-align: left;
+  }
+  .userManager_cont .headBut {
+    width: 120px;
+    position: absolute;
+    bottom: -500px;
+    left: 5%;
   }
 </style>

@@ -32,13 +32,29 @@ export default {
   methods: {
     sendBestTitle(item){
         console.log(item)
+      this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+            name: 'newCourse'
+        });
+      window.open(href, '_blank')
     //  this.$router.push('/newCourse');
     },
+
     playBestVideo (item) {
+        console.log(item)
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+//        const {href} = this.$router.resolve({
+//                name: 'newCourse'
+//            });
+//        window.open(href, '_blank')
       this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
     },
     playBestPdf (item) {
+        console.log(item)
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
       this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
     }
   },
@@ -86,7 +102,12 @@ a:hover{
     margin-top:-25px;
     font-size: 18px;
     text-align: center;
-    margin-left:-9%;
+    margin-left:9%;
+    width: 140px;
+    cursor:pointer;
+}
+.best-class .five-box .p:hover{
+  color:#e4393c;
 }
 .mask-play>img{
   width:169px;
@@ -106,7 +127,7 @@ a:hover{
     height:100px;
     background: rgba(0, 0, 0, 0.7);
     position: relative;
-    top:-104px;
+    top:-100px;
     right:0;
     display:none;
 }

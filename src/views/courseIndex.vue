@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="courseIndex">
     <div class="nav">
         <navgation-head></navgation-head>
     </div>
@@ -46,10 +46,13 @@
                             <span class="jianjie">
                             简介:
                             </span>
-                            {{item.intro}}
+                            {{item.describe}}
                         </div>
                         </div>
-                    <p class="p" @click="sendRecommendTitle(item)"><router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link></p>
+                    <p class="p" @click="sendRecommendTitle(item)">
+                        {{item.title}}
+                        <!--<router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link>-->
+                    </p>
                     </a>
                 </li>
               </ul>
@@ -133,6 +136,11 @@ export default {
         },
     sendRecommendTitle(item){
       this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+            name: 'newCourse'
+        });
+      window.open(href, '_blank')
     }
   },
   mounted(){
@@ -176,9 +184,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-.container{
-  min-width:960px;
-}
 *{
     margin:0;
     padding:0;
@@ -203,11 +208,11 @@ hr{
     margin-top: 2px;
     margin-bottom:2px;
 }
-.title{
+.courseIndex .title{
     font-size:20px;
     font-weight:bolder;
 }
-.banner{
+.courseIndex .banner{
   width:960px;
   height:460px;
   margin:0 auto;
@@ -215,7 +220,7 @@ hr{
   display:flex;
   margin-bottom:75px;
 }
-.left-menu{
+.courseIndex .left-menu{
   width:165px;;
   height:100%;
   padding:17px;
@@ -226,58 +231,58 @@ hr{
   border-top-left-radius: 10px;
   font-weight:200;
 }
-.rightbox {
+.courseIndex .rightbox {
     width:795px;
     height:100%;
     overflow:hidden;
 }
-.mask-play>img{
+.courseIndex .mask-play>img{
   width:169px;
   height:100px;
 }
-.zz{
+.courseIndex .zz{
     border-radius:10px;
     overflow: hidden;
 }
-.mf{
+.courseIndex .mf{
     width:171px;
     height:100px;
     margin-bottom:40px;
 }
-.mask-play .mask{
+.courseIndex .mask-play .mask{
     width:171px;
     height:100px;
     background: rgba(0, 0, 0, 0.7);
     position: relative;
-    top:-104px;
+    top:-100px;
     right:0;
     display:none;
 }
-.mask>img{
+.courseIndex .mask>img{
     margin-top:20px;
 }
-.mask p>span{
+.courseIndex .mask p>span{
     font-size:13px;
 }
-div.mask-play:hover .mask{
+.courseIndex div.mask-play:hover .mask{
     display: block;
     cursor: pointer;
 }
-.bottom-box{
+.courseIndex .bottom-box{
   width:960px;
   height:550px;
   margin:0 auto;
   margin-bottom:20px;
   display:flex;
 }
-.bb-left{
+.courseIndex .bb-left{
     width:156px;
     height: 490px;
     box-shadow: 10px 10px 30px #ccc;
     margin-top:20px;
     margin-right:30px;
 }
-.bb-span{
+.courseIndex .bb-span{
     color:#222;
     font-size: 18px;
     float: left;
@@ -287,36 +292,36 @@ div.mask-play:hover .mask{
     border-left:4px solid #e4393c;
     margin-right:25px;
 }
-.bb-right{
+.courseIndex .bb-right{
     width:156px;
     height: 490px;
     box-shadow: 10px 10px 30px #ccc;
     margin-top:20px;
     padding-right:0;
 }
-.bb-middle{
+.courseIndex .bb-middle{
     width:582px;
     height:630px;
     margin-right:33px;
     margin-top:15px;
 }
-.shizhan{
+.courseIndex .shizhan{
     width:580px;
     height:422px;
     margin-top:18px;
     margin-left:15px;
 }
-.shizhan>ul{
+.courseIndex .shizhan>ul{
     text-align:left;
 }
-.mask-play{
+.courseIndex .mask-play{
     height:100px;
     position:relative;
 }
-.mask .play{
+.courseIndex .mask .play{
     margin-left:53px;
 }
-.row-a{
+.courseIndex .row-a{
     width:169px;
     height:100px;
     margin-top:5px;
@@ -324,19 +329,19 @@ div.mask-play:hover .mask{
     margin-right:20px;
     margin-bottom:88px;
 }
-.ppv{
+.courseIndex .ppv{
     width:37px;
     height:18px;
     border-radius: 8px;
     background: #fff;
     color:#000;
     margin-left: 124px;
-    margin-top:-43px;
+    margin-top:-55px;
     text-align: center;
 }
-.intro{
-    width:140px;
-    height:50px;
+.courseIndex .intro{
+    width:161px;
+    height:70px;
     border-radius: 15px;
     background: rgba(200,200,200,1);
     color:#fff;
@@ -351,33 +356,34 @@ div.mask-play:hover .mask{
     color:#000;
     font-size:14px;
 }
-.jianjie{
+.courseIndex .jianjie{
     font-weight: bolder;
 }
-div.mask-play:hover .intro{
+.courseIndex div.mask-play:hover .intro{
     display: -webkit-box;
 }
-.intro::after {
+.courseIndex .intro::after {
     content: '...'
 }
-.bb-middle .row-a .p{
+.courseIndex .bb-middle .row-a .p{
+    text-align:center;
     margin-top:15px;
     font-size: 18px;
 }
 
 
-.pageination_align {
+.courseIndex .pageination_align {
             text-align: center
         }
 
-        .pageination {
+        .courseIndex .pageination {
             color: #48576a;
             font-size: 12px;
             display: inline-block;
             user-select: none;
         }
 
-        .pagination_page {
+        .courseIndex .pagination_page {
             padding: 0 4px;
             border: 1px solid #d1dbe5;
             border-right: 0;
@@ -394,21 +400,21 @@ div.mask-play:hover .intro{
             border-radius:5px;
         }
 
-        .pagination_page_right {
+        .courseIndex .pagination_page_right {
             border-right: 1px solid #d1dbe5;
         }
 
-        .pagination_page:hover {
+        .courseIndex .pagination_page:hover {
             color: #e4393c;
         }
 
-        .disabled {
+        .courseIndex .disabled {
             color: #e4e4e4 !important;
             background-color: #fff;
             cursor: not-allowed;
         }
 
-        .pagination_page_active {
+        .courseIndex .pagination_page_active {
             border-color: #e4393c;
             background-color: #e4393c;
             color: #fff !important;;

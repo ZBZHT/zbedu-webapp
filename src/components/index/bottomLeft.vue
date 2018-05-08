@@ -4,7 +4,10 @@
                 <div class="mask-play-right" v-for="item in bottomLeftData">
                     <img :src="url_before + item.url">
                     <img @click="playBottomLeftVideo(item)" class="play-right" src="src/assets/imgs/play3.png">
-                    <p class="p" @click="sendButtomLeftTitle(item)"><router-link :to="{path:'/courseNoTree/'+item.courseId + '/title/' + item.title}">{{item.title}}</router-link></p>
+                    <p class="p" @click="sendButtomLeftTitle(item)">
+                        {{item.title}}
+                        <!--<router-link :to="{path:'/courseNoTree/'+item.courseId + '/title/' + item.title}">{{item.title}}</router-link>-->
+                    </p>
                 </div>
 
 
@@ -28,6 +31,11 @@ export default {
     },
     sendButtomLeftTitle(item) {
       this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+            name: 'newCourse'
+        });
+      window.open(href, '_blank')
     }
   }
 }
@@ -63,12 +71,15 @@ a:focus {
     margin-top:10px;
 }
 .bb-left .p{
-    margin-top:15px;
+    margin-top:10px;
+    margin-left: 23px;
     font-size: 16px;
+    width: 134px;
+    cursor: pointer;
 }
 .mask-play-right .play-right{
     position: relative;
-    top:-10px;
+    top:-6px;
     left:61px;
     margin-top:-64px;
     display: none;
@@ -78,6 +89,6 @@ div.mask-play-right:hover .play-right{
     cursor: pointer;
 }
 .mask-play-right>img{
-    margin-top:24px;
+    margin-top:15px;
 }
 </style>

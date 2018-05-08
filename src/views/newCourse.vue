@@ -3,7 +3,6 @@
     <div>
         <navgation-head></navgation-head>
     </div>
-<button @click="check()">.....</button>
     <div class="newCourse-content">
         <el-row>
             <el-col :span="6">
@@ -22,11 +21,11 @@
                 <!--教学中心-->
                 <div>
                     <p class="exerP">{{noTree.label}}</p>
-                    
-                          <el-tabs type="border-card">
+
+                          <el-tabs type="border-card" v-model="activeName">
 
                             <!--简介-->
-                            <el-tab-pane label="本节简介">
+                            <el-tab-pane label="本节简介" :name="descTab">
                                 <div class="courseDescribe" >
                                     <p class="title">课程简介：</p>
                                     <p class="desc">{{ noTree.describe }}</p>
@@ -39,16 +38,16 @@
                                 <p class="devDownload" v-show="noTree.teachingBook"></p>
                                   <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></iframe>
                                 <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
-                              </div>    
+                              </div>
                             </el-tab-pane>
 
                             <!--课件-->
                             <el-tab-pane label="教学课件">
-                              <div id="courseppt">
+                              <div id="courseppt" class="content-box">
                                 <p class="devDownload" v-show="noTree.teachingMaterial"></p>
                                   <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></iframe>
                                 <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
-                              </div>  
+                              </div>
                             </el-tab-pane>
 
                             <!--微课-->
@@ -65,7 +64,7 @@
                                 <p class="devDownload" v-show="noTree.workPage"></p>
                                   <iframe :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></iframe>
                                 <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
-                              </div>  
+                              </div>
                             </el-tab-pane>
 
                             <!--课后作业-->
@@ -191,7 +190,7 @@
                             </el-tab-pane>
 
                           </el-tabs>
-                    
+
                 </div>
             </el-col>
         </el-row>
@@ -246,8 +245,10 @@ export default {
       courseId2:'',
       checkArr:[],
       userId:this.$store.state.userID,
-      keyId:100,
-      
+      keyId:'',
+      activeName: '',
+      descTab:'0'
+
     }
   },
   computed:{
@@ -259,7 +260,7 @@ export default {
     },
     noTree1(){
         this.noTree11 = this.$store.state.noTree1;
-        
+
         return this.$store.state.noTree1;
     },
       currentTitle(){
@@ -281,97 +282,123 @@ export default {
         return this.$store.state.noTree.videoTitle;
       }
   },
-  created(){
-    
-  },
+//  created(){
+//     var _this = this
+//        this.$nextTick(function () {
+//            // 直接调用
+//            _this.refRecursion(100, 1)
+//        })
+//  },
   mounted(){
-    console.log(this.$refs.vuetree);
-    this.$nextTick(() => {
-      this.$refs.vuetree.setCurrentKey(100)
-    })
+
       //从courseIndex页传值并默认展开
       //  console.log("sjsjs");
       //  console.log(this.$store.state.noTree1.courseId);
         var data = this.$store.state.noTree1;
         var id = this.$store.state.noTree1.courseId;
         if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600){
-            
+
             if(id == 100){
                 this.courseId1 = id;
                 this.courseId2 = 111;
+                this.keyId = 1111;
                 this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
             }else if(id == 200){
                 this.courseId1 = id;
                 this.courseId2 = 211;
+                this.keyId = 211;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }else if(id == 300){
                 this.courseId1 = id;
                 this.courseId2 = 311;
+                this.keyId = 311;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }else if(id == 400){
                 this.courseId1 = id;
                 this.courseId2 = 411;
+                this.keyId = 411;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
-            }else if(id == 500 || id == 600){
+            }else if(id == 500){
                 this.courseId1 = id;
+                this.keyId = 510;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else if(id == 600){
+                this.courseId1 = id;
+                this.keyId = 610;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }
         }else if(id > 100 && id < 200){
             if(id == 110){
                 this.courseId1 = 100;
                 this.courseId2 = 111;
+                this.keyId = 1111;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }else if(id > 110 && id < 120){
                 this.courseId1 = 100;
                 this.courseId2 = id;
+                this.keyId = id.toString()+1;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }else if(id > 120 && id < 130){
                 this.courseId1 = 100;
                 this.courseId2 = id;
+                this.keyId = id.toString()+1;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }else if(id == 120){
                 this.courseId1 = 100;
                 this.courseId2 = 121;
+                this.keyId = 1211;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }
         }else if(id > 200 && id < 300){
             if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
                 this.courseId1 = 200;
                 this.courseId2 = id;
+                this.keyId = id + 1;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }else{
                 this.courseId1 = 200;
                 this.courseId2 = id;
+                this.keyId = id;
                 this.$store.commit('noTreeTitle',data);
             }
         }else if(id > 300 && id < 400){
             if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
                 this.courseId1 = 300;
                 this.courseId2 = id;
+                this.keyId = id + 1;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }else{
                 this.courseId1 = 300;
                 this.courseId2 = id;
+                this.keyId = id;
                 this.$store.commit('noTreeTitle',data);
             }
         }else if(id > 400 && id < 500){
             if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
                 this.courseId1 = 400;
                 this.courseId2 = id;
+                this.keyId = id + 1;
                 this.$store.commit('noTreeTitle',data.children[0]);
             }else{
                 this.courseId1 = 400;
                 this.courseId2 = id;
+                this.keyId = id;
                 this.$store.commit('noTreeTitle',data);
             }
         }else if(id > 500 && id < 600){
             this.courseId1 = 500;
             this.courseId2 = id;
+            this.keyId = id;
             this.$store.commit('noTreeTitle',data);
         }else if(id > 600 && id < 700){
             this.courseId1 = 600;
             this.courseId2 = id;
+            this.keyId = id;
             this.$store.commit('noTreeTitle',data);
+        }else if(id > 1110 && id < 1300){
+            this.courseId1 = 100;
+            this.courseId2 = id;
+            this.keyId = id;
         }
     //获取树形数据
     axios.get("/readJson/bannerLeftData",{
@@ -381,6 +408,14 @@ export default {
       }).then((res)=>{
           this.data = res.data[0].children;
           //console.log(this.data[0].label)
+          //console.log(this.$refs.vuetree);
+          setTimeout(() => {
+            this.$refs.vuetree.setCurrentKey(this.keyId)
+          }, 20)
+//        var _this = this
+//        this.$nextTick(function () {
+//        _this.refRecursion(100, 1)
+//        })
       }).catch(function(error){
           console.log("error init." + error)
       });
@@ -416,34 +451,45 @@ export default {
       }).catch(function(error){
         console.log("评论请求错误")
       });
-    
-    
-    
+
+
+
     },
   methods:{
-    check(){
-          this.$refs.vuetree.setCurrentKey(100)
+    //递归方法默认标红实验
+    refRecursion(key, time){
+      console.log(time)
+      if(time > 10){
+        throw new Error('没有找到VueTree')
+      }
+      var tree = this.$refs.vueTree;
+        if(tree){
+          tree.setCurrentKey(key)
+        }else{
+          this.refRecursion(key, time + 1)
+        }
+
     },
+
 
     //从树形传值到tabs
     handleNodeClick(data,node) {
-    this.appAnswer = false;
-    //  console.log(node);
-    //  console.log(node.data.label);
-    //  console.log(node.parent.label);
-    //  console.log(node.parent.parent.label);
-    //  console.log(node.parent.parent.parent.label);
+      this.appAnswer = false;
+      //  console.log(node);
+      //  console.log(node.data.label);
+      //  console.log(node.parent.label);
+      //  console.log(node.parent.parent.label);
+      //  console.log(node.parent.parent.parent.label);
 
-      
       if(data.children){
 
       }else{
+        this.activeName = this.descTab;
         this.checkArr = [];
           if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){
             this.checkArr.push(node.parent.label)
             this.checkArr.push(node.label)
-          }else 
-          if(node.parent.parent.parent.label == '新能源汽车'){
+          }else if(node.parent.parent.parent.label == '新能源汽车'){
             this.checkArr.push(node.parent.parent.parent.label)
             this.checkArr.push(node.parent.parent.label)
             this.checkArr.push(node.parent.label)
@@ -453,7 +499,7 @@ export default {
             this.checkArr.push(node.parent.label)
             this.checkArr.push(node.label)
           }
-          
+
           //console.log(this.checkArr);
           this.$store.commit('noTreeTitle',data);
           axios.get("/readTestQuestion/getHomeWork",{
@@ -899,6 +945,13 @@ hr{
 }
 .newCourse-content .exerEngImg img{
     width:100%;
+}
+.newCourse-content .content-box{
+  width: 100%;
+  margin-top: 105px;
+  height: 700px;
+  position: relative;
+  padding: 0 5%;
 }
 .newCourse-content .pdf-box{
     width:100%;

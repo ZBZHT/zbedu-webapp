@@ -20,250 +20,380 @@
     {
       "url":"img.png",
       "title":"纯电动汽车总体结构认知",
-      "courseId": 1122
+      "label":"总体结构认知",
+      "describe":"北汽EV160整车控制器、电机控制器、电动空调等结构的工作原理及工作条件。",
+      "teachingMaterial":"EV系列-1-2-纯电动汽车总体结构认知.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"纯电动汽车总体结构认知.mp4"
+        }
+      ],
+      "workPage":"纯电动汽车总体结构认知工作业.pdf",
+      "courseId": 1112
 
     },
     {
       "url":"img.png",
       "title":"纯电动汽车动力电池拆装",
-      "courseId": 1122
+      "label":"动力电池拆装",
+      "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤。",
+      "teachingMaterial":"EV系列-2-1-动力电池的拆装.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":""
+        }
+      ],
+      "workPage":"动力电池拆装工作页.pdf",
+      "courseId": 1121
     },
     {
       "url":"img.png",
-      "title":"混合动力汽车新车交接检查",
-      "courseId": 1122
+      "title":"纯电动汽车基本信息收集与介绍",
+      "label":"基本信息收集与介绍",
+      "describe":"检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
+      "teachingMaterial":"EV系列-1-1-纯电动汽车基本信息收集与介绍.pdf",
+      "teachingBook":"纯电动汽车基本信息收集与介绍教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":""
+        }
+      ],
+      "workPage":"纯电动汽车基本信息收集与介绍工作业.pdf",
+      "courseId": 1111
     },
     {
       "url":"img.png",
       "title":"纯电动汽车BMS系统拆装",
+      "label":"BMS系统拆装",
+      "describe":"BMS的功能原理和作用，更换BMS控制器步骤及电动汽车高压安全操作注意事项。",
+      "teachingMaterial":"EV系列-2-2-拆装BMS系统.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"拆装动力电池BMS-10.24.mp4"
+        }
+      ],
+      "workPage":"拆装BMS系统工作业.pdf",
       "courseId": 1122
     },
     {
       "url":"img.png",
-      "title":"混合动力汽车高压安全操作",
-      "courseId": 1122
+      "title":"纯电动汽车继电器模组故障检修",
+      "label":"继电器模组故障检修",
+      "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
+      "teachingMaterial":"EV系列-2-3-电机继电器故障检测.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"动力电池继电器模组更换-10.24.mp4"
+        },
+        {
+          "videoTitle":"继电器模组故障检测-2.22.mp4"
+        }
+      ],
+      "workPage":"继电器模组故障检修工作业.pdf",
+      "courseId": 1123
     }
   ],
   "pageData":[
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介1",
-      "courseId": 81
-
+      "title":"纯电动汽车高压安全操作",
+      "label":"高压安全操作",
+      "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
+      "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"高压安全操作-11.10.mp4"
+        }
+      ],
+      "workPage":"纯电动汽车高压安全操作工作业.pdf",
+      "courseId": 1113
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介2",
-      "courseId": 82
+      "title":"纯电动汽车高压危害与救助方法",
+      "label":"高压危害与救助方法",
+      "describe":"用电操作不当遇到危险时候的一些急救方法以及如何正确安全的操作纯电动汽车。",
+      "teachingMaterial":"EV系列-1-4-高压危害与救助方法.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":""
+        }
+      ],
+      "workPage":"纯电动汽车高压安全操作工作业.pdf",
+      "courseId": 1114
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介3",
-      "courseId": 83
+      "title":"纯电动汽车新车PDI检查",
+      "label":"新车PDI检查",
+      "describe":"纯电动汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
+      "teachingMaterial":"EV系列-1-5-新车PDI检查.pdf",
+      "teachingBook":"新车PDI检查教材.pdf",
+      "videoTitle":[
+      {
+      "videoTitle":"基本检查5.5（720P）.mp4"
+      },
+      {
+      "videoTitle":"前机舱内检查5.5（720P）.mp4"
+      }
+      ],
+      "workPage":"新车PDI检查工作业.pdf",
+      "courseId": 1115
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介4",
-      "courseId": 84
+      "title":"纯电动汽车常规保养与维护",
+      "label":"常规保养与维护",
+      "describe":"纯电动汽车如何保养、保养哪些方面和保养维护的时候应当注意的地方有哪些。",
+      "teachingMaterial":"EV系列-1-6-常规保养与维护.pdf",
+      "teachingBook":"常规保养与维护教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"纯电动汽车常规保养与维护.mp4"
+        }
+      ],
+      "workPage":"常规保养与维护工作业.pdf",
+      "courseId": 1116
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介5",
-      "courseId": 85
+      "title":"纯电动汽车继电器模组故障检修",
+      "label":"继电器模组故障检修",
+      "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
+      "teachingMaterial":"EV系列-2-3-电机继电器故障检测.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"动力电池继电器模组更换-10.24.mp4"
+        },
+        {
+          "videoTitle":"继电器模组故障检测-2.22.mp4"
+        }
+      ],
+      "workPage":"继电器模组故障检修工作业.pdf",
+      "courseId": 1123
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介6",
-      "courseId": 86
+      "title":"纯电动汽车动力电池故障检修",
+      "label":"动力电池故障检修",
+      "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
+      "teachingMaterial":"EV系列-2-4-动力电池故障检修.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":""
+        }
+      ],
+      "workPage":"动力电池故障检修工作业.pdf",
+      "courseId": 1124
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介7",
-      "courseId": 87
+      "title":"纯电动汽车MCU与VCU通讯丢失故障",
+      "label":"MCU与VCU通讯丢失故障",
+      "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
+      "teachingMaterial":"MCU与VCU通讯丢失故障.pdf",
+      "teachingBook":"MCU与VCU通讯丢失故障教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"MCU与VCU通讯故障.mp4"
+        }
+      ],
+      "workPage":"MCU与VCU通讯丢失故障工作页.pdf",
+      "courseId": 1134
     },
     {
       "url":"img.png",
-      "title":"检测",
-      "intro":"简介1",
-      "courseId": 88
+      "title":"纯电动汽车电机旋变传感器故障检修",
+      "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
+      "label":"电机旋变传感器故障检修",
+      "teachingMaterial":"EV系列-3-10-电机旋变传感器故障检修.pdf",
+      "teachingBook":"电机旋变传感器故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"旋变传感器故障检测-2.22.mp4"
+        }
+      ],
+      "workPage":"电机旋变传感器故障检修工作页.pdf",
+      "courseId": 1135
     }
   ],
   "bottomLeftData":[
     {
       "url":"left.png",
-      "title":"DC-DC检测",
-      "courseId": 71
+      "title":"纯电动汽车动力电池故障检修",
+      "label":"动力电池故障检修",
+      "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
+      "teachingMaterial":"EV系列-2-4-动力电池故障检修.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":""
+        }
+      ],
+      "workPage":"动力电池故障检修工作业.pdf",
+      "courseId": 1124
     },
     {
       "url":"left.png",
-      "title":"DC-DC检测",
-      "courseId": 72
+      "title":"纯电动汽车MCU与VCU通讯丢失故障",
+      "label":"MCU与VCU通讯丢失故障",
+      "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
+      "teachingMaterial":"MCU与VCU通讯丢失故障.pdf",
+      "teachingBook":"MCU与VCU通讯丢失故障教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"MCU与VCU通讯故障.mp4"
+        }
+      ],
+      "workPage":"MCU与VCU通讯丢失故障工作页.pdf",
+      "courseId": 1134
     },
     {
       "url":"left.png",
-      "title":"DC-DC检测",
-      "courseId": 73
+      "title":"纯电动汽车电机旋变传感器故障检修",
+      "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
+      "label":"电机旋变传感器故障检修",
+      "teachingMaterial":"EV系列-3-10-电机旋变传感器故障检修.pdf",
+      "teachingBook":"电机旋变传感器故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"旋变传感器故障检测-2.22.mp4"
+        }
+      ],
+      "workPage":"电机旋变传感器故障检修工作页.pdf",
+      "courseId": 1135
     }
   ],
   "bottomRightData":[
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车电机旋变传感器故障检修",
+      "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
+      "label":"电机旋变传感器故障检修",
+      "teachingMaterial":"EV系列-3-10-电机旋变传感器故障检修.pdf",
+      "teachingBook":"电机旋变传感器故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"旋变传感器故障检测-2.22.mp4"
+        }
+      ],
+      "workPage":"电机旋变传感器故障检修工作页.pdf",
+      "courseId": 1135,
       "name":"熊永刚",
       "num":"1"
     },
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车动力电池拆装",
+      "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤。",
+      "label":"动力电池拆装",
+      "teachingMaterial":"EV系列-2-1-动力电池的拆装.pdf",
+      "teachingBook":"电机旋变传感器故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":""
+        }
+      ],
+      "workPage":"动力电池拆装工作页.pdf",
+      "courseId": 1121,
       "name":"熊永刚",
       "num":"2"
     },
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车BMS系统拆装",
+      "describe":"BMS的功能原理和作用，更换BMS控制器步骤及电动汽车高压安全操作注意事项",
+      "label":"BMS系统拆装",
+      "teachingMaterial":"EV系列-2-2-拆装BMS系统.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"拆装动力电池BMS-10.24.mp4"
+        }
+      ],
+      "workPage":"拆装BMS系统工作业.pdf",
+      "courseId": 1122,
       "name":"熊永刚",
       "num":"3"
     },
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车高压控制盒的故障检修",
+      "describe":"电动汽车安全操作注意事项，检测前的操作事项。故障检测的方法和步骤以及操作过程中的安全事项",
+      "label":"高压控制盒的故障检修",
+      "teachingMaterial":"EV系列-4-1-高压控制器故障检修.pdf",
+      "teachingBook":"高压控制盒的故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"高压控制器检修-10.24.mp4"
+        }
+      ],
+      "workPage":"高压控制盒的故障检修工作页.pdf",
+      "courseId": 1141,
       "name":"熊永刚",
       "num":"4"
     },
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车DC/DC故障检修",
+      "describe":"DC-DC功能和工作原理、检测前的注意事项有哪些以及检测步骤和故障现象。利用软件来诊断故障码，和利用外用表测量DC-DC内部线路连接情况。",
+      "label":"DC/DC故障检修",
+      "teachingMaterial":"DCDC故障检修.pdf",
+      "teachingBook":"DCDC故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"DCDC的检查与维护.mp4"
+        }
+      ],
+      "workPage":"DCDC故障检修工作页.pdf",
+      "courseId": 1142,
       "name":"熊永刚",
       "num":"5"
     },
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车电子旋钮换挡器故障检修",
+      "describe":"电子旋钮换挡器的档位数及功能，安装的位置。内饰拆解的注意事项，需要带白色手套及塑料拆卸工具。电子旋钮换挡器的详细拆解步骤及安装步骤。",
+      "label":"电子旋钮换挡器故障检修",
+      "teachingMaterial":"EV系列-4-3-电子旋钮换档器故障检修.pdf",
+      "teachingBook":"",
+      "videoTitle":[
+        {
+          "videoTitle":"电子旋钮换挡器拆装-2.22.mp4"
+        },
+        {
+          "videoTitle":"电子旋钮换挡器故障检修-2.22.mp4"
+        }
+      ],
+      "workPage":"电机旋变传感器故障检修工作页.pdf",
+      "courseId": 1143,
       "name":"熊永刚",
       "num":"6"
     },
     {
-      "couse":"DC-DC检测",
+      "title":"纯电动汽车加速踏板信号故障检修",
+      "describe":"详述加速踏板的控制及工作原理，与VCU之间是怎么通讯的，丢失信号时候会是怎样的反应",
+      "label":"加速踏板信号故障检修",
+      "teachingMaterial":"EV系列-4-4-加速踏板信号故障检修.pdf",
+      "teachingBook":"加速踏板信号故障检修教材.pdf",
+      "videoTitle":[
+        {
+          "videoTitle":"加速踏板故障检修.mp4"
+        }
+      ],
+      "workPage":"加速踏板信号故障检修工作页.pdf",
+      "courseId": 1144,
       "name":"熊永刚",
       "num":"7"
     },
     {
-      "couse":"DC-DC检测",
+      "couse":[
+        
+      ],
       "name":"熊永刚",
       "num":"8"
-    }
-  ],
-  "information":[
-    {
-      "num":"1",
-      "src":"同学们，手机登录也能进行考试啦！"
-    },
-    {
-      "num":"2",
-      "src":"最新消息！注意啦：目前本公司推出汽车维修工中级和汽车维修电工中级试题。"
-    }
-  ],
-  "winner":[
-    {
-      "title":"一周考试排行榜",
-      "stu":[
-          {
-            "num":"1",
-            "name":"熊永刚"
-          },
-          {
-            "num":"2",
-            "name":"卞旺阳"
-          },
-          {
-            "num":"3",
-            "name":"尹东阳"
-          }
-      ]
-    },
-    {
-      "title":"一月考试排行榜",
-      "stu":[
-          {
-            "num":"1",
-            "name":"徐瑞"
-          },
-          {
-            "num":"2",
-            "name":"姜老师"
-          },
-          {
-            "num":"3",
-            "name":"贺林"
-          }
-      ]
-    }
-  ],
-  "hotTest":[
-    {
-      "testId":"101",
-      "url":"img.png",
-      "title":"汽车电气"
-    },
-    {
-      "testId":"106",
-      "url":"img.png",
-      "title":"全国汽车维修工中级培训"
-    },
-    {
-      "testId":"107",
-      "url":"img.png",
-      "title":"全国汽车维修电工中级"
-    },
-    {
-      "testId":"104",
-      "url":"img.png",
-      "title":"新能源"
-    },
-    {
-      "testId":"105",
-      "url":"img.png",
-      "title":"汽车底盘"
-    }
-  ],
-  "gradeTest":[
-    {
-      "testId":"106",
-      "url":"img.png",
-      "title":"全国汽车维修工中级培训"
-    },
-    {
-      "testId":"107",
-      "url":"img.png",
-      "title":"全国汽车维修电工中级"
-    }
-  ],
-  "contentTest":[
-    {
-      "testId":"101",
-      "url":"img.png",
-      "title":"汽车电气"
-    },
-    {
-      "testId":"102",
-      "url":"img.png",
-      "title":"汽车发动机"
-    },
-    {
-      "testId":"103",
-      "url":"img.png",
-      "title":"汽车变速器"
-    },
-    {
-      "testId":"104",
-      "url":"img.png",
-      "title":"新能源"
-    },
-    {
-      "testId":"105",
-      "url":"img.png",
-      "title":"汽车底盘"
     }
   ]
 }

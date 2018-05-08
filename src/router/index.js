@@ -21,6 +21,7 @@ import loginPage from '@/views/loginPage'
 import resourceCenter from '@/views/resourceCenter'
 import teacherCMS from '@/views/CMS/teacherCMS'
 import testLogin from '@/views/testLogin'
+import testSureLogin from '@/views/testSureLogin'
 import {setCookie,getCookie,delCookie} from '../assets/js/cookie.js'
 import axios from 'axios'
 //import md5 from 'js-md5'
@@ -179,6 +180,14 @@ const routes = [
       component: testLogin
     },
     {
+      path: '/testSureLogin',
+      name: 'testSureLogin',
+      meta:{
+        title: 'zbt考试登录'
+      },
+      component: testSureLogin
+    },
+    {
       path:'/resourceCenter',
       name:'resourceCenter',
       meta:{
@@ -240,14 +249,13 @@ router.beforeEach((to,from,next) => {
               router.replace('/')
           }
 
-      }else if(store.state.username && a == 0){
-        router.replace('/testLogin')
-              a+=1;
-
+      }else if(store.state.username && store.state.testCode == 0){
+        router.replace('/testSureLogin')
+        store.commit('testCode',1);
       }
   }else{
     next();
-    a=0;
+    a=1;
   };
 });
 

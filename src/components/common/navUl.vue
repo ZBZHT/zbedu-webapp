@@ -247,7 +247,7 @@ a:hover{
         display:none;
     }
     .contentui .el-col:hover .introduce{
-        height:40px;
+        height:55px;
     }
     .contentui .el-col:hover .introduce p{
         display:block;
@@ -324,7 +324,7 @@ a:hover{
         display:none;
     }
     .contentui .el-col:hover .introduce{
-        height:35px;
+        height:55px;
     }
     .contentui .el-col:hover .introduce p{
         display:block;
@@ -401,7 +401,7 @@ a:hover{
         display:none;
     }
     .contentui .el-col:hover .introduce{
-        height:18px;
+        height:55px;
     }
     .contentui .el-col:hover .introduce p{
         display:block;
@@ -477,7 +477,7 @@ a:hover{
         display:none;
     }
     .contentui .el-col:hover .introduce{
-        height:18px;
+        height:55px;
     }
     .contentui .el-col:hover .introduce p{
         display:block;

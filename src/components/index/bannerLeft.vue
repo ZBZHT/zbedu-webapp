@@ -54,13 +54,20 @@ export default {
        console.log(item)
       if(item.children){
           this.$store.commit('noTreeTitle1',item);
-      //    this.$router.push('/course' + '/label/'+ item.label);
-          this.$router.push('/newCourse');
+        //  this.$router.push('/course' + '/label/'+ item.label);
+          const {href} = this.$router.resolve({
+                name: 'newCourse'
+            });
+          window.open(href, '_blank')
+          //this.$router.replace('/newCourse');
       }else{
           this.$store.commit('noTreeTitle1',item);
       //    window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
-          this.$router.push('/newCourse');
-          
+      //    this.$router.replace('/newCourse');
+          const {href} = this.$router.resolve({
+                name: 'newCourse'
+            });
+          window.open(href, '_blank')
       }
     }
   }
