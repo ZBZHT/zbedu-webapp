@@ -237,7 +237,7 @@ a:hover{
         background:rgba(200,200,200,0.5);
         transition:height 0.5s;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: left;
         text-indent: 1em;
@@ -247,7 +247,7 @@ a:hover{
         display:none;
     }
     .contentui .el-col:hover .introduce{
-        height:55px;
+        height:62px;
     }
     .contentui .el-col:hover .introduce p{
         display:block;
@@ -314,7 +314,7 @@ a:hover{
         background:rgba(200,200,200,0.5);
         transition:height 0.5s;
         display: -webkit-box;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: left;
         text-indent: 1em;
@@ -391,7 +391,7 @@ a:hover{
         background:rgba(200,200,200,0.5);
         transition:height 0.5s;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: left;
         text-indent: 1em;
@@ -467,7 +467,7 @@ a:hover{
         background:rgba(200,200,200,0.5);
         transition:height 0.5s;
         display: -webkit-box;
-        -webkit-line-clamp: 1;
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         text-align: left;
         text-indent: 1em;

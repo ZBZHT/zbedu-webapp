@@ -975,7 +975,7 @@ hr{
   border-bottom: 3px solid #ffffff;
 }
 .el-tree-node__expand-icon{
-  color: #ffffff;
+  color: #000;
 }
 .newCourse-content .homework-box{
   width: 100%;

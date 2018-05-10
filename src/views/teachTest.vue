@@ -854,13 +854,13 @@
               this.toTestDataReq();
               this.Success('考试创建成功');
             }
-          }).catch(function (error) {
-            this.$message({
-                showClose: true,
-                message: '考试提交失败',
-                type: 'error'
-              });
-          });
+            }).catch(function (error) {
+              this.$message({
+                  showClose: true,
+                  message: '考试提交失败',
+                  type: 'error'
+                });
+            });
       },
       //创建考试后清空数据
       cleanAllData(formName){
@@ -879,6 +879,11 @@
             this.onSubmit(formName);
           } else {
             console.log('error submit!!');
+            this.$message({
+                showClose: true,
+                message: '考试提交失败',
+                type: 'error'
+            });
             return false;
           }
         });
@@ -1118,6 +1123,10 @@
   .teach_Test .el-dropdown {
     width: 488px;
     position: relative;
+  }
+
+  .teach_Test .el-tree-node__expand-icon{
+    color:#000;
   }
 
   .teach_Test .elinput {

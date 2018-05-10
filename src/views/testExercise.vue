@@ -24,28 +24,28 @@
           
           <div class="content">
             <div class="data">
-              <div class="desc" v-for="(item,index) in textQuestionData.question">
+              <div class="desc" v-for="(item,index) in textQuestionData">
                   <span class="desctitle">
                       <a @click="tip(index)">
-                          <img src="../assets/imgs/tip.png">
+                          <i class="el-icon-location-outline" :class='{tipIcon:tipIcon[index]}'></i>
                       </a>
                       {{index + 1}}.{{item.desc}}
                   </span>
                 <ul class="ans">
                   <li>
-                    <label :for="item.forId[0]" v-if="item.options[0]">
+                    <label :for="item.forId[0]" v-if="item.options[0]" class="ans-label">
                       <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                       {{item.options[0]}}
                     </label>
-                    <label :for="item.forId[1]" v-if="item.options[1]">
+                    <label :for="item.forId[1]" v-if="item.options[1]" class="ans-label">
                       <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                       {{item.options[1]}}
                     </label>
-                    <label :for="item.forId[2]" v-if="item.options[2]">
+                    <label :for="item.forId[2]" v-if="item.options[2]" class="ans-label">
                       <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                       {{item.options[2]}}
                     </label>
-                    <label :for="item.forId[3]" v-if="item.options[3]">
+                    <label :for="item.forId[3]" v-if="item.options[3]" class="ans-label">
                       <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                       {{item.options[3]}}
                     </label>
@@ -54,7 +54,7 @@
               </div>
             </div>
             <div class="number">
-              <ul>
+              <ul class="number-ul">
                 <li v-for="(item,index) in textQuestionData.question">
                   <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                 </li>
@@ -94,7 +94,7 @@
   import core from '../assets/js/core.js';
 
   export default {
-    name: 'test',
+    name: 'testExercise',
     data () {
       return {
         textQuestionData: '',
@@ -124,6 +124,7 @@
         isCheckArr: [],
         AllLength: '',
         classItem: {},
+        tipIcon:{},
         QidArr: [],
         null: [],
         userMessageData: '',
@@ -257,13 +258,14 @@
           }
         }).then((res) => {
             console.log("2222")
-            console.log(res.data.testQuestion)
+            console.log(res.data)
           if (res.data.testQuestion.state == 1 && res.data.testQuestion.currTestType == 106) {
-            this.textQuestionData = res.data.testQuestion;
+            this.textQuestionData = res.data.question;
+            console.log(this.textQuestionData)
             this.minutes = parseInt(res.data.testQuestion.timeHour *60) + parseInt(res.data.testQuestion.timeMin);
-            console.log(this.minutes)
-            console.log(res.data.testQuestion.timeHour)
-            console.log(res.data.testQuestion.timeMin)
+        //    console.log(this.minutes)
+        //    console.log(res.data.testQuestion.timeHour)
+        //    console.log(res.data.testQuestion.timeMin)
             this.AllLength = res.data.testQuestion.question.length;
           } else {
             this.TestNum = res.data.testQuestion.testLength;
@@ -283,8 +285,8 @@
           //考试题的唯一编号
           this.testQuestion = res.data.testQuestion;
           this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTime));
-          console.log("333333")
-          console.log(res.data)
+        //  console.log("333333")
+        //  console.log(res.data)
           if(res.data.state == 1 && res.data.currTestType == 106){
             this.picked = res.data.currAnswer;
             this.QidArr = res.data.currIsId;
@@ -374,13 +376,15 @@
           }
         }
         this.$set(this.isCheckArr,index,true);
+        this.$set(this.tipIcon,index,false);
       },
       myNum:function(index2){
         this.myNumber = index2;
         console.log(this.myNumber)
       },
       tip(index){
-        this.$set(this.classItem,index,true)
+        this.$set(this.classItem,index,true);
+        this.$set(this.tipIcon,index,true);
       },
       myFunction(event){
         var con = confirm("考试未完成，点击确定将帮您提交");
@@ -487,6 +491,9 @@
     background:rgb(194,0,0) !important;
     height:18px;
   }
+  .tipIcon{
+    color:#f00;
+  }
   .number{
     width:29%;
     height:100%;
@@ -494,6 +501,10 @@
     border-left:1px solid #000;
     position:relative;
     background:rgb(140,61,61);
+  }
+  .number .number-ul{
+    overflow:auto;
+    height: 63%;
   }
   .number li{
     display:inline-block;
@@ -537,6 +548,9 @@
     display:flex;
     margin-top:5px;
     margin-bottom:5px;
+  }
+  .ans-label{
+    margin-right:15px;
   }
   .answer{
     display:none;

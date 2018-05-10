@@ -18,15 +18,15 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
-            <el-table-column label="名称" width="500">
+            <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
-            <el-table-column label="上传时间" width="300">
+            <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
             </el-table-column>
 
-            <el-table-column label="文件大小" show-overflow-tooltip>
+            <el-table-column label="文件大小" show-overflow-tooltip width="120">
               <template slot-scope="scope">{{ scope.row.size }}M</template>
             </el-table-column>
 
@@ -48,15 +48,15 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
-            <el-table-column label="名称" width="500">
+            <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
-            <el-table-column label="上传时间" width="300">
+            <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
             </el-table-column>
 
-            <el-table-column label="文件大小" show-overflow-tooltip>
+            <el-table-column label="文件大小" show-overflow-tooltip width="120">
               <template slot-scope="scope">{{ scope.row.size }}M</template>
             </el-table-column>
 
@@ -78,15 +78,15 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
-            <el-table-column label="名称" width="500">
+            <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
-            <el-table-column label="上传时间" width="300">
+            <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
             </el-table-column>
 
-            <el-table-column label="文件大小" show-overflow-tooltip>
+            <el-table-column label="文件大小" show-overflow-tooltip width="120">
               <template slot-scope="scope">{{ scope.row.size }}M</template>
             </el-table-column>
 
@@ -109,15 +109,15 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
-            <el-table-column label="名称" width="500">
+            <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
-            <el-table-column label="上传时间" width="300">
+            <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
             </el-table-column>
 
-            <el-table-column label="文件大小" show-overflow-tooltip>
+            <el-table-column label="文件大小" show-overflow-tooltip  width="120">
               <template slot-scope="scope">{{ scope.row.size }}M</template>
             </el-table-column>
 
@@ -388,7 +388,16 @@
     bottom: 5rem;
     left: -12.7rem;
   }
+  .resourceCenter {
+    position: relative;
+  }
   .resourceCenter .card-body {
-    width: 96%;
+    width: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+  }
+  .resourceCenter .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+    text-align: left;
   }
 </style>

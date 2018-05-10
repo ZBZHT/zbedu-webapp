@@ -90,6 +90,12 @@
                   </template>
                 </el-table-column>
 
+                <el-table-column label="考试结束时间" width="180">
+                  <template slot-scope="scope">
+                    <span style="margin-left: 10px">{{ scope.row.date2 }} {{ scope.row.date4 }}</span>
+                  </template>
+                </el-table-column>
+
                 <el-table-column label="考试时长" width="150">
                   <template slot-scope="scope">
                     <span style="margin-left: 10px">{{ scope.row.timeHour }}小时{{scope.row.timeMin}}分钟</span>

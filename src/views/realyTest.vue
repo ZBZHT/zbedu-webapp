@@ -26,28 +26,29 @@
                     
                     <div class="content">
                         <div class="data">
+                            <p class="data-p">{{testAllData.theme}}</p>
                             <div class="desc" v-for="(item,index) in textQuestionData">
                                 <span class="desctitle">
                                     <a @click="tip(index)">
-                                        <img src="../assets/imgs/tip.png">
+                                        <i class="el-icon-location-outline" :class='{tipIcon:tipIcon[index]}'></i>
                                     </a>
                                     {{ index + 1 }}.{{item.desc}}
                                 </span>
                                 <ul class="ans">
                                     <li>
-                                        <label :for="item.forId[0]" v-if="item.options[0]">
+                                        <label :for="item.forId[0]" v-if="item.options[0]" class="ans-label">
                                             <input :id="item.forId[0]" :type="item.type" value="A" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                                 {{item.options[0]}}
                                         </label>
-                                        <label :for="item.forId[1]" v-if="item.options[1]">
+                                        <label :for="item.forId[1]" v-if="item.options[1]" class="ans-label">
                                             <input :id="item.forId[1]" :type="item.type" value="B" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                                 {{item.options[1]}}
                                         </label>
-                                        <label :for="item.forId[2]" v-if="item.options[2]">
+                                        <label :for="item.forId[2]" v-if="item.options[2]" class="ans-label">
                                             <input :id="item.forId[2]" :type="item.type" value="C" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                                 {{item.options[2]}}
                                         </label>
-                                        <label :for="item.forId[3]" v-if="item.options[3]">
+                                        <label :for="item.forId[3]" v-if="item.options[3]" class="ans-label">
                                             <input :id="item.forId[3]" :type="item.type" value="D" :name="item.name" v-model="picked[index]" @change="myAnswer(item.num,index)">
                                                 {{item.options[3]}}
                                         </label>
@@ -56,7 +57,7 @@
                             </div>
                         </div>
                         <div class="number">
-                            <ul>
+                            <ul class="number-ul">
                                 <li v-for="(item,index) in textQuestionData">
                                     <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                                 </li>
@@ -127,6 +128,7 @@ export default {
       isCheckArr: [],
       AllLength: '',
       classItem: {},
+      tipIcon:{},
       QidArr: [],
       null: [],
       userMessageData: '',
@@ -145,7 +147,8 @@ export default {
       testQuestion: '',
       isCheckNumA:0,
       height:window.innerHeight,
-      testScore:''
+      testAllData:'',
+      minutesLong:''
     }
   },
   created(){
@@ -179,18 +182,24 @@ export default {
     var _this = this;
     //倒计时
     var time = window.setInterval(function () {
-
+    //    console.log("asdfadsfadsf")
+    //    console.log(new Date().getTime())
+        var startTestTimeLong = new Date(_this.startTestTime).getTime();
+        var startTestTimeNow = new Date().getTime();
+        var gotTime = startTestTimeNow - startTestTimeLong;
+        _this.minutes = _this.minutesLong - parseInt(gotTime/(60*1000));
+    //    console.log(gotTime)
         if (_this.seconds == 0 && _this.minutes != 0) {
             _this.seconds = 59;
             _this.minutes -= 1;
-        }else if(_this.minutes == 0 && _this.seconds == 0){
+        }else if(_this.minutes <= 0 && _this.seconds <= 0){
             _this.seconds = 0;
             window.clearInterval(time);
             console.log("111");
         }else{
             _this.seconds -= 1
         };
-        if(_this.minutes == 0 && _this.seconds == 0){
+        if(_this.minutes <= 0 && _this.seconds <= 0){
             window.clearInterval(time);
             alert("时间到，已帮您提交");
             _this.submit();
@@ -287,7 +296,7 @@ export default {
         //console.log(res.data)
         //console.log(res.data.currState);
         //考试题的唯一编号
-        this.testScore = res.data;
+        this.testAllData = res.data;
         this.testQuestion = res.data.currTestNum;
         console.log(this.testQuestion)
         console.log("12121212121");
@@ -296,7 +305,7 @@ export default {
         this.$store.commit('vuexState',res.data.state);
         if(res.data.state == 1){
           this.textQuestionData = res.data.question;
-          this.minutes = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
+          this.minutesLong = parseInt(res.data.timeHour *60) + parseInt(res.data.timeMin);
           this.AllLength = res.data.question.length;
           this.picked = res.data.currAnswer;
           this.QidArr = res.data.currIsId;
@@ -324,7 +333,7 @@ export default {
             submit:function () {
                 this.sorce = 0;
                 this.error = [];
-                var everyScore = parseInt(this.testScore.allScore  / this.textQuestionData.length);
+                var everyScore = parseInt(this.testAllData.allScore  / this.textQuestionData.length);
                 console.log(this.textQuestionData.length);
                 //console.log(this.picked)
                 for(var i = 0;i < this.QidArr.length;i++){
@@ -397,6 +406,7 @@ export default {
             //        }
             //    }
                 this.$set(this.isCheckArr,index,true);
+                this.$set(this.tipIcon,index,false);
 
                 axios({
                         method:'get',
@@ -428,6 +438,7 @@ export default {
             },
             tip(index){
                 this.$set(this.classItem,index,true)
+                this.$set(this.tipIcon,index,true)
             },
             myFunction(event){
                 var con = confirm("考试未完成，点击确定将帮您提交");
@@ -531,8 +542,14 @@ a{
     border-top:1px solid #000;
     overflow:auto;
     text-align:left;
-    padding-top:40px;
+    padding-top:10px;
     box-sizing:border-box;
+}
+.data .data-p{
+    margin-left:10px;
+    font-weight:bolder;
+    font-size:18px;
+    margin-bottom: -10px;
 }
 .dispear{
     display:none;
@@ -541,6 +558,9 @@ a{
     background:rgb(194,0,0) !important;
     height:18px;
 }
+.tipIcon{
+    color:#f00;
+}
 .number{
     width:29%;
     height:100%;
@@ -548,6 +568,10 @@ a{
     border-left:1px solid #000;
     position:relative;
     background:rgb(140,61,61);
+}
+.number .number-ul{
+    overflow:auto;
+    height: 63%;
 }
 .number li{
     display:inline-block;
@@ -592,6 +616,9 @@ a{
     margin-top:5px;
     margin-bottom:5px;
 }
+.ans-label{
+    margin-right:15px;
+}
 .answer{
     display:none;
 }
@@ -608,7 +635,7 @@ a{
     background-color:rgb(253,96,96);
     padding:8px;
     position:absolute;
-    bottom:48px;
+    bottom:8px;
     left:18px;
     cursor:pointer;
     color:#fff;
