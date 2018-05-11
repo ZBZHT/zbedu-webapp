@@ -2,7 +2,7 @@
 <div class="best-class">
     <div class="five-box" v-for="item in bestClassData">
         <div class="mask-play zz mf">
-            <img :src="url_before + item.url">
+            <div class="maskImg"><img :src="url_before + item.url"></div>
             <div class="mask">
                 <img @click="playBestVideo(item)" src="src/assets/imgs/play3.png">
                 <p class="ppv" @click="playBestPdf(item)"><span>PPT</span></p>
@@ -122,6 +122,14 @@ a:hover{
     height:100px;
     margin-bottom:40px;
 }
+.mask-play .maskImg{
+    width:169px;
+    height:100px;
+}
+.mask-play .maskImg img{
+    width:100%;
+    height:100%;
+}
 .mask-play .mask{
     width:171px;
     height:100px;
@@ -143,12 +151,12 @@ div.mask-play:hover .mask{
 }
 .ppv{
     width:37px;
-    height:18px;
+    height:23px;
     border-radius: 8px;
     background: #fff;
     color:#000;
     margin-left: 124px;
-    margin-top:-43px;
+    margin-top:-50px;
     text-align: center;
 }
 </style>

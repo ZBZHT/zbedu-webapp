@@ -18,7 +18,7 @@
   ],
   "bestClassData":[
     {
-      "url":"img.png",
+      "url":"bestclass1.png",
       "title":"纯电动汽车总体结构认知",
       "label":"总体结构认知",
       "describe":"北汽EV160整车控制器、电机控制器、电动空调等结构的工作原理及工作条件。",
@@ -34,7 +34,7 @@
 
     },
     {
-      "url":"img.png",
+      "url":"bestclass2.png",
       "title":"纯电动汽车动力电池拆装",
       "label":"动力电池拆装",
       "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤。",
@@ -49,7 +49,7 @@
       "courseId": 1121
     },
     {
-      "url":"img.png",
+      "url":"bestclass3.png",
       "title":"纯电动汽车基本信息收集与介绍",
       "label":"基本信息收集与介绍",
       "describe":"检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
@@ -64,7 +64,7 @@
       "courseId": 1111
     },
     {
-      "url":"img.png",
+      "url":"bestclass4.png",
       "title":"纯电动汽车BMS系统拆装",
       "label":"BMS系统拆装",
       "describe":"BMS的功能原理和作用，更换BMS控制器步骤及电动汽车高压安全操作注意事项。",
@@ -79,7 +79,7 @@
       "courseId": 1122
     },
     {
-      "url":"img.png",
+      "url":"bestclass5.png",
       "title":"纯电动汽车继电器模组故障检修",
       "label":"继电器模组故障检修",
       "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
@@ -99,7 +99,7 @@
   ],
   "pageData":[
     {
-      "url":"img.png",
+      "url":"bottomMiddle1.png",
       "title":"纯电动汽车高压安全操作",
       "label":"高压安全操作",
       "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
@@ -114,7 +114,7 @@
       "courseId": 1113
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle2.png",
       "title":"纯电动汽车高压危害与救助方法",
       "label":"高压危害与救助方法",
       "describe":"用电操作不当遇到危险时候的一些急救方法以及如何正确安全的操作纯电动汽车。",
@@ -129,7 +129,7 @@
       "courseId": 1114
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle3.png",
       "title":"纯电动汽车新车PDI检查",
       "label":"新车PDI检查",
       "describe":"纯电动汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
@@ -147,7 +147,7 @@
       "courseId": 1115
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle4.png",
       "title":"纯电动汽车常规保养与维护",
       "label":"常规保养与维护",
       "describe":"纯电动汽车如何保养、保养哪些方面和保养维护的时候应当注意的地方有哪些。",
@@ -162,7 +162,7 @@
       "courseId": 1116
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle5.png",
       "title":"纯电动汽车继电器模组故障检修",
       "label":"继电器模组故障检修",
       "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
@@ -180,7 +180,7 @@
       "courseId": 1123
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle6.png",
       "title":"纯电动汽车动力电池故障检修",
       "label":"动力电池故障检修",
       "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
@@ -195,7 +195,7 @@
       "courseId": 1124
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle7.png",
       "title":"纯电动汽车MCU与VCU通讯丢失故障",
       "label":"MCU与VCU通讯丢失故障",
       "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
@@ -210,7 +210,7 @@
       "courseId": 1134
     },
     {
-      "url":"img.png",
+      "url":"bottomMiddle8.png",
       "title":"纯电动汽车电机旋变传感器故障检修",
       "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
       "label":"电机旋变传感器故障检修",
@@ -227,7 +227,7 @@
   ],
   "bottomLeftData":[
     {
-      "url":"left.png",
+      "url":"bottomLeft1.png",
       "title":"纯电动汽车动力电池故障检修",
       "label":"动力电池故障检修",
       "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
@@ -242,7 +242,7 @@
       "courseId": 1124
     },
     {
-      "url":"left.png",
+      "url":"bottomLeft2.png",
       "title":"纯电动汽车MCU与VCU通讯丢失故障",
       "label":"MCU与VCU通讯丢失故障",
       "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
@@ -257,7 +257,7 @@
       "courseId": 1134
     },
     {
-      "url":"left.png",
+      "url":"bottomLeft3.png",
       "title":"纯电动汽车电机旋变传感器故障检修",
       "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
       "label":"电机旋变传感器故障检修",

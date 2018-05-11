@@ -12,6 +12,8 @@
     <div class="middlebox">
         <div class="information">
             <p>考试通知</p>
+
+            {{minutes}}..{{seconds}}
             <hr>
             <ul>
                 <li v-for="item in information">
@@ -100,33 +102,53 @@ export default {
           height: '100%'
         },
         url:'',
-        url_before:'src/assets/imgs/'
+        url_before:'src/assets/imgs/',
+        minutes:'',
+        seconds:'',
+        timeLong:61,
+        minutesAll:''
     }
   },
   created(){
 
   },
   mounted(){
-      this.url = document.domain;
-      axios.get("/readJson/index",{
-                params:{
-                     user:123
-                }
-            }).then((res)=>{
-                this.textCenterData = res.data;
-                console.log(this.textCenterData);
-                this.information = this.textCenterData.information;
-                this.winner = this.textCenterData.winner;
-                this.hotTest = this.textCenterData.hotTest;
-                this.gradeTest = this.textCenterData.gradeTest;
-                this.contentTest = this.textCenterData.contentTest;
-                this.slides = this.textCenterData.slides;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-    },
+      
+      var gotTime = new Date().getTime() - 1525936549734;
+      var minu = parseInt(gotTime/(60*1000));
+      this.minutesAll = this.timeLong * 60 - parseInt(gotTime/1000);
+      console.log(new Date().getTime());
+      if(this.minutesAll >= 0){
+        this.timeInterval();
+      }else{
+         
+      }
+      
+  },
   methods:{
+    timeInterval(){
+  //      console.log("ddd")
+        setTimeout(function () {
+            this.minutesAll -= 1;
+            if(this.minutesAll >= 0){
+                this.secondTime(this.minutesAll);
+                this.timeInterval();
+            }else{
+                alert("oooo");
+                alert("时间到，已帮您提交");
+                _this.submit();
+            }
 
+        }.bind(this),1000)
+    },
+    secondTime(time){
+        console.log(time)
+        this.minutes = parseInt(time / 60);
+        this.seconds = time % 60;
+        if(_this.seconds < 10){
+            _this.seconds = "0" + _this.seconds;
+        }
+    }
   },
   watch:{
       '$route' (to,from) {

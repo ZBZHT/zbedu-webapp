@@ -102,8 +102,8 @@ export default {
   data () {
     return {
       textQuestionData: '',
-      minutes: 120,
-      seconds: 0,
+      minutes: '',
+      seconds: '',
       dispear: true,
       answer: true,
       myAns: '',
@@ -148,7 +148,8 @@ export default {
       isCheckNumA:0,
       height:window.innerHeight,
       testAllData:'',
-      minutesLong:''
+      minutesLong:'',
+      minutesAll:''
     }
   },
   created(){
@@ -176,39 +177,24 @@ export default {
   },
   mounted(){
    window.addEventListener('resize', this.handleResize)
+   this.getTestQ();
+   this.getTestQuesInfo();
    setTimeout(function(){
-    //var allTestNum = this.$store.state.allTestNum ;
-    //var url = document.domain;
     var _this = this;
     //倒计时
-    var time = window.setInterval(function () {
-    //    console.log("asdfadsfadsf")
-    //    console.log(new Date().getTime())
+
         var startTestTimeLong = new Date(_this.startTestTime).getTime();
         var startTestTimeNow = new Date().getTime();
         var gotTime = startTestTimeNow - startTestTimeLong;
-        _this.minutes = _this.minutesLong - parseInt(gotTime/(60*1000));
-    //    console.log(gotTime)
-        if (_this.seconds == 0 && _this.minutes != 0) {
-            _this.seconds = 59;
-            _this.minutes -= 1;
-        }else if(_this.minutes <= 0 && _this.seconds <= 0){
-            _this.seconds = 0;
-            window.clearInterval(time);
-            console.log("111");
+        _this.minutesAll = _this.minutesLong * 60 - parseInt(gotTime/1000);
+    //    console.log("ssss")
+    //    console.log(_this.minutesLong)
+    //    console.log(_this.minutesAll)
+        if(_this.minutesAll >= 0){
+            _this.timeInterval();
         }else{
-            _this.seconds -= 1
-        };
-        if(_this.minutes <= 0 && _this.seconds <= 0){
-            window.clearInterval(time);
-            alert("时间到，已帮您提交");
-            _this.submit();
-        };
-        if(_this.seconds < 10){
-        _this.seconds = "0" + _this.seconds;
+            
         }
-
-        },1000);
 
         _this.dispear = !_this.dispear;
         _this.nowTime = new Date();
@@ -238,11 +224,10 @@ export default {
         _this.currentdate = _this.nowTime.getFullYear() + seperator1 + month + seperator1 + strDate
         + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
 
-     this.getTestQ();
-     this.getTestQuesInfo();
+     
     }.bind(this),500)
 
-    },
+  },
   watch: {
         second:{
             handler(newVal){
@@ -256,6 +241,29 @@ export default {
         }
     },
   methods:{
+    //倒计时
+    timeInterval(){
+        setTimeout(function () {
+            this.minutesAll -= 1;
+            if(this.minutesAll >= 0){
+                this.secondTime(this.minutesAll);
+                this.timeInterval();
+            }else{
+                alert("时间到，已帮您提交");
+                this.submit();
+            }
+
+        }.bind(this),1000)
+    },
+    //秒转成分
+    secondTime(time){
+    //    console.log(time)
+        this.minutes = parseInt(time / 60);
+        this.seconds = time % 60;
+        if(this.seconds < 10){
+            this.seconds = "0" + this.seconds;
+        }
+    },
     handleResize (event) {
         this.height = window.innerHeight;
         if(this.height <= "620"){

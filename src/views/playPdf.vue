@@ -4,6 +4,7 @@
       <navgation-head></navgation-head>
     </div>
     <div class="content-box">
+      <p class="devDownload" v-show="noTree.teachingMaterial"></p>
       <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></iframe>
     </div>
 
@@ -54,6 +55,15 @@
     height: 700px;
     position: relative;
     padding: 0 5%;
+  }
+  .content-box .devDownload{
+    margin-left: 9.7%;
+    width: 79.5%;
+    height: 53px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: rgb(82,86,89);
   }
   .content-box .pdf-box{
     width: 90%;

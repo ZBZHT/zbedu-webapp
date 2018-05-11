@@ -29,6 +29,7 @@
                         </el-tab-pane>
                         <el-tab-pane label="设备参数">
                             <div class="exerEngRule">
+                                <p class="devDownload" v-show="exerEngRule"></p>
                                 <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                                     <param name="_Version" value="65539">
                                     <param name="_ExtentX" value="20108">
@@ -55,6 +56,7 @@
                         </el-tab-pane>
                         <el-tab-pane label="实训中心配置">
                             <div class="exerEngRule">
+                                <p class="devDownload" v-show="exerEngRule"></p>
                                 <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
                                     <param name="_Version" value="65539">
                                     <param name="_ExtentX" value="20108">
@@ -292,5 +294,11 @@ hr{
 }
 .el-tree-node__expand-icon{
   color: #ffffff;
+}
+.exerciseCenter-content .devDownload{
+    width:96.7%;
+    height:53px;
+    position:absolute;
+    background:rgb(82,86,89);
 }
 </style>

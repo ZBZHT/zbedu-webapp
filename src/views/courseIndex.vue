@@ -35,11 +35,11 @@
                     v-if="index >= (page-1)*6 && index <= (page-1)*6 + 5">
                     <a>
                         <div class="mask-play">
-                            <img :src="url_before + item.url">
+                            <div class="maskImg"><img :src="url_before + item.url"></div>
                             <div class="mask">
                                 <img @click="toPlayVideo(item)" class="play" src="src/assets/imgs/play3.png">
                                 <p @click="toPlayPdf(item)" class="ppv"><span>PPT</span></p>
-                                <p @click="toPlayVideo(item)" class="ppv"><span>Video</span></p>
+                                <p @click="toPlayVideo(item)" class="video"><span>Video</span></p>
                             </div>
 
                         <div class="intro">
@@ -264,6 +264,14 @@ hr{
     right:0;
     display:none;
 }
+.courseIndex .mask-play .maskImg{
+    width:169px;
+    height:100px;
+}
+.courseIndex .mask-play .maskImg img{
+    width:100%;
+    height:100%;
+}
 .courseIndex .mask>img{
     margin-top:20px;
 }
@@ -337,12 +345,22 @@ hr{
 }
 .courseIndex .ppv{
     width:37px;
-    height:18px;
+    height:23px;
     border-radius: 8px;
     background: #fff;
     color:#000;
     margin-left: 124px;
-    margin-top:-55px;
+    margin-top:-48px;
+    text-align: center;
+}
+.courseIndex .video{
+    width:37px;
+    height:23px;
+    border-radius: 8px;
+    background: #fff;
+    color:#000;
+    margin-left: 124px;
+    margin-top:-67px;
     text-align: center;
 }
 .courseIndex .intro{

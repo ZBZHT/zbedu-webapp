@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="resourceCenter">
     <div>
       <navgation-head></navgation-head>
     </div>
@@ -13,7 +13,7 @@
             ref="multipleTable"
             :data="msgArr"
             tooltip-effect="dark"
-            style="width: 90%"
+            style="width: 96%;"
             @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -22,7 +22,7 @@
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
-            <el-table-column label="上传时间" width="220">
+            <el-table-column label="上传时间" width="220" >
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
             </el-table-column>
 
@@ -43,7 +43,7 @@
             ref="multipleTable"
             :data="courseWareArr"
             tooltip-effect="dark"
-            style="width: 90%"
+            style="width: 96%"
             @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -73,7 +73,7 @@
             ref="multipleTable"
             :data="videoArr"
             tooltip-effect="dark"
-            style="width: 90%"
+            style="width: 96%"
             @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
@@ -397,7 +397,7 @@
     top:0;
     left:0;
   }
-  .resourceCenter .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+  .resourceCenter .el-table .cell {
     text-align: left;
   }
 </style>

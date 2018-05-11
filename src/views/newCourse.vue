@@ -36,7 +36,7 @@
                             <el-tab-pane label="本节教材">
                               <div id="teachingBook">
                                 <p class="devDownload" v-show="noTree.teachingBook"></p>
-                                  <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></iframe>
+                                  <embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>
                                 <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
@@ -45,7 +45,7 @@
                             <el-tab-pane label="教学课件">
                               <div id="courseppt">
                                 <p class="devDownload" v-show="noTree.teachingMaterial"></p>
-                                  <iframe :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></iframe>
+                                  <embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>
                                 <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
@@ -62,7 +62,7 @@
                             <el-tab-pane label="工作页">
                               <div id="courseWorkPage">
                                 <p class="devDownload" v-show="noTree.workPage"></p>
-                                  <iframe :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></iframe>
+                                  <embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>
                                 <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
@@ -502,6 +502,7 @@ export default {
 
           //console.log(this.checkArr);
           this.$store.commit('noTreeTitle',data);
+          this.$store.commit('noTreeTitle1',data);
           axios.get("/readTestQuestion/getHomeWork",{
             params:{
                 userId:this.userId,
@@ -860,6 +861,15 @@ hr{
     box-sizing:border-box;
     text-align:left;
 }
+.newCourse-content #teachingBook{
+    width:100%;
+}
+.newCourse-content #courseppt{
+    width:100%;
+}
+.newCourse-content #courseWorkPage{
+    width:100%;
+}
 .newCourse-content .courseDescribe .title{
     font-weight:bolder;
 }
@@ -871,11 +881,9 @@ hr{
     margin-bottom:20px;
 }
 .newCourse-content .devDownload{
-    width:100%;
+    width:96.7%;
     height:53px;
     position:absolute;
-    top:0;
-    left:0;
     background:rgb(82,86,89);
 }
 .newCourse-content .el-tree-node__expand-icon {

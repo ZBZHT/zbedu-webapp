@@ -2,7 +2,7 @@
             <div class="bb-left-case">
 
                 <div class="mask-play-right" v-for="item in bottomLeftData">
-                    <img :src="url_before + item.url">
+                    <div class="maskImg"><img :src="url_before + item.url"></div>
                     <img @click="playBottomLeftVideo(item)" class="play-right" src="src/assets/imgs/play3.png">
                     <p class="p" @click="sendButtomLeftTitle(item)">
                         {{item.title}}
@@ -85,10 +85,19 @@ a:focus {
 }
 .mask-play-right .play-right{
     position: relative;
-    top:-6px;
+    top:4px;
     left:61px;
     margin-top:-64px;
     display: none;
+}
+.mask-play-right .maskImg{
+    width:132px;
+    height:77px;
+}
+.mask-play-right .maskImg img{
+    width:100%;
+    height:100%;
+    margin-left: 22px;
 }
 div.mask-play-right:hover .play-right{
     display: block;
