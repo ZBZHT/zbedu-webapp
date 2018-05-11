@@ -9,10 +9,10 @@
             <nav-user></nav-user>
         </div>
         <div v-show="textQuestionData">
-            <div class="leftItem">
-                <p>开始时间</p>
-                <span>{{startTestTime}}</span>
-            </div>
+            <!--<div class="leftItem">-->
+                <!--<p>开始时间</p>-->
+                <!--<span>{{startTestTime}}</span>-->
+            <!--</div>-->
             <div class="leftItem">
                 <p>倒计时</p>
                 <span class="time">{{minutes}}</span>'<span class="time">{{seconds}}</span>
@@ -21,7 +21,7 @@
       </div>
       <div class="rightBox">
         <div class="testOnline" v-show="currIndex === 0">
-          
+
           <div class="content">
             <div class="data">
               <div class="desc" v-for="(item,index) in textQuestionData">
@@ -55,7 +55,7 @@
             </div>
             <div class="number">
               <ul class="number-ul">
-                <li v-for="(item,index) in textQuestionData.question">
+                <li v-for="(item,index) in textQuestionData">
                   <a :class='{tip:classItem[index],isCheck : isCheckArr[index]}'>{{ index + 1 }}</a>
                 </li>
               </ul>
@@ -259,9 +259,10 @@
         }).then((res) => {
             console.log("2222")
             console.log(res.data)
+            console.log(res.data.testQuestion.question)
           if (res.data.testQuestion.state == 1 && res.data.testQuestion.currTestType == 106) {
-            this.textQuestionData = res.data.question;
-            console.log(this.textQuestionData)
+            this.textQuestionData = res.data.testQuestion.question;
+        //    console.log(this.textQuestionData)
             this.minutes = parseInt(res.data.testQuestion.timeHour *60) + parseInt(res.data.testQuestion.timeMin);
         //    console.log(this.minutes)
         //    console.log(res.data.testQuestion.timeHour)
@@ -343,7 +344,7 @@
             //console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
             //console.log("asd"+this.picked[i])
             //console.log(this.textQuestionData)
-            if(this.textQuestionData.question[i].answer == this.picked[i]){
+            if(this.textQuestionData[i].answer == this.picked[i]){
 
               this.sorce += 5;
             }else{
@@ -365,7 +366,7 @@
       },
 
       myAnswer:function(id,index){
-        this.lengthData = this.textQuestionData.question.length;
+        this.lengthData = this.textQuestionData.length;
         this.QidArr[index] = id;
         console.log(this.QidArr);
         var a = 0;

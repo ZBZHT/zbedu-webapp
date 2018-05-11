@@ -720,7 +720,7 @@
                             {
                               "label":"混合动力汽车概述",
                               "describe":"详述什么是混合动力汽车，有哪些部件结构组成，其基本工作原理是什么？",
-                              "teachingMaterial":"",
+                              "teachingMaterial":"新车交接.pdf",
                               "teachingBook":"",
                               "videoTitle":[
                                 {
@@ -1728,7 +1728,7 @@
                     {
                       "label":"进排气凸轮轴调节阀",
                       "describe":"大众速腾进排气凸轮调节阀工作原理，如何调节及调节阀故障如何检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"进排气凸轮轴调节阀.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -1994,7 +1994,7 @@
                     {
                       "label":"发动机无法起动故障详解",
                       "describe":"大众速腾发动机无法启动的原因、判断方法及对故障进行检修方法。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"发动机无法起动故障详解.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2014,7 +2014,7 @@
                     {
                       "label":"活性碳罐及碳罐电磁阀",
                       "describe":"大众速腾活性炭罐及电磁阀的工作原理、安装位置、起什么作用和发生故障时的检修流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"活性碳罐及碳罐电磁阀.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2034,7 +2034,7 @@
                     {
                       "label":"发动机冷却装置拆装",
                       "describe":"如何拆装冷却系统装置，冷却装置的安装位置及拆解流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"冷却装置的拆装.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2086,7 +2086,7 @@
                     {
                       "label":"汽车维修车间的基本操作规程",
                       "describe":"简述汽车维修间的基本操作流程以及基本操作注意事项。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"汽车维修车间的基本操作规程.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2133,7 +2133,7 @@
                       "label":"认识速腾双离合变速器",
                       "describe":"大众速腾双离合变速器的组成、部件功能及工作原理。",
                       "teachingMaterial":"大众速腾-DSG齿轮箱.pdf",
-                      "teachingBook":"",
+                      "teachingBook":"认识速腾双离合变速器.pdf",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2324,7 +2324,7 @@
                     {
                       "label":"悬架系统部件检修",
                       "describe":"大众速腾悬架系统的组成、各个部件的功能以及对悬架检修的方法。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"悬架系统部件检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2344,7 +2344,7 @@
                     {
                       "label":"四轮定位检测与调整",
                       "describe":"四轮定位的作用、四轮定位仪的使用和如何进行四轮定位的检测与调整",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"四轮定位检测与调整.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2364,7 +2364,7 @@
                     {
                       "label":"轮胎拆装与更换",
                       "describe":"轮胎拆装的流程及方法，扒胎机的使用及注意事项。",
-                      "teachingMaterial":"轮胎的拆卸与装复.pdf",
+                      "teachingMaterial":" 轮胎拆装与更换.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2404,7 +2404,7 @@
                     {
                       "label":"行驶跑偏故障检修",
                       "describe":"简述行驶跑偏现象，跑偏的原因及排除行驶跑偏的方法流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"行驶跑偏故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2430,7 +2430,7 @@
                     {
                       "label":"认识制动系统",
                       "describe":"简述传统汽车制动系统的组成以及和大众速腾制动系统之间的区别",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"认识制动系统.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2450,7 +2450,7 @@
                     {
                       "label":"液压制动总泵及真空助力器检修",
                       "describe":"制动总泵及真空助力器的组成、实现的功能及工作原理，如何对总泵或真空助力器故障进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"液压制动总泵及真空助力器检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2510,7 +2510,7 @@
                     {
                       "label":"制动灯故障",
                       "describe":"大众速腾制动灯系统的组成及控制原理，如何对制动灯故障进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"制动灯故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2602,7 +2602,7 @@
                     {
                       "label":"充电指示灯常亮故障检修",
                       "describe":"大众速腾充电指示灯亮起的原因，电路原理及对故障灯点亮维修的过程和方法。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"充电指示灯常亮故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2839,7 +2839,7 @@
                     {
                       "label":"转向灯工作异常故障检修",
                       "describe":"大众速腾转向灯电路控制原理和对转向灯故障检修的流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"转向灯工作异常故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2879,7 +2879,7 @@
                     {
                       "label":"远光灯不亮故障检修",
                       "describe":"大众速腾远光灯电路控制原理和对远光灯故障检修的流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"远光灯不亮故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2985,7 +2985,7 @@
                     {
                       "label":"电动后视镜无法调节故障检修",
                       "describe":"大众速腾电动后视镜系统组成、电路控制原理及对无法调节故障进行检修流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"后视镜不能调节故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3117,7 +3117,7 @@
                     {
                       "label":"can-bus综述",
                       "describe":"简述什么是CAN-BUS，总线组成、工作原理及控制原理等。",
-                      "teachingMaterial":"车载网络.pdf",
+                      "teachingMaterial":"canbus综述.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3137,7 +3137,7 @@
                     {
                       "label":"典型车型整车电气故障检修",
                       "describe":"整车电气组成、电路控制原理、线路如何连接及故障维修诊断流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"典型车型电气故障检修.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3157,7 +3157,7 @@
                     {
                       "label":"多媒体主机拆装",
                       "describe":"大众速腾多媒体工作原理、系统组成，如何拆装并且对故障进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"多媒体系统拆装.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3295,7 +3295,7 @@
                 "label":"机油机滤",
                 "describe":"简述更换机油机滤的流程，更换时候的注意事项、机油及机滤的作用及功能。",
                 "teachingMaterial":"大众速腾-机油机滤宽屏.pdf",
-                "teachingBook":"",
+                "teachingBook":"机油机滤.pdf",
                 "videoTitle":[
                   {
                     "videoTitle":""
@@ -3315,7 +3315,7 @@
               {
                 "label":"汽车首次维护",
                 "describe":"简述新车首次维护应做的哪些检查和哪些保养。",
-                "teachingMaterial":"",
+                "teachingMaterial":"汽车首保.pdf",
                 "teachingBook":"",
                 "videoTitle":[
                   {
@@ -3336,7 +3336,7 @@
               {
                 "label":"汽车4万公里维护",
                 "describe":"简述汽车4万公里保养时候应做哪些检查和更换内容。",
-                "teachingMaterial":"",
+                "teachingMaterial":"4万公里维护.pdf",
                 "teachingBook":"",
                 "videoTitle":[
                   {
@@ -3357,7 +3357,7 @@
               {
                 "label":"汽车换季维护",
                 "describe":"简述汽车换季时候应对汽车进行哪些方面的保养，保养的内容及保养方法。",
-                "teachingMaterial":"",
+                "teachingMaterial":"换季保养.pdf",
                 "teachingBook":"",
                 "videoTitle":[
                   {
@@ -5866,7 +5866,48 @@
               "id":3100,
               "children":[
                 {
-                  "label":"大赛1",
+                  "label":"2018年全国职业院校技能大赛",
+                  "title":"教育部关于举办2018年全国职业院校技能大赛的通知",
+                  "sTitle":"教职成函〔2018〕6号",
+                  "content":[
+                    {
+                      "content":"各省、自治区、直辖市教育厅（教委），各计划单列市教育局，新疆生产建设兵团教育局，有关单位："
+                    },
+                    {
+                      "content":"2018年全国职业院校技能大赛将于5月至6月在天津主赛区和北京、山西、内蒙古、辽宁、吉林、江苏、浙江、安徽、福建、山东、河南、湖北、湖南、广东、重庆、四川、云南、陕西、甘肃、宁夏、青岛、宁波等22个分赛区举行。现将大赛组织委员会组成人员名单（详见附件1）及大赛实施方案（详见附件2、3）印发给你们，请做好相关准备工作。"
+                    },
+                    {
+                      "content":"大赛开幕式定于5月6日职业教育活动周期间在天津举行。天津比赛期间，还将同期举办中华优秀传统文化艺术表演赛、全国职业院校技能大赛博物馆展示交流、全国大赛获奖选手就业洽谈会等重要活动。"
+                    },
+                    {
+                      "content":"关于大赛开幕式的有关事项由大赛组委会秘书处另行通知。"
+                    }
+                  ],
+                  "moreText":[
+                    {
+                      "text":"全国职业院校技能大赛组织委员会组成人员名单.docx "
+                    },
+                    {
+                      "text":"2018年全国职业院校技能大赛常规赛项实施方案.docx"
+                    },
+                    {
+                      "text":"2018年全国职业院校技能大赛行业特色赛项实施方案.docx"
+                    }
+                  ],
+                  "address":"教育部",
+                  "time":"2018年4月27日",
+                  "ruleText":"2018年全国职业院校技能大赛制度汇编.pdf",
+                  "historyTitle":"",
+                  "historyContent":[
+                    {
+                      "historyContent":""
+                    }
+                  ],
+                  "historyImg":[
+                    {
+                      "historyImg":""
+                    }
+                  ],
                   "id":3110
                 },
                 {
@@ -5884,7 +5925,132 @@
               "id":3200,
               "children":[
                 {
-                  "label":"大赛1",
+                  "label":"2017年全国职业院校技能大赛中职组“汽车运用与维修”赛项",
+                  "title":"关于召开2017年全国职业院校技能大赛中职组“汽车运用与维修”赛项说明会的通知",
+                  "sTitle":"",
+                  "content":[
+                    {
+                      "content":"各省、自治区、直辖市教育厅（教委），各计划单列市教育局，新疆生产建设兵团教育局，有关单位："
+                    },
+                    {
+                      "content":"为做好2017年全国职业院校技能大赛汽车运用与维修（中职组）赛项的筹备工作，解读2017年大赛技术方案，经研究决定召开赛项说明会，现将具体内容通知如下："
+                    },
+                    {
+                      "content":"一、会议时间："
+                    },
+                    {
+                      "content":"1.报到时间：4月13日"
+                    },
+                    {
+                      "content":"2.会议时间：4月14日"
+                    },
+                    {
+                      "content":"二、会议地点："
+                    },
+                    {
+                      "content":"1.报到地点："
+                    },
+                    {
+                      "content":"1）天津空港白云酒店，天津空港经济区西二道90号，联系人：严腊梅13820230934，标间价格：380元含双早。（主要酒店，房间较多）；"
+                    },
+                    {
+                      "content":"2）天津空港格兰云天大酒店，天津市空港经济区西二道82号，距离空港白云酒店走路5分钟路程，联系人：靳明雨13821186010，标间价格330元含双早。（辅助酒店，房间较少）。"
+                    },
+                    {
+                      "content":"因房间有限，此次会议安排两个宾馆住宿，两个宾馆均设报到处。"
+                    },
+                    {
+                      "content":"2.会议地点：天津空港白云酒店（具体会议室安排见附件2）。"
+                    },
+                    {
+                      "content":"三、会议内容："
+                    },
+                    {
+                      "content":"1.2017年大赛项目介绍"
+                    },
+                    {
+                      "content":"2.大赛会务工作介绍"
+                    },
+                    {
+                      "content":"3.赛项技术方案解读介绍、答疑及赛项实操比赛问题分析："
+                    },
+                    {
+                      "content":"1）机电维修（定期维护、车轮定位、机械拆装、故障诊断）"
+                    },
+                    {
+                      "content":"2）车身修复（钣金）"
+                    },
+                    {
+                      "content":"3）车身涂装（涂漆）"
+                    },
+                    {
+                      "content":"四、会议经费："
+                    },
+                    {
+                      "content":"本次会议的会务费由大赛承办方承担，所有代表食宿统一安排，费用自理。"
+                    },
+                    {
+                      "content":"五、联系方式："
+                    },
+                    {
+                      "content":"中国汽车维修行业协会"
+                    },
+                    {
+                      "content":"联系人：康学楠   010-63310375   13911508542"
+                    },
+                    {
+                      "content":"天津市东丽区职业教育中心学校"
+                    },
+                    {
+                      "content":"总负责人：魏云福      联系电话13820019299"
+                    },
+                    {
+                      "content":"交通负责人：贾国新    联系电话13164068466"
+                    },
+                    {
+                      "content":"宾馆负责人：刘爱军    联系电话13752226393"
+                    },
+                    {
+                      "content":"电子邮件：wyf9299@126.com"
+                    },
+                    {
+                      "content":"因酒店预定房间服务需要，请各位代表在4月7日前，务必将参会回执发电子邮件到天津市东丽区职业教育中心学校。"
+                    }
+                  ],
+                  "moreText":[
+                    {
+                      "text":"中职组”汽车运用与维修“赛项说明会回执.docx"
+                    },
+                    {
+                      "text":"中职组”汽车运用与维修“赛项说明会会议日程.docx"
+                    },
+                    {
+                      "text":"中职组”汽车运用与维修“赛项说明会交通路线及说明.doc"
+                    }
+                  ],
+                  "address":"中国汽车维修行业协会",
+                  "time":"2017年3月31",
+                  "ruleText":"2017年全国职业院校技能大赛制度汇编.pdf",
+                  "historyTitle":"2017年全国职业院校技能大赛中职组汽车运用与维修赛项成功举办",
+                  "historyContent":[
+                    {
+                      "historyContent":"2017年全国职业院校技能大赛中职组汽车运用与维修技能大赛”于5月24-27日在天津市东丽区举办。参加本次大赛的有来自全国各省、市、自治区、计划单列市和新疆生产建设兵团中等职业学校汽车维修专业的37支代表队，共计361名学生。"
+                    },
+                    {
+                      "historyContent":"本次比赛共设立3个子赛项：包括汽车整车维护、车身修复（钣金）和车身涂装（涂漆）；其中汽车整车维护整合了定期维护、车轮定位、发动机拆装与测量、故障诊断、汽车空调维修等行业全部的机修项目，贴近世界技能大赛比赛模式，对于选手实际操作的考察已经达到了技师的水平。"
+                    },
+                    {
+                      "historyContent":"举办本届技能竞赛，是对汽车运用与维修专业紧缺人才培养培训工程的进一步检验，是对深入贯彻落实国务院职业教育工作会议精神、深化改革、加快发展所取得成果的又一次检阅；是汽修行业弘扬“工匠”精神的一次体现；更是职业学校广大师生奋发向上、锐意进取的精神面貌和熟练技能的一次展示。这对于进一步宣传职业教育，营造关心支持职业教育发展的良好社会氛围；对于全面落实科学发展观，加快发展职业教育，提高办学质量和效益，实现又好又快发展具有重要意义。"
+                    }
+                  ],
+                  "historyImg":[
+                    {
+                      "historyImg":"competition1.png"
+                    },
+                    {
+                      "historyImg":"competition2.png"
+                    }
+                  ],
                   "id":3210
                 },
                 {

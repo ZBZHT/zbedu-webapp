@@ -20,11 +20,21 @@
             <el-col :span="18">
                 <!--大赛资讯-->
                 <div v-show="is697">
-                    <p class="exerP">{{exerLabel}}</p>
-                    <el-tabs type="border-card">
-                        <el-tab-pane label="通知文件">
-                            <div class="exerEngImg" v-for="item in exerEngImg">
-
+                    <p class="exerP">{{competitionData.label}}</p>
+                    <el-tabs type="border-card" v-model="activeName">
+                        <el-tab-pane label="通知文件" :name="descTab">
+                            <div class="exerEngImg">
+                                <p class="exerEngImgTitle">{{competitionData.title}}</p>
+                                <p class="exerEngImgSTitle">{{competitionData.sTitle}}</p>
+                                <div v-for="item in competitionData.content">
+                                    <p class="exerEngImgContent">{{item.content}}</p>
+                                </div> 
+                                附件：
+                                <div v-for="item in competitionData.moreText">
+                                    <p class="exerEngmoreText" @click="sendName(item.text)">{{item.text}}</p>
+                                </div>
+                                <p class="exerEngImgSTitle">{{competitionData.address}}</p>
+                                <p class="exerEngImgSTitle">{{competitionData.time}}</p>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="大赛规程">
@@ -35,7 +45,7 @@
                                     <param name="_ExtentY" value="10866">
                                     <param name="_StockProps" value="0">
                                     <param name="SRC" value="teachingMaterial">
-                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                    <object :data="'/resource/pdf/competitionData/' + competitionData.ruleText" type="application/pdf" class="pdf-box">
                                     </object>
                                 </object>
                             </div>
@@ -46,11 +56,21 @@
 
                 <!--历届回顾-->
                 <div v-show="is123">
-                    <p class="exerP">{{exerLabel}}</p>
+                    <p class="exerP">{{competitionData.label}}</p>
                     <el-tabs type="border-card">
                         <el-tab-pane label="通知文件">
-                            <div class="exerEngImg" v-for="item in exerEngImg">
-                                
+                            <div class="exerEngImg">
+                                <p class="exerEngImgTitle">{{competitionData.title}}</p>
+                                <p class="exerEngImgSTitle">{{competitionData.sTitle}}</p>
+                                <div v-for="item in competitionData.content">
+                                    <p class="exerEngImgContent">{{item.content}}</p>
+                                </div> 
+                                附件：
+                                <div v-for="item in competitionData.moreText">
+                                    <p class="exerEngmoreText" @click="sendName(item.text)">{{item.text}}</p>
+                                </div>
+                                <p class="exerEngImgSTitle">{{competitionData.address}}</p>
+                                <p class="exerEngImgSTitle">{{competitionData.time}}</p>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="大赛规程">
@@ -61,18 +81,28 @@
                                     <param name="_ExtentY" value="10866">
                                     <param name="_StockProps" value="0">
                                     <param name="SRC" value="teachingMaterial">
-                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                    <object :data="'/resource/pdf/competitionData/' + competitionData.ruleText" type="application/pdf" class="pdf-box">
                                     </object>
                                 </object>
                             </div>
                         </el-tab-pane>
-                        <el-tab-pane label="实况·硕果">实况·硕果</el-tab-pane>
+                        <el-tab-pane label="实况·硕果">
+                            <div class="exerEngImg">
+                                <p class="exerEngImgTitle">{{competitionData.historyTitle}}</p>
+                                <div v-for="item in competitionData.historyContent">
+                                    <p class="exerEngImgContent">{{item.historyContent}}</p>
+                                </div> 
+                                <div class="exerEngImage" v-for="item in competitionData.historyImg">
+                                    <img :src=" '/resource/imgs/competition/' + item.historyImg">
+                                </div> 
+                            </div>
+                        </el-tab-pane>
                     </el-tabs>
                 </div>
 
                 <!--实战专题-->
                 <div v-show="is926">
-                <p class="exerP">{{exerLabel}}</p>
+                <p class="exerP">{{}}</p>
                     <el-tabs type="border-card">
                         <el-tab-pane label="实战目标">
                             <div class="exerEngImg">
@@ -133,21 +163,43 @@ export default {
       is926:false,
       courseId1:'',
       courseId2:'',
-      keyId:''
+      keyId:'',
+      activeName: '',
+      descTab:'0'
     }
   },
   computed:{
-    exerEngImg(){
-        return this.$store.state.competitionData.engImg
-    },
-    exerEngRule(){
-        return this.$store.state.competitionData.engRule
-    },
-    exerLabel(){
-        return this.$store.state.competitionData.label
-    },
+    competitionData(){
+        return this.$store.state.competitionData
+    }
   },
   methods:{
+    //下载文件
+    sendName(item){
+        axios({
+          method:'get',
+          url:'/fileUpDown/downComp',
+          responseType: 'blob',
+          params:{
+            downloadName:item
+          }
+        }).then((res) => { // 处理返回的文件流
+          let content = res.data;
+          let blob = new Blob([content]);
+          if ('download' in document.createElement('a')) { // 非IE下载
+            let elink = document.createElement('a');
+            elink.download = item;
+            elink.style.display = 'none';
+            elink.href = URL.createObjectURL(blob);
+            document.body.appendChild(elink);
+            elink.click();
+            URL.revokeObjectURL(elink.href);// 释放URL 对象
+            document.body.removeChild(elink)
+          } else { // IE10+下载
+            navigator.msSaveBlob(blob, item)
+          }
+        })
+      },
     handleNodeClick(data) {
       //右侧显示不同页面
       console.log(data);
@@ -180,14 +232,15 @@ export default {
       if(data.children){
 
       }else{
-        this.$store.commit('competitionData',data)
+        this.$store.commit('competitionData',data);
+        this.activeName = this.descTab;
       }
 
     }
 
 
   },
-  mounted(){
+  mounted(){    
     axios.get("/readJson/bannerLeftData",{
         params:{
              user:234
@@ -316,16 +369,37 @@ hr{
     float:none;
 }
 .competitionCenter-content .exerEngImg{
-    width:595px;
+    width:100%;
     margin:0 auto;
     margin-bottom:20px;
+    text-align:left;
+}
+.competitionCenter-content .exerEngImgTitle{
+    margin-top:10px;
+    text-align:center;
+    font-size:22px;
+}
+.competitionCenter-content .exerEngImgSTitle{
+    text-align:right;
+}
+.competitionCenter-content .exerEngImgContent{
+    text-align:left;
+    text-indent:2em;
+}
+.competitionCenter-content .exerEngImage{
+    width:80%;
+    margin:0 auto;
+    margin-bottom:40px;
+}
+.competitionCenter-content .exerEngmoreText{
+    cursor:pointer;
 }
 .competitionCenter-content .exerEngImg img{
     width:100%;
 }
 .competitionCenter-content .pdf-box{
     width:100%;
-  height: 800px;
+    height: 800px;
 }
 .competitionCenter-content .el-col-6{
   width: 16%;

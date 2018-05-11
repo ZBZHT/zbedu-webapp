@@ -322,17 +322,17 @@
 
                     <el-form-item label="专业" prop="major">
                       <el-select v-model="form.major" placeholder="请选择专业">
-                        <el-option label="汽车维修" value="汽车维修"></el-option>
-                        <el-option label="汽车维护" value="汽车维护"></el-option>
-                        <el-option label="汽车电气" value="汽车电气"></el-option>
+                        <div v-for="item in majorM">
+                          <el-option :label="item.label" :value="item.label"></el-option>
+                        </div>
                       </el-select>
                     </el-form-item>
 
                     <el-form-item label="班级" prop="classGrade">
                       <el-select v-model="form.classGrade" placeholder="请选择班级">
-                        <el-option label="16" value="16"></el-option>
-                        <el-option label="17" value="17"></el-option>
-                        <el-option label="18" value="18"></el-option>
+                        <div v-for="item in classM">
+                          <el-option :label="item.label" :value="item.label"></el-option>
+                        </div>
                       </el-select>
                     </el-form-item>
 
@@ -569,7 +569,9 @@
         scoreData: [],
         startDatePicker:this.beginDate(),
         endDatePicker:this.processDate(),
-        height:window.innerHeight
+        height:window.innerHeight,
+        majorM:[],
+        classM:[]
       };
     },
 
@@ -961,6 +963,17 @@
     },
     mounted() {
       window.addEventListener('resize', this.handleResize)
+      //请求班级、专业
+      axios.post('/teacherCMS/getClass', {
+          data: {
+            userType: this.userType
+          }
+        }).then((res) => {
+        //    console.log(res.data);
+            this.majorM = res.data.majorMsg;
+            this.classM = res.data.classMsg;
+        });
+
       //请求待考试数据
       axios.get("/readTestQuestion/toTestData", {
         params: {
