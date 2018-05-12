@@ -13,11 +13,12 @@ const router = express.Router();
 const sysInfo = core.getServerInfo();
 const rootDir = path.resolve(__dirname,"../app/uploads");
 const uploadsPath = "../app/uploads/";
+const CompPath = "../app/uploads/competition";
 const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
 //var uploadDir = path.join(path.resolve(__dirname,"../"), "uploads");
 const zipName = "moreFiles.zip";
 
-//文件上传
+//资源中心上传
 router.post('/upload', function(req, res) {
   try {
     let form = new formidable.IncomingForm();
@@ -64,12 +65,28 @@ catch (e) {
   }
 });
 
-//文件下载
+//资源中心下载
 router.get('/download', function(req, res) {
   let fileName = req.query.downloadName;
   let currFile = uploadsPath + fileName;
   fs.exists(currFile,function(exist) {
     if(exist){
+      res.download( currFile );
+    }else{
+      res.set("Content-type","text/html");
+      res.send("file not exist!");
+      res.end();
+    }
+  });
+});
+//大赛中心下载
+router.get('/downComp', function(req, res) {
+  let fileName = req.query.downloadName;
+  let currFile = CompPath + fileName;
+  console.log(currFile);
+  fs.exists(currFile,function(exist) {
+    if(exist){
+      res.setHeader('Content-Type', 'application/msword');
       res.download( currFile );
     }else{
       res.set("Content-type","text/html");

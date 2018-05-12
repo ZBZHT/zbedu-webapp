@@ -1,16 +1,20 @@
-Array.prototype.forEach = function(fn){
-  var _this = this;
-  for (var k = 0, length = this.length; k < length; k++) {
-    fn(this[k],k,this)
-    console.log('11');
-  }
-  return {
-    end:function(fn){
-      fn(_this);
-      console.log('22');
-    }
-  };
+function start() {
+  return new Promise((resolve, reject) => {
+    resolve('start');
+  });
 }
 
-var d = [1,2,3];
-d.forEach((v,i,a)=>{ console.log(v)}).end(function(arr){console.log(arr)})
+start()
+  .then(data => {
+    // promise start
+    console.log('1: ');
+  })
+  .then(data => {
+    // promise p1
+    console.log('2: ');
+  })
+
+  .then(data => {
+    // promise p4
+    console.log('3: ');
+  });

@@ -15,11 +15,9 @@ let a = new Teacher({
   userID: '00000001',
   IDNo: '410521000000000001',
   MoNo: '18537228775',
-  userType: 'admin',
+  userType: 'SA',
   gender: 1,
   AdmDate: new Date(),
-  major: '汽车维修',
-  classGrade: '03'
 });
 
 

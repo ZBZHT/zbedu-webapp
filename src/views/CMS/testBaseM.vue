@@ -10,7 +10,7 @@
           <!--显示所有题-->
           <el-table
             class="userM_el-table"
-            :data="choiceData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+            :data="choiceData.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"
             @selection-change="changeFun"
             style="width: 99%; margin-top: 10px">
 
@@ -19,16 +19,16 @@
             <el-table-column prop="num" label="序号" width="80">
             </el-table-column>
 
-            <el-table-column prop="desc" label="试题内容" width="500">
+            <el-table-column prop="desc" label="试题内容">
             </el-table-column>
 
-            <el-table-column prop="options" label="选项" width="360">
+            <el-table-column prop="options" label="选项">
             </el-table-column>
 
             <el-table-column prop="major" label="专业" width="130">
             </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="90">
               <template slot-scope="scope">
                 <el-button
                   size="mini" type="warning"
@@ -43,32 +43,18 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
+              :current-page.sync="currentPage1"
               :page-size="pagesize"
               layout="prev, pager, next, jumper"
               :total=parseInt(total1)>
             </el-pagination>
           </div>
 
-          <!--头部按钮-->
-          <div class="headBut">
-      <span class="userM_But1">
-        <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
-      </span>
-            <span class="userM_But2">
-          <el-upload
-            class="upload-demo"
-            action="/teacherCMS/addExcelTest"
-            :onError="uploadError"
-            :beforeUpload="beforeAvatarUpload"
-            :onSuccess="uploadSuccess"
-            :show-file-list=false
-            :on-exceed="handleExceed"
-            accept=".xlsx">
-          <el-button size="small" type="primary">Excel导入试题</el-button>
-        </el-upload>
-        </span>
-            <el-dropdown>
+        </el-tab-pane>
+
+        <el-tab-pane label="查询" name="second">
+
+          <el-dropdown>
         <span class="el-dropdown-link">
 
            <span class="elinput">
@@ -77,34 +63,27 @@
               </ul>
           </span>
         </span>
-              <el-dropdown-menu slot="dropdown" class="dropdown">
-                <div class="treeModle">
-                  <el-tree
-                    :data="data"
-                    ref="tree"
-                    show-checkbox
-                    node-key="id"
-                    @check-change="handleCheckChange"
-                    @node-click="handleClick">
-                  </el-tree>
-                </div>
-                <div class="buttons">
-                  <el-button type="primary" @click="getCheckedNodes">确定</el-button>
-                </div>
-              </el-dropdown-menu>
-            </el-dropdown>
-
-          </div>
-
-
-        </el-tab-pane>
-
-        <el-tab-pane label="查询" name="second">
+            <el-dropdown-menu slot="dropdown" class="dropdown">
+              <div class="treeModle">
+                <el-tree
+                  :data="data"
+                  ref="tree"
+                  show-checkbox
+                  node-key="id"
+                  @check-change="handleCheckChange"
+                  @node-click="handleClick">
+                </el-tree>
+              </div>
+              <div class="buttons">
+                <el-button type="primary" @click="getCheckedNodes">确定</el-button>
+              </div>
+            </el-dropdown-menu>
+          </el-dropdown>
 
           <!--显示查询列表-->
           <el-table
             class="userM_el-table"
-            :data="checkingData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+            :data="checkingData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)"
             @selection-change="changeFun"
             style="width: 99%; margin-top: 10px">
 
@@ -137,7 +116,7 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
+              :current-page.sync="currentPage2"
               :page-size="pagesize"
               layout="prev, pager, next, jumper"
               :total=parseInt(total2)>
@@ -147,7 +126,25 @@
         </el-tab-pane>
       </el-tabs>
 
-
+      <!--头部按钮-->
+      <div class="headBut">
+            <span class="userM_But1">
+              <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+            </span>
+        <span class="userM_But2">
+          <el-upload
+            class="upload-demo"
+            action="/teacherCMS/addExcelTest"
+            :onError="uploadError"
+            :beforeUpload="beforeAvatarUpload"
+            :onSuccess="uploadSuccess"
+            :show-file-list=false
+            :on-exceed="handleExceed"
+            accept=".xlsx">
+              <el-button size="small" type="primary">Excel导入试题</el-button>
+          </el-upload>
+            </span>
+      </div>
 
     </el-col>
   </div>
@@ -177,7 +174,8 @@
           num:'',
           time:''
         },
-        currentPage: 1,
+        currentPage1: 1,
+        currentPage2: 1,
         pagesize: 10,
         total1: '',
         total2: '',
@@ -369,7 +367,7 @@
     padding: 0;
   }
   .testBaseM_cont .el-table .cell {
-    margin-left: 14px
+    max-height: 42px;
   }
   .testBaseM_cont .elinput{
     width:486px;
@@ -397,6 +395,7 @@
   }
   .testBaseM_cont .el-table-column--selection .cell {
     padding-left: 0;
+    margin-left: 10px;
   }
 
   .testBaseM_cont .block .el-button {
@@ -406,7 +405,7 @@
     display: inline-block;
   }
   .testBaseM_cont .userM_But1,.userM_But2 {
-    margin-right: 16px;
+    margin-bottom: 10px;
   }
   .testBaseM_cont .el-dialog {
     width: 650px;
@@ -428,6 +427,15 @@
   }
   .testBaseM_cont .el-table td, .el-table th {
     height: 40px;
+  }
+  .testBaseM_cont {
+    position: relative;
+  }
+  .testBaseM_cont .headBut {
+    width: 120px;
+    position: absolute;
+    bottom: -500px;
+    left: 5%;
   }
 
 </style>

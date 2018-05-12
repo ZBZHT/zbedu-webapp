@@ -26,43 +26,60 @@ router.use(function (req, res, next) {
 //老师创建考试
 function newTestQuestion(req, res, next) {
   let reqQ = req.query;
-  TeachNewTestQ.find().sort({id:-1}).then(function (result) {
-    //console.log(result[0].user);
-    if (result.length != 0) {
-      testResult.resId = Number(result[0].id) + 1;
-    } else {
-      testResult.resId = 1;
+  TeachNewTestQ.find().then(function (result) {
+    function start() {
+      return new Promise((resolve, reject) => {
+        resolve('start');
+      });
     }
-    //console.log(testResult.resId);
-    let teachNewTestQ = new TeachNewTestQ({
-      id : testResult.resId,
-      user: reqQ.user,
-      theme: reqQ.theme,
-      name: reqQ.name,
-      nameId: reqQ.nameId,
-      currTestType: reqQ.currTestType,
-      state: 0,
-      date1: reqQ.date1,
-      date2: reqQ.date2,
-      date3: reqQ.date3,
-      date4: reqQ.date4,
-      num: reqQ.num,
-      timeHour: reqQ.timeHour,
-      timeMin: reqQ.timeMin,
-      major: reqQ.major,
-      classGrade: reqQ.classGrade,
-      newData: reqQ.newData,
-      allScore: reqQ.allScore,
-      question: [],
-    });
-    teachNewTestQ.save(function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Success! teachNewTestQ');
+    start()
+      .then(data => {
+        if (result.length !== 0) {
+          let EE = [];
+          for (let i=0; i<=result.length-1; i++) {
+            EE.push(result[i].id)
+          }
+          testResult.resId = (Math.max.apply(null, EE)) + 1;
+        } else {
+          testResult.resId = 1;
+        }
+      })
+      .then(data => {
+        //console.log(testResult.resId);
+        let teachNewTestQ = new TeachNewTestQ({
+          id : testResult.resId,
+          user: reqQ.user,
+          theme: reqQ.theme,
+          name: reqQ.name,
+          nameId: reqQ.nameId,
+          currTestType: reqQ.currTestType,
+          state: 0,
+          date1: reqQ.date1,
+          date2: reqQ.date2,
+          date3: reqQ.date3,
+          date4: reqQ.date4,
+          num: reqQ.num,
+          timeHour: reqQ.timeHour,
+          timeMin: reqQ.timeMin,
+          major: reqQ.major,
+          classGrade: reqQ.classGrade,
+          newData: reqQ.newData,
+          allScore: reqQ.allScore,
+          question: [],
+        });
+        teachNewTestQ.save(function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('Success! teachNewTestQ');
+          }
+        });
+      })
+
+      .then(data => {
         next();
-      }
-    });
+      });
+
   });
 }
 
@@ -302,6 +319,7 @@ router.get('/stuToTestData', function (req, res) {
   TestQuestionInfo.find({
     user: reqUser,
     state: 0,
+    currTestType: { "$in": [101,102,103,104,106] }
   }).then(function (result) {
     //console.log(result);
     res.end(JSON.stringify(result));
@@ -310,7 +328,7 @@ router.get('/stuToTestData', function (req, res) {
 
 //学生,开始考试 获取待考试题
 router.get('/getTestQ', function (req, res) {
-  if (req.query.currTestNum != '') {
+  if (req.query.currTestNum !== '') {
     let reqCurrTestNum = req.query.currTestNum;
     TestQuestionInfo.findOne({
       currTestNum: reqCurrTestNum

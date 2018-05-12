@@ -6,9 +6,7 @@ module.exports = new Schema({
     type: String,
     required: true, //设定是否必填
   },
-  pwd: {
-    type: String,
-  },
+  pwd: String,
   userID: {
     type: String,
     unique: true,  //索引值唯一
@@ -16,33 +14,24 @@ module.exports = new Schema({
   },
   IDNo: {
     type: String,
-    unique: true,  //索引值唯一
-    required: true, //设定是否必填
   },
   MoNo: {
     type: String,
-    unique: true,  //索引值唯一
-    required: true, //设定是否必填
   },
   userType: {
     type: String,
     required: true, //设定是否必填
   },
-  gender: {
-    type: Number,
-    required: true, //设定是否必填
-  },
-  AdmDate: {  //入学时间
-    type: Date,
-    required: true, //设定是否必填
-  },
-  major: {  //专业
+  gender: Number,
+  time: Date,       //入学时间
+  major: String,    //专业
+  avatar: String,   //头像
+
+  classGrade: {     //班级
     type: String,
     required: true, //设定是否必填
   },
-  avatar: String,  //头像
-  classGrade: {  //班级
-    type: String,
-    required: true, //设定是否必填
-  }
+  department: String,  //院系
+  email: String,
+
 });

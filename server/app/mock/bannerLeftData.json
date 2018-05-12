@@ -25,7 +25,7 @@
                               "teachingBook":"纯电动汽车基本信息收集与介绍教材.pdf",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"纯电动汽车基本信息收集与介绍.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"纯电动汽车基本信息收集与介绍工作业.pdf",
@@ -85,7 +85,7 @@
                               "teachingBook":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"高压危害与救助方法.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"纯电动汽车高压安全操作工作业.pdf",
@@ -154,7 +154,7 @@
                               "teachingBook":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"动力电池拆装.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"动力电池拆装工作页.pdf",
@@ -293,7 +293,7 @@
                               "teachingBook":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"动力电池故障检修.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"动力电池故障检修工作业.pdf",
@@ -491,7 +491,7 @@
                               "teachingBook":"整车供断电控制故障教材.pdf",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"EV系列-4-5-新能源can线系统故障检修.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"整车供断电控制故障工作页.pdf",
@@ -603,7 +603,7 @@
                               "teachingBook":"充电桩结构原理及性能介绍教材.pdf",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"充电桩结构原理及性能介绍.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"充电桩结构原理及性能介绍工作业.pdf",
@@ -649,7 +649,7 @@
                               "teachingBook":"电动助力转向系统故障检修教材.pdf",
                               "videoTitle":[
                                 {
-                                  "videoTitle":"电动助力转向系统故障检修.mp4"
+                                  "videoTitle":""
                                 }
                               ],
                               "workPage":"电动助力转向系统故障检修工作页.pdf",
@@ -720,7 +720,7 @@
                             {
                               "label":"混合动力汽车概述",
                               "describe":"详述什么是混合动力汽车，有哪些部件结构组成，其基本工作原理是什么？",
-                              "teachingMaterial":"新车交接.pdf",
+                              "teachingMaterial":"",
                               "teachingBook":"",
                               "videoTitle":[
                                 {
@@ -1728,7 +1728,7 @@
                     {
                       "label":"进排气凸轮轴调节阀",
                       "describe":"大众速腾进排气凸轮调节阀工作原理，如何调节及调节阀故障如何检修。",
-                      "teachingMaterial":"进排气凸轮轴调节阀.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -1994,7 +1994,7 @@
                     {
                       "label":"发动机无法起动故障详解",
                       "describe":"大众速腾发动机无法启动的原因、判断方法及对故障进行检修方法。",
-                      "teachingMaterial":"发动机无法起动故障详解.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2014,7 +2014,7 @@
                     {
                       "label":"活性碳罐及碳罐电磁阀",
                       "describe":"大众速腾活性炭罐及电磁阀的工作原理、安装位置、起什么作用和发生故障时的检修流程。",
-                      "teachingMaterial":"活性碳罐及碳罐电磁阀.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2034,7 +2034,7 @@
                     {
                       "label":"发动机冷却装置拆装",
                       "describe":"如何拆装冷却系统装置，冷却装置的安装位置及拆解流程。",
-                      "teachingMaterial":"冷却装置的拆装.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2086,7 +2086,7 @@
                     {
                       "label":"汽车维修车间的基本操作规程",
                       "describe":"简述汽车维修间的基本操作流程以及基本操作注意事项。",
-                      "teachingMaterial":"汽车维修车间的基本操作规程.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2133,7 +2133,7 @@
                       "label":"认识速腾双离合变速器",
                       "describe":"大众速腾双离合变速器的组成、部件功能及工作原理。",
                       "teachingMaterial":"大众速腾-DSG齿轮箱.pdf",
-                      "teachingBook":"认识速腾双离合变速器.pdf",
+                      "teachingBook":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2324,7 +2324,7 @@
                     {
                       "label":"悬架系统部件检修",
                       "describe":"大众速腾悬架系统的组成、各个部件的功能以及对悬架检修的方法。",
-                      "teachingMaterial":"悬架系统部件检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2344,7 +2344,7 @@
                     {
                       "label":"四轮定位检测与调整",
                       "describe":"四轮定位的作用、四轮定位仪的使用和如何进行四轮定位的检测与调整",
-                      "teachingMaterial":"四轮定位检测与调整.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2364,7 +2364,7 @@
                     {
                       "label":"轮胎拆装与更换",
                       "describe":"轮胎拆装的流程及方法，扒胎机的使用及注意事项。",
-                      "teachingMaterial":" 轮胎拆装与更换.pdf",
+                      "teachingMaterial":"轮胎的拆卸与装复.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2404,7 +2404,7 @@
                     {
                       "label":"行驶跑偏故障检修",
                       "describe":"简述行驶跑偏现象，跑偏的原因及排除行驶跑偏的方法流程。",
-                      "teachingMaterial":"行驶跑偏故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2430,7 +2430,7 @@
                     {
                       "label":"认识制动系统",
                       "describe":"简述传统汽车制动系统的组成以及和大众速腾制动系统之间的区别",
-                      "teachingMaterial":"认识制动系统.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2450,7 +2450,7 @@
                     {
                       "label":"液压制动总泵及真空助力器检修",
                       "describe":"制动总泵及真空助力器的组成、实现的功能及工作原理，如何对总泵或真空助力器故障进行检修。",
-                      "teachingMaterial":"液压制动总泵及真空助力器检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2510,7 +2510,7 @@
                     {
                       "label":"制动灯故障",
                       "describe":"大众速腾制动灯系统的组成及控制原理，如何对制动灯故障进行检修。",
-                      "teachingMaterial":"制动灯故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2602,7 +2602,7 @@
                     {
                       "label":"充电指示灯常亮故障检修",
                       "describe":"大众速腾充电指示灯亮起的原因，电路原理及对故障灯点亮维修的过程和方法。",
-                      "teachingMaterial":"充电指示灯常亮故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2839,7 +2839,7 @@
                     {
                       "label":"转向灯工作异常故障检修",
                       "describe":"大众速腾转向灯电路控制原理和对转向灯故障检修的流程。",
-                      "teachingMaterial":"转向灯工作异常故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2879,7 +2879,7 @@
                     {
                       "label":"远光灯不亮故障检修",
                       "describe":"大众速腾远光灯电路控制原理和对远光灯故障检修的流程。",
-                      "teachingMaterial":"远光灯不亮故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -2985,7 +2985,7 @@
                     {
                       "label":"电动后视镜无法调节故障检修",
                       "describe":"大众速腾电动后视镜系统组成、电路控制原理及对无法调节故障进行检修流程。",
-                      "teachingMaterial":"后视镜不能调节故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3117,7 +3117,7 @@
                     {
                       "label":"can-bus综述",
                       "describe":"简述什么是CAN-BUS，总线组成、工作原理及控制原理等。",
-                      "teachingMaterial":"canbus综述.pdf",
+                      "teachingMaterial":"车载网络.pdf",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3137,7 +3137,7 @@
                     {
                       "label":"典型车型整车电气故障检修",
                       "describe":"整车电气组成、电路控制原理、线路如何连接及故障维修诊断流程。",
-                      "teachingMaterial":"典型车型电气故障检修.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3157,7 +3157,7 @@
                     {
                       "label":"多媒体主机拆装",
                       "describe":"大众速腾多媒体工作原理、系统组成，如何拆装并且对故障进行检修。",
-                      "teachingMaterial":"多媒体系统拆装.pdf",
+                      "teachingMaterial":"",
                       "teachingBook":"",
                       "videoTitle":[
                         {
@@ -3295,7 +3295,7 @@
                 "label":"机油机滤",
                 "describe":"简述更换机油机滤的流程，更换时候的注意事项、机油及机滤的作用及功能。",
                 "teachingMaterial":"大众速腾-机油机滤宽屏.pdf",
-                "teachingBook":"机油机滤.pdf",
+                "teachingBook":"",
                 "videoTitle":[
                   {
                     "videoTitle":""
@@ -3315,7 +3315,7 @@
               {
                 "label":"汽车首次维护",
                 "describe":"简述新车首次维护应做的哪些检查和哪些保养。",
-                "teachingMaterial":"汽车首保.pdf",
+                "teachingMaterial":"",
                 "teachingBook":"",
                 "videoTitle":[
                   {
@@ -3336,7 +3336,7 @@
               {
                 "label":"汽车4万公里维护",
                 "describe":"简述汽车4万公里保养时候应做哪些检查和更换内容。",
-                "teachingMaterial":"4万公里维护.pdf",
+                "teachingMaterial":"",
                 "teachingBook":"",
                 "videoTitle":[
                   {
@@ -3357,7 +3357,7 @@
               {
                 "label":"汽车换季维护",
                 "describe":"简述汽车换季时候应对汽车进行哪些方面的保养，保养的内容及保养方法。",
-                "teachingMaterial":"换季保养.pdf",
+                "teachingMaterial":"",
                 "teachingBook":"",
                 "videoTitle":[
                   {
@@ -3387,11 +3387,10 @@
       "children":[
         {
           "label":"教学设备展示",
-          "id":1000,
+          "id":101,
           "children":[
               {
                 "label":"新能源纯电动汽车教学设备",
-                "id":1100,
                 "children":[
                     {
                       "label":"BMS锂电池管理系统实训台",
@@ -3400,8 +3399,7 @@
                           "engImage":"BMS锂电池管理系统实训台.gif"
                         }
                       ],
-                      "engRule":"BMS锂电池管理系统实训台.pdf",
-                      "id":1101,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3411,8 +3409,7 @@
                           "engImage":"北汽EC180整车解剖实训车.png"
                         }
                       ],
-                      "engRule":"整车教学解剖车.pdf",
-                      "id":1102,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3425,8 +3422,7 @@
                           "engImage":"北汽EV160电子转向系统实验台 (8).png"
                         }
                       ],
-                      "engRule":"电子转向台架.pdf",
-                      "id":1103,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3439,8 +3435,7 @@
                           "engImage":"北汽EV160动力电池实验台 (7).png"
                         }
                       ],
-                      "engRule":"电池拆装台架.pdf",
-                      "id":1104,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3450,8 +3445,7 @@
                           "engImage":"北汽新能源EV160空调防抱死系统教学平台 (1).png"
                         }
                       ],
-                      "engRule":"空调防抱死.pdf",
-                      "id":1105,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3461,8 +3455,7 @@
                           "engImage":"电动汽车动力系统实训台（英博尔类型）.png"
                         }
                       ],
-                      "engRule":"动力系统实验台.pdf",
-                      "id":1106,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3472,8 +3465,7 @@
                           "engImage":"江淮新能源IEV6E驱动系统检测台架.png"
                         }
                       ],
-                      "engRule":"驱动系统实验台.pdf",
-                      "id":1107,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3483,8 +3475,7 @@
                           "engImage":"新能源交流汽车动力系统实验台架-(2).png"
                         }
                       ],
-                      "engRule":"动力系统.pdf",
-                      "id":1108,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3494,8 +3485,7 @@
                           "engImage":"新能源EV160空调系统实验台 .png"
                         }
                       ],
-                      "engRule":"空调系统.pdf",
-                      "id":1109,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3505,8 +3495,7 @@
                           "engImage":"新能源-控制系统 (2).png"
                         }
                       ],
-                      "engRule":"控制系统.pdf",
-                      "id":1110,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3516,8 +3505,7 @@
                           "engImage":"江淮新能源IEV6E动力电池检测台架.png"
                         }
                       ],
-                      "engRule":"电池拆装台架.pdf",
-                      "id":1111,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3527,8 +3515,7 @@
                           "engImage":"新能源汽车控制系统检测实训台.JPG"
                         }
                       ],
-                      "engRule":"控制系统检测实验台.pdf",
-                      "id":1112,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3538,8 +3525,7 @@
                           "engImage":"新能源汽车驱动系统实训台.JPG"
                         }
                       ],
-                      "engRule":"驱动系统实训.pdf",
-                      "id":1113,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3549,15 +3535,13 @@
                           "engImage":"新能源直流电机控制系统实验台架-(8).png"
                         }
                       ],
-                      "engRule":"直流电机控制系统.pdf",
-                      "id":1114,
+                      "engRule":"",
                       "engIntor":""
                     }
                 ]
               },
               {
                 "label":"新能源混合动力汽车教学设备",
-                "id":1200,
                 "children":[
                     {
                       "label":"比亚迪秦系列教学设备",
@@ -3566,8 +3550,7 @@
                           "engImage":"比亚迪秦整车电器检测实训设备.png"
                         }
                       ],
-                      "engRule":"比亚迪.pdf",
-                      "id":1201,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3577,8 +3560,7 @@
                           "engImage":""
                         }
                       ],
-                      "engRule":"卡罗拉系列.pdf",
-                      "id":1202,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3588,8 +3570,7 @@
                           "engImage":""
                         }
                       ],
-                      "engRule":"凯美瑞.pdf",
-                      "id":1203,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3599,8 +3580,7 @@
                           "engImage":"雷凌双擎HV动力电池检测台 (1).png"
                         }
                       ],
-                      "engRule":"雷凌.pdf",
-                      "id":1204,
+                      "engRule":"",
                       "engIntor":""
                     },
                     {
@@ -3610,19 +3590,16 @@
                           "engImage":"普锐斯混合动力系统实训台 (1).png"
                         }
                       ],
-                      "engRule":"普锐斯.pdf",
-                      "id":1205,
+                      "engRule":"",
                       "engIntor":""
                     }
                 ]
               },
               {
                 "label":"发动机部分教学设备",
-                "id":1300,
                 "children":[
                     {
                       "label":"点火系统教学设备",
-                      "id":1310,
                       "children":[
                           {
                             "label":"大众帕萨特点火喷油示教板",
@@ -3632,12 +3609,10 @@
                               }
                             ],
                             "engRule":"大众帕萨特点火喷油示教板.pdf",
-                            "id":1311,
                             "engIntor":""
                           },
                           {
                             "label":"丰田5A点火系统示教板",
-                            "id":1312,
                             "engImg":[
                               {
                                 "engImage":"丰田5A点火系统示教板.JPG"
@@ -3654,7 +3629,6 @@
                               }
                             ],
                             "engRule":"6种点火系统示教板.pdf",
-                            "id":1313,
                             "engIntor":""
                           },
                           {
@@ -3665,14 +3639,12 @@
                               }
                             ],
                             "engRule":"四种点火系统示教板.pdf",
-                            "id":1314,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"发动机实验台架",
-                      "id":1320,
                       "children":[
                           {
                             "label":"5A发动机检修实训台架",
@@ -3682,7 +3654,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1321,
                             "engIntor":""
                           },
                           {
@@ -3693,7 +3664,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1322,
                             "engIntor":""
                           },
                           {
@@ -3704,7 +3674,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1323,
                             "engIntor":""
                           },
                           {
@@ -3715,7 +3684,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1324,
                             "engIntor":""
                           },
                           {
@@ -3726,7 +3694,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1325,
                             "engIntor":""
                           },
                           {
@@ -3737,7 +3704,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1326,
                             "engIntor":""
                           },
                           {
@@ -3748,7 +3714,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1327,
                             "engIntor":""
                           },
                           {
@@ -3759,7 +3724,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1328,
                             "engIntor":""
                           },
                           {
@@ -3770,7 +3734,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":1329,
                             "engIntor":""
                           },
                           {
@@ -3781,7 +3744,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13210,
                             "engIntor":""
                           },
                           {
@@ -3792,7 +3754,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13211,
                             "engIntor":""
                           },
                           {
@@ -3803,7 +3764,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13212,
                             "engIntor":""
                           },
                           {
@@ -3814,7 +3774,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13213,
                             "engIntor":""
                           },
                           {
@@ -3825,7 +3784,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13214,
                             "engIntor":""
                           },
                           {
@@ -3836,7 +3794,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13215,
                             "engIntor":""
                           },
                           {
@@ -3847,7 +3804,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13216,
                             "engIntor":""
                           },
                           {
@@ -3858,7 +3814,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13217,
                             "engIntor":""
                           },
                           {
@@ -3869,7 +3824,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13218,
                             "engIntor":""
                           },
                           {
@@ -3880,7 +3834,6 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13219,
                             "engIntor":""
                           },
                           {
@@ -3891,14 +3844,12 @@
                               }
                             ],
                             "engRule":"发动机实验台架.pdf",
-                            "id":13220,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"发动机原理接线积木板",
-                      "id":1330,
                       "children":[
                           {
                             "label":"67种积木",
@@ -3911,7 +3862,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1331,
                             "engIntor":""
                           },
                           {
@@ -3928,7 +3878,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1332,
                             "engIntor":""
                           },
                           {
@@ -3942,7 +3891,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1333,
                             "engIntor":""
                           },
                           {
@@ -3953,7 +3901,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1334,
                             "engIntor":""
                           },
                           {
@@ -3967,7 +3914,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1335,
                             "engIntor":""
                           },
                           {
@@ -3978,7 +3924,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1336,
                             "engIntor":""
                           },
                           {
@@ -3992,14 +3937,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1337,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"发动机原理示教板",
-                      "id":1340,
                       "children":[
                           {
                             "label":"1NZ电子燃油喷射系统示教板",
@@ -4009,7 +3952,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1341,
                             "engIntor":""
                           },
                           {
@@ -4020,7 +3962,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1342,
                             "engIntor":""
                           },
                           {
@@ -4031,7 +3972,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1343,
                             "engIntor":""
                           },
                           {
@@ -4042,7 +3982,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1344,
                             "engIntor":""
                           },
                           {
@@ -4053,7 +3992,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1345,
                             "engIntor":""
                           },
                           {
@@ -4064,7 +4002,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1346,
                             "engIntor":""
                           },
                           {
@@ -4075,7 +4012,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1347,
                             "engIntor":""
                           },
                           {
@@ -4086,7 +4022,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1348,
                             "engIntor":""
                           },
                           {
@@ -4097,7 +4032,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1349,
                             "engIntor":""
                           },
                           {
@@ -4108,14 +4042,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":13410,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"发动机运行",
-                      "id":1350,
                       "children":[
                           {
                             "label":"8A发动机运行台架",
@@ -4125,7 +4057,6 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1351,
                             "engIntor":""
                           },
                           {
@@ -4136,7 +4067,6 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1352,
                             "engIntor":""
                           },
                           {
@@ -4147,7 +4077,6 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1353,
                             "engIntor":""
                           },
                           {
@@ -4158,7 +4087,6 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1354,
                             "engIntor":""
                           },
                           {
@@ -4169,7 +4097,6 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1355,
                             "engIntor":""
                           },
                           {
@@ -4180,7 +4107,6 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1356,
                             "engIntor":""
                           },
                           {
@@ -4191,14 +4117,12 @@
                               }
                             ],
                             "engRule":"发动机运行.pdf",
-                            "id":1357,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"润滑系统教学设备",
-                      "id":1360,
                       "children":[
                           {
                             "label":"JEEP润滑示教板",
@@ -4208,7 +4132,6 @@
                               }
                             ],
                             "engRule":"润滑系统教学设备.pdf",
-                            "id":1361,
                             "engIntor":""
                           },
                           {
@@ -4219,7 +4142,6 @@
                               }
                             ],
                             "engRule":"润滑系统教学设备.pdf",
-                            "id":1362,
                             "engIntor":""
                           },
                           {
@@ -4230,7 +4152,6 @@
                               }
                             ],
                             "engRule":"润滑系统教学设备.pdf",
-                            "id":1363,
                             "engIntor":""
                           },
                           {
@@ -4241,7 +4162,6 @@
                               }
                             ],
                             "engRule":"润滑系统教学设备.pdf",
-                            "id":1364,
                             "engIntor":""
                           }
                       ]
@@ -4250,11 +4170,9 @@
               },
               {
                 "label":"底盘部分教学设备",
-                "id":1400,
                 "children":[
                     {
                       "label":"变速器检测实训台架",
-                      "id":1410,
                       "children":[
                           {
                             "label":"01M工作台",
@@ -4264,7 +4182,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1411,
                             "engIntor":""
                           },
                           {
@@ -4275,7 +4192,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1412,
                             "engIntor":""
                           },
                           {
@@ -4286,7 +4202,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1413,
                             "engIntor":""
                           },
                           {
@@ -4297,7 +4212,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1414,
                             "engIntor":""
                           },
                           {
@@ -4308,7 +4222,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1415,
                             "engIntor":""
                           },
                           {
@@ -4319,7 +4232,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1416,
                             "engIntor":""
                           },
                           {
@@ -4330,7 +4242,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1417,
                             "engIntor":""
                           },
                           {
@@ -4341,7 +4252,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1418,
                             "engIntor":""
                           },
                           {
@@ -4352,7 +4262,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":1419,
                             "engIntor":""
                           },
                           {
@@ -4363,7 +4272,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14110,
                             "engIntor":""
                           },
                           {
@@ -4374,7 +4282,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14111,
                             "engIntor":""
                           },
                           {
@@ -4385,7 +4292,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14112,
                             "engIntor":""
                           },
                           {
@@ -4396,7 +4302,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14113,
                             "engIntor":""
                           },
                           {
@@ -4407,7 +4312,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14114,
                             "engIntor":""
                           },
                           {
@@ -4418,7 +4322,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14115,
                             "engIntor":""
                           },
                           {
@@ -4429,7 +4332,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14116,
                             "engIntor":""
                           },
                           {
@@ -4440,7 +4342,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14117,
                             "engIntor":""
                           },
                           {
@@ -4451,7 +4352,6 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14118,
                             "engIntor":""
                           },
                           {
@@ -4462,14 +4362,12 @@
                               }
                             ],
                             "engRule":"变速器检测实训台架.pdf",
-                            "id":14119,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"差速器教学台架",
-                      "id":1420,
                       "children":[
                           {
                             "label":"差速器1",
@@ -4479,7 +4377,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1421,
                             "engIntor":""
                           },
                           {
@@ -4490,7 +4387,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1422,
                             "engIntor":""
                           },
                           {
@@ -4501,7 +4397,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1423,
                             "engIntor":""
                           },
                           {
@@ -4512,14 +4407,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1424,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"传动系统教学设备",
-                      "id":1430,
                       "children":[
                           {
                             "label":"丰田金杯后驱传动系统实训台架",
@@ -4529,7 +4422,6 @@
                               }
                             ],
                             "engRule":"传动系统教学设备.pdf",
-                            "id":1431,
                             "engIntor":""
                           },
                           {
@@ -4540,14 +4432,12 @@
                               }
                             ],
                             "engRule":"传动系统教学设备.pdf",
-                            "id":1432,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"底盘系统教学车",
-                      "id":1440,
                       "children":[
                           {
                             "label":"别克凯越",
@@ -4557,7 +4447,6 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1441,
                             "engIntor":""
                           },
                           {
@@ -4568,7 +4457,6 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1442,
                             "engIntor":""
                           },
                           {
@@ -4579,7 +4467,6 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1443,
                             "engIntor":""
                           },
                           {
@@ -4590,7 +4477,6 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1444,
                             "engIntor":""
                           },
                           {
@@ -4601,7 +4487,6 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1445,
                             "engIntor":""
                           },
                           {
@@ -4612,7 +4497,6 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1446,
                             "engIntor":""
                           },
                           {
@@ -4623,14 +4507,12 @@
                               }
                             ],
                             "engRule":"底盘系统教学车.pdf",
-                            "id":1447,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"后桥拆装台架",
-                      "id":1450,
                       "children":[
                           {
                             "label":"奥迪后桥",
@@ -4640,7 +4522,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1451,
                             "engIntor":""
                           },
                           {
@@ -4651,7 +4532,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1452,
                             "engIntor":""
                           },
                           {
@@ -4662,7 +4542,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1453,
                             "engIntor":""
                           },
                           {
@@ -4673,7 +4552,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1454,
                             "engIntor":""
                           },
                           {
@@ -4684,7 +4562,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1455,
                             "engIntor":""
                           },
                           {
@@ -4695,7 +4572,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1456,
                             "engIntor":""
                           },
                           {
@@ -4706,14 +4582,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1457,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"离合器教学台架",
-                      "id":1460,
                       "children":[
                           {
                             "label":"拉线离合器实验台架",
@@ -4723,7 +4597,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1461,
                             "engIntor":""
                           },
                           {
@@ -4734,7 +4607,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1462,
                             "engIntor":""
                           },
                           {
@@ -4745,7 +4617,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1463,
                             "engIntor":""
                           },
                           {
@@ -4756,14 +4627,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1464,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"前桥拆装台架",
-                      "id":1470,
                       "children":[
                           {
                             "label":"奥迪前桥",
@@ -4773,7 +4642,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1471,
                             "engIntor":""
                           },
                           {
@@ -4784,7 +4652,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1472,
                             "engIntor":""
                           },
                           {
@@ -4795,7 +4662,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1473,
                             "engIntor":""
                           },
                           {
@@ -4806,7 +4672,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1474,
                             "engIntor":""
                           },
                           {
@@ -4817,7 +4682,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1475,
                             "engIntor":""
                           },
                           {
@@ -4828,14 +4692,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1476,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"手动变速器解剖台架",
-                      "id":1480,
                       "children":[
                           {
                             "label":"大众捷达手动变速器",
@@ -4845,7 +4707,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1481,
                             "engIntor":""
                           },
                           {
@@ -4856,7 +4717,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1482,
                             "engIntor":""
                           },
                           {
@@ -4867,7 +4727,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1483,
                             "engIntor":""
                           },
                           {
@@ -4878,7 +4737,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1484,
                             "engIntor":""
                           },
                           {
@@ -4889,7 +4747,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1485,
                             "engIntor":""
                           },
                           {
@@ -4900,7 +4757,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1486,
                             "engIntor":""
                           },
                           {
@@ -4911,7 +4767,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1487,
                             "engIntor":""
                           },
                           {
@@ -4922,7 +4777,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":1489,
                             "engIntor":""
                           },
                           {
@@ -4933,7 +4787,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":14810,
                             "engIntor":""
                           },
                           {
@@ -4944,7 +4797,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":14811,
                             "engIntor":""
                           },
                           {
@@ -4955,7 +4807,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":14812,
                             "engIntor":""
                           },
                           {
@@ -4966,7 +4817,6 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":14813,
                             "engIntor":""
                           },
                           {
@@ -4977,14 +4827,12 @@
                               }
                             ],
                             "engRule":"手动变速器解剖台架.pdf",
-                            "id":14814,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"制动系统实训台架",
-                      "id":1490,
                       "children":[
                           {
                             "label":"esp",
@@ -4994,7 +4842,6 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1491,
                             "engIntor":""
                           },
                           {
@@ -5005,7 +4852,6 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1492,
                             "engIntor":""
                           },
                           {
@@ -5016,7 +4862,6 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1493,
                             "engIntor":""
                           },
                           {
@@ -5027,7 +4872,6 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1494,
                             "engIntor":""
                           },
                           {
@@ -5038,7 +4882,6 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1495,
                             "engIntor":""
                           },
                           {
@@ -5049,7 +4892,6 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1496,
                             "engIntor":""
                           },
                           {
@@ -5060,14 +4902,12 @@
                               }
                             ],
                             "engRule":"制动系统实训台架.pdf",
-                            "id":1497,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"转向系统教学设备",
-                      "id":14100,
                       "children":[
                           {
                             "label":"LS400 电控转向",
@@ -5077,7 +4917,6 @@
                               }
                             ],
                             "engRule":"转向系统教学设备.pdf",
-                            "id":14101,
                             "engIntor":""
                           },
                           {
@@ -5088,7 +4927,6 @@
                               }
                             ],
                             "engRule":"转向系统教学设备.pdf",
-                            "id":14102,
                             "engIntor":""
                           },
                           {
@@ -5099,7 +4937,6 @@
                               }
                             ],
                             "engRule":"转向系统教学设备.pdf",
-                            "id":14103,
                             "engIntor":""
                           },
                           {
@@ -5110,7 +4947,6 @@
                               }
                             ],
                             "engRule":"转向系统教学设备.pdf",
-                            "id":14104,
                             "engIntor":""
                           },
                           {
@@ -5121,7 +4957,6 @@
                               }
                             ],
                             "engRule":"转向系统教学设备.pdf",
-                            "id":14105,
                             "engIntor":""
                           },
                           {
@@ -5132,14 +4967,12 @@
                               }
                             ],
                             "engRule":"转向系统教学设备.pdf",
-                            "id":14106,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"自动变速器解剖台架",
-                      "id":14110,
                       "children":[
                           {
                             "label":"01M",
@@ -5149,7 +4982,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14111,
                             "engIntor":""
                           },
                           {
@@ -5160,7 +4992,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14112,
                             "engIntor":""
                           },
                           {
@@ -5171,7 +5002,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14113,
                             "engIntor":""
                           },
                           {
@@ -5182,7 +5012,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14114,
                             "engIntor":""
                           },
                           {
@@ -5193,7 +5022,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14115,
                             "engIntor":""
                           },
                           {
@@ -5204,7 +5032,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14116,
                             "engIntor":""
                           },
                           {
@@ -5215,7 +5042,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14117,
                             "engIntor":""
                           },
                           {
@@ -5226,7 +5052,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14118,
                             "engIntor":""
                           },
                           {
@@ -5237,7 +5062,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":14119,
                             "engIntor":""
                           },
                           {
@@ -5248,7 +5072,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":141110,
                             "engIntor":""
                           },
                           {
@@ -5259,7 +5082,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":141111,
                             "engIntor":""
                           },
                           {
@@ -5270,7 +5092,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":141112,
                             "engIntor":""
                           },
                           {
@@ -5281,7 +5102,6 @@
                               }
                             ],
                             "engRule":"自动变速器解剖台架.pdf",
-                            "id":141113,
                             "engIntor":""
                           }
                       ]
@@ -5290,11 +5110,9 @@
               },
               {
                 "label":"电气部分教学设备",
-                "id":1500,
                 "children":[
                     {
                       "label":"安全气囊",
-                      "id":1510,
                       "children":[
                           {
                             "label":"ls400 双气囊",
@@ -5304,14 +5122,12 @@
                               }
                             ],
                             "engRule":"安全气囊.pdf",
-                            "id":1511,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"灯光",
-                      "id":1520,
                       "children":[
                           {
                             "label":"sangtana 2000",
@@ -5321,7 +5137,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1521,
                             "engIntor":""
                           },
                           {
@@ -5332,7 +5147,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1522,
                             "engIntor":""
                           },
                           {
@@ -5343,7 +5157,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1523,
                             "engIntor":""
                           },
                           {
@@ -5354,7 +5167,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1524,
                             "engIntor":""
                           },
                           {
@@ -5365,7 +5177,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1525,
                             "engIntor":""
                           },
                           {
@@ -5376,7 +5187,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1526,
                             "engIntor":""
                           },
                           {
@@ -5387,7 +5197,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1527,
                             "engIntor":""
                           },
                           {
@@ -5398,7 +5207,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1528,
                             "engIntor":""
                           },
                           {
@@ -5409,7 +5217,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":1529,
                             "engIntor":""
                           },
                           {
@@ -5420,7 +5227,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":15210,
                             "engIntor":""
                           },
                           {
@@ -5431,7 +5237,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":15211,
                             "engIntor":""
                           },
                           {
@@ -5442,7 +5247,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":15212,
                             "engIntor":""
                           },
                           {
@@ -5453,7 +5257,6 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":15213,
                             "engIntor":""
                           },
                           {
@@ -5464,14 +5267,12 @@
                               }
                             ],
                             "engRule":"灯光.pdf",
-                            "id":15214,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"空调",
-                      "id":1530,
                       "children":[
                           {
                             "label":"3000手动空调",
@@ -5481,7 +5282,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1531,
                             "engIntor":""
                           },
                           {
@@ -5492,7 +5292,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1532,
                             "engIntor":""
                           },
                           {
@@ -5503,7 +5302,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1533,
                             "engIntor":""
                           },
                           {
@@ -5514,7 +5312,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1534,
                             "engIntor":""
                           },
                           {
@@ -5525,7 +5322,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1535,
                             "engIntor":""
                           },
                           {
@@ -5536,7 +5332,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1536,
                             "engIntor":""
                           },
                           {
@@ -5547,7 +5342,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1537,
                             "engIntor":""
                           },
                           {
@@ -5558,7 +5352,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1538,
                             "engIntor":""
                           },
                           {
@@ -5569,7 +5362,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":1539,
                             "engIntor":""
                           },
                           {
@@ -5580,7 +5372,6 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":15310,
                             "engIntor":""
                           },
                           {
@@ -5591,14 +5382,12 @@
                               }
                             ],
                             "engRule":"空调.pdf",
-                            "id":15311,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"雨刮",
-                      "id":1540,
                       "children":[
                           {
                             "label":"3000雨刮",
@@ -5608,7 +5397,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1541,
                             "engIntor":""
                           },
                           {
@@ -5619,7 +5407,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1542,
                             "engIntor":""
                           },
                           {
@@ -5630,7 +5417,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1543,
                             "engIntor":""
                           },
                           {
@@ -5641,7 +5427,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1544,
                             "engIntor":""
                           },
                           {
@@ -5655,7 +5440,6 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1545,
                             "engIntor":""
                           },
                           {
@@ -5666,14 +5450,12 @@
                               }
                             ],
                             "engRule":"",
-                            "id":1546,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"中控门窗",
-                      "id":1550,
                       "children":[
                           {
                             "label":"3000中控门锁接线台架",
@@ -5683,7 +5465,6 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1551,
                             "engIntor":""
                           },
                           {
@@ -5694,7 +5475,6 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1552,
                             "engIntor":""
                           },
                           {
@@ -5705,7 +5485,6 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1553,
                             "engIntor":""
                           },
                           {
@@ -5716,7 +5495,6 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1554,
                             "engIntor":""
                           },
                           {
@@ -5727,7 +5505,6 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1555,
                             "engIntor":""
                           },
                           {
@@ -5738,7 +5515,6 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1556,
                             "engIntor":""
                           },
                           {
@@ -5749,14 +5525,12 @@
                               }
                             ],
                             "engRule":"中控门窗.pdf",
-                            "id":1557,
                             "engIntor":""
                           }
                       ]
                     },
                     {
                       "label":"座椅",
-                      "id":1560,
                       "engImg":[
                         {
                           "engImage":"帕萨特B5电动座椅实训台.JPG"
@@ -5771,62 +5545,48 @@
         },
         {
           "label":"实训中心设计",
-          "id":2000,
+          "id":102,
           "children":[
             {
               "label":"综合实训中心设计（南昌职业学院）",
               "engImg":"综合实训中心设计（南昌职业学院）.png",
-              "id":2100,
               "engRule":"设计1.pdf"
             },
-
             {
               "label":"发动机实训室设计",
               "engImg":"发动机实训室设计.png",
-              "id":2200,
               "engRule":"设计2.pdf"
             }
-
             ,
             {
               "label":"新能汽车源动力电池实训室",
               "engImg":"新能汽车源动力电池实训室.png",
-              "id":2300,
               "engRule":"设计3.pdf"
             }
-
             ,
             {
               "label":"新能源汽车电机与控制实训室",
               "engImg":"新能源汽车电机与控制实训室.png",
-              "id":2400,
               "engRule":"设计4.pdf"
             }
-
             ,
             {
               "label":"新能源汽车低压电器与底盘实训室",
               "engImg":"新能源汽车低压电器与底盘实训室.png",
-              "id":2500,
               "engRule":"设计5.pdf"
             }
-
             ,
             {
               "label":"纯电动汽车整车实训室",
               "engImg":"纯电动汽车整车实训室.png",
-              "id":2600,
               "engRule":"设计6.pdf"
             }
-
             ,
             {
               "label":"信息化智慧教室设计",
               "engImg":"信息化智慧教室设计.png",
-              "id":2700,
               "engRule":"设计7.pdf"
             }
-
           ]
         }
       ]
@@ -5853,277 +5613,18 @@
     },
     {
       "label":"大赛中心",
-      "name":"competitionCenter",
+      "name":"appraiseCenter",
       "background":"competitionIndex.png",
       "introduce":"发布有关于汽车大赛的通知消息，注意事项等；通过这里掌握最新大赛动态",
       "children":[
         {
-          "label":"大赛资讯",
-          "id":3000,
-          "children":[
-            {
-              "label":"大赛预告",
-              "id":3100,
-              "children":[
-                {
-                  "label":"2018年全国职业院校技能大赛",
-                  "title":"教育部关于举办2018年全国职业院校技能大赛的通知",
-                  "sTitle":"教职成函〔2018〕6号",
-                  "content":[
-                    {
-                      "content":"各省、自治区、直辖市教育厅（教委），各计划单列市教育局，新疆生产建设兵团教育局，有关单位："
-                    },
-                    {
-                      "content":"2018年全国职业院校技能大赛将于5月至6月在天津主赛区和北京、山西、内蒙古、辽宁、吉林、江苏、浙江、安徽、福建、山东、河南、湖北、湖南、广东、重庆、四川、云南、陕西、甘肃、宁夏、青岛、宁波等22个分赛区举行。现将大赛组织委员会组成人员名单（详见附件1）及大赛实施方案（详见附件2、3）印发给你们，请做好相关准备工作。"
-                    },
-                    {
-                      "content":"大赛开幕式定于5月6日职业教育活动周期间在天津举行。天津比赛期间，还将同期举办中华优秀传统文化艺术表演赛、全国职业院校技能大赛博物馆展示交流、全国大赛获奖选手就业洽谈会等重要活动。"
-                    },
-                    {
-                      "content":"关于大赛开幕式的有关事项由大赛组委会秘书处另行通知。"
-                    }
-                  ],
-                  "moreText":[
-                    {
-                      "text":"全国职业院校技能大赛组织委员会组成人员名单.docx "
-                    },
-                    {
-                      "text":"2018年全国职业院校技能大赛常规赛项实施方案.docx"
-                    },
-                    {
-                      "text":"2018年全国职业院校技能大赛行业特色赛项实施方案.docx"
-                    }
-                  ],
-                  "address":"教育部",
-                  "time":"2018年4月27日",
-                  "ruleText":"2018年全国职业院校技能大赛制度汇编.pdf",
-                  "historyTitle":"",
-                  "historyContent":[
-                    {
-                      "historyContent":""
-                    }
-                  ],
-                  "historyImg":[
-                    {
-                      "historyImg":""
-                    }
-                  ],
-                  "id":3110
-                },
-                {
-                  "label":"大赛2",
-                  "id":3120
-                },
-                {
-                  "label":"大赛3",
-                  "id":3130
-                }
-              ]
-            },
-            {
-              "label":"历届回顾",
-              "id":3200,
-              "children":[
-                {
-                  "label":"2017年全国职业院校技能大赛中职组“汽车运用与维修”赛项",
-                  "title":"关于召开2017年全国职业院校技能大赛中职组“汽车运用与维修”赛项说明会的通知",
-                  "sTitle":"",
-                  "content":[
-                    {
-                      "content":"各省、自治区、直辖市教育厅（教委），各计划单列市教育局，新疆生产建设兵团教育局，有关单位："
-                    },
-                    {
-                      "content":"为做好2017年全国职业院校技能大赛汽车运用与维修（中职组）赛项的筹备工作，解读2017年大赛技术方案，经研究决定召开赛项说明会，现将具体内容通知如下："
-                    },
-                    {
-                      "content":"一、会议时间："
-                    },
-                    {
-                      "content":"1.报到时间：4月13日"
-                    },
-                    {
-                      "content":"2.会议时间：4月14日"
-                    },
-                    {
-                      "content":"二、会议地点："
-                    },
-                    {
-                      "content":"1.报到地点："
-                    },
-                    {
-                      "content":"1）天津空港白云酒店，天津空港经济区西二道90号，联系人：严腊梅13820230934，标间价格：380元含双早。（主要酒店，房间较多）；"
-                    },
-                    {
-                      "content":"2）天津空港格兰云天大酒店，天津市空港经济区西二道82号，距离空港白云酒店走路5分钟路程，联系人：靳明雨13821186010，标间价格330元含双早。（辅助酒店，房间较少）。"
-                    },
-                    {
-                      "content":"因房间有限，此次会议安排两个宾馆住宿，两个宾馆均设报到处。"
-                    },
-                    {
-                      "content":"2.会议地点：天津空港白云酒店（具体会议室安排见附件2）。"
-                    },
-                    {
-                      "content":"三、会议内容："
-                    },
-                    {
-                      "content":"1.2017年大赛项目介绍"
-                    },
-                    {
-                      "content":"2.大赛会务工作介绍"
-                    },
-                    {
-                      "content":"3.赛项技术方案解读介绍、答疑及赛项实操比赛问题分析："
-                    },
-                    {
-                      "content":"1）机电维修（定期维护、车轮定位、机械拆装、故障诊断）"
-                    },
-                    {
-                      "content":"2）车身修复（钣金）"
-                    },
-                    {
-                      "content":"3）车身涂装（涂漆）"
-                    },
-                    {
-                      "content":"四、会议经费："
-                    },
-                    {
-                      "content":"本次会议的会务费由大赛承办方承担，所有代表食宿统一安排，费用自理。"
-                    },
-                    {
-                      "content":"五、联系方式："
-                    },
-                    {
-                      "content":"中国汽车维修行业协会"
-                    },
-                    {
-                      "content":"联系人：康学楠   010-63310375   13911508542"
-                    },
-                    {
-                      "content":"天津市东丽区职业教育中心学校"
-                    },
-                    {
-                      "content":"总负责人：魏云福      联系电话13820019299"
-                    },
-                    {
-                      "content":"交通负责人：贾国新    联系电话13164068466"
-                    },
-                    {
-                      "content":"宾馆负责人：刘爱军    联系电话13752226393"
-                    },
-                    {
-                      "content":"电子邮件：wyf9299@126.com"
-                    },
-                    {
-                      "content":"因酒店预定房间服务需要，请各位代表在4月7日前，务必将参会回执发电子邮件到天津市东丽区职业教育中心学校。"
-                    }
-                  ],
-                  "moreText":[
-                    {
-                      "text":"中职组”汽车运用与维修“赛项说明会回执.docx"
-                    },
-                    {
-                      "text":"中职组”汽车运用与维修“赛项说明会会议日程.docx"
-                    },
-                    {
-                      "text":"中职组”汽车运用与维修“赛项说明会交通路线及说明.doc"
-                    }
-                  ],
-                  "address":"中国汽车维修行业协会",
-                  "time":"2017年3月31",
-                  "ruleText":"2017年全国职业院校技能大赛制度汇编.pdf",
-                  "historyTitle":"2017年全国职业院校技能大赛中职组汽车运用与维修赛项成功举办",
-                  "historyContent":[
-                    {
-                      "historyContent":"2017年全国职业院校技能大赛中职组汽车运用与维修技能大赛”于5月24-27日在天津市东丽区举办。参加本次大赛的有来自全国各省、市、自治区、计划单列市和新疆生产建设兵团中等职业学校汽车维修专业的37支代表队，共计361名学生。"
-                    },
-                    {
-                      "historyContent":"本次比赛共设立3个子赛项：包括汽车整车维护、车身修复（钣金）和车身涂装（涂漆）；其中汽车整车维护整合了定期维护、车轮定位、发动机拆装与测量、故障诊断、汽车空调维修等行业全部的机修项目，贴近世界技能大赛比赛模式，对于选手实际操作的考察已经达到了技师的水平。"
-                    },
-                    {
-                      "historyContent":"举办本届技能竞赛，是对汽车运用与维修专业紧缺人才培养培训工程的进一步检验，是对深入贯彻落实国务院职业教育工作会议精神、深化改革、加快发展所取得成果的又一次检阅；是汽修行业弘扬“工匠”精神的一次体现；更是职业学校广大师生奋发向上、锐意进取的精神面貌和熟练技能的一次展示。这对于进一步宣传职业教育，营造关心支持职业教育发展的良好社会氛围；对于全面落实科学发展观，加快发展职业教育，提高办学质量和效益，实现又好又快发展具有重要意义。"
-                    }
-                  ],
-                  "historyImg":[
-                    {
-                      "historyImg":"competition1.png"
-                    },
-                    {
-                      "historyImg":"competition2.png"
-                    }
-                  ],
-                  "id":3210
-                },
-                {
-                  "label":"大赛2",
-                  "id":3220
-                },
-                {
-                  "label":"大赛3",
-                  "id":3230
-                }
-              ]
-            }
-          ]
+          "label":"课程评价"
         },
         {
-          "label":"实战专题",
-          "id":4000,
-          "children":[
-            {
-              "label":"机电项目",
-              "id":4100,
-              "children":[
-                {
-                  "label":"实战课题1",
-                  "id":4110
-                },
-                {
-                  "label":"实战课题2",
-                  "id":4120
-                },
-                {
-                  "label":"实战课题3",
-                  "id":4130
-                }
-              ]
-            },
-            {
-              "label":"钣喷项目",
-              "id":4200,
-              "children":[
-                {
-                  "label":"实战课题1",
-                  "id":4210
-                },
-                {
-                  "label":"实战课题2",
-                  "id":4220
-                },
-                {
-                  "label":"实战课题3",
-                  "id":4230
-                }
-              ]
-            },
-            {
-              "label":"营销项目",
-              "id":4300,
-              "children":[
-                {
-                  "label":"大赛1",
-                  "id":4310
-                },
-                {
-                  "label":"实战课题2",
-                  "id":4320
-                },
-                {
-                  "label":"实战课题3",
-                  "id":4330
-                }
-              ]
-            }
-          ]
+          "label":"教师评价"
+        },
+        {
+          "label":"设备评价"
         }
       ]
     },

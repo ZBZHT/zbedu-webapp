@@ -314,7 +314,7 @@
         }).then((res) => {
           if (res.data.userInfo) {
             this.resUserMsg = res.data.userInfo;
-            this.imgSrc = "/resource/myAvatar/" + this.resUserMsg.avatar;
+            this.imgSrc = "/competition/myAvatar/" + this.resUserMsg.avatar;
             console.log(this.imgSrc);
             let ee = this.resUserMsg.MoNo;
             this.userMoNo = (ee.substring(0,3)) + "****" + (ee.substring(7,11));
@@ -403,6 +403,11 @@
     font-size: 20px;
     position: absolute;
     top: 7rem;
+  }
+  .myData_cont {
+    position: relative;
+  }
+  .myData_cont {
   }
 
 </style>

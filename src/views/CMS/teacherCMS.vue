@@ -8,9 +8,10 @@
       <el-row>
         <el-col :span="4">
           <el-tree
-            :data="data"
+            :data="treeData"
+            node-key="id"
             default-expand-all
-            ref="tree"
+            ref="treeData"
             highlight-current
             :props="defaultProps"
             @node-click="handleNodeClick"></el-tree>
@@ -73,7 +74,7 @@
     activeName2: 'first',
     data() {
       return {
-        data: [],
+        treeData: [],
         total: '',
         pagesize: 12,
         defaultProps: {
@@ -179,8 +180,11 @@
           userType: this.userType
         }
       }).then((res) => {
-        //console.log();
-        this.data = res.data.result;
+        this.treeData = res.data.result;
+        console.log(this.treeData);
+        setTimeout(() => {
+          this.$refs.treeData.setCurrentKey(201)
+        }, 20)
       })
     },
     components: {
@@ -253,7 +257,6 @@
 
   .CMS_cont .el-table .cell {
     text-align: left;
-    margin-left: 14px
   }
 
   .CMS_cont .el-card__body {

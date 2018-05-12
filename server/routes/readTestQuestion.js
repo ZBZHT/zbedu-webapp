@@ -14,6 +14,7 @@ let testResult;
 router.use(function (req, res, next) {
   testResult = {
     question: [],
+    testItemsNum: [],
     testLength: '',
     testQuestion: 0,
     resId : 0
@@ -172,63 +173,74 @@ router.get('/stuHistoryTestData', function (req, res) {
 //学生,创建练习
 router.get('/stuNewExercise', function (req, res) {
   let reqQ = req.query;
-  //console.log(reqQ);
   Question.find(
   ).then(function (question) {
     let testItems = core.getArrayItems(question, reqQ.num);
     for (let i=0; i<=testItems.length-1; i++) {
-      testItems.push(testItems[i].num)
+      testResult.testItemsNum.push(testItems[i].num)
     }
     TestQuestionInfo.find({
     }).sort({currTestNum:-1}).then(function (testQ) {
-      if (testQ.length <= 0) {
-        testResult.testLength = 0;
-      } else {
-        testResult.testLength = testQ[0].currTestNum;
+      let EE = [];
+      function start() {
+        return new Promise((resolve, reject) => {
+          resolve('start');
+        });
       }
-        testResult.testLength = Number(testResult.testLength) + 1;
-
-        //创建学生试题
-      let testQuestionInfo = new TestQuestionInfo({
-        user: reqQ.user,
-        currTestType : reqQ.currTestType,
-        currTestNum: testResult.testLength,
-        theme: reqQ.theme,
-        msg: "error parameter",
-        testId: 1,
-        state: 0,
-        status: 0,
-        title: '',
-        desc: "biansuqi test",
-        startTime: '',
-        currAnswer: '',
-        currState: '',
-        currIsId: [],
-        error: '',
-        sorce: 2,
-        startTimeHours: 0,
-        startTimeMinutes: 0,
-        startTimeSeconds: 0,
-        testTimeMinutes: 0,
-        testTimeSeconds: 0,
-        isCheckNum: 0,
-        date1: reqQ.date1,
-        date2: reqQ.date2,
-        date3: reqQ.date3,
-        date4: reqQ.date4,
-        timeHour: reqQ.timeHour,
-        timeMin: reqQ.timeMin,
-        allScore: reqQ.allScore,
-      });
-      testQuestionInfo.question = testResult.testItemsNum;
-      testQuestionInfo.save(function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log('Success!');
-          res.end(JSON.stringify({code: 0,msg: '练习创建成功'}));
-        }
-      });
+      start()
+        .then(data => {
+          if (testQ.length !== 0) {
+            for (let i=0; i<=testQ.length-1; i++) {
+              EE.push(testQ[i].currTestNum)
+            }
+            testResult.testLength = (Math.max.apply(null, EE)) + 1;
+          } else {
+            testResult.testLength = 1;
+          }
+        })
+        .then(data => {
+          //创建学生试题
+          let testQuestionInfo = new TestQuestionInfo({
+            user: reqQ.user,
+            currTestType : 106,
+            currTestNum: testResult.testLength,
+            theme: '',
+            msg: "error parameter",
+            testId: 1,
+            state: 1,
+            status: 0,
+            title: '',
+            desc: "biansuqi test",
+            startTime: '',
+            currAnswer: '',
+            currState: '',
+            currIsId: [],
+            error: '',
+            sorce: 2,
+            startTimeHours: 0,
+            startTimeMinutes: 0,
+            startTimeSeconds: 0,
+            testTimeMinutes: 0,
+            testTimeSeconds: 0,
+            isCheckNum: 0,
+            date1: reqQ.date1,
+            date2: reqQ.date2,
+            date3: reqQ.date3,
+            date4: reqQ.date4,
+            timeHour: reqQ.timeHour,
+            timeMin: reqQ.timeMin,
+            allScore: reqQ.allScore,
+          });
+          testQuestionInfo.question = testResult.testItemsNum;
+          testQuestionInfo.save(function (err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('Success!');
+              res.end(JSON.stringify({code: 0,msg: '练习创建成功'}));
+            }
+          });
+        })
     });
   });
 });
@@ -237,17 +249,21 @@ router.get('/stuNewExercise', function (req, res) {
 router.get('/getTestExercise', function (req, res) {
   //console.log(reqUser);
   let reqUser = req.query.user;
+  console.log(reqUser);
   TestQuestionInfo.findOne({
     user: reqUser,
     state: 1,
     currTestType: 106,
   }).then(function (info) {
     if (info) {
-      res.end(JSON.stringify({
-        testQuestion: info,
-      }));
+      Question.find({
+        num: { "$in": info.question }
+      }).then(function (result) {
+        info.question = result;
+        res.end(JSON.stringify({ testQuestion: info }));
+      });
     } else {
-      res.status(404).send({err: err,});
+      res.end(JSON.stringify({code : 1, msg: '未找到数据'}));
     }
   })
 });

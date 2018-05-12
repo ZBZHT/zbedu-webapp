@@ -178,10 +178,10 @@ module.exports = {
     }else if(user == 'T'){
       userT = '教师';
       return userT;
-    }else if(user == 'E'){
+    }else if(user == 'EA'){
       userT = '教务管理员';
       return userT;
-    }else if(user == 'admin'){
+    }else if(user == 'SA'){
       userT = '管理员';
       return userT;
     }
@@ -252,6 +252,21 @@ module.exports = {
       gender = '女';
       return gender;
     }
+  },
+  /**
+   * 传入一个arr, 输出去除重复后的数组
+   * 数组去重
+   */
+  unique : function (arr) {
+    for (var i =0,hash=[];i<arr.length ;i++ ){
+      if (hash[arr[i]]===undefined){
+        hash[arr[i]]=1;
+      }
+    }
+    var j=0;
+    var keys=[];
+    for (keys[j++] in hash );
+    return keys;
   },
 
 };

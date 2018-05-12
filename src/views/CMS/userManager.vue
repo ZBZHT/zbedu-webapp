@@ -46,17 +46,18 @@
 
           <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm" style="width: 98%">
             <el-form-item label="专业" prop="major">
-              <el-select v-model="label" placeholder="请选择专业">
+              <el-select v-model="majorMV" placeholder="请选择专业">
                 <el-option
                   v-for="item in majorM"
                   :key="item.label"
                   :label="item.label"
-                  :value="item.label">
+                  :value="item.label"
+                  automatic-dropdown>
                 </el-option>
               </el-select>
             </el-form-item>
             <el-form-item label="班级" prop="classGrade" >
-              <el-select v-model="label" placeholder="请选择班级">
+              <el-select v-model="classMV" placeholder="请选择班级">
                 <el-option
                   v-for="item in classM"
                   :key="item.label"
@@ -117,7 +118,7 @@
 
           <el-form-item label="用户类别" prop="userType" style="width: 92%">
             <el-radio-group v-model="addTeachForm.userType">
-              <el-radio v-model="radio1" label="E">教务管理员</el-radio>
+              <el-radio v-model="radio1" label="EA">教务管理员</el-radio>
               <el-radio v-model="radio1" label="T">教师</el-radio>
             </el-radio-group>
           </el-form-item>
@@ -155,9 +156,9 @@
         <el-tab-pane label="学生列表" name="first">
 
           <!--学生列表-->
-          <el-table class="userM_el-table" :data="stuData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+          <el-table class="userM_el-table" :data="stuData.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"
                     @selection-change="changeStudent"
-                    stripe style="width: 98%;">
+                    stripe style="width: 99%;">
 
             <el-table-column type="selection" width="40"></el-table-column>
 
@@ -167,7 +168,7 @@
             <el-table-column prop="user" label="用户名" width="100">
             </el-table-column>
 
-            <el-table-column prop="userID" label="用户ID" width="120">
+            <el-table-column prop="userID" label="学号" width="120">
             </el-table-column>
 
             <el-table-column prop="IDNo" label="身份证号" width="190">
@@ -182,13 +183,13 @@
             <el-table-column prop="gender" label="性别" width="70">
             </el-table-column>
 
-            <el-table-column prop="time" label="入学时间" width="130">
+            <el-table-column prop="time" label="入学时间" width="110">
             </el-table-column>
 
-            <el-table-column prop="major" label="专业" width="100">
+            <el-table-column prop="major" label="专业" width="110">
             </el-table-column>
 
-            <el-table-column prop="classGrade" label="班级" width="70">
+            <el-table-column prop="classGrade" label="班级" width="90">
             </el-table-column>
 
             <el-table-column label="操作" style="width: 100px">
@@ -200,7 +201,19 @@
             </el-table-column>
           </el-table>
 
-          <!--修改用户对话框-->
+          <!--分页显示-->
+          <div class="block">
+            <el-pagination
+              @size-change="handleSizeChange"
+              @current-change="handleCurrentChange"
+              :current-page.sync="currentPage1"
+              :page-size="pagesize"
+              layout="prev, pager, next, jumper"
+              :total=parseInt(total1)>
+            </el-pagination>
+          </div>
+
+          <!--修改学生对话框-->
           <el-dialog title="修改资料"
                      :visible.sync="dialogFormVisible1"
                      :before-close="handleClose"
@@ -235,8 +248,6 @@
 
               <el-form-item label="用户类别" prop="userType" style="width: 92%">
                 <el-radio-group v-model="addUserForm1.userType">
-                  <el-radio v-model="radio1" label="E">教务管理员</el-radio>
-                  <el-radio v-model="radio1" label="T">教师</el-radio>
                   <el-radio v-model="radio1" label="S">学生</el-radio>
                   <el-radio v-model="radio1" label="O">外来学生</el-radio>
                 </el-radio-group>
@@ -244,13 +255,25 @@
 
               <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1" style="width: 98%">
                 <el-form-item label="专业" prop="major">
-                  <el-select v-model="addUserForm1.major" placeholder="请选择专业">
-                    <el-option label="汽车专业" value="汽车专业"></el-option>
-                    <el-option label="机电专业" value="机电专业"></el-option>
+                  <el-select v-model="majorMV" placeholder="请选择专业">
+                    <el-option
+                      v-for="item in majorM"
+                      :key="item.label"
+                      :label="item.label"
+                      :value="item.label"
+                      automatic-dropdown>
+                    </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="班级" prop="classGrade">
-                  <el-input v-model="addUserForm1.classGrade" placeholder="请输入班级"></el-input>
+                <el-form-item label="班级" prop="classGrade" >
+                  <el-select v-model="classMV" placeholder="请选择班级">
+                    <el-option
+                      v-for="item in classM"
+                      :key="item.label"
+                      :label="item.label"
+                      :value="item.label">
+                    </el-option>
+                  </el-select>
                 </el-form-item>
               </el-form>
 
@@ -269,23 +292,12 @@
             </div>
           </el-dialog>
 
-          <!--分页显示-->
-          <div class="block">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
-              :page-size="pagesize"
-              layout="prev, pager, next, jumper"
-              :total=parseInt(total1)>
-            </el-pagination>
-          </div>
-
         </el-tab-pane>
+
         <el-tab-pane label="教师列表" name="second">
 
           <!--教师列表-->
-          <el-table class="userM_el-table" :data="teachData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+          <el-table class="userM_el-table" :data="teachData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)"
                     @selection-change="changeTeacher"
                     stripe style="width: 98%;">
 
@@ -321,7 +333,7 @@
             <el-table-column label="操作" style="width: 100px">
               <template slot-scope="scope">
                 <el-button size="small" class="userM_el-tableBut" type="warning"
-                           @click="handleEdit(scope.$index, scope.row)">修 改
+                           @click="handleEdit1(scope.$index, scope.row)">修 改
                 </el-button>
               </template>
             </el-table-column>
@@ -332,7 +344,7 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
+              :current-page.sync="currentPage2"
               :page-size="pagesize"
               layout="prev, pager, next, jumper"
               :total=parseInt(total2)>
@@ -340,6 +352,62 @@
           </div>
 
         </el-tab-pane>
+
+        <!--修改教师对话框-->
+        <el-dialog title="修改资料"
+                   :visible.sync="dialogFormVisible3"
+                   :before-close="handleClose"
+                   :close-on-click-modal="false">
+          <el-form :model="addUserForm1" :rules="rules" ref="addUserForm1" label-width="80px" class="demo-addUserForm">
+
+            <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
+              <el-form-item label="姓名" prop="user" >
+                <el-input v-model="addUserForm1.user" placeholder="姓名为2-4个汉字"></el-input>
+              </el-form-item>
+
+              <el-form-item label="性别" prop="gender" style="width: 48%">
+                <el-radio-group v-model="addUserForm1.gender">
+                  <el-radio v-model="radio2" label="1">男</el-radio>
+                  <el-radio v-model="radio2" label="2">女</el-radio>
+                </el-radio-group>
+              </el-form-item>
+            </el-form>
+
+            <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
+              <el-form-item label="学号" prop="userID">
+                <el-input v-model="addUserForm1.userID" placeholder="学号为8位数字"></el-input>
+              </el-form-item>
+              <el-form-item label="手机号" prop="MoNo">
+                <el-input v-model="addUserForm1.MoNo" placeholder="手机号码位11位"></el-input>
+              </el-form-item>
+            </el-form>
+
+            <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
+              <el-input v-model="addUserForm1.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+            </el-form-item>
+
+            <el-form-item label="用户类别" prop="userType" style="width: 92%">
+              <el-radio-group v-model="addUserForm1.userType">
+                <el-radio v-model="radio1" label="EA">教务管理员</el-radio>
+                <el-radio v-model="radio1" label="T">教师</el-radio>
+              </el-radio-group>
+            </el-form-item>
+
+            <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
+              <el-form-item prop="time" label="入学时间">
+                <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.time"></el-date-picker>
+              </el-form-item>
+              <el-form-item label="密码" prop="pwd">
+                <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位"></el-input>
+              </el-form-item>
+            </el-form>
+          </el-form>
+
+          <div slot="footer" class="dialog-footer" style="width: 93%">
+            <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
+          </div>
+        </el-dialog>
+
       </el-tabs>
 
       <span class="headBut">
@@ -360,7 +428,7 @@
             :onSuccess="uploadSuccess"
             :show-file-list=false
             :on-exceed="handleExceed"
-            accept=".xlsx">
+            accept=".xlsx,.xls">
           <el-button size="small" type="primary">Excel导入用户</el-button>
         </el-upload>
         </span>
@@ -411,7 +479,8 @@
         total2: '',
         activeName: 'first',
         pagesize: 10,
-        currentPage: 1,
+        currentPage1: 1,
+        currentPage2: 1,
         defaultProps: {
           children: 'children',
           label: 'label'
@@ -425,6 +494,7 @@
         dialogFormVisible: false,
         dialogFormVisible1: false,
         dialogFormVisible2: false,
+        dialogFormVisible3: false,
         addStuForm: {
           user: '',
           pwd: '',
@@ -474,18 +544,16 @@
             { min: 8, max: 8, message: '长度在 8 个字符', trigger: 'blur' }
           ],
           IDNo: [
-            { required: true, message: '请输入身份证号', trigger: 'change' },
             { min: 15, max: 18, message: '长度在 15 到 18 位', trigger: 'blur' }
           ],
           MoNo: [
-            { required: true, message: '请输入手机号', trigger: 'change' },
             { min: 11, max: 11, message: '长度在 11 位', trigger: 'blur' }
           ],
           userType: [
             { required: true, message: '请选择一个类型', trigger: 'change' }
           ],
           gender: [
-            { required: true, message: '请选择性别', trigger: 'change'}
+            {  message: '请选择性别', trigger: 'change'}
           ],
           time: [
             { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
@@ -501,8 +569,11 @@
         },
         radio: "1",
         radio1: "S",
-        majorM:[],
-        classM:[],
+        radio2: "",
+        majorM: [],
+        classM: [],
+        majorMV: [],
+        classMV: [],
 
       }
     },
@@ -573,7 +644,7 @@
         this.addUserForm1.classGrade = '';
       },
 
-      //修改
+      //修改学生
       handleEdit(index, row) {
         this.addUserForm1.user = row.user;
         this.addUserForm1.userID = row.userID;
@@ -588,8 +659,25 @@
         this.addUserForm1.time = row.time;
         this.addUserForm1.major = row.major;
         this.addUserForm1.classGrade = row.classGrade;
+        this.majorMV = row.major;
+        this.classMV = row.classGrade;
         this.dialogFormVisible1 = true;
-        console.log(this.addUserForm1);
+        //console.log(this.addUserForm1);
+      },
+      //修改老师
+      handleEdit1(index, row) {
+        this.addUserForm1.user = row.user;
+        this.addUserForm1.userID = row.userID;
+        this.addUserForm1.IDNo = row.IDNo;
+        this.addUserForm1.MoNo = row.MoNo;
+        this.addUserForm1.userType = row.userType;
+        if (row.gender === '男') {
+          this.addUserForm1.gender = '1';
+        } else if (row.gender === '女') {
+          this.addUserForm1.gender = '2';
+        }
+        this.dialogFormVisible3 = true;
+        //console.log(this.addUserForm1);
       },
 
       //删除用户信息方法
@@ -600,27 +688,25 @@
           type: 'warning',
           center: true
         }).then(() => {
-            if (this.activeName === 'first') {
-              axios.post('/teacherCMS/delUserData', {
-                data: {
-                  username: this.username,
-                  userType: this.userType,
-                  studentSelection: this.studentSelection,
-                  teacherSelection: this.teacherSelection
-                }
-              }).then((res) => {
-                //console.log(res.data);
-                if (res.data.code === 0) {
-                  this.getUserData();
-                  this.$message({
-                    type: 'success',
-                    message: '删除成功!'
-                  });
-                }else {
-                  console.log('返回错误')
-                }
-              });
+          axios.post('/teacherCMS/delUserData', {
+            data: {
+              username: this.username,
+              userType: this.userType,
+              studentSelection: this.studentSelection,
+              teacherSelection: this.teacherSelection
             }
+          }).then((res) => {
+            //console.log(res.data);
+            if (res.data.code == 0) {
+              this.getUserData();
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              });
+            }else {
+              console.log('返回错误')
+            }
+          });
         }).catch(() => {
           this.$message({
             type: 'info',
@@ -643,8 +729,10 @@
 
       //添加学生
       addStu() {
-          this.dialogFormVisible = false;
-          let resData = this.resUserData(this.addStuForm);
+        this.addStuForm.major = this.majorMV;
+        this.addStuForm.classGrade = this.classMV;
+        let resData = this.resUserData(this.addStuForm);
+        this.dialogFormVisible = false;
           axios.post('/teacherCMS/addStu', {
             data: {
               username: this.username,
@@ -661,8 +749,8 @@
       },
       //添加教师
       addTeach() {
-          this.dialogFormVisible2 = false;
-          let resData = this.resUserData(this.addTeachForm);
+        let resData = this.resUserData(this.addTeachForm);
+        this.dialogFormVisible2 = false;
           //console.log(this.addUserForm);
           axios.post('/teacherCMS/addTeach', {
             data: {
@@ -742,7 +830,6 @@
         this.teacherSelection = val;
       },
       handleClick(tab, event) {
-        console.log(tab.name);
         if (tab.name === 'first') {
           this.teacherSelection = [];
         } else if (tab.name === 'second') {
@@ -762,6 +849,7 @@
             for (let i = 0; i < studentData.length; i++) {
               studentData[i].time = moment(new Date(studentData[i].time)).format("YYYY-MM-DD");
               studentData[i].gender = core.getGender(studentData[i].gender);
+              studentData[i].userType = core.userType(studentData[i].userType);
               studentData[i].num = i + 1;
             }
             this.stuData = studentData;
@@ -773,6 +861,7 @@
             for (let i = 0; i < teacherData.length; i++) {
               teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");
               teacherData[i].gender = core.getGender(teacherData[i].gender);
+              studentData[i].userType = core.userType(studentData[i].userType);
               teacherData[i].num = i + 1;
             }
             this.teachData = teacherData;
@@ -851,7 +940,6 @@
   }
   .userManager_cont .el-table .cell {
     text-align: left;
-    margin-left: 14px
   }
   .userManager_cont .CMS_cont {
     min-height: 34.3rem;
@@ -864,6 +952,7 @@
   }
   .userManager_cont .el-table-column--selection .cell {
     padding-left: 0;
+    margin-left: 10px;
   }
   .userManager_cont .el-dialog{
     width: 40.5%;
