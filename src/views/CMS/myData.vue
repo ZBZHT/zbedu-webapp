@@ -6,7 +6,7 @@
         <el-card>
           <el-col :span="6">
             <div class="img">
-              <img :src=" imgSrc" alt="头像" @click="dialogFormVisible2 = true">
+              <img :src="imgSrc" alt="头像" @click="dialogFormVisible2 = true">
               <el-button class="head-portrait" type="info" @click="dialogFormVisible2 = true">编辑头像</el-button>
             </div>
           </el-col>
@@ -314,7 +314,13 @@
         }).then((res) => {
           if (res.data.userInfo) {
             this.resUserMsg = res.data.userInfo;
-            this.imgSrc = "/competition/myAvatar/" + this.resUserMsg.avatar;
+            console.log(__dirname);
+            if (res.data.userInfo.avatar === '' || res.data.userInfo.avatar === undefined) {
+              this.imgSrc = '/src/assets/imgs/user.png';
+            } else {
+              this.imgSrc = '/resource/myAvatar/' + this.resUserMsg.avatar;
+            }
+
             console.log(this.imgSrc);
             let ee = this.resUserMsg.MoNo;
             this.userMoNo = (ee.substring(0,3)) + "****" + (ee.substring(7,11));
@@ -377,7 +383,7 @@
     display: block;
     float: right;
     width: 180px;
-    height: 180px;
+    height: 280px;
     position: relative;
   }
   .myData_cont .img img{
@@ -398,11 +404,15 @@
     padding-right: 40px;
   }
   .myData_cont .head-portrait {
+    display: none;
     margin-left: 8px;
     padding: 10px 40px;
     font-size: 20px;
     position: absolute;
     top: 7rem;
+  }
+  .myData_cont .img img:hover {
+    opacity: 0.8;
   }
   .myData_cont {
     position: relative;

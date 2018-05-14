@@ -7,7 +7,7 @@
       <!--<p>完整url:{{aa}}</p>-->
       <!--<p>路由路径:{{bb}}</p>-->
       <!--<p>路由路径参数:{{cc}}</p>-->
-      <div v-for="item in noTree.videoTitle">
+      <div v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
         <video id="video-box" autoplay controls @click="stop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
         </video>
       </div>

@@ -96,13 +96,13 @@ import footFooter from '@/components/common/footFooter'
                             this.$store.commit('userID',res.data.userID);
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
-                                    if(this.$store.state.userType == "admin"){
+                                    if(this.$store.state.userType == "SA"){
                                         this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == ""){
                                         this.$router.push('/test');
                                     }else if(this.$store.state.userType == "S"){
                                         this.$router.push('/testSureLogin');
-                                    }else if(this.$store.state.userType == "E"){
+                                    }else if(this.$store.state.userType == "EA"){
                                         this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == "T"){
 
@@ -119,13 +119,13 @@ import footFooter from '@/components/common/footFooter'
                             this.$store.commit('userTypeC',core.userType(res.data.userType));
                         //    setCookie('username',this.username)
                                 setTimeout(function(){
-                                    if(this.$store.state.userType == "admin"){
+                                    if(this.$store.state.userType == "SA"){
                                         this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == ""){
                                         this.$router.push('/test');
                                     }else if(this.$store.state.userType == "S"){
                                         this.$router.push('/testSureLogin');
-                                    }else if(this.$store.state.userType == "E"){
+                                    }else if(this.$store.state.userType == "EA"){
                                         this.$router.push('/teachTest');
                                     }else if(this.$store.state.userType == "T"){
                                         this.$router.push('/teachTest');
@@ -149,13 +149,13 @@ import footFooter from '@/components/common/footFooter'
                           }.bind(this),0.1)
             },
             yes(){
-                if(this.$store.state.userType == "admin"){
+                if(this.$store.state.userType == "SA"){
                     this.$router.push('/teachTest');
                 }else if(this.$store.state.userType == ""){
                     this.$router.push('/test');
                 }else if(this.$store.state.userType == "S"){
                     this.$router.push('/test');
-                }else if(this.$store.state.userType == "E"){
+                }else if(this.$store.state.userType == "EA"){
                     this.$router.push('/test');
                 }else if(this.$store.state.userType == "T"){
                     this.$router.push('/teachTest');

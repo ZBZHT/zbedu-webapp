@@ -74,7 +74,7 @@ export default {
             this.$router.push('/courseIndex');
         }else if(index == 1){
             this.$router.push('/exerciseCenter');
-        }else if(index == 2 && this.$store.state.userType == "admin"){
+        }else if(index == 2 && this.$store.state.userType == "SA"){
             const {href} = this.$router.resolve({
                 name: 'teachTest'
             });
@@ -89,7 +89,7 @@ export default {
                 name: 'test'
             });
             window.open(href, '_blank')
-        }else if(index == 2 && this.$store.state.userType == "E"){
+        }else if(index == 2 && this.$store.state.userType == "EA"){
             const {href} = this.$router.resolve({
                 name: 'teachTest'
             });

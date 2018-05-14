@@ -28,7 +28,7 @@
                                 <p class="exerEngImgSTitle">{{competitionData.sTitle}}</p>
                                 <div v-for="item in competitionData.content">
                                     <p class="exerEngImgContent">{{item.content}}</p>
-                                </div> 
+                                </div>
                                 附件：
                                 <div v-for="item in competitionData.moreText">
                                     <p class="exerEngmoreText" @click="sendName(item.text)">{{item.text}}</p>
@@ -57,20 +57,29 @@
                 <!--历届回顾-->
                 <div v-show="is123">
                     <p class="exerP">{{competitionData.label}}</p>
-                    <el-tabs type="border-card">
-                        <el-tab-pane label="通知文件">
+                    <el-tabs type="border-card" v-model="activeName">
+                        <el-tab-pane label="通知文件" :name="descTab">
                             <div class="exerEngImg">
-                                <p class="exerEngImgTitle">{{competitionData.title}}</p>
-                                <p class="exerEngImgSTitle">{{competitionData.sTitle}}</p>
-                                <div v-for="item in competitionData.content">
-                                    <p class="exerEngImgContent">{{item.content}}</p>
-                                </div> 
+                                <!--<p class="exerEngImgTitle">{{competitionData.title}}</p>-->
+                                <!--<p class="exerEngImgSTitle">{{competitionData.sTitle}}</p>-->
+                                <!--<div v-for="item in competitionData.content">-->
+                                    <!--<p class="exerEngImgContent">{{item.content}}</p>-->
+                                <!--</div> -->
+                              <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                <param name="_Version" value="65539">
+                                <param name="_ExtentX" value="20108">
+                                <param name="_ExtentY" value="10866">
+                                <param name="_StockProps" value="0">
+                                <param name="SRC" value="teachingMaterial">
+                                <object :data="'/resource/pdf/competitionData/' + competitionData.informpdf" type="application/pdf" class="pdf-box">
+                                </object>
+                              </object>
                                 附件：
                                 <div v-for="item in competitionData.moreText">
                                     <p class="exerEngmoreText" @click="sendName(item.text)">{{item.text}}</p>
                                 </div>
-                                <p class="exerEngImgSTitle">{{competitionData.address}}</p>
-                                <p class="exerEngImgSTitle">{{competitionData.time}}</p>
+                                <!--<p class="exerEngImgSTitle">{{competitionData.address}}</p>-->
+                                <!--<p class="exerEngImgSTitle">{{competitionData.time}}</p>-->
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="大赛规程">
@@ -91,10 +100,10 @@
                                 <p class="exerEngImgTitle">{{competitionData.historyTitle}}</p>
                                 <div v-for="item in competitionData.historyContent">
                                     <p class="exerEngImgContent">{{item.historyContent}}</p>
-                                </div> 
+                                </div>
                                 <div class="exerEngImage" v-for="item in competitionData.historyImg">
                                     <img :src=" '/resource/imgs/competition/' + item.historyImg">
-                                </div> 
+                                </div>
                             </div>
                         </el-tab-pane>
                     </el-tabs>
@@ -103,33 +112,33 @@
                 <!--实战专题-->
                 <div v-show="is926">
                 <p class="exerP">{{}}</p>
-                    <el-tabs type="border-card">
-                        <el-tab-pane label="实战目标">
+                    <el-tabs type="border-card" v-model="activeName">
+                        <el-tab-pane label="实战目标" :name="descTab">
                             <div class="exerEngImg">
-                                
+                              <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                <param name="_Version" value="65539">
+                                <param name="_ExtentX" value="20108">
+                                <param name="_ExtentY" value="10866">
+                                <param name="_StockProps" value="0">
+                                <param name="SRC" value="teachingMaterial">
+                                <object :data="'/resource/pdf/competitionData/' + competitionData.goalpdf" type="application/pdf" class="pdf-box">
+                                </object>
+                              </object>
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="教学资料">
                             <div class="exerEngRule">
-                                <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
-                                    <param name="_Version" value="65539">
-                                    <param name="_ExtentX" value="20108">
-                                    <param name="_ExtentY" value="10866">
-                                    <param name="_StockProps" value="0">
-                                    <param name="SRC" value="teachingMaterial">
-                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
-                                    </object>
-                                </object>
+
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="大赛课件">
                             <div class="exerEngImg">
-                                
+
                             </div>
                         </el-tab-pane>
                         <el-tab-pane label="大赛视频">
                             <div class="exerEngImg">
-                                <img :src=" '/resource/imgs/' + exerEngImg">
+                                <!--<img :src=" '/resource/imgs/' + competitionData.ruleText">-->
                             </div>
                         </el-tab-pane>
                     </el-tabs>
@@ -226,7 +235,7 @@ export default {
             this.is926 = true;
             this.is123 = false;
           }
-          
+
       }
       //刷新保存数据
       if(data.children){
@@ -240,7 +249,7 @@ export default {
 
 
   },
-  mounted(){    
+  mounted(){
     axios.get("/readJson/bannerLeftData",{
         params:{
              user:234

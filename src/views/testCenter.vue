@@ -14,6 +14,9 @@
             <p>考试通知</p>
 
             {{minutes}}..{{seconds}}
+            <video id="video-box" autoplay controls src="/resource/video/充电桩结构原理及性能介绍.mp4">
+            </video>
+
             <hr>
             <ul>
                 <li v-for="item in information">

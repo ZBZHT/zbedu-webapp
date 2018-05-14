@@ -855,6 +855,7 @@
             if (res.data.code === 0) {
               this.toTestDataReq();
               this.Success('考试创建成功');
+              this.cleanAllData(formName);
             }
             }).catch(function (error) {
               this.$message({

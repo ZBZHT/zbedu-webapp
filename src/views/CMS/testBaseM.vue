@@ -367,7 +367,7 @@
     padding: 0;
   }
   .testBaseM_cont .el-table .cell {
-    max-height: 42px;
+    max-height: 38px;
   }
   .testBaseM_cont .elinput{
     width:486px;

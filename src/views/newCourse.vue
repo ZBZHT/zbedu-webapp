@@ -52,7 +52,7 @@
 
                             <!--微课-->
                             <el-tab-pane label="教学微课">
-                                <div  v-for="item in noTree.videoTitle">
+                                <div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
                                     <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
                                     </video>
                                 </div>
