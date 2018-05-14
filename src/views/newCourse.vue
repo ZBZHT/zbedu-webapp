@@ -67,6 +67,14 @@
                               </div>
                             </el-tab-pane>
 
+                            <!--二维动画-->
+                            <el-tab-pane label="二维动画">
+                              <div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
+                                <video id="flash2d" controls @click="flash2d" :src="'/resource/video/flash2d/' + noTree.flash2d">
+                                </video>
+                              </div>
+                            </el-tab-pane>
+
                             <!--课后作业-->
                             <el-tab-pane label="课后作业">
                                 <div class="homework-box">
@@ -188,8 +196,8 @@
                                     </div>
                                 </div>
                             </el-tab-pane>
-
                           </el-tabs>
+
 
                 </div>
             </el-col>
@@ -766,9 +774,18 @@ export default {
           this.currentReplyToReply = -1
         }
       },
-      //点击视频暂停开始
+      //点击微课视频暂停开始
       videostop(){
         var myVideo =document.getElementById("video-box");
+        if (myVideo.paused){
+            myVideo.play()
+        }else {
+          myVideo.pause()
+        }
+      },
+      //点击flash视频暂停开始
+      flash2d(){
+        var myVideo =document.getElementById("flash2d");
         if (myVideo.paused){
             myVideo.play()
         }else {
@@ -966,6 +983,10 @@ hr{
     height: 800px;
 }
 .newCourse-content #video-box{
+    width:100%;
+    height: 700px;
+}
+.newCourse-content #flash2d{
     width:100%;
     height: 700px;
 }
