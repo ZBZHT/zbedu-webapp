@@ -14,7 +14,7 @@
                     <div v-for="item3 in item2.children">
                         <b class="hd-label" @click="setMsg(item3)">
                           <!--<router-link :to="{path:'/course' + '/label/'+ item3.label}">-->
-                            <a>{{item3.label}}</a>
+                            <a class="hiddenbox-a">{{item3.label}}</a>
                           <!--</router-link>-->
 
                             <!--<a @click="qqq(item3.label)">{{item3.label}}</a>-->
@@ -37,17 +37,27 @@
 </template>
 
 <script>
-      import axios from 'axios'
+import axios from 'axios'
 export default {
   name: 'bannerLeft',
-  props:['bannerLeftData'],
+//  props:['bannerLeftData'],
   data () {
     return {
-      msg: 'bannerLeft'
+      msg: 'bannerLeft',
+      bannerLeftData:''
     }
   },
   mounted(){
-
+    axios.get("/readJson/bannerLeftData",{
+                params:{
+                     user:234
+                }
+            }).then((res)=>{
+                this.bannerLeftData = res.data;
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
+    
   },
   methods: {
     setMsg: function (item) {
@@ -149,6 +159,10 @@ a:focus {
     cursor: auto;
     overflow: auto;
     text-align:left;
+}
+.hiddenbox-a{
+    font-weight:bolder;
+    font-size:15px;
 }
 .item-a:hover .hiddenbox{
     display: block;

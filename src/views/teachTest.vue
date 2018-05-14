@@ -856,6 +856,12 @@
               this.toTestDataReq();
               this.Success('考试创建成功');
               this.cleanAllData(formName);
+            }else if(res.data.code === 1){
+              this.$message({
+                  showClose: true,
+                  message: '考试题目不能重复',
+                  type: 'error'
+                });
             }
             }).catch(function (error) {
               this.$message({

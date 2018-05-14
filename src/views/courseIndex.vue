@@ -6,7 +6,8 @@
     <div class="banner">
         <div class="left-menu">
 
-            <banner-left :bannerLeftData = "bannerLeftData"></banner-left>
+            <!--<banner-left :bannerLeftData = "bannerLeftData"></banner-left>-->
+            <banner-left></banner-left>
 
         </div>
         <div class="rightbox">
@@ -167,16 +168,7 @@ export default {
                 console.log("error init." + error)
             });
 
-        axios.get("/readJson/bannerLeftData",{
-                params:{
-                     user:234
-                }
-            }).then((res)=>{
-                this.indexData = res.data;
-                this.bannerLeftData = this.indexData;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
+
     },
   components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,footFooter}
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="testHead-title">
     <router-link :to="{path:'/'}">
-      <img class="brand" alt="Brand" src="../../assets/imgs/zbtLogo.png">
+      <img class="testHead-brand" alt="Brand" src="../../assets/imgs/zbtLogo.png">
     </router-link>
     <img class="testHead-headerbg" src="../../assets/imgs/header.png">
   </div>
@@ -44,5 +44,9 @@
     top:0px;
     height:94px;
     width: 80%;
-}
+    z-index: -1;
+  }
+  .testHead-brand{
+    z-index: 9999;
+  }
 </style>

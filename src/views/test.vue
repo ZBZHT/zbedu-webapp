@@ -128,15 +128,15 @@
                 <el-table-column label="序号" type="index" width="60">
                 </el-table-column>
 
-                <el-table-column label="考试题目" width="150">
+                <el-table-column label="考试题目" width="100">
                   <template slot-scope="scope">
                     <span>{{ scope.row.theme }}</span>
                   </template>
                 </el-table-column>
 
-                <el-table-column label="创建时间" width="200">
+                <el-table-column label="考试开始时间" width="180">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.newData }}</span>
+                    <span style="margin-left: 10px">{{ scope.row.date1 }} {{ scope.row.date3 }}</span>
                   </template>
                 </el-table-column>
 
@@ -195,25 +195,25 @@
                            :visible.sync="dialogTableVisible1">
                   <div v-for="(item2,index2) in originPaper.question">
                     <span class="desctitle">
-                        {{index2 + 1}}.{{item2.desc}}
+                        {{index2 + 1}}.{{item2[0].desc}}
                     </span>
                     <ul class="ans">
                       <li>
-                          <label for="11" v-if="item2.options[0]">
-                              <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[0]}}
+                          <label for="11" v-if="item2[0].options[0]">
+                              <input id="11" :type="item2[0].type" value="A" :name="item2[0].name" v-model="originPaper.currAnswer[index2]">
+                                  {{item2[0].options[0]}}
                           </label>
-                          <label for="22" v-if="item2.options[1]">
-                              <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[1]}}
+                          <label for="22" v-if="item2[0].options[1]">
+                              <input id="22" :type="item2[0].type" value="B" :name="item2[0].name" v-model="originPaper.currAnswer[index2]">
+                                  {{item2[0].options[1]}}
                           </label>
-                          <label for="33" v-if="item2.options[2]">
-                              <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[2]}}
+                          <label for="33" v-if="item2[0].options[2]">
+                              <input id="33" :type="item2[0].type" value="C" :name="item2[0].name" v-model="originPaper.currAnswer[index2]">
+                                  {{item2[0].options[2]}}
                           </label>
-                          <label for="44" v-if="item2.options[3]">
-                              <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[3]}}
+                          <label for="44" v-if="item2[0].options[3]">
+                              <input id="44" :type="item2[0].type" value="D" :name="item2[0].name" v-model="originPaper.currAnswer[index2]">
+                                  {{item2[0].options[3]}}
                           </label>
                       </li>
                     </ul>
@@ -228,18 +228,18 @@
                   <div v-for="(item3,index3) in ErrorPaper">
                     <span class="desctitle">
                       <img src="../assets/imgs/err.jpg">
-                      {{index3 + 1}}.{{item3.num}}{{item3.desc}}
+                      {{index3 + 1}}.{{item3[0].desc}}
                     </span>
                     <ul class="ans">
                       <li>
-                          {{item3.options[0]}}
-                          {{item3.options[1]}}
-                          {{item3.options[2]}}
-                          {{item3.options[3]}}
+                          {{item3[0].options[0]}}
+                          {{item3[0].options[1]}}
+                          {{item3[0].options[2]}}
+                          {{item3[0].options[3]}}
                       </li>
                     </ul>
                     <span>
-                        正确答案：{{item3.answer}}
+                        正确答案：{{item3[0].answer}}
                     </span>
                   </div>
                 </el-dialog>
@@ -431,25 +431,25 @@
                            :visible.sync="dialogTableVisible3">
                   <div v-for="(item2,index2) in exerciseOriginPaper.question">
                     <span class="desctitle">
-                        {{index2 + 1}}.{{item2.desc}}
+                        {{index2 + 1}}.{{item2[0].desc}}
                     </span>
                     <ul class="ans">
                       <li>
-                          <label for="11" v-if="item2.options[0]">
-                              <input id="11" :type="item2.type" value="A" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[0]}}
+                          <label for="11" v-if="item2[0].options[0]">
+                              <input id="11" :type="item2[0].type" value="A" :name="item2[0].name" v-model="exerciseOriginPaper.currAnswer[index2]">
+                                  {{item2[0].options[0]}}
                           </label>
-                          <label for="22" v-if="item2.options[1]">
-                              <input id="22" :type="item2.type" value="B" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[1]}}
+                          <label for="22" v-if="item2[0].options[1]">
+                              <input id="22" :type="item2[0].type" value="B" :name="item2[0].name" v-model="exerciseOriginPaper.currAnswer[index2]">
+                                  {{item2[0].options[1]}}
                           </label>
-                          <label for="33" v-if="item2.options[2]">
-                              <input id="33" :type="item2.type" value="C" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[2]}}
+                          <label for="33" v-if="item2[0].options[2]">
+                              <input id="33" :type="item2[0].type" value="C" :name="item2[0].name" v-model="exerciseOriginPaper.currAnswer[index2]">
+                                  {{item2[0].options[2]}}
                           </label>
-                          <label for="44" v-if="item2.options[3]">
-                              <input id="44" :type="item2.type" value="D" :name="item2.name" v-model="item2.currAnswer">
-                                  {{item2.options[3]}}
+                          <label for="44" v-if="item2[0].options[3]">
+                              <input id="44" :type="item2[0].type" value="D" :name="item2[0].name" v-model="exerciseOriginPaper.currAnswer[index2]">
+                                  {{item2[0].options[3]}}
                           </label>
                       </li>
                     </ul>
@@ -464,18 +464,18 @@
                   <div v-for="(item3,index3) in exerciseErrorPaper">
                     <span class="desctitle">
                       <img src="../assets/imgs/err.jpg">
-                      {{index3 + 1}}.{{item3.num}}{{item3.desc}}
+                      {{index3 + 1}}.{{item3[0].desc}}
                     </span>
                     <ul class="ans">
                       <li>
-                          {{item3.options[0]}}
-                          {{item3.options[1]}}
-                          {{item3.options[2]}}
-                          {{item3.options[3]}}
+                          {{item3[0].options[0]}}
+                          {{item3[0].options[1]}}
+                          {{item3[0].options[2]}}
+                          {{item3[0].options[3]}}
                       </li>
                     </ul>
                     <span>
-                        正确答案：{{item3.answer}}
+                        正确答案：{{item3[0].answer}}
                     </span>
                   </div>
                 </el-dialog>
@@ -701,19 +701,21 @@
       getOriginPaper(index, row){
         this.dialogTableVisible1 = true;
         console.log(row);
+      //  console.log(row.question)
         this.originPaper = row;
       },
       //查看错题分析弹出框
       getErrorPaper(index, row){
         this.dialogTableVisible2 = true;
-        this.ErrorPaper = [];
-        console.log(row.question);
-        console.log(row.error);
+
+      //  console.log(row.question);
+      //  console.log(row.error);
         for(var i = 0; i < row.error.length; i++){
-          for(var j = 0; j < row.question.length; j++)
-            if(row.error[i] == row.question[j].num){
-              this.ErrorPaper.push(row.question[j])
-            }
+          for(var j = 0; j < row.question.length; j++){
+              if(row.error[i] - 1 == j){
+                this.ErrorPaper.push(row.question[j])
+              }
+          }
         }
         console.log(this.ErrorPaper)
       },
@@ -726,22 +728,23 @@
       //查看练习错题分析弹出框
       getExerciseError(index, row){
         this.dialogTableVisible4 = true;
-        this.exerciseErrorPaper = [];
+
         console.log(row);
-        console.log(row.error);
+      //  console.log(row.error);
         for(var i = 0; i < row.error.length; i++){
-          for(var j = 0; j < row.question.length; j++)
-          //  if(row.error[i] == row.question[j].num){
-            if(row.error[i] == j + 1){
-              this.exerciseErrorPaper.push(row.question[j])
-            }
+          for(var j = 0; j < row.question.length; j++){
+              if(row.error[i] - 1 == j){
+                this.exerciseErrorPaper.push(row.question[j])
+              }
+          }
         }
         console.log(this.exerciseErrorPaper)
       },
       //关闭弹窗
       handleClose(done) {
         done();
-
+        this.exerciseErrorPaper = [];
+        this.ErrorPaper = [];
       },
       handleSizeChange(val) {
         //console.log(`每页 ${val} 条`);
@@ -1012,7 +1015,7 @@
             if(resTestData[i].currTestType == "106"){
               resTestData[i] = [];
             }
-            resTestData[i].newData = moment(resTestData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+            resTestData[i].date1 = moment(resTestData[i].date1).format("YYYY-MM-DD");
             resTestData[i].currTestType = core.getCurrTestType(resTestData[i].currTestType);
         //    resTestData[i].sorce = resTestInfoData[i].sorce;
         //    for (let j = 0; j < resTestData[i].question.length; j++){
@@ -1103,19 +1106,20 @@
             user: this.user,
           }
         }).then((res) => {
-          let resTestData = res.data.testQuestion;
-          let resTestInfoData = res.data.testQuestionInfo;
+          console.log(res.data.testQuestionInfo)
+          let resTestData = res.data.testQuestionInfo;
+        //  let resTestInfoData = res.data.testQuestion;
           for (let i = 0; i < resTestData.length; i++) {
             resTestData[i].date1 = moment(resTestData[i].newData).format("YYYY-MM-DD hh:mm:ss");
             resTestData[i].currTestType = core.getCurrTestType(resTestData[i].currTestType);
-            resTestData[i].sorce = resTestInfoData[i].sorce;
-            for (let j = 0; j < resTestData[i].question.length; j++){
-              resTestData[i].question[j].currAnswer = resTestInfoData[i].currAnswer[j];
-            };
-            resTestData[i].error = resTestInfoData[i].error;
+        //    resTestData[i].sorce = resTestInfoData[i].sorce;
+        //    for (let j = 0; j < resTestData[i].question.length; j++){
+        //      resTestData[i].question[j].currAnswer = resTestInfoData[i].currAnswer[j];
+        //    };
+        //    resTestData[i].error = resTestInfoData[i].error;
           }
           this.historyPracticeData = resTestData;
-          this.total = this.historyPracticeData.length;
+        //  this.total = this.historyPracticeData.length;
           console.log(this.historyPracticeData)
         });
       },
