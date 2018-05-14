@@ -137,10 +137,9 @@
           :onError="uploadError"
           :beforeUpload="beforeAvatarUpload"
           :onSuccess="uploadSuccess"
-          :on-exceed="handleExceed"
-          accept=".xlsx">
+          :on-exceed="handleExceed">
           <el-button class="uploadBut" size="medium " type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">温馨提示: 上传的文件不可超过1000M</div>
+          <div slot="tip" class="el-upload__tip">提示: 上传的文件不可超过1000M</div>
         </el-upload>
       </b-tabs>
 
@@ -148,18 +147,23 @@
 
     </b-card>
 
-    <!--对话框-->
+    <!--文件类型对话框-->
     <el-dialog
       title="请选择上传文件的类型"
       :visible.sync="centerDialogVisible"
       width="25%"
-      :show-close=false
       :close-on-press-escape=false
+      :close-on-click-modal=false
+      :show-close=false
       center>
-      <div style="margin-top: 20px; margin-left: 60px;">
-        <el-radio v-model="radioJX" label="1" border size="medium">教学课件</el-radio>
-        <el-radio v-model="radioJX" label="2" border size="medium">教学微课</el-radio>
-      </div>
+        <el-select v-model="label1" placeholder="请选择类型">
+          <el-option
+            v-for="item in options"
+            :key="item.label"
+            :label="item.label"
+            :value="item.label">
+          </el-option>
+        </el-select>
       <span slot="footer" class="dialog-footer">
           <el-button type="primary" @click="addArr">确 定</el-button>
         </span>
@@ -194,18 +198,44 @@
         checked: true,
         multipleSelection: [],
         centerDialogVisible: false,
-        radioJX: '1',
-        url:document.domain
+        url:document.domain,
+        options: [{
+          label: '教学课件'
+        }, {
+          label: '教学微课'
+        }, {
+          label: '其他教材'
+        }],
+        label1: '',
       }
     },
     computed:{
     },
     methods: {
+      // 成功提示信息
+      successMsg(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      // 失败提示信息
+      DefeatMsg(msg) {
+        this.$message.error(msg);
+      },
+      warningMsg(msg) {
+        this.$message({
+          message: msg,
+          type: 'warning'
+        });
+      },
       /*上传方法*/
       // 上传成功后的回调
       uploadSuccess (res, file) {
         if (res.fileMsg[0]) {
           this.msgArr.push(res.fileMsg[0]);
+          this.successMsg('上传成功');
         }
       },
       // 上传错误
@@ -216,28 +246,33 @@
         this.$message.warning(`每次只能上传 1 个文件`);
       },
       addArr() {
-        this.centerDialogVisible = false;
-        if (this.radioJX == 1)
-        {
-          this.courseWareArr.push(this.msgArr[this.msgArr.length-1])
+        if (this.label === '') {
+            this.warningMsg('请选择上传文件的类型')
+        } else {
+          this.centerDialogVisible = false;
+          if (this.label1 === '教学课件')
+          {
+            this.courseWareArr.push(this.msgArr[this.msgArr.length-1])
+          }
+          else if (this.label1 === '教学微课')
+          {
+            this.videoArr.push(this.msgArr[this.msgArr.length-1])
+          }
+          else if (this.label1 === '其他教材')
+          {
+            this.otherArr.push(this.msgArr[this.msgArr.length-1])
+          }
         }
-        else if (this.radioJX == 2)
-        {
-          this.videoArr.push(this.msgArr[this.msgArr.length-1])
-        }
-        else
-        {
-          this.otherArr.push(this.msgArr[this.msgArr.length-1])
-        }
+
       },
       // 上传前弹出对话框
       beforeAvatarUpload (file) {
       this.centerDialogVisible = true;
+      //this.successMsg('文件正在上传')
       },
       handleClick(tab, event) {
         //console.log(tab, event);
       },
-
       /*下载方法*/
       toggleSelection(rows) {
         if (rows) {
@@ -276,6 +311,7 @@
           }
         })
       },
+      //删除文件
       fileDelete(item){
         axios({
           method:'get',
@@ -284,8 +320,8 @@
             downloadName:item
           }
         }).then((res) => { // 处理返回的文件流
+          this.successMsg('删除成功');
           let resFileName = res.data.fileName;
-
           dellArrE(this.msgArr, resFileName);
           dellArrE(this.courseWareArr, resFileName);
           dellArrE(this.videoArr, resFileName);
@@ -304,32 +340,35 @@
           }
         })
       },
+      loadFile() {
+        axios.get('/fileUpDown/loadFile',{
+          params:{
+            user:6666
+          }
+        }).then((res)=>{
+            for (let i = 0; i < res.data.var.length; i++){
+              if (res.data.var[i].size != 0){
+                this.msgArr.push(res.data.var[i])
+              }
+            }
+            for ( let j = 0; j < this.msgArr.length; j++){
+              let index = this.msgArr[j].name.split(".");
+              let suffix = index[index.length-1];
+              if (suffix === 'mp4' || suffix === 'rmvb' || suffix === 'avi'){
+                this.videoArr.push(this.msgArr[j]);
+              }else if(suffix === 'txt' || suffix === 'docx' || suffix === 'doc' || suffix === 'xlsx' || suffix === 'xls' || suffix === 'pdf' || suffix === 'ppt' || suffix === 'pptx'){
+                this.courseWareArr.push(this.msgArr[j])
+              }else {
+                this.otherArr.push(this.msgArr[j])
+              }
+            }
+          }
+        );
+      },
     },
     mounted(){
-      axios.get('/fileUpDown/loadFile',{
-        params:{
-          user:6666
-        }
-      }).then((res)=>{
-          for (let i = 0; i < res.data.var.length; i++){
-            if (res.data.var[i].size != 0){
-              this.msgArr.push(res.data.var[i])
-            }
-          }
-          //
-          for ( let j = 0; j < this.msgArr.length; j++){
-            let index = this.msgArr[j].name.split(".");
-            let suffix = index[index.length-1];
-            if (suffix == 'mp4' || suffix == 'rmvb' || suffix == 'avi'){
-              this.videoArr.push(this.msgArr[j]);
-            }else if(suffix == 'txt' || suffix == 'docx' || suffix == 'doc' || suffix == 'xlsx' || suffix == 'xls' || suffix == 'pdf' || suffix == 'ppt' || suffix == 'pptx'){
-              this.courseWareArr.push(this.msgArr[j])
-            }else {
-              this.otherArr.push(this.msgArr[j])
-            }
-          }
-        }
-      );
+        this.loadFile();
+
     },
     components: {navgationHead, footFooter}
   }
@@ -385,8 +424,8 @@
   }
   .resourceCenter .upload-demo1 {
     position: absolute;
-    bottom: 5rem;
-    left: -12.7rem;
+    bottom: 16rem;
+    left: -12rem;
   }
   .resourceCenter {
     position: relative;
@@ -399,5 +438,11 @@
   }
   .resourceCenter .el-table .cell {
     text-align: left;
+  }
+  .resourceCenter .el-dialog {
+    border-radius: 16px;
+  }
+  .resourceCenter .el-dialog--center .el-dialog__body {
+    text-align: center;
   }
 </style>
