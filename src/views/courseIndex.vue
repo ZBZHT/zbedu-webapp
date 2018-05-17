@@ -212,7 +212,7 @@ hr{
 }
 .courseIndex .banner{
   width:960px;
-  height:460px;
+  height:540px;
   margin:0 auto;
   position:relative;
   display:flex;

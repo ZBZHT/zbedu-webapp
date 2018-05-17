@@ -44,24 +44,16 @@ export default {
   data () {
     return {
       msg: 'bannerLeft',
-      bannerLeftData:''
+      bannerLeftData:'',
+      secondData:[],
+      thirdData:[],
+      teachingPPTimg:[],
+      videoTitle:[]
     }
-  },
-  mounted(){
-    axios.get("/readJson/bannerLeftData",{
-                params:{
-                     user:234
-                }
-            }).then((res)=>{
-                this.bannerLeftData = res.data;
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-    
   },
   methods: {
     setMsg: function (item) {
-       console.log(item)
+       console.log(item);
       if(item.children){
           this.$store.commit('noTreeTitle1',item);
         //  this.$router.push('/course' + '/label/'+ item.label);
@@ -80,7 +72,80 @@ export default {
           window.open(href, '_blank')
       }
     }
-  }
+  },
+  mounted(){
+    axios.post("/teacherCMS/getTeacherCustomCourse",{
+      data:{
+        userID: this.$store.state.userID,
+        userType: this.$store.state.userType,
+      }
+    }).then((res)=>{
+      var tab = res.data.techCosCou[0].tab;
+      for(var i = 0; i < tab.length; i++){
+        this.thirdData = []
+        for(var j = 0; j < tab[i].course.length; j++){
+        var ii = i + 1;    
+        var jj = j + 1;    
+        //    this.teachingPPTimg.push({
+        //        teachingPPTimg:tab[i].course[j].teachingPPTimg
+        //    })
+            for(var t = 0; t < tab[i].course[j].videoTitle.length; t++){
+                this.videoTitle.push({
+                    videoTitle:tab[i].course[j].videoTitle[t]
+                })
+            }
+            
+            this.thirdData.push({
+                label:tab[i].course[j].label,
+                describe:tab[i].course[j].describe,
+                videoTitle:this.videoTitle,
+                teachingMaterial:tab[i].course[j].teachingMaterial,
+                courseId:'7' + ii + jj,
+                teachingPPTimg:"",
+                teachingBook:"",
+                flash2d:"",
+                workPage:''
+            })
+        }
+          
+          this.secondData.push({
+              label:tab[i].label,
+              courseId:'7' + ii + '0',
+              children:this.thirdData
+          })
+      }
+
+    }).catch(function(error){
+      console.log("error init." + error)
+    });
+
+    setTimeout(function () {
+       axios.get("/readJson/bannerLeftData",{
+        params:{
+            user:234
+        }
+        }).then((res)=>{
+        this.bannerLeftData = res.data;
+        var lastData = res.data[0];
+    //      console.log(lastData.children[6])
+    //      console.log(this.bannerLeftData[0].children[6])
+    //    console.log("this.secondData");
+    //    console.log(this.secondData)
+        for(var h = 0; h < this.secondData.length; h++){
+    //        console.log(this.secondData.length)
+            this.bannerLeftData[0].children[6].children.push(this.secondData[h])
+        }
+        console.log(this.bannerLeftData[0].children[6].children)
+        this.$store.commit('newBannerLeft',this.bannerLeftData[0].children);
+    //    console.log(this.bannerLeftData[0])
+        }).catch(function(error){
+        console.log("error init." + error)
+        });     
+
+    }.bind(this),1000)
+
+    
+  },
 }
 </script>
 

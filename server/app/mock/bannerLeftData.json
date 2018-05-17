@@ -22,6 +22,7 @@
                               "label":"基本信息收集与介绍",
                               "describe":"检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
                               "teachingMaterial":"EV系列-1-1-纯电动汽车基本信息收集与介绍.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"纯电动汽车基本信息收集与介绍教材.pdf",
                               "flash2d":"1.1新能源汽车基本信息.mp4",
                               "videoTitle":[
@@ -43,6 +44,7 @@
                               "label":"总体结构认知",
                               "describe":"北汽EV160整车控制器、电机控制器、电动空调等结构的工作原理及工作条件。",
                               "teachingMaterial":"EV系列-1-2-纯电动汽车总体结构认知.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"纯电动汽车总体结构认知教材.pdf",
                               "flash2d":"1.2纯电动汽车总体结构.mp4",
                               "videoTitle":[
@@ -64,6 +66,7 @@
                               "label":"高压安全操作",
                               "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
                               "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"纯电动汽车高压安全操作教材.pdf",
                               "flash2d":"",
                               "videoTitle":[
@@ -85,6 +88,7 @@
                               "label":"高压危害与救助方法",
                               "describe":"简述用电操作不当遇到危险时候的一些急救方法以及如何正确安全的操作纯电动汽车。",
                               "teachingMaterial":"EV系列-1-4-高压危害与救助方法.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"高压危害与救助方法教材.pdf",
                               "flash2d":"",
                               "videoTitle":[
@@ -106,6 +110,7 @@
                               "label":"新车PDI检查",
                               "describe":"纯电动汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
                               "teachingMaterial":"EV系列-1-5-新车PDI检查.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"新车PDI检查教材.pdf",
                               "flash2d":"",
                               "videoTitle":[
@@ -130,6 +135,7 @@
                               "label":"常规保养与维护",
                               "describe":"纯电动汽车如何保养、保养哪些方面和保养维护的时候应当注意的地方有哪些。",
                               "teachingMaterial":"EV系列-1-6-常规保养与维护.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"常规保养与维护教材.pdf",
                               "flash2d":"",
                               "videoTitle":[
@@ -157,6 +163,7 @@
                               "label":"动力电池拆装",
                               "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤。",
                               "teachingMaterial":"EV系列-2-1-动力电池的拆装.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"动力电池拆装教材.pdf",
                               "flash2d":"2.1动力电池的拆装.mp4",
                               "videoTitle":[
@@ -178,6 +185,7 @@
                               "label":"BMS系统拆装",
                               "describe":"BMS的功能原理和作用，更换BMS控制器步骤及电动汽车高压安全操作注意事项。",
                               "teachingMaterial":"EV系列-2-2-拆装BMS系统.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"拆装BMS系统教材.pdf",
                               "flash2d":"2.2拆装BMS.mp4",
                               "videoTitle":[
@@ -275,6 +283,7 @@
                               "label":"继电器模组故障检修",
                               "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
                               "teachingMaterial":"EV系列-2-3-电机继电器故障检测.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"继电器模组故障检修教材.pdf",
                               "flash2d":"2.3继电器模组故障检修.mp4",
                               "videoTitle":[
@@ -299,6 +308,7 @@
                               "label":"动力电池故障检修",
                               "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
                               "teachingMaterial":"EV系列-2-4-动力电池故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"动力电池故障检修教材.pdf",
                               "flash2d":"2.4动力电池检修.mp4",
                               "videoTitle":[
@@ -326,6 +336,7 @@
                               "label":"MCU与VCU通讯丢失故障",
                               "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
                               "teachingMaterial":"MCU与VCU通讯丢失故障.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"MCU与VCU通讯丢失故障教材.pdf",
                               "flash2d":"3.4mcu与vcu通讯丢失故障检修.mp4",
                               "videoTitle":[
@@ -347,6 +358,7 @@
                               "label":"电机旋变传感器故障检修",
                               "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
                               "teachingMaterial":"EV系列-3-10-电机旋变传感器故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"电机旋变传感器故障检修教材.pdf",
                               "flash2d":"3.5电机旋变传感器的检修.mp4",
                               "videoTitle":[
@@ -374,6 +386,7 @@
                               "label":"高压控制盒的故障检修",
                               "describe":"电动汽车安全操作注意事项，检测前的操作事项。故障检测的方法和步骤以及操作过程中的安全事项",
                               "teachingMaterial":"EV系列-4-1-高压控制器故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"高压控制盒的故障检修教材.pdf",
                               "flash2d":"4.1高压盒故障检修.mp4",
                               "videoTitle":[
@@ -395,6 +408,7 @@
                               "label":"DC/DC故障检修",
                               "describe":"DC-DC功能和工作原理、检测前的注意事项有哪些以及检测步骤和故障现象。利用软件来诊断故障码，和利用外用表测量DC-DC内部线路连接情况。",
                               "teachingMaterial":"DCDC故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"DCDC故障检修教材.pdf",
                               "flash2d":"4.2DCDC故障检修.mp4",
                               "videoTitle":[
@@ -416,6 +430,7 @@
                               "label":"电子旋钮换挡器故障检修",
                               "describe":"电子旋钮换挡器的档位数及功能，安装的位置。内饰拆解的注意事项，需要带白色手套及塑料拆卸工具。电子旋钮换挡器的详细拆解步骤及安装步骤。",
                               "teachingMaterial":"EV系列-4-3-电子旋钮换档器故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"电子旋钮换挡器故障检修教材.pdf",
                               "flash2d":"4.3电子旋钮换挡器故障检修.mp4",
                               "videoTitle":[
@@ -440,6 +455,7 @@
                               "label":"加速踏板信号故障检修",
                               "describe":"详述加速踏板的控制及工作原理，与VCU之间是怎么通讯的，丢失信号时候会是怎样的反应。",
                               "teachingMaterial":"EV系列-4-4-加速踏板信号故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"加速踏板信号故障检修教材.pdf",
                               "flash2d":"4.4加速踏板信号故障检修.mp4",
                               "videoTitle":[
@@ -461,6 +477,7 @@
                               "label":"新能源can线系统故障检修",
                               "describe":"新能源CAN线的作用，及哪些模块需要通过新能源CAN线来实现通信的以及发生故障排故的流程。",
                               "teachingMaterial":"EV系列-4-5-新能源can线系统故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"新能源can线系统故障检修教材.pdf",
                               "flash2d":"4.5新能源can线故障检修.mp4",
                               "videoTitle":[
@@ -482,6 +499,7 @@
                               "label":"高压线束及互锁故障检修",
                               "describe":"电动汽车高压安全操作注意事项，检测前操作事项以及电子旋钮换挡器出现故障时的故障现象。分析故障原因以及哪些方面会引发故障，电子换挡器的工作原理和测量的标准电压值以及测量的步骤。",
                               "teachingMaterial":"高压线束及互锁故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"高压线束及互锁故障检修教材.pdf",
                               "flash2d":"",
                               "videoTitle":[
@@ -506,6 +524,7 @@
                               "label":"整车供断电控制故障",
                               "describe":"详述低压唤醒及高、低压控制原理，充电模式下唤醒的方式是怎样的。",
                               "teachingMaterial":"整车供断电控制故障.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"整车供断电控制故障教材.pdf",
                               "flash2d":"4.7整车供断电控制故障检修.mp4",
                               "videoTitle":[
@@ -533,6 +552,7 @@
                               "label":"慢充系统故障检修",
                               "describe":"慢充电故障现象，慢充线束功能及端口介绍。慢充线束故障检测的流程及检测的标准读数值。",
                               "teachingMaterial":"EV系列-5-3-慢充系统故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"慢充系统故障检修教材.pdf",
                               "flash2d":"5.1慢充系统故障检修.mp4",
                               "videoTitle":[
@@ -554,6 +574,7 @@
                               "label":"快充系统故障检修",
                               "describe":"电动汽车安全操作注意事项，更换快充线束的详细步骤及更换时的操作注意事项。快充线束的取拿等。",
                               "teachingMaterial":"EV系列-5-4-快充系统故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"快充系统故障检修教材.pdf",
                               "flash2d":"5.2快充系统故障检修.mp4",
                               "videoTitle":[
@@ -578,6 +599,7 @@
                               "label":"拆装车载充电机",
                               "describe":"车载充电机的端口含义及工作原理以及纯电动车高压电操作注意安全事项，拆卸车载充电机的步骤及注意事项。拆下后检查四颗固定螺栓的使用情况和更换新的车载充电机详细步骤。",
                               "teachingMaterial":"EV系列-5-5-拆装车载充电机.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"车载充电机拆装教材.pdf",
                               "flash2d":"5.3拆装车载充电机.mp4",
                               "videoTitle":[
@@ -599,6 +621,7 @@
                               "label":"低压蓄电池警示灯点亮故障检修",
                               "describe":"详述DC/DC作用，低压蓄电池报警有哪些条件，排除故障的流程等。",
                               "teachingMaterial":"EV系列-4-2-低压蓄电池警示灯亮的检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"低压蓄电池警示灯点亮故障检修教材.pdf",
                               "flash2d":"5.4低压蓄电池警示灯点亮故障检修.mp4",
                               "videoTitle":[
@@ -623,6 +646,7 @@
                               "label":"充电桩结构原理及性能介绍",
                               "describe":"充电桩的结构是怎样的，其工作原理和控制原理是怎样的，如何与车辆之间实现充电。",
                               "teachingMaterial":"EV系列-5-1-充电桩结构原理及性能介绍.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"充电桩结构原理及性能介绍教材.pdf",
                               "flash2d":"5.5充电桩结构原理及性能介绍.mp4",
                               "videoTitle":[
@@ -650,6 +674,7 @@
                               "label":"冷却系统故障检修",
                               "describe":"详述北汽冷却系统结构原理、控制原理、部件功能及排除冷却系统故障方法。",
                               "teachingMaterial":"冷却系统组成及故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"冷却系统组成及故障检修教材.pdf",
                               "flash2d":"5.5充电桩结构原理及性能介绍.mp4",
                               "videoTitle":[
@@ -671,6 +696,7 @@
                               "label":"电动助力转向系统故障检修",
                               "describe":"详述北汽电动助力转向系统结构原理、控制原理、部件功能及排除转向系统故障方法。",
                               "teachingMaterial":"电动助力转向系统故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"电动助力转向系统故障检修教材.pdf",
                               "flash2d":"6.2电动助力转向系统故障检修.mp4",
                               "videoTitle":[
@@ -692,6 +718,7 @@
                               "label":"制动系统故障检修",
                               "describe":"详述北汽制动系统结构原理、控制原理、部件功能及排除制动系统故障方法。",
                               "teachingMaterial":"制动系统故障检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"制动系统故障检修教材.pdf",
                               "flash2d":"6.3制动系统故障检修.mp4",
                               "videoTitle":[
@@ -713,6 +740,7 @@
                               "label":"电动空调系统故障检修",
                               "describe":"详述北汽电动空调系统结构原理、控制原理、部件功能及排除电动空调系统故障方法。",
                               "teachingMaterial":"电动空调系统检修.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"电动空调系统故障检修教材.pdf",
                               "flash2d":"6.4电动空调系统故障检修.mp4",
                               "videoTitle":[
@@ -749,6 +777,7 @@
                               "label":"混合动力汽车概述",
                               "describe":"详述什么是混合动力汽车，有哪些部件结构组成，其基本工作原理是什么？",
                               "teachingMaterial":"新车交接.pdf",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -770,6 +799,7 @@
                               "label":"高压安全操作",
                               "describe":"混合动力汽车高压操作时的注意事项，包含绝缘工具使用、维修塞的拆装、检测高压系统电压情况、保养模式和认证模式操作流程。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -791,6 +821,7 @@
                               "label":"新车交接检查（PDI）",
                               "describe":"混合动力汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -812,6 +843,7 @@
                               "label":"常规保养与维护",
                               "describe":"混合动力汽车如何保养、保养哪些方面和保养维护时候应当注意的地方有哪些。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -839,6 +871,7 @@
                               "label":"更换动力电池冷却滤清器",
                               "describe":"动力电池冷却液滤清保养流程及冷却系统的功能和工作原理，冷却系统的进气口安装位置。动力电池冷却滤清器拆卸步骤和安装步骤，再用故障诊断仪清楚故障码。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -860,6 +893,7 @@
                               "label":"动力电池控制系统通信故障检修",
                               "describe":"混合动力汽车动力电池控制系统通信故障检修流程、案例导入分析、根据维修手册进行拆装检修的详细流程，最后排除故障。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -887,6 +921,7 @@
                               "label":"发动机故障灯常亮的故障检修",
                               "describe":"混合动力汽车发动机构造及工作原理，故障灯点亮维修的流程及方法。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -908,6 +943,7 @@
                               "label":"冷却系统水温过高故障检修",
                               "describe":"混合动力系统水温过高检测流程，包含：工具的准备、学习手册、维修手册、工作业、案例导入分析、水泵和传感器功能。读取故障码并查阅维修手册找到冷却系统工作原理图，并且根据电路图进行电路测试并排除故障。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -935,6 +971,7 @@
                               "label":"变速驱动桥异响故障检修",
                               "describe":"混合动力汽车驱动桥结构原理、工作原理和发生异响时候故障检修的流程及方法。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -956,6 +993,7 @@
                               "label":"无法挂档故障检修",
                               "describe":"混合动力汽车无法挂档故障检修，包含：故障案例分析、工具准备、诊断流程等。根据读取的故障码和数据流判断出故障原因和故障点，换挡杆的拆卸检测流程。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -977,6 +1015,7 @@
                               "label":"P410拆装",
                               "describe":"P410电动变速驱动桥拆装的要求：工具、教学软件、维修手册和工作业。拆装流程及注意事项，检测数值是否在标准范围内，如不在那就必须更换。连接MG1和MG2，转动其中一个看看另一个是否跟着转动，判断电机工作是否正常。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1004,6 +1043,7 @@
                               "label":"HV主警告灯点亮故障检修",
                               "describe":"简介检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1025,6 +1065,7 @@
                               "label":"充电警告灯点亮故障检修",
                               "describe":"丰田卡罗拉实验台架充电指示灯故障检测维修。工具准备、案例导入分析，模拟故障现象并对故障进行诊断排除。DC-DC的功能和DC-DC保险丝安装位置以及拆卸DC-DC后进行电路检测并排除故障。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1046,6 +1087,7 @@
                               "label":"无法行驶故障检修",
                               "describe":"混合动力汽车无法行驶故障，包含：工具准备、故障现象的模拟、案例导入分析、读取故障码数据流以及整个诊断的详细流程，电机解析器的工作原理和信号波形分析。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1067,6 +1109,7 @@
                               "label":"绝缘故障故障检修",
                               "describe":"混合动力汽车绝缘故障检测流程。读取故障码、读取数据流、高压电路的电路原理以及检测绝缘故障的方法和测量的标准数值。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1094,6 +1137,7 @@
                               "label":"ABS故障灯常亮故障检修",
                               "describe":"ABS故障灯点亮维修诊断流程，包含：案例导入分析，诊断流程，检测流程及故障判断和排除，最后清除故障码排除故障。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1115,6 +1159,7 @@
                               "label":"空调不制冷故障检修",
                               "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1136,6 +1181,7 @@
                               "label":"HV系统水温高故障检修",
                               "describe":"混合动力系统水温过高检测流程，包含：工具的准备、学习手册、维修手册、工作业、案例导入分析、水泵和传感器功能。读取故障码并查阅维修手册找到冷却系统工作原理图，并且根据电路图进行电路测试并排除故障。",
                               "teachingMaterial":"",
+                              "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
@@ -1171,6 +1217,7 @@
                       "label":"发动机概述",
                       "describe":"简述发动机的基本组成、发动机发展由来和发展的历史。",
                       "teachingMaterial":"大众速腾-发动机概述.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1192,6 +1239,7 @@
                       "label":"总体结构认识",
                       "describe":"简述发动机的基本组成、各部件结构功能以及其工作原理，各部件的相互关联及联系",
                       "teachingMaterial":"发动机总体认识.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1213,6 +1261,7 @@
                       "label":"大众EA111发动机",
                       "describe":"详细介绍了大众EA111发动机的组成及其特点，发动机的结构原理及EA111发动机的优缺点.",
                       "teachingMaterial":"大众速腾-EA111.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1233,7 +1282,8 @@
                     {
                       "label":"配气机构拆装与检修",
                       "describe":"介绍大众速腾配气机构的组成、拆装步骤以及如何对速腾配气机构进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"发动机配气机构的拆装与检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1254,7 +1304,8 @@
                     {
                       "label":"曲柄连杆机构拆装与检修",
                       "describe":"介绍大众速腾曲柄连杆机构的组成、拆装步骤以及如何对速腾曲柄连杆机构进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"发动机曲柄连杆机构拆装与检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1275,7 +1326,8 @@
                     {
                       "label":"附件拆装与检修",
                       "describe":"简述发动机上的附件（发电机、起动机、水泵等）拆装步骤以及故障检修的过程。",
-                      "teachingMaterial":"大众速腾-发电机.pdf",
+                      "teachingMaterial":"发动机附件拆装与检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1296,7 +1348,8 @@
                     {
                       "label":"冷却系统检修",
                       "describe":"大众速腾冷却系统的组成、系统及部件的功能以及对其故障检修的过程。",
-                      "teachingMaterial":"水温传感器故障检修.pdf",
+                      "teachingMaterial":"发动机冷却系统检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1318,6 +1371,7 @@
                       "label":"认识发动机拆装检修工量具",
                       "describe":"介绍发动机拆装所需要的工具，各工具使用要求及使用说明。",
                       "teachingMaterial":"认识发动机拆装检修工量具.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1338,7 +1392,8 @@
                     {
                       "label":"润滑系统检修",
                       "describe":"大众速腾润滑系统的组成、系统及部件的功能以及对其故障检修的过程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"发动机润滑系统检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1366,6 +1421,7 @@
                       "label":"电控发动机",
                       "describe":"介绍大众速腾电控发动机的功能，工作方式及原理。",
                       "teachingMaterial":"电控发动机概述.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1386,7 +1442,8 @@
                     {
                       "label":"电路图的识读",
                       "describe":"介绍如何读懂大众电路图，线路故障诊断以及如何运用电路图来对故障进行查找检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"电路图的识读.pptx",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1408,6 +1465,7 @@
                       "label":"故障自诊断检修",
                       "describe":"简述发动机自诊断原理及如何利用故障码进行故障诊断及排除",
                       "teachingMaterial":"发动机控制单元自诊断检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1434,7 +1492,8 @@
                     {
                       "label":"ECM电源控制系统检修",
                       "describe":"简述汽车ECM供电原理以及电源控制系统故障检修",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"电控发动机ECM电源控制系统检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1456,6 +1515,7 @@
                       "label":"电动油泵检修",
                       "describe":"大众速腾油泵工作原理以及如何对电动油泵故障进行检修，检修的流程及维修思路。",
                       "teachingMaterial":"电动汽油泵检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1477,6 +1537,7 @@
                       "label":"电磁式喷油器故障检修",
                       "describe":"简介喷油器的类别，电磁式喷油器工作原理和大众速腾喷油器的故障检修流程。",
                       "teachingMaterial":"喷油器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1498,6 +1559,7 @@
                       "label":"曲轴位置传感器故障检修",
                       "describe":"曲轴位置传感器工作原理、信号波形及如何对速腾曲轴位置传感器故障进行检修",
                       "teachingMaterial":"曲轴位置传感器检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1519,6 +1581,7 @@
                       "label":"点火模块故障检修",
                       "describe":"大众速腾点火模块的组成、部件功能和工作原理以及如何对速腾点火模块故障进行检修。",
                       "teachingMaterial":"点火模块故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1540,6 +1603,7 @@
                       "label":"燃油压力传感器及调节阀故障检修",
                       "describe":"大众速腾燃油压力传感器工作原理、调节阀工作流程以及其故障检修流程及方式。",
                       "teachingMaterial":"燃油压力传感器及调节阀故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1560,7 +1624,8 @@
                     {
                       "label":"主继电器故障检修",
                       "describe":"简述主继电器工作原理及当主继电器发生故障所可能有的故障现象，故障检修流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"大众速腾-主继电器（电源辅助继电器）宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1588,6 +1653,7 @@
                       "label":"电子节气门检修",
                       "describe":"大众速腾电子节气门的组成、部件功能及电子节气门工作原理，如何对电子节气门故障进行检修。",
                       "teachingMaterial":"6.1-电子节气门检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1609,6 +1675,7 @@
                       "label":"热线式空气流量计故障检修",
                       "describe":"热线式空气流量计的工作原理，故障现象及对空气流量计故障的检修流程。",
                       "teachingMaterial":"热线式空气流量计检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1630,6 +1697,7 @@
                       "label":"水温传感器故障检修",
                       "describe":"大众速腾水温传感器的特点、系统的组成、部件功能及故障检修流程。",
                       "teachingMaterial":"水温传感器检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1651,6 +1719,7 @@
                       "label":"氧传感器检修",
                       "describe":"大众速腾氧传感器工作特点、工作原理及故障检修的流程。",
                       "teachingMaterial":"氧传感器检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1672,6 +1741,7 @@
                       "label":"加热型氧传感器故障检修",
                       "describe":"简述加热型的氧传感器工作原理，加热条件及要求，如何对加热型氧传感器的故障进行检修。",
                       "teachingMaterial":"加热型氧传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1692,7 +1762,8 @@
                     {
                       "label":"燃油排气系统检修",
                       "describe":"燃油排气系统的组成、如何利用专用工具进行燃油排气以及如何对燃油排气系统故障进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"大众速腾-燃油压力传感器宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1714,6 +1785,7 @@
                       "label":"节气门位置传感器故障检修",
                       "describe":"大众速腾节气门工作原理，节气门传感器功能及对节气门传感器故障进行检修。",
                       "teachingMaterial":"项目三 节气门位置传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1735,6 +1807,7 @@
                       "label":"进气压力传感器故障检测",
                       "describe":"大众速腾进气压力传感器功能，如何对进气压力传感器故障进行检修。",
                       "teachingMaterial":"进气压力传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1762,6 +1835,7 @@
                       "label":"油门踏板位置传感器故障检修",
                       "describe":"大众速腾油门踏板组成、油门踏板传感器工作原理及如何对油门踏板传感器故障进行检修。",
                       "teachingMaterial":"油门踏板位置传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1783,6 +1857,7 @@
                       "label":"凸轮轴位置传感器故障检修",
                       "describe":"大众速腾凸轮轴位置传感器功能和工作原理，故障现象表现和如何对凸轮轴位置传感器故障进行检修。",
                       "teachingMaterial":"凸轮轴位置传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1804,6 +1879,7 @@
                       "label":"进排气凸轮轴调节阀",
                       "describe":"大众速腾进排气凸轮调节阀工作原理，如何调节及调节阀故障如何检修。",
                       "teachingMaterial":"进排气凸轮轴调节阀.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1825,6 +1901,7 @@
                       "label":"爆震传感器故障检修",
                       "describe":"大众速腾爆震传感器工作原理，传感器组成及如何对爆震传感器故障进行检修。",
                       "teachingMaterial":"爆震传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1845,7 +1922,8 @@
                     {
                       "label":"可变气门正时系统故障检修",
                       "describe":"可变气门正时含义、工作原理及如何对可变气门正时故障进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务5 可变气门正时系统故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1866,7 +1944,8 @@
                     {
                       "label":"增压压力传感器故障检修",
                       "describe":"大众速腾增压压力传感器工作原理，传感器故障案例及检修流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"项目十 进气温度、增压压力传感器故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1893,7 +1972,8 @@
                     {
                       "label":"喷油系统闭环控制检修",
                       "describe":"喷油系统闭环控制原理以及故障检修案例和流程",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务1 电控发动机喷油系统闭环控制检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1914,7 +1994,8 @@
                     {
                       "label":"怠速系统闭环控制检修",
                       "describe":"喷怠速系统闭环控制原理以及故障检修案例和流程",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务2 电控发动机怠速系统闭环控制检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1935,7 +2016,8 @@
                     {
                       "label":"废气涡轮增压故障检修",
                       "describe":"大众速腾废气涡轮增压工作原理、部件功能、组成及故障检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务3 废气涡轮增压故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1956,7 +2038,8 @@
                     {
                       "label":"数据流检测与分析",
                       "describe":"大众速腾故障码及数据流读取，判断并且根据判断的结果来排除故障。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务4 电控发动机数据流检测与分析.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1977,7 +2060,8 @@
                     {
                       "label":"传感器与执行器波形分析",
                       "describe":"大众速腾各传感器的波形和执行器的波形形状，学会判断波形是否正常。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务5 传感器与执行器波形分析.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -1998,7 +2082,8 @@
                     {
                       "label":"综合故障分析",
                       "describe":"大众速腾上一些综合性故障维修方法及维修流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务6 电控发动机综合故障分析.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2019,7 +2104,8 @@
                     {
                       "label":"发动机怠速不稳工况详解",
                       "describe":"怠速不稳的起因、判断方式方法、如何对怠速不稳进行检修。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务7 发动机怠速不稳工况详解.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2040,7 +2126,8 @@
                     {
                       "label":"发动机加速无力工况详解",
                       "describe":"发动机加速无力的起因，分析过程及解决问题。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务8 发动机加速无力工况详解.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2061,7 +2148,8 @@
                     {
                       "label":"发动机控制模块介绍",
                       "describe":"大众速腾各控制模块的功能、名称、工作原理及发生故障时检修流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务9 发动机控制模块介绍.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2083,6 +2171,7 @@
                       "label":"发动机无法起动故障详解",
                       "describe":"大众速腾发动机无法启动的原因、判断方法及对故障进行检修方法。",
                       "teachingMaterial":"发动机无法起动故障详解.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2104,6 +2193,7 @@
                       "label":"活性碳罐及碳罐电磁阀",
                       "describe":"大众速腾活性炭罐及电磁阀的工作原理、安装位置、起什么作用和发生故障时的检修流程。",
                       "teachingMaterial":"活性碳罐及碳罐电磁阀.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2125,6 +2215,7 @@
                       "label":"发动机冷却装置拆装",
                       "describe":"如何拆装冷却系统装置，冷却装置的安装位置及拆解流程。",
                       "teachingMaterial":"冷却装置的拆装.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2157,7 +2248,8 @@
                     {
                       "label":"汽车底盘维修常用工具与设备的使用",
                       "describe":"详述底盘工具分类，各工具使用方法以及底盘检测维修设备使用说明。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"任务1 汽车底盘维修常用工具与设备的使用.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2179,6 +2271,7 @@
                       "label":"汽车维修车间的基本操作规程",
                       "describe":"简述汽车维修间的基本操作流程以及基本操作注意事项。",
                       "teachingMaterial":"汽车维修车间的基本操作规程.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2199,7 +2292,8 @@
                     {
                       "label":"认识汽车底盘系统",
                       "describe":"简述汽车底盘基本组成、组成构件的功能及工作原理、控制原理等。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"认识汽车底盘系统.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2227,6 +2321,7 @@
                       "label":"认识速腾双离合变速器",
                       "describe":"大众速腾双离合变速器的组成、部件功能及工作原理。",
                       "teachingMaterial":"大众速腾-DSG齿轮箱.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"认识速腾双离合变速器.pdf",
                       "flash2d":"",
                       "videoTitle":[
@@ -2247,7 +2342,8 @@
                     {
                       "label":"DSG变速器拆装",
                       "describe":"如何拆解DSG变速器、拆解的流程及注意事项。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"大众速腾-学习任务六-DSG变速器双离合器拆装.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2269,6 +2365,7 @@
                       "label":"DSG电控单元",
                       "describe":"简述DSG电控单元的组成、功能、控制原理等",
                       "teachingMaterial":"大众速腾-DSG机电单元.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2290,6 +2387,7 @@
                       "label":"DSG离合器拆装检修",
                       "describe":"DSG变速器的故障判断及检修流程方式方法。",
                       "teachingMaterial":"大众速腾-双离合器.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2316,7 +2414,8 @@
                     {
                       "label":"认识大众速腾转向系统",
                       "describe":"大众速腾转向系统的组成、部件功能及工作原理。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"大众速腾-电动转向助力宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2338,6 +2437,7 @@
                       "label":"转向器横拉杆球头故障检修",
                       "describe":"大众速腾转向横拉杆工作原理、球头更换流程。",
                       "teachingMaterial":"大众速腾-球头宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2359,6 +2459,7 @@
                       "label":"ESP",
                       "describe":"大众速腾ESP系统组成、部件的功能及工作原理。",
                       "teachingMaterial":"大众速腾-ESP宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2380,6 +2481,7 @@
                       "label":"EPS",
                       "describe":"大众速腾EPS系统组成、部件的功能及工作原理。",
                       "teachingMaterial":"大众速腾-电动转向助力宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2401,6 +2503,7 @@
                       "label":"换挡杆",
                       "describe":"大众速腾换挡杆的作用、工作原理和控制原理以及互相之间的同信。",
                       "teachingMaterial":"大众速腾-换档杆.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2428,6 +2531,7 @@
                       "label":"悬架系统部件检修",
                       "describe":"大众速腾悬架系统的组成、各个部件的功能以及对悬架检修的方法。",
                       "teachingMaterial":"悬架系统部件检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2449,6 +2553,7 @@
                       "label":"四轮定位检测与调整",
                       "describe":"四轮定位的作用、四轮定位仪的使用和如何进行四轮定位的检测与调整",
                       "teachingMaterial":"四轮定位检测与调整.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2470,6 +2575,7 @@
                       "label":"轮胎拆装与更换",
                       "describe":"轮胎拆装的流程及方法，扒胎机的使用及注意事项。",
                       "teachingMaterial":" 轮胎拆装与更换.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2491,6 +2597,7 @@
                       "label":"轮速传感器故障检修",
                       "describe":"大众速腾轮速传感器的工作原理及控制原理，如何对轮速传感器进行检修，检修的流程等。",
                       "teachingMaterial":"大众速腾轮速传感器故障的检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2512,6 +2619,7 @@
                       "label":"行驶跑偏故障检修",
                       "describe":"简述行驶跑偏现象，跑偏的原因及排除行驶跑偏的方法流程。",
                       "teachingMaterial":"行驶跑偏故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2539,6 +2647,7 @@
                       "label":"认识制动系统",
                       "describe":"简述传统汽车制动系统的组成以及和大众速腾制动系统之间的区别",
                       "teachingMaterial":"认识制动系统.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2560,6 +2669,7 @@
                       "label":"液压制动总泵及真空助力器检修",
                       "describe":"制动总泵及真空助力器的组成、实现的功能及工作原理，如何对总泵或真空助力器故障进行检修。",
                       "teachingMaterial":"液压制动总泵及真空助力器检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2581,6 +2691,7 @@
                       "label":"盘式制动片检修（包括拆卸和安装）",
                       "describe":"盘式制动器的组成、拆装流程及注意事项，以及盘式制动器工作原理。",
                       "teachingMaterial":"大众速腾-制动片宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2599,30 +2710,10 @@
                       "courseId": 353
                     },
                     {
-                      "label":"鼓式制动器检修（包括拆卸和安装）",
-                      "describe":"鼓式制动器的组成、拆装流程及注意事项，以及鼓式制动器工作原理。",
-                      "teachingMaterial":"",
-                      "teachingBook":"",
-                      "flash2d":"",
-                      "videoTitle":[
-                        {
-                          "videoTitle":""
-                        }
-                      ],
-                      "workPage":"",
-                      "homeWorkData":[
-                        {
-                          "title":"",
-                          "desc":"",
-                          "answer":""
-                        }
-                      ],
-                      "courseId": 354
-                    },
-                    {
                       "label":"制动灯故障",
                       "describe":"大众速腾制动灯系统的组成及控制原理，如何对制动灯故障进行检修。",
                       "teachingMaterial":"制动灯故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2656,6 +2747,7 @@
                       "label":"蓄电池充电",
                       "describe":"大众速腾蓄电池充电概述，如何充电，充电的方法方法。",
                       "teachingMaterial":"大众速腾-工作任务一-蓄电池充电.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2677,6 +2769,7 @@
                       "label":"蓄电池检测维护",
                       "describe":"大众速腾蓄电池电压的检测以及对蓄电池好坏检测。",
                       "teachingMaterial":"大众速腾-蓄电池.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2698,6 +2791,7 @@
                       "label":"发电机故障检修",
                       "describe":"大众速腾发电机工作原理及控制原理，如何检修发电机故障。",
                       "teachingMaterial":"大众速腾-发电机故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2719,6 +2813,7 @@
                       "label":"充电指示灯常亮故障检修",
                       "describe":"大众速腾充电指示灯亮起的原因，电路原理及对故障灯点亮维修的过程和方法。",
                       "teachingMaterial":"充电指示灯常亮故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2746,6 +2841,7 @@
                       "label":"起动系统",
                       "describe":"大众速腾启动系统组成、如何对启动系统故障进行检修，包含机械检修及电路检修。",
                       "teachingMaterial":"起动系统总成认知.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2767,6 +2863,7 @@
                       "label":"起动机故障检修",
                       "describe":"大众速腾起动机工作原理及控制原理，如何判断起动机故障及对起动机故障进行检修。",
                       "teachingMaterial":"大众速腾-起动机.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2794,6 +2891,7 @@
                       "label":"灯光照明系统",
                       "describe":"大众速腾灯光照明系统的组成、各部件的功能及工作原理。",
                       "teachingMaterial":"大众速腾-近光灯故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2919,7 +3017,8 @@
                     {
                       "label":"前照灯故障检修",
                       "describe":"大众速腾前照灯电路控制原理和对前照灯故障检修的流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"远光灯不亮故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2941,6 +3040,7 @@
                       "label":"雾灯不亮故障检修",
                       "describe":"大众速腾雾灯电路控制原理和对雾灯故障检修的流程。",
                       "teachingMaterial":"大众速腾-雾灯.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2962,6 +3062,7 @@
                       "label":"转向灯工作异常故障检修",
                       "describe":"大众速腾转向灯电路控制原理和对转向灯故障检修的流程。",
                       "teachingMaterial":"转向灯工作异常故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -2983,6 +3084,7 @@
                       "label":"近光灯不亮故障检测",
                       "describe":"大众速腾近光灯电路控制原理和对近光灯故障检修的流程。",
                       "teachingMaterial":"左近光灯故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3004,6 +3106,7 @@
                       "label":"远光灯不亮故障检修",
                       "describe":"大众速腾远光灯电路控制原理和对远光灯故障检修的流程。",
                       "teachingMaterial":"远光灯不亮故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3025,6 +3128,7 @@
                       "label":"车内顶灯故障检修",
                       "describe":"大众速腾顶灯电路控制原理和对顶灯故障检修的流程。",
                       "teachingMaterial":"大众速腾-车内顶灯的检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3052,6 +3156,7 @@
                       "label":"雨刮器检查与更换",
                       "describe":"大众速腾雨刮器拆卸及更换流程、操作时候的注意事项等",
                       "teachingMaterial":"大众速腾-刮水片.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3072,7 +3177,8 @@
                     {
                       "label":"雨刮器不工作故障检修",
                       "describe":"大众速腾雨刮器工作原理、系统组成及对雨刮器不工作故障进行检修的流程。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"大众速腾-刮水片宽屏.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3094,6 +3200,7 @@
                       "label":"电动车窗故障检修",
                       "describe":"大众速腾车窗的系统组成，部件工作原理和控制原理以及如何对车窗无法升降故障进行检修。",
                       "teachingMaterial":"大众速腾-电动车窗.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3115,6 +3222,7 @@
                       "label":"电动后视镜无法调节故障检修",
                       "describe":"大众速腾电动后视镜系统组成、电路控制原理及对无法调节故障进行检修流程。",
                       "teachingMaterial":"后视镜不能调节故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3136,6 +3244,7 @@
                       "label":"汽车中控门锁故障检修",
                       "describe":"大众速腾中空门锁系统组成、电路控制原理及对中空门锁故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-中控门锁.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3157,6 +3266,7 @@
                       "label":"多功能方向盘故障检修",
                       "describe":"大众速腾多功能方向盘作用、电路控制原理及对多功能方向盘故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-多功能方向盘.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3178,6 +3288,7 @@
                       "label":"双音喇叭故障检修",
                       "describe":"大众速腾双音喇叭电路控制原理及对多功能方向盘故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-双音喇叭.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3204,7 +3315,8 @@
                     {
                       "label":"仪表综述",
                       "describe":"大众速腾仪表组成、作用及功能，仪表上有哪些故障提示灯。",
-                      "teachingMaterial":"",
+                      "teachingMaterial":"大众速腾-仪表.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3226,6 +3338,7 @@
                       "label":"仪表系统工作异常故障检修",
                       "describe":"大众速腾仪表系统电路控制原理及对仪表系统工作异常故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-仪表.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3253,6 +3366,7 @@
                       "label":"can-bus综述",
                       "describe":"简述什么是CAN-BUS，总线组成、工作原理及控制原理等。",
                       "teachingMaterial":"canbus综述.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3274,6 +3388,7 @@
                       "label":"典型车型整车电气故障检修",
                       "describe":"整车电气组成、电路控制原理、线路如何连接及故障维修诊断流程。",
                       "teachingMaterial":"典型车型电气故障检修.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3295,6 +3410,7 @@
                       "label":"多媒体主机拆装",
                       "describe":"大众速腾多媒体工作原理、系统组成，如何拆装并且对故障进行检修。",
                       "teachingMaterial":"多媒体系统拆装.pdf",
+                      "teachingPPTimg":"",
                       "teachingBook":"",
                       "flash2d":"",
                       "videoTitle":[
@@ -3323,7 +3439,8 @@
               {
                 "label":"汽车空调",
                 "describe":"汽车空调的组成及作用，各部件的介绍简介。",
-                "teachingMaterial":"",
+                "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3344,7 +3461,8 @@
               {
                 "label":"汽车空调异味故障检修",
                 "describe":"简介汽车空调吹风带有异味，判断问题在哪及如何解决空调异味流程。",
-                "teachingMaterial":"",
+                "teachingMaterial":"大众速腾-空调滤芯宽屏.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3366,7 +3484,8 @@
               {
                 "label":"汽车空调不制冷故障检修",
                 "describe":"大众速腾空调工作原理及电路控制原理，如何对空调不制冷进行故障诊断及排除。",
-                "teachingMaterial":"",
+                "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3388,7 +3507,8 @@
               {
                 "label":"汽车空调鼓风机不工作故障检修",
                 "describe":"大众速腾空调鼓风机工作及电路控制原理，如何对鼓风机不工作进行判断并且排除故障。",
-                "teachingMaterial":"",
+                "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3416,7 +3536,8 @@
               {
                 "label":"新车交接",
                 "describe":"简述新车交接的注意事项，交接过程中应该做哪些事情和交接的流程。",
-                "teachingMaterial":"",
+                "teachingMaterial":"新车交接.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3439,6 +3560,7 @@
                 "label":"机油机滤",
                 "describe":"简述更换机油机滤的流程，更换时候的注意事项、机油及机滤的作用及功能。",
                 "teachingMaterial":"大众速腾-机油机滤宽屏.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"机油机滤.pdf",
                 "flash2d":"",
                 "videoTitle":[
@@ -3461,6 +3583,7 @@
                 "label":"汽车首次维护",
                 "describe":"简述新车首次维护应做的哪些检查和哪些保养。",
                 "teachingMaterial":"汽车首保.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3483,6 +3606,7 @@
                 "label":"汽车4万公里维护",
                 "describe":"简述汽车4万公里保养时候应做哪些检查和更换内容。",
                 "teachingMaterial":"4万公里维护.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3505,6 +3629,7 @@
                 "label":"汽车换季维护",
                 "describe":"简述汽车换季时候应对汽车进行哪些方面的保养，保养的内容及保养方法。",
                 "teachingMaterial":"换季保养.pdf",
+                "teachingPPTimg":"",
                 "teachingBook":"",
                 "flash2d":"",
                 "videoTitle":[
@@ -3523,6 +3648,13 @@
                 
                 "courseId": 650
               }
+          ]
+        },
+        {
+          "label":"自定义课程",
+          "courseId": 700,
+          "children":[
+              
           ]
         }
       ]

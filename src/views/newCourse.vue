@@ -44,8 +44,9 @@
                             <!--课件-->
                             <el-tab-pane label="教学课件">
                               <div id="courseppt">
-                                <p class="devDownload" v-show="noTree.teachingMaterial"></p>
-                                  <embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>
+                                <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
+                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
+                                  <ppt-slides :slides="noTree.teachingPPTimg" :slidesLength="noTree.teachingPPTimg.length" :style="styleObject"></ppt-slides>
                                 <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
@@ -70,7 +71,7 @@
                             <!--二维动画-->
                             <el-tab-pane label="二维动画">
                               <div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
-                                <video id="flash2d" controls @click="flash2d" :src="'/resource/video/flash2d/' + noTree.flash2d">
+                                <video id="flash2d" autoplay controls @click="flash2d" :src="'/resource/video/flash2d/' + noTree.flash2d">
                                 </video>
                               </div>
                             </el-tab-pane>
@@ -213,6 +214,7 @@
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
+import pptSlides from '@/components/courseTree/pptSlides'
 import footFooter from '@/components/common/footFooter'
 
 export default {
@@ -255,7 +257,13 @@ export default {
       userId:this.$store.state.userID,
       keyId:'',
       activeName: '',
-      descTab:'0'
+      descTab:'0',
+      slides: [],
+      styleObject: {
+        width: '100%',
+        height: '100%'
+      },
+      slidesLength:''
 
     }
   },
@@ -409,24 +417,28 @@ export default {
             this.keyId = id;
         }
     //获取树形数据
-    axios.get("/readJson/bannerLeftData",{
-        params:{
-             user:234
-        }
-      }).then((res)=>{
-          this.data = res.data[0].children;
-          //console.log(this.data[0].label)
-          //console.log(this.$refs.vuetree);
-          setTimeout(() => {
-            this.$refs.vuetree.setCurrentKey(this.keyId)
-          }, 20)
-//        var _this = this
-//        this.$nextTick(function () {
-//        _this.refRecursion(100, 1)
-//        })
-      }).catch(function(error){
-          console.log("error init." + error)
-      });
+    this.data = this.$store.state.newBannerLeft;
+    setTimeout(() => {
+      this.$refs.vuetree.setCurrentKey(this.keyId)
+    }, 20)
+//    axios.get("/readJson/bannerLeftData",{
+//        params:{
+//             user:234
+//        }
+//      }).then((res)=>{
+//          this.data = res.data[0].children;
+//          //console.log(this.data[0].label)
+//          //console.log(this.$refs.vuetree);
+//          setTimeout(() => {
+//            this.$refs.vuetree.setCurrentKey(this.keyId)
+//          }, 20)
+////        var _this = this
+////        this.$nextTick(function () {
+////        _this.refRecursion(100, 1)
+////        })
+//      }).catch(function(error){
+//          console.log("error init." + error)
+//      });
     //评论一系列
       this.user = this.$store.state.username;
       // console.log(this.user)
@@ -828,7 +840,7 @@ export default {
 
 
   },
-  components:{navgationHead,footFooter}
+  components:{navgationHead,pptSlides,footFooter}
 }
 </script>
 
@@ -883,6 +895,7 @@ hr{
 }
 .newCourse-content #courseppt{
     width:100%;
+    height: 700px;
 }
 .newCourse-content #courseWorkPage{
     width:100%;
@@ -962,6 +975,9 @@ hr{
 }
 .newCourse-content .el-tabs__nav{
     float:none;
+}
+.newCourse-content  .el-tabs--border-card>.el-tabs__content{
+    padding-bottom: 41px;
 }
 .newCourse-content .exerEngImg{
     width:595px;
