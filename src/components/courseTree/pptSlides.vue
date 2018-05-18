@@ -1,183 +1,243 @@
 <template>
-  <div class="slide-show">
-    <transition-group tag="ul" class='slide-ul' :name="name">
-      <li v-for="(item , index ) in slides" :key="index" v-show="index===nowIndex">
-        <a :href="item.href" :target="target">
-          <img :src="url_before + item.teachingPPTimg" alt="">
-        </a>
-      </li>
-    </transition-group>
-    
-    <div class="control-wrapper">
-      <a class="prev" @click="goto(prevIndex)"></a>
-      <a class="next" @click="goto(nextIndex)"></a>
+    <div class="pageination_align">
+            <div class="pageination" v-if="pageinationTotal">
+                <div @click="pageUp(0)" class="pagination_page" :class="startDisabled?'disabled':''">首页</div>
+                <div @click="pageUp(1)" class="pagination_page" :class="startDisabled?'disabled':''">上一页</div>
+
+                <div class="pagination_page" :class="item==pageinationCurrentPage?'pagination_page_active':''"
+                     v-for="(item,index) in pageinationLength" @click="jump(item)">
+                    {{item}}
+                </div>
+                <div class="point" v-show="nowIndex <= pageinationPage - 6">......</div>
+                <div  v-show="nowIndex <= pageinationPage - 5" class="pagination_page" :class="pageinationPage==pageinationCurrentPage?'pagination_page_active':''"
+                @click="pageDown(0)">
+                    {{pageinationPage}}
+                </div>
+
+                <div @click="pageDown(1)" class="pagination_page" :class="endDisabled?'disabled':''">下一页</div>
+                <div @click="pageDown(0)" class="pagination_page pagination_page_right" :class="endDisabled?'disabled':''">
+                    尾页
+                </div>
+
+                <div class="numJump">
+                    <p class="numJumpP">跳到第</p>
+                    <el-input size="mini" v-model="pageInputValue" @change="pageInput(pageInputValue)"></el-input>
+                    <p>页</p>
+                </div>
+            </div>
     </div>
-     <div class="slidelength">总页数：{{slidesLength}}</div>
-    <ul class="slide-pages">
-      <li v-for="(item, index) in slides"
-          @click="goto(index)"
-          class="slide-page-point">
-        <a :class="{'active': index === nowIndex}">{{ index + 1 }}</a>
-      </li>
-    </ul>
-   
-  </div>
 </template>
 
 <script>
-  export default {
-    props: {
-      slides: {
-        type: Array,
-        default: []
-      },
-      inv: {
-        type: Number,
-        default: 1000
-      },
-      name: {
-        type: String,
-        default: 'move'
-      },
-      target: {
-        type: String,
-        default: '_blank'
-      },
-      slidesLength:{
-        type: Number,
-        default: 100
-      }
-    },
+import EventBus from '../../assets/js/EventBus';
+
+    export default {
+    name : 'MoPaging',
+    //通过props来接受从父组件传递过来的值
+    props :['total', 'size', 'page', 'changge', 'isUrl'],
     data () {
-      return {
-        nowIndex: 0,
-        url_before:'resource/imgs/coursePPTimg/'
-      }
-    },
-    computed: {
-      prevIndex () {
-        if (this.nowIndex === 0) {
-          return this.slides.length - 1
-        } else {
-          return this.nowIndex - 1
+        return {
+            pageinationTotal: this.total,//总条目数
+            pageinationSize: this.size ? this.size : 1,//每页显示条目个数
+            pageinationLength: [],
+            pageinationCurrentPage: this.page ? this.page : 1,//当前页数默认1
+            pageinationPage: 0,//可分页数
+            startDisabled: true,//是否可以点击首页上一页
+            endDisabled: true,//是否可以点击尾页下一页
+            pageChangge: this.changge,//修改方法
+            pageIsUrl: this.isUrl ? true : false,//是否开启修改url,
+            nowIndex:'',
+            pageInputValue:'',
+            isMsg:''
         }
-      },
-      nextIndex () {
-        if (this.nowIndex === this.slides.length - 1) {
-          return 0
-        } else {
-          return this.nowIndex + 1
+    },
+     methods: {
+        pageInput(val){
+            if(val == ''){
+                this.pageInputValue = '';
+            }else if(val <= 1){
+                this.jump(1);
+                this.pageInputValue = 1;
+            }else if(val >= this.pageinationPage){
+                this.jump(this.pageinationPage);
+                this.pageInputValue = this.pageinationPage;
+            }else{
+                this.jump(val);
+            }
+            
+        },
+        jump(item) {
+            
+            this.pageinationCurrentPage = item;
+            console.log(this.pageinationCurrentPage)
+            this.pagers();
+            EventBus.$on('newPageUp', function (msg) {
+                this.pageChangge = msg;
+                this.isMsg = msg;
+            })
+            
+            EventBus.$on('newpageDown', function (msg) {
+                this.pageChangge = msg;
+                this.isMsg = msg;
+            })
+            
+            if(this.isMsg != ''){
+
+            }else{
+                this.pageChangge(this.pageinationCurrentPage);
+                this.nowIndex = item;
+                console.log(item)
+            }
+            
+          //  console.log(this.nowIndex)
+        },//跳转页码
+        pagers() {
+            //可分页数
+            this.pageinationPage = Math.ceil(this.pageinationTotal / this.pageinationSize);
+            //url修改
+            if (this.pageIsUrl) {
+                this.$router.replace({
+                    path: this.$route.path,
+                    query: {
+                        page: this.pageinationCurrentPage,
+                    }
+                });
+            }
+            //是否可以点击上一页首页
+            this.startDisabled = this.pageinationCurrentPage != 1 ? false : true;
+            //是否可以点击下一页尾页
+
+            this.endDisabled = this.pageinationCurrentPage != this.pageinationPage ? false : true;
+            if (this.pageinationPage == 0) this.endDisabled = true;
+            //重置
+            this.pageinationLength = [];
+            //开始页码1
+            let start = this.pageinationCurrentPage - 4 > 1 ? this.pageinationCurrentPage - 4 : 1;
+            //当前页码减去开始页码得到差
+            let interval = this.pageinationCurrentPage - start;
+            //最多9个页码，总页码减去interval 得到end要显示的数量+
+            let end = (9 - interval) < this.pageinationPage ? (9 - interval) : this.pageinationPage;
+            //最末页码减开始页码小于8
+            if ((end - start) != 8) {
+                //最末页码加上与不足9页的数量，数量不得大于总页数
+                end = end + (8 - (end - start)) < this.pageinationPage ? end + (8 - (end - start)) : this.pageinationPage;
+                //最末页码加上但是还不够9页，进行开始页码追加，开始页码不得小于1
+                if ((end - start) != 8) {
+                    start = (end - 8) > 1 ? (end - 8) : 1;
+                }
+            }
+            for (let i = start; i <= end; i++) {
+                this.pageinationLength.push(i);
+            }
+        },//计算分页显示的数字
+        pageUp(state) {
+            EventBus.$on('newPageUp', function (msg) {
+                this.pageChangge = msg;
+            })
+            if (this.startDisabled) return;
+            if (this.pageinationCurrentPage - 1 != 0 && state == 1) {
+                this.jump(this.pageinationCurrentPage - 1);
+            } else {
+                this.jump(1);
+            }
+        },//上一页跟首页 state=1是上一页 state=0是首页
+        pageDown(state) {
+            EventBus.$on('newpageDown', function (msg) {
+                this.pageChangge = msg;
+            })
+            if (this.endDisabled) return;
+            if (this.pageinationCurrentPage + 1 != this.pageinationPage && state == 1) {
+                this.jump(this.pageinationCurrentPage + 1);
+            } else {
+                this.jump(this.pageinationPage);
+            }
+        },// state=1是下一页 state=0是尾页
+        pageCurrentChange() {
+            this.pageChangge(this.pageinationCurrentPage);
+            this.pagers();
         }
-      }
     },
-    methods: {
-      goto (index) {
-        this.nowIndex = index
-      },
-      runInv () {
-  //      this.invId = setInterval(() => {
-          this.goto(this.nextIndex)
-  //      }, this.inv)
-      },
-      clearInv () {
-        clearInterval(this.invId)
-      }
+    created() {
+        this.pageCurrentChange();
     },
-    mounted () {
-    //  this.runInv()
+    watch: {
+        total: function (val, oldVal) {
+            this.pageinationTotal = val;
+            this.pagers();
+        },
+        page: function (val, oldVal) {
+            this.pageinationCurrentPage = val;
+            this.pagers();
+        }
     }
-  }
+}
 </script>
 
 <style>
-.slide-pages {
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  cursor:pointer;
-  width: 90%;
-}
-.slidelength {
-  position: absolute;
-  bottom: 13px;
-  right: 0;  
-}
-.slide-pages li{
-  display: inline-block;
-  height: 18px;
-}
-.slide-pages a{
-  display: block;
-  width: 30px;
-  height: 26px;
-  margin: 0 5px;
-  border: 2px solid #fff;
-  border-color: rgba(255, 255, 255, 0.3);
-  border-radius: 5px;
-  background: #f5f5f5;
-}
-.slide-pages .active{
-  background: #e4393c;
-  border-color: #757575;
-  border-color: rgba(0, 0, 0, 0.4);
-}
-  .control-wrapper a{
-    display: inline-block;
-      position: absolute;
-      top: 50%;
-      width: 41px;
-      height: 69px;
-      transform: translateY(-50%);
-  }
-  .prev{
-    left: 0;
-    background: url("http://c1.mifile.cn/f/i/2014/cn/icon/icon-slides.png") no-repeat -84px 50%;
-  }
-  .prev:hover {
-      background-position: 0 50%
-  }
-  .next{
-    right: 0;
-    background: url(//c1.mifile.cn/f/i/2014/cn/icon/icon-slides.png) no-repeat -125px 50%;
-  }
-  .next:hover {
-    background-position: -42px 50%;
-  }
-  .slide-show {
-    position: relative;
-    overflow: hidden;
-  }
-  .slide-ul {
-    width: 100%;
-    height: 100%;
-  }
-  .slide-ul li{
-    position: absolute;
-      width: 100%;
-      height: 100%;
-  }
-  .slide-ul img{
-    width: 100%;
-    height: 90%;
-  }
-  .move-enter-active {
-    transition: all 0.5s ease;
-    transform: translateX(0)
-  }
-  .move-leave-active {
-    transition: all 0.5s ease;
-    transform: translateX(-100%);
-  }
-  .move-enter {
-    transform: translateX(100%);
-  }
-  .move-leave {
-    transform: translateX(0);
-  }
-  .fade-enter-active, .fade-leave-active {
-    transition: opacity .5s
-  }
-  .fade-enter, .fade-leave-active {
-    opacity: 0
-  }
+    .pageination_align {
+            text-align: center
+        }
+
+        .pageination {
+            color: #48576a;
+            font-size: 12px;
+            user-select: none;
+            display:flex;
+        }
+
+        .pagination_page {
+            padding: 0 4px;
+            border: 1px solid #d1dbe5;
+            background: #fff;
+            font-size: 13px;
+            min-width: 28px;
+            height: 28px;
+            line-height: 28px;
+            cursor: pointer;
+            box-sizing: border-box;
+            text-align: center;
+            float: left;
+        }
+
+        .pagination_page_right {
+            border-right: 1px solid #d1dbe5;
+        }
+
+        .pagination_page:hover {
+            color: #e4393c;
+        }
+
+        .disabled {
+            color: #e4e4e4 !important;
+            background-color: #fff;
+            cursor: not-allowed;
+        }
+
+        .pagination_page_active {
+            border-color: #e4393c;
+            background-color: #e4393c;
+            color: #fff !important;;
+            cursor: default;
+        }
+
+        .pageination_align .point{
+
+        }
+
+        .numJump{
+            display:flex;
+            margin-left:20px;
+        }
+        
+        .numJump .numJumpP{
+            width:60px;
+        }
+
+        .numJump p{
+            margin-top:5px;
+        }
+
+        .el-input--mini .el-input__inner{
+            width:55px;
+        }
 </style>

@@ -27,12 +27,6 @@
               <el-tab-pane label="待考试">
                 <el-table style="width: 100%" :data="toTestData">
 
-                  <!--<el-table-column label="序号" width="60">-->
-                    <!--<template slot-scope="scope">-->
-                      <!--<span >{{ scope.row.toTestDataIndex + 1 }}</span>-->
-                    <!--</template>-->
-                  <!--</el-table-column>-->
-
                   <el-table-column label="序号" type="index" width="60">
                   </el-table-column>
 
@@ -108,7 +102,7 @@
 
               <!--历史考试-->
               <el-tab-pane label="历史考试">
-                <el-table style="width: 100%" :data="historyTestData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+                <el-table style="width: 100%" :data="historyTestData.slice((currentPage1-1)*pagesize,currentPage1*pagesize)">
 
                   <!--<el-table-column label="序号" width="60">-->
                     <!--<template slot-scope="scope">-->
@@ -163,7 +157,7 @@
                   <el-pagination
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
-                    :current-page.sync="currentPage"
+                    :current-page.sync="currentPage1"
                     :page-size="pagesize"
                     layout="prev, pager, next, jumper"
                     :total=parseInt(total2)>
@@ -349,7 +343,7 @@
 
         <!--成绩管理-->
         <div class="userMessage" v-show="currIndex === 1">
-          <el-table style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage-1)*pagesize,currentPage*pagesize)">
+          <el-table style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)">
 
             <el-table-column label="序号" type="index" width="60">
             </el-table-column>
@@ -405,7 +399,7 @@
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
-              :current-page.sync="currentPage"
+              :current-page.sync="currentPage2"
               :page-size="pagesize"
               layout="prev, pager, next, jumper"
               :total=parseInt(total3)>
@@ -556,7 +550,8 @@
         checkGradesData: [],
         historyTestDataIndex:[],
         scoreM: [],
-        currentPage: 1,
+        currentPage1: 1,
+        currentPage2: 1,
         pagesize: 10,
         total1: '',
         total2: '',
@@ -612,15 +607,19 @@
           }
         }).then((res) => {
           //console.log(res.data);
-          let resData = res.data;
-          for (let i = 0; i < resData.length; i++) {
-            resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
-            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
-            console.log(resData[i].currTestType);
-            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType)
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            for (let i = 0; i < resData.length; i++) {
+              resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+              resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
+              resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
+              resData[i].toTestDataIndex = i;
+            }
+            this.toTestData = resData;
+            this.total1 = this.toTestData.length;
+          } else if (res.data.code === 1) {
+            this.errorMsg('返回错误')
           }
-          this.toTestData = resData;
-          this.total1 = this.toTestData.length;
         });
       },
 
@@ -631,10 +630,8 @@
         //console.log(`当前页: ${val}`);
       },
       rightAppear(index) {
+          console.log(index);
         this.currIndex = index;
-        if (index == 1) {
-
-        }
       },
       // 成功后提示信息
       Success(msg) {
@@ -642,6 +639,13 @@
           showClose: true,
           message: msg,
           type: 'success'
+        });
+      },
+      errorMsg(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'error'
         });
       },
       //本来考试主题显示在input的func
@@ -800,13 +804,13 @@
             }else{
               this.submitForm('form');
             }
-        }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") !== moment(this.form.date2).format("YYYY-MM-DD")){
           this.submitForm('form');
         }
       },
       //选择开始时间默认结束时间是两个小时后
       writeEnd(){
-        if(moment(this.form.date1).format("YYYY-MM-DD") == moment(this.form.date2).format("YYYY-MM-DD")){
+        if(moment(this.form.date1).format("YYYY-MM-DD") === moment(this.form.date2).format("YYYY-MM-DD")){
           var str = this.form.date3.split(":");
           var newStr = parseInt(str[0]) + parseInt(2)
           if(newStr < 10){
@@ -817,7 +821,7 @@
           if(parseInt(str[0]) >= "22"){
             this.form.date4 = "23" + ":" + 30;
           }
-        }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
+        }else if(moment(this.form.date1).format("YYYY-MM-DD") !== moment(this.form.date2).format("YYYY-MM-DD")){
           this.form.date4 = '';
         }
       },
@@ -921,7 +925,7 @@
             }
             this.total1 = this.toTestData.length;
             this.Success('删除成功');
-          } else if (res.data.code == 1) {
+          } else if (res.data.code === 1) {
             this.Success('删除成功');
           }
 
@@ -969,7 +973,7 @@
       window.removeEventListener('resize', this.handleResize)
     },
     mounted() {
-      window.addEventListener('resize', this.handleResize)
+      window.addEventListener('resize', this.handleResize);
       //请求班级、专业
       axios.post('/teacherCMS/getClass', {
           data: {
@@ -982,23 +986,7 @@
         });
 
       //请求待考试数据
-      axios.get("/readTestQuestion/toTestData", {
-        params: {
-          user: this.user,
-        }
-      }).then((res) => {
-        //console.log(res.data);
-        let resData = res.data;
-        for (let i = 0; i < resData.length; i++) {
-          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
-          resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
-          resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
-          resData[i].toTestDataIndex = i;
-        }
-        this.toTestData = resData;
-        //console.log(this.toTestData)
-        this.total1 = this.toTestData.length;
-      });
+      this.toTestDataReq();
 
       //请求历史考试数据
       axios.get("/readTestQuestion/historyTestData", {
@@ -1007,14 +995,19 @@
         }
       }).then((res) => {
         //console.log(res.data);
-        let resData = res.data;
-        for (let i = 0; i < resData.length; i++) {
-          resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
-          resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
-          resData[i].historyTestDataIndex = i;
+        let resData = res.data.result;
+        if (res.data.code === 0) {
+          for (let i = 0; i < resData.length; i++) {
+            resData[i].newData = moment(resData[i].newData).format("YYYY-MM-DD hh:mm:ss");
+            resData[i].date1 = moment(resData[i].date1).format("YYYY-MM-DD");
+            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
+            resData[i].historyTestDataIndex = i;
+          }
+          this.historyTestData = resData;
+          this.total2 = this.historyTestData.length;
+        } else if (res.data.code === 1) {
+          this.errorMsg('返回错误')
         }
-        this.historyTestData = resData;
-        this.total2 = this.historyTestData.length;
       });
 
       //请求成绩管理数据
@@ -1023,7 +1016,7 @@
           user: this.user,
         }
       }).then((res) => {
-        console.log(res.data);
+        //console.log(res.data);
         let resData = res.data;
         for (let i = 0; i < resData.length; i++) {
           resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");

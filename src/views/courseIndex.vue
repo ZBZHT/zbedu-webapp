@@ -3,7 +3,7 @@
     <div class="nav">
         <navgation-head></navgation-head>
     </div>
-    <div class="banner">
+    <div class="banner" :style="{height: rightboxHeight + 'px'}">
         <div class="left-menu">
 
             <!--<banner-left :bannerLeftData = "bannerLeftData"></banner-left>-->
@@ -112,7 +112,8 @@ export default {
           height: '100%'
         },
       url:'',
-      url_before:'src/assets/imgs/'
+      url_before:'src/assets/imgs/',
+      rightboxHeight:''
     }
   },
   computed:{
@@ -151,6 +152,12 @@ export default {
     }
   },
   mounted(){
+        if(this.$store.state.userType == "S"){
+            this.rightboxHeight = 460;
+        }else{
+            this.rightboxHeight = 540;
+        }
+        
         this.url = document.domain;
         axios.get("/readJson/index",{
                 params:{
@@ -212,7 +219,6 @@ hr{
 }
 .courseIndex .banner{
   width:960px;
-  height:540px;
   margin:0 auto;
   position:relative;
   display:flex;

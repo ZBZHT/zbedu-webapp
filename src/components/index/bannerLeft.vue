@@ -1,17 +1,17 @@
 <template>
 <div>
-  <div v-for="(item,index) in bannerLeftData" v-if="index <= 0">
-    <div class="item-a" v-for="item2 in item.children">
-                <a @click="setMsg(item2)">
-                    <!--<router-link :to="{path:'/course' + '/label/'+ item2.label}">-->
+  <div v-for="(item,index) in bannerLeftData.children">
+    <div class="item-a">
+                <a @click="setMsg(item)">
+                    <!--<router-link :to="{path:'/course' + '/label/'+ item.label}">-->
                         <span class="item-b">
-                            <span class="bleft">{{item2.label}}</span>
+                            <span class="bleft">{{item.label}}</span>
                             <b class="jiantou"> > </b>
                         </span>
                     <!--</router-link>-->
                 </a>
                 <div class="hiddenbox">
-                    <div v-for="item3 in item2.children">
+                    <div v-for="item3 in item.children">
                         <b class="hd-label" @click="setMsg(item3)">
                           <!--<router-link :to="{path:'/course' + '/label/'+ item3.label}">-->
                             <a class="hiddenbox-a">{{item3.label}}</a>
@@ -74,50 +74,55 @@ export default {
     }
   },
   mounted(){
-    axios.post("/teacherCMS/getTeacherCustomCourse",{
-      data:{
-        userID: this.$store.state.userID,
-        userType: this.$store.state.userType,
-      }
-    }).then((res)=>{
-      var tab = res.data.techCosCou[0].tab;
-      for(var i = 0; i < tab.length; i++){
-        this.thirdData = []
-        for(var j = 0; j < tab[i].course.length; j++){
-        var ii = i + 1;    
-        var jj = j + 1;    
-        //    this.teachingPPTimg.push({
-        //        teachingPPTimg:tab[i].course[j].teachingPPTimg
-        //    })
-            for(var t = 0; t < tab[i].course[j].videoTitle.length; t++){
-                this.videoTitle.push({
-                    videoTitle:tab[i].course[j].videoTitle[t]
+    if(this.$store.state.userType == "S"){
+
+    }else{
+        axios.post("/teacherCMS/getTeacherCustomCourse",{
+        data:{
+            userID: this.$store.state.userID,
+            userType: this.$store.state.userType,
+        }
+        }).then((res)=>{
+        var tab = res.data.techCosCou[0].tab;
+        for(var i = 0; i < tab.length; i++){
+            this.thirdData = []
+            for(var j = 0; j < tab[i].course.length; j++){
+            var ii = i + 1;    
+            var jj = j + 1;    
+            //    this.teachingPPTimg.push({
+            //        teachingPPTimg:tab[i].course[j].teachingPPTimg
+            //    })
+                for(var t = 0; t < tab[i].course[j].videoTitle.length; t++){
+                    this.videoTitle.push({
+                        videoTitle:tab[i].course[j].videoTitle[t]
+                    })
+                }
+                
+                this.thirdData.push({
+                    label:tab[i].course[j].label,
+                    describe:tab[i].course[j].describe,
+                    videoTitle:this.videoTitle,
+                    teachingMaterial:tab[i].course[j].teachingMaterial,
+                    courseId:'7' + ii + jj,
+                    teachingPPTimg:"",
+                    teachingBook:"",
+                    flash2d:"",
+                    workPage:''
                 })
             }
             
-            this.thirdData.push({
-                label:tab[i].course[j].label,
-                describe:tab[i].course[j].describe,
-                videoTitle:this.videoTitle,
-                teachingMaterial:tab[i].course[j].teachingMaterial,
-                courseId:'7' + ii + jj,
-                teachingPPTimg:"",
-                teachingBook:"",
-                flash2d:"",
-                workPage:''
+            this.secondData.push({
+                label:tab[i].label,
+                courseId:'7' + ii + '0',
+                children:this.thirdData
             })
         }
-          
-          this.secondData.push({
-              label:tab[i].label,
-              courseId:'7' + ii + '0',
-              children:this.thirdData
-          })
-      }
 
-    }).catch(function(error){
-      console.log("error init." + error)
-    });
+        }).catch(function(error){
+        console.log("error init." + error)
+        });
+    }
+    
 
     setTimeout(function () {
        axios.get("/readJson/bannerLeftData",{
@@ -125,22 +130,38 @@ export default {
             user:234
         }
         }).then((res)=>{
-        this.bannerLeftData = res.data;
-        var lastData = res.data[0];
-    //      console.log(lastData.children[6])
-    //      console.log(this.bannerLeftData[0].children[6])
-    //    console.log("this.secondData");
-    //    console.log(this.secondData)
-        for(var h = 0; h < this.secondData.length; h++){
-    //        console.log(this.secondData.length)
-            this.bannerLeftData[0].children[6].children.push(this.secondData[h])
+        if(this.$store.state.userType == "S"){
+            this.bannerLeftData = res.data[0];
+            var newBannerLeft = [];
+        //    console.log(this.bannerLeftData.children.length -1);
+            for(var i = 0; i < this.bannerLeftData.children.length; i++){
+            //    console.log(i)
+                if(i != this.bannerLeftData.children.length -1){
+                    newBannerLeft.push(this.bannerLeftData.children[i]);
+                }
+                //console.log(newBannerLeft)
+            }  
+            this.bannerLeftData.children = newBannerLeft;
+        }else{
+            this.bannerLeftData = res.data[0];
+            var lastData = res.data[0];
+        //      console.log(lastData.children[6])
+        //      console.log(this.bannerLeftData[0].children[6])
+        //    console.log("this.secondData");
+        //    console.log(this.secondData)
+            for(var h = 0; h < this.secondData.length; h++){
+        //        console.log(this.secondData.length)
+                this.bannerLeftData.children[6].children.push(this.secondData[h])
+            }
+        //    console.log(this.bannerLeftData.children[6].children)
+            this.$store.commit('newBannerLeft',this.bannerLeftData.children);
+        //    console.log(this.bannerLeftData)
+            
         }
-        console.log(this.bannerLeftData[0].children[6].children)
-        this.$store.commit('newBannerLeft',this.bannerLeftData[0].children);
-    //    console.log(this.bannerLeftData[0])
         }).catch(function(error){
-        console.log("error init." + error)
-        });     
+            console.log("error init." + error)
+        });
+             
 
     }.bind(this),1000)
 

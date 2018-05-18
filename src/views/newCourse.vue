@@ -46,8 +46,20 @@
                               <div id="courseppt">
                                 <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
                                   <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
-                                  <ppt-slides :slides="noTree.teachingPPTimg" :slidesLength="noTree.teachingPPTimg.length" :style="styleObject"></ppt-slides>
-                                <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
+                                  <div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">
+                                      <img class="coursepptImg" :src="item.img">
+                                      <div class="prev" @click="newPageUp(index)"></div>
+                                      <div class="next" @click="newpageDown(index+2)"></div>
+                                  </div>
+                                  
+                                  <ppt-slides
+                                  :total="total"
+                                  :size="size"
+                                  :page="page"
+                                  :changge="pageFn">
+                                  </ppt-slides>                   
+                                  
+                                  <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
 
@@ -216,7 +228,9 @@ import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
 import pptSlides from '@/components/courseTree/pptSlides'
 import footFooter from '@/components/common/footFooter'
+import EventBus from '../assets/js/EventBus';
 
+var contentSlides = pptSlides;
 export default {
   name: 'newCourse',
   data () {
@@ -263,7 +277,28 @@ export default {
         width: '100%',
         height: '100%'
       },
-      slidesLength:''
+      slidesLength:'',
+      total:'',//总信息数
+      size:1,//每页显示信息个数不传默认6
+      page:1,//当前页码,
+      lists: [
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片1.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片2.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片3.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片4.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片5.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片6.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片7.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片8.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片9.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片10.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片11.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片12.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片13.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片14.JPG' },
+          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
+        
+        ],
 
     }
   },
@@ -298,21 +333,23 @@ export default {
         return this.$store.state.noTree.videoTitle;
       }
   },
-//  created(){
+  created(){
+    
 //     var _this = this
 //        this.$nextTick(function () {
 //            // 直接调用
 //            _this.refRecursion(100, 1)
 //        })
-//  },
+  },
   mounted(){
-
+      //PPT页数
+      this.total = this.lists.length;
       //从courseIndex页传值并默认展开
       //  console.log("sjsjs");
       //  console.log(this.$store.state.noTree1.courseId);
         var data = this.$store.state.noTree1;
         var id = this.$store.state.noTree1.courseId;
-        if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600){
+        if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600 || id == 700){
 
             if(id == 100){
                 this.courseId1 = id;
@@ -342,6 +379,11 @@ export default {
                 this.courseId1 = id;
                 this.keyId = 610;
                 this.$store.commit('noTreeTitle',data.children[0]);
+            }else if(id == 700){
+                this.courseId1 = id;
+                this.courseId2 = 711;
+                this.keyId = 711;
+                this.$store.commit('noTreeTitle',data.children[0].children[0]);
             }
         }else if(id > 100 && id < 200){
             if(id == 110){
@@ -411,6 +453,19 @@ export default {
             this.courseId2 = id;
             this.keyId = id;
             this.$store.commit('noTreeTitle',data);
+        }else if(id > 700 && id < 800){
+            if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
+                this.courseId1 = 700;
+                this.courseId2 = id;
+                var nowId = parseInt(id) + 1
+                this.keyId = nowId;
+                this.$store.commit('noTreeTitle',data.children[0]);
+            }else{
+                this.courseId1 = 700;
+                this.courseId2 = id;
+                this.keyId = id;
+                this.$store.commit('noTreeTitle',data);
+            }
         }else if(id > 1110 && id < 1300){
             this.courseId1 = 100;
             this.courseId2 = id;
@@ -476,6 +531,27 @@ export default {
 
     },
   methods:{
+    //点击左侧向上翻页
+    newPageUp(val){
+      if(val > 0 && val < this.lists.length){
+        EventBus.$emit('newPageUp',this.pageFn(val));
+        contentSlides.methods.pageUp(1);
+        contentSlides.methods.jump(val);
+      }
+    },
+    //点击右侧向下翻页
+    newpageDown(val){
+      if(val > 0 && val < this.lists.length){
+        EventBus.$emit('newpageDown',this.pageFn(val));
+        contentSlides.methods.pageDown(1);
+        contentSlides.methods.jump(val);
+      }
+    },
+    //PPT翻页
+    pageFn(val){
+            this.page=val;
+          //  console.log(val);
+    },
     //递归方法默认标红实验
     refRecursion(key, time){
       console.log(time)
@@ -523,6 +599,7 @@ export default {
           //console.log(this.checkArr);
           this.$store.commit('noTreeTitle',data);
           this.$store.commit('noTreeTitle1',data);
+
           axios.get("/readTestQuestion/getHomeWork",{
             params:{
                 userId:this.userId,
@@ -534,6 +611,19 @@ export default {
               //console.log(this.homeworkData)
           }).catch(function(error){
               console.log("error init." + error)
+          });
+
+          //
+          axios.post("/readResource/getPPT",{
+            data:{
+              fileName: node.data.label,
+            }
+          }).then((res)=>{
+            console.log(res.data.result);
+            this.lists = res.data.result;
+            //console.log(this.homeworkData)
+          }).catch(function(error){
+            console.log("error init." + error)
           });
       }
     },
@@ -897,6 +987,31 @@ hr{
     width:100%;
     height: 700px;
 }
+.newCourse-content .courseImg{
+    height:89%;
+    position:relative;
+    cursor:pointer;
+}
+.newCourse-content .coursepptImg{
+    width:100%;
+    height:100%;
+}
+.newCourse-content .prev{
+    width:50%;
+    height:100%;
+    border:1px solid #000;
+    position:absolute;
+    top:0;
+    left:0;
+}
+.newCourse-content .next{
+    width:50%;
+    height:100%;
+    border:1px solid #f00;
+    position:absolute;
+    top:0;
+    right:0;
+}
 .newCourse-content #courseWorkPage{
     width:100%;
 }
@@ -977,7 +1092,7 @@ hr{
     float:none;
 }
 .newCourse-content  .el-tabs--border-card>.el-tabs__content{
-    padding-bottom: 41px;
+    padding-bottom: 100px;
 }
 .newCourse-content .exerEngImg{
     width:595px;
