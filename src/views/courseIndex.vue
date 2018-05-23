@@ -153,9 +153,9 @@ export default {
   },
   mounted(){
         if(this.$store.state.userType == "S"){
-            this.rightboxHeight = 460;
+            this.rightboxHeight = 300;
         }else{
-            this.rightboxHeight = 540;
+            this.rightboxHeight = 350;
         }
         
         this.url = document.domain;
@@ -223,11 +223,13 @@ hr{
   position:relative;
   display:flex;
   margin-bottom:75px;
+  margin-top: 25px;
 }
 .courseIndex .left-menu{
   width:165px;;
   height:100%;
-  padding:17px;
+  padding-right:17px;
+  padding-top:5px;
   padding-left:0;
   box-sizing: border-box;
   background: #2b333b;

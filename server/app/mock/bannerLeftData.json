@@ -21,7 +21,7 @@
                             {
                               "label":"基本信息收集与介绍",
                               "describe":"检测前的安全操作事项和详细的操作步骤，电动汽车安全操作的注意事项",
-                              "teachingMaterial":"EV系列-1-1-纯电动汽车基本信息收集与介绍.pdf",
+                              "teachingMaterial":"EV系列-1-1-纯电动汽车基本信息收集与介绍",
                               "teachingPPTimg":"",
                               "teachingBook":"纯电动汽车基本信息收集与介绍教材.pdf",
                               "flash2d":"1.1新能源汽车基本信息.mp4",
@@ -43,7 +43,7 @@
                             {
                               "label":"总体结构认知",
                               "describe":"北汽EV160整车控制器、电机控制器、电动空调等结构的工作原理及工作条件。",
-                              "teachingMaterial":"EV系列-1-2-纯电动汽车总体结构认知.pdf",
+                              "teachingMaterial":"EV系列-1-2-纯电动汽车总体结构认知",
                               "teachingPPTimg":"",
                               "teachingBook":"纯电动汽车总体结构认知教材.pdf",
                               "flash2d":"1.2纯电动汽车总体结构.mp4",
@@ -65,7 +65,7 @@
                             {
                               "label":"高压安全操作",
                               "describe":"维修操作之前的安全注意事项，需要做的一些保护准备。",
-                              "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作.pdf",
+                              "teachingMaterial":"EV系列-1-3-纯电动汽车高压安全操作",
                               "teachingPPTimg":"",
                               "teachingBook":"纯电动汽车高压安全操作教材.pdf",
                               "flash2d":"",
@@ -87,7 +87,7 @@
                             {
                               "label":"高压危害与救助方法",
                               "describe":"简述用电操作不当遇到危险时候的一些急救方法以及如何正确安全的操作纯电动汽车。",
-                              "teachingMaterial":"EV系列-1-4-高压危害与救助方法.pdf",
+                              "teachingMaterial":"EV系列-1-4-高压危害与救助方法",
                               "teachingPPTimg":"",
                               "teachingBook":"高压危害与救助方法教材.pdf",
                               "flash2d":"",
@@ -109,7 +109,7 @@
                             {
                               "label":"新车PDI检查",
                               "describe":"纯电动汽车新车交接时候应当要进行的整车检查，包含发动机舱内、驾驶室内、整车表面、电器仪表等这些方面的检查。",
-                              "teachingMaterial":"EV系列-1-5-新车PDI检查.pdf",
+                              "teachingMaterial":"EV系列-1-5-新车PDI检查",
                               "teachingPPTimg":"",
                               "teachingBook":"新车PDI检查教材.pdf",
                               "flash2d":"",
@@ -134,7 +134,7 @@
                             {
                               "label":"常规保养与维护",
                               "describe":"纯电动汽车如何保养、保养哪些方面和保养维护的时候应当注意的地方有哪些。",
-                              "teachingMaterial":"EV系列-1-6-常规保养与维护.pdf",
+                              "teachingMaterial":"EV系列-1-6-常规保养与维护",
                               "teachingPPTimg":"",
                               "teachingBook":"常规保养与维护教材.pdf",
                               "flash2d":"",
@@ -162,7 +162,7 @@
                             {
                               "label":"动力电池拆装",
                               "describe":"动力电池盖的拆解步骤及电动车高压电的安全操作注意事项。工具的使用选择及注意力的大小，密封胶的清洁及安装的详细步骤。",
-                              "teachingMaterial":"EV系列-2-1-动力电池的拆装.pdf",
+                              "teachingMaterial":"EV系列-2-1-动力电池的拆装",
                               "teachingPPTimg":"",
                               "teachingBook":"动力电池拆装教材.pdf",
                               "flash2d":"2.1动力电池的拆装.mp4",
@@ -184,7 +184,7 @@
                             {
                               "label":"BMS系统拆装",
                               "describe":"BMS的功能原理和作用，更换BMS控制器步骤及电动汽车高压安全操作注意事项。",
-                              "teachingMaterial":"EV系列-2-2-拆装BMS系统.pdf",
+                              "teachingMaterial":"EV系列-2-2-拆装BMS系统",
                               "teachingPPTimg":"",
                               "teachingBook":"拆装BMS系统教材.pdf",
                               "flash2d":"2.2拆装BMS.mp4",
@@ -282,7 +282,7 @@
                             {
                               "label":"继电器模组故障检修",
                               "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
-                              "teachingMaterial":"EV系列-2-3-电机继电器故障检测.pdf",
+                              "teachingMaterial":"EV系列-2-3-电机继电器故障检测",
                               "teachingPPTimg":"",
                               "teachingBook":"继电器模组故障检修教材.pdf",
                               "flash2d":"2.3继电器模组故障检修.mp4",
@@ -307,7 +307,7 @@
                             {
                               "label":"动力电池故障检修",
                               "describe":"详述动力电池的作用、工作条件及工作电压，动力电池发生故障时候如何解决，解决的流程及办法。",
-                              "teachingMaterial":"EV系列-2-4-动力电池故障检修.pdf",
+                              "teachingMaterial":"EV系列-2-4-动力电池故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"动力电池故障检修教材.pdf",
                               "flash2d":"2.4动力电池检修.mp4",
@@ -335,7 +335,7 @@
                             {
                               "label":"MCU与VCU通讯丢失故障",
                               "describe":"详述MCU电机控制器及VCU作用和控制原理，当两个控制器之间信号丢失引发的故障及排除故障的方法。",
-                              "teachingMaterial":"MCU与VCU通讯丢失故障.pdf",
+                              "teachingMaterial":"EV系列-3-4-MCU与VCU通讯丢失故障",
                               "teachingPPTimg":"",
                               "teachingBook":"MCU与VCU通讯丢失故障教材.pdf",
                               "flash2d":"3.4mcu与vcu通讯丢失故障检修.mp4",
@@ -357,7 +357,7 @@
                             {
                               "label":"电机旋变传感器故障检修",
                               "describe":"旋变传感器的功能和结构及故障检测方法和详细步骤。用万用表测量的标准数值范围。如果测量不在标准范围内的故障判断。",
-                              "teachingMaterial":"EV系列-3-10-电机旋变传感器故障检修.pdf",
+                              "teachingMaterial":"EV系列-3-5-电机旋变传感器故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"电机旋变传感器故障检修教材.pdf",
                               "flash2d":"3.5电机旋变传感器的检修.mp4",
@@ -385,7 +385,7 @@
                             {
                               "label":"高压控制盒的故障检修",
                               "describe":"电动汽车安全操作注意事项，检测前的操作事项。故障检测的方法和步骤以及操作过程中的安全事项",
-                              "teachingMaterial":"EV系列-4-1-高压控制器故障检修.pdf",
+                              "teachingMaterial":"EV系列-4-1-高压控制器故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"高压控制盒的故障检修教材.pdf",
                               "flash2d":"4.1高压盒故障检修.mp4",
@@ -407,7 +407,7 @@
                             {
                               "label":"DC/DC故障检修",
                               "describe":"DC-DC功能和工作原理、检测前的注意事项有哪些以及检测步骤和故障现象。利用软件来诊断故障码，和利用外用表测量DC-DC内部线路连接情况。",
-                              "teachingMaterial":"DCDC故障检修.pdf",
+                              "teachingMaterial":"EV系列-4-2-DCDC故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"DCDC故障检修教材.pdf",
                               "flash2d":"4.2DCDC故障检修.mp4",
@@ -429,7 +429,7 @@
                             {
                               "label":"电子旋钮换挡器故障检修",
                               "describe":"电子旋钮换挡器的档位数及功能，安装的位置。内饰拆解的注意事项，需要带白色手套及塑料拆卸工具。电子旋钮换挡器的详细拆解步骤及安装步骤。",
-                              "teachingMaterial":"EV系列-4-3-电子旋钮换档器故障检修.pdf",
+                              "teachingMaterial":"EV系列-4-3-电子旋钮换档器故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"电子旋钮换挡器故障检修教材.pdf",
                               "flash2d":"4.3电子旋钮换挡器故障检修.mp4",
@@ -454,7 +454,7 @@
                             {
                               "label":"加速踏板信号故障检修",
                               "describe":"详述加速踏板的控制及工作原理，与VCU之间是怎么通讯的，丢失信号时候会是怎样的反应。",
-                              "teachingMaterial":"EV系列-4-4-加速踏板信号故障检修.pdf",
+                              "teachingMaterial":"EV系列-4-4-加速踏板信号故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"加速踏板信号故障检修教材.pdf",
                               "flash2d":"4.4加速踏板信号故障检修.mp4",
@@ -476,7 +476,7 @@
                             {
                               "label":"新能源can线系统故障检修",
                               "describe":"新能源CAN线的作用，及哪些模块需要通过新能源CAN线来实现通信的以及发生故障排故的流程。",
-                              "teachingMaterial":"EV系列-4-5-新能源can线系统故障检修.pdf",
+                              "teachingMaterial":"EV系列-4-5-新能源can线系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"新能源can线系统故障检修教材.pdf",
                               "flash2d":"4.5新能源can线故障检修.mp4",
@@ -498,7 +498,7 @@
                             {
                               "label":"高压线束及互锁故障检修",
                               "describe":"电动汽车高压安全操作注意事项，检测前操作事项以及电子旋钮换挡器出现故障时的故障现象。分析故障原因以及哪些方面会引发故障，电子换挡器的工作原理和测量的标准电压值以及测量的步骤。",
-                              "teachingMaterial":"高压线束及互锁故障检修.pdf",
+                              "teachingMaterial":"EV系列-4-6-高压线束及互锁故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"高压线束及互锁故障检修教材.pdf",
                               "flash2d":"",
@@ -523,7 +523,7 @@
                             {
                               "label":"整车供断电控制故障",
                               "describe":"详述低压唤醒及高、低压控制原理，充电模式下唤醒的方式是怎样的。",
-                              "teachingMaterial":"整车供断电控制故障.pdf",
+                              "teachingMaterial":"EV系列-4-7-整车供断电控制故障",
                               "teachingPPTimg":"",
                               "teachingBook":"整车供断电控制故障教材.pdf",
                               "flash2d":"4.7整车供断电控制故障检修.mp4",
@@ -551,7 +551,7 @@
                             {
                               "label":"慢充系统故障检修",
                               "describe":"慢充电故障现象，慢充线束功能及端口介绍。慢充线束故障检测的流程及检测的标准读数值。",
-                              "teachingMaterial":"EV系列-5-3-慢充系统故障检修.pdf",
+                              "teachingMaterial":"EV系列-5-1-慢充系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"慢充系统故障检修教材.pdf",
                               "flash2d":"5.1慢充系统故障检修.mp4",
@@ -573,7 +573,7 @@
                             {
                               "label":"快充系统故障检修",
                               "describe":"电动汽车安全操作注意事项，更换快充线束的详细步骤及更换时的操作注意事项。快充线束的取拿等。",
-                              "teachingMaterial":"EV系列-5-4-快充系统故障检修.pdf",
+                              "teachingMaterial":"EV系列-5-2-快充系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"快充系统故障检修教材.pdf",
                               "flash2d":"5.2快充系统故障检修.mp4",
@@ -598,7 +598,7 @@
                             {
                               "label":"拆装车载充电机",
                               "describe":"车载充电机的端口含义及工作原理以及纯电动车高压电操作注意安全事项，拆卸车载充电机的步骤及注意事项。拆下后检查四颗固定螺栓的使用情况和更换新的车载充电机详细步骤。",
-                              "teachingMaterial":"EV系列-5-5-拆装车载充电机.pdf",
+                              "teachingMaterial":"EV系列-5-3-拆装车载充电机",
                               "teachingPPTimg":"",
                               "teachingBook":"车载充电机拆装教材.pdf",
                               "flash2d":"5.3拆装车载充电机.mp4",
@@ -620,7 +620,7 @@
                             {
                               "label":"低压蓄电池警示灯点亮故障检修",
                               "describe":"详述DC/DC作用，低压蓄电池报警有哪些条件，排除故障的流程等。",
-                              "teachingMaterial":"EV系列-4-2-低压蓄电池警示灯亮的检修.pdf",
+                              "teachingMaterial":"EV系列-5-4-低压蓄电池警示灯亮的检修",
                               "teachingPPTimg":"",
                               "teachingBook":"低压蓄电池警示灯点亮故障检修教材.pdf",
                               "flash2d":"5.4低压蓄电池警示灯点亮故障检修.mp4",
@@ -645,7 +645,7 @@
                             {
                               "label":"充电桩结构原理及性能介绍",
                               "describe":"充电桩的结构是怎样的，其工作原理和控制原理是怎样的，如何与车辆之间实现充电。",
-                              "teachingMaterial":"EV系列-5-1-充电桩结构原理及性能介绍.pdf",
+                              "teachingMaterial":"EV系列-5-5-充电桩结构原理及性能介绍",
                               "teachingPPTimg":"",
                               "teachingBook":"充电桩结构原理及性能介绍教材.pdf",
                               "flash2d":"5.5充电桩结构原理及性能介绍.mp4",
@@ -673,7 +673,7 @@
                             {
                               "label":"冷却系统故障检修",
                               "describe":"详述北汽冷却系统结构原理、控制原理、部件功能及排除冷却系统故障方法。",
-                              "teachingMaterial":"冷却系统组成及故障检修.pdf",
+                              "teachingMaterial":"EV系列-6-1-冷却系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"冷却系统组成及故障检修教材.pdf",
                               "flash2d":"5.5充电桩结构原理及性能介绍.mp4",
@@ -695,7 +695,7 @@
                             {
                               "label":"电动助力转向系统故障检修",
                               "describe":"详述北汽电动助力转向系统结构原理、控制原理、部件功能及排除转向系统故障方法。",
-                              "teachingMaterial":"电动助力转向系统故障检修.pdf",
+                              "teachingMaterial":"EV系列-6-2-电动助力转向系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"电动助力转向系统故障检修教材.pdf",
                               "flash2d":"6.2电动助力转向系统故障检修.mp4",
@@ -717,7 +717,7 @@
                             {
                               "label":"制动系统故障检修",
                               "describe":"详述北汽制动系统结构原理、控制原理、部件功能及排除制动系统故障方法。",
-                              "teachingMaterial":"制动系统故障检修.pdf",
+                              "teachingMaterial":"EV系列-6-3-制动系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"制动系统故障检修教材.pdf",
                               "flash2d":"6.3制动系统故障检修.mp4",
@@ -739,7 +739,7 @@
                             {
                               "label":"电动空调系统故障检修",
                               "describe":"详述北汽电动空调系统结构原理、控制原理、部件功能及排除电动空调系统故障方法。",
-                              "teachingMaterial":"电动空调系统检修.pdf",
+                              "teachingMaterial":"EV系列-6-4-电动空调系统故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"电动空调系统故障检修教材.pdf",
                               "flash2d":"6.4电动空调系统故障检修.mp4",

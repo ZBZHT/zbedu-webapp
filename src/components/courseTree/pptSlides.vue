@@ -68,7 +68,6 @@ import EventBus from '../../assets/js/EventBus';
 
         },
         jump(item) {
-
             this.pageinationCurrentPage = item;
          //   console.log(this.pageinationCurrentPage)
             this.pagers();

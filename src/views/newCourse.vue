@@ -46,8 +46,8 @@
                               <div id="courseppt">
                                 <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
                                   <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
-                                  <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1" @mouseover="mousewheel(index)">-->
-                                <div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">
+                                  <div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1" @mouseenter="mousewheel(index)">
+                                <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">-->
                                       <img class="coursepptImg" :src="item.img">
                                       <div class="pptPrev" @click="newPageUp(index)"></div>
                                       <div class="pptNext" @click="newpageDown(index+2)"></div>
@@ -283,24 +283,24 @@ export default {
       size:1,//每页显示信息个数不传默认6
       page:1,//当前页码,
       lists: [
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片1.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片2.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片3.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片4.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片5.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片6.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片7.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片8.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片9.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片10.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片11.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片12.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片13.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片14.JPG' },
-          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片1.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片2.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片3.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片4.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片5.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片6.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片7.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片8.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片9.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片10.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片11.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片12.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片13.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片14.JPG' },
+//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
 
         ],
-
+        scrolled: false
     }
   },
   computed:{
@@ -343,6 +343,9 @@ export default {
 //        })
   },
   mounted(){
+   // var scrollbox = document.querySelector(".courseImg");
+   // console.log(document.querySelector(".courseImg"))
+   // window.addEventListener('scroll', this.handleScroll);
 
 
 
@@ -535,56 +538,46 @@ export default {
 
     },
   methods:{
-//    mousewheel(val){
-//      console.log(val)
-//      var scrollFunc = function (e) {
-//        val +=1;
-//        var direct = 0;
-//        e = e || window.event;
-//        if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
-//            if (e.wheelDelta > 0) { //当滑轮向上滚动时
-//                alert("滑轮向上滚动");
-////                if(val > 0 && val < this.lists.length){
-//        EventBus.$emit('newPageUp',val);
-//        contentSlides.methods.pageUp(1);
-//        contentSlides.methods.jump(val);
-// //     }
-//            }
-//            if (e.wheelDelta < 0) { //当滑轮向下滚动时
-//                alert("滑轮向下滚动");
-//  //              if(val > 0 && val < this.lists.length){
-//        EventBus.$emit('newpageDown',val);
-//        contentSlides.methods.pageDown(1);
-//        contentSlides.methods.jump(val);
-// //     }
-//            }
-//        } else if (e.detail) {  //Firefox滑轮事件
-//            if (e.detail> 0) { //当滑轮向上滚动时
-//                alert("滑轮向上滚动");
-// //               if(val > 0 && val < this.lists.length){
-//        EventBus.$emit('newPageUp',val);
-//        contentSlides.methods.pageUp(1);
-//        contentSlides.methods.jump(val);
-// //     }
-//            }
-//            if (e.detail< 0) { //当滑轮向下滚动时
-//                alert("滑轮向下滚动");
-//  //              if(val > 0 && val < this.lists.length){
-//        EventBus.$emit('newpageDown',val);
-//        contentSlides.methods.pageDown(1);
-//        contentSlides.methods.jump(val);
-//  //    }
-//            }
-//        }
-//     //   ScrollText(direct);
-//    }
-//    //给页面绑定滑轮滚动事件
-//    if (document.addEventListener) {
-//        document.addEventListener('DOMMouseScroll', scrollFunc, false);
-//    }
-//    //滚动滑轮触发scrollFunc方法
-//      window.onmousewheel = document.onmousewheel = scrollFunc;
-//    },
+    handleScroll () {
+      this.scrolled = window.scrollY;
+      alert(this.scrolled)
+    },
+    mousewheel(val){
+      console.log(val)
+      var _this = this;
+      var scrollFunc = function (e) {
+        
+        val +=1;
+        var direct = 0;
+        e = e || window.event;
+        if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
+            if (e.wheelDelta > 0) { //当滑轮向上滚动时
+            //    alert("滑轮向上滚动");
+                _this.newPageUp(val-2);
+            }
+            if (e.wheelDelta < 0) { //当滑轮向下滚动时
+            //    alert("滑轮向下滚动");
+                _this.newpageDown(val)
+            }
+        } else if (e.detail) {  //Firefox滑轮事件
+            if (e.detail> 0) { //当滑轮向上滚动时
+            //    alert("滑轮向上滚动");
+                _this.newPageUp(val-2);
+            }
+            if (e.detail< 0) { //当滑轮向下滚动时
+            //    alert("滑轮向下滚动");
+                _this.newpageDown(val)
+            }
+        }
+     //   ScrollText(direct);
+    }
+    //给页面绑定滑轮滚动事件
+    if (document.addEventListener) {
+        document.addEventListener('DOMMouseScroll', scrollFunc, false);
+    }
+    //滚动滑轮触发scrollFunc方法
+      window.onmousewheel = document.onmousewheel = scrollFunc;
+    },
 
     //点击左侧向上翻页
     newPageUp(val){
@@ -601,7 +594,7 @@ export default {
         contentSlides.methods.pageDown(1);
         contentSlides.methods.jump(val);
       }else{
-        
+
       }
     },
     //PPT翻页
@@ -637,7 +630,13 @@ export default {
       if(data.children){
 
       }else{
+        //点击新课程让课件跳转到第一页
+        EventBus.$emit('newPageUp',this.pageFn(1));
+        contentSlides.methods.pageUp(1);
+        contentSlides.methods.jump(1);
+        //点击新课程tabs标签默认第一个
         this.activeName = this.descTab;
+        //请求课件和课后作业给后台发送的数组
         this.checkArr = [];
           if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){
             this.checkArr.push(node.parent.label)
@@ -654,9 +653,10 @@ export default {
           }
 
           //console.log(this.checkArr);
+          //点击新课程存本地的资源
           this.$store.commit('noTreeTitle',data);
           this.$store.commit('noTreeTitle1',data);
-
+          //请求课后作业
           axios.get("/readTestQuestion/getHomeWork",{
             params:{
                 userId:this.userId,
@@ -670,14 +670,32 @@ export default {
               console.log("error init." + error)
           });
 
-          //
+          //拼接地址
+          let fileNamePath = '';
+            if(this.$store.state.noTree1.courseId > 1110 && this.$store.state.noTree1.courseId < 1200){
+              for(var i = 0; i < this.checkArr.length; i++){
+                if(i < this.checkArr.length - 1){
+                  fileNamePath = fileNamePath + this.checkArr[i] + '/';
+                }else{
+
+                }
+              }
+              fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
+            }else{
+              for(var i = 0; i < this.checkArr.length; i++){
+                fileNamePath = fileNamePath + this.checkArr[i] + '/';
+              }
+            }
+          //请求课件
           axios.post("/readResource/getPPT",{
             data:{
-              fileName: node.data.label,
+              userId:this.userId,
+              fileName: fileNamePath
             }
           }).then((res)=>{
-            console.log(res.data.result);
+          //  console.log(res.data.result);
             this.lists = res.data.result;
+            this.total = this.lists.length;
             //console.log(this.homeworkData)
           }).catch(function(error){
             console.log("error init." + error)

@@ -423,7 +423,7 @@
                   </template>
                 </el-table-column>
 
-                <el-table-column label="创建时间" width="200">
+                <el-table-column label="开始时间" width="200">
                   <template slot-scope="scope">
                     <span>{{ scope.row.startTime }}</span>
                   </template>
@@ -438,12 +438,6 @@
                 <el-table-column label="成绩" width="120">
                   <template slot-scope="scope">
                     <span>{{ scope.row.sorce }}</span>
-                  </template>
-                </el-table-column>
-
-                <el-table-column label="用时" width="120">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.testTimeMinutes }}:{{ scope.row.testTimeSeconds }}</span>
                   </template>
                 </el-table-column>
 
@@ -1078,7 +1072,7 @@
           //console.log(this.checkGradesData);
         require.ensure([], () => {
           const { export_json_to_excel } = require('.././json2excel/Export2Excel');
-          const tHeader = ['序号','姓名','考试题目','创建时间','考试类型','成绩',];
+          const tHeader = ['序号','姓名','考试题目','开始时间','考试类型','成绩',];
           const filterVal = ['num', 'user', 'theme', 'startTime', 'currTestType', 'sorce',];
           const data = this.formatJson(filterVal, this.checkGradesData);
           const name = this.checkGradesData[0].theme;

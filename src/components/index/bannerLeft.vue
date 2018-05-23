@@ -194,7 +194,8 @@ a:focus {
   z-index:2;
   width:17.5%;
   height:384px;
-  padding:17px;
+  padding-right:17px;
+  padding-top:5px;
   padding-left:0;
   box-sizing: border-box;
   background: #2b333b;
@@ -207,12 +208,12 @@ a:focus {
 }
 .item-a{
     width:110%;
-    height:71px;
+    height:48px;
     line-height:46px;
     font-size:12px;
     cursor:pointer;
     padding-left:4px;
-    padding-top:20px;
+    padding-top:3px;
 }
 .item-b{
     position:relative;
