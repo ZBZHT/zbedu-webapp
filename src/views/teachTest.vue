@@ -104,11 +104,6 @@
               <el-tab-pane label="历史考试">
                 <el-table style="width: 100%" :data="historyTestData.slice((currentPage1-1)*pagesize,currentPage1*pagesize)">
 
-                  <!--<el-table-column label="序号" width="60">-->
-                    <!--<template slot-scope="scope">-->
-                      <!--<span >{{ scope.row.historyTestDataIndex + 1 }}</span>-->
-                    <!--</template>-->
-                  <!--</el-table-column>-->
                   <el-table-column label="序号" type="index" width="60">
                   </el-table-column>
 
@@ -295,7 +290,6 @@
                       <el-col class="line" :span="4">分钟</el-col>
                     </el-form-item>
 
-
                     <el-form-item label="考试类型" prop="currTestType">
                       <el-select v-model="form.currTestType" placeholder="请选择考试类型">
                         <el-option label="期末考试" value="101"></el-option>
@@ -343,84 +337,137 @@
 
         <!--成绩管理-->
         <div class="userMessage" v-show="currIndex === 1">
-          <el-table style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)">
+          <!--历史考试列表-->
+            <el-table style="width: 100%;margin-left: 16px" :data="historyTestData.slice((currentPage1-1)*pagesize,currentPage1*pagesize)">
 
-            <el-table-column label="序号" type="index" width="60">
-            </el-table-column>
+              <el-table-column label="序号" type="index" width="60">
+              </el-table-column>
 
-            <el-table-column label="姓名" width="80">
-              <template slot-scope="scope">
-                <span>{{ scope.row.user }}</span>
-              </template>
-            </el-table-column>
+              <el-table-column label="考试题目" width="150">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.theme }}</span>
+                </template>
+              </el-table-column>
 
-            <el-table-column label="考试题目" width="150">
-              <template slot-scope="scope">
-                <span>{{ scope.row.theme }}</span>
-              </template>
-            </el-table-column>
+              <el-table-column label="开始日期" width="120">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.date1 }}</span>
+                </template>
+              </el-table-column>
 
-            <el-table-column label="创建时间" width="200">
-              <template slot-scope="scope">
-                <span>{{ scope.row.startTime }}</span>
-              </template>
-            </el-table-column>
+              <el-table-column label="开始时间" width="120">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.date3 }}</span>
+                </template>
+              </el-table-column>
 
-            <el-table-column label="考试类型" width="120">
-              <template slot-scope="scope">
-                <span>{{ scope.row.currTestType }}</span>
-              </template>
-            </el-table-column>
+              <el-table-column label="考试类型" width="120">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.currTestType }}</span>
+                </template>
+              </el-table-column>
 
-            <el-table-column label="成绩" width="120">
-              <template slot-scope="scope">
-                <span>{{ scope.row.sorce }}</span>
-              </template>
-            </el-table-column>
+              <el-table-column label="考试数目" width="120">
+                <template slot-scope="scope">
+                  <span>{{ scope.row.num }}</span>
+                </template>
+              </el-table-column>
 
-            <el-table-column label="用时" width="120">
-              <template slot-scope="scope">
-                <span>{{ scope.row.testTimeMinutes }}:{{ scope.row.testTimeSeconds }}</span>
-              </template>
-            </el-table-column>
+              <el-table-column label="操作">
+                <template slot-scope="scope">
+                  <el-button size="mini" type="primary" @click="scoreManData(scope.$index, scope.row)">
+                    查看成绩
+                  </el-button>
+                  <el-button size="mini" type="primary" @click="exportExcel1(scope.$index, scope.row)">
+                    导出成绩
+                  </el-button>
+                </template>
+              </el-table-column>
 
-            <el-table-column label="成绩详情">
-              <template slot-scope="scope">
-                <el-button size="mini" type="primary" @click="scoreManData(scope.$index, scope.row)">
-                  查看成绩
-                </el-button>
-              </template>
-            </el-table-column>
-
-          </el-table>
-
-          <!--分页显示-->
-          <div class="block">
-            <el-pagination
-              @size-change="handleSizeChange"
-              @current-change="handleCurrentChange"
-              :current-page.sync="currentPage2"
-              :page-size="pagesize"
-              layout="prev, pager, next, jumper"
-              :total=parseInt(total3)>
-            </el-pagination>
-          </div>
-
-          <!--查看成绩对话框-->
-          <el-dialog title="成绩列表"
-                     width="70%"
-                     :visible.sync="dialogTableVisible3">
-            <el-table :data="scoreData">
-              <el-table-column label="序号" type="index" width="60"></el-table-column>
-              <el-table-column property="name" label="姓名" width="120"></el-table-column>
-              <el-table-column property="data" label="学号" width="120"></el-table-column>
-              <el-table-column property="data" label="分数" width="100"></el-table-column>
-              <el-table-column property="data" label="总题数" width="100"></el-table-column>
-              <el-table-column property="data" label="错题数" width="100"></el-table-column>
-              <el-table-column property="data" label="正确率" width="100"></el-table-column>
-              <el-table-column property="data" label="答题用时" width="100"></el-table-column>
             </el-table>
-          </el-dialog>
+
+            <!--分页显示-->
+            <div class="block">
+              <el-pagination
+                @size-change="handleSizeChange"
+                @current-change="handleCurrentChange"
+                :current-page.sync="currentPage1"
+                :page-size="pagesize"
+                layout="prev, pager, next, jumper"
+                :total=parseInt(total2)>
+              </el-pagination>
+            </div>
+
+            <!--查看成绩弹窗-->
+            <el-dialog title="查看成绩"
+                       width="59%"
+                       :before-close="handleClose"
+                       :visible.sync="dialogTableVisible4">
+              <el-table id="out-table" style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)">
+
+                <el-table-column label="序号" width="60">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.num }}</span>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="姓名" width="80">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.user }}</span>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="考试题目" width="150">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.theme }}</span>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="创建时间" width="200">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.startTime }}</span>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="考试类型" width="120">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.currTestType }}</span>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="成绩" width="120">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.sorce }}</span>
+                  </template>
+                </el-table-column>
+
+                <el-table-column label="用时" width="120">
+                  <template slot-scope="scope">
+                    <span>{{ scope.row.testTimeMinutes }}:{{ scope.row.testTimeSeconds }}</span>
+                  </template>
+                </el-table-column>
+
+              </el-table>
+
+              <!--分页显示-->
+              <div class="block">
+                <el-pagination
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page.sync="currentPage2"
+                  :page-size="pagesize"
+                  layout="prev, pager, next, jumper"
+                  :total=parseInt(total3)>
+                </el-pagination>
+              </div>
+
+              <div slot="footer" class="dialog-footer">
+                <el-button type="primary" @click="exportExcel()">
+                  导出成绩
+                </el-button>
+              </div>
+
+            </el-dialog>
 
         </div>
 
@@ -559,6 +606,7 @@
         dialogTableVisible1: false,
         dialogTableVisible2: false,
         dialogTableVisible3: false,
+        dialogTableVisible4: false,
         toMoreData: [],
         toHistoryData: [],
         scoreData: [],
@@ -566,7 +614,7 @@
         endDatePicker:this.processDate(),
         height:window.innerHeight,
         majorM:[],
-        classM:[]
+        classM:[],
       };
     },
 
@@ -618,7 +666,6 @@
             this.toTestData = resData;
             this.total1 = this.toTestData.length;
           } else if (res.data.code === 1) {
-            this.errorMsg('返回错误')
           }
         });
       },
@@ -948,17 +995,18 @@
         row.date2 = moment(row.date2).format("YYYY-MM-DD");
         row.newData = core.formatDate("yyyy-MM-dd", new Date(row.newData));
         this.toHistoryData.push(row);
-        console.log(this.toHistoryData);
+        //console.log(this.toHistoryData);
 
       },
       //成绩管理, 查看成绩
       scoreManData(index, row) {
-        this.dialogTableVisible3 = true;
+        this.getCheckGrades(row);
+        this.dialogTableVisible4 = true;
         row.date1 = moment(row.date1).format("YYYY-MM-DD");
         row.date2 = moment(row.date2).format("YYYY-MM-DD");
         row.newData = core.formatDate("yyyy-MM-dd", new Date(row.newData));
         this.toHistoryData.push(row);
-        console.log(this.toHistoryData);
+        //console.log(this.toHistoryData);
 
       },
       //关闭三个弹窗,清空数组
@@ -967,6 +1015,75 @@
         this.toMoreData = [];
         this.toHistoryData = [];
 
+      },
+      //请求成绩管理数据
+      getCheckGrades(row) {
+        axios.get("/readTestQuestion/checkGradesData", {
+          params: {
+            username: this.user,
+            theme: row.theme,
+          }
+        }).then((res) => {
+          //console.log(res.data);
+          let resData = res.data.result;
+          console.log(resData);
+          for (let i = 0; i < resData.length; i++) {
+              if (resData[i].startTime !== null) {
+                resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
+              } else {
+                resData[i].startTime = '';
+              }
+            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
+            resData[i].historyTestDataIndex = i;
+            resData[i].num = i + 1;
+          }
+          this.checkGradesData = [];
+          this.checkGradesData = resData;
+          this.total3 = this.checkGradesData.length;
+          //console.log(this.checkGradesData);
+        });
+      },
+      //导出Excel成绩
+      exportExcel1(index, row) {
+        axios.get("/readTestQuestion/checkGradesData", {
+          params: {
+            username: this.user,
+            theme: row.theme,
+          }
+        }).then((res) => {
+          //console.log(res.data);
+          let resData = res.data.result;
+          for (let i = 0; i < resData.length; i++) {
+            if (resData[i].startTime !== null) {
+              resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
+            } else {
+              resData[i].startTime = '';
+            }
+            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
+            resData[i].historyTestDataIndex = i;
+            resData[i].num = i + 1;
+          }
+          this.checkGradesData = [];
+          this.checkGradesData = resData;
+          this.total3 = this.checkGradesData.length;
+          //console.log(this.checkGradesData);
+          this.exportExcel();
+        });
+      },
+      formatJson(filterVal, jsonData) {
+        return jsonData.map(v => filterVal.map(j => v[j]))
+      },
+      //格式化json并转换为excel
+      exportExcel() {
+          //console.log(this.checkGradesData);
+        require.ensure([], () => {
+          const { export_json_to_excel } = require('.././json2excel/Export2Excel');
+          const tHeader = ['序号','姓名','考试题目','创建时间','考试类型','成绩',];
+          const filterVal = ['num', 'user', 'theme', 'startTime', 'currTestType', 'sorce',];
+          const data = this.formatJson(filterVal, this.checkGradesData);
+          const name = this.checkGradesData[0].theme;
+          export_json_to_excel(tHeader, data, name);
+        })
       },
     },
     beforeDestroy: function () {
@@ -1003,29 +1120,11 @@
             resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
             resData[i].historyTestDataIndex = i;
           }
+          this.historyTestData = [];
           this.historyTestData = resData;
           this.total2 = this.historyTestData.length;
         } else if (res.data.code === 1) {
-          this.errorMsg('返回错误')
         }
-      });
-
-      //请求成绩管理数据
-      axios.get("/readTestQuestion/checkGradesData", {
-        params: {
-          user: this.user,
-        }
-      }).then((res) => {
-        //console.log(res.data);
-        let resData = res.data;
-        for (let i = 0; i < resData.length; i++) {
-          resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
-          resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
-          resData[i].historyTestDataIndex = i;
-        }
-        this.checkGradesData = resData;
-        this.total3 = this.checkGradesData.length;
-        //console.log(this.checkGradesData);
       });
 
       //请求data数据

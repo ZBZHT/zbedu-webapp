@@ -8,11 +8,11 @@
                      v-for="(item,index) in pageinationLength" @click="jump(item)">
                     {{item}}
                 </div>
-                <div class="point" v-show="nowIndex <= pageinationPage - 6">......</div>
-                <div  v-show="nowIndex <= pageinationPage - 5" class="pagination_page" :class="pageinationPage==pageinationCurrentPage?'pagination_page_active':''"
-                @click="pageDown(0)">
-                    {{pageinationPage}}
-                </div>
+                <!--<div class="point" v-show="nowIndex <= pageinationPage - 6">......</div>-->
+                <!--<div  v-show="nowIndex <= pageinationPage - 5" class="pagination_page" :class="pageinationPage==pageinationCurrentPage?'pagination_page_active':''"-->
+                <!--@click="pageDown(0)">-->
+                    <!--{{pageinationPage}}-->
+                <!--</div>-->
 
                 <div @click="pageDown(1)" class="pagination_page" :class="endDisabled?'disabled':''">下一页</div>
                 <div @click="pageDown(0)" class="pagination_page pagination_page_right" :class="endDisabled?'disabled':''">
@@ -22,7 +22,8 @@
                 <div class="numJump">
                     <p class="numJumpP">跳到第</p>
                     <el-input size="mini" v-model="pageInputValue" @change="pageInput(pageInputValue)"></el-input>
-                    <p>页</p>
+                    <p class="numJumpY">页</p>
+                    <p class="allPage">共{{pageinationPage}}页</p>
                 </div>
             </div>
     </div>
@@ -64,31 +65,31 @@ import EventBus from '../../assets/js/EventBus';
             }else{
                 this.jump(val);
             }
-            
+
         },
         jump(item) {
-            
+
             this.pageinationCurrentPage = item;
-            console.log(this.pageinationCurrentPage)
+         //   console.log(this.pageinationCurrentPage)
             this.pagers();
             EventBus.$on('newPageUp', function (msg) {
                 this.pageChangge = msg;
                 this.isMsg = msg;
             })
-            
+
             EventBus.$on('newpageDown', function (msg) {
                 this.pageChangge = msg;
                 this.isMsg = msg;
             })
-            
+
             if(this.isMsg != ''){
 
             }else{
                 this.pageChangge(this.pageinationCurrentPage);
                 this.nowIndex = item;
-                console.log(item)
+        //        console.log(item)
             }
-            
+
           //  console.log(this.nowIndex)
         },//跳转页码
         pagers() {
@@ -183,6 +184,7 @@ import EventBus from '../../assets/js/EventBus';
             font-size: 12px;
             user-select: none;
             display:flex;
+            margin-top: 5px;
         }
 
         .pagination_page {
@@ -228,13 +230,23 @@ import EventBus from '../../assets/js/EventBus';
             display:flex;
             margin-left:20px;
         }
-        
+
         .numJump .numJumpP{
-            width:60px;
+            width: 66px;
+            margin-left: 5px;
+            margin-right: -24px;
+            margin-top:5px;
         }
 
-        .numJump p{
+        .numJump .numJumpY{
             margin-top:5px;
+            margin-left: -20px;
+        }
+
+        .numJump .allPage{
+            width:62px;
+            margin-top:5px;
+            margin-left: 19px;
         }
 
         .el-input--mini .el-input__inner{

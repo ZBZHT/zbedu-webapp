@@ -782,10 +782,10 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"丰田混合动力系统1(系统运作).mp4"
                                 }
                               ],
-                              "workPage":"",
+                              "workPage":"认识卡罗拉双擎.pdf",
                               "homeWorkData":[
                                 {
                                   "title":"",
@@ -804,10 +804,10 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车高压安全操作6.7.mp4"
                                 }
                               ],
-                              "workPage":"",
+                              "workPage":"丰田卡罗拉双擎高压安全操作.pdf",
                               "homeWorkData":[
                                 {
                                   "title":"",
@@ -898,10 +898,10 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车动力电池控制系统通信故障检修6.8.mp4"
                                 }
                               ],
-                              "workPage":"",
+                              "workPage":"丰田卡罗拉双擎动力电池故障检修.pdf",
                               "homeWorkData":[
                                 {
                                   "title":"",
@@ -926,7 +926,7 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力发动机故障灯常亮的检修6.21.mp4"
                                 }
                               ],
                               "workPage":"",
@@ -976,7 +976,7 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车无法行驶故障检修7.28.mp4"
                                 }
                               ],
                               "workPage":"",
@@ -998,7 +998,7 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车无法挂档的故障检修6.15.mp4"
                                 }
                               ],
                               "workPage":"",
@@ -1048,7 +1048,7 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"HV主警告灯点亮故障检修.mp4"
                                 }
                               ],
                               "workPage":"",
@@ -1070,7 +1070,7 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车充电警告灯点亮的故障检修7.25.mp4"
                                 }
                               ],
                               "workPage":"",
@@ -1108,16 +1108,16 @@
                             {
                               "label":"绝缘故障故障检修",
                               "describe":"混合动力汽车绝缘故障检测流程。读取故障码、读取数据流、高压电路的电路原理以及检测绝缘故障的方法和测量的标准数值。",
-                              "teachingMaterial":"",
+                              "teachingMaterial":"混合动力汽车绝缘故障检修操作.pdf",
                               "teachingPPTimg":"",
                               "teachingBook":"",
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车绝缘故障检修6.9.mp4"
                                 }
                               ],
-                              "workPage":"",
+                              "workPage":"丰田卡罗拉双擎绝缘故障检修.pdf",
                               "homeWorkData":[
                                 {
                                   "title":"",
@@ -1142,7 +1142,7 @@
                               "flash2d":"",
                               "videoTitle":[
                                 {
-                                  "videoTitle":""
+                                  "videoTitle":"混合动力汽车ABS故障灯点亮的故障检修7.25.mp4"
                                 }
                               ],
                               "workPage":"",
@@ -2748,14 +2748,14 @@
                       "describe":"大众速腾蓄电池充电概述，如何充电，充电的方法方法。",
                       "teachingMaterial":"大众速腾-工作任务一-蓄电池充电.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务1  蓄电池充电  教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务1  蓄电池充电  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -2770,14 +2770,14 @@
                       "describe":"大众速腾蓄电池电压的检测以及对蓄电池好坏检测。",
                       "teachingMaterial":"大众速腾-蓄电池.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务2  蓄电池检测维护   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务2  蓄电池检测维护   工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -2792,14 +2792,14 @@
                       "describe":"大众速腾发电机工作原理及控制原理，如何检修发电机故障。",
                       "teachingMaterial":"大众速腾-发电机故障检修.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务3  发电机故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务3  发电机故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3026,7 +3026,7 @@
                           "videoTitle":"左侧前照灯总成的拆装.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"汽车前照灯工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3041,14 +3041,14 @@
                       "describe":"大众速腾雾灯电路控制原理和对雾灯故障检修的流程。",
                       "teachingMaterial":"大众速腾-雾灯.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"大众汽车照明系统教学教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"五灯不亮故障检修工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3070,7 +3070,7 @@
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务4 转向灯工作异常工作页doc.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3085,14 +3085,14 @@
                       "describe":"大众速腾近光灯电路控制原理和对近光灯故障检修的流程。",
                       "teachingMaterial":"左近光灯故障检修.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"近光灯不亮故障检测教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":"右近光灯故障检测.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"近光灯不亮故障检修工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3107,14 +3107,14 @@
                       "describe":"大众速腾远光灯电路控制原理和对远光灯故障检修的流程。",
                       "teachingMaterial":"远光灯不亮故障检修.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"大众汽车照明系统教学教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":"右侧远光灯不亮故障检修.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"远光灯不亮故障检修工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3129,14 +3129,14 @@
                       "describe":"大众速腾顶灯电路控制原理和对顶灯故障检修的流程。",
                       "teachingMaterial":"大众速腾-车内顶灯的检修.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"大众汽车照明系统教学教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务7 车内定灯不亮故障检修工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3164,7 +3164,7 @@
                           "videoTitle":"雨刮系统总成的拆装.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"大众速腾-学习任务1-雨刮片的检查与更换-工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3179,14 +3179,14 @@
                       "describe":"大众速腾雨刮器工作原理、系统组成及对雨刮器不工作故障进行检修的流程。",
                       "teachingMaterial":"大众速腾-刮水片宽屏.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务2  雨刮器不工作故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务2  雨刮器不工作故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3201,14 +3201,14 @@
                       "describe":"大众速腾车窗的系统组成，部件工作原理和控制原理以及如何对车窗无法升降故障进行检修。",
                       "teachingMaterial":"大众速腾-电动车窗.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务3  电动车窗故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":"后左车窗升降器故障检修.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务3  电动车窗故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3223,14 +3223,14 @@
                       "describe":"大众速腾电动后视镜系统组成、电路控制原理及对无法调节故障进行检修流程。",
                       "teachingMaterial":"后视镜不能调节故障检修.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务4  电动后视镜无法调节故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":"车外左后视镜故障检修4.27.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务4  电动后视镜无法调节故障检修 工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3245,14 +3245,14 @@
                       "describe":"大众速腾中空门锁系统组成、电路控制原理及对中空门锁故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-中控门锁.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务5  汽车中控门锁故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务5  汽车中控门锁故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3267,14 +3267,14 @@
                       "describe":"大众速腾多功能方向盘作用、电路控制原理及对多功能方向盘故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-多功能方向盘.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务6  多功能方向盘故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务6  多功能方向盘故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3289,14 +3289,14 @@
                       "describe":"大众速腾双音喇叭电路控制原理及对多功能方向盘故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-双音喇叭.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务7  双音喇叭故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务7  双音喇叭故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3317,14 +3317,14 @@
                       "describe":"大众速腾仪表组成、作用及功能，仪表上有哪些故障提示灯。",
                       "teachingMaterial":"大众速腾-仪表.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务1  仪表综述  教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务1  仪表综述   工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3339,14 +3339,14 @@
                       "describe":"大众速腾仪表系统电路控制原理及对仪表系统工作异常故障判断和检修流程。",
                       "teachingMaterial":"大众速腾-仪表.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"任务2  仪表系统工作异常故障检修   教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务2  仪表系统工作异常故障检修  工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3367,14 +3367,14 @@
                       "describe":"简述什么是CAN-BUS，总线组成、工作原理及控制原理等。",
                       "teachingMaterial":"canbus综述.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"CAN总线介绍.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"CAN总线检修工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3389,14 +3389,14 @@
                       "describe":"整车电气组成、电路控制原理、线路如何连接及故障维修诊断流程。",
                       "teachingMaterial":"典型车型电气故障检修.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"大众汽车电源系统教学教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":""
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务2  典型车型整车电气故障检修工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3411,14 +3411,14 @@
                       "describe":"大众速腾多媒体工作原理、系统组成，如何拆装并且对故障进行检修。",
                       "teachingMaterial":"多媒体系统拆装.pdf",
                       "teachingPPTimg":"",
-                      "teachingBook":"",
+                      "teachingBook":"大众汽车音响娱乐系统教学教材.pdf",
                       "flash2d":"",
                       "videoTitle":[
                         {
                           "videoTitle":"多媒体系统主机的拆装.mp4"
                         }
                       ],
-                      "workPage":"",
+                      "workPage":"任务3  多媒体主机拆装工作页.pdf",
                       "homeWorkData":[
                         {
                           "title":"",
@@ -3441,14 +3441,14 @@
                 "describe":"汽车空调的组成及作用，各部件的介绍简介。",
                 "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
                 "teachingPPTimg":"",
-                "teachingBook":"",
+                "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
                 "flash2d":"",
                 "videoTitle":[
                   {
                     "videoTitle":""
                   }
                 ],
-                "workPage":"",
+                "workPage":"汽车空调工作页.pdf",
                 "homeWorkData":[
                   {
                     "title":"",
@@ -3463,14 +3463,14 @@
                 "describe":"简介汽车空调吹风带有异味，判断问题在哪及如何解决空调异味流程。",
                 "teachingMaterial":"大众速腾-空调滤芯宽屏.pdf",
                 "teachingPPTimg":"",
-                "teachingBook":"",
+                "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
                 "flash2d":"",
                 "videoTitle":[
                   {
                     "videoTitle":""
                   }
                 ],
-                "workPage":"",
+                "workPage":"速腾空调滤清更换工作页.pdf",
                 "homeWorkData":[
                   {
                     "title":"",
@@ -3486,14 +3486,14 @@
                 "describe":"大众速腾空调工作原理及电路控制原理，如何对空调不制冷进行故障诊断及排除。",
                 "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
                 "teachingPPTimg":"",
-                "teachingBook":"",
+                "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
                 "flash2d":"",
                 "videoTitle":[
                   {
                     "videoTitle":""
                   }
                 ],
-                "workPage":"",
+                "workPage":"任务三：汽车空调系统不制冷工作页.pdf",
                 "homeWorkData":[
                   {
                     "title":"",
@@ -3509,14 +3509,14 @@
                 "describe":"大众速腾空调鼓风机工作及电路控制原理，如何对鼓风机不工作进行判断并且排除故障。",
                 "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
                 "teachingPPTimg":"",
-                "teachingBook":"",
+                "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
                 "flash2d":"",
                 "videoTitle":[
                   {
                     "videoTitle":""
                   }
                 ],
-                "workPage":"",
+                "workPage":"鼓风机不工作工作页.pdf",
                 "homeWorkData":[
                   {
                     "title":"",

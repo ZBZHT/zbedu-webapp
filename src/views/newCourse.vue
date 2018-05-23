@@ -46,19 +46,20 @@
                               <div id="courseppt">
                                 <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
                                   <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
-                                  <div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">
+                                  <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1" @mouseover="mousewheel(index)">-->
+                                <div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">
                                       <img class="coursepptImg" :src="item.img">
-                                      <div class="prev" @click="newPageUp(index)"></div>
-                                      <div class="next" @click="newpageDown(index+2)"></div>
+                                      <div class="pptPrev" @click="newPageUp(index)"></div>
+                                      <div class="pptNext" @click="newpageDown(index+2)"></div>
                                   </div>
-                                  
+
                                   <ppt-slides
                                   :total="total"
                                   :size="size"
                                   :page="page"
                                   :changge="pageFn">
-                                  </ppt-slides>                   
-                                  
+                                  </ppt-slides>
+
                                   <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
@@ -282,22 +283,22 @@ export default {
       size:1,//每页显示信息个数不传默认6
       page:1,//当前页码,
       lists: [
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片1.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片2.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片3.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片4.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片5.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片6.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片7.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片8.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片9.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片10.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片11.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片12.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片13.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片14.JPG' },
-          { img : '../../resource/imgs/coursePPTimg/新能源汽车/纯电动汽车/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
-        
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片1.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片2.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片3.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片4.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片5.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片6.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片7.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片8.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片9.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片10.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片11.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片12.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片13.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片14.JPG' },
+          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
+
         ],
 
     }
@@ -334,7 +335,7 @@ export default {
       }
   },
   created(){
-    
+
 //     var _this = this
 //        this.$nextTick(function () {
 //            // 直接调用
@@ -342,6 +343,9 @@ export default {
 //        })
   },
   mounted(){
+
+
+
       //PPT页数
       this.total = this.lists.length;
       //从courseIndex页传值并默认展开
@@ -531,9 +535,60 @@ export default {
 
     },
   methods:{
+//    mousewheel(val){
+//      console.log(val)
+//      var scrollFunc = function (e) {
+//        val +=1;
+//        var direct = 0;
+//        e = e || window.event;
+//        if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
+//            if (e.wheelDelta > 0) { //当滑轮向上滚动时
+//                alert("滑轮向上滚动");
+////                if(val > 0 && val < this.lists.length){
+//        EventBus.$emit('newPageUp',val);
+//        contentSlides.methods.pageUp(1);
+//        contentSlides.methods.jump(val);
+// //     }
+//            }
+//            if (e.wheelDelta < 0) { //当滑轮向下滚动时
+//                alert("滑轮向下滚动");
+//  //              if(val > 0 && val < this.lists.length){
+//        EventBus.$emit('newpageDown',val);
+//        contentSlides.methods.pageDown(1);
+//        contentSlides.methods.jump(val);
+// //     }
+//            }
+//        } else if (e.detail) {  //Firefox滑轮事件
+//            if (e.detail> 0) { //当滑轮向上滚动时
+//                alert("滑轮向上滚动");
+// //               if(val > 0 && val < this.lists.length){
+//        EventBus.$emit('newPageUp',val);
+//        contentSlides.methods.pageUp(1);
+//        contentSlides.methods.jump(val);
+// //     }
+//            }
+//            if (e.detail< 0) { //当滑轮向下滚动时
+//                alert("滑轮向下滚动");
+//  //              if(val > 0 && val < this.lists.length){
+//        EventBus.$emit('newpageDown',val);
+//        contentSlides.methods.pageDown(1);
+//        contentSlides.methods.jump(val);
+//  //    }
+//            }
+//        }
+//     //   ScrollText(direct);
+//    }
+//    //给页面绑定滑轮滚动事件
+//    if (document.addEventListener) {
+//        document.addEventListener('DOMMouseScroll', scrollFunc, false);
+//    }
+//    //滚动滑轮触发scrollFunc方法
+//      window.onmousewheel = document.onmousewheel = scrollFunc;
+//    },
+
     //点击左侧向上翻页
     newPageUp(val){
-      if(val > 0 && val < this.lists.length){
+      if(val > 0 && val <= this.lists.length){
         EventBus.$emit('newPageUp',this.pageFn(val));
         contentSlides.methods.pageUp(1);
         contentSlides.methods.jump(val);
@@ -541,10 +596,12 @@ export default {
     },
     //点击右侧向下翻页
     newpageDown(val){
-      if(val > 0 && val < this.lists.length){
+      if(val > 0 && val <= this.lists.length){
         EventBus.$emit('newpageDown',this.pageFn(val));
         contentSlides.methods.pageDown(1);
         contentSlides.methods.jump(val);
+      }else{
+        
       }
     },
     //PPT翻页
@@ -996,18 +1053,16 @@ hr{
     width:100%;
     height:100%;
 }
-.newCourse-content .prev{
+.newCourse-content .pptPrev{
     width:50%;
     height:100%;
-    border:1px solid #000;
     position:absolute;
     top:0;
     left:0;
 }
-.newCourse-content .next{
+.newCourse-content .pptNext{
     width:50%;
     height:100%;
-    border:1px solid #f00;
     position:absolute;
     top:0;
     right:0;
