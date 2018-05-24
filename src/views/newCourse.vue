@@ -60,7 +60,7 @@
                                   :changge="pageFn">
                                   </ppt-slides>
 
-                                  <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
+                                  <el-button type="info" round @click="appFullScreen()" v-show="isFullCode">全屏显示</el-button>
                               </div>
                             </el-tab-pane>
 
@@ -300,7 +300,8 @@ export default {
 //          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
 
         ],
-        scrolled: false
+        scrolled: false,
+        isFullCode:true
     }
   },
   computed:{
@@ -543,41 +544,74 @@ export default {
       alert(this.scrolled)
     },
     mousewheel(val){
-      console.log(val)
       var _this = this;
-      var scrollFunc = function (e) {
-        
-        val +=1;
-        var direct = 0;
-        e = e || window.event;
-        if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
-            if (e.wheelDelta > 0) { //当滑轮向上滚动时
-            //    alert("滑轮向上滚动");
-                _this.newPageUp(val-2);
-            }
-            if (e.wheelDelta < 0) { //当滑轮向下滚动时
-            //    alert("滑轮向下滚动");
-                _this.newpageDown(val)
-            }
-        } else if (e.detail) {  //Firefox滑轮事件
-            if (e.detail> 0) { //当滑轮向上滚动时
-            //    alert("滑轮向上滚动");
-                _this.newPageUp(val-2);
-            }
-            if (e.detail< 0) { //当滑轮向下滚动时
-            //    alert("滑轮向下滚动");
-                _this.newpageDown(val)
-            }
-        }
-     //   ScrollText(direct);
+      var isFull = document.fullscreenElement    ||
+                   document.msFullscreenElement  ||
+                   document.mozFullScreenElement ||
+                   document.webkitFullscreenElement
+      //console.log(isFull)
+      if(isFull === null){
+        this.isFullCode = true;
+      }else{
+        document.addEventListener("keydown",function(){
+          switch(event.keyCode){
+            // ←
+            case 37:
+                _this.newPageUp(val);
+                break;
+            // →
+            case 39:
+                _this.newpageDown(val + 2)
+                break;
+            // ↑
+            case 38:
+                _this.newPageUp(val);
+                break;
+            // ↓
+            case 40:
+                _this.newpageDown(val + 2)
+                break;
+            // 回车
+            case 13:
+                _this.newpageDown(val + 2)
+                break;    
+          }
+        });
+
+        var scrollFunc = function (e) {
+          
+          var direct = 0;
+          e = e || window.event;
+          if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
+              if (e.wheelDelta > 0) { //当滑轮向上滚动时
+              //    alert("滑轮向上滚动");
+                  _this.newPageUp(val);
+              }
+              if (e.wheelDelta < 0) { //当滑轮向下滚动时
+              //    alert("滑轮向下滚动");
+                  _this.newpageDown(val + 2)
+              }
+          } else if (e.detail) {  //Firefox滑轮事件
+              if (e.detail> 0) { //当滑轮向上滚动时
+              //    alert("滑轮向上滚动");
+                  _this.newPageUp(val);
+              }
+              if (e.detail< 0) { //当滑轮向下滚动时
+              //    alert("滑轮向下滚动");
+                  _this.newpageDown(val + 2)
+              }
+          }
+      //   ScrollText(direct);
+      }
+      //给页面绑定滑轮滚动事件
+      if (document.addEventListener) {
+          document.addEventListener('DOMMouseScroll', scrollFunc, false);
+      }
+      //滚动滑轮触发scrollFunc方法
+        window.onmousewheel = document.onmousewheel = scrollFunc;
     }
-    //给页面绑定滑轮滚动事件
-    if (document.addEventListener) {
-        document.addEventListener('DOMMouseScroll', scrollFunc, false);
-    }
-    //滚动滑轮触发scrollFunc方法
-      window.onmousewheel = document.onmousewheel = scrollFunc;
-    },
+      
+  },
 
     //点击左侧向上翻页
     newPageUp(val){
@@ -975,6 +1009,7 @@ export default {
       },
       //点击显示课件全屏
       appFullScreen(){
+        this.isFullCode = false;
         var elem = document.getElementById("courseppt");
         console.log(elem);
         this.requestFullScreen(elem);
@@ -1452,11 +1487,11 @@ hr{
       }
   #courseppt:-webkit-full-screen {
     width: 100%;
-    height: 150%;
+    height: 100%;
   }
   #courseWorkPage:-webkit-full-screen {
     width: 100%;
-    height: 150%;
+    height: 100%;
   }
   #teachingBook:-webkit-full-screen {
     width: 100%;

@@ -53,8 +53,21 @@ export default {
   },
   methods: {
     setMsg: function (item) {
-       console.log(item);
-      if(item.children){
+      console.log(item);
+      var ownLabel = "";
+      for(var i = 0; i < item.label.length; i++){
+          if(i == item.label.length - 2 || i == item.label.length - 1)
+            ownLabel = ownLabel + item.label[i];
+      }
+      // console.log(ownLabel)
+      if(ownLabel == "课堂" && item.children.length == 0){
+          this.$message({
+            showClose: true,
+            message: '还没有自己的课程呢。。请在个人中心添加',
+            type: 'error'
+          });
+      }else{
+        if(item.children){
           this.$store.commit('noTreeTitle1',item);
         //  this.$router.push('/course' + '/label/'+ item.label);
           const {href} = this.$router.resolve({
@@ -64,13 +77,15 @@ export default {
           //this.$router.replace('/newCourse');
       }else{
           this.$store.commit('noTreeTitle1',item);
-      //    window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
-      //    this.$router.replace('/newCourse');
+        //  window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
+        //  this.$router.replace('/newCourse');
           const {href} = this.$router.resolve({
                 name: 'newCourse'
             });
           window.open(href, '_blank')
       }
+     }
+      
     }
   },
   mounted(){
@@ -92,16 +107,17 @@ export default {
             //    this.teachingPPTimg.push({
             //        teachingPPTimg:tab[i].course[j].teachingPPTimg
             //    })
-                for(var t = 0; t < tab[i].course[j].videoTitle.length; t++){
-                    this.videoTitle.push({
-                        videoTitle:tab[i].course[j].videoTitle[t]
-                    })
-                }
+
+            //    for(var t = 0; t < tab[i].course[j].videoTitle.length; t++){
+            //        this.videoTitle.push({
+            //            videoTitle:tab[i].course[j].videoTitle[t]
+            //        })
+            //    }
                 
                 this.thirdData.push({
                     label:tab[i].course[j].label,
                     describe:tab[i].course[j].describe,
-                    videoTitle:this.videoTitle,
+                    videoTitle:tab[i].course[j].videoTitle,
                     teachingMaterial:tab[i].course[j].teachingMaterial,
                     courseId:'7' + ii + jj,
                     teachingPPTimg:"",
@@ -153,9 +169,20 @@ export default {
         //        console.log(this.secondData.length)
                 this.bannerLeftData.children[6].children.push(this.secondData[h])
             }
+        //    console.log(this.bannerLeftData)
+            if(this.$store.state.username){
+                var myName = this.$store.state.username;
+                for(var i = 0; i < myName.length; i++){
+                    if(i == 0){
+                        var myFirstName = myName[i]
+                    }
+                }
+                // console.log(myFirstName)
+                this.bannerLeftData.children[6].label = myFirstName + '老师课堂'
+            }
+            
         //    console.log(this.bannerLeftData.children[6].children)
             this.$store.commit('newBannerLeft',this.bannerLeftData.children);
-        //    console.log(this.bannerLeftData)
             
         }
         }).catch(function(error){

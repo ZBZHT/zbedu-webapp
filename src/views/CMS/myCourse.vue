@@ -230,8 +230,9 @@
                   label="微课名称"
                   width="360">
                   <template slot-scope="scope">
-                    <span>
-                      {{ scope.row.videoTitle }}</span>
+                    <span v-if="scope.row.videoTitle.length>0">
+                      {{ scope.row.videoTitle[0].videoTitle }}
+                    </span>
                   </template>
                 </el-table-column>
 
@@ -285,7 +286,7 @@
             </el-upload>
           </el-form-item>
           <el-form-item label="微课名称" prop="videoTitle">
-            <el-input v-model="editForm.videoTitle" style="width:70%;"></el-input>
+            <el-input v-model="videoTitle" style="width:70%;"></el-input>
             <el-upload
               class="upload-demo"
               style="float:right;"
@@ -367,7 +368,8 @@
         courseItem: '', //点击课程目录的名称
         appendData: '',
         appendNode: '',
-        value1: ''
+        value1: '',
+        videoTitle:'',
       }
     },
     computed: {},
@@ -380,14 +382,16 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          for (let i=0; i<=this.dataForm.length; i++) {
+            //console.log(this.dataForm);
+          for (let i=0; i<this.dataForm.length; i++) {
             if (this.dataForm[i].label === row.label) {
               let resultEE = core.remove(this.dataForm, this.dataForm[i]);
               this.dataForm = resultEE;
             }
           }
           this.resDataForm[this.tabIndex].course = this.dataForm;
-          //console.log(this.resDataForm[this.tabIndex].course);
+          //console.log(this.resDataForm);
+          console.log(this.resDataForm[this.tabIndex].course);
           this.updateCustomCourse();
           this.successMsg('删除成功!')
         }).catch(() => {
@@ -423,6 +427,10 @@
         this.courseIndex = index;
         this.editForm = this.dataForm[index];
         this.dialogVisible7 = true;
+        this.videoTitle = '';
+        if (this.editForm.videoTitle.length>0) {
+          this.videoTitle = this.editForm.videoTitle[0].videoTitle
+        }
         //console.log(this.editForm);
       },
       //编辑, 取消
@@ -452,6 +460,7 @@
       //编辑, 上传微课前
       editBeforeUpload2(file) {
         if (file.name != '') {
+            this.videoTitle = file.name;
           if (this.dataForm[this.courseIndex].videoTitle.length === 0) {
             let EE = {videoTitle: file.name};
             this.dataForm[this.courseIndex].videoTitle.push(EE);
@@ -641,6 +650,7 @@
       uploadSuccess1(response, file, fileList) {
           //console.log(response.code);
           if (response.code === 0) {
+              this.getCustomCourse();
             this.successMsg(file.name + '已上传成功!');
           }
       },
