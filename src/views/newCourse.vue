@@ -53,6 +53,7 @@
                                       <div class="pptNext" @click="newpageDown(index+2)"></div>
                                   </div>
 
+
                                   <ppt-slides
                                   :total="total"
                                   :size="size"
@@ -507,8 +508,8 @@ export default {
             this.keyId = id;
             this.findParent(id);
         }
-    
-    
+
+
 //    axios.get("/readJson/bannerLeftData",{
 //        params:{
 //             user:234
@@ -614,8 +615,8 @@ export default {
           coursePath.push("新能源汽车");
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
-          coursePath.push(data.children[0].children[0].label);     
-          homeworkPath = coursePath; 
+          coursePath.push(data.children[0].children[0].label);
+          homeworkPath = coursePath;
         }
       }else if(id > 200 && id < 300){
             if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
@@ -867,12 +868,12 @@ export default {
             // 回车
             case 13:
                 _this.newpageDown(val + 2)
-                break;    
+                break;
           }
         });
 
         var scrollFunc = function (e) {
-          
+
           var direct = 0;
           e = e || window.event;
           if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
@@ -903,7 +904,7 @@ export default {
       //滚动滑轮触发scrollFunc方法
         window.onmousewheel = document.onmousewheel = scrollFunc;
     }
-      
+
   },
 
     //点击左侧向上翻页
