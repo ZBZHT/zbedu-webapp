@@ -111,7 +111,7 @@
 
                 <!--实战专题-->
                 <div v-show="is926">
-                <p class="exerP">{{}}</p>
+                <p class="exerP">{{competitionData.label}}</p>
                     <el-tabs type="border-card" v-model="activeName">
                         <el-tab-pane label="实战目标" :name="descTab">
                             <div class="exerEngImg">
@@ -143,6 +143,38 @@
                         </el-tab-pane>
                     </el-tabs>
                 </div>
+
+                <!--预选赛啊-->
+                <div v-show="isYXS">
+                <p class="exerP">{{competitionData.label}}</p>
+                    <div class="joinButton">
+                        <el-button size="small" type="primary" @click="dialogVisible = true">
+                            我要报名
+                        </el-button>
+                    </div>
+                    
+                    <!--添加报名对话框-->
+                    <el-dialog
+                        title="请选择带队老师"
+                        :visible.sync="dialogVisible"
+                        width="30%"
+                        :before-close="handleClose">
+                        
+                        <span slot="footer" class="dialog-footer">
+                            <el-button type="primary">确定</el-button>
+                        </span>
+
+                    </el-dialog>
+
+                    <el-tabs type="border-card" v-model="activeName">
+                        <el-tab-pane label="000">
+                            <div class="exerEngRule">
+
+                            </div>
+                        </el-tab-pane>
+                    </el-tabs>
+                    
+                </div>
             </el-col>
         </el-row>
     </div>
@@ -170,11 +202,13 @@ export default {
       is697:true,
       is123:false,
       is926:false,
+      isYXS:false,
       courseId1:'',
       courseId2:'',
       keyId:'',
       activeName: '',
-      descTab:'0'
+      descTab:'0',
+      dialogVisible: false,
     }
   },
   computed:{
@@ -183,6 +217,15 @@ export default {
     }
   },
   methods:{
+    //确认关闭
+      handleClose(done) {
+        done();
+        /*this.$confirm('确认关闭？')
+          .then(_ => {
+
+          })
+          .catch(_ => {});*/
+      },  
     //下载文件
     sendName(item){
         axios({
@@ -219,13 +262,15 @@ export default {
           this.is697 = true;
           this.is123 = false;
           this.is926 = false;
+          this.isYXS = false;
       }else if(id == 3210 || id == 3220 || id == 3230){
           //console.log("aaaa")
           //console.log(id.toString())
           this.is697 = false;
           this.is926 = false;
           this.is123 = true;
-      }else if(id > 4000){
+          this.isYXS = false;
+      }else if(id > 4000 && id < 5000){
           if(id == 4100 || id == 4200 || id == 4300){
 
           }else{
@@ -234,8 +279,13 @@ export default {
             this.is697 = false;
             this.is926 = true;
             this.is123 = false;
+            this.isYXS = false;
           }
-
+      }else if(id == 5000){
+            this.is697 = false;
+            this.is926 = false;
+            this.is123 = false;
+            this.isYXS = true;
       }
       //刷新保存数据
       if(data.children){
@@ -425,5 +475,14 @@ hr{
 }
 .el-tree-node__expand-icon{
   color: #ffffff;
+}
+.competitionCenter-content .joinButton{
+    text-align:left;
+    margin-left:25px;
+    margin-bottom:10px;
+}
+.competitionCenter-content .el-button--primary{
+    background-color:rgb(159,83,85);
+    border-color:rgb(159,83,85);
 }
 </style>

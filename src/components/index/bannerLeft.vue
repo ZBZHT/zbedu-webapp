@@ -53,7 +53,8 @@ export default {
   },
   methods: {
     setMsg: function (item) {
-      console.log(item);
+      //  console.log(item);
+      //  console.log(this.bannerLeftData)
       var ownLabel = "";
       for(var i = 0; i < item.label.length; i++){
           if(i == item.label.length - 2 || i == item.label.length - 1)

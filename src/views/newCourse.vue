@@ -301,7 +301,9 @@ export default {
 
         ],
         scrolled: false,
-        isFullCode:true
+        isFullCode:true,
+        moutedCorusePath:[],
+        moutedHomeworkPath:[]
     }
   },
   computed:{
@@ -347,6 +349,11 @@ export default {
    // var scrollbox = document.querySelector(".courseImg");
    // console.log(document.querySelector(".courseImg"))
    // window.addEventListener('scroll', this.handleScroll);
+   //获取树形数据
+    this.data = this.$store.state.newBannerLeft;
+    setTimeout(() => {
+      this.$refs.vuetree.setCurrentKey(this.keyId)
+    }, 20)
 
 
 
@@ -364,34 +371,41 @@ export default {
                 this.courseId2 = 111;
                 this.keyId = 1111;
                 this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
+                this.findParent(id);
             }else if(id == 200){
                 this.courseId1 = id;
                 this.courseId2 = 211;
                 this.keyId = 211;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
+                this.findParent(id);
             }else if(id == 300){
                 this.courseId1 = id;
                 this.courseId2 = 311;
                 this.keyId = 311;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
+                this.findParent(id);
             }else if(id == 400){
                 this.courseId1 = id;
                 this.courseId2 = 411;
                 this.keyId = 411;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
+                this.findParent(id);
             }else if(id == 500){
                 this.courseId1 = id;
                 this.keyId = 510;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else if(id == 600){
                 this.courseId1 = id;
                 this.keyId = 610;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else if(id == 700){
                 this.courseId1 = id;
                 this.courseId2 = 711;
                 this.keyId = 711;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
+                this.findParent(id);
             }
         }else if(id > 100 && id < 200){
             if(id == 110){
@@ -399,21 +413,25 @@ export default {
                 this.courseId2 = 111;
                 this.keyId = 1111;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
+                this.findParent(id);
             }else if(id > 110 && id < 120){
                 this.courseId1 = 100;
                 this.courseId2 = id;
                 this.keyId = id.toString()+1;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else if(id > 120 && id < 130){
                 this.courseId1 = 100;
                 this.courseId2 = id;
                 this.keyId = id.toString()+1;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else if(id == 120){
                 this.courseId1 = 100;
                 this.courseId2 = 121;
                 this.keyId = 1211;
                 this.$store.commit('noTreeTitle',data.children[0].children[0]);
+                this.findParent(id);
             }
         }else if(id > 200 && id < 300){
             if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
@@ -421,11 +439,13 @@ export default {
                 this.courseId2 = id;
                 this.keyId = id + 1;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else{
                 this.courseId1 = 200;
                 this.courseId2 = id;
                 this.keyId = id;
                 this.$store.commit('noTreeTitle',data);
+                this.findParent(id);
             }
         }else if(id > 300 && id < 400){
             if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
@@ -433,6 +453,7 @@ export default {
                 this.courseId2 = id;
                 this.keyId = id + 1;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else{
                 this.courseId1 = 300;
                 this.courseId2 = id;
@@ -445,22 +466,26 @@ export default {
                 this.courseId2 = id;
                 this.keyId = id + 1;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else{
                 this.courseId1 = 400;
                 this.courseId2 = id;
                 this.keyId = id;
                 this.$store.commit('noTreeTitle',data);
+                this.findParent(id);
             }
         }else if(id > 500 && id < 600){
             this.courseId1 = 500;
             this.courseId2 = id;
             this.keyId = id;
             this.$store.commit('noTreeTitle',data);
+            this.findParent(id);
         }else if(id > 600 && id < 700){
             this.courseId1 = 600;
             this.courseId2 = id;
             this.keyId = id;
             this.$store.commit('noTreeTitle',data);
+            this.findParent(id);
         }else if(id > 700 && id < 800){
             if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
                 this.courseId1 = 700;
@@ -468,22 +493,22 @@ export default {
                 var nowId = parseInt(id) + 1
                 this.keyId = nowId;
                 this.$store.commit('noTreeTitle',data.children[0]);
+                this.findParent(id);
             }else{
                 this.courseId1 = 700;
                 this.courseId2 = id;
                 this.keyId = id;
                 this.$store.commit('noTreeTitle',data);
+                this.findParent(id);
             }
         }else if(id > 1110 && id < 1300){
             this.courseId1 = 100;
             this.courseId2 = id;
             this.keyId = id;
+            this.findParent(id);
         }
-    //获取树形数据
-    this.data = this.$store.state.newBannerLeft;
-    setTimeout(() => {
-      this.$refs.vuetree.setCurrentKey(this.keyId)
-    }, 20)
+    
+    
 //    axios.get("/readJson/bannerLeftData",{
 //        params:{
 //             user:234
@@ -539,10 +564,278 @@ export default {
 
     },
   methods:{
+    findParent(id){
+      var data = this.$store.state.noTree1;
+      var coursePath = [];
+      var homeworkPath = [];
+      id = id.toString();
+      if(id == 100){
+        homeworkPath.push(data.label);
+        homeworkPath.push(data.children[0].label);
+        homeworkPath.push(data.children[0].children[0].label);
+        homeworkPath.push(data.children[0].children[0].children[0].label);
+        coursePath.push(data.label);
+        coursePath.push(data.children[0].label);
+        coursePath.push(data.children[0].children[0].label);
+        coursePath.push(this.$store.state.noTree.teachingMaterial);
+      }else if(id == 200 || id == 300 || id == 400 || id == 700){
+        coursePath.push(data.label);
+        coursePath.push(data.children[0].label);
+        coursePath.push(data.children[0].children[0].label);
+      }else if(id == 500 || id == 600){
+        coursePath.push(data.label);
+        coursePath.push(data.children[0].label);
+      }else if(id > 100 && id < 200){
+        if(id == 110){
+          homeworkPath.push("新能源汽车");
+          homeworkPath.push(data.children[0].label);
+          homeworkPath.push(data.children[0].children[0].label);
+          homeworkPath.push(data.children[0].children[0].label);
+          coursePath.push("新能源汽车");
+          coursePath.push(data.label);
+          coursePath.push(data.children[0].label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id > 110 && id < 120){
+          homeworkPath.push("新能源汽车");
+          homeworkPath.push("纯电动汽车");
+          homeworkPath.push(data.label);
+          homeworkPath.push(data.children[0].label);
+          coursePath.push("新能源汽车");
+          coursePath.push("纯电动汽车");
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id > 120 && id < 130){
+          coursePath.push("新能源汽车");
+          coursePath.push("混合动力汽车");
+          coursePath.push(data.label);
+          coursePath.push(data.children[0].label);
+          homeworkPath = coursePath;
+        }else if(id == 120){
+          coursePath.push("新能源汽车");
+          coursePath.push(data.label);
+          coursePath.push(data.children[0].label);
+          coursePath.push(data.children[0].children[0].label);     
+          homeworkPath = coursePath; 
+        }
+      }else if(id > 200 && id < 300){
+            if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
+              coursePath.push("汽车发动机");
+              coursePath.push(data.label);
+              coursePath.push(data.children[0].label);
+              homeworkPath = coursePath;
+            }else if(id > 210 && id < 220){
+              coursePath.push("汽车发动机");
+              coursePath.push("结构认识");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 220 && id < 230){
+              coursePath.push("汽车发动机");
+              coursePath.push("电控发动机");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 230 && id < 240){
+              coursePath.push("汽车发动机");
+              coursePath.push("电控发动机不着车故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 240 && id < 250){
+              coursePath.push("汽车发动机");
+              coursePath.push("电控发动机怠速不稳故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 250 && id < 260){
+              coursePath.push("汽车发动机");
+              coursePath.push("电控发动机加速不良故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 260 && id < 270){
+              coursePath.push("汽车发动机");
+              coursePath.push("电控发动机综合故障检修能力训练");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }
+        }else if(id > 300 && id < 400){
+            if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
+              coursePath.push("底盘检修");
+              coursePath.push(data.label);
+              coursePath.push(data.children[0].label);
+              homeworkPath = coursePath;
+            }else if(id > 310 && id < 320){
+              coursePath.push("底盘检修");
+              coursePath.push("汽车底盘维修基本知识");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 320 && id < 330){
+              coursePath.push("底盘检修");
+              coursePath.push("变速器故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 330 && id < 340){
+              coursePath.push("底盘检修");
+              coursePath.push("转向沉重故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 340 && id < 350){
+              coursePath.push("底盘检修");
+              coursePath.push("速腾行驶系统故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 350 && id < 360){
+              coursePath.push("底盘检修");
+              coursePath.push("制动失灵故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }
+          }else if(id > 400 && id < 500){
+            if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
+              coursePath.push("汽车电气");
+              coursePath.push(data.label);
+              coursePath.push(data.children[0].label);
+              homeworkPath = coursePath;
+            }else if(id > 410 && id < 420){
+              coursePath.push("汽车电气");
+              coursePath.push("电源系统检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 420 && id < 430){
+              coursePath.push("汽车电气");
+              coursePath.push("起动系统检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 430 && id < 440){
+              coursePath.push("汽车电气");
+              coursePath.push("照明与信号系统故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 440 && id < 450){
+              coursePath.push("汽车电气");
+              coursePath.push("汽车辅助系统检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 450 && id < 460){
+              coursePath.push("汽车电气");
+              coursePath.push("仪表系统工作异常故障检修");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 460 && id < 470){
+              coursePath.push("汽车电气");
+              coursePath.push("汽车整车电路");
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }
+          }else if(id > 500 && id < 600){
+            coursePath.push("汽车空调");
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 600 && id < 700){
+            coursePath.push("汽车维修");
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 700 && id < 800){
+            var allData = this.data;
+            console.log(allData)
+            if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
+              coursePath.push(allData[6].label);
+              coursePath.push(data.label);
+              coursePath.push(data.children[0].label);
+              homeworkPath = coursePath;
+            }else if(id > 710 && id < 720){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[0].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 720 && id < 730){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[1].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 730 && id < 740){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[2].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 740 && id < 750){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[3].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 750 && id < 760){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[4].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 760 && id < 770){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[5].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 770 && id < 780){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[6].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 780 && id < 790){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[7].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }else if(id > 790 && id < 800){
+              coursePath.push(allData[6].label);
+              coursePath.push(allData[6].children[8].label);
+              coursePath.push(data.label);
+              homeworkPath = coursePath;
+            }
+          }
+    //  console.log(id)
+      this.moutedCorusePath = coursePath;
+      this.moutedHomeworkPath = homeworkPath;
+      coursePath = [];
+      for(var i = 0; i < this.moutedCorusePath.length; i++){
+        coursePath = coursePath + this.moutedCorusePath[i] + '/';
+      }
+      //请求PPT
+      axios.post("/readResource/getPPT",{
+        data:{
+          userId:this.userId,
+          fileName: coursePath
+        }
+      }).then((res)=>{
+      //  console.log(res.data.result);
+        this.lists = res.data.result;
+        this.total = this.lists.length;
+        //console.log(this.homeworkData)
+      }).catch(function(error){
+        console.log("error init." + error)
+      });
+      //请求课后作业
+      axios.get("/readTestQuestion/getHomeWork",{
+        params:{
+            userId:this.userId,
+            checkArr:this.moutedHomeworkPath
+        }
+      }).then((res)=>{
+          //console.log(res.data.result)
+          if(res.data.result){
+          //  console.log("111"+res.data.result)
+            this.$store.commit('homework',res.data.result);
+          }else{
+          //  console.log("222"+res.data.result)
+            this.$store.commit('homework',[]);
+          }
+          this.$store.commit('homework',[]);
+          //console.log(this.homeworkData)
+      }).catch(function(error){
+          console.log("error init." + error)
+      });
+      console.log(homeworkPath)
+      console.log(coursePath)
+    },
+    //监听scroll事件(没用到)
     handleScroll () {
       this.scrolled = window.scrollY;
       alert(this.scrolled)
     },
+    //滚轮键盘啥啥
     mousewheel(val){
       var _this = this;
       var isFull = document.fullscreenElement    ||
@@ -698,7 +991,13 @@ export default {
             }
           }).then((res)=>{
               //console.log(res.data.result)
-              this.$store.commit('homework',res.data.result);
+              if(res.data.result){
+              //  console.log("1111")
+                this.$store.commit('homework',res.data.result);
+              }else{
+              //  console.log(res.data.result)
+                this.$store.commit('homework',[]);
+              }
               //console.log(this.homeworkData)
           }).catch(function(error){
               console.log("error init." + error)

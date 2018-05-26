@@ -407,7 +407,7 @@
                             {
                               "label":"DC/DC故障检修",
                               "describe":"DC-DC功能和工作原理、检测前的注意事项有哪些以及检测步骤和故障现象。利用软件来诊断故障码，和利用外用表测量DC-DC内部线路连接情况。",
-                              "teachingMaterial":"EV系列-4-2-DCDC故障检修",
+                              "teachingMaterial":"EV系列-4-2-DC-DC故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"DCDC故障检修教材.pdf",
                               "flash2d":"4.2DCDC故障检修.mp4",
@@ -6403,6 +6403,10 @@
               ]
             }
           ]
+        },
+        {
+          "label":"预选赛",
+          "id":5000
         }
       ]
     },
