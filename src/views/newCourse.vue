@@ -35,10 +35,15 @@
                             <!--教材-->
                             <el-tab-pane label="本节教材">
                               <div id="teachingBook">
-                                <p class="devDownload" v-show="noTree.teachingBook"></p>
-                                  <embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>
-                                <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
+                                <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
+                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
+                                <div id="teachingBookImg" v-for="(item,index) in teachingBooklists">
+                                  <img class="teachingBookImg" :src="item.img">
+                                </div>
                               </div>
+
+                              <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
+
                             </el-tab-pane>
 
                             <!--课件-->
@@ -53,16 +58,15 @@
                                       <div class="pptNext" @click="newpageDown(index+2)"></div>
                                   </div>
 
-
                                   <ppt-slides
                                   :total="total"
                                   :size="size"
                                   :page="page"
                                   :changge="pageFn">
                                   </ppt-slides>
-
-                                  <el-button type="info" round @click="appFullScreen()" v-show="isFullCode">全屏显示</el-button>
-                              </div>
+                                </div>
+                                <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
+                              
                             </el-tab-pane>
 
                             <!--微课-->
@@ -76,10 +80,14 @@
                             <!--工作页-->
                             <el-tab-pane label="工作页">
                               <div id="courseWorkPage">
-                                <p class="devDownload" v-show="noTree.workPage"></p>
-                                  <embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>
-                                <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
-                              </div>
+                                <!--<p class="devDownload" v-show="noTree.workPage"></p>-->
+                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>-->
+                                  <div id="courseWorkPageImg" v-for="(item,index) in courseWorkPagelists">
+                                    <img class="teachingBookImg" :src="item.img">
+                                  </div>
+                              </div>  
+                              <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
+                              
                             </el-tab-pane>
 
                             <!--二维动画-->
@@ -283,26 +291,42 @@ export default {
       total:'',//总信息数
       size:1,//每页显示信息个数不传默认6
       page:1,//当前页码,
-      lists: [
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片1.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片2.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片3.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片4.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片5.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片6.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片7.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片8.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片9.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片10.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片11.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片12.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片13.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片14.JPG' },
-//          { img : '../../resource/新能源汽车/纯电动汽车/1、纯电动汽车高压安全操作与维护保养/EV系列-1-1-纯电动汽车基本信息收集与介绍/幻灯片15.JPG' },
-
+      teachingBooklists: [
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-0.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-1.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-2.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-3.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-4.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-5.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-6.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-7.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-8.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-9.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-10.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-11.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-12.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-13.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-14.png' },
         ],
+        courseWorkPagelists: [
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-0.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-1.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-2.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-3.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-4.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-5.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-6.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-7.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-8.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-9.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-10.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-11.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-12.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-13.png' },
+          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-14.png' },
+        ],
+        lists:[],
         scrolled: false,
-        isFullCode:true,
         moutedCorusePath:[],
         moutedHomeworkPath:[]
     }
@@ -579,7 +603,7 @@ export default {
         coursePath.push(data.children[0].label);
         coursePath.push(data.children[0].children[0].label);
         coursePath.push(this.$store.state.noTree.teachingMaterial);
-      }else if(id == 200 || id == 300 || id == 400 || id == 700){
+      }else if(id == 200 || id == 300 || id == 400){
         coursePath.push(data.label);
         coursePath.push(data.children[0].label);
         coursePath.push(data.children[0].children[0].label);
@@ -735,53 +759,51 @@ export default {
           }else if(id > 700 && id < 800){
             var allData = this.data;
             console.log(allData)
-            if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
-              coursePath.push(allData[6].label);
-              coursePath.push(data.label);
-              coursePath.push(data.children[0].label);
-              homeworkPath = coursePath;
+            if(id == 700 || id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
+              if(id == 700){
+                coursePath.push(data.children[0].label);
+                coursePath.push(data.children[0].children[0].label);
+                homeworkPath = coursePath;
+              }else{
+                coursePath.push(data.label);
+                coursePath.push(data.children[0].label);
+                homeworkPath = coursePath;
+              }
             }else if(id > 710 && id < 720){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[0].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
+              console.log(homeworkPath)
+              console.log(coursePath)
             }else if(id > 720 && id < 730){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[1].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 730 && id < 740){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[2].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 740 && id < 750){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[3].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 750 && id < 760){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[4].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 760 && id < 770){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[5].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 770 && id < 780){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[6].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 780 && id < 790){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[7].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 790 && id < 800){
-              coursePath.push(allData[6].label);
               coursePath.push(allData[6].children[8].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
@@ -791,9 +813,24 @@ export default {
       this.moutedCorusePath = coursePath;
       this.moutedHomeworkPath = homeworkPath;
       coursePath = [];
-      for(var i = 0; i < this.moutedCorusePath.length; i++){
-        coursePath = coursePath + this.moutedCorusePath[i] + '/';
+      if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
+        homeworkPath = [];
+        coursePath = coursePath + '我的课堂' + '/' + this.$store.state.username + '/';
+        for(var i = 0; i < this.moutedCorusePath.length; i++){
+          coursePath = coursePath + this.moutedCorusePath[i] + '/';
+        }
+        homeworkPath.push('我的课堂');
+        homeworkPath.push(this.$store.state.username);
+        for(var i = 0; i < this.moutedHomeworkPath.length; i++){
+          console.log(this.moutedHomeworkPath)
+          homeworkPath.push(this.moutedHomeworkPath[i]);
+        }
+      }else{
+        for(var i = 0; i < this.moutedCorusePath.length; i++){
+          coursePath = coursePath + this.moutedCorusePath[i] + '/';
+        }
       }
+      
       //请求PPT
       axios.post("/readResource/getPPT",{
         data:{
@@ -812,7 +849,7 @@ export default {
       axios.get("/readTestQuestion/getHomeWork",{
         params:{
             userId:this.userId,
-            checkArr:this.moutedHomeworkPath
+            checkArr:homeworkPath
         }
       }).then((res)=>{
           //console.log(res.data.result)
@@ -828,8 +865,8 @@ export default {
       }).catch(function(error){
           console.log("error init." + error)
       });
-      console.log(homeworkPath)
-      console.log(coursePath)
+      //console.log(homeworkPath)
+      //console.log(coursePath)
     },
     //监听scroll事件(没用到)
     handleScroll () {
@@ -845,8 +882,11 @@ export default {
                    document.webkitFullscreenElement
       //console.log(isFull)
       if(isFull === null){
-        this.isFullCode = true;
+        document.removeEventListener('DOMMouseScroll',scrollFunc,false);
+        window.onmousewheel = document.onmousewheel = null;
+        //console.log("buquanping");
       }else{
+        //console.log("quanping");
         document.addEventListener("keydown",function(){
           switch(event.keyCode){
             // ←
@@ -985,10 +1025,21 @@ export default {
           this.$store.commit('noTreeTitle',data);
           this.$store.commit('noTreeTitle1',data);
           //请求课后作业
+          var checkArrHomeWork = this.checkArr;
+          if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
+            checkArrHomeWork = [];
+            checkArrHomeWork.push('我的课堂');
+            checkArrHomeWork.push(this.$store.state.username);
+            for(var i = 1; i < this.checkArr.length; i++){
+              checkArrHomeWork.push(this.checkArr[i]);
+            }
+          }else{
+
+          }
           axios.get("/readTestQuestion/getHomeWork",{
             params:{
                 userId:this.userId,
-                checkArr:this.checkArr
+                checkArr:checkArrHomeWork
             }
           }).then((res)=>{
               //console.log(res.data.result)
@@ -1015,11 +1066,21 @@ export default {
                 }
               }
               fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
+            }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
+              for(var i = 0; i < this.checkArr.length; i++){
+                if(i == 0){
+                  fileNamePath = fileNamePath + '我的课堂' + '/' + this.$store.state.username + '/';
+                }else{
+                  fileNamePath = fileNamePath + this.checkArr[i] + '/';
+                }
+              }
             }else{
               for(var i = 0; i < this.checkArr.length; i++){
                 fileNamePath = fileNamePath + this.checkArr[i] + '/';
               }
             }
+            console.log(this.$store.state.noTree1.courseId)
+            console.log(fileNamePath)
           //请求课件
           axios.post("/readResource/getPPT",{
             data:{
@@ -1309,7 +1370,6 @@ export default {
       },
       //点击显示课件全屏
       appFullScreen(){
-        this.isFullCode = false;
         var elem = document.getElementById("courseppt");
         console.log(elem);
         this.requestFullScreen(elem);
@@ -1326,6 +1386,10 @@ export default {
       },
       //类似F11的全屏
       requestFullScreen(element) {
+        var pptHeight = document.querySelector(".coursepptImg").offsetHeight;
+        var pptWidth = document.querySelector(".coursepptImg").offsetWidth;
+        var innerHeight = window.innerHeight;
+        var innerWidth = window.innerWidth;
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
         if (requestMethod) {
           requestMethod.call(element);
@@ -1336,6 +1400,15 @@ export default {
           }
         }
         //console.log("2221")
+        if(element == document.getElementById("courseppt")){
+          if(parseInt(innerWidth / innerHeight) < parseInt(pptWidth / pptHeight)){
+            element.style.width = '100%';
+            element.style.height = "auto";
+          }else{
+            element.style.height = 100 + '%';
+            element.style.width = "auto";
+          }
+        }
       }
 
 
@@ -1391,7 +1464,23 @@ hr{
     text-align:left;
 }
 .newCourse-content #teachingBook{
-    width:100%;
+    width:80%;
+    margin:0 auto;
+    height:700px;
+    overflow:auto;
+    background:rgb(82,86,89);
+}
+.newCourse-content .teachingBookImg{
+    width:90%;
+    box-shadow: 3px -3px 15px #000;
+    margin-top:35px;
+}
+.newCourse-content #courseWorkPage{
+    width:80%;
+    margin:0 auto;
+    height:700px;
+    overflow:auto;
+    background:rgb(82,86,89);
 }
 .newCourse-content #courseppt{
     width:100%;
@@ -1419,9 +1508,6 @@ hr{
     position:absolute;
     top:0;
     right:0;
-}
-.newCourse-content #courseWorkPage{
-    width:100%;
 }
 .newCourse-content .courseDescribe .title{
     font-weight:bolder;
@@ -1779,22 +1865,31 @@ hr{
     .2s;
   }
   .appraise-box .all>input:checked~span{
-      color:#666;
-      }
+    color:#666;
+  }
 
   .appraise-box .all>input:checked+span{
-      color:gold;
-      }
+    color:gold;
+  }
   #courseppt:-webkit-full-screen {
-    width: 100%;
-    height: 100%;
+    
   }
   #courseWorkPage:-webkit-full-screen {
     width: 100%;
     height: 100%;
+    overflow:auto;
+    background:rgb(82,86,89);
   }
   #teachingBook:-webkit-full-screen {
-    width: 100%;
-    height: 150%;
+    width:100%;
+    height:100%;
+    overflow:auto;
+    background:rgb(82,86,89);
+  }
+  video::-webkit-media-controls-enclosure {
+    overflow:hidden;
+  }
+  video::-webkit-media-controls-panel {
+    width: calc(100% + 30px);
   }
 </style>

@@ -184,6 +184,7 @@ import EventBus from '../../assets/js/EventBus';
             user-select: none;
             display:flex;
             margin-top: 5px;
+            margin-bottom: 30px;
         }
 
         .pagination_page {

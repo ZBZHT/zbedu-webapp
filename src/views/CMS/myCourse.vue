@@ -254,10 +254,9 @@
 
       <!--编辑  :disabled="true"-->
       <el-dialog
-        class="dialog3 dialog7"
+        class="dialog6 dialog7"
         title="编辑课程"
-        width="35%"
-        style="height: 626px;"
+        width="40%"
         :close-on-click-modal="false"
         :visible.sync="dialogVisible7"
         :before-close="handleClose">

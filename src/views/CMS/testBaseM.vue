@@ -126,10 +126,10 @@
         </el-tab-pane>
       </el-tabs>
 
-      <!--头部按钮-->
+      <!--按钮-->
       <div class="headBut">
             <span class="userM_But1">
-              <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+              <el-button size="small" @click="delChecked" type="danger">删除选中试题</el-button>
             </span>
         <span class="userM_But2">
           <el-upload

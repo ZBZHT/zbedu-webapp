@@ -7,7 +7,7 @@
           <el-col :span="6">
             <div class="img">
               <img :src="imgSrc" alt="头像" @click="dialogFormVisible2 = true">
-              <el-button class="head-portrait" type="info" @click="dialogFormVisible2 = true">编辑头像</el-button>
+              <span class="head-portrait" type="info" @click="dialogFormVisible2 = true">编辑头像</span>
             </div>
           </el-col>
           <el-col :span="5" class="nameMsg">
@@ -177,11 +177,11 @@
           ],
           oldMoNo: [
             { required: true, validator: validateMoNo1, trigger: 'blur' },
-            { min: 11, max: 11, message: '长度在 11 位', trigger: 'blur' }
+            { min: 11, max: 11, message: '长度在 基本信息收集与介绍 位', trigger: 'blur' }
           ],
           newMoNo: [
             { required: true, message: '请输入手机号', trigger: 'blur' },
-            { min: 11, max: 11, message: '长度在 11 位', trigger: 'blur' }
+            { min: 11, max: 11, message: '长度在 csdf 位', trigger: 'blur' }
           ],
           checkPass: [
             { validator: validatePass2, trigger: 'blur' }
@@ -414,10 +414,14 @@
   .myData_cont .img img:hover {
     opacity: 0.8;
   }
-  .myData_cont {
-    position: relative;
+  .myData_cont .img img:hover + .head-portrait {
+    display: block;
+  }
+  .myData_cont .head-portrait:hover {
+    display: block;
   }
   .myData_cont {
+    position: relative;
   }
 
 </style>

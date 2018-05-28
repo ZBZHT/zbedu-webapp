@@ -5,19 +5,19 @@
     <el-col :span="19" class="el-Col">
 
       <!--添加学生对话框-->
-      <el-dialog title="请填写资料"
+      <el-dialog title="请填写学生资料"
                  :visible.sync="dialogFormVisible"
                  :before-close="handleClose"
                  :close-on-click-modal="false">
         <el-form :model="addStuForm" :rules="rules" ref="addStuForm" label-width="80px" class="demo-addUserForm">
 
           <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
-          <el-form-item label="姓名" prop="user">
-            <el-input v-model="addStuForm.user" placeholder="姓名为2-4个汉字"></el-input>
+          <el-form-item label="姓" prop="user">&emsp;&emsp;名
+            <el-input v-model="addStuForm.user" placeholder="姓名为2-4个汉字" style="width: 80%"></el-input>
           </el-form-item>
 
-            <el-form-item label="性别" prop="gender" style="width: 48%">
-              <el-radio-group v-model="addStuForm.gender">
+            <el-form-item label="性" prop="gender" style="width: 48%;">&emsp;&emsp;别
+              <el-radio-group v-model="addStuForm.gender" style="margin-left: 10px;">
                 <el-radio v-model="radio" label="1">男</el-radio>
                 <el-radio v-model="radio" label="2">女</el-radio>
               </el-radio-group>
@@ -25,28 +25,28 @@
           </el-form>
 
           <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
-          <el-form-item label="学号" prop="userID">
-            <el-input v-model="addStuForm.userID" placeholder="学号为8位数字"></el-input>
+          <el-form-item label="学" prop="userID" >&emsp;&emsp;号
+            <el-input v-model="addStuForm.userID" placeholder="学号为8位数字" style="width: 80%;"></el-input>
           </el-form-item>
-          <el-form-item label="手机号" prop="MoNo">
-            <el-input v-model="addStuForm.MoNo" placeholder="手机号码位11位"></el-input>
+          <el-form-item label="手" prop="MoNo">&#8194;机&#8194;号
+            <el-input v-model="addStuForm.MoNo" placeholder="手机号码位11位"  style="width: 80%"></el-input>
           </el-form-item>
           </el-form>
 
-          <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
+          <el-form-item label="身份证号" prop="IDNo" style="width: 96%;margin-left: 10px;">
             <el-input v-model="addStuForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
           </el-form-item>
 
-          <el-form-item label="用户类别" prop="userType" style="width: 92%">
+          <el-form-item label="用户类别" prop="userType">
             <el-radio-group v-model="addStuForm.userType">
               <el-radio v-model="radio1" label="S">学生</el-radio>
               <el-radio v-model="radio1" label="O">外来学生</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm" style="width: 98%">
-            <el-form-item label="专业" prop="major">
-              <el-select v-model="majorMV" placeholder="请选择专业">
+          <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
+            <el-form-item label="专" prop="major" style="margin-right:0;">&emsp;&emsp;业
+              <el-select v-model="majorMV" placeholder="请选择专业" style="width:78%;">
                 <el-option
                   v-for="item in majorM"
                   :key="item.label"
@@ -56,7 +56,7 @@
                 </el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="班级" prop="classGrade" >
+            <el-form-item label="班" prop="classGrade">&emsp;&emsp;级
               <el-select v-model="classMV" placeholder="请选择班级">
                 <el-option
                   v-for="item in classM"
@@ -69,33 +69,34 @@
           </el-form>
 
           <el-form :inline="true" :model="addStuForm" :rules="rules" ref="addStuForm">
-            <el-form-item prop="time" label="入学时间">
-              <el-date-picker type="date" placeholder="选择日期" v-model="addStuForm.time"></el-date-picker>
+            <el-form-item prop="time" label="入学时间" style="margin-left:0;margin-right:0;">
+              <el-date-picker type="date" placeholder="选择日期" v-model="addStuForm.time" style="width:89%;"></el-date-picker>
             </el-form-item>
-            <el-form-item label="密码" prop="pwd">
-              <el-input v-model="addStuForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
+            <el-form-item label="密" prop="pwd" style="margin-left:0;margin-right:0;width:48%;">&emsp;&emsp;码
+              <el-input v-model="addStuForm.pwd" placeholder="默认密码为身份证后6位" style="width:80%;"></el-input>
             </el-form-item>
           </el-form>
         </el-form>
 
-        <div slot="footer" class="dialog-footer" style="width: 93%">
+        <div slot="footer" class="dialog-footer">
           <el-button @click="resetStu('addStuForm')">重&emsp;置</el-button>
             <el-button :plain="true" type="primary" @click="addStu('addStuForm')">提&emsp;交</el-button>
         </div>
       </el-dialog>
+
       <!--添加教师对话框-->
-      <el-dialog title="请填写资料"
+      <el-dialog title="请填写教师资料"
                  :visible.sync="dialogFormVisible2"
                  :before-close="handleClose"
                  :close-on-click-modal="false">
         <el-form :model="addTeachForm" :rules="rules" ref="addTeachForm" label-width="80px" class="demo-addUserForm">
 
           <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
-          <el-form-item label="姓名" prop="user">
-            <el-input v-model="addTeachForm.user" placeholder="姓名为2-4个汉字"></el-input>
+          <el-form-item label="姓" prop="user">&emsp;&emsp;名
+            <el-input v-model="addTeachForm.user" placeholder="姓名为2-4个汉字" style="width: 80%;"></el-input>
           </el-form-item>
 
-            <el-form-item label="性别" prop="gender" style="width: 48%">
+            <el-form-item label="性" prop="gender" style="width: 48%;">&emsp;&emsp;别
               <el-radio-group v-model="addTeachForm.gender">
                 <el-radio v-model="radio" label="1">男</el-radio>
                 <el-radio v-model="radio" label="2">女</el-radio>
@@ -103,49 +104,29 @@
             </el-form-item>
           </el-form>
 
-          <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
-          <el-form-item label="学号" prop="userID">
-            <el-input v-model="addTeachForm.userID" placeholder="学号为8位数字"></el-input>
-          </el-form-item>
-          <el-form-item label="手机号" prop="MoNo">
-            <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位"></el-input>
-          </el-form-item>
-          </el-form>
-
-          <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
+          <el-form-item label="身份证号" prop="IDNo" style="width: 96%;margin-left: 10px;">
             <el-input v-model="addTeachForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
           </el-form-item>
 
-          <el-form-item label="用户类别" prop="userType" style="width: 92%">
+          <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
+            <el-form-item label="手" prop="MoNo" style="margin-left: 10px;">&#8194;机&#8194;号
+              <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位" style="width: 80%;"></el-input>
+            </el-form-item>
+            <el-form-item label="密" prop="pwd">&emsp;&emsp;码
+              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为111111" style="width: 80%;"></el-input>
+            </el-form-item>
+          </el-form>
+
+          <el-form-item label="用户类别" prop="userType">
             <el-radio-group v-model="addTeachForm.userType">
-              <el-radio v-model="radio1" label="EA">教务管理员</el-radio>
-              <el-radio v-model="radio1" label="T">教师</el-radio>
+              <el-radio v-model="radio2" label="EA">教务管理员</el-radio>
+              <el-radio v-model="radio2" label="T">教师</el-radio>
             </el-radio-group>
           </el-form-item>
 
-          <!--<el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm" style="width: 98%">
-            <el-form-item label="专业" prop="major">
-              <el-select v-model="addTeachForm.major" placeholder="请选择专业">
-                <el-option label="汽车专业" value="汽车专业"></el-option>
-                <el-option label="机电专业" value="机电专业"></el-option>
-              </el-select>
-            </el-form-item>
-            <el-form-item label="班级" prop="classGrade" >
-              <el-input v-model="addTeachForm.classGrade" placeholder="请输入班级"></el-input>
-            </el-form-item>
-          </el-form>-->
-
-          <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
-            <el-form-item prop="time" label="入职时间">
-              <el-date-picker type="date" placeholder="选择日期" v-model="addTeachForm.time"></el-date-picker>
-            </el-form-item>
-            <el-form-item label="密码" prop="pwd">
-              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为身份证后6位"></el-input>
-            </el-form-item>
-          </el-form>
         </el-form>
 
-        <div slot="footer" class="dialog-footer" style="width: 93%">
+        <div slot="footer" class="dialog-footer">
           <el-button @click="resetTeach">重&emsp;置</el-button>
             <el-button :plain="true" type="primary" @click="addTeach('addTeachForm')">提&emsp;交</el-button>
         </div>
@@ -221,41 +202,41 @@
             <el-form :model="addUserForm1" :rules="rules" ref="addUserForm1" label-width="80px" class="demo-addUserForm">
 
               <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-                <el-form-item label="姓名" prop="user" >
-                  <el-input v-model="addUserForm1.user" placeholder="姓名为2-4个汉字"></el-input>
+                <el-form-item label="姓" prop="user">&emsp;&emsp;名
+                  <el-input v-model="addUserForm1.user" placeholder="姓名为2-4个汉字" style="width: 80%"></el-input>
                 </el-form-item>
 
-                <el-form-item label="性别" prop="gender" style="width: 48%">
-                  <el-radio-group v-model="addUserForm1.gender">
-                    <el-radio v-model="radio2" label="1">男</el-radio>
-                    <el-radio v-model="radio2" label="2">女</el-radio>
+                <el-form-item label="性" prop="gender" style="width: 48%;">&emsp;&emsp;别
+                  <el-radio-group v-model="addUserForm1.gender" style="margin-left: 10px;">
+                    <el-radio v-model="radio3" label="1">男</el-radio>
+                    <el-radio v-model="radio3" label="2">女</el-radio>
                   </el-radio-group>
                 </el-form-item>
               </el-form>
 
               <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-                <el-form-item label="学号" prop="userID">
-                  <el-input v-model="addUserForm1.userID" placeholder="学号为8位数字"></el-input>
+                <el-form-item label="学" prop="userID" style="width: 48%;margin-right:0;">&emsp;&emsp;号
+                  <el-input v-model="addUserForm1.userID" placeholder="学号为8位数字" style="width:80%;"></el-input>
                 </el-form-item>
-                <el-form-item label="手机号" prop="MoNo">
-                  <el-input v-model="addUserForm1.MoNo" placeholder="手机号码位11位"></el-input>
+                <el-form-item label="手" prop="MoNo" style="width: 48%;">&#8194;机&#8194;号
+                  <el-input v-model="addUserForm1.MoNo" placeholder="手机号码位11位" style="width:80%;"></el-input>
                 </el-form-item>
               </el-form>
 
-              <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
-                <el-input v-model="addUserForm1.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+              <el-form-item label="身份证号" prop="IDNo" style="margin-left: 10px;">
+                <el-input v-model="addUserForm1.IDNo" placeholder="身份证号码为15位或者18位" style="width:98%;"></el-input>
               </el-form-item>
 
-              <el-form-item label="用户类别" prop="userType" style="width: 92%">
+              <el-form-item label="用户类别" prop="userType">
                 <el-radio-group v-model="addUserForm1.userType">
-                  <el-radio v-model="radio1" label="S">学生</el-radio>
-                  <el-radio v-model="radio1" label="O">外来学生</el-radio>
+                  <el-radio v-model="radio3" label="S">学生</el-radio>
+                  <el-radio v-model="radio3" label="O">外来学生</el-radio>
                 </el-radio-group>
               </el-form-item>
 
-              <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1" style="width: 98%">
-                <el-form-item label="专业" prop="major">
-                  <el-select v-model="majorMV" placeholder="请选择专业">
+              <el-form :inline="true" :model="addStuForm1" :rules="rules" ref="addStuForm">
+                <el-form-item label="专" prop="major" style="margin-right:0;">&emsp;&emsp;业
+                  <el-select v-model="majorMV" placeholder="请选择专业" style="width:78%;">
                     <el-option
                       v-for="item in majorM"
                       :key="item.label"
@@ -265,7 +246,7 @@
                     </el-option>
                   </el-select>
                 </el-form-item>
-                <el-form-item label="班级" prop="classGrade" >
+                <el-form-item label="班" prop="classGrade">&emsp;&emsp;级
                   <el-select v-model="classMV" placeholder="请选择班级">
                     <el-option
                       v-for="item in classM"
@@ -281,13 +262,13 @@
                 <el-form-item prop="time" label="入学时间">
                   <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.time"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="密码" prop="pwd">
-                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位"></el-input>
+                <el-form-item label="密" prop="pwd" style="margin-left: 10px;">&emsp;&emsp;码
+                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位" style="width:80%;"></el-input>
                 </el-form-item>
               </el-form>
             </el-form>
 
-            <div slot="footer" class="dialog-footer" style="width: 93%">
+            <div slot="footer" class="dialog-footer">
               <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
             </div>
           </el-dialog>
@@ -358,53 +339,45 @@
                    :visible.sync="dialogFormVisible3"
                    :before-close="handleClose"
                    :close-on-click-modal="false">
-          <el-form :model="addUserForm1" :rules="rules" ref="addUserForm1" label-width="80px" class="demo-addUserForm">
+          <el-form :model="addTeachForm" :rules="rules" ref="addUserForm1" label-width="80px" class="demo-addUserForm">
 
-            <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-              <el-form-item label="姓名" prop="user" >
-                <el-input v-model="addUserForm1.user" placeholder="姓名为2-4个汉字"></el-input>
+            <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
+              <el-form-item label="姓" prop="user">&emsp;&emsp;名
+                <el-input v-model="addTeachForm.user" placeholder="姓名为2-4个汉字" style="width: 80%;"></el-input>
               </el-form-item>
 
-              <el-form-item label="性别" prop="gender" style="width: 48%">
-                <el-radio-group v-model="addUserForm1.gender">
-                  <el-radio v-model="radio2" label="1">男</el-radio>
-                  <el-radio v-model="radio2" label="2">女</el-radio>
+              <el-form-item label="性" prop="gender" style="width: 48%;">&emsp;&emsp;别
+                <el-radio-group v-model="addTeachForm.gender">
+                  <el-radio v-model="radio3" label="1">男</el-radio>
+                  <el-radio v-model="radio3" label="2">女</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-form>
 
-            <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-              <el-form-item label="学号" prop="userID">
-                <el-input v-model="addUserForm1.userID" placeholder="学号为8位数字"></el-input>
+            <el-form-item label="身份证号" prop="IDNo" style="width: 96%;margin-left: 10px;">
+              <el-input v-model="addTeachForm.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
+            </el-form-item>
+
+            <el-form :inline="true" :model="addTeachForm" :rules="rules" ref="addTeachForm">
+              <el-form-item label="手" prop="MoNo" style="margin-left: 10px;">&#8194;机&#8194;号
+                <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位" style="width: 80%;"></el-input>
               </el-form-item>
-              <el-form-item label="手机号" prop="MoNo">
-                <el-input v-model="addUserForm1.MoNo" placeholder="手机号码位11位"></el-input>
+              <el-form-item label="密" prop="pwd">&emsp;&emsp;码
+                <el-input v-model="addTeachForm.pwd" placeholder="默认密码为111111" style="width: 80%;"></el-input>
               </el-form-item>
             </el-form>
 
-            <el-form-item label="身份证号" prop="IDNo" style="width: 92%">
-              <el-input v-model="addUserForm1.IDNo" placeholder="身份证号码为15位或者18位"></el-input>
-            </el-form-item>
-
-            <el-form-item label="用户类别" prop="userType" style="width: 92%">
-              <el-radio-group v-model="addUserForm1.userType">
-                <el-radio v-model="radio1" label="EA">教务管理员</el-radio>
-                <el-radio v-model="radio1" label="T">教师</el-radio>
+            <el-form-item label="用户类别" prop="userType">
+              <el-radio-group v-model="addTeachForm.userType">
+                <el-radio v-model="radio3" label="EA">教务管理员</el-radio>
+                <el-radio v-model="radio3" label="T">教师</el-radio>
               </el-radio-group>
             </el-form-item>
 
-            <el-form :inline="true" :model="addUserForm1" :rules="rules" ref="addUserForm1">
-              <el-form-item prop="time" label="入学时间">
-                <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.time"></el-date-picker>
-              </el-form-item>
-              <el-form-item label="密码" prop="pwd">
-                <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位"></el-input>
-              </el-form-item>
-            </el-form>
           </el-form>
 
-          <div slot="footer" class="dialog-footer" style="width: 93%">
-            <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="addTeach('addTeachForm')">确定修改</el-button>
           </div>
         </el-dialog>
 
@@ -495,6 +468,7 @@
         dialogFormVisible1: false,
         dialogFormVisible2: false,
         dialogFormVisible3: false,
+        addStuForm1:[],
         addStuForm: {
           user: '',
           pwd: '',
@@ -510,14 +484,10 @@
         addTeachForm: {
           user: '',
           pwd: '',
-          userID: '',
           IDNo: '',
           MoNo: '',
           userType: 'T',
           gender: '1',
-          time: '',
-          major: '',
-          classGrade: ''
         },
         addUserForm1: {
           user: '',
@@ -547,7 +517,7 @@
             { min: 15, max: 18, message: '长度在 15 到 18 位', trigger: 'blur' }
           ],
           MoNo: [
-            { min: 11, max: 11, message: '长度在 11 位', trigger: 'blur' }
+            { min: 11, max: 11, message: '长度在 csdf 位', trigger: 'blur' }
           ],
           userType: [
             { required: true, message: '请选择一个类型', trigger: 'change' }
@@ -569,7 +539,8 @@
         },
         radio: "1",
         radio1: "S",
-        radio2: "",
+        radio2: "T",
+        radio3: "",
         majorM: [],
         classM: [],
         majorMV: [],
@@ -621,14 +592,10 @@
       resetTeach() {
         this.addTeachForm.user = '';
         this.addTeachForm.pwd = '';
-        this.addTeachForm.userID = '';
         this.addTeachForm.IDNo = '';
         this.addTeachForm.MoNo = '';
         this.addTeachForm.userType = 'T';
         this.addTeachForm.gender = '1';
-        this.addTeachForm.time = '';
-        this.addTeachForm.major = '';
-        this.addTeachForm.classGrade = '';
       },
       //重置修改用户
       resetUser1() {
@@ -646,11 +613,17 @@
 
       //修改学生
       handleEdit(index, row) {
+          this.resetUser1();
         this.addUserForm1.user = row.user;
         this.addUserForm1.userID = row.userID;
         this.addUserForm1.IDNo = row.IDNo;
         this.addUserForm1.MoNo = row.MoNo;
-        this.addUserForm1.userType = row.userType;
+        if (row.userType === '学生') {
+          this.addUserForm1.userType = 'S';
+        } else if (row.userType === '外来学生') {
+          this.addUserForm1.userType = 'O';
+        }
+        //console.log(row);
         if (row.gender === '男') {
           this.addUserForm1.gender = '1';
         } else if (row.gender === '女') {
@@ -666,18 +639,18 @@
       },
       //修改老师
       handleEdit1(index, row) {
-        this.addUserForm1.user = row.user;
-        this.addUserForm1.userID = row.userID;
-        this.addUserForm1.IDNo = row.IDNo;
-        this.addUserForm1.MoNo = row.MoNo;
-        this.addUserForm1.userType = row.userType;
+          //console.log(row);
+        this.addTeachForm.user = row.user;
+        this.addTeachForm.IDNo = row.IDNo;
+        this.addTeachForm.MoNo = row.MoNo;
+        this.addTeachForm.userType = row.userType;
         if (row.gender === '男') {
-          this.addUserForm1.gender = '1';
+          this.addTeachForm.gender = '1';
         } else if (row.gender === '女') {
-          this.addUserForm1.gender = '2';
+          this.addTeachForm.gender = '2';
         }
         this.dialogFormVisible3 = true;
-        //console.log(this.addUserForm1);
+        //console.log(this.addTeachForm);
       },
 
       //删除用户信息方法
@@ -697,7 +670,7 @@
             }
           }).then((res) => {
             //console.log(res.data);
-            if (res.data.code == 0) {
+            if (res.data.code === 0) {
               this.getUserData();
               this.$message({
                 type: 'success',
@@ -749,7 +722,14 @@
       },
       //添加教师
       addTeach() {
-        let resData = this.resUserData(this.addTeachForm);
+        function resUserData1(data) {
+          if (data.pwd != '') {
+            data.pwd = md5(data.pwd);
+          }
+          return data;
+        }
+
+        let resData = resUserData1(this.addTeachForm);
         this.dialogFormVisible2 = false;
           //console.log(this.addUserForm);
           axios.post('/teacherCMS/addTeach', {
@@ -770,7 +750,7 @@
       //修改用户信息
       reUser() {
         this.dialogFormVisible1 = false;
-        console.log(this.addUserForm1);
+        //console.log(this.addUserForm1);
         //处理发送的用户信息方法
         function resUserData1(data) {
           if (data.pwd != '') {
@@ -875,7 +855,7 @@
             userType: this.userType
           }
         }).then((res) => {
-            console.log(res.data);
+            //console.log(res.data);
             this.majorM = res.data.majorMsg;
             this.classM = res.data.classMsg;
           //学生
@@ -986,5 +966,16 @@
     position: absolute;
     bottom: -500px;
     left: 5%;
+  }
+  .userManager_cont .el-form-item__label{
+    text-align: left;
+    padding: 0;
+  }
+  .userManager_cont .el-input__inner{
+    margin-right:0;
+    margin-left: 10px;
+  }
+  .userManager_cont .el-radio-group{
+    margin-left: 10px;
   }
 </style>
