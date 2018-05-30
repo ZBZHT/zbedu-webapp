@@ -613,12 +613,13 @@ export default {
       }else if(id > 100 && id < 200){
         if(id == 110){
           homeworkPath.push("新能源汽车");
+          homeworkPath.push(data.label);
           homeworkPath.push(data.children[0].label);
-          homeworkPath.push(data.children[0].children[0].label);
           homeworkPath.push(data.children[0].children[0].label);
           coursePath.push("新能源汽车");
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
+          coursePath.push(data.children[0].children[0].label);
           coursePath.push(this.$store.state.noTree.teachingMaterial);
         }else if(id > 110 && id < 120){
           homeworkPath.push("新能源汽车");
@@ -628,6 +629,7 @@ export default {
           coursePath.push("新能源汽车");
           coursePath.push("纯电动汽车");
           coursePath.push(data.label);
+          coursePath.push(data.children[0].label);
           coursePath.push(this.$store.state.noTree.teachingMaterial);
         }else if(id > 120 && id < 130){
           coursePath.push("新能源汽车");
@@ -1059,11 +1061,7 @@ export default {
           let fileNamePath = '';
             if(this.$store.state.noTree1.courseId > 1110 && this.$store.state.noTree1.courseId < 1200){
               for(var i = 0; i < this.checkArr.length; i++){
-                if(i < this.checkArr.length - 1){
                   fileNamePath = fileNamePath + this.checkArr[i] + '/';
-                }else{
-
-                }
               }
               fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
             }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
