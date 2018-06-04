@@ -82,7 +82,7 @@ const routes = [
       path:'/competitionCenter',
       name:'competitionCenter',
       meta:{
-        require:true,
+        requireAuth:true,
         title: 'zbt大赛中心'
       },
       component:competitionCenter

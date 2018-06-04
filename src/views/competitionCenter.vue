@@ -147,33 +147,31 @@
                 <!--预选赛啊-->
                 <div v-show="isYXS">
                 <p class="exerP">{{competitionData.label}}</p>
-                    <div class="joinButton">
-                        <el-button size="small" type="primary" @click="dialogVisible = true">
-                            我要报名
-                        </el-button>
-                    </div>
-                    
-                    <!--添加报名对话框-->
-                    <el-dialog
-                        title="请选择带队老师"
-                        :visible.sync="dialogVisible"
-                        width="30%"
-                        :before-close="handleClose">
-                        
-                        <span slot="footer" class="dialog-footer">
-                            <el-button type="primary">确定</el-button>
-                        </span>
-
-                    </el-dialog>
 
                     <el-tabs type="border-card" v-model="activeName">
-                        <el-tab-pane label="000">
-                            <div class="exerEngRule">
+                        <div v-for="(item,index) in teacherList">
+                            <el-tab-pane :label="item">
+                                <div class="competitionAdd" v-for="(item2,index2) in studentList" v-show="index == index2">
+                                    <div v-for="(item3,index3) in item2">
+                                        <div class="studentName" v-for="(item4,index4) in item3">
+                                           {{item4}}
+                                        </div>
+                                        <div class="joinButton">
+                                          <el-button size="small" type="primary" @click="IWantAdd(item)">
+                                            我要报名
+                                          </el-button>
+                                        </div>
 
-                            </div>
-                        </el-tab-pane>
+                                        <div class="competitionTip">
+                                            {{item}}老师队共需1人，还差1人
+                                        </div>
+                                    </div>
+                                </div>
+                            </el-tab-pane>
+                        </div>
+
                     </el-tabs>
-                    
+
                 </div>
             </el-col>
         </el-row>
@@ -208,7 +206,16 @@ export default {
       keyId:'',
       activeName: '',
       descTab:'0',
-      dialogVisible: false,
+      teacherList:['xxx','yyy'],
+      studentList:[
+        {
+          xxx:['aaa','bbb']
+        },
+        {
+          yyy:['ccc','ddd']
+        }
+      ]
+
     }
   },
   computed:{
@@ -217,15 +224,24 @@ export default {
     }
   },
   methods:{
-    //确认关闭
-      handleClose(done) {
-        done();
-        /*this.$confirm('确认关闭？')
-          .then(_ => {
+    //报名提示
+    IWantAdd(val){
+      this.$alert('确定加入'+val+'老师队?', '我要报名', {
+        confirmButtonText: '确定'
+          }).then(() => {
+            this.IWantAddSure();
+          }).catch(() => {
 
-          })
-          .catch(_ => {});*/
-      },  
+          });
+
+    },
+    //报名点击确定
+    IWantAddSure(){
+      this.$message({
+        type: 'success',
+        message: `报名成功`
+      });
+    },
     //下载文件
     sendName(item){
         axios({
@@ -484,5 +500,32 @@ hr{
 .competitionCenter-content .el-button--primary{
     background-color:rgb(159,83,85);
     border-color:rgb(159,83,85);
+}
+.competitionCenter-content .competitionAdd{
+    width:80%;
+    height:400px;
+    margin:0 auto;
+    margin-top:40px;
+    border-radius:15px;
+    background:rgb(210,210,210);
+    box-shadow: 3px -3px 30px #000;
+    padding:25px 25px 25px 35px;
+    box-sizing:border-box;
+    text-align:left;
+    position:relative;
+}
+.competitionCenter-content .studentName{
+    line-height:50px;
+    font-size:18px;
+}
+.competitionCenter-content .competitionTip{
+    position:absolute;
+    right:25px;
+    bottom:50px;
+}
+.competitionCenter-content .joinButton{
+    position:absolute;
+    right:80px;
+    bottom:5px;
 }
 </style>
