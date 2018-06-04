@@ -22,7 +22,7 @@
                 <div>
                     <p class="exerP">{{noTree.label}}</p>
 
-                          <el-tabs type="border-card" v-model="activeName">
+                          <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
 
                             <!--简介-->
                             <el-tab-pane label="本节简介" :name="descTab">
@@ -51,7 +51,7 @@
                               <div id="courseppt">
                                 <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
                                   <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
-                                  <div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1" @mouseenter="mousewheel(index)">
+                                  <div class="courseImg" v-for="(item,index) in lists" v-show="index == page-1" @mouseenter="mousewheel(index)">
                                 <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">-->
                                       <img class="coursepptImg" :src="item.img">
                                       <div class="pptPrev" @click="newPageUp(index)"></div>
@@ -66,13 +66,14 @@
                                   </ppt-slides>
                                 </div>
                                 <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
-                              
+
                             </el-tab-pane>
 
                             <!--微课-->
                             <el-tab-pane label="教学微课">
                                 <div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
                                     <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
+                                    <!--<video id="video-box" controls @click="videostop">-->
                                     </video>
                                 </div>
                             </el-tab-pane>
@@ -85,9 +86,9 @@
                                   <div id="courseWorkPageImg" v-for="(item,index) in courseWorkPagelists">
                                     <img class="teachingBookImg" :src="item.img">
                                   </div>
-                              </div>  
+                              </div>
                               <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
-                              
+
                             </el-tab-pane>
 
                             <!--二维动画-->
@@ -291,44 +292,13 @@ export default {
       total:'',//总信息数
       size:1,//每页显示信息个数不传默认6
       page:1,//当前页码,
-      teachingBooklists: [
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-0.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-1.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-2.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-3.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-4.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-5.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-6.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-7.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-8.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-9.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-10.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-11.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-12.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-13.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-14.png' },
-        ],
-        courseWorkPagelists: [
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-0.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-1.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-2.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-3.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-4.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-5.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-6.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-7.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-8.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-9.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-10.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-11.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-12.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-13.png' },
-          { img : '../../resource/学习任务二更换动力电池内部组件/pdf-14.png' },
-        ],
-        lists:[],
-        scrolled: false,
-        moutedCorusePath:[],
-        moutedHomeworkPath:[]
+      teachingBooklists: [],
+      courseWorkPagelists: [],
+      lists:[],
+      scrolled: false,
+      moutedCorusePath:[],
+      moutedHomeworkPath:[],
+      courseButtonShow:true
     }
   },
   computed:{
@@ -371,6 +341,8 @@ export default {
 //        })
   },
   mounted(){
+
+
    // var scrollbox = document.querySelector(".courseImg");
    // console.log(document.querySelector(".courseImg"))
    // window.addEventListener('scroll', this.handleScroll);
@@ -589,12 +561,33 @@ export default {
 
     },
   methods:{
+    //切换标签暂停视频
+    handleClickTabs(tab){
+      //console.log(tab);
+      //console.log(tab._data)
+      if(tab._data.index == 3){
+        //console.log("我是微课");
+        //this.videostop();
+      }else{
+        //console.log("爱谁谁是");
+        this.clickTabsStop();
+      }
+      if(tab._data.index == 5){
+        //console.log("我是微课");
+        //this.videostop();
+      }else{
+        //console.log("爱谁谁是");
+        this.clickTabsFlashStop();
+      }
+    },
+    //进入页面时的请求地址
     findParent(id){
       var data = this.$store.state.noTree1;
       var coursePath = [];
       var homeworkPath = [];
       id = id.toString();
       if(id == 100){
+        console.log(data.children[0].children[0].children)
         homeworkPath.push(data.label);
         homeworkPath.push(data.children[0].label);
         homeworkPath.push(data.children[0].children[0].label);
@@ -602,43 +595,58 @@ export default {
         coursePath.push(data.label);
         coursePath.push(data.children[0].label);
         coursePath.push(data.children[0].children[0].label);
+        coursePath.push(data.children[0].children[0].children[0].label);
         coursePath.push(this.$store.state.noTree.teachingMaterial);
       }else if(id == 200 || id == 300 || id == 400){
         coursePath.push(data.label);
         coursePath.push(data.children[0].label);
         coursePath.push(data.children[0].children[0].label);
+        homeworkPath = coursePath;
       }else if(id == 500 || id == 600){
         coursePath.push(data.label);
         coursePath.push(data.children[0].label);
+        homeworkPath = coursePath;
+      }else if(id > 1110 && id < 1200){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[0].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[0].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
       }else if(id > 100 && id < 200){
         if(id == 110){
-          homeworkPath.push("新能源汽车");
+          //console.log(this.data[4].label)
+          //console.log(this.data[3].children[1].label)
+          homeworkPath.push(this.data[0].label);
           homeworkPath.push(data.label);
           homeworkPath.push(data.children[0].label);
           homeworkPath.push(data.children[0].children[0].label);
-          coursePath.push("新能源汽车");
+          coursePath.push(this.data[0].label);
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
           coursePath.push(data.children[0].children[0].label);
           coursePath.push(this.$store.state.noTree.teachingMaterial);
         }else if(id > 110 && id < 120){
-          homeworkPath.push("新能源汽车");
-          homeworkPath.push("纯电动汽车");
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
           homeworkPath.push(data.label);
           homeworkPath.push(data.children[0].label);
-          coursePath.push("新能源汽车");
-          coursePath.push("纯电动汽车");
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
           coursePath.push(this.$store.state.noTree.teachingMaterial);
         }else if(id > 120 && id < 130){
-          coursePath.push("新能源汽车");
-          coursePath.push("混合动力汽车");
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[1].label);
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
           homeworkPath = coursePath;
         }else if(id == 120){
-          coursePath.push("新能源汽车");
+          coursePath.push(this.data[0].label);
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
           coursePath.push(data.children[0].children[0].label);
@@ -646,121 +654,121 @@ export default {
         }
       }else if(id > 200 && id < 300){
             if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
-              coursePath.push("汽车发动机");
+              coursePath.push(this.data[1].label);
               coursePath.push(data.label);
               coursePath.push(data.children[0].label);
               homeworkPath = coursePath;
             }else if(id > 210 && id < 220){
-              coursePath.push("汽车发动机");
-              coursePath.push("结构认识");
+              coursePath.push(this.data[1].label);
+              coursePath.push(this.data[1].children[0].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 220 && id < 230){
-              coursePath.push("汽车发动机");
-              coursePath.push("电控发动机");
+              coursePath.push(this.data[1].label);
+              coursePath.push(this.data[1].children[1].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 230 && id < 240){
-              coursePath.push("汽车发动机");
-              coursePath.push("电控发动机不着车故障检修");
+              coursePath.push(this.data[1].label);
+              coursePath.push(this.data[1].children[2].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 240 && id < 250){
-              coursePath.push("汽车发动机");
-              coursePath.push("电控发动机怠速不稳故障检修");
+              coursePath.push(this.data[1].label);
+              coursePath.push(this.data[1].children[3].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 250 && id < 260){
-              coursePath.push("汽车发动机");
-              coursePath.push("电控发动机加速不良故障检修");
+              coursePath.push(this.data[1].label);
+              coursePath.push(this.data[1].children[4].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 260 && id < 270){
-              coursePath.push("汽车发动机");
-              coursePath.push("电控发动机综合故障检修能力训练");
+              coursePath.push(this.data[1].label);
+              coursePath.push(this.data[1].children[5].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }
         }else if(id > 300 && id < 400){
             if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
-              coursePath.push("底盘检修");
+              coursePath.push(this.data[2].label);
               coursePath.push(data.label);
               coursePath.push(data.children[0].label);
               homeworkPath = coursePath;
             }else if(id > 310 && id < 320){
-              coursePath.push("底盘检修");
-              coursePath.push("汽车底盘维修基本知识");
+              coursePath.push(this.data[2].label);
+              coursePath.push(this.data[2].children[0].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 320 && id < 330){
-              coursePath.push("底盘检修");
-              coursePath.push("变速器故障检修");
+              coursePath.push(this.data[2].label);
+              coursePath.push(this.data[2].children[1].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 330 && id < 340){
-              coursePath.push("底盘检修");
-              coursePath.push("转向沉重故障检修");
+              coursePath.push(this.data[2].label);
+              coursePath.push(this.data[2].children[2].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 340 && id < 350){
-              coursePath.push("底盘检修");
-              coursePath.push("速腾行驶系统故障检修");
+              coursePath.push(this.data[2].label);
+              coursePath.push(this.data[2].children[3].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 350 && id < 360){
-              coursePath.push("底盘检修");
-              coursePath.push("制动失灵故障检修");
+              coursePath.push(this.data[2].label);
+              coursePath.push(this.data[2].children[4].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }
           }else if(id > 400 && id < 500){
             if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
-              coursePath.push("汽车电气");
+              coursePath.push(this.data[3].label);
               coursePath.push(data.label);
               coursePath.push(data.children[0].label);
               homeworkPath = coursePath;
             }else if(id > 410 && id < 420){
-              coursePath.push("汽车电气");
-              coursePath.push("电源系统检修");
+              coursePath.push(this.data[3].label);
+              coursePath.push(this.data[3].children[0].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 420 && id < 430){
-              coursePath.push("汽车电气");
-              coursePath.push("起动系统检修");
+              coursePath.push(this.data[3].label);
+              coursePath.push(this.data[3].children[1].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 430 && id < 440){
-              coursePath.push("汽车电气");
-              coursePath.push("照明与信号系统故障检修");
+              coursePath.push(this.data[3].label);
+              coursePath.push(this.data[3].children[2].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 440 && id < 450){
-              coursePath.push("汽车电气");
-              coursePath.push("汽车辅助系统检修");
+              coursePath.push(this.data[3].label);
+              coursePath.push(this.data[3].children[3].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 450 && id < 460){
-              coursePath.push("汽车电气");
-              coursePath.push("仪表系统工作异常故障检修");
+              coursePath.push(this.data[3].label);
+              coursePath.push(this.data[3].children[4].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }else if(id > 460 && id < 470){
-              coursePath.push("汽车电气");
-              coursePath.push("汽车整车电路");
+              coursePath.push(this.data[3].label);
+              coursePath.push(this.data[3].children[5].label);
               coursePath.push(data.label);
               homeworkPath = coursePath;
             }
           }else if(id > 500 && id < 600){
-            coursePath.push("汽车空调");
+            coursePath.push(this.data[4].label);
             coursePath.push(data.label);
             homeworkPath = coursePath;
           }else if(id > 600 && id < 700){
-            coursePath.push("汽车维修");
+            coursePath.push(this.data[5].label);
             coursePath.push(data.label);
             homeworkPath = coursePath;
           }else if(id > 700 && id < 800){
             var allData = this.data;
-            console.log(allData)
+            //console.log(allData)
             if(id == 700 || id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
               if(id == 700){
                 coursePath.push(data.children[0].label);
@@ -772,11 +780,11 @@ export default {
                 homeworkPath = coursePath;
               }
             }else if(id > 710 && id < 720){
-              coursePath.push(allData[6].children[0].label);
-              coursePath.push(data.label);
+              //coursePath.push(allData[6].children[0].label);
+              //coursePath.push(data.label);
               homeworkPath = coursePath;
-              console.log(homeworkPath)
-              console.log(coursePath)
+              //console.log(homeworkPath)
+              //console.log(coursePath)
             }else if(id > 720 && id < 730){
               coursePath.push(allData[6].children[1].label);
               coursePath.push(data.label);
@@ -821,18 +829,19 @@ export default {
         for(var i = 0; i < this.moutedCorusePath.length; i++){
           coursePath = coursePath + this.moutedCorusePath[i] + '/';
         }
+        coursePath = coursePath + this.$store.state.noTree.teachingMaterial;
         homeworkPath.push('我的课堂');
         homeworkPath.push(this.$store.state.username);
         for(var i = 0; i < this.moutedHomeworkPath.length; i++){
-          console.log(this.moutedHomeworkPath)
+          //console.log(this.moutedHomeworkPath)
           homeworkPath.push(this.moutedHomeworkPath[i]);
         }
+        homeworkPath.push(this.$store.state.noTree.teachingMaterial)
       }else{
         for(var i = 0; i < this.moutedCorusePath.length; i++){
           coursePath = coursePath + this.moutedCorusePath[i] + '/';
         }
       }
-      
       //请求PPT
       axios.post("/readResource/getPPT",{
         data:{
@@ -840,10 +849,11 @@ export default {
           fileName: coursePath
         }
       }).then((res)=>{
-      //  console.log(res.data.result);
-        this.lists = res.data.result;
+        //console.log(res.data.result.textBookList);
+        this.lists = res.data.result.courseList;
         this.total = this.lists.length;
-        //console.log(this.homeworkData)
+        this.teachingBooklists = res.data.result.textBookList;
+        this.courseWorkPagelists = res.data.result.workPageList;
       }).catch(function(error){
         console.log("error init." + error)
       });
@@ -886,6 +896,7 @@ export default {
       if(isFull === null){
         document.removeEventListener('DOMMouseScroll',scrollFunc,false);
         window.onmousewheel = document.onmousewheel = null;
+        document.getElementById("courseppt").style.width = 100 + '%';
         //console.log("buquanping");
       }else{
         //console.log("quanping");
@@ -991,7 +1002,40 @@ export default {
     //从树形传值到tabs
     handleNodeClick(data,node) {
       this.appAnswer = false;
-      //  console.log(node);
+        console.log(data);
+
+
+      var now = this.$store.state.noTree.videoTitle[0].videoTitle;
+      console.log(now)
+      var url = 'http://http://127.0.0.1:8080/resource/video/courseVideoData/'+now;
+      console.log(url)
+      var video = document.querySelector('video');
+//      fetch(url)
+//          .then(response => response.blob())
+//          .then(response => {
+//              const url = URL.createObjectURL(response)
+//              video.onload = () => URL.revokeObjectURL(response)
+//              video.src = url
+//          })
+
+
+//        var video = document.getElementById("video");
+//        window.URL = window.URL || window.webkitURL;
+//        var xhr = new XMLHttpRequest();
+//        xhr.open("GET", url, true);
+//
+//        xhr.responseType = "blob";
+//        xhr.onload = function() {
+//          if (this.status == 200) {
+//                var blob = this.response;
+//                video.onload = function(e) {
+//                    window.URL.revokeObjectURL(video.src);
+//                };
+//                video.src = window.URL.createObjectURL(blob);
+//              }
+//        }
+//        xhr.send();
+
       //  console.log(node.data.label);
       //  console.log(node.parent.label);
       //  console.log(node.parent.parent.label);
@@ -1011,7 +1055,7 @@ export default {
           if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){
             this.checkArr.push(node.parent.label)
             this.checkArr.push(node.label)
-          }else if(node.parent.parent.parent.label == '新能源汽车'){
+          }else if(node.parent.parent.parent.label == this.data[0].label){
             this.checkArr.push(node.parent.parent.parent.label)
             this.checkArr.push(node.parent.parent.label)
             this.checkArr.push(node.parent.label)
@@ -1035,6 +1079,7 @@ export default {
             for(var i = 1; i < this.checkArr.length; i++){
               checkArrHomeWork.push(this.checkArr[i]);
             }
+            checkArrHomeWork.push(this.$store.state.noTree.teachingMaterial);
           }else{
 
           }
@@ -1072,6 +1117,7 @@ export default {
                   fileNamePath = fileNamePath + this.checkArr[i] + '/';
                 }
               }
+              fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
             }else{
               for(var i = 0; i < this.checkArr.length; i++){
                 fileNamePath = fileNamePath + this.checkArr[i] + '/';
@@ -1086,10 +1132,11 @@ export default {
               fileName: fileNamePath
             }
           }).then((res)=>{
-          //  console.log(res.data.result);
-            this.lists = res.data.result;
+            console.log(res.data.result.textBookList);
+            this.lists = res.data.result.courseList;
             this.total = this.lists.length;
-            //console.log(this.homeworkData)
+            this.teachingBooklists = res.data.result.textBookList;
+            this.courseWorkPagelists = res.data.result.workPageList;
           }).catch(function(error){
             console.log("error init." + error)
           });
@@ -1348,10 +1395,25 @@ export default {
       videostop(){
         var myVideo =document.getElementById("video-box");
         if (myVideo.paused){
-            myVideo.play()
+            myVideo.play();
         }else {
-          myVideo.pause()
+          myVideo.pause();
         }
+      },
+      //暂停视频
+      clickTabsStop(){
+        var myVideo = document.getElementById("video-box");
+        myVideo.pause();
+      },
+      //开始视频
+      clickTabsStart(){
+        var myVideo =document.getElementById("video-box");
+        myVideo.play();
+      },
+      //暂停二维动画
+      clickTabsFlashStop(){
+        var myVideo =document.getElementById("flash2d");
+        myVideo.pause();
       },
       //点击flash视频暂停开始
       flash2d(){
@@ -1388,6 +1450,10 @@ export default {
         var pptWidth = document.querySelector(".coursepptImg").offsetWidth;
         var innerHeight = window.innerHeight;
         var innerWidth = window.innerWidth;
+        console.log(pptHeight)
+        console.log(pptWidth)
+        console.log(innerHeight)
+        console.log(innerWidth)
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
         if (requestMethod) {
           requestMethod.call(element);
@@ -1399,8 +1465,8 @@ export default {
         }
         //console.log("2221")
         if(element == document.getElementById("courseppt")){
-          if(parseInt(innerWidth / innerHeight) < parseInt(pptWidth / pptHeight)){
-            element.style.width = '100%';
+          if(1.7 < pptWidth / pptHeight){
+            element.style.width = '90%';
             element.style.height = "auto";
           }else{
             element.style.height = 100 + '%';
@@ -1870,7 +1936,7 @@ hr{
     color:gold;
   }
   #courseppt:-webkit-full-screen {
-    
+
   }
   #courseWorkPage:-webkit-full-screen {
     width: 100%;

@@ -244,7 +244,7 @@ import EventBus from '../../assets/js/EventBus';
         }
 
         .numJump .allPage{
-            width:62px;
+            width:75px;
             margin-top:5px;
             margin-left: 19px;
         }

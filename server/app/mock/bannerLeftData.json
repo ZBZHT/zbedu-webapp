@@ -282,7 +282,7 @@
                             {
                               "label":"继电器模组故障检修",
                               "describe":"动力电池继电器模块的功能及作用，更换动力电池继电器模块的详细步骤及操作时的相关注意事项，更换后测量数值是否正常。",
-                              "teachingMaterial":"EV系列-2-3-电机继电器故障检测",
+                              "teachingMaterial":"EV系列-2-3-继电器模组故障检修",
                               "teachingPPTimg":"",
                               "teachingBook":"继电器模组故障检修教材.pdf",
                               "flash2d":"2.3继电器模组故障检修.mp4",
@@ -405,7 +405,7 @@
                               "courseId": 1141
                             },
                             {
-                              "label":"DC/DC故障检修",
+                              "label":"DC-DC故障检修",
                               "describe":"DC-DC功能和工作原理、检测前的注意事项有哪些以及检测步骤和故障现象。利用软件来诊断故障码，和利用外用表测量DC-DC内部线路连接情况。",
                               "teachingMaterial":"EV系列-4-2-DC-DC故障检修",
                               "teachingPPTimg":"",
@@ -619,7 +619,7 @@
                             },
                             {
                               "label":"低压蓄电池警示灯点亮故障检修",
-                              "describe":"详述DC/DC作用，低压蓄电池报警有哪些条件，排除故障的流程等。",
+                              "describe":"详述DC-DC作用，低压蓄电池报警有哪些条件，排除故障的流程等。",
                               "teachingMaterial":"EV系列-5-4-低压蓄电池警示灯亮的检修",
                               "teachingPPTimg":"",
                               "teachingBook":"低压蓄电池警示灯点亮故障检修教材.pdf",
@@ -2749,7 +2749,7 @@
                       "teachingMaterial":"大众速腾-工作任务一-蓄电池充电.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务1  蓄电池充电  教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"1蓄电池充电.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2771,7 +2771,7 @@
                       "teachingMaterial":"大众速腾-蓄电池.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务2  蓄电池检测维护   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"2蓄电池检测维护.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2793,7 +2793,7 @@
                       "teachingMaterial":"大众速腾-发电机故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务3  发电机故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"3发电机故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2815,7 +2815,7 @@
                       "teachingMaterial":"充电指示灯常亮故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"4充电指示灯常亮故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2843,7 +2843,7 @@
                       "teachingMaterial":"起动系统总成认知.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"起动系统.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -2865,7 +2865,7 @@
                       "teachingMaterial":"大众速腾-起动机.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"起动系统故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"起动机线路故障检修4.10.mp4"
@@ -2893,7 +2893,7 @@
                       "teachingMaterial":"大众速腾-近光灯故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"1灯光照明系统.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"右近光灯故障检测-11.14.mp4"
@@ -3020,7 +3020,7 @@
                       "teachingMaterial":"远光灯不亮故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"2前照灯故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"左侧前照灯总成的拆装.mp4"
@@ -3042,7 +3042,7 @@
                       "teachingMaterial":"大众速腾-雾灯.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"大众汽车照明系统教学教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"3雾灯故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3064,7 +3064,7 @@
                       "teachingMaterial":"转向灯工作异常故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"4转向灯不工作故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3086,7 +3086,7 @@
                       "teachingMaterial":"左近光灯故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"近光灯不亮故障检测教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"5近光灯不亮故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"右近光灯故障检测.mp4"
@@ -3108,7 +3108,7 @@
                       "teachingMaterial":"远光灯不亮故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"大众汽车照明系统教学教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"6远光灯不亮故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"右侧远光灯不亮故障检修.mp4"
@@ -3130,7 +3130,7 @@
                       "teachingMaterial":"大众速腾-车内顶灯的检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"大众汽车照明系统教学教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"7车内顶灯的检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3158,7 +3158,7 @@
                       "teachingMaterial":"大众速腾-刮水片.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"",
-                      "flash2d":"",
+                      "flash2d":"1雨刮器检查与更换.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"雨刮系统总成的拆装.mp4"
@@ -3180,7 +3180,7 @@
                       "teachingMaterial":"大众速腾-刮水片宽屏.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务2  雨刮器不工作故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"2雨刮器不工作故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3202,7 +3202,7 @@
                       "teachingMaterial":"大众速腾-电动车窗.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务3  电动车窗故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"3电动车窗故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"后左车窗升降器故障检修.mp4"
@@ -3224,7 +3224,7 @@
                       "teachingMaterial":"后视镜不能调节故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务4  电动后视镜无法调节故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"4后视镜不能调节故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":"车外左后视镜故障检修4.27.mp4"
@@ -3246,7 +3246,7 @@
                       "teachingMaterial":"大众速腾-中控门锁.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务5  汽车中控门锁故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"5中控门锁故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3268,7 +3268,7 @@
                       "teachingMaterial":"大众速腾-多功能方向盘.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务6  多功能方向盘故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"6多功能方向盘故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3290,7 +3290,7 @@
                       "teachingMaterial":"大众速腾-双音喇叭.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务7  双音喇叭故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"7双音喇叭故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3318,7 +3318,7 @@
                       "teachingMaterial":"大众速腾-仪表.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务1  仪表综述  教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"仪表综述.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3340,7 +3340,7 @@
                       "teachingMaterial":"大众速腾-仪表.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"任务2  仪表系统工作异常故障检修   教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"仪表系统工作异常故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3368,7 +3368,7 @@
                       "teachingMaterial":"canbus综述.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"CAN总线介绍.pdf",
-                      "flash2d":"",
+                      "flash2d":"CANBUS综述.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3390,7 +3390,7 @@
                       "teachingMaterial":"典型车型电气故障检修.pdf",
                       "teachingPPTimg":"",
                       "teachingBook":"大众汽车电源系统教学教材.pdf",
-                      "flash2d":"",
+                      "flash2d":"典型车型电气系统故障检修.mp4",
                       "videoTitle":[
                         {
                           "videoTitle":""
@@ -3442,7 +3442,7 @@
                 "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
                 "teachingPPTimg":"",
                 "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
-                "flash2d":"",
+                "flash2d":"汽车空调.mp4",
                 "videoTitle":[
                   {
                     "videoTitle":""
@@ -3464,7 +3464,7 @@
                 "teachingMaterial":"大众速腾-空调滤芯宽屏.pdf",
                 "teachingPPTimg":"",
                 "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
-                "flash2d":"",
+                "flash2d":"汽车空调异味故障检修.mp4",
                 "videoTitle":[
                   {
                     "videoTitle":""
@@ -3487,7 +3487,7 @@
                 "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
                 "teachingPPTimg":"",
                 "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
-                "flash2d":"",
+                "flash2d":"汽车空调不制冷故障检修.mp4",
                 "videoTitle":[
                   {
                     "videoTitle":""
@@ -3510,7 +3510,7 @@
                 "teachingMaterial":"大众速腾-汽车空调宽屏.pdf",
                 "teachingPPTimg":"",
                 "teachingBook":"汽车空调系统--汽车电气设备教材.pdf",
-                "flash2d":"",
+                "flash2d":"汽车空调鼓风机不工作故障检修.mp4",
                 "videoTitle":[
                   {
                     "videoTitle":""
