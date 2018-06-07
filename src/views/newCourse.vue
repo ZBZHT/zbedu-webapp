@@ -65,7 +65,7 @@
                                   :changge="pageFn">
                                   </ppt-slides>
                                 </div>
-                                <el-button type="info" round @click="appFullScreen()">全屏显示</el-button>
+                                <el-button type="info" round @click="appFullScreen(currpage)">全屏显示</el-button>
 
                             </el-tab-pane>
 
@@ -298,13 +298,12 @@ export default {
       scrolled: false,
       moutedCorusePath:[],
       moutedHomeworkPath:[],
-      courseButtonShow:true
+      courseButtonShow:true,
+      currpage:0,
+      homeworkData:[]
     }
   },
   computed:{
-    homeworkData(){
-        return this.$store.state.homeworkData;
-    },
     noTree(){
         return this.$store.state.noTree;
     },
@@ -766,7 +765,7 @@ export default {
             coursePath.push(this.data[5].label);
             coursePath.push(data.label);
             homeworkPath = coursePath;
-          }else if(id > 700 && id < 800){
+          }else if(id >= 700 && id < 800){
             var allData = this.data;
             //console.log(allData)
             if(id == 700 || id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
@@ -774,6 +773,8 @@ export default {
                 coursePath.push(data.children[0].label);
                 coursePath.push(data.children[0].children[0].label);
                 homeworkPath = coursePath;
+                //console.log("222")
+                //console.log(coursePath)
               }else{
                 coursePath.push(data.label);
                 coursePath.push(data.children[0].label);
@@ -819,13 +820,16 @@ export default {
               homeworkPath = coursePath;
             }
           }
-    //  console.log(id)
+      //console.log(id)
       this.moutedCorusePath = coursePath;
       this.moutedHomeworkPath = homeworkPath;
       coursePath = [];
       if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
+        //console.log(this.moutedCorusePath)
+        //console.log(coursePath)
         homeworkPath = [];
         coursePath = coursePath + '我的课堂' + '/' + this.$store.state.username + '/';
+        console.log(this.moutedCorusePath)
         for(var i = 0; i < this.moutedCorusePath.length; i++){
           coursePath = coursePath + this.moutedCorusePath[i] + '/';
         }
@@ -867,12 +871,13 @@ export default {
           //console.log(res.data.result)
           if(res.data.result){
           //  console.log("111"+res.data.result)
-            this.$store.commit('homework',res.data.result);
+            this.homeworkData = res.data.result
+          //  this.$store.commit('homework',res.data.result);
           }else{
-          //  console.log("222"+res.data.result)
-            this.$store.commit('homework',[]);
+            //  console.log("222"+res.data.result)
+            //  this.$store.commit('homework',[]);
+            this.homeworkData = []
           }
-          this.$store.commit('homework',[]);
           //console.log(this.homeworkData)
       }).catch(function(error){
           console.log("error init." + error)
@@ -893,10 +898,11 @@ export default {
                    document.mozFullScreenElement ||
                    document.webkitFullscreenElement
       //console.log(isFull)
+      this.currpage = val;
       if(isFull === null){
         document.removeEventListener('DOMMouseScroll',scrollFunc,false);
         window.onmousewheel = document.onmousewheel = null;
-        document.getElementById("courseppt").style.width = 100 + '%';
+
         //console.log("buquanping");
       }else{
         //console.log("quanping");
@@ -1041,6 +1047,12 @@ export default {
       //  console.log(node.parent.parent.label);
       //  console.log(node.parent.parent.parent.label);
 
+      for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
+        document.getElementsByClassName("coursepptImg")[i].style.height = '100%';
+        document.getElementsByClassName("coursepptImg")[i].style.width = '100%';
+      }
+      this.homeworkData = []
+      
       if(data.children){
 
       }else{
@@ -1091,11 +1103,15 @@ export default {
           }).then((res)=>{
               //console.log(res.data.result)
               if(res.data.result){
-              //  console.log("1111")
-                this.$store.commit('homework',res.data.result);
+                //  console.log("1111")
+                //  this.$store.commit('homework',res.data.result);
+                this.homeworkData = res.data.result
+                console.log(this.homeworkData)
               }else{
-              //  console.log(res.data.result)
-                this.$store.commit('homework',[]);
+                //  console.log(res.data.result)
+                //  this.$store.commit('homework',[]);
+                this.homeworkData = [];
+                console.log(this.homeworkData)
               }
               //console.log(this.homeworkData)
           }).catch(function(error){
@@ -1429,10 +1445,10 @@ export default {
         this.appAnswer = true;
       },
       //点击显示课件全屏
-      appFullScreen(){
+      appFullScreen(val){
         var elem = document.getElementById("courseppt");
         console.log(elem);
-        this.requestFullScreen(elem);
+        this.requestFullScreen(elem,val);
       },
       workPageFullScreen(){
         var elem = document.getElementById("courseWorkPage");
@@ -1445,11 +1461,13 @@ export default {
         this.requestFullScreen(elem);
       },
       //类似F11的全屏
-      requestFullScreen(element) {
-        var pptHeight = document.querySelector(".coursepptImg").offsetHeight;
-        var pptWidth = document.querySelector(".coursepptImg").offsetWidth;
+      requestFullScreen(element,val) {
+        var pptHeight = document.getElementsByClassName("coursepptImg")[val].offsetHeight;
+        var pptWidth = document.getElementsByClassName("coursepptImg")[val].offsetWidth;
         var innerHeight = window.innerHeight;
         var innerWidth = window.innerWidth;
+        console.log(document.getElementsByClassName("coursepptImg")[0])
+        console.log(val)
         console.log(pptHeight)
         console.log(pptWidth)
         console.log(innerHeight)
@@ -1466,11 +1484,17 @@ export default {
         //console.log("2221")
         if(element == document.getElementById("courseppt")){
           if(1.7 < pptWidth / pptHeight){
-            element.style.width = '90%';
+          //  console.log(pptWidth / pptHeight)
+            element.style.width = '100%';
             element.style.height = "auto";
-          }else{
-            element.style.height = 100 + '%';
-            element.style.width = "auto";
+          }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800 && 1.7 >= pptWidth / pptHeight){
+          //  console.log(1.7)
+            var realHeight = innerHeight + 50;
+            for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
+              document.getElementsByClassName("coursepptImg")[i].style.height = realHeight + 'px';
+              document.getElementsByClassName("coursepptImg")[i].style.width = "auto";
+            }
+
           }
         }
       }
@@ -1548,10 +1572,9 @@ hr{
 }
 .newCourse-content #courseppt{
     width:100%;
-    height: 700px;
 }
 .newCourse-content .courseImg{
-    height:89%;
+    height:100%;
     position:relative;
     cursor:pointer;
 }
@@ -1936,7 +1959,7 @@ hr{
     color:gold;
   }
   #courseppt:-webkit-full-screen {
-
+    background:#000;
   }
   #courseWorkPage:-webkit-full-screen {
     width: 100%;

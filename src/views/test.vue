@@ -1453,6 +1453,11 @@
     font-size: 20px;
   }
 
+  .test_T .line{
+    margin-left: -32px;
+    margin-top: 8px;
+  }
+
   .test_T .exerciseOnline {
     width: 100%;
     height: 100%;

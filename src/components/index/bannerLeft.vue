@@ -52,6 +52,55 @@ export default {
     }
   },
   methods: {
+    letBannerLeft(){
+          axios.get("/readJson/bannerLeftData",{
+            params:{
+                user:234
+            }
+            }).then((res)=>{
+            if(this.$store.state.userType == "S"){
+                this.bannerLeftData = res.data[0];
+                var newBannerLeft = [];
+            //    console.log(this.bannerLeftData.children.length -1);
+                for(var i = 0; i < this.bannerLeftData.children.length; i++){
+                //    console.log(i)
+                    if(i != this.bannerLeftData.children.length -1){
+                        newBannerLeft.push(this.bannerLeftData.children[i]);
+                    }
+                    //console.log(newBannerLeft)
+                }  
+                this.bannerLeftData.children = newBannerLeft;
+            }else{
+                this.bannerLeftData = res.data[0];
+                var lastData = res.data[0];
+            //      console.log(lastData.children[6])
+            //      console.log(this.bannerLeftData[0].children[6])
+            //    console.log("this.secondData");
+            //    console.log(this.secondData)
+                for(var h = 0; h < this.secondData.length; h++){
+            //        console.log(this.secondData.length)
+                    this.bannerLeftData.children[6].children.push(this.secondData[h])
+                }
+            //    console.log(this.bannerLeftData)
+                if(this.$store.state.username){
+                    var myName = this.$store.state.username;
+                    for(var i = 0; i < myName.length; i++){
+                        if(i == 0){
+                            var myFirstName = myName[i]
+                        }
+                    }
+                    // console.log(myFirstName)
+                    this.bannerLeftData.children[6].label = myFirstName + '老师课堂'
+                }
+                
+            //    console.log(this.bannerLeftData.children[6].children)
+                this.$store.commit('newBannerLeft',this.bannerLeftData.children);
+                
+            }
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
+      },
     setMsg: function (item) {
       //  console.log(item);
       //  console.log(this.bannerLeftData)
@@ -90,6 +139,7 @@ export default {
     }
   },
   mounted(){
+    
     if(this.$store.state.userType == "S"){
 
     }else{
@@ -134,66 +184,12 @@ export default {
                 children:this.thirdData
             })
         }
-
+        this.letBannerLeft();
         }).catch(function(error){
         console.log("error init." + error)
         });
     }
-    
-
-    setTimeout(function () {
-       axios.get("/readJson/bannerLeftData",{
-        params:{
-            user:234
-        }
-        }).then((res)=>{
-        if(this.$store.state.userType == "S"){
-            this.bannerLeftData = res.data[0];
-            var newBannerLeft = [];
-        //    console.log(this.bannerLeftData.children.length -1);
-            for(var i = 0; i < this.bannerLeftData.children.length; i++){
-            //    console.log(i)
-                if(i != this.bannerLeftData.children.length -1){
-                    newBannerLeft.push(this.bannerLeftData.children[i]);
-                }
-                //console.log(newBannerLeft)
-            }  
-            this.bannerLeftData.children = newBannerLeft;
-        }else{
-            this.bannerLeftData = res.data[0];
-            var lastData = res.data[0];
-        //      console.log(lastData.children[6])
-        //      console.log(this.bannerLeftData[0].children[6])
-        //    console.log("this.secondData");
-        //    console.log(this.secondData)
-            for(var h = 0; h < this.secondData.length; h++){
-        //        console.log(this.secondData.length)
-                this.bannerLeftData.children[6].children.push(this.secondData[h])
-            }
-        //    console.log(this.bannerLeftData)
-            if(this.$store.state.username){
-                var myName = this.$store.state.username;
-                for(var i = 0; i < myName.length; i++){
-                    if(i == 0){
-                        var myFirstName = myName[i]
-                    }
-                }
-                // console.log(myFirstName)
-                this.bannerLeftData.children[6].label = myFirstName + '老师课堂'
-            }
-            
-        //    console.log(this.bannerLeftData.children[6].children)
-            this.$store.commit('newBannerLeft',this.bannerLeftData.children);
-            
-        }
-        }).catch(function(error){
-            console.log("error init." + error)
-        });
-             
-
-    }.bind(this),1000)
-
-    
+        
   },
 }
 </script>

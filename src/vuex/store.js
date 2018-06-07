@@ -18,16 +18,12 @@ export default new Vuex.Store({
     vuexState:'',
     stillBtn:false,
     userID:'',
-    homeworkData:[],
     testCode:0,
     exerciseData:'',
     competitionData:'',
     newBannerLeft:[]
 },
  mutations : {
-    homework(state,item){
-        state.homeworkData = item;
-    },
     newTitle(state,item){
         state.course = item;
     },

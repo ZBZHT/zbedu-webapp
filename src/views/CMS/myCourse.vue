@@ -284,10 +284,11 @@
               <el-button type="primary">上传课件</el-button>
             </el-upload>
           </el-form-item>
+
           <el-form-item label="微课名称" prop="videoTitle">
             <el-input v-model="videoTitle" style="width:70%;"></el-input>
             <el-upload
-              class="upload-demo"
+              class="upload-demo1"
               style="float:right;"
               action="/teacherCMS/uploadCourse"
               :on-success="uploadSuccess2"
@@ -319,6 +320,7 @@
     name: 'myCourse',
     data() {
       return {
+        loading1: true,
         resDataForm: [],
         dataForm: [],
         courseIndex: 0,  //新增课程的index
@@ -369,6 +371,9 @@
         appendNode: '',
         value1: '',
         videoTitle:'',
+        upDate:this.resDataForm,
+        newFileName1:'',
+        newFileName2:'',
       }
     },
     computed: {},
@@ -423,6 +428,7 @@
       },
       //编辑
       editCourse(index, row) {
+        //console.log(this.resDataForm[index].label);
         this.courseIndex = index;
         this.editForm = this.dataForm[index];
         this.dialogVisible7 = true;
@@ -430,7 +436,12 @@
         if (this.editForm.videoTitle.length>0) {
           this.videoTitle = this.editForm.videoTitle[0].videoTitle
         }
-        //console.log(this.editForm);
+        this.newFileName1 = '';
+        this.newFileName1 = this.resDataForm[this.tabIndex].label;
+        this.newFileName2 = '';
+        this.newFileName2 = this.editForm.label;
+        console.log(this.newFileName1);
+        console.log(this.newFileName2);
       },
       //编辑, 取消
       closeEdit() {
@@ -444,6 +455,7 @@
       },
       //编辑, 上传课件前
       editBeforeUpload1(file) {
+        this.successMsg(file.name + '正在上传，并做处理，请稍等!');
         if (file.name != '') {
             if (this.value1 === this.resDataForm[this.resDataForm.length-1].label) {
                 let EE = this.resDataForm[this.resDataForm.length-1].course;
@@ -528,14 +540,18 @@
               this.dialogVisible8 = true;
             }
           }
+          this.newFileName1 = '';
+          this.newFileName1 = this.form.name;
+          console.log(this.newFileName1);
         } else {
           this.warningMsg('名称不能为空')
         }
       },
       //目录,课程名称
       addCourse1() {
+          //console.log(this.courseForm1.name);
         if (this.courseForm1.name != '') {
-            console.log(this.dataForm);
+            //console.log(this.dataForm);
           let EE = this.resDataForm[this.resDataForm.length-1].course;
           if (EE.length === 0) {
             let newCourse = { label : this.courseForm1.name, describe: '', teachingMaterial: '', videoTitle: [] };
@@ -546,12 +562,15 @@
             this.resDataForm[this.courseIndex].course.push(newCourse);
             //this.dataForm = newCourse;
           }
-          console.log(this.dataForm);
+          this.newFileName2 = '';
+          this.newFileName2 = this.courseForm1.name;
+          console.log(this.newFileName2);
           this.dialogVisible8 = false;
           this.dialogVisible9 = true;
         } else {
           this.warningMsg('名称不能为空')
         }
+        this.updateCustomCourse();
       },
       //目录,课程简介
       addDescribe1() {
@@ -560,10 +579,11 @@
           EE[EE.length-1].describe = this.describeNode1.describe;
           this.dialogVisible9 = false;
           this.dialogVisible5 = true;
-          console.log(EE);
+          //console.log(EE);
         } else {
           this.warningMsg('课程简介不能为空')
         }
+        this.updateCustomCourse();
       },
       //添加课程
       addCourse() {
@@ -578,7 +598,13 @@
             this.dialogVisible4 = false;
             this.dialogVisible2 = true;
           }
-          console.log(this.resDataForm[this.courseIndex]);
+          this.newFileName1 = '';
+          this.newFileName1 = this.value1;
+          this.newFileName2 = '';
+          this.newFileName2 = this.courseForm.name;
+          console.log(this.newFileName1);
+          console.log(this.newFileName2);
+          //console.log(this.resDataForm[this.courseIndex]);
         } else {
           this.warningMsg('名称不能为空')
         }
@@ -641,20 +667,38 @@
         this.dialogVisible6 = true;
       },
       skip2() {
+        let EE = this.resDataForm[this.courseIndex].course;
+        let newCourse = { videoTitle : '', };
+        EE[EE.length-1].videoTitle.push(newCourse);
         this.dialogVisible6 = false;
         this.updateCustomCourse();
         this.form.name = '';
       },
       //上传课件成功
       uploadSuccess1(response, file, fileList) {
-          //console.log(response.code);
-          if (response.code === 0) {
-              this.getCustomCourse();
-            this.successMsg(file.name + '已上传成功!');
-          }
+        if (response.code === 0) {
+          this.updateCustomCourse();
+          this.getCustomCourse();
+
+          //发送newFileName
+          axios.post('/teacherCMS/uploadCourseSec', {
+            data: {
+              newFileName1: this.newFileName1,
+              newFileName2: this.newFileName2,
+              fileName: file.name,
+            }
+          }).then((res) => {
+            if (res.data.code === 0) {
+              this.successMsg(file.name + '上传的文件已处理完!');
+            }
+            //console.log(this.resDataForm[0]);
+            //this.dataForm.push(this.resDataForm[0]);
+          });
+        }
       },
       //上传课件前
       beforeUpload1(file) {
+        this.successMsg(file.name + '正在上传，并做处理!');
         if (file.name != '') {
           let EE = this.resDataForm[this.courseIndex].course;
           EE[EE.length-1].teachingMaterial = file.name;
@@ -666,6 +710,7 @@
       uploadSuccess2(response, file, fileList) {
         if (response.code === 0) {
           this.updateCustomCourse();
+          this.getCustomCourse();
           this.form.name = '';
           this.successMsg(file.name + '已上传成功!');
         }
@@ -677,7 +722,6 @@
           let newCourse = { videoTitle : file.name, };
           EE[EE.length-1].videoTitle.push(newCourse);
           //console.log(this.resDataForm);
-          this.successMsg('正在上传,上传完成将会有提示信息!');
           this.dialogVisible6 = false;
         }
       },

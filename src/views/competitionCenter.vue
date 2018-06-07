@@ -274,7 +274,7 @@ export default {
       var id = data.id;
       if(id == 3110 || id == 3120 || id == 3130){
           //console.log(id)
-          //console.log(id.toString()+1)
+          //console.log(id.toString() + 1)
           this.is697 = true;
           this.is123 = false;
           this.is926 = false;

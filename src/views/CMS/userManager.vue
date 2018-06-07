@@ -740,7 +740,7 @@
             }
           }).then((res) => {
             if (res.data.code === 0) {
-              this.addUserSuccess('用户信息已存入数据库');
+              this.addUserSuccess('添加成功');
               this.resetStu();
               this.getUserData();
             }
