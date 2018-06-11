@@ -11,7 +11,7 @@ import pptSlides from '@/components/courseTree/pptSlides'
 
 
 export default {
-  name: 'textCenter',
+  name: 'testCenter',
   data () {
     return {
         lists: [
@@ -44,7 +44,7 @@ export default {
         window.URL = window.URL || window.webkitURL;
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "http://127.0.0.1:8080/resource/video/courseVideoData/拆卸车轮.mp4", true);
-        
+
             xhr.responseType = "blob";
             xhr.onload = function() {
             if (this.status == 200) {
@@ -56,7 +56,7 @@ export default {
                 }
             }
             xhr.send();
-            
+
 //      var video = document.querySelector('video');
 //        var assetURL = 'http://127.0.0.1:8080/resource/video/courseVideoData/拆卸车轮.mp4';
 //        // Need to be specific for Blink regarding codecs
