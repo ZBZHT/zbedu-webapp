@@ -24,28 +24,6 @@
 
                           <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
 
-                            <!--简介-->
-                            <el-tab-pane label="本节简介" :name="descTab">
-                                <div class="courseDescribe" >
-                                    <p class="title">课程简介：</p>
-                                    <p class="desc">{{ noTree.describe }}</p>
-                                </div>
-                            </el-tab-pane>
-
-                            <!--教材-->
-                            <el-tab-pane label="本节教材">
-                              <div id="teachingBook">
-                                <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
-                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
-                                <div id="teachingBookImg" v-for="(item,index) in teachingBooklists">
-                                  <img class="teachingBookImg" :src="item.img">
-                                </div>
-                              </div>
-
-                              <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
-
-                            </el-tab-pane>
-
                             <!--课件-->
                             <el-tab-pane label="教学课件">
                               <div id="courseppt">
@@ -93,7 +71,7 @@
                             </el-tab-pane>
 
                             <!--二维动画-->
-                            <el-tab-pane label="二维动画">
+                            <el-tab-pane label="flash动画">
                               <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                               <div>
                                 <video id="flash2d" autoplay controls @click="flash2d" :src="'resource/' + this.videoPath + noTree.flash2d">
@@ -181,43 +159,34 @@
                                     <textarea type="text" v-model="text"/>
 
                                     <div class="shopList">
-                                        <p>请评价：</p>
-                                        <p class="all">
-
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="0" v-model="inputdata"/>
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="1" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="2" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="3" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="4" v-model="inputdata" />
-                                        <span>★</span>
-                                        <!--<input-->
-                                        <!--type="radio"-->
-                                        <!--name="b"-->
-                                        <!--value="5" v-model="inputdata" />-->
-                                        <!--<span>★</span>-->
-
-                                        </p>
-                                        <p>{{ arrData[inputdata]}}</p>
-                                        <br>
+                                        <div class="block">
+                                          <span class="demonstration">教学课件的内容</span>
+                                          <el-rate
+                                            v-model="appraiseStar.value1"
+                                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                                          </el-rate>
+                                        </div>
+                                        <div class="block">
+                                          <span class="demonstration">教学微课的质量</span>
+                                          <el-rate
+                                            v-model="appraiseStar.value2"
+                                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                                          </el-rate>
+                                        </div>
+                                        <div class="block">
+                                          <span class="demonstration">工作页的内容</span>
+                                          <el-rate
+                                            v-model="appraiseStar.value3"
+                                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                                          </el-rate>
+                                        </div>
+                                        <div class="block">
+                                          <span class="demonstration">flash动画的质量</span>
+                                          <el-rate
+                                            v-model="appraiseStar.value4"
+                                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                                          </el-rate>
+                                        </div>
                                         <el-button type="success" round @click="submitComments()">提交评论</el-button>
                                     </div>
                                 </div>
@@ -263,8 +232,13 @@ export default {
       replyToReplyArr:[],
       currentMsg:'',
       appraiseMsg: '全部评价',
-      inputdata: 0,
-      arrData: ['一星', '两星', '三星', '四星', '五星'],
+      appraiseStar:{
+        value1:null,
+        value2:null,
+        value3:null,
+        value4:null,
+      },
+      
       currentdate: '',
       isAppearCommentBox: false,
       isAppearCommentBox1: false,
@@ -1750,6 +1724,7 @@ hr{
   padding:0 10px;
   border-top: none;
   color: #212529;
+  width: 150px;
 }
 .newCourse-content .el-tabs--border-card{
     margin-left:20px;
@@ -1887,8 +1862,6 @@ hr{
     text-align: left;
     padding: 10px;
     margin: 0 30px 30px;
-    /*background: red;*/
-    /*border-bottom: 1px solid #ccc;*/
   }
   .newCourse-content .design-box{
     width: 560px;
@@ -1930,6 +1903,9 @@ hr{
   .appraise-box .text-box .text-box-a:hover{
     color: red;
     text-decoration: none;
+  }
+  .appraise-box .block{
+    display:flex;
   }
   .comment-box .msg-box{
     /*background: pink;*/
