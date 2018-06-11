@@ -21,6 +21,7 @@ const readTestQuestion = require('./routes/readTestQuestion');
 const readTestQuestionInfo = require('./routes/readTestQuestionInfo');
 const testManagement = require('./routes/testManagement');
 const fileUpDown = require('./routes/fileUpDown');
+const readResource = require('./routes/readResource');
 
 const app = express();
 
@@ -46,7 +47,10 @@ app.use(session({
   cookie: {maxAge: 1000 * 60 * 180}, //设置maxAge是30分钟
   resave: false,  //每次请求都自动更新session
   saveUninitialized: false,      // 是否设置session在存储容器中可以给修改
-  store: new MongoStore({ url: 'mongodb://127.0.0.1/zbt' })//设置数据库
+  store: new MongoStore({
+    url: 'mongodb://127.0.0.1/zbt',
+    collection: 'sessions'
+  })//设置数据库
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -63,6 +67,7 @@ app.use('/readTestQuestion', readTestQuestion);//读取考试数据
 app.use('/readTestQuestionInfo', readTestQuestionInfo);//考试成绩
 app.use('/testManagement', testManagement);//考试管理
 app.use('/fileUpDown', fileUpDown);//上传下载
+app.use('/readResource', readResource);//读取ppt,视频,pdf等资源
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

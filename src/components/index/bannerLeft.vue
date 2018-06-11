@@ -44,7 +44,33 @@ export default {
   data () {
     return {
       msg: 'bannerLeft',
-      bannerLeftData:'',
+      bannerLeftData:{
+
+              "children":[
+                  {
+                    "label":"新能源汽车"
+                  },
+                  {
+                    "label":"汽车发动机"
+                  },
+                  {
+                    "label":"底盘检修"
+                  },
+                  {
+                    "label":"汽车电气"
+                  },
+                  {
+                    "label":"汽车空调"
+                  },
+                  {
+                    "label":"汽车维护"
+                  },
+                  {
+                    "label":"自定义课程"
+                  },
+              ]
+
+      },
       secondData:[],
       thirdData:[],
       teachingPPTimg:[],
@@ -68,7 +94,7 @@ export default {
                         newBannerLeft.push(this.bannerLeftData.children[i]);
                     }
                     //console.log(newBannerLeft)
-                }  
+                }
                 this.bannerLeftData.children = newBannerLeft;
             }else{
                 this.bannerLeftData = res.data[0];
@@ -92,10 +118,10 @@ export default {
                     // console.log(myFirstName)
                     this.bannerLeftData.children[6].label = myFirstName + '老师课堂'
                 }
-                
+
             //    console.log(this.bannerLeftData.children[6].children)
                 this.$store.commit('newBannerLeft',this.bannerLeftData.children);
-                
+
             }
             }).catch(function(error){
                 console.log("error init." + error)
@@ -135,11 +161,11 @@ export default {
           window.open(href, '_blank')
       }
      }
-      
+
     }
   },
   mounted(){
-    
+//    console.log(this.bannerLeftData)
     if(this.$store.state.userType == "S"){
 
     }else{
@@ -153,8 +179,8 @@ export default {
         for(var i = 0; i < tab.length; i++){
             this.thirdData = []
             for(var j = 0; j < tab[i].course.length; j++){
-            var ii = i + 1;    
-            var jj = j + 1;    
+            var ii = i + 1;
+            var jj = j + 1;
             //    this.teachingPPTimg.push({
             //        teachingPPTimg:tab[i].course[j].teachingPPTimg
             //    })
@@ -164,7 +190,7 @@ export default {
             //            videoTitle:tab[i].course[j].videoTitle[t]
             //        })
             //    }
-                
+
                 this.thirdData.push({
                     label:tab[i].course[j].label,
                     describe:tab[i].course[j].describe,
@@ -177,7 +203,7 @@ export default {
                     workPage:''
                 })
             }
-            
+
             this.secondData.push({
                 label:tab[i].label,
                 courseId:'7' + ii + '0',
@@ -189,7 +215,7 @@ export default {
         console.log("error init." + error)
         });
     }
-        
+
   },
 }
 </script>

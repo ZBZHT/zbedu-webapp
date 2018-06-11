@@ -71,8 +71,9 @@
 
                             <!--微课-->
                             <el-tab-pane label="教学微课">
-                                <div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
-                                    <video id="video-box" controls @click="videostop" :src="'/resource/video/courseVideoData/' + item.videoTitle">
+                                <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
+                                <div>
+                                    <video id="video-box" controls @click="videostop" :src="'resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
                                     <!--<video id="video-box" controls @click="videostop">-->
                                     </video>
                                 </div>
@@ -93,8 +94,9 @@
 
                             <!--二维动画-->
                             <el-tab-pane label="二维动画">
-                              <div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">
-                                <video id="flash2d" autoplay controls @click="flash2d" :src="'/resource/video/flash2d/' + noTree.flash2d">
+                              <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
+                              <div>
+                                <video id="flash2d" autoplay controls @click="flash2d" :src="'resource/' + this.videoPath + noTree.flash2d">
                                 </video>
                               </div>
                             </el-tab-pane>
@@ -300,7 +302,8 @@ export default {
       moutedHomeworkPath:[],
       courseButtonShow:true,
       currpage:0,
-      homeworkData:[]
+      homeworkData:[],
+      videoPath:''
     }
   },
   computed:{
@@ -606,6 +609,7 @@ export default {
         coursePath.push(data.children[0].label);
         homeworkPath = coursePath;
       }else if(id > 1110 && id < 1200){
+        if(id >= 1111 && id <1120){
           homeworkPath.push(this.data[0].label);
           homeworkPath.push(this.data[0].children[0].label);
           homeworkPath.push(this.data[0].children[0].children[0].label);
@@ -615,6 +619,87 @@ export default {
           coursePath.push(this.data[0].children[0].children[0].label);
           coursePath.push(data.label);
           coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1120 && id <1130){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[1].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[1].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1130 && id <1140){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[2].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[2].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1140 && id <1150){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[3].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[3].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1150 && id <1160){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[4].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[4].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1160 && id <1170){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[5].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[5].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1170 && id <1180){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[6].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[6].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1180 && id <1190){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[7].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[7].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }else if(id >= 1190 && id <120){
+          homeworkPath.push(this.data[0].label);
+          homeworkPath.push(this.data[0].children[0].label);
+          homeworkPath.push(this.data[0].children[0].children[8].label);
+          homeworkPath.push(data.label);
+          coursePath.push(this.data[0].label);
+          coursePath.push(this.data[0].children[0].label);
+          coursePath.push(this.data[0].children[0].children[8].label);
+          coursePath.push(data.label);
+          coursePath.push(this.$store.state.noTree.teachingMaterial);
+        }
       }else if(id > 100 && id < 200){
         if(id == 110){
           //console.log(this.data[4].label)
@@ -781,8 +866,8 @@ export default {
                 homeworkPath = coursePath;
               }
             }else if(id > 710 && id < 720){
-              //coursePath.push(allData[6].children[0].label);
-              //coursePath.push(data.label);
+              coursePath.push(allData[6].children[0].label);
+              coursePath.push(data.label);
               homeworkPath = coursePath;
               //console.log(homeworkPath)
               //console.log(coursePath)
@@ -824,15 +909,16 @@ export default {
       this.moutedCorusePath = coursePath;
       this.moutedHomeworkPath = homeworkPath;
       coursePath = [];
-      if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
+      if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800){
         //console.log(this.moutedCorusePath)
         //console.log(coursePath)
         homeworkPath = [];
         coursePath = coursePath + '我的课堂' + '/' + this.$store.state.username + '/';
-        console.log(this.moutedCorusePath)
+    //    console.log(this.moutedCorusePath)
         for(var i = 0; i < this.moutedCorusePath.length; i++){
           coursePath = coursePath + this.moutedCorusePath[i] + '/';
         }
+        this.videoPath = coursePath;
         coursePath = coursePath + this.$store.state.noTree.teachingMaterial;
         homeworkPath.push('我的课堂');
         homeworkPath.push(this.$store.state.username);
@@ -845,7 +931,19 @@ export default {
         for(var i = 0; i < this.moutedCorusePath.length; i++){
           coursePath = coursePath + this.moutedCorusePath[i] + '/';
         }
+        if((id > 1110 && id < 1200) || (id >= 100 && id < 200) || (id > 110 && id < 120) || (id >= 700 && id < 800)){
+          for(var i = 0; i < this.moutedCorusePath.length - 1; i++){
+            this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+          }
+        }else{
+          for(var i = 0; i < this.moutedCorusePath.length; i++){
+            this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+          }
+        }
       }
+
+    console.log(coursePath)
+    //console.log(this.videoPath + this.$store.state.noTree.videoTitle[0].videoTitle)
       //请求PPT
       axios.post("/readResource/getPPT",{
         data:{
@@ -861,6 +959,7 @@ export default {
       }).catch(function(error){
         console.log("error init." + error)
       });
+      
       //请求课后作业
       axios.get("/readTestQuestion/getHomeWork",{
         params:{
@@ -1011,10 +1110,10 @@ export default {
         console.log(data);
 
 
-      var now = this.$store.state.noTree.videoTitle[0].videoTitle;
-      console.log(now)
-      var url = 'http://http://127.0.0.1:8080/resource/video/courseVideoData/'+now;
-      console.log(url)
+//      var now = this.$store.state.noTree.videoTitle[0].videoTitle;
+//      console.log(now)
+//      var url = 'http://http://127.0.0.1:8080/resource/video/courseVideoData/'+now;
+//      console.log(url)
       var video = document.querySelector('video');
 //      fetch(url)
 //          .then(response => response.blob())
@@ -1051,8 +1150,10 @@ export default {
         document.getElementsByClassName("coursepptImg")[i].style.height = '100%';
         document.getElementsByClassName("coursepptImg")[i].style.width = '100%';
       }
-      this.homeworkData = []
-      
+      this.homeworkData = [];
+      this.courseId1 = '';
+      this.courseId2 = '';
+
       if(data.children){
 
       }else{
@@ -1124,6 +1225,7 @@ export default {
               for(var i = 0; i < this.checkArr.length; i++){
                   fileNamePath = fileNamePath + this.checkArr[i] + '/';
               }
+              this.videoPath = fileNamePath;
               fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
             }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
               for(var i = 0; i < this.checkArr.length; i++){
@@ -1133,11 +1235,13 @@ export default {
                   fileNamePath = fileNamePath + this.checkArr[i] + '/';
                 }
               }
+              this.videoPath = fileNamePath;
               fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
             }else{
               for(var i = 0; i < this.checkArr.length; i++){
                 fileNamePath = fileNamePath + this.checkArr[i] + '/';
               }
+              this.videoPath = fileNamePath;
             }
             console.log(this.$store.state.noTree1.courseId)
             console.log(fileNamePath)
@@ -1462,16 +1566,13 @@ export default {
       },
       //类似F11的全屏
       requestFullScreen(element,val) {
-        var pptHeight = document.getElementsByClassName("coursepptImg")[val].offsetHeight;
-        var pptWidth = document.getElementsByClassName("coursepptImg")[val].offsetWidth;
-        var innerHeight = window.innerHeight;
-        var innerWidth = window.innerWidth;
-        console.log(document.getElementsByClassName("coursepptImg")[0])
-        console.log(val)
-        console.log(pptHeight)
-        console.log(pptWidth)
-        console.log(innerHeight)
-        console.log(innerWidth)
+        
+      //  console.log(document.getElementsByClassName("coursepptImg")[0])
+      //  console.log(val)
+      //  console.log(pptHeight)
+      //  console.log(pptWidth)
+      //  console.log(innerHeight)
+      //  console.log(innerWidth)
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
         if (requestMethod) {
           requestMethod.call(element);
@@ -1483,6 +1584,10 @@ export default {
         }
         //console.log("2221")
         if(element == document.getElementById("courseppt")){
+          var pptHeight = document.getElementsByClassName("coursepptImg")[val].offsetHeight;
+          var pptWidth = document.getElementsByClassName("coursepptImg")[val].offsetWidth;
+          var innerHeight = window.innerHeight;
+          var innerWidth = window.innerWidth;
           if(1.7 < pptWidth / pptHeight){
           //  console.log(pptWidth / pptHeight)
             element.style.width = '100%';

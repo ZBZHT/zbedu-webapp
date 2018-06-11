@@ -20,67 +20,75 @@ router.use(function (req, res, next) {
   next();
 });
 
-/*
- * 老师
- * */
+
 //老师创建考试
 function newTestQuestion(req, res, next) {
   let reqQ = req.query;
-  TeachNewTestQ.find().then(function (result) {
-    function start() {
-      return new Promise((resolve, reject) => {
-        resolve('start');
-      });
-    }
-    start()
-      .then(data => {
-        if (result.length !== 0) {
-          let EE = [];
-          for (let i=0; i<=result.length-1; i++) {
-            EE.push(result[i].id)
-          }
-          testResult.resId = (Math.max.apply(null, EE)) + 1;
-        } else {
-          testResult.resId = 1;
-        }
-      })
-      .then(data => {
-        //console.log(testResult.resId);
-        let teachNewTestQ = new TeachNewTestQ({
-          id : testResult.resId,
-          user: reqQ.user,
-          theme: reqQ.theme,
-          name: reqQ.name,
-          nameId: reqQ.nameId,
-          currTestType: reqQ.currTestType,
-          state: 0,
-          date1: reqQ.date1,
-          date2: reqQ.date2,
-          date3: reqQ.date3,
-          date4: reqQ.date4,
-          num: reqQ.num,
-          timeHour: reqQ.timeHour,
-          timeMin: reqQ.timeMin,
-          major: reqQ.major,
-          classGrade: reqQ.classGrade,
-          newData: reqQ.newData,
-          allScore: reqQ.allScore,
-          question: [],
-        });
-        teachNewTestQ.save(function (err) {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('Success! teachNewTestQ');
-          }
-        });
-      })
+  if (req.session.users.userType === 'S' || req.session.users.userType === 'O') {
+    res.end(JSON.stringify({ code:0, msg: '该用户无权限'}));
+  } else {
+    TeachNewTestQ.find({theme: reqQ.theme}).then(function (tt) {
+      if (tt.length !== 0) {
+        res.end(JSON.stringify({code : 1, Msg: '考试题目重复,请换个名字试试'}));
 
-      .then(data => {
-        next();
-      });
+      } else if (tt.length === 0){
+        TeachNewTestQ.find().then(function (result) {
+          function start() {
+            return new Promise((resolve, reject) => {
+              resolve('start');
+            });
+          }
+          start()
+            .then(data => {
+              if (result.length !== 0) {
+                let EE = [];
+                for (let i=0; i<=result.length-1; i++) {
+                  EE.push(result[i].id)
+                }
+                testResult.resId = (Math.max.apply(null, EE)) + 1;
+              } else {
+                testResult.resId = 1;
+              }
+            })
+            .then(data => {
+              //console.log(testResult.resId);
+              let teachNewTestQ = new TeachNewTestQ({
+                id : testResult.resId,
+                user: reqQ.user,
+                theme: reqQ.theme,
+                name: reqQ.name,
+                nameId: reqQ.nameId,
+                currTestType: reqQ.currTestType,
+                state: 0,
+                date1: reqQ.date1,
+                date2: reqQ.date2,
+                date3: reqQ.date3,
+                date4: reqQ.date4,
+                num: reqQ.num,
+                timeHour: reqQ.timeHour,
+                timeMin: reqQ.timeMin,
+                major: reqQ.major,
+                classGrade: reqQ.classGrade,
+                newData: reqQ.newData,
+                allScore: reqQ.allScore,
+                question: [],
+              });
+              teachNewTestQ.save(function (err) {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log('Success! teachNewTestQ');
+                }
+              });
+            })
 
-  });
+            .then(data => {
+              next();
+            });
+        });
+      }
+    });
+  }
 }
 
 //教师发题
@@ -95,7 +103,7 @@ function distTestQuestion(req, res, next) {
         testResult.testItemsNum.push(testItems[i].num)
       }
       Student.find({
-        classGrade: reqQ.classGrade
+        major: reqQ.major
       }).then(function (stu) {
         TestQuestionInfo.find({
         }).sort({currTestNum:-1}).then(function (testQ) {
@@ -124,7 +132,7 @@ function distTestQuestion(req, res, next) {
               currState: '',
               currIsId: [],
               error: '',
-              sorce: 2,
+              sorce: '',
               startTimeHours: 0,
               startTimeMinutes: 0,
               startTimeSeconds: 0,
@@ -158,7 +166,7 @@ function distTestQuestion(req, res, next) {
 
 //教师,创建考试
 router.get('/addTestQuestion', newTestQuestion, distTestQuestion, function (req, res) {
-  console.log('11');
+  //console.log('csdf');
   let reqQ = req.query;
   TeachNewTestQ.find({
     user: reqQ.user,
@@ -198,7 +206,7 @@ router.get('/getTestQuesInfo', function (req, res) {
 router.get('/update', function (req, res) {
   let reqQ = req.query;
   let code = '';
-  console.log(reqQ);
+  //console.log(reqQ);
 
   TestQuestionInfo.findOneAndUpdate({
       currTestNum: reqQ.currTestNum
@@ -228,12 +236,10 @@ router.get('/update', function (req, res) {
 // 提交
 router.get('/submitQuestionInfo', function (req, res) {
   let reqQ = req.query;
-  console.log(reqQ);
   //console.log(reqTestQuestion);
     TestQuestionInfo.findOneAndUpdate({
         currTestNum: reqQ.currTestNum
     }, {
-      user: reqQ.user,
       state: 2,
       startTime: reqQ.startTime,
       currAnswer: reqQ.currAnswer,
@@ -259,7 +265,7 @@ router.get('/submitQuestionInfo', function (req, res) {
 router.get('/submitQuestion', function (req, res) {
   let reqQ = req.query;
   let reqTestQuestion = reqQ.testQuestion;
-  //console.log('11');
+  //console.log('csdf');
   //console.log(reqQ.startTime);
   TestQuestionInfo.findOneAndUpdate({
       testQuestion: reqTestQuestion
@@ -314,16 +320,16 @@ router.get('/testManagement', function (req, res) {
 
 //学生,待考试请求
 router.get('/stuToTestData', function (req, res) {
-  let reqUser = req.query.user;
-  //console.log(reqUser);
-  TestQuestionInfo.find({
-    user: reqUser,
-    state: 0,
-    currTestType: { "$in": [101,102,103,104,106] }
-  }).then(function (result) {
-    //console.log(result);
-    res.end(JSON.stringify(result));
-  });
+    let reqUser = req.query.user;
+    //console.log(reqUser);
+    TestQuestionInfo.find({
+      user: reqUser,
+      state: 0,
+      currTestType: { "$in": [101,102,103,104,105] }
+    }).then(function (result) {
+      //console.log(result);
+      res.end(JSON.stringify(result));
+    });
 });
 
 //学生,开始考试 获取待考试题
@@ -353,7 +359,6 @@ router.get('/getTestQ', function (req, res) {
 router.get('/getTestExerciseInfo', function (req, res) {
   let reqQ = req.query;
   //console.log(req.query);
-
   TestQuestionInfo.findOne({
     user: reqQ.user,
     state: 1,

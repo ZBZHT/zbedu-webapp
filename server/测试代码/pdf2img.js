@@ -5,7 +5,7 @@ const rd = require('rd');
 
 //let file = 'D:/zbedu-webapp/resource/新能源汽车/纯电动汽车/高压安全操作与保养维护/总体结构认知/EV系列-1-2-纯电动汽车总体结构认知-教材/纯电动汽车总体结构认知教材.pdf';
 // 同步遍历目录下的所有js文件
-rd.eachFileFilterSync('D:/zbedu-webapp/server/public/resource/11', /\.pdf$/, function (f, s) {
+rd.eachFileFilterSync('C:/zbedu-webapp/resource', /\.pdf$/, function (f, s) {
   //console.log(f);
 
   let opts = {

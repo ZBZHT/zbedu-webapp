@@ -7,7 +7,7 @@ const Question = require('../app/models/Question');
 const Student = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const core = require('../utils/core');
-const Async = require('async');
+const moment = require('moment');
 
 //定义返回格式
 let testResult;
@@ -23,28 +23,83 @@ router.use(function (req, res, next) {
 });
 
 //教师,待考试请求
-router.get('/toTestData', function (req, res) {
+function setState(req, res, next) {
   let reqUser = req.query.user;
   TeachNewTestQ.find({
     user: reqUser,
     state: 0,
   }).then(function (result) {
-    //console.log(result);
-    res.end(JSON.stringify(result));
+    let nowTime = moment(new Date()).unix();
+    let hosTime = '';
+    if (result.length !== 0) {
+      for (let i=0; i<=result.length-1; i++) {
+        hosTime = moment(result[i].date2).format("YYYY-MM-DD") + "," + result[i].date4;
+        let EE = moment(hosTime).unix();
+        if (Number(nowTime) >= Number(EE)) {
+          TeachNewTestQ.findOneAndUpdate({  //改变考试答案状态为2
+              id: result[i].id,
+            }, {
+              state: 2,
+            },
+            function (err) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('TeachNewTestQ更新state=2成功');
+                TestQuestionInfo.update({  //改变考试答案状态为2
+                  theme: result[i].theme,
+                },{$set:{state: 2}},{multi: true},function (err) {
+                  if (err) {
+                      console.log(err);
+                  } else {
+                    console.log('TestQuestionInfo更新state=2成功');
+                  }
+                })
+              }
+            });
+
+        }
+      }
+    }
+  }).then(function () {
+    next()
   });
+}
+router.get('/toTestData',setState, function (req, res) {
+  let reqUser = req.query.user;
+  //console.log(reqUser);
+    TeachNewTestQ.find({ user: reqUser, state: 0,}).then(function (testQ) {
+      //console.log(testQ);
+      if (testQ.length !== 0) {
+        res.end(JSON.stringify({result: testQ, code:0, msg:'获取成功'}));
+      } else {
+        res.end(JSON.stringify({code:1, msg:'获取失败'}));
+      }
+    })
 });
 
 //教师,删除创建的考试
 router.get('/dellNewTestQ', function (req, res) {
   let reqId = req.query.id;
-  TeachNewTestQ.remove({id: reqId}, function (err) {
-    if (err) {
-      return res.status(404).send({err: err,});
-    } else {
-      console.log('删除数据成功');
-      res.end(JSON.stringify({code : 0 }));
-    }
-  })
+  TeachNewTestQ.findOne({id: reqId}).then(function (result) {
+    //console.log(result);
+    TestQuestionInfo.remove({theme: result.theme}, function (err) {
+      if (err) {
+        return res.status(404).send({err: err,});
+      } else {
+        TeachNewTestQ.remove({id: reqId}, function (err) {
+          if (err) {
+            return res.status(404).send({err: err,});
+          } else {
+            console.log('删除数据成功');
+            res.end(JSON.stringify({code : 0 }));
+          }
+        })
+      }
+    })
+
+  });
+  /**/
 });
 
 //教师,历史考试请求
@@ -53,19 +108,32 @@ router.get('/historyTestData', function (req, res) {
   TeachNewTestQ.find({
     user: reqUser,
     state: 2,
+    currTestType: { "$in": [101,102,103,104,105] }
   }).then(function (result) {
     //console.log(result);
-    res.end(JSON.stringify(result));
+    if (result.length !== 0) {
+      res.status(200).send({ code: 0, result: result, msg: '获取数据成功'});
+    } else {
+      res.status(200).send({ code: 1, msg: '无数据'});
+    }
   });
 });
 
 //教师,成绩管理请求
 router.get('/checkGradesData', function (req, res) {
+  let reqQue = req.query;
+  //console.log(reqQue);
   TestQuestionInfo.find({
+    username: reqQue.userneme,
+    theme: reqQue.theme,
     state: 2,
   }).then(function (result) {
     //console.log(result);
-    res.end(JSON.stringify(result));
+    if (result.length !== 0) {
+      res.status(200).send({ code: 0, result: result, msg: '获取数据成功'});
+    } else {
+      res.status(200).send({ code: 1, msg: '无数据'});
+    }
   });
 });
 
@@ -113,66 +181,30 @@ router.get('/stuHistoryTestData', function (req, res) {
   TestQuestionInfo.find({
     user: reqUser,
     state: 2,
+    currTestType: {"$in": [101,102,103,104,105]},
   }).sort({currTestNum:-1}).then(function (testQuestionInfo) {
     if (testQuestionInfo) {
-      /*Async.forEachOf(testQuestionInfo, function (value1, i, callback) {
-        Async.forEachOf(testQuestionInfo[i].question, function (value2, j, callback) {
-        setTimeout() Question.find({
-            num: { "$in": testQuestionInfo[i].question[j] }
-          }).then(function (question) {
-            return testQuestionInfo[i].question[j] = question;
-          }).then(function (result) {
-           return testResult.question.push(testQuestionInfo[i].question);
-          });
-        }, function (err) {
-          if (err) console.error(err.message);
-          console.log(rr);
-        });
-          callback();
-      }, function (err) {
-        if (err) console.error(err.message);
-        //doSomethingWith(configs);
-      });*/
-
-      testQuestionInfo.forEach((element, i, Info) => {
-          Info[i].question.forEach((element, j, arr) =>{
-            Question.find({
-              num: { "$in": arr[j] }
-            }).then(function (question) {
-              arr[j] = question;
-            }).then(function () {
-              testResult.question.push(arr);
-              //console.log(testResult.question);
-              console.log('11');
-            });
-          });
-        });
-
-      testQuestionInfo.forEach((element, i, Info) => {
-          Info[i].question.forEach((element, j, arr) =>{
-            Question.find({
-              num: { "$in": arr[j] }
-            }).then(function (question) {
-              arr[j] = question;
-            }).then(function () {
-              testResult.question.push(arr);
-              //console.log(testResult.question);
-              console.log('11');
-            });
-          });
-        });
-      }
-  }).then(function () {
-    res.end(JSON.stringify({
-      //testQuestionInfo: testQuestionInfo
-    }));
+      testQuestionInfo.forEach(function (item1, i, arr) {
+        arr[i].question.forEach(function (item2, j, arr) {
+          Question.find({num: {"$in": item2}}).then(function (result) {
+            testQuestionInfo[i].question[j] = result;
+          })
+        })
+      });
+      setTimeout(function(){
+        //console.log(testQuestionInfo);
+        res.end(JSON.stringify({
+         testQuestionInfo: testQuestionInfo
+         }));
+      }, 500);
+    }
   });
-  console.log(testResult.question);
 });
 
 //学生,创建练习
 router.get('/stuNewExercise', function (req, res) {
   let reqQ = req.query;
+  console.log(reqQ);
   Question.find(
   ).then(function (question) {
     let testItems = core.getArrayItems(question, reqQ.num);
@@ -199,12 +231,12 @@ router.get('/stuNewExercise', function (req, res) {
           }
         })
         .then(data => {
-          //创建学生试题
+          //创建学生练习试题
           let testQuestionInfo = new TestQuestionInfo({
             user: reqQ.user,
             currTestType : 106,
             currTestNum: testResult.testLength,
-            theme: '',
+            theme: '练习' + testResult.testLength,
             msg: "error parameter",
             testId: 1,
             state: 1,
@@ -249,7 +281,7 @@ router.get('/stuNewExercise', function (req, res) {
 router.get('/getTestExercise', function (req, res) {
   //console.log(reqUser);
   let reqUser = req.query.user;
-  console.log(reqUser);
+  //console.log(reqUser);
   TestQuestionInfo.findOne({
     user: reqUser,
     state: 1,
@@ -271,20 +303,27 @@ router.get('/getTestExercise', function (req, res) {
 //学生,历史练习
 router.get('/stuHistoryPractice', function (req, res) {
   let reqUser = req.query.user;
-  //console.log(reqUser);
   TestQuestionInfo.find({
     user: reqUser,
     state: 2,
     currTestType: 106,
-  }).sort({testQuestion:-1}).then(function (testQuestionInfo) {
+  }).sort({currTestNum:-1}).then(function (testQuestionInfo) {
     if (testQuestionInfo) {
-      res.end(JSON.stringify({
-        testQuestionInfo: testQuestionInfo
-      }));
-    } else {
-      res.status(404).send({err: err,});
+      testQuestionInfo.forEach(function (item1, i, arr) {
+        arr[i].question.forEach(function (item2, j, arr) {
+          Question.find({num: {"$in": item2}}).then(function (result) {
+            testQuestionInfo[i].question[j] = result;
+          })
+        })
+      });
+      setTimeout(function(){
+        console.log(testQuestionInfo);
+        res.end(JSON.stringify({
+          testQuestionInfo: testQuestionInfo
+        }));
+      }, 300);
     }
-  })
+  });
 });
 
 //学生,获取课后作业
@@ -297,7 +336,7 @@ router.get('/getHomeWork', function (req, res) {
     Question.find({
       major: { "$in": reqQc }
     }).then(function (question) {
-      if (question !== []) {
+      if (question.length > 0) {
         for (let i=0; i<=question.length-1; i++) {
           if (reqQc[reqQc.length-1] === question[i].title1) {
             resQues.push(question[i]);
@@ -313,7 +352,9 @@ router.get('/getHomeWork', function (req, res) {
           }
         }
         //console.log(resQues);
-        res.end(JSON.stringify({ result: resQues }));
+        res.status(200).send({code: 0, msg: '获取成功', result: resQues, });
+      } else {
+        res.status(404).send({code: 0, msg: '获取失败' });
       }
     })
   }

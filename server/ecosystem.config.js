@@ -8,7 +8,7 @@ module.exports = {
     // First application
     {
       name      : 'zbt',
-      script    : './bin/www',
+      script    : './bin/zbt',
       watch     : true,
       autorestart     : true,
       max_memory_restart     : '2000M',

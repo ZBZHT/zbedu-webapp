@@ -11,8 +11,8 @@ const core = require('../utils/core');
 const router = express.Router();
 
 const sysInfo = core.getServerInfo();
-const rootDir = path.resolve(__dirname,"../app/uploads");
-const uploadsPath = "../app/uploads/";
+const resourcePath = "../app/uploads/resource/";
+const uploadsPath = "../app/uploads/resource/";
 const CompPath = "../app/uploads/competition";
 const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
 //var uploadDir = path.join(path.resolve(__dirname,"../"), "uploads");
@@ -20,9 +20,9 @@ const zipName = "moreFiles.zip";
 
 //资源中心上传
 router.post('/upload', function(req, res) {
-  try {
+
     let form = new formidable.IncomingForm();
-    form.uploadDir = "../app/uploads/";//设置文件上传存放地址
+    form.uploadDir = "../app/uploads/resource";//设置文件上传存放地址
     form.maxFieldsSize = 600 * 1024 * 1024; //设置最大600M
     form.keepExtensions = true;
 
@@ -34,6 +34,8 @@ router.post('/upload', function(req, res) {
       let oldPath = files.file.path;
       let newPath = uploadsPath + fileName;
       let fileMsg = [];
+      console.log(oldPath);
+      console.log(newPath);
 
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
@@ -56,13 +58,6 @@ router.post('/upload', function(req, res) {
         });
       });
     });
-  }
-catch (e) {
-    res.status(404).send({
-      err: 1,
-      msg: 'upload err',
-    });
-  }
 });
 
 //资源中心下载
@@ -83,10 +78,9 @@ router.get('/download', function(req, res) {
 router.get('/downComp', function(req, res) {
   let fileName = req.query.downloadName;
   let currFile = CompPath + fileName;
-  console.log(currFile);
+  //console.log(currFile);
   fs.exists(currFile,function(exist) {
     if(exist){
-      res.setHeader('Content-Type', 'application/msword');
       res.download( currFile );
     }else{
       res.set("Content-type","text/html");
@@ -97,55 +91,55 @@ router.get('/downComp', function(req, res) {
 });
 
 /*//获取下载文件的地址
-router.get('/download',function(req, res){
-  let fileName = path.normalize(req.query.downloadName);
+ router.get('/download',function(req, res){
+ let fileName = path.normalize(req.query.downloadName);
 
-  //将文件和文件夹分开命名
-  fileArray.forEach(function(file) {
-    if(file.type == 1){
-      filesCount++;
-      fileNameArray.push(file.name);
-    }else{
-      fileNameArray.push(path.join(file.name,"**"));  //文件夹格式：folderName/!**
-    }
-  });
+ //将文件和文件夹分开命名
+ fileArray.forEach(function(file) {
+ if(file.type == 1){
+ filesCount++;
+ fileNameArray.push(file.name);
+ }else{
+ fileNameArray.push(path.join(file.name,"**"));  //文件夹格式：folderName/!**
+ }
+ });
 
-  if(fileArray.length == 0){
-    res.send({"code":"fail", "summary":"no files"});
-    return;
-  }
+ if(fileArray.length == 0){
+ res.send({"code":"fail", "summary":"no files"});
+ return;
+ }
 
-  if(fileName){
-    //直接走get
-    let downloadUrl = "/downloadSingle?dir="+encodeURIComponent(rootDir)+"&name="+encodeURIComponent(fileName);
-    res.send({"code":"s_ok", "url":downloadUrl});
-  }else{
-    console.log('err');
-    //多个文件就压缩后再走get
-    var output = fs.createWriteStream(path.join("zip",zipName));
-    var archive = archiver.create('zip', {});
-    archive.pipe(output);   //和输出流相接
-    //打包文件
-    archive.bulk([
-      {
-        cwd:currDir,    //设置相对路径
-        src: fileNameArray,
-        expand: currDir
-      }
-    ]);
+ if(fileName){
+ //直接走get
+ let downloadUrl = "/downloadSingle?dir="+encodeURIComponent(rootDir)+"&name="+encodeURIComponent(fileName);
+ res.send({"code":"s_ok", "url":downloadUrl});
+ }else{
+ console.log('err');
+ //多个文件就压缩后再走get
+ var output = fs.createWriteStream(path.join("zip",zipName));
+ var archive = archiver.create('zip', {});
+ archive.pipe(output);   //和输出流相接
+ //打包文件
+ archive.bulk([
+ {
+ cwd:currDir,    //设置相对路径
+ src: fileNameArray,
+ expand: currDir
+ }
+ ]);
 
-    archive.on('error', function(err){
-      res.send({"code":"failed", "summary":err});
-      throw err;
-    });
-    archive.on('end', function(a){
-      //输出下载链接
-      var downloadUrl = "/downloadSingle?dir="+encodeURIComponent(zipDir)+"&name="+encodeURIComponent(zipName)+"&comefrom=archive";
-      res.send({"code":"s_ok", "url":downloadUrl});
-    });
-    archive.finalize();
-  }
-});*/
+ archive.on('error', function(err){
+ res.send({"code":"failed", "summary":err});
+ throw err;
+ });
+ archive.on('end', function(a){
+ //输出下载链接
+ var downloadUrl = "/downloadSingle?dir="+encodeURIComponent(zipDir)+"&name="+encodeURIComponent(zipName)+"&comefrom=archive";
+ res.send({"code":"s_ok", "url":downloadUrl});
+ });
+ archive.finalize();
+ }
+ });*/
 
 //删除文件
 router.get('/fileDelete', function (req, res, next) {
@@ -158,7 +152,8 @@ router.get('/fileDelete', function (req, res, next) {
         } else { // 删除单文件
           fs.unlinkSync(filePath);
           res.status(200).send({
-            success: 0,
+            code: 0,
+            msg: '删除文件成功',
             fileName: fileName,
           });
         }
@@ -198,121 +193,57 @@ router.get('/files', function (req, res, next) {
   });
 });
 
-//读取目录文件并排序
-
+//读取文件
 router.get('/loadFile',function(req, res) {
-  let currDir = "",
-    order = "";
+  let fileDetailArray = [];
+  //console.log(resourcePath);
+  fs.readdir(resourcePath, function (err, files) {
+    if (!err) {
+      //console.log(files);
+      if (files.length !== 0) {
+        function start() {
+          return new Promise((resolve, reject) => {
+            resolve(files);
+          });
+        }
 
-  if(!req.body.dir){
-    currDir = rootDir;
-  }else{
-    currDir = path.join(req.body.dir,req.body.folderName);
-  }
-
-  if(!req.body.order){
-    order = "name";
-  }else{
-    order = req.body.order;
-  }
-  res.set("Content-type","text/json");
-  fs_ext.readdir(currDir)
-    .then(function(files){
-      return _.clone(files);
-    })
-    .then(function(fileArray){
-      let fileDetailArray = [];
-
-      function getFileInfo(fileName){
-        return new Promise(function(resolve,rejected){
-          fs.lstat(path.join(currDir,fileName),function(err,stats){
-            if(!err){
-              let obj = {
-                name: fileName,
-                //type: stats.isFile() ? 1:0,
-                //isFile: stats.isFile(),
-                //isDirectory: stats.isDirectory(),
-                size: ((stats.size) / 1000000).toFixed(2),
-                birthtime: moment(stats.birthtime).format('YYYY-MM-DD, h:mm:ss'),
-                //ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
-                //mtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.mtime)    //modify time
-              };
-              fileDetailArray.push(obj);
-              resolve();
-            }else{
-              if(err.errno = -4048){//无权限访问的文件夹
-                resolve();
-              }else{
-                rejected(err);
-              }
-            }
+        start()
+          .then(files => {
+            files.forEach(function (item, i, files) {
+              fs.lstat(resourcePath + files[i], function (err, stats) {
+                //console.log(resourcePath + files[i]);
+                if (!err) {
+                  let obj = {
+                    name: files[i],
+                    //type: stats.isFile() ? 1:0,
+                    //isFile: stats.isFile(),
+                    //isDirectory: stats.isDirectory(),
+                    size: ((stats.size) / 1000000).toFixed(2),
+                    birthtime: moment(stats.birthtime).format('YYYY-MM-DD, h:mm:ss'),
+                    //ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
+                    //mtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.mtime)    //modify time
+                  };
+                  fileDetailArray.push(obj);
+                  //console.log(fileDetailArray);
+                }
+              });
+            });
+            return files
           })
-        });
+
+          .then(files => {
+            setTimeout(function () {
+              let result = {code: 0, "var": fileDetailArray, msg: '获取文件信息成功'};
+              //console.log(result);
+              res.send(result);
+            }, 200);
+
+          });
       }
-
-      Promise.all(fileArray.map(getFileInfo))
-        .then(function() {
-          //TODO:sort 按文件夹在上的顺序
-          fileDetailArray.sort(sortOrder);
-          let result = {"code":"s_ok", "path":currDir, "var":fileDetailArray, sysInfo:sysInfo};
-          res.send(result);
-          //console.log(result);
-          //排序
-          function sortOrder(a,b) {
-            if(a.type != b.type){
-              if(a.type > b.type){   //文件夹总是排在上面
-                return 1;
-              }else{
-                return -1;
-              }
-            }
-
-            //文件类型相同再第二级比较
-            let forward;
-            switch (order) {
-              case "size":
-                if(a.size >= b.size){
-                  forward = -1;
-                }else{
-                  forward = 1;
-                }
-                break;
-              case "birthtime":
-                if(a.birthtime >= b.birthtime){
-                  forward = -1;
-                }else{
-                  forward = 1;
-                }
-                break;
-              case "ctime":
-                if(a.ctime >= b.ctime){
-                  forward = -1;
-                }else{
-                  forward = 1;
-                }
-                break;
-              default:
-                if(a.name <= b.name){
-                  forward = -1;
-                }else{
-                  forward = 1;
-                }
-                break;
-            }
-            return forward;
-          }
-        })
-        .catch(function(err){
-          let result = {"code":"failed", "path":currDir, "summary":err};
-          res.send(result);
-        })
-        .done();
-    })
-    .catch(function(err){
-      let result = {"code":"failed", "path":currDir, "summary":err};
-      res.send(result);
-    })
-    .done();
+    } else {
+      res.status(404).send({ code: 0, msg: '错误', });
+    }
+  });
 });
 
 module.exports = router;

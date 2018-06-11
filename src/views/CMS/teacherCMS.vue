@@ -45,6 +45,10 @@
         <div v-show="isShow401">
           <my-exam></my-exam>
         </div>
+        <!--我的大赛-->
+        <div v-show="isShow501">
+          <game-m></game-m>
+        </div>
 
       </el-row>
     </div>
@@ -92,6 +96,7 @@
         isShow301: false,
         isShow302: false,
         isShow401: false,
+        isShow501: false,
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
@@ -110,6 +115,7 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
         }
         //点击题库管理
         if (data.id == 102) {
@@ -120,6 +126,7 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
         }
         //点击我的资料
         if (data.id == 201) {
@@ -130,6 +137,7 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
         }
         //点击我的足迹
         if (data.id == 202) {
@@ -140,6 +148,7 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
         }
         //点击课程设置
         if (data.id == 302) {
@@ -150,6 +159,7 @@
           this.isShow302 = true;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
         }
         //点击我的课程
         if (data.id == 301) {
@@ -160,6 +170,7 @@
           this.isShow302 = false;
           this.isShow301 = true;
           this.isShow401 = false;
+          this.isShow501 = false;
         }
         //点击我的考试
         if (data.id == 401) {
@@ -170,6 +181,18 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = true;
+          this.isShow501 = false;
+        }
+        //点击我的大赛
+        if (data.id == 501) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = true;
         }
       },
     },

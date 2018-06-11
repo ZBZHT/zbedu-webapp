@@ -14,10 +14,12 @@ const TechCosCou = require('../app/models/TechCosCou');
 const CmsLabelTree = require('../app/models/CmsLabelTree');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
-const uploadCoursePath = "../app/uploads/pdf/";
-const uploadVideoPath = "../app/uploads/video/";
+const uploadCoursePath = "../public/resource/我的课堂/";
 const core = require('../utils/core');
 const moment = require('moment');
+const ppt2png = require('ppt2png');
+const pdf = require('pdf-poppler');
+const os = require('os');
 
 //删除数组中指定元素  方法
   function removeChildren(arr, id) {
@@ -55,6 +57,7 @@ router.post('/labelTree', function (req, res) {
         let labelTree = tree.children;
         labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
         labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
+        labelTree = removeNode(labelTree, 500);  //传入要删除的Node id
           res.status(200).send({ result: labelTree });
       });
     } else if (reqBody.userType === 'T') {
@@ -217,27 +220,38 @@ router.post('/addTeach', function (req, res) {
   if (req.body.data) {
     let reqData = req.body.data;
     let addUsers = reqData.teachForm;
+    let EE = [];
+    let ID = '';
     //console.log(addUsers);
     if (reqData.userType == 'SA' || reqData.userType == 'EA') {
-      let teacher = new Teacher({
-        user: addUsers.user,
-        pwd: addUsers.pwd,
-        userID: addUsers.userID,
-        IDNo: addUsers.IDNo,
-        MoNo: addUsers.MoNo,
-        userType: addUsers.userType,
-        gender: addUsers.gender,
-        time: addUsers.time,
-        //major: addUsers.major,
-        //classGrade: addUsers.classGrade
-      });
-      teacher.save(function (err) {
-        if (err) {
-          console.log(err)
+      Teacher.find().then(function (idArr) {
+        if (idArr.length !== 0) {
+          for (let i=0; i<idArr.length; i++) {
+            EE.push(idArr[i].userID)
+          }
+          ID = (Math.max.apply(null, EE)) + 1;
         } else {
-          console.log('Save success');
-          res.status(200).send({ code: 0, msg: '教师信息保存成功'});
+          ID = 1;
         }
+
+        let teacher = new Teacher({
+          user: addUsers.user,
+          pwd: addUsers.pwd,
+          userID: ID,
+          IDNo: addUsers.IDNo,
+          MoNo: addUsers.MoNo,
+          userType: addUsers.userType,
+          //gender: addUsers.gender,
+          //time: addUsers.time,
+        });
+        teacher.save(function (err) {
+          if (err) {
+            console.log(err)
+          } else {
+            console.log('Save success');
+            res.status(200).send({ code: 0, msg: '教师信息保存成功'});
+          }
+        });
       });
     }else {
       res.status(404).send({
@@ -671,10 +685,21 @@ router.post('/addExcelTest', function(req, res) {
                   numID = Number(numID) + 1;
                   arrSingle.num = numID;
                   arrSingle.desc = jsonResult[i].desc;
-                  arrSingle.options.push(jsonResult[i].options0);
-                  arrSingle.options.push(jsonResult[i].options1);
-                  arrSingle.value.push('A');
-                  arrSingle.value.push('B');
+
+                  if (jsonResult[i].options0 !== '' && jsonResult[i].options0 !== undefined) {
+                    arrSingle.options.push(jsonResult[i].options0);
+                    arrSingle.value.push('A');
+                  } else {
+                    arrSingle.options.push(jsonResult[0].options0);
+                    arrSingle.value.push('A');
+                  }
+                  if (jsonResult[i].options1 !== '' && jsonResult[i].options1 !== undefined) {
+                    arrSingle.options.push(jsonResult[i].options1);
+                    arrSingle.value.push('B');
+                  } else {
+                    arrSingle.options.push(jsonResult[0].options1);
+                    arrSingle.value.push('B');
+                  }
                   if (jsonResult[i].options2 !== '' && jsonResult[i].options2 !== undefined) {
                     arrSingle.options.push(jsonResult[i].options2);
                     arrSingle.value.push('C');
@@ -683,6 +708,7 @@ router.post('/addExcelTest', function(req, res) {
                     arrSingle.options.push(jsonResult[i].options3);
                     arrSingle.value.push('D');
                   }
+
                   arrSingle.answer = jsonResult[i].answer;
                   if (jsonResult[i].difficulty !== '') {
                     arrSingle.difficulty = jsonResult[i].difficulty;
@@ -813,16 +839,30 @@ router.post('/addExcelTest', function(req, res) {
 
 //教师, 获取自定义课程
 router.post('/getTeacherCustomCourse', function (req, res) {
-  //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
-    console.log(reqData);
+    let username = req.session.users.username;
     if (reqData.userType == 'SA' || reqData.userType == 'EA' || reqData.userType == 'T') {
+      if (!fs.existsSync(uploadCoursePath + username)) {
+        fs.mkdirSync(uploadCoursePath + username);
+      }
       TechCosCou.find({
         userID : reqData.userID,
       }).then(function (techCosCou) {
-        console.log(techCosCou.length);
-        if (techCosCou.length !=0) {
+
+        if (techCosCou.length !==0) {
+          let lab = techCosCou[0].tab;
+          //console.log(techCosCou[0].tab);
+          if (lab !== 0) {
+            for (let i = 0; i < lab.length; i++) {
+              let path = uploadCoursePath + username + '/' + lab[i].label;
+              //console.log(path);
+              if (!fs.existsSync(path)) {
+                fs.mkdirSync(path);
+              }
+            }
+          }
+
           res.status(200).send({ techCosCou: techCosCou, });
         } else if (techCosCou.length === 0) {
           let techCosCou = new TechCosCou({
@@ -840,7 +880,6 @@ router.post('/getTeacherCustomCourse', function (req, res) {
               }).then(function (techCosCou) {
                 res.status(200).send({ techCosCou: techCosCou, });
               });
-
             }
           });
         } else {
@@ -867,7 +906,9 @@ router.post('/addCustomCourse', function (req, res) {
   //console.log(req.body.data.tab);
   if (req.body.data) {
     let reqData = req.body.data;
+    let username = req.session.users.username;
     if (reqData.userType == 'SA' || reqData.userType == 'EA' || reqData.userType == 'T') {
+      //console.log(reqData.tab);
       TechCosCou.findOneAndUpdate({
         userID : reqData.userID,
       }, {
@@ -878,6 +919,14 @@ router.post('/addCustomCourse', function (req, res) {
           res.status(404).send({ Msg: '更新失败', code: 1, });
         } else {
           console.log('修改成功course');
+          for (i = 0; i < reqData.tab.length; i++) {
+            if (reqData.tab[i].label !== '') {
+              let path = uploadCoursePath + username + '/' + reqData.tab[i].label;
+              if (!fs.existsSync(path)) {
+                fs.mkdirSync(path);
+              }
+            }
+          }
           res.status(200).send({ Msg: '更新成功', code: 0, });
         }
       });
@@ -898,49 +947,159 @@ router.post('/addCustomCourse', function (req, res) {
 //教师上传课件
 router.post('/uploadCourse', function(req, res) {
   let reqUserType = req.session.users.userType;
+  let username = req.session.users.username;
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
 
     let form = new formidable.IncomingForm();
-    form.uploadDir = "../app/uploads/";//设置文件上传存放地址
-    form.maxFieldsSize = 1000 * 1024 * 1024; //设置最大1000M
+    form.uploadDir = uploadCoursePath;//设置文件上传存放地址
+    form.maxFieldsSize = 500 * 1024 * 1024; //设置最大500M
     form.keepExtensions = true;
 
     form.parse(req, function (err, fields, files) {
       //旧名字
-      let fileName = files.file.name;
-      console.log(fileName);
-      //新名字
-      let oldPath = files.file.path;
-      let newPath = '';
-      arr = fileName.split(".");
-      if (arr[arr.length-1] === 'pdf') {
-        newPath = uploadCoursePath + fileName;
-      } else {
-        newPath = uploadVideoPath + fileName;
-      }
-      fs.rename(oldPath, newPath, function (err) {
-        if (err) {
-          throw  Error("改名失败");
-        }
-        fs.stat(newPath, function(err,stats){  //获取文件信息
-          if(err){
-            return err;
-          }
-          res.status(200).send({
-            Msg : '上传成功',
-            code : 0,
+      if (files.file.name !== undefined) {
+        let fileName = files.file.name;
+        //console.log(fileName);
+        //新名字
+        let oldPath = files.file.path;
+        let newPath = '';
+        arr = fileName.split(".");
+        if (arr[arr.length-1] === 'pdf' || arr[arr.length-1] === 'ppt') {
+          //pdf/ppt的处理
+          newPath = uploadCoursePath + username +'/' + fileName;
+          fs.rename(oldPath, newPath, function (err) {
+            if (err) {
+              console.log('改名失败');
+              res.status(404).send({ Msg : '改名失败', code : 1, });
+            }
+            fs.stat(newPath, function(err,stats){  //获取文件信息
+              if(err){
+                return err;
+              }
+              res.status(200).send({ Msg : '上传成功', code : 0, });
+            });
           });
-        });
-      });
+        //是pdf的处理
+        } else {
+          newPath = uploadCoursePath + username +'/' + fileName;
+          //console.log(newPath);
+          fs.rename(oldPath, newPath, function (err) {
+            if (err) {
+              console.log('改名失败');
+              res.status(404).send({ Msg : '改名失败', code : 1, });
+            }
+            fs.stat(newPath, function(err,stats){  //获取文件信息
+              if(err){
+                return err;
+              }
+              res.status(200).send({ Msg : '上传成功', code : 0, });
+            });
+          });
+        }
+
+      } else {
+        res.status(404).send({ Msg : '上传的文件名为空', code : 1, });
+      }
     });
   } else {
-    res.status(404).send({
-      Msg : '用户无权限或未登录',
-      code : 1,
-    });
+    res.status(404).send({ Msg : '用户无权限或未登录', code : 1, });
   }
 });
 
+//教师上传课件--成功后处理文件
+router.post('/uploadCourseSec', function(req, res) {
+  let newFileName1 = req.body.data.newFileName1;
+  let newFileName2 = req.body.data.newFileName2;
+  let fileName = req.body.data.fileName;
+  let reqUserType = req.session.users.userType;
+  let username = req.session.users.username;
+  let sysType=os.type();
+  let newPath = '';
+  if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
+
+    let arr = fileName.split(".");
+    newPath = uploadCoursePath + username +'/';
+    //console.log(newPath);
+    if (!fs.existsSync(newPath + newFileName1)) {
+      fs.mkdirSync(newPath + newFileName1);
+    }
+    if (!fs.existsSync(newPath + newFileName1 +'/' + newFileName2 )) {
+      fs.mkdirSync(newPath + newFileName1 +'/' + newFileName2);
+    }
+    let pdfPath = newPath + fileName;
+    let coursePath = newPath + newFileName1 +'/' + newFileName2 +'/' + arr[0] + '-课件';
+    //console.log(pdfPath);
+    //console.log(coursePath);
+    //pdf||ppt转png
+    let p1 = new Promise((resolve, reject) => {
+      if (!fs.existsSync(coursePath)) {
+        fs.mkdirSync(coursePath);
+        resolve('目录创建成功')
+      }
+      resolve('目录已存在')
+    });
+
+    let p2 = new Promise((resolve, reject) => {
+      if (sysType !== 'linux') {
+        let opts = {
+          format: 'png',
+          out_dir: coursePath,
+          out_prefix: 'pdf',
+          page: null
+        };
+        pdf.convert(pdfPath, opts)
+          .then(res => {
+            let path_dir = coursePath;
+            fs.readdir(path_dir, function (err, stats) {
+              //console.log(path_dir);
+              //console.log(stats);
+              for (let i=0; i<=stats.length-1; i++) {
+                let arr1 = stats[i].split(".");
+                if (arr1[arr1.length-1] === 'png') {
+                  let arr2 = arr1[0].split("-");
+                  let name1 = Number(arr2[arr2.length-1]);
+                  let oldPath = path_dir + '/' + stats[i];
+                  let newPath = path_dir + '/' + arr2[0] + '-' + name1 + '.' + arr1[arr1.length-1];
+                  //console.log(oldPath);
+                  //console.log(newPath);
+                  fs.rename(oldPath, newPath, function (err) {
+                    if (err) {
+                      console.log(err);
+                    }
+                    resolve('Windows_NT下convert successful')
+                  })
+                }
+              }
+             /* fs.unlink(f, function (err) {
+                if (err) return console.log(err);
+                console.log('文件删除成功');
+              });*/
+            });
+          })
+          .catch(error => {
+            console.error(error);
+          });
+
+      } else if (sysType === 'linux') {
+        ppt2png(coursePath, path + '/pdf', function (err) {
+          if (err) {
+            console.log(err);
+          } else {
+            resolve('linux下convert successful')
+          }
+        });
+      }
+    });
+
+    Promise.all([p1, p2]).then((msg) => {
+      res.status(200).send({ code: 0, msg: msg});
+      console.log(msg)
+    }).catch((error) => {
+      console.log(error)
+    });
+
+  }
+});
 //获取课程树
 router.post('/getCenterTree', function(req, res) {
   let reqUserType = req.session.users.userType;
@@ -969,14 +1128,14 @@ router.post('/updateCenterTree', function(req, res) {
 //上传头像
 router.post('/uploadAvatar', function(req, res) {
   let form = new formidable.IncomingForm();
-  form.uploadDir = "../public/competition/myAvatar";//设置头像上传存放地址
+  form.uploadDir = "../public/resource/myAvatar";//设置头像上传存放地址
   form.maxFieldsSize = 2 * 1024 * 1024; //设置最大2M
   form.keepExtensions = true;
   let reqS = req.session.users;
 
   form.parse(req, function (err, fields, files) {
     let arr = files.file.path.split('\\');
-    fs.writeFileSync("../../competition/myAvatar/" + arr[arr.length-1], fs.readFileSync("../public/competition/myAvatar/" + arr[arr.length-1],'utf8'));
+    fs.writeFileSync("../../resource/myAvatar/" + arr[arr.length-1], fs.readFileSync("../public/resource/myAvatar/" + arr[arr.length-1],'utf8'));
     //console.log(arr[arr.length-1]);
     if (reqS.userType === 'S' || reqS.userType === 'O') {
       Student.findOneAndUpdate({
@@ -1010,7 +1169,7 @@ router.post('/uploadAvatar', function(req, res) {
 
 //获取班级和专业
 router.post('/getClass', function (req, res) {
-  console.log('jdsfjawnejkfnaef');
+  //console.log('jdsfjawnejkfnaef');
   Student.find({
   }).then(function (student) {
     let classMsg = [];
@@ -1018,16 +1177,16 @@ router.post('/getClass', function (req, res) {
     let CC = [];
     let MM = [];
     if (student) {
-      for (let i=0; i<=student.length-1; i++) {
+      for (let i=0; i<student.length; i++) {
         classMsg.push(student[i].classGrade);
         majorMsg.push(student[i].major);
       }
       classMsg = core.unique(classMsg);
-      for (let i=0; i<=classMsg.length-1; i++) {
+      for (let i=0; i<classMsg.length; i++) {
         CC.push({label: classMsg[i]});
       }
       majorMsg = core.unique(majorMsg);
-      for (let i=0; i<=majorMsg.length-1; i++) {
+      for (let i=0; i<majorMsg.length; i++) {
         MM.push({label: majorMsg[i]});
       }
       res.status(200).send({

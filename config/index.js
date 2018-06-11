@@ -11,14 +11,14 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/api": 'http://192.168.2.251:8000' ,  //代理到开发服务器
-      "/readJson": 'http://192.168.2.251:8000',
-      "/readTestQuestion": 'http://192.168.2.251:8000',
-      "/testManagement": 'http://192.168.2.251:8000',
-      "/readComments": 'http://192.168.2.251:8000',
-      "/teacherCMS": 'http://192.168.2.251:8000',
-      "/fileUpDown": 'http://192.168.2.251:8000',
-      "/readResource": 'http://192.168.2.251:8000'
+      "/api": 'http://127.0.0.1:80' ,  //代理到开发服务器
+      "/readJson": 'http://127.0.0.1:80',
+      "/readTestQuestion": 'http://127.0.0.1:80',
+      "/testManagement": 'http://127.0.0.1:80',
+      "/readComments": 'http://127.0.0.1:80',
+      "/teacherCMS": 'http://127.0.0.1:80',
+      "/fileUpDown": 'http://127.0.0.1:80',
+      "/readResource": 'http://127.0.0.1:80'
       /*
       "/menu/header": {
         target: "http://localhost:8080",
@@ -35,7 +35,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: '127.0.0.1', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
