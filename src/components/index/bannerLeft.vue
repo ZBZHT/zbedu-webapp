@@ -165,7 +165,17 @@ export default {
     }
   },
   mounted(){
-//    console.log(this.bannerLeftData)
+      if(this.$store.state.userType == "S"){
+          var newBannerLeft = [];
+          for(var i = 0; i < this.bannerLeftData.children.length; i++){
+                    if(i != this.bannerLeftData.children.length -1){
+                        newBannerLeft.push(this.bannerLeftData.children[i]);
+                        console.log(newBannerLeft)
+                    }
+                }
+          this.bannerLeftData.children = newBannerLeft;
+      }
+
     if(this.$store.state.userType == "S"){
 
     }else{

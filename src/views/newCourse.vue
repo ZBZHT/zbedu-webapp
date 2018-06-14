@@ -95,100 +95,92 @@
                             <!--评论-->
                             <el-tab-pane label="课程评价">
                                 <div class="appraise-box">
-                                    <p class="appraiseTitle">{{ appraiseMsg }}</p>
-                                    <p v-show="!commentArr.length">暂无评价</p>
-                                    <div class="comment-box">
-                                        <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.label">
-                                        <div class="text-box">
-                                            <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
-                                            <p >{{commentItem.text}}</p>
-                                        </div>
-                                        <div class="msg-box">
-                                            <p class="time-box">时间：{{ commentItem.time }}</p>
-                                            <p class="star">
-                                            <span  :class="{'on': commentItem.score>=0}"class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=1}" class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=2}" class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=3}" class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=4}" class="star-item" >
-                                            </span>
-                                            </p>
-                                            <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
-                                        </div>
-                                        <div class="reply-msg-box">
-                                            <ul v-show="replyArr.length">
-                                            <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.label && replyItem.targetId == commentItem.num">
-                                                <span>{{replyItem.user}}：</span>
-                                                <span>{{replyItem.text}}</span>
-                                                <div class="replyTime-box">
-                                                <p>{{replyItem.time}}</p>
-                                                <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
-                                                </div>
-
-                                                <div class="replyToReply-box">
-                                                <ul v-show="replyToReplyArr.length">
-                                                    <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.label && replytoReplyItem.targetId == replyItem.num">
-                                                    <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
-                                                    <span>{{replytoReplyItem.text}}</span>
-                                                    <p>{{replytoReplyItem.time}}</p>
-                                                    </li>
-                                                </ul>
-                                                </div>
-                                                <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
-
-                                                <textarea type="text" v-model="replyToReplyText"></textarea>
-
-                                                <button @click="submitReplyToReply(replyItem)">回复他</button>
-                                                </div>
-                                            </li>
-                                            </ul>
-                                        </div>
-                                        <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
-                                            <textarea type="text" v-model="replyText"></textarea>
-                                            <button @click="submitReply(commentItem,index)">提交回复</button>
-                                        </div>
-                                        <hr>
-                                        </div>
-                                    </div>
-                                    <p class="appraiseTitle">我要评价</p>
-
-                                    <textarea type="text" v-model="text"/>
-
-                                    <div class="shopList">
-                                        <div class="block">
-                                          <span class="demonstration">教学课件的内容</span>
+                                    <p class="appraiseTitle">全部评价</p>
+                                    <hr>
+                                    <p v-show="appraiseContent.length == 0">暂无评价</p>
+                                    <div class="showAppraise" v-for="(item,index) in appraiseContent">
+                                      <div class="AppraiseMsg">
+                                        <p class="AppraiseUser">{{item.user}}</p>
+                                        <div class="AppraiseStar">
                                           <el-rate
-                                            v-model="appraiseStar.value1"
-                                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                                            v-model="item.appShowStar"
+                                            disabled
+                                            show-score
+                                            text-color="#ff9900"
+                                            score-template="{value}">
                                           </el-rate>
                                         </div>
+                                      </div>
+                                      <div class="AppraiseText">
+                                        {{item.text}}
+                                      </div>
+                                      <div class="AppraiseTime">{{item.date}}</div>
+                                      <hr>
+
+                                      <div class="showReplyClass">
+                                        <div class="showReplyMsg">
+                                          <p class="AppraiseUser" v-show="appraiseContent[index].replyText != '' ">{{userName}}回复{{item.user}}:</p>
+                                          <p class="showReplyText">{{item.replyText}}</p>
+                                          <p class="AppraiseTime">{{item.replyDate}}</p>
+                                        </div>
+                                        <div class="replyEventButtons" v-show="userSession == 1">
+                                          <el-button size="small" type="primary" @click="showReply(index)">
+                                            回复
+                                          </el-button>
+                                          <div class="replyEvent" v-show="appraiseContent[index].replyText != '' ">
+                                            <!--<el-button size="small" type="primary" @click="showReply(index)">-->
+                                              <!--修改回复-->
+                                            <!--</el-button>-->
+                                            <el-button size="small" @click="deleteReply(index)">
+                                              删除回复
+                                            </el-button>
+                                          </div>
+                                        </div>
+
+                                        <div v-show="replyShow == index">
+                                          <textarea autofocus class="replyText" type="text" v-model="replyText" />
+                                          <div class="replyButtons">
+                                            <el-button type="success" size="small" round @click="submitReply(index)">确定</el-button>
+                                            <el-button size="small" round @click="cancelReply(index)">取消</el-button>
+                                          </div>
+
+                                        </div>
+
+                                      </div>
+                                    </div>
+
+                                    <p class="appraiseTitle">我要评价</p>
+                                    <div class="IwantAppraise">
+
+                                      <div class="block">
+                                        <span class="demonstration">综合评价</span>
+                                        <el-rate
+                                          v-model="appraiseStar.value1"
+                                          :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                                        </el-rate>
+                                      </div>
+                                      <textarea class="AppraiseNowText" type="text" v-model="text"/>
+                                      </div>
+
+                                      <div class="shopList">
                                         <div class="block">
-                                          <span class="demonstration">教学微课的质量</span>
+                                          <span class="demonstration">教学内容</span>
                                           <el-rate
                                             v-model="appraiseStar.value2"
                                             :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                                           </el-rate>
                                         </div>
                                         <div class="block">
-                                          <span class="demonstration">工作页的内容</span>
+                                          <span class="demonstration">任课老师</span>
                                           <el-rate
                                             v-model="appraiseStar.value3"
                                             :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
                                           </el-rate>
                                         </div>
-                                        <div class="block">
-                                          <span class="demonstration">flash动画的质量</span>
-                                          <el-rate
-                                            v-model="appraiseStar.value4"
-                                            :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                                          </el-rate>
-                                        </div>
-                                        <el-button type="success" round @click="submitComments()">提交评论</el-button>
-                                    </div>
+
+                                      </div>
+
+                                    <el-button type="success" round @click="submitComments()">提交评论</el-button>
                                 </div>
                             </el-tab-pane>
                           </el-tabs>
@@ -211,6 +203,7 @@ import navgationHead from '@/components/common/navgationHead'
 import pptSlides from '@/components/courseTree/pptSlides'
 import footFooter from '@/components/common/footFooter'
 import EventBus from '../assets/js/EventBus';
+import core from '../assets/js/core.js';
 
 var contentSlides = pptSlides;
 export default {
@@ -236,19 +229,15 @@ export default {
         value1:null,
         value2:null,
         value3:null,
-        value4:null,
+        value:7
       },
-      
+      appraiseContent:[],
       currentdate: '',
       isAppearCommentBox: false,
       isAppearCommentBox1: false,
       text:'',
       replyText:'',
-      replyToReplyText:'',
       replyTime:'',
-      replyToReplyTime:'',
-      currentReplyOpen:-1,
-      currentReplyToReply:-1,
       url:'',
       appAnswer:false,
       noTree11:'',
@@ -256,6 +245,11 @@ export default {
       courseId2:'',
       checkArr:[],
       userId:this.$store.state.userID,
+      userName:this.$store.state.username,
+      userType:this.$store.state.userType,
+      userSession:0,
+      replyShow:-1,
+      showReplyText:-1,
       keyId:'',
       activeName: '',
       descTab:'0',
@@ -318,17 +312,24 @@ export default {
   },
   mounted(){
 
+    //判断当前是否是老师
+    console.log(this.userType)
+    if(this.userType == 'EA' || this.userType == 'T'){
+      this.userSession = 1;
+      console.log(this.userSession)
+    }else{
+
+    }
 
    // var scrollbox = document.querySelector(".courseImg");
    // console.log(document.querySelector(".courseImg"))
    // window.addEventListener('scroll', this.handleScroll);
+
    //获取树形数据
     this.data = this.$store.state.newBannerLeft;
     setTimeout(() => {
       this.$refs.vuetree.setCurrentKey(this.keyId)
     }, 20)
-
-
 
       //PPT页数
       this.total = this.lists.length;
@@ -933,7 +934,7 @@ export default {
       }).catch(function(error){
         console.log("error init." + error)
       });
-      
+
       //请求课后作业
       axios.get("/readTestQuestion/getHomeWork",{
         params:{
@@ -1236,12 +1237,57 @@ export default {
           });
       }
     },
-    enterUserManagement () {
-        this.$router.push('/userManagement')
-      },
-      dele: function (index) {
-        this.replyArr.splice(index, 1)
-      },
+    //点击显示回复
+    showReply(index){
+      this.replyShow = index;
+    },
+    //取消回复
+    cancelReply(){
+      this.replyShow = -1;
+      this.replyText = '';
+    },
+    //删除回复
+    deleteReply(index){
+      this.appraiseContent[index].replyText = '';
+      this.appraiseContent[index].replyName = '';
+      this.appraiseContent[index].replyDate = '';
+    },
+    //提交回复
+    submitReply(index){
+      if(this.user === ''){
+          var con = confirm("请登录");
+          if(con == true){
+            this.$router.push({path: '/loginPage'})
+          }else{
+            return false;
+          }
+        }else {
+          if (this.replyText === '') {
+            alert('回复不能为空')
+          } else {
+            console.log(this.appraiseContent[index])
+            this.appraiseContent[index].replyText = this.replyText;
+            this.appraiseContent[index].replyName = this.userName;
+            this.appraiseContent[index].replyDate = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date());
+
+
+            //console.log(this.appraiseContent)
+            axios({
+              method:'get',
+              url:"/readComments/update",
+              params:{
+                appraiseContent:this.appraiseContent
+              }
+            }).then(function (res) {
+               // console.log(res.data.code)
+              })
+            this.replyText = '';
+          }
+        }
+      this.showReplyText = index;
+      this.replyShow = -1;
+    },
+    //提交评论
       submitComments () {
         if(this.user === ''){
           var con = confirm("请登录");
@@ -1254,235 +1300,42 @@ export default {
           if (this.text === '') {
             alert('评论不能为空')
           } else {
-            var date = new Date()
-            var seperator1 = '-'
-            var seperator2 = ':'
-            var month = date.getMonth() + 1
-            var strDate = date.getDate()
-            if (month >= 1 && month <= 9) {
-              month = '0' + month
-            }
-            if (strDate >= 0 && strDate <= 9) {
-              strDate = '0' + strDate
-            }
-            this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-              + ' ' + date.getHours() + seperator2 + date.getMinutes()
-              + seperator2 + date.getSeconds()
-            this.score = this.inputdata
-            this.commentAllObj.push({
-              type:1,
-              num:this.commentAllObj.length +1 ,
-              source:"course",
-              title: this.currentCourseTitle,
-              user:this.user,
-              text:this.text,
-              time:this.currentdate,
-              score:this.inputdata,
-              targetId:'',
-              target:''
-            })
-            console.log(this.currentCourseTitle)
-            this.commentArr.push({
-              type:1,
-              num:this.commentAllObj.length + 1,
-              source:"course",
-              title: this.currentCourseTitle,
-              user:this.user,
-              text:this.text,
-              time:this.currentdate,
-              score:this.inputdata,
-              targetId:'',
-              target:''
-            })
+            var currCourse = this.moutedHomeworkPath;
+            //console.log(currCourse)
+            if(this.appraiseStar.value1 == null){
+              this.appraiseStar.value1 = 0;
+            }else{
 
+            }
+              this.appraiseContent.unshift({
+                title:currCourse,
+                user:this.userName,
+                appShowStar:this.appraiseStar.value1,
+                text:this.text,
+                date:core.formatDate("yyyy-MM-dd hh:mm:ss", new Date()),
+                replyText:'',
+                replyName:'',
+                replyDate:'',
+                contentAppraise:this.appraiseStar.value2,
+                teacherAppraise:this.appraiseStar.value3
+              })
+
+            this.appraiseStar.value1 = null;
+            this.appraiseStar.value2 = null;
+            this.appraiseStar.value3 = null;
+
+            console.log(this.appraiseContent)
             axios({
               method:'get',
               url:"/readComments/update",
               params:{
-                type:1,
-                num:this.commentAllObj.length + 1,
-                title: this.currentCourseTitle,
-                source:"course",
-                user:this.user,
-                text:this.text,
-                time:this.currentdate,
-                score:this.inputdata,
-                targetId:'',
-                target:''
+                appraiseContent:this.appraiseContent
               }
-            }).then(
-              function (res) {
-                console.log(res.data.code)
-              }
-            )
+            }).then(function (res) {
+               // console.log(res.data.code)
+              })
             this.text = ''
           }
-        }
-      },
-      wantReply(item,num){
-        if(this.user === ''){
-          var con = confirm("请登录");
-          if(con == true){
-            this.$router.push({path: '/loginPage'})
-          }else{
-            return false;
-          }
-        }else {
-          this.currentReplyOpen = num
-          this.isAppearCommentBox = true
-        }
-        // this.isAppearCommentBox = !this.isAppearCommentBox
-      },
-      submitReply(item,aa) {
-        console.log(item)
-        if (this.replyText === '') {
-          alert('评论不能为空')
-        }else {
-
-          var date = new Date()
-          var seperator1 = '-'
-          var seperator2 = ':'
-          var month = date.getMonth() + 1
-          var strDate = date.getDate()
-          if (month >= 1 && month <= 9) {
-            month = '0' + month
-          }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
-          }
-          this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + ' ' + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds()
-          // console.log(item.replyArr)
-          // console.log(item)
-          this.commentAllObj.push({
-            type:2,
-            num:this.commentAllObj.length + 1 ,
-            source:"course",
-            title: this.currentCourseTitle,
-            user:this.user,
-            text:this.text,
-            time:this.currentdate,
-            score:this.inputdata,
-            target:item.user,
-            targetId:item.num
-          })
-          this.replyArr.push({
-            type:2,
-            num:this.commentAllObj.length + 1,
-            source:"course",
-            title:this.currentCourseTitle,
-            user:this.user,
-            text:this.replyText,
-            time:this.replyTime,
-            score:'',
-            target:item.user,
-            targetId:item.num
-          })
-          axios({
-            method:'get',
-            url:"/readComments/update",
-            params:{
-              type:2,
-              num:this.commentAllObj.length + 1,
-              source:"course",
-              title:this.currentCourseTitle,
-              user:this.user,
-              text:this.replyText,
-              time:this.replyTime,
-              score:'',
-              target:item.user,
-              targetId:item.num
-            }
-          }).then(
-            function (res) {
-              console.log(res.data.code)
-            }
-          )
-          this.currentReplyOpen = -1
-          this.replyText = ''
-        }
-      },
-      replyToReply(item, num){
-        if(this.user === ''){
-          var con = confirm("请登录");
-          if(con == true){
-            this.$router.push({path: '/loginPage'})
-          }else{
-            return false;
-          }
-        }else {
-          this.currentReplyToReply = num
-          this.isAppearCommentBox1 = true
-        }
-      },
-      submitReplyToReply (item){
-        if (this.replyToReplyText === '') {
-          alert('评论不能为空')
-        }else {
-
-          var date = new Date()
-          var seperator1 = '-'
-          var seperator2 = ':'
-          var month = date.getMonth() + 1
-          var strDate = date.getDate()
-          if (month >= 1 && month <= 9) {
-            month = '0' + month
-          }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
-          }
-          this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + ' ' + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds()
-          this.commentAllObj.push({
-            type:3,
-            num:this.commentAllObj.length+1,
-            source:"course",
-            title: this.currentCourseTitle,
-            user:this.user,
-            text:this.text,
-            time:this.currentdate,
-            score:this.inputdata,
-            target:item.user,
-            targetId:item.num
-          })
-          this.replyToReplyArr.push({
-            type:3,
-            num:this.commentAllObj.length +1,
-            source:"course",
-            title:this.currentCourseTitle,
-            user: this.user,
-            text: this.replyToReplyText,
-            time: this.replyToReplyTime,
-            score:'',
-            target:item.user,
-            targetId:item.num
-          })
-
-          axios({
-            method:'get',
-            url:"/readComments/update",
-            params:{
-              type:3,
-              num:this.commentAllObj.length+1,
-              source:"course",
-              title:this.currentCourseTitle,
-              user: this.user,
-              text: this.replyToReplyText,
-              time: this.replyToReplyTime,
-              score:'',
-              target:item.user,
-              targetId:item.num
-            }
-          }).then(
-            function (res) {
-              console.log(res.data.code)
-            }
-          )
-          this.replyToReplyText = ''
-          // console.log(item)
-          this.currentReplyToReply = -1
         }
       },
       //点击微课视频暂停开始
@@ -1540,7 +1393,7 @@ export default {
       },
       //类似F11的全屏
       requestFullScreen(element,val) {
-        
+
       //  console.log(document.getElementsByClassName("coursepptImg")[0])
       //  console.log(val)
       //  console.log(pptHeight)
@@ -1841,27 +1694,69 @@ hr{
   }
 
   .newCourse-content .appraise-box .appraiseTitle{
-    font-weight: normal;
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
-    padding: 10px;
-    margin: 0 30px;
-    border-bottom: 1px solid #ccc;
+    padding: 6px;
+    background:rgb(159,83,85);
+    width: 68px;
+    height:33px;
+    border-radius:50px;
+    color: #fff;
   }
-  .newCourse-content .appraise-box textarea{
-    margin-top: 20px;
-    /*background: linen;*/
+  .newCourse-content .AppraiseNowText{
+    margin-top: 0px;
     height: 60px;
-    width: 60%;
+    width: 70%;
     font-size: 20px;
   }
-
-  .newCourse-content .appraise-box .appraiseTitle{
-    font-weight: normal;
-    font-size: 16px;
-    text-align: left;
-    padding: 10px;
-    margin: 0 30px 30px;
+  .newCourse-content .IwantAppraise{
+    width: 90%;
+    margin-left: 68px;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    padding:20px;
+    box-sizing:border-box;
+    text-align:left;
+  }
+  .newCourse-content .showAppraise{
+    text-align:left;
+    margin-bottom:25px;
+    margin-left: 68px;
+  }
+  .newCourse-content .AppraiseMsg{
+    display:flex;
+  }
+  .newCourse-content .AppraiseUser{
+    font-weight:bolder;
+    font-size:15px;
+    margin-right:10px;
+  }
+  .newCourse-content .AppraiseTime{
+    text-align:right;
+    font-size:13px;
+    margin-top: 5px;
+  }
+  .newCourse-content .AppraiseText{
+    margin-left:50px;
+  }
+  .newCourse-content .replyText{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    height: 35px;
+    width: 100%;
+    font-size: 20px;
+  }
+  .newCourse-content .replyEventButtons{
+    position:relative;
+  }
+  .newCourse-content .replyEvent{
+    position:absolute;
+    top:0;
+    left:0;
+  }
+  .newCourse-content .replyButtons{
+    display:flex;
   }
   .newCourse-content .design-box{
     width: 560px;
@@ -1904,8 +1799,23 @@ hr{
     color: red;
     text-decoration: none;
   }
+  .appraise-box .shopList{
+    border-top:1px dashed #ccc;
+    border-bottom:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    padding-top:20px;
+    padding-left:25px;
+    margin-bottom:10px;
+    width: 90%;
+    margin-left: 68px;
+  }
   .appraise-box .block{
     display:flex;
+    margin-bottom:12px;
+  }
+  .appraise-box .block span{
+    margin-right:2px;
   }
   .comment-box .msg-box{
     /*background: pink;*/
@@ -1992,10 +1902,6 @@ hr{
     font-size: 12px;
     font-weight: normal;
     margin-bottom: 5px;
-  }
-  .appraise-box .shopList{
-    margin-top: 20px;
-    text-align: center;
   }
   .appraise-box .shopList p{
     display: inline-block;
