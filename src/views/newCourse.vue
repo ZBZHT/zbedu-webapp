@@ -119,7 +119,7 @@
 
                                       <div class="showReplyClass">
                                         <div class="showReplyMsg">
-                                          <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">{{userName}}回复{{item.user}}:</p>
+                                          <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">【{{userName}}】老师:</p>
                                           <p class="showReplyText">{{item.replyText}}</p>
                                           <p class="AppraiseTime">{{item.replyDate}}</p>
                                         </div>
@@ -318,10 +318,10 @@ export default {
   mounted(){
 
     //判断当前是否是老师
-    console.log(this.userType)
+    //console.log(this.userType)
     if(this.userType == 'EA' || this.userType == 'T'){
       this.userSession = 1;
-      console.log(this.userSession)
+      //console.log(this.userSession)
     }else{
 
     }
@@ -509,40 +509,27 @@ export default {
     //评论一系列
       this.user = this.$store.state.username;
       // console.log(this.user)
-      axios.get("/readComments/all",{
+      this.getComment(this.moutedHomeworkPath);
+    },
+  methods:{
+    //获取评论请求
+    getComment(title){
+      this.appraiseIndex = [];
+      this.appraiseContent.appraiseMsg = this.appraiseIndex;
+      axios.get("/readComments/getComment",{
         params:{
-          user:6666
+          user: this.userName,
+          title: title,
         }
       }).then((res)=>{
-        // console.log(res.data.msg)
-        // console.log(res.data.result)
-        this.commentAllObj = res.data.result
-        // console.log(this.commentAllObj)
-        for (var i=0;i<this.commentAllObj.length; i++){
-            // console.log(i)
-            if (this.commentAllObj[i].type == "1"){
-              // console.log(this.commentAllObj[i])
-              // console.log(i)
-              this.commentArr.push(this.commentAllObj[i])
-            }
-            if (this.commentAllObj[i].type == "2"){
-              // console.log(this.commentAllObj[i])
-              this.replyArr.push(this.commentAllObj[i])
-            }
-            if (this.commentAllObj[i].type == "3"){
-              // console.log(this.commentAllObj[i])
-              this.replyToReplyArr.push(this.commentAllObj[i])
-            }
-        }
-        // console.log(this.qqqq)
+        console.log(res.data.result);
+        this.appraiseIndex = res.data.result.appraiseMsg;
+        this.appraiseContent.appraiseMsg = this.appraiseIndex;
+        console.log(this.appraiseIndex)
       }).catch(function(error){
         console.log("评论请求错误")
       });
-
-
-
     },
-  methods:{
     //切换标签暂停视频
     handleClickTabs(tab){
       //console.log(tab);
@@ -1088,7 +1075,7 @@ export default {
     //从树形传值到tabs
     handleNodeClick(data,node) {
       this.appAnswer = false;
-        console.log(data);
+      //  console.log(data);
 
 
 //      var now = this.$store.state.noTree.videoTitle[0].videoTitle;
@@ -1187,7 +1174,10 @@ export default {
             }
           }).then((res)=>{
               //console.log(res.data.result)
+              //评论的title
               this.currCourse = checkArrHomeWork;
+              this.appraiseContent.title = this.currCourse;
+
               if(res.data.result){
                 //  console.log("1111")
                 //  this.$store.commit('homework',res.data.result);
@@ -1197,7 +1187,7 @@ export default {
                 //  console.log(res.data.result)
                 //  this.$store.commit('homework',[]);
                 this.homeworkData = [];
-                console.log(this.homeworkData)
+               // console.log(this.homeworkData)
               }
               //console.log(this.homeworkData)
           }).catch(function(error){
@@ -1214,7 +1204,7 @@ export default {
               fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
             }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
               for(var i = 0; i < this.checkArr.length; i++){
-                if(i == 0){
+                if(i === 0){
                   fileNamePath = fileNamePath + '我的课堂' + '/' + this.$store.state.username + '/';
                 }else{
                   fileNamePath = fileNamePath + this.checkArr[i] + '/';
@@ -1228,8 +1218,8 @@ export default {
               }
               this.videoPath = fileNamePath;
             }
-            console.log(this.$store.state.noTree1.courseId)
-            console.log(fileNamePath)
+           // console.log(this.$store.state.noTree1.courseId);
+            //console.log(fileNamePath);
           //请求课件
           axios.post("/readResource/getPPT",{
             data:{
@@ -1237,7 +1227,7 @@ export default {
               fileName: fileNamePath
             }
           }).then((res)=>{
-            console.log(res.data.result.textBookList);
+            //console.log(res.data.result.textBookList);
             this.lists = res.data.result.courseList;
             this.total = this.lists.length;
             this.teachingBooklists = res.data.result.textBookList;
@@ -1245,6 +1235,7 @@ export default {
           }).catch(function(error){
             console.log("error init." + error)
           });
+        this.getComment(checkArrHomeWork);
       }
     },
     //点击显示回复
@@ -1267,12 +1258,12 @@ export default {
     appraiseUpdate(){
       axios({
         method:'get',
-        url:"/readComments/update",
+        url:"/readComments/updateComment",
         params:{
           appraiseContent:this.appraiseContent
         }
       }).then(function (res) {
-          // console.log(res.data.code)
+         //  console.log(res.data.result)
       })
     },
     //提交回复
@@ -1340,7 +1331,7 @@ export default {
             this.appraiseStar.value2 = null;
             this.appraiseStar.value3 = null;
 
-            console.log(this.appraiseContent)
+            //console.log(this.appraiseContent)
             this.appraiseUpdate();
             this.text = '';
           }
@@ -1754,6 +1745,9 @@ hr{
     height: 35px;
     width: 100%;
     font-size: 20px;
+  }
+  .newCourse-content .showReplyText{
+    margin-left:50px;
   }
   .newCourse-content .replyEventButtons{
     position:relative;
