@@ -97,8 +97,8 @@
                                 <div class="appraise-box">
                                     <p class="appraiseTitle">全部评价</p>
                                     <hr>
-                                    <p v-show="appraiseContent.length == 0">暂无评价</p>
-                                    <div class="showAppraise" v-for="(item,index) in appraiseContent">
+                                    <p v-show="appraiseContent.appraiseMsg.length == 0">暂无评价</p>
+                                    <div class="showAppraise" v-for="(item,index) in appraiseContent.appraiseMsg">
                                       <div class="AppraiseMsg">
                                         <p class="AppraiseUser">{{item.user}}</p>
                                         <div class="AppraiseStar">
@@ -119,7 +119,7 @@
 
                                       <div class="showReplyClass">
                                         <div class="showReplyMsg">
-                                          <p class="AppraiseUser" v-show="appraiseContent[index].replyText != '' ">{{userName}}回复{{item.user}}:</p>
+                                          <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">{{userName}}回复{{item.user}}:</p>
                                           <p class="showReplyText">{{item.replyText}}</p>
                                           <p class="AppraiseTime">{{item.replyDate}}</p>
                                         </div>
@@ -127,7 +127,7 @@
                                           <el-button size="small" type="primary" @click="showReply(index)">
                                             回复
                                           </el-button>
-                                          <div class="replyEvent" v-show="appraiseContent[index].replyText != '' ">
+                                          <div class="replyEvent" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">
                                             <!--<el-button size="small" type="primary" @click="showReply(index)">-->
                                               <!--修改回复-->
                                             <!--</el-button>-->
@@ -231,7 +231,10 @@ export default {
         value3:null,
         value:7
       },
-      appraiseContent:[],
+      appraiseContent:{
+        title:[],
+        appraiseMsg:{}
+      },
       currentdate: '',
       isAppearCommentBox: false,
       isAppearCommentBox1: false,
@@ -271,7 +274,9 @@ export default {
       courseButtonShow:true,
       currpage:0,
       homeworkData:[],
-      videoPath:''
+      videoPath:'',
+      currCourse:[],
+      appraiseIndex:[]
     }
   },
   computed:{
@@ -883,6 +888,7 @@ export default {
       //console.log(id)
       this.moutedCorusePath = coursePath;
       this.moutedHomeworkPath = homeworkPath;
+      this.currCourse = this.moutedHomeworkPath;
       coursePath = [];
       if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800){
         //console.log(this.moutedCorusePath)
@@ -1132,6 +1138,9 @@ export default {
       if(data.children){
 
       }else{
+        //点击请求评论
+
+
         //点击新课程让课件跳转到第一页
         EventBus.$emit('newPageUp',this.pageFn(1));
         contentSlides.methods.pageUp(1);
@@ -1178,6 +1187,7 @@ export default {
             }
           }).then((res)=>{
               //console.log(res.data.result)
+              this.currCourse = checkArrHomeWork;
               if(res.data.result){
                 //  console.log("1111")
                 //  this.$store.commit('homework',res.data.result);
@@ -1248,9 +1258,22 @@ export default {
     },
     //删除回复
     deleteReply(index){
-      this.appraiseContent[index].replyText = '';
-      this.appraiseContent[index].replyName = '';
-      this.appraiseContent[index].replyDate = '';
+      this.appraiseContent.appraiseMsg[index].replyText = '';
+      this.appraiseContent.appraiseMsg[index].replyName = '';
+      this.appraiseContent.appraiseMsg[index].replyDate = '';
+      this.appraiseUpdate();
+    },
+    //评论的更新请求
+    appraiseUpdate(){
+      axios({
+        method:'get',
+        url:"/readComments/update",
+        params:{
+          appraiseContent:this.appraiseContent
+        }
+      }).then(function (res) {
+          // console.log(res.data.code)
+      })
     },
     //提交回复
     submitReply(index){
@@ -1265,22 +1288,14 @@ export default {
           if (this.replyText === '') {
             alert('回复不能为空')
           } else {
-            console.log(this.appraiseContent[index])
-            this.appraiseContent[index].replyText = this.replyText;
-            this.appraiseContent[index].replyName = this.userName;
-            this.appraiseContent[index].replyDate = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date());
+            //console.log(this.appraiseContent[index])
+            this.appraiseContent.appraiseMsg[index].replyText = this.replyText;
+            this.appraiseContent.appraiseMsg[index].replyName = this.userName;
+            this.appraiseContent.appraiseMsg[index].replyDate = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date());
 
 
             //console.log(this.appraiseContent)
-            axios({
-              method:'get',
-              url:"/readComments/update",
-              params:{
-                appraiseContent:this.appraiseContent
-              }
-            }).then(function (res) {
-               // console.log(res.data.code)
-              })
+            this.appraiseUpdate();
             this.replyText = '';
           }
         }
@@ -1289,6 +1304,7 @@ export default {
     },
     //提交评论
       submitComments () {
+        //this.appraiseIndex = [];
         if(this.user === ''){
           var con = confirm("请登录");
           if(con == true){
@@ -1300,15 +1316,13 @@ export default {
           if (this.text === '') {
             alert('评论不能为空')
           } else {
-            var currCourse = this.moutedHomeworkPath;
             //console.log(currCourse)
             if(this.appraiseStar.value1 == null){
               this.appraiseStar.value1 = 0;
             }else{
 
             }
-              this.appraiseContent.unshift({
-                title:currCourse,
+              this.appraiseIndex.unshift({
                 user:this.userName,
                 appShowStar:this.appraiseStar.value1,
                 text:this.text,
@@ -1319,22 +1333,16 @@ export default {
                 contentAppraise:this.appraiseStar.value2,
                 teacherAppraise:this.appraiseStar.value3
               })
+              this.appraiseContent.title = this.currCourse;
+              this.appraiseContent.appraiseMsg = this.appraiseIndex;
 
             this.appraiseStar.value1 = null;
             this.appraiseStar.value2 = null;
             this.appraiseStar.value3 = null;
 
             console.log(this.appraiseContent)
-            axios({
-              method:'get',
-              url:"/readComments/update",
-              params:{
-                appraiseContent:this.appraiseContent
-              }
-            }).then(function (res) {
-               // console.log(res.data.code)
-              })
-            this.text = ''
+            this.appraiseUpdate();
+            this.text = '';
           }
         }
       },
