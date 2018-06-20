@@ -84,19 +84,9 @@ export default {
                 user:234
             }
             }).then((res)=>{
-            if(this.$store.state.userType == "S"){
-                this.bannerLeftData = res.data[0];
-                var newBannerLeft = [];
-            //    console.log(this.bannerLeftData.children.length -1);
-                for(var i = 0; i < this.bannerLeftData.children.length; i++){
-                //    console.log(i)
-                    if(i != this.bannerLeftData.children.length -1){
-                        newBannerLeft.push(this.bannerLeftData.children[i]);
-                    }
-                    //console.log(newBannerLeft)
-                }
-                this.bannerLeftData.children = newBannerLeft;
-            }else{
+            if(this.$store.state.userType != "S"){
+             //   console.log("111")
+             //   console.log(this.$store.state.userType)
                 this.bannerLeftData = res.data[0];
                 var lastData = res.data[0];
             //      console.log(lastData.children[6])
@@ -121,7 +111,22 @@ export default {
 
             //    console.log(this.bannerLeftData.children[6].children)
                 this.$store.commit('newBannerLeft',this.bannerLeftData.children);
-
+                
+            }else{
+                console.log("222")
+                this.bannerLeftData = res.data[0];
+                var newBannerLeft = [];
+            //    console.log(this.bannerLeftData.children.length -1);
+                for(var i = 0; i < this.bannerLeftData.children.length; i++){
+                //    console.log(i)
+                    if(i != this.bannerLeftData.children.length -1){
+                        newBannerLeft.push(this.bannerLeftData.children[i]);
+                    }
+                    //console.log(newBannerLeft)
+                }
+                this.bannerLeftData.children = newBannerLeft;
+                
+                console.log(this.bannerLeftData)
             }
             }).catch(function(error){
                 console.log("error init." + error)
@@ -165,19 +170,17 @@ export default {
     }
   },
   mounted(){
-      if(this.$store.state.userType == "S"){
+    this.letBannerLeft();
+    if(this.$store.state.userType == "S"){
+        
           var newBannerLeft = [];
           for(var i = 0; i < this.bannerLeftData.children.length; i++){
                     if(i != this.bannerLeftData.children.length -1){
                         newBannerLeft.push(this.bannerLeftData.children[i]);
-                        console.log(newBannerLeft)
+                        //console.log(newBannerLeft)
                     }
                 }
           this.bannerLeftData.children = newBannerLeft;
-      }
-
-    if(this.$store.state.userType == "S"){
-
     }else{
         axios.post("/teacherCMS/getTeacherCustomCourse",{
         data:{
@@ -185,6 +188,7 @@ export default {
             userType: this.$store.state.userType,
         }
         }).then((res)=>{
+            console.log(res.data)
         var tab = res.data.techCosCou[0].tab;
         for(var i = 0; i < tab.length; i++){
             this.thirdData = []

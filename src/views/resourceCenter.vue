@@ -8,7 +8,7 @@
 
     <b-card no-body>
       <b-tabs pills card vertical>
-        <b-tab title="全部教程" active>
+        <b-tab title="精彩瞬间" active>
           <el-table
             ref="multipleTable"
             :data="msgArr"
@@ -18,12 +18,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号">
+              <template slot-scope="scope">{{ scope.row.index }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220" >
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip width="120">
@@ -38,7 +46,7 @@
             </el-table-column>
           </el-table>
         </b-tab>
-        <b-tab title="教学课件">
+        <b-tab title="说课课件">
           <el-table
             ref="multipleTable"
             :data="courseWareArr"
@@ -48,12 +56,21 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+
+            <el-table-column label="序号">
+              <template slot-scope="scope">{{ scope.row.index }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip width="120">
@@ -68,7 +85,7 @@
             </el-table-column>
           </el-table>
         </b-tab>
-        <b-tab title="教学微课">
+        <b-tab title="实操视频">
           <el-table
             ref="multipleTable"
             :data="videoArr"
@@ -78,12 +95,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号">
+              <template slot-scope="scope">{{ scope.row.index }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip width="120">
@@ -99,7 +124,7 @@
 
           </el-table>
         </b-tab>
-        <b-tab title="其他教材">
+        <b-tab title="其他素材">
           <el-table
             ref="multipleTable"
             :data="otherArr"
@@ -109,12 +134,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号">
+              <template slot-scope="scope">{{ scope.row.index }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
               <template slot-scope="scope">{{ scope.row.name }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220">
               <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip  width="120">
@@ -143,7 +176,7 @@
         </el-upload>
       </b-tabs>
 
-      <span class="file-up">文件上传</span>
+      <span class="file-up">成果收集</span>
 
     </b-card>
 
@@ -249,20 +282,22 @@
         if (this.label === '') {
             this.warningMsg('请选择上传文件的类型')
         } else {
+          this.getFile();
           this.centerDialogVisible = false;
-          if (this.label1 === '教学课件')
+          if (this.label1 === '说课课件')
           {
             this.courseWareArr.push(this.msgArr[this.msgArr.length-1])
           }
-          else if (this.label1 === '教学微课')
+          else if (this.label1 === '实操视频')
           {
             this.videoArr.push(this.msgArr[this.msgArr.length-1])
           }
-          else if (this.label1 === '其他教材')
+          else if (this.label1 === '其他素材')
           {
             this.otherArr.push(this.msgArr[this.msgArr.length-1])
           }
         }
+        
 
       },
       // 上传前弹出对话框
@@ -349,9 +384,26 @@
             for (let i = 0; i < res.data.var.length; i++){
               if (res.data.var[i].size != 0){
                 this.msgArr.push(res.data.var[i])
+                this.msgArr[i].personName = this.$store.state.username;
+                this.msgArr[i].index = i + 1;
               }
+            //  console.log("111")
+            //  console.log(this.msgArr)
             }
-            for ( let j = 0; j < this.msgArr.length; j++){
+            this.getFile();
+          }
+        );
+      },
+      getFile(){
+        axios.get('/fileUpDown/loadFile',{
+          params:{
+            userType:6666,
+            msgArr:this.msgArr
+          }
+        }).then((res)=>{
+
+
+          for ( let j = 0; j < this.msgArr.length; j++){
               let index = this.msgArr[j].name.split(".");
               let suffix = index[index.length-1];
               if (suffix === 'mp4' || suffix === 'rmvb' || suffix === 'avi'){
@@ -362,13 +414,14 @@
                 this.otherArr.push(this.msgArr[j])
               }
             }
-          }
-        );
-      },
+
+            
+          })
+      }
     },
     mounted(){
         this.loadFile();
-
+        
     },
     components: {navgationHead, footFooter}
   }

@@ -269,7 +269,7 @@
             </el-form>
 
             <div slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
+              <el-button type="primary" @click="updateUser('addUserForm1')">确定修改</el-button>
             </div>
           </el-dialog>
 
@@ -377,7 +377,7 @@
           </el-form>
 
           <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="addTeach('addTeachForm')">确定修改</el-button>
+            <el-button type="primary" @click="updateUser('addTeachForm')">确定修改</el-button>
           </div>
         </el-dialog>
 
@@ -610,6 +610,15 @@
         this.addUserForm1.major = '';
         this.addUserForm1.classGrade = '';
       },
+      //重置添加添加教师
+      resetUser2() {
+        this.addTeachForm.user = '';
+        this.addTeachForm.pwd = '';
+        this.addTeachForm.IDNo = '';
+        this.addTeachForm.MoNo = '';
+        this.addTeachForm.userType = '';
+        this.addTeachForm.gender = '';
+      },
 
       //修改学生
       handleEdit(index, row) {
@@ -717,6 +726,8 @@
               this.addUserSuccess('用户信息已存入数据库');
               this.resetStu();
               this.getUserData();
+            } else if (res.data.code === 1) {
+              this.addUserDefeat(res.data.msg);
             }
           });
       },
@@ -741,16 +752,20 @@
           }).then((res) => {
             if (res.data.code === 0) {
               this.addUserSuccess('添加成功');
-              this.resetStu();
+              this.resetTeach();
               this.getUserData();
+            } else if (res.data.code === 1) {
+              this.addUserDefeat(res.data.msg);
             }
           });
       },
 
       //修改用户信息
-      reUser() {
-        this.dialogFormVisible1 = false;
-        //console.log(this.addUserForm1);
+      updateUser(data) {
+        //this.dialogFormVisible1 = false;
+        //this.dialogFormVisible2 = false;
+        console.log(this.addUserForm1);
+        console.log(this.addTeachForm);
         //处理发送的用户信息方法
         function resUserData1(data) {
           if (data.pwd != '') {
@@ -759,7 +774,7 @@
           return data;
         }
 
-        let resData = resUserData1(this.addUserForm1);
+        let resData = resUserData1(this.addStuForm1);
           axios.post('/teacherCMS/updateUser', {
             data: {
               username: this.username,
@@ -773,6 +788,7 @@
               //this.total = this.teachData.length;
               this.addUserSuccess();
               this.resetUser1();
+              this.resetUser2();
               this.getUserData();
             }
           });
@@ -798,6 +814,10 @@
       handleClose(done) {  //对话框关闭确认
         this.$confirm('已输入的信息未保存! 确认关闭？')
           .then(_ => {
+            this.resetStu();
+            this.resetTeach();
+            this.resetUser1();
+            this.resetUser2();
             done();
           })
           .catch(_ => {
@@ -825,7 +845,8 @@
         }).then((res) => {
           //学生
           let studentData = res.data.student;
-          if (studentData.length > 0) {
+          //console.log(studentData);
+          if (studentData.length !== 0) {
             for (let i = 0; i < studentData.length; i++) {
               studentData[i].time = moment(new Date(studentData[i].time)).format("YYYY-MM-DD");
               studentData[i].gender = core.getGender(studentData[i].gender);
@@ -837,7 +858,8 @@
           }
           //教师
           let teacherData = res.data.teacher;
-          if (teacherData.length > 0) {
+          //console.log(teacherData.length);
+          if (teacherData.length !== 0) {
             for (let i = 0; i < teacherData.length; i++) {
               teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");
               teacherData[i].gender = core.getGender(teacherData[i].gender);
