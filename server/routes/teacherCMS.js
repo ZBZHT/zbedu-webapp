@@ -57,7 +57,6 @@ router.post('/labelTree', function (req, res) {
         let labelTree = tree.children;
         labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
         labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
-        labelTree = removeNode(labelTree, 500);  //传入要删除的Node id
           res.status(200).send({ result: labelTree });
       });
     } else if (reqBody.userType === 'T') {
@@ -93,7 +92,7 @@ router.post('/labelTree', function (req, res) {
   }
 });
 
-/* 获取所有教师数据 */
+/* 获取所有用户数据 */
 router.post('/getUserData', function (req, res) {
   if (req.body.data.username) {
     let username = req.body.data.username;
@@ -102,9 +101,12 @@ router.post('/getUserData', function (req, res) {
     }).then(function (userType) {
       //console.log(userType);
       if (userType.userType == 'SA' || userType.userType == 'EA') {
-        Teacher.find().then(function (teacher) {
+        Teacher.find({
+          userType: { "$in": ['EA','T'] }
+        }).then(function (teacher) {
           if (teacher) {
             Student.find().then(function (student) {
+              //console.log(teacher);
               if (student) {
                 res.status(200).send({
                   teacher: teacher,
@@ -134,33 +136,33 @@ router.post('/delUserData', function (req, res) {
   //console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
-    if (reqData.userType == 'SA' || reqData.userType == 'EA') {
-      if (reqData.studentSelection.length != 0) {
+    if (reqData.userType === 'SA' || reqData.userType === 'EA') {
+      //console.log(reqData.studentSelection.length);
+      //console.log(reqData.teacherSelection.length);
+      if (reqData.studentSelection.length !== 0) {
         for (let i = 0; i < reqData.studentSelection.length; i++) {
           Student.remove({userID: reqData.studentSelection[i].userID}, function (err) {
             if (err) {
-              return res.status(404).send({err: err,});
+              console.log(err);
+              res.status(200).send({code: 1, msg:'删除失败'});
             } else {
-              console.log('删除数据成功');
-              res.status(200).send({
-                code: 0,
-              });
+              //console.log('删除成功');
             }
           })
         }
-      } else if (reqData.teacherSelection.length != 0) {
+        res.status(200).send({code: 0, msg:'删除成功'});
+      } else if (reqData.teacherSelection.length !== 0) {
         for (let i = 0; i < reqData.teacherSelection.length; i++) {
           Teacher.remove({userID: reqData.teacherSelection[i].userID}, function (err) {
             if (err) {
-              return res.status(404).send({err: err,});
+              console.log(err);
+              res.status(200).send({code: 1, msg:'删除失败'});
             } else {
-              console.log('删除数据成功');
-              res.status(200).send({
-                code: 0,
-              });
+              //console.log('删除成功');
             }
           })
         }
+        res.status(200).send({code: 0, msg:'删除成功'});
       }
     }else {
       res.status(404).send({
@@ -180,7 +182,7 @@ router.post('/addStu', function (req, res) {
   if (req.body.data) {
     let reqData = req.body.data;
     let addUsers = reqData.stuForm;
-    console.log(addUsers);
+    //console.log(addUsers);
     if (reqData.userType == 'SA' || reqData.userType == 'EA') {
       let student = new Student({
         user: addUsers.user,
@@ -196,7 +198,16 @@ router.post('/addStu', function (req, res) {
       });
       student.save(function (err) {
         if (err) {
-          console.log(err)
+          let errMsg = err.message;
+          if ((errMsg.search(addUsers.userID) !== -1) === true) {
+            res.status(200).send({ code: 1, msg: '学号重复，请核对！'});
+          }
+          if ((errMsg.search(addUsers.IDNo) !== -1) === true) {
+            res.status(200).send({ code: 1, msg: '身份证号重复，请核对！'});
+          }
+          if ((errMsg.search(addUsers.MoNo) !== -1) === true) {
+            res.status(200).send({ code: 1, msg: '手机号码重复，请核对！'});
+          }
         } else {
           console.log('Save success');
           res.status(200).send({ code: 0, msg: '学生信息保存成功'});
@@ -240,15 +251,20 @@ router.post('/addTeach', function (req, res) {
           userID: ID,
           IDNo: addUsers.IDNo,
           MoNo: addUsers.MoNo,
+          gender: addUsers.gender,
           userType: addUsers.userType,
-          //gender: addUsers.gender,
-          //time: addUsers.time,
         });
         teacher.save(function (err) {
           if (err) {
-            console.log(err)
+            let errMsg = err.message;
+            if ((errMsg.search(addUsers.IDNo) !== -1) === true) {
+              res.status(200).send({ code: 1, msg: '身份证号重复，请核对！'});
+            }
+            if ((errMsg.search(addUsers.MoNo) !== -1) === true) {
+              res.status(200).send({ code: 1, msg: '手机号码重复，请核对！'});
+            }
           } else {
-            console.log('Save success');
+            //console.log('Save success');
             res.status(200).send({ code: 0, msg: '教师信息保存成功'});
           }
         });
@@ -402,67 +418,68 @@ router.post('/addExcelUsers', function(req, res) {
 
 //更新用户信息
 router.post('/updateUser', function (req, res) {
-  if (req.body.data) {
     let reqData = req.body.data;
+    let reqUserType = reqData.userType;
     let reqUser = reqData.addUser;
-    if (reqData.userType == 'SA' || reqData.userType == 'EA') {
-      console.log(reqUser);
-      //查找userID来更新数据
-      Student.findOneAndUpdate({
-        userID: reqUser.userID
-      }, {
-        user: reqUser.user,
-        pwd: reqUser.pwd,
-        IDNo: reqUser.IDNo,
-        MoNo: reqUser.MoNo,
-        userType: reqUser.userType,
-        gender: reqUser.gender,
-        AdmDate: reqUser.AdmDate,
-        major: reqUser.major,
-        classGrade: reqUser.classGrade
-      }, function (err) {
-        if (err) {
-          console.log(err);
-          //查找IDNo来更新数据
-          Student.findOneAndUpdate({
-            IDNo: reqUser.IDNo
-          }, {
-            user: reqUser.user,
-            pwd: reqUser.pwd,
-            userID: reqUser.userID,
-            MoNo: reqUser.MoNo,
-            userType: reqUser.userType,
-            gender: reqUser.gender,
-            AdmDate: reqUser.AdmDate,
-            major: reqUser.major,
-            classGrade: reqUser.classGrade
-          }, function (err) {
-            if (err) {
-              console.log(err);
-              res.status(404).send({
-                Msg: '更新失败',
-              });
-            } else {
-              console.log('修改成功IDNo');
-              res.status(200).send({
-                Msg: '更新成功',
-              });
-            }
-          });
-        } else {
-          console.log('修改成功userID');
-          res.status(200).send({
-            Msg: '更新成功',
-          });
-        }
-      });
-    }
-  } else {
-    res.status(404).send({
-      Msg: '该用户无权限',
-      success: 1,
+    let p1 = new Promise((resolve, reject) => {
+      if (reqUserType === 'SA' || reqUserType === 'EA') {
+        resolve('成功了1')
+      } else {
+        res.status(200).send({ code:1, Msg: '未登录或者该用户无权限', });
+      }
     });
-  }
+
+    Promise.all([p1]).then((result) => {
+      //console.log(result);
+      //console.log(reqUser.userType);
+      if (reqUser.userType === 'S' || reqUser.userType === 'O') {
+        Student.findOneAndUpdate({
+          userID: reqUser.userID
+        }, {
+          user: reqUser.user,
+          //pwd: reqUser.pwd,
+          MoNo: reqUser.MoNo,
+          IDNo: reqUser.IDNo,
+          userType: reqUser.userType,
+          gender: reqUser.gender,
+          AdmDate: reqUser.AdmDate,
+          major: reqUser.major,
+          classGrade: reqUser.classGrade
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            res.status(200).send({code:1, Msg: '更新失败', });
+          } else {
+            //console.log('修改成功IDNo');
+            res.status(200).send({code:0, Msg: '更新成功', });
+          }
+        });
+
+      } else if (reqUser.userType === 'EA' || reqUser.userType === 'T') {
+        //console.log(reqUser);
+        Teacher.findOneAndUpdate({
+          userID: reqUser.userID
+        }, {
+          user: reqUser.user,
+          //pwd: reqUser.pwd,
+          IDNo: reqUser.IDNo,
+          MoNo: reqUser.MoNo,
+          userType: reqUser.userType,
+          gender: reqUser.gender,
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            //查找IDNo来更新数据
+          } else {
+            //console.log('修改成功userID');
+            res.status(200).send({ code:0, Msg: '更新成功', });
+          }
+        });
+      }
+    }).catch((error) => {
+      console.log(error);
+      res.status(200).send({ code:0, Msg: '修改出错', });
+    });
 });
 //修改密码
 router.post('/updatePass', function (req, res) {
@@ -585,8 +602,8 @@ router.post('/getMyMsg', function (req, res) {
 //题库管理--显示全部题
 router.get('/getAllTest', function (req, res) {
   let reqQ = req.query.userType;
-  console.log(reqQ);
-  if (reqQ == 'T' || reqQ == 'EA' || reqQ == 'SA') {
+  //console.log(reqQ);
+  if (reqQ === 'T' || reqQ === 'EA' || reqQ === 'SA') {
     Question.find({
     }).then(function (result) {
       res.status(200).send(result);
@@ -842,27 +859,37 @@ router.post('/getTeacherCustomCourse', function (req, res) {
   if (req.body.data) {
     let reqData = req.body.data;
     let username = req.session.users.username;
-    if (reqData.userType == 'SA' || reqData.userType == 'EA' || reqData.userType == 'T') {
+    if (reqData.userType === 'SA' || reqData.userType === 'EA' || reqData.userType === 'T') {
       if (!fs.existsSync(uploadCoursePath + username)) {
         fs.mkdirSync(uploadCoursePath + username);
       }
       TechCosCou.find({
         userID : reqData.userID,
       }).then(function (techCosCou) {
-
         if (techCosCou.length !==0) {
           let lab = techCosCou[0].tab;
           //console.log(techCosCou[0].tab);
           if (lab !== 0) {
             for (let i = 0; i < lab.length; i++) {
               let path = uploadCoursePath + username + '/' + lab[i].label;
-              //console.log(path);
               if (!fs.existsSync(path)) {
                 fs.mkdirSync(path);
               }
+              //console.log(lab[i]);
+              if (lab[i].children !== undefined) {
+                if (lab[i].children.length >= 0) {
+                  //console.log(lab[i].course);
+                  for (let j = 0; j < lab[i].children.length; j++) {
+                    let obj = lab[i].children[j].label;
+                    //console.log(obj);
+                    if (!fs.existsSync(path + '/' + lab[i].children[j].label)) {
+                      fs.mkdirSync(path + '/' + lab[i].children[j].label);
+                    }
+                  }
+                }
+              }
             }
           }
-
           res.status(200).send({ techCosCou: techCosCou, });
         } else if (techCosCou.length === 0) {
           let techCosCou = new TechCosCou({
@@ -949,7 +976,6 @@ router.post('/uploadCourse', function(req, res) {
   let reqUserType = req.session.users.userType;
   let username = req.session.users.username;
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
-
     let form = new formidable.IncomingForm();
     form.uploadDir = uploadCoursePath;//设置文件上传存放地址
     form.maxFieldsSize = 500 * 1024 * 1024; //设置最大500M
@@ -965,6 +991,7 @@ router.post('/uploadCourse', function(req, res) {
         let newPath = '';
         arr = fileName.split(".");
         if (arr[arr.length-1] === 'pdf' || arr[arr.length-1] === 'ppt') {
+          console.log('pdf');
           //pdf/ppt的处理
           newPath = uploadCoursePath + username +'/' + fileName;
           fs.rename(oldPath, newPath, function (err) {
@@ -979,8 +1006,9 @@ router.post('/uploadCourse', function(req, res) {
               res.status(200).send({ Msg : '上传成功', code : 0, });
             });
           });
-        //是pdf的处理
+        //是微课 / 动画的处理
         } else {
+          console.log('动画');
           newPath = uploadCoursePath + username +'/' + fileName;
           //console.log(newPath);
           fs.rename(oldPath, newPath, function (err) {
@@ -1008,13 +1036,16 @@ router.post('/uploadCourse', function(req, res) {
 
 //教师上传课件--成功后处理文件
 router.post('/uploadCourseSec', function(req, res) {
-  let newFileName1 = req.body.data.newFileName1;
-  let newFileName2 = req.body.data.newFileName2;
-  let fileName = req.body.data.fileName;
+  let reqData = req.body.data;
+  let newFileName1 = reqData.newFileName1;
+  let newFileName2 = reqData.newFileName2;
+  let fileName = reqData.fileName;
+  let fileType = reqData.fileType;
   let reqUserType = req.session.users.userType;
   let username = req.session.users.username;
   let sysType=os.type();
   let newPath = '';
+  //console.log(fileType);
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
 
     let arr = fileName.split(".");
@@ -1027,7 +1058,7 @@ router.post('/uploadCourseSec', function(req, res) {
       fs.mkdirSync(newPath + newFileName1 +'/' + newFileName2);
     }
     let pdfPath = newPath + fileName;
-    let coursePath = newPath + newFileName1 +'/' + newFileName2 +'/' + arr[0] + '-课件';
+    let coursePath = newPath + newFileName1 +'/' + newFileName2 +'/' + arr[0] + fileType;
     //console.log(pdfPath);
     //console.log(coursePath);
     //pdf||ppt转png
@@ -1070,10 +1101,10 @@ router.post('/uploadCourseSec', function(req, res) {
                   })
                 }
               }
-             /* fs.unlink(f, function (err) {
+              fs.unlink(pdfPath, function (err) {
                 if (err) return console.log(err);
                 console.log('文件删除成功');
-              });*/
+              });
             });
           })
           .catch(error => {
@@ -1093,18 +1124,98 @@ router.post('/uploadCourseSec', function(req, res) {
 
     Promise.all([p1, p2]).then((msg) => {
       res.status(200).send({ code: 0, msg: msg});
-      console.log(msg)
+      //console.log(msg)
     }).catch((error) => {
       console.log(error)
     });
 
   }
 });
+
+//教师上传微课--成功后移动文件到
+router.post('/uploadMove', function(req, res) {
+  let newFileName1 = req.body.data.newFileName1;
+  let newFileName2 = req.body.data.newFileName2;
+  let fileName = req.body.data.fileName;
+  let reqUserType = req.session.users.userType;
+  let username = req.session.users.username;
+  let oldPath = uploadCoursePath + username +'/' + fileName;
+  let newPath = uploadCoursePath + username +'/'+ newFileName1 +'/'+ newFileName2 +'/'+ fileName;
+  if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
+    fs.rename(oldPath,newPath,function(err){
+      if(!err)
+        res.status(200).send({ Msg : '课件处理成功', code : 0, });
+        console.log("rename complete.");
+    });
+  }
+});
+
+//教师上传课件
+router.post('/uploadCourse', function(req, res) {
+  let reqUserType = req.session.users.userType;
+  let username = req.session.users.username;
+  if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
+
+    let form = new formidable.IncomingForm();
+    form.uploadDir = uploadCoursePath;//设置文件上传存放地址
+    form.maxFieldsSize = 500 * 1024 * 1024; //设置最大500M
+    form.keepExtensions = true;
+
+    form.parse(req, function (err, fields, files) {
+      //旧名字
+      if (files.file.name !== undefined) {
+        let fileName = files.file.name;
+        //console.log(fileName);
+        //新名字
+        let oldPath = files.file.path;
+        let newPath = '';
+        arr = fileName.split(".");
+        if (arr[arr.length-1] === 'pdf' || arr[arr.length-1] === 'ppt') {
+          //pdf/ppt的处理
+          newPath = uploadCoursePath + username +'/' + fileName;
+          fs.rename(oldPath, newPath, function (err) {
+            if (err) {
+              console.log('改名失败');
+              res.status(404).send({ Msg : '改名失败', code : 1, });
+            }
+            fs.stat(newPath, function(err,stats){  //获取文件信息
+              if(err){
+                return err;
+              }
+              res.status(200).send({ Msg : '上传成功', code : 0, });
+            });
+          });
+          //是pdf的处理
+        } else {
+          newPath = uploadCoursePath + username +'/' + fileName;
+          //console.log(newPath);
+          fs.rename(oldPath, newPath, function (err) {
+            if (err) {
+              console.log('改名失败');
+              res.status(404).send({ Msg : '改名失败', code : 1, });
+            }
+            fs.stat(newPath, function(err,stats){  //获取文件信息
+              if(err){
+                return err;
+              }
+              res.status(200).send({ Msg : '上传成功', code : 0, });
+            });
+          });
+        }
+
+      } else {
+        res.status(404).send({ Msg : '上传的文件名为空', code : 1, });
+      }
+    });
+  } else {
+    res.status(404).send({ Msg : '用户无权限或未登录', code : 1, });
+  }
+});
+
 //获取课程树
 router.post('/getCenterTree', function(req, res) {
   let reqUserType = req.session.users.userType;
   if (reqUserType === 'EA' || reqUserType === 'SA') {
-
   } else {
     res.status(404).send({
       Msg : '用户无权限或未登录',
@@ -1112,6 +1223,7 @@ router.post('/getCenterTree', function(req, res) {
     });
   }
 });
+
 //更新课程树
 router.post('/updateCenterTree', function(req, res) {
   let reqUserType = req.session.users.userType;

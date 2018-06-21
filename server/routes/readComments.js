@@ -1,72 +1,64 @@
 const express = require('express');
 const router = express.Router();
-const Comments = require('../app/models/Comments');
+const Comment = require('../app/models/Comment');
 
-//添加新comment
-router.get('/addComment', function (req, res) {
-  //let reqComment = req.query;
-  let comments = new Comments({
-    status: '0',
-    msg: "comments data a success"
-  });
-  comments.result.push({
-    type: "1",
-    num: "1",
-    source: "course",
-    title: "动力电池系统故障检修",
-    user: "橘子1",
-    text: "不错，微课拍的很专业，也很详细",
-    time: "2017-12-12 10:20:36",
-    score: "2",
-    target: "",
-    targetId: ""
-  });
-  comments.save(function (err) {
-    if (err) return handleError(err);
-    console.log('Success!');
-  });
-});
+//获取对应的comment
+router.get('/getComment', function (req, res) {
+  let reqTit = req.query.title;
+  let username = req.session.users.username;
+  //console.log(reqTit);
+    if (username !== '') {
+    findComment();
+    function findComment() {
+      Comment.findOne({
+        title: reqTit
+      }).then(function (user) {
+        console.log(user);
+        if (user === null) {
+          //console.log('找不到');
+          let comment = new Comment({
+            title: reqTit,
+            appraiseMsg: [],
+          });
+          comment.save(function (err) {
+            if (err) console.log(err);
+            console.log('Success!');
+            Comment.findOne({
+              title: reqTit
+            }).then(function (user1) {
+              res.status(200).send({ code: 1, result: user1 });
+            })
+          });
+        } else {
+          //res.end(JSON.stringify({ result: user }));
+          console.log('读取成功');
+          res.status(200).send({ code: 1, result: user });
+        }
+      });
+    }
+  } else {
+    console.log('未登录');
+    res.status(200).send({ code: 1, msg: '未登录'});
+  }
 
-//查询整个文档
-router.get('/all', function (req, res) {
-  let result = '';
-  Comments.findOne({
-    status: '0'
-  }).then(function (user) {
-    result = user;
-    res.end(JSON.stringify(result));
-  });
 });
 
 //更新result
-router.get('/update', function (req, res) {
-  let reqComment = req.query;
-  let code = '';
-  console.log(reqComment);
-  Comments.update({status: "0"}, {
-      $push: {
-        result: {
-          type: reqComment.type,
-          num: reqComment.num,
-          source: reqComment.source,
-          title: reqComment.title,
-          user: reqComment.user,
-          text: reqComment.text,
-          time: reqComment.time,
-          score: reqComment.score,
-          target: reqComment.target,
-          targetId: reqComment.targetId
-        }
-      }
-    }, {upsert: true},
-    function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        code = 0;
-        res.end(JSON.stringify(code));
-      }
-    });
+router.get('/updateComment', function (req, res) {
+  let reqComment = JSON.parse(req.query.appraiseContent);
+  Comment.findOneAndUpdate({
+    title: reqComment.title
+  }, {
+    appraiseMsg: reqComment.appraiseMsg,
+  }, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({ code: 1, Msg: '更新失败', });
+    } else {
+      console.log('更新成功');
+      res.status(200).send({ code: 0, Msg: '更新成功', });
+    }
+  });
 });
 
 module.exports = router;

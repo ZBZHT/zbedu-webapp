@@ -18,7 +18,7 @@ router.post('/getPPT', function (req, res) {
     workPageList:[],
   };
   let fileName = req.body.data.fileName;
-  console.log(fileName);
+  //console.log(fileName);
   if (fileName !== '') {
     //处理路径
     let fileNameArr1 = fileName.split(".");
@@ -44,8 +44,8 @@ router.post('/getPPT', function (req, res) {
     let p1 = new Promise((resolve, reject) => {
       //读取课件列表
       fs.readdir(resourcePath + fileName2, function (err, stats2) {
-        console.log(stats2);
-        console.log(resourcePath + fileName2);
+        //console.log(stats2);
+        //console.log(resourcePath + fileName2);
         if (stats2 && stats2.length>0) {
 
           let num = [];
@@ -77,7 +77,7 @@ router.post('/getPPT', function (req, res) {
               data = resPath + fileName2 + "/" + name3 + item + '.' + name2;
               pList.courseList.push({img: data});
             });
-            console.log(pList.courseList);
+            //console.log(pList.courseList);
             resolve('读取-课件-成功');
           }
         } else {
@@ -89,8 +89,8 @@ router.post('/getPPT', function (req, res) {
     let p2 = new Promise((resolve, reject) => {
       //读取教材列表
       fs.readdir(resourcePath + fileName1, function (err, stats1) {
-        console.log(stats1);
-        console.log(resourcePath + fileName1);
+        //console.log(stats1);
+        //console.log(resourcePath + fileName1);
         if (stats1 && stats1.length>0) {
           let num = [];
           if (err) {
@@ -121,7 +121,7 @@ router.post('/getPPT', function (req, res) {
               data = resPath + fileName1 + "/" + name3 + item + '.' + name2;
               pList.textBookList.push({img: data});
             });
-            console.log(pList.textBookList);
+            //console.log(pList.textBookList);
             resolve('读取-教材-成功');
           }
         } else {
@@ -133,8 +133,8 @@ router.post('/getPPT', function (req, res) {
     let p3 = new Promise((resolve, reject) => {
       //读取工作页列表
       fs.readdir(resourcePath + fileName3, function (err, stats3) {
-        console.log(stats3);
-        console.log(resourcePath + fileName3);
+        //console.log(stats3);
+        //console.log(resourcePath + fileName3);
         if (stats3 && stats3.length>0) {
           let num = [];
           if (err) {
@@ -165,7 +165,7 @@ router.post('/getPPT', function (req, res) {
               data = resPath + fileName3 + "/" + name3 + item + '.' + name2;
               pList.workPageList.push({img: data});
             });
-            console.log(pList.workPageList);
+            //console.log(pList.workPageList);
             resolve('读取-工作页-成功');
           }
         } else {
@@ -175,7 +175,7 @@ router.post('/getPPT', function (req, res) {
     });
 
     Promise.all([p1, p2, p3]).then((msg) => {
-      console.log(msg);
+      //console.log(msg);
       res.status(200).send({ result: pList, code: 0, msg: msg});
     }).catch((error) => {
       console.log(error)

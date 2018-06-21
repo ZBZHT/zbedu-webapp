@@ -195,7 +195,7 @@
           </div>
 
           <!--修改学生对话框-->
-          <el-dialog title="修改资料"
+          <el-dialog title="修改学生资料"
                      :visible.sync="dialogFormVisible1"
                      :before-close="handleClose"
                      :close-on-click-modal="false">
@@ -335,7 +335,7 @@
         </el-tab-pane>
 
         <!--修改教师对话框-->
-        <el-dialog title="修改资料"
+        <el-dialog title="修改老师资料"
                    :visible.sync="dialogFormVisible3"
                    :before-close="handleClose"
                    :close-on-click-modal="false">
@@ -545,6 +545,7 @@
         classM: [],
         majorMV: [],
         classMV: [],
+        addUserPwd:'',
 
       }
     },
@@ -622,17 +623,17 @@
 
       //修改学生
       handleEdit(index, row) {
-          this.resetUser1();
+        this.resetUser1();
         this.addUserForm1.user = row.user;
         this.addUserForm1.userID = row.userID;
         this.addUserForm1.IDNo = row.IDNo;
         this.addUserForm1.MoNo = row.MoNo;
+        this.addUserPwd = row.pwd;
         if (row.userType === '学生') {
           this.addUserForm1.userType = 'S';
         } else if (row.userType === '外来学生') {
           this.addUserForm1.userType = 'O';
         }
-        //console.log(row);
         if (row.gender === '男') {
           this.addUserForm1.gender = '1';
         } else if (row.gender === '女') {
@@ -644,15 +645,17 @@
         this.majorMV = row.major;
         this.classMV = row.classGrade;
         this.dialogFormVisible1 = true;
-        //console.log(this.addUserForm1);
       },
       //修改老师
       handleEdit1(index, row) {
           //console.log(row);
+        this.resetUser2();
         this.addTeachForm.user = row.user;
         this.addTeachForm.IDNo = row.IDNo;
         this.addTeachForm.MoNo = row.MoNo;
+        this.addTeachForm.userID = row.userID;
         this.addTeachForm.userType = row.userType;
+        this.addUserPwd = row.pwd;
         if (row.gender === '男') {
           this.addTeachForm.gender = '1';
         } else if (row.gender === '女') {
@@ -762,19 +765,39 @@
 
       //修改用户信息
       updateUser(data) {
-        //this.dialogFormVisible1 = false;
-        //this.dialogFormVisible2 = false;
-        console.log(this.addUserForm1);
-        console.log(this.addTeachForm);
-        //处理发送的用户信息方法
-        function resUserData1(data) {
-          if (data.pwd != '') {
-            data.pwd = md5(data.pwd);
+        let resData1 = '';
+        let resData = '';
+        let userPwd = this.addUserPwd;
+        console.log(this.addUserPwd);
+        let p1 = new Promise((resolve, reject) => {
+          if (this.dialogFormVisible1 ===true) {
+              resData1 = this.addUserForm1;
+            resolve('成功了1')
+          } else if (this.dialogFormVisible3 ===true) {
+            resData1 = this.addTeachForm;
+            resolve('成功了')
           }
-          return data;
-        }
+        });
 
-        let resData = resUserData1(this.addStuForm1);
+        let p2 = new Promise((resolve, reject) => {
+
+          //处理发送的用户信息方法
+          function resUserData1(data) {
+            if (data.pwd != '') {
+              data.pwd = md5(data.pwd);
+            } else {
+              //data.pwd = this.addUserPwd;
+            }
+            //console.log(data);
+            return data;
+          }
+          resData = resUserData1(resData1);
+          //console.log(resData);
+          resolve('成功了2')
+        });
+
+        Promise.all([p1, p2]).then((result) => {
+          //console.log(result);
           axios.post('/teacherCMS/updateUser', {
             data: {
               username: this.username,
@@ -782,7 +805,7 @@
               addUser: resData
             }
           }).then((res) => {
-            if (res.data.userInfo) {
+            if (res.data.code === 0) {
               //console.log(res.data.userInfo);
               //this.teachData = res.data.userInfo;
               //this.total = this.teachData.length;
@@ -790,8 +813,14 @@
               this.resetUser1();
               this.resetUser2();
               this.getUserData();
+              this.dialogFormVisible1 = false;
+              this.dialogFormVisible3 = false;
+              this.addUserSuccess('修改成功')
             }
           });
+        }).catch((error) => {
+          console.log(error)
+        });
       },
 
       handleSizeChange(val) {
@@ -858,7 +887,7 @@
           }
           //教师
           let teacherData = res.data.teacher;
-          //console.log(teacherData.length);
+          //console.log(teacherData);
           if (teacherData.length !== 0) {
             for (let i = 0; i < teacherData.length; i++) {
               teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");

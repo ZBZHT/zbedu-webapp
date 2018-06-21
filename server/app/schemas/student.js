@@ -14,9 +14,11 @@ module.exports = new Schema({
   },
   IDNo: {
     type: String,
+    unique: true,  //索引值唯一
   },
   MoNo: {
     type: String,
+    unique: true,  //索引值唯一
   },
   userType: {
     type: String,
