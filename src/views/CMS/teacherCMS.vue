@@ -45,6 +45,38 @@
         <div v-show="isShow401">
           <my-exam></my-exam>
         </div>
+        <!--我的大赛-->
+        <div v-show="isShow501">
+          <game-m></game-m>
+        </div>
+        <!--课堂管理（管理员）授课计划-->
+        <div v-show="isShow601">
+          <boss-plan></boss-plan>
+        </div>
+        <!--课堂管理（管理员）考勤信息-->
+        <div v-show="isShow602">
+          <boss-infor></boss-infor>
+        </div>
+        <!--我的课堂（教师）课堂计划-->
+        <div v-show="isShow701">
+          <teacher-plan></teacher-plan>
+        </div>
+        <!--我的课堂（教师）考勤信息-->
+        <div v-show="isShow702">
+          <teacher-infor></teacher-infor>
+        </div>
+        <!--我的课堂（教师）考勤汇总-->
+        <div v-show="isShow703">
+          5
+        </div>
+        <!--我的课堂（学生）课堂信息-->
+        <div v-show="isShow801">
+          6
+        </div>
+        <!--我的课堂（学生）考勤信息-->
+        <div v-show="isShow802">
+          7
+        </div>
 
       </el-row>
     </div>
@@ -68,6 +100,10 @@
   import MyCourse from './myCourse'
   import MyExam from './myExam'
   import TeacherCMS from './teacherCMS'
+  import bossPlan from './bossPlan'
+  import bossInfor from './bossInfor'
+  import teacherPlan from './teacherPlan'
+  import teacherInfor from './teacherInfor'
 
   export default {
     name: 'index',
@@ -92,6 +128,14 @@
         isShow301: false,
         isShow302: false,
         isShow401: false,
+        isShow501: false,
+        isShow601: false,
+        isShow602: false,
+        isShow701: false,
+        isShow702: false,
+        isShow703: false,
+        isShow801: false,
+        isShow802: false,
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
@@ -110,6 +154,14 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
         }
         //点击题库管理
         if (data.id == 102) {
@@ -120,6 +172,14 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
         }
         //点击我的资料
         if (data.id == 201) {
@@ -130,6 +190,14 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
         }
         //点击我的足迹
         if (data.id == 202) {
@@ -140,6 +208,14 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
         }
         //点击课程设置
         if (data.id == 302) {
@@ -150,6 +226,14 @@
           this.isShow302 = true;
           this.isShow301 = false;
           this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
         }
         //点击我的课程
         if (data.id == 301) {
@@ -160,6 +244,14 @@
           this.isShow302 = false;
           this.isShow301 = true;
           this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
         }
         //点击我的考试
         if (data.id == 401) {
@@ -170,6 +262,157 @@
           this.isShow302 = false;
           this.isShow301 = false;
           this.isShow401 = true;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击我的大赛
+        if (data.id == 501) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = true;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（管理员）授课计划
+        if (data.id == 601) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = true;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（管理员）考勤信息
+        if (data.id == 602) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = true;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }//点击课堂管理（教师）课堂计划
+        if (data.id == 701) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = true;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（教师）考勤信息
+        if (data.id == 702) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = true;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（教师）考勤汇总
+        if (data.id == 703) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = true;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（学生）课堂信息
+        if (data.id == 801) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = true;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（学生）考勤信息
+        if (data.id == 802) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = true;
         }
       },
     },
@@ -181,7 +424,7 @@
         }
       }).then((res) => {
         this.treeData = res.data.result;
-        //console.log(this.treeData);
+        console.log(this.treeData);
         setTimeout(() => {
           this.$refs.treeData.setCurrentKey(201)
         }, 20)
@@ -194,6 +437,10 @@
       TeacherCMS,
       MyExam,
       GameM,
+      bossPlan,
+      bossInfor,
+      teacherPlan,
+      teacherInfor,
       navgationHead, navUl, footFooter, userManager, TestBaseM, CourseM}
   }
 </script>

@@ -57,6 +57,8 @@ router.post('/labelTree', function (req, res) {
         let labelTree = tree.children;
         labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
         labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
+        labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理 
+        labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
           res.status(200).send({ result: labelTree });
       });
     } else if (reqBody.userType === 'T') {
@@ -68,6 +70,8 @@ router.post('/labelTree', function (req, res) {
         let children1 = labelTree[2].children;
         children = removeChildren(childrenE, 101);  //传入要删除的Children id
         children2 = removeChildren(children1, 302);  //传入要删除的Children id
+        labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理 
+        labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理
         labelTree[1].children = children;
         labelTree[2].children = children2;
         res.status(200).send({ result: labelTree });
@@ -76,7 +80,11 @@ router.post('/labelTree', function (req, res) {
       CmsLabelTree.findOne({
         name: 'cmsLabelTree'
       }).then(function (tree) {
-        res.status(200).send({ result: tree.children });
+        let labelTree = tree.children;
+        labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理 
+        labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
+
+          res.status(200).send({ result: labelTree });
       });
     } else {
       res.status(404).send({

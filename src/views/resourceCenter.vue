@@ -293,19 +293,6 @@
       },
       // 上传前弹出对话框
       beforeAvatarUpload (file) {
-        console.log(file)
-        for(var i = 0; i < this.msgArr.length; i++){
-          if(this.msgArr[i].fileName === file.name){
-            console.log(this.msgArr[i].fileName)
-            console.log(file.name)
-            this.DefeatMsg('文件名重复，请重新上传啊');
-            this.centerDialogVisible = false;
-         //   this.beforeAvatarUpload(file);
-          }else{
-            
-          }
-        }
-        
         this.centerDialogVisible = true;
       },
       handleClick(tab, event) {
@@ -404,42 +391,12 @@
             for(let j = 0; j < this.msgArr.length; j++){
                 if(this.msgArr[j].fileType == '精彩瞬间'){
                   this.msgArrLittle.push(this.msgArr[j]);
-
-                 for(var p = 0; p < this.msgArrLittle.length; p++){
-                    for(var q = p + 1; q < this.msgArrLittle.length; q++){
-                      if(this.msgArrLittle[q].fileName === this.msgArrLittle[p].fileName){
-                        this.msgArrLittle.splice(q,1);
-
-                      }
-                    }
-                  }
                 }else if(this.msgArr[j].fileType == '说课课件'){
                   this.courseWareArr.push(this.msgArr[j]);
-                  for(var p = 0; p < this.courseWareArr.length; p++){
-                    for(var q = p + 1; q < this.courseWareArr.length; q++){
-                      if(this.courseWareArr[q].fileName === this.courseWareArr[p].fileName){
-                        this.courseWareArr.splice(q,1);
-                      }
-                    }
-                  }
                 }else if(this.msgArr[j].fileType == '实操视频'){
                   this.videoArr.push(this.msgArr[j]);
-                  for(var p = 0; p < this.videoArr.length; p++){
-                    for(var q = p + 1; q < this.videoArr.length; q++){
-                      if(this.videoArr[q].fileName === this.videoArr[p].fileName){
-                      this.videoArr.splice(q,1);
-                      }
-                    }
-                  }
                 }else if(this.msgArr[j].fileType == '其他素材'){
                   this.otherArr.push(this.msgArr[j]);
-                  for(var p = 0; p < this.otherArr.length; p++){
-                    for(var q = p + 1; q < this.otherArr.length; q++){
-                      if(this.otherArr[q].fileName === this.otherArr[p].fileName){
-                      this.otherArr.splice(q,1);
-                      }
-                    }
-                  }
                 }
             }
           }

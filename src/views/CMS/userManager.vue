@@ -1,5 +1,28 @@
 <template>
   <div class="userManager_cont">
+    <span class="headBut">
+        <span  class="userM_But2">
+          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加学生</el-button>
+        </span>
+        <span  class="userM_But4">
+          <el-button size="small" type="primary" @click="dialogFormVisible2 = true">添加教师</el-button>
+        </span>
+        <span class="userM_But1">
+          <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+        </span>
+        <span class="userM_But3">
+          <el-upload
+            class="upload-demo"
+            action="/teacherCMS/addExcelUsers"
+            :onError="uploadError"
+            :onSuccess="uploadSuccess"
+            :show-file-list=false
+            :on-exceed="handleExceed"
+            accept=".xlsx,.xls">
+          <el-button size="small" type="primary">Excel导入用户</el-button>
+        </el-upload>
+        </span>
+      </span>
 
     <!--用户管理-->
     <el-col :span="19" class="el-Col">
@@ -382,30 +405,6 @@
         </el-dialog>
 
       </el-tabs>
-
-      <span class="headBut">
-        <span class="userM_But1">
-          <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
-        </span>
-        <span  class="userM_But2">
-          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加学生</el-button>
-        </span>
-        <span  class="userM_But4">
-          <el-button size="small" type="primary" @click="dialogFormVisible2 = true">添加教师</el-button>
-        </span>
-        <span class="userM_But3">
-          <el-upload
-            class="upload-demo"
-            action="/teacherCMS/addExcelUsers"
-            :onError="uploadError"
-            :onSuccess="uploadSuccess"
-            :show-file-list=false
-            :on-exceed="handleExceed"
-            accept=".xlsx,.xls">
-          <el-button size="small" type="primary">Excel导入用户</el-button>
-        </el-upload>
-        </span>
-      </span>
 
     </el-col>
 
@@ -1013,10 +1012,10 @@
     text-align: left;
   }
   .userManager_cont .headBut {
-    width: 120px;
+    width: 200px;
     position: absolute;
-    bottom: -500px;
-    left: 5%;
+    bottom: -580px;
+    left: 2.5%;
   }
   .userManager_cont .el-form-item__label{
     text-align: left;
