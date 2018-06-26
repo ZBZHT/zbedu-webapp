@@ -141,7 +141,8 @@
         TestNum: 0,
         fullscreenLoading: false,
         testQuestion: '',
-        height:window.innerHeight
+        height:window.innerHeight,
+        currTestNum: '',
 
       }
     },
@@ -150,7 +151,7 @@
       window.onkeydown = function(){
         if(checkFull()){
           if(window.event.keyCode === 27){
-            alert("...")
+            alert("...");
             event.preventDefault();
           }
         }
@@ -169,7 +170,7 @@
       window.removeEventListener('resize', this.handleResize)
     },
     mounted(){
-      window.addEventListener('resize', this.handleResize)
+      window.addEventListener('resize', this.handleResize);
       setTimeout(function(){
         //var allTestNum = this.$store.state.allTestNum ;
         //var url = document.domain;
@@ -183,7 +184,7 @@
           }else if(_this.minutes == 0 && _this.seconds == 0){
             _this.seconds = 0;
             window.clearInterval(time);
-            console.log("111");
+            //console.log("111");
           }else{
             _this.seconds -= 1
           };
@@ -196,7 +197,7 @@
             _this.seconds = "0" + _this.seconds;
           }
 
-        },1000);
+        },600);
 
         _this.dispear = !_this.dispear;
         _this.nowTime = new Date();
@@ -228,7 +229,7 @@
 
         this.getTestQ();
         this.getTestQuesInfo();
-      }.bind(this),500)
+      }.bind(this),300)
 
     },
     watch: {
@@ -257,16 +258,10 @@
             user: this.user,
           }
         }).then((res) => {
-            console.log("2222")
-            console.log(res.data)
-            console.log(res.data.testQuestion.question)
+            this.currTestNum = res.data.testQuestion.currTestNum;
           if (res.data.testQuestion.state == 1 && res.data.testQuestion.currTestType == 106) {
             this.textQuestionData = res.data.testQuestion.question;
-        //    console.log(this.textQuestionData)
             this.minutes = parseInt(res.data.testQuestion.timeHour *60) + parseInt(res.data.testQuestion.timeMin);
-        //    console.log(this.minutes)
-        //    console.log(res.data.testQuestion.timeHour)
-        //    console.log(res.data.testQuestion.timeMin)
             this.AllLength = res.data.testQuestion.question.length;
           } else {
             this.TestNum = res.data.testQuestion.testLength;
@@ -311,7 +306,7 @@
             url:"/readTestQuestionInfo/submitQuestionInfo",
             params:{
               user:this.user,
-              testQuestion:this.testQuestion,
+              currTestNum:this.currTestNum,
               startTime:this.currentdate,
               currAnswer:this.picked,
               currState:this.isCheckArr,
@@ -352,7 +347,7 @@
               this.error.push(i+1);
             }
           }else{
-            console.log(i+"123456");
+            //console.log(i+"123456");
             this.null.push(i+1);
           }
         }

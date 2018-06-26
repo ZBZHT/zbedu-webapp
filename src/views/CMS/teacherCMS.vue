@@ -424,7 +424,7 @@
         }
       }).then((res) => {
         this.treeData = res.data.result;
-        console.log(this.treeData);
+      //  console.log(this.treeData);
         setTimeout(() => {
           this.$refs.treeData.setCurrentKey(201)
         }, 20)
