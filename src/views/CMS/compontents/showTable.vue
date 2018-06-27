@@ -67,25 +67,9 @@
     props:['course'],
     data() {
       return {
-        username: this.$store.state.username,
-        userType: this.$store.state.userType,
-        activeName: 'first',
         weekData:['周一','周二','周三','周四','周五','周六','周日'],
         classData:['1','2','3','4','5'],
-        form:{
-          date1: '',
-          date2: '',
-        },
-        rules:{
-          date1: [
-            {required: true, message: '请选择日期', trigger: 'change'}
-          ],
-          date2: [
-            {required: true, message: '请选择日期', trigger: 'change'}
-          ],
-        },
-        startDatePicker:this.beginDate(),
-        endDatePicker:this.processDate(),
+        
       }
     },
     computed: {
@@ -95,27 +79,7 @@
 
     },
     methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
-      },
-      //创建考试开始时间不能选择历史日期
-      beginDate(){
-        let self = this
-        return {
-          disabledDate(time){
-            return time.getTime() < Date.now() - 8.64e7;
-          }
-        }
-      },
-      //创建考试结束时间不能大于开始时间
-      processDate(){
-        let self = this
-        return {
-          disabledDate(time){
-            return time.getTime() < self.form.date1;
-          }
-        }
-      },
+      
 
     },
 
@@ -127,25 +91,6 @@
   * {
     margin: 0;
     padding: 0;
-  }
-  .showTable .el-tabs--card>.el-tabs__header .el-tabs__nav{
-    border-width: 1px 1px 0 0;
-    border-color: #9f5355;
-    border-style: solid;
-  }
-  .showTable .el-tabs--card>.el-tabs__header{
-    border-width: 0 0 1px 0;
-    border-color: #9f5355;
-    border-style: solid;
-  }
-  .showTable .el-tabs--card>.el-tabs__header .el-tabs__item{
-    border-left: 1px solid #9f5355;
-  }
-  .showTable .el-table td, .el-table th {
-    height: 40px;
-  }
-  .showTable .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
-    font-size: 16px;
   }
   .showTable .classPlan{
     width:80%;

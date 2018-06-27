@@ -40,9 +40,8 @@
                       </el-date-picker>
                     </el-form-item>
 
-                    <p>
-                      <el-button type="primary" @click="compareTime1()">立即创建</el-button>
-                    </p>
+                    <add-table></add-table>
+
                   </el-form>
         </el-tab-pane>
         <el-tab-pane label="修改授课计划" name="third">
@@ -60,6 +59,7 @@
   import core from '../../assets/js/core.js'
   import moment from 'moment'
   import showTable from './compontents/showTable'
+  import addTable from './compontents/addTable'
 
   export default {
     name: 'bossPlan',
@@ -70,8 +70,6 @@
         activeName: 'first',
         classGrade: '',
         classM:[],
-        weekData:['周一','周二','周三','周四','周五','周六','周日','备注'],
-        classData:['1','2','3','4','5','6'],
         form:{
           date1: '',
           date2: '',
@@ -236,7 +234,7 @@
 
     },
     
-    components: {showTable}
+    components: {showTable,addTable}
   }
 </script>
 
@@ -264,5 +262,7 @@
   .bossPlan .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
     font-size: 16px;
   }
-  
+  .bossPlan p .el-button--primary{
+    margin-bottom: 70px;
+  }
 </style>

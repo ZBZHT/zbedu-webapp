@@ -2,6 +2,16 @@
   <div class="teacherPlan">
     <el-col :span="19">
 
+      <el-form>
+        <el-form-item label="请选择班级" prop="classGrade">
+          <el-select v-model="classGrade" placeholder="请选择班级">
+            <div v-for="item in classM">
+              <el-option :label="item.label" :value="item.label"></el-option>
+            </div>
+          </el-select>
+        </el-form-item>
+      </el-form>
+
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick()">
         <el-tab-pane label="授课计划表" name="first">
           
@@ -28,8 +38,8 @@
         username: this.$store.state.username,
         userType: this.$store.state.userType,
         activeName: 'first',
-        weekData:['周一','周二','周三','周四','周五','周六','周日','备注'],
-        classData:['1','2','3','4','5','6'],
+        classGrade: '',
+        classM:[],
         form:{
           date1: '',
           date2: '',
@@ -41,12 +51,28 @@
           date2: [
             {required: true, message: '请选择日期', trigger: 'change'}
           ],
+          classGrade: [
+            {required: true, message: '请输入班级', trigger: 'change'}
+          ],
         },
         startDatePicker:this.beginDate(),
         endDatePicker:this.processDate(),
       }
     },
     computed: {
+
+    },
+    mounted() {
+         //请求班级、专业
+      axios.post('/teacherCMS/getClass', {
+          data: {
+            userType: this.userType
+          }
+        }).then((res) => {
+        //    console.log(res.data);
+            this.majorM = res.data.majorMsg;
+            this.classM = res.data.classMsg;
+        });
 
     },
     methods: {
@@ -73,10 +99,7 @@
       },
 
     },
-    mounted() {
-        
-
-    },
+    
     components: {showTable}
   }
 </script>
