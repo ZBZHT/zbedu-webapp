@@ -268,5 +268,20 @@ module.exports = {
     for (keys[j++] in hash );
     return keys;
   },
+  /**
+   * 传入一个日期, 如：2018-6-27
+   * 返回该日期所在周的周一日期
+   */
+  getMonday : function (data) {
+    let now = data;
+    let nowTime = now.getTime() ;
+    let day = now.getDay();
+    let oneDayLong = 24*60*60*1000 ;
+    let MondayTime = nowTime - (day-1)*oneDayLong  ;
+    //let SundayTime =  nowTime + (7-day)*oneDayLong ;
+    let monday = new Date(MondayTime);
+    //let sunday = new Date(SundayTime);
+    return monday;
+  },
 
 };

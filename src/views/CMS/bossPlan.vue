@@ -2,17 +2,13 @@
   <div class="bossPlan">
     <el-col :span="19">
 
-      <el-form>
-        <el-form-item label="请选择班级" prop="classGrade">
-          <el-select v-model="classGrade" placeholder="请选择班级">
-            <div v-for="item in classM">
-              <el-option :label="item.label" :value="item.label"></el-option>
-            </div>
-          </el-select>
-        </el-form-item>
-      </el-form>
+      <el-select class="selectClass" v-model="classGrade" @change="showThreeTable()" placeholder="请选择班级">
+        <div v-for="item in classM">
+          <el-option :label="item.label" :value="item.label"></el-option>
+        </div>
+      </el-select>
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()" v-show="showThree">
         <el-tab-pane label="授课计划表" name="first">
 
           <show-table :course = "course"></show-table>
@@ -26,6 +22,7 @@
                       <el-date-picker
                         v-model="form.date1"
                         type="date"
+                        @change="compareTime()"
                         placeholder="开始日期"
                         :picker-options="startDatePicker">
                       </el-date-picker>
@@ -35,12 +32,13 @@
                       <el-date-picker
                         v-model="form.date2"
                         type="date"
+                        @change="compareTime()"
                         placeholder="结束日期"
                         :picker-options="endDatePicker">
                       </el-date-picker>
                     </el-form-item>
 
-                    <add-table></add-table>
+                    <add-table :classGrade = "classGrade"></add-table>
 
                   </el-form>
         </el-tab-pane>
@@ -87,131 +85,41 @@
         },
         startDatePicker:this.beginDate(),
         endDatePicker:this.processDate(),
-        course:  {
-            "firstQuarter": [
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              }
-            ],
-            "Quarter": [
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某77777楼"
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              },
-              {
-                  "courseTime": "2018-6-18-9:00, 2018-6-18-10:00",
-                  "teacher": "付老师",
-                  "courseName": "新能源电池技术",
-                  "courseAddress": "某某5楼"
-                
-              }
-            ]
-          },
-        
-
+        course: {},
+        showThree:false,
       }
     },
     computed: {
 
     },
     mounted() {
-      //请求班级、专业
-      axios.post('/teacherCMS/getClass', {
-          data: {
-            userType: this.userType
-          }
-        }).then((res) => {
-        //    console.log(res.data);
-            this.majorM = res.data.majorMsg;
-            this.classM = res.data.classMsg;
-        });
-
+      this.getClassList();
+      this.getCourseTable();
+      
     },
     methods: {
       handleClick(tab, event) {
         console.log(tab, event);
+      },
+      //选择班级显示table，选择班级切换数据
+      showThreeTable(){
+        if(this.classGrade != ''){
+        //  console.log("ppp")
+          this.showThree = true;
+        }else{
+
+        }
+      },
+      //选择后创建考试结束时间不能大于开始时间
+      compareTime(){
+      //  console.log(new Date(this.form.date1).getTime());
+      //  console.log(new Date(this.form.date2).getTime());
+        if(new Date(this.form.date1).getTime() > new Date(this.form.date2).getTime()){
+      //    console.log("xiao")
+          this.form.date2 = '';
+        }else{
+      //    console.log("da")
+        }
       },
       //创建考试开始时间不能选择历史日期
       beginDate(){
@@ -231,9 +139,34 @@
           }
         }
       },
-
+      //获取-课程表
+      getCourseTable(){
+        axios.post('/teacherCMS/getCourseTable', {
+          data: {
+            courseDate: "2018-6-19",
+            className: "镇江培训"
+          }
+        }).then((res) => {
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            this.course = resData.course[0];
+          }
+        });
+      },
+      //获取-课程表
+      getClassList() {
+        axios.post('/teacherCMS/getClass', {
+          data: {
+            userType: this.userType
+          }
+        }).then((res) => {
+          console.log(res.data);
+          //this.majorM = res.data.majorMsg;
+          this.classM = res.data.classMsg;
+        });
+      },
     },
-    
+
     components: {showTable,addTable}
   }
 </script>

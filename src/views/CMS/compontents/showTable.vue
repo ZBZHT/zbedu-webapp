@@ -110,7 +110,7 @@
   }
   .showTable .classPlan .classPlan_topLeft{
     width:5%;
-    height:100%;
+    height:104%;
     background: #e5e9f2;
     border: 5px solid #fff;
   }
