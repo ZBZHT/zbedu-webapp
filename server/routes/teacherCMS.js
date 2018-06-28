@@ -12,6 +12,7 @@ const Teacher = require('../app/models/Teacher');
 const Question = require('../app/models/Question');
 const TechCosCou = require('../app/models/TechCosCou');
 const CmsLabelTree = require('../app/models/CmsLabelTree');
+const CourseTable = require('../app/models/CourseTable');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
 const uploadCoursePath = "../public/resource/我的课堂/";
@@ -20,6 +21,233 @@ const moment = require('moment');
 const ppt2png = require('ppt2png');
 const pdf = require('pdf-poppler');
 const os = require('os');
+
+let courseP;
+router.use(function (req, res, next) {
+  courseP = [{
+        "newCourse": [
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          }
+        ],
+        "newCourse2": [
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          }
+        ],
+        "newCourse3": [
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          }
+        ],
+        "newCourse4": [
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          }
+        ],
+        "newCourse5": [
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          },
+          {
+            "courseTime": "",
+            "teacher": "",
+            "courseName": "",
+            "courseAddress": ""
+          }
+        ]
+      }];
+  next();
+});
 
 //删除数组中指定元素  方法
   function removeChildren(arr, id) {
@@ -57,7 +285,7 @@ router.post('/labelTree', function (req, res) {
         let labelTree = tree.children;
         labelTree = removeNode(labelTree, 100);  //传入要删除的Node id
         labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
-        labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理 
+        labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理
         labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
           res.status(200).send({ result: labelTree });
       });
@@ -70,7 +298,7 @@ router.post('/labelTree', function (req, res) {
         let children1 = labelTree[2].children;
         children = removeChildren(childrenE, 101);  //传入要删除的Children id
         children2 = removeChildren(children1, 302);  //传入要删除的Children id
-        labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理 
+        labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理
         labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理
         labelTree[1].children = children;
         labelTree[2].children = children2;
@@ -81,7 +309,7 @@ router.post('/labelTree', function (req, res) {
         name: 'cmsLabelTree'
       }).then(function (tree) {
         let labelTree = tree.children;
-        labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理 
+        labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理
         labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
 
           res.status(200).send({ result: labelTree });
@@ -234,6 +462,7 @@ router.post('/addStu', function (req, res) {
     });
   }
 });
+
 //添加教师
 router.post('/addTeach', function (req, res) {
   if (req.body.data) {
@@ -439,13 +668,12 @@ router.post('/updateUser', function (req, res) {
 
     Promise.all([p1]).then((result) => {
       //console.log(result);
-      //console.log(reqUser.userType);
+      //console.log(reqUser);
       if (reqUser.userType === 'S' || reqUser.userType === 'O') {
         Student.findOneAndUpdate({
           userID: reqUser.userID
         }, {
           user: reqUser.user,
-          //pwd: reqUser.pwd,
           MoNo: reqUser.MoNo,
           IDNo: reqUser.IDNo,
           userType: reqUser.userType,
@@ -489,6 +717,7 @@ router.post('/updateUser', function (req, res) {
       res.status(200).send({ code:0, Msg: '修改出错', });
     });
 });
+
 //修改密码
 router.post('/updatePass', function (req, res) {
   if (req.body.data) {
@@ -529,6 +758,7 @@ router.post('/updatePass', function (req, res) {
     });
   }
 });
+
 //修改手机号
 router.post('/updateMoNo', function (req, res) {
   if (req.body.data) {
@@ -1319,8 +1549,81 @@ router.post('/getClass', function (req, res) {
   });
 });
 
+//创建-课程表
+router.post('/newCourseTable', function (req, res) {
+  let reqData = req.body.data;
+  let reqSess = req.session.users;
+  let userType = reqSess.userType;
+  let username = reqSess.username;
+  console.log(reqData);
 
+  if (userType === 'EA' || userType === 'SA') {
+    let courseTable = new CourseTable({
+      createDate: moment().format("YYYY-MM-DD"),
+      courseDate: "2018-06-19",
+      createName: username,
+      teachList: [],
+      course: reqData.allMyCourse,
+      className: "镇江培训",
+    });
+    courseTable.save(function (err) {
+      if (err) {
+        console.log(err);
+        res.status(200).send({ code: 1, msg: '创建课程失败'});
+      } else {
+        console.log('创建课程成功');
+        res.status(200).send({ code: 0, msg: '创建课程成功'});
+      }
+    });
+  }
+});
 
+//获取-课程表
+router.post('/getCourseTable', function (req, res) {
+  let userType = req.session.users.userType;
+  let reqData = req.body.data;
+  //console.log(reqData.courseDate);
+  //console.log(reqData.className);
+  if (userType === 'EA' || userType === 'T' || userType === 'SA') {
+    CourseTable.findOne({
+      courseDate: reqData.courseDate,
+      className: reqData.className
+    }).then(function (courseTable) {
+      //console.log(courseTable);
+      if (courseTable === null) {
+        console.log('找不到该课程表');
+        res.status(200).send({ code: 1, msg:'找不到该课程表' });
+      } else {
+        //console.log(courseTable);
+        res.status(200).send({ code: 0, result: courseTable });
+      }
+    });
+  }
+});
+
+//修改-课程表
+router.post('/alterCourseTable', function (req, res) {
+  let reqData = req.body.data.result;
+  let userType = req.session.users.userType;
+  console.log(reqData);
+  if (userType === 'EA' || userType === 'SA') {
+    CourseTable.findOneAndUpdate({
+      courseDate: "2018-6-19",
+      className: "镇江培训"
+    }, {
+      createDate: new Date(),
+      //teachList: reqData.teachList,
+      course: reqData.course,
+    }, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        //console.log('修改成功userID');
+        res.status(200).send({ code:0, Msg: '更新成功', });
+      }
+    });
+  }
+});
 
 
 module.exports = router;

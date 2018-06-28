@@ -38,7 +38,7 @@
                       </el-date-picker>
                     </el-form-item>
 
-                    <add-table :classGrade = "classGrade"></add-table>
+                    <add-table :classGrade = "classGrade" :date1 = "form.date1" :date2 = "form.date2" v-show="showAddTable"></add-table>
 
                   </el-form>
         </el-tab-pane>
@@ -68,6 +68,7 @@
         activeName: 'first',
         classGrade: '',
         classM:[],
+        dateData:[],
         form:{
           date1: '',
           date2: '',
@@ -87,6 +88,7 @@
         endDatePicker:this.processDate(),
         course: {},
         showThree:false,
+        showAddTable:false
       }
     },
     computed: {
@@ -94,8 +96,6 @@
     },
     mounted() {
       this.getClassList();
-      this.getCourseTable();
-      
     },
     methods: {
       handleClick(tab, event) {
@@ -103,12 +103,16 @@
       },
       //选择班级显示table，选择班级切换数据
       showThreeTable(){
+        this.$store.commit('getClassGrade',this.classGrade);
         if(this.classGrade != ''){
-        //  console.log("ppp")
           this.showThree = true;
         }else{
-
         }
+        let resDate = core.getMonday(new Date());
+        resDate = moment(resDate).format("YYYY-MM-DD");
+        //console.log(resDate)
+        //console.log(this.classGrade);
+        this.getCourseTable(resDate)
       },
       //选择后创建考试结束时间不能大于开始时间
       compareTime(){
@@ -120,6 +124,13 @@
         }else{
       //    console.log("da")
         }
+        if(this.form.date1 != '' && this.form.date2 != ''){
+          this.showAddTable = true;
+        }else{
+
+        }
+        console.log(this.form.date1.getDay())
+        
       },
       //创建考试开始时间不能选择历史日期
       beginDate(){
@@ -140,11 +151,11 @@
         }
       },
       //获取-课程表
-      getCourseTable(){
+      getCourseTable(resDate){
         axios.post('/teacherCMS/getCourseTable', {
           data: {
-            courseDate: "2018-6-19",
-            className: "镇江培训"
+            courseDate: resDate,
+            className: this.classGrade,
           }
         }).then((res) => {
           let resData = res.data.result;
@@ -153,14 +164,14 @@
           }
         });
       },
-      //获取-课程表
+      //获取-班级信息
       getClassList() {
         axios.post('/teacherCMS/getClass', {
           data: {
             userType: this.userType
           }
         }).then((res) => {
-          console.log(res.data);
+          //console.log(res.data);
           //this.majorM = res.data.majorMsg;
           this.classM = res.data.classMsg;
         });
@@ -194,8 +205,5 @@
   }
   .bossPlan .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
     font-size: 16px;
-  }
-  .bossPlan p .el-button--primary{
-    margin-bottom: 70px;
   }
 </style>

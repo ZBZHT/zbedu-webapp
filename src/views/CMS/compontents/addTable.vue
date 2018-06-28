@@ -1,5 +1,6 @@
 <template>
   <div class="addTable">
+    <el-button type="primary" @click="addAll()" class="pageButton"> < </el-button>
     <div class="classPlan">
             <div class="classPlan_top">
               <div class="classPlan_topLeft"></div>
@@ -418,19 +419,23 @@
                 </table>
               </div>
             </div>
-          </div>
-          <p>
-            <el-button type="primary" @click="addAll()">立即创建</el-button>
-          </p>
+            <p class="addAllClass">
+              <el-button type="primary" @click="addAll()">立即创建</el-button>
+            </p>
+    </div>
+            
+    <el-button type="primary" @click="addAll()" class="pageButton"> > </el-button>
   </div>
+    
 </template>
 
 <script>
   import axios from 'axios'
+  import core from '../../../assets/js/core.js'
 
   export default {
     name: 'addTable',
-    props:['course','classGrade'],
+    props:['course','classGrade','date1','date2'],
     data() {
       return {
         username: this.$store.state.username,
@@ -969,12 +974,19 @@
                }
       },
       addAll(){
+
+       // console.log(this.date2)
+        this.date1 = core.formatDate("yyyy-MM-dd", new Date(this.date1));
+        this.date2 = core.formatDate("yyyy-MM-dd", new Date(this.date2));
+      //  console.log(this.date2)
         axios.post('/teacherCMS/newCourseTable', {
           data: {
             userType: this.userType,
             userName: this.username,
             className: this.classGrade,
-            allMyCourse: this.allMyCourse
+            allMyCourse: this.allMyCourse,
+            startTime:this.date1,
+            endTime:this.date2
           }
         }).then((res) => {
           
@@ -991,11 +1003,27 @@
     margin: 0;
     padding: 0;
   }
+  .addTable{
+    display:flex;
+  }
+  .addTable .pageButton{
+    height: 100%;
+    margin-top: 280px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
   .addTable .classPlan{
     width:80%;
     height:640px;
     margin:0 auto;
     margin-top: 25px;
+    position:relative;
+    margin-bottom:85px;
+  }
+  .addTable .addAllClass{
+    position:absolute;
+    bottom:-4%;
+    left:46%;
   }
   .addTable .classPlan .classPlan_top{
     width:100%;

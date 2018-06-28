@@ -5,6 +5,6 @@ module.exports = new Schema(
   {
     name: String,
     date: Date,
-    children: [],
+    children: Array,
   },
 );
