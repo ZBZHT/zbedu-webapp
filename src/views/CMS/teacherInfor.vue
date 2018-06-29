@@ -4,29 +4,24 @@
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="考勤动态" name="first">
-          <p>课堂信息</p>
           <div class="mainContent">
-            <div class="currClass">
-              <p>
-                <span>课程名称：</span>
-              </p>
-              <p>
-                <span>任课老师：</span>
-              </p>
-            </div>
-            <p>
-              <span>签到动态</span>
-              <span>(</span>
-              <span class="IamHere">出勤</span>
-              <span class="IamLate">迟到</span>
-              <span class="IamDispear">缺勤</span>
-              <span class="IamSick">请假</span>
-              <span>)</span>
-            </p>
-            <div class="currTable">
-            
+            <el-row class="guidance" style="padding-top: 0;text-align: left">
+              <p style="text-align: left">课程名称：</p>
+              <p style="text-align: left">任课老师：</p>
+              <span>颜色注解 ：</span>
+              <el-button size="mini" type="success">已签到</el-button>
+              <el-button size="mini" type="danger">缺勤</el-button>
+              <el-button size="mini" type="warning">迟到</el-button>
+              <el-button size="mini" type="primary">请假</el-button>
+            </el-row>
+          </div>
+          <div class="currTable">
+            <div class="currTable1" v-for="item in stateList">
+              <el-button class='currTable2' size="mini" :type='item.state'>{{item.stuName}}</el-button>
+
             </div>
           </div>
+
         </el-tab-pane>
       </el-tabs>
 
@@ -47,6 +42,24 @@
         username: this.$store.state.username,
         userType: this.$store.state.userType,
         activeName: 'first',
+        stateList: [
+          {
+            "stuName": "学生1",
+            "state": 'success'
+          },
+          {
+            "stuName": "学生2",
+            "state": 'danger'
+          },
+          {
+            "stuName": "学生3",
+            "state": 'warning'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'primary'
+          }
+        ]
       }
     },
     computed: {
@@ -58,7 +71,7 @@
       },
     },
     mounted() {
-        
+
 
     },
     components: {}
@@ -90,25 +103,23 @@
     font-size: 16px;
   }
   .teacherInfor .mainContent{
-    width:80%;
-    height:700px;
     margin:0 auto;
-    padding:15px;
+    padding-left: 10px;
     box-sizing:border-box;
   }
-  .teacherInfor .currClass{
-    text-align:left;
+  .teacherInfor .el-tabs__header{
+    margin: 0 0 10px;
   }
-  .teacherInfor .IamHere{
-    background:rgb(158,234,106);
+  .teacherInfor p{
+    margin-bottom: 0.5rem;
   }
-  .teacherInfor .IamLate{
-    background:rgb(221,190,69);
+  .teacherInfor .currTable{
+    padding: 10px;
+    text-align: left;
   }
-  .teacherInfor .IamDispear{
-    background:#f00;
+  .teacherInfor .currTable2{
+    float: left;
+    margin: 2px;
   }
-  .teacherInfor .IamSick{
-    background:#ccc;
-  }
+
 </style>

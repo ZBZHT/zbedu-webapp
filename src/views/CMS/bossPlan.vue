@@ -19,9 +19,7 @@
           <add-table :classGrade = "classGrade"></add-table>
 
         </el-tab-pane>
-        <el-tab-pane label="修改授课计划" name="third">
-
-        </el-tab-pane>
+        
       </el-tabs>
 
     </el-col>
@@ -96,7 +94,7 @@
           }
           this.mondayDate = res.data.result.courseDate;
           this.weekDate = core.getDayAll(new Date(this.mondayDate));
-          console.log(this.weekDate)
+        //  console.log(this.weekDate)
         });
       },
       //获取-班级信息

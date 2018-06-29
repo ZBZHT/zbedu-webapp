@@ -118,11 +118,9 @@
                                 </el-form-item>
 
                                 <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-radio-group v-model="form.cycleTime">
-                                  <el-radio label="仅此一次"></el-radio>
-                                    <el-radio label="每周循环"></el-radio>
-                                    <el-radio label="每两周循环"></el-radio>
-                                  </el-radio-group>
+                                  <el-checkbox-group v-model="form.cycleTime">
+                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
+                                  </el-checkbox-group>
                                 </el-form-item>
 
                             </el-form>
@@ -229,11 +227,9 @@
                                 </el-form-item>
 
                                 <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-radio-group v-model="form.cycleTime">
-                                  <el-radio label="仅此一次"></el-radio>
-                                    <el-radio label="每周循环"></el-radio>
-                                    <el-radio label="每两周循环"></el-radio>
-                                  </el-radio-group>
+                                  <el-checkbox-group v-model="form.cycleTime">
+                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
+                                  </el-checkbox-group>
                                 </el-form-item>
 
                             </el-form>
@@ -338,11 +334,9 @@
                                 </el-form-item>
 
                                 <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-radio-group v-model="form.cycleTime">
-                                  <el-radio label="仅此一次"></el-radio>
-                                    <el-radio label="每周循环"></el-radio>
-                                    <el-radio label="每两周循环"></el-radio>
-                                  </el-radio-group>
+                                  <el-checkbox-group v-model="form.cycleTime">
+                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
+                                  </el-checkbox-group>
                                 </el-form-item>
 
                             </el-form>
@@ -447,11 +441,9 @@
                                 </el-form-item>
 
                                 <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-radio-group v-model="form.cycleTime">
-                                  <el-radio label="仅此一次"></el-radio>
-                                    <el-radio label="每周循环"></el-radio>
-                                    <el-radio label="每两周循环"></el-radio>
-                                  </el-radio-group>
+                                  <el-checkbox-group v-model="form.cycleTime">
+                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
+                                  </el-checkbox-group>
                                 </el-form-item>
 
                             </el-form>
@@ -556,11 +548,9 @@
                                 </el-form-item>
 
                                 <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-radio-group v-model="form.cycleTime">
-                                  <el-radio label="仅此一次"></el-radio>
-                                    <el-radio label="每周循环"></el-radio>
-                                    <el-radio label="每两周循环"></el-radio>
-                                  </el-radio-group>
+                                  <el-checkbox-group v-model="form.cycleTime">
+                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
+                                  </el-checkbox-group>
                                 </el-form-item>
 
                             </el-form>
@@ -574,9 +564,7 @@
                 </table>
               </div>
             </div>
-            <p class="addAllClass">
-              <el-button type="primary" @click="addAll()">立即创建</el-button>
-            </p>
+            
     </div>
             
   </div>
@@ -1097,8 +1085,7 @@
                this.allMyCourse.newCourse[this.courseIndex].courseName == '' ||
                this.allMyCourse.newCourse[this.courseIndex].courseAddress == '' ||
                this.allMyCourse.newCourse[this.courseIndex].studyStartTime == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].studyEndTime == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].cycleTime == ''){
+               this.allMyCourse.newCourse[this.courseIndex].studyEndTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -1116,6 +1103,17 @@
                }else{
                  this.centerDialogVisible = false;
                }
+
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            userType: this.userType,
+            userName: this.username,
+            className: this.classGrade,
+            allMyCourse: this.allMyCourse,
+          }
+        }).then((res) => {
+          
+        });
       },
       addEach2(index){
         this.courseIndex2 = index;
@@ -1155,8 +1153,7 @@
                this.allMyCourse.newCourse2[this.courseIndex2].courseName == '' ||
                this.allMyCourse.newCourse2[this.courseIndex2].courseAddress == '' ||
                this.allMyCourse.newCourse2[this.courseIndex2].studyStartTime == '' ||
-               this.allMyCourse.newCourse2[this.courseIndex2].studyEndTime == '' ||
-               this.allMyCourse.newCourse2[this.courseIndex2].cycleTime == ''){
+               this.allMyCourse.newCourse2[this.courseIndex2].studyEndTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -1174,6 +1171,16 @@
                }else{
                  this.centerDialogVisible2 = false;
                }
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            userType: this.userType,
+            userName: this.username,
+            className: this.classGrade,
+            allMyCourse: this.allMyCourse,
+          }
+        }).then((res) => {
+          
+        });
       },
       addEach3(index){
         this.courseIndex3 = index;
@@ -1213,8 +1220,7 @@
                this.allMyCourse.newCourse3[this.courseIndex3].courseName == '' ||
                this.allMyCourse.newCourse3[this.courseIndex3].courseAddress == '' ||
                this.allMyCourse.newCourse3[this.courseIndex3].studyStartTime == '' ||
-               this.allMyCourse.newCourse3[this.courseIndex3].studyEndTime == '' ||
-               this.allMyCourse.newCourse3[this.courseIndex3].cycleTime == ''){
+               this.allMyCourse.newCourse3[this.courseIndex3].studyEndTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -1232,6 +1238,16 @@
                }else{
                  this.centerDialogVisible3 = false;
                }
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            userType: this.userType,
+            userName: this.username,
+            className: this.classGrade,
+            allMyCourse: this.allMyCourse,
+          }
+        }).then((res) => {
+          
+        });
       },
       addEach4(index){
         this.courseIndex4 = index;
@@ -1271,8 +1287,7 @@
                this.allMyCourse.newCourse4[this.courseIndex4].courseName == '' ||
                this.allMyCourse.newCourse4[this.courseIndex4].courseAddress == '' ||
                this.allMyCourse.newCourse4[this.courseIndex4].studyStartTime == '' ||
-               this.allMyCourse.newCourse4[this.courseIndex4].studyEndTime == '' ||
-               this.allMyCourse.newCourse4[this.courseIndex4].cycleTime == ''){
+               this.allMyCourse.newCourse4[this.courseIndex4].studyEndTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -1290,6 +1305,16 @@
                }else{
                  this.centerDialogVisible4 = false;
                }
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            userType: this.userType,
+            userName: this.username,
+            className: this.classGrade,
+            allMyCourse: this.allMyCourse,
+          }
+        }).then((res) => {
+          
+        });
       },
       addEach5(index){
         this.courseIndex5 = index;
@@ -1329,8 +1354,7 @@
                this.allMyCourse.newCourse5[this.courseIndex5].courseName == '' ||
                this.allMyCourse.newCourse5[this.courseIndex5].courseAddress == '' ||
                this.allMyCourse.newCourse5[this.courseIndex5].studyStartTime == '' ||
-               this.allMyCourse.newCourse5[this.courseIndex5].studyEndTime == '' ||
-               this.allMyCourse.newCourse5[this.courseIndex5].cycleTime == ''){
+               this.allMyCourse.newCourse5[this.courseIndex5].studyEndTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -1348,12 +1372,6 @@
                }else{
                  this.centerDialogVisible5 = false;
                }
-      },
-      addAll(){
-
-       // console.log(this.date2)
-        
-      //  console.log(this.date2)
         axios.post('/teacherCMS/newCourseTable', {
           data: {
             userType: this.userType,
@@ -1364,7 +1382,8 @@
         }).then((res) => {
           
         });
-      }
+      },
+      
     },
 
     components: {}

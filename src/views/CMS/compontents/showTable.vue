@@ -4,14 +4,14 @@
     <div class="classPlan">
       <div class="classPlan_top">
         <!--<div class="classPlan_topLeft"></div>-->
+        <div class="classPlan_topLeft" v-show = "course"></div>
         <div class="classPlan_topRight">
           <table>
             <tr>
-              <td class="classPlan_topLeft"></td>
               <td v-for="(item,index) in weekData" :key="index" class="weekDataP">{{item}}</td>
             </tr>
             <tr>
-              <td v-for="(itemW,indexW) in weekDate" :key="indexW" class="weekDataP">{{itemW}}</td>
+              <td rowspan="2" v-for="(itemW,indexW) in weekDate" :key="indexW" class="weekDateP">{{itemW}}</td>
             </tr>
           </table>
         </div>
@@ -37,8 +37,8 @@
               </td>
             </tr>
             <tr>
-              <td class="classDataP" v-show = "course">2</td>
-              <td class="eachDataP" v-for="(item3,index3) in course.newCourse2">
+              <td class="classDataP2" v-show = "course">2</td>
+              <td class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
                 <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
@@ -223,8 +223,9 @@
             if (res.data.code === 0) {
               this.course = resData.course[0];
               this.mondayDate = res.data.result.courseDate;
+              this.weekDate = core.getDayAll(new Date(this.mondayDate));
             }
-            
+
           });
         },
     },
@@ -240,10 +241,12 @@
   }
   .showTable{
     display:flex;
+    margin-bottom: 60px !important;
+    overflow:auto;
   }
   .showTable .pageButton{
     height: 100%;
-    margin-top: 280px;
+    margin-top: 336px;
     padding-top: 50px;
     padding-bottom: 50px;
   }
@@ -258,7 +261,7 @@
 
   .showTable .classPlan .classPlan_top {
     width: 100%;
-    height: 8%;
+    height: 9%;
     display: flex;
   }
 
@@ -282,7 +285,7 @@
 
   .showTable .classPlan .classPlan_bottomLeft {
     width: 5%;
-    height: 92%;
+    height: 85%;
   }
 
   .showTable .classPlan .classPlan_bottomRight {
@@ -324,11 +327,21 @@
   .showTable .classPlan_topRight .weekDataP {
     background: #e5e9f2;
     width: 183px;
-    border: 5px solid #fff;
+    border-right: 5px solid #fff;
+    border-left: 5px solid #fff;
+    border-top: 5px solid #fff;
     border-radius: 15px;
-    height: 53px;
+    height: 30px;
   }
-
+  .showTable .classPlan_topRight .weekDateP {
+    background: #e5e9f2;
+    width: 183px;
+    border-right: 5px solid #fff;
+    border-left: 5px solid #fff;
+    border-bottom: 5px solid #fff;
+    border-radius: 15px;
+    height: 30px;
+  }
   .showTable .classDataP {
     background: #e5e9f2;
     border: 5px solid #fff;
@@ -336,11 +349,26 @@
     height: 108px;
     width: 2%;
   }
-
+  .showTable .classDataP2 {
+    background: #e5e9f2;
+    border: 5px solid #fff;
+    border-bottom: 6px solid #aaa;
+    border-radius: 15px;
+    height: 108px;
+    width: 2%;
+  }
   .showTable .eachDataP {
     background: #e5e9f2;
     width: 4%;
     border: 5px solid #fff;
+    border-radius: 15px;
+    height: 108px;
+  }
+  .showTable .eachDataP2 {
+    background: #e5e9f2;
+    width: 4%;
+    border: 5px solid #fff;
+    border-bottom: 6px solid #aaa;
     border-radius: 15px;
     height: 108px;
   }
@@ -349,7 +377,11 @@
     text-align: left;
     margin-left: 6px;
   }
-
+  .showTable .eachDataP2 p {
+    margin-bottom: 0;
+    text-align: left;
+    margin-left: 6px;
+  }
   .showTable .classPlan_bottomLeft .grid-content {
     border-radius: 4px;
     min-height: 106px;
