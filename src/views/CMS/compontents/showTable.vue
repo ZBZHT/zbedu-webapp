@@ -1,41 +1,33 @@
 <template>
   <div class="showTable">
+    <el-button type="primary" @click="previous()" class="pageButton"> < </el-button>
     <div class="classPlan">
       <div class="classPlan_top">
-        <div class="classPlan_topLeft"></div>
+        <!--<div class="classPlan_topLeft"></div>-->
         <div class="classPlan_topRight">
-          <!--<el-row>-->
-          <!--<el-col :span="3" v-for="(item,index) in weekData" :key = "index">-->
-          <!--<div class="grid-content bg-purple">-->
-          <!--<p>{{item}}</p>-->
-          <!--</div>-->
-          <!--</el-col>-->
-          <!--</el-row>-->
           <table>
             <tr>
+              <td class="classPlan_topLeft"></td>
               <td v-for="(item,index) in weekData" :key="index" class="weekDataP">{{item}}</td>
+            </tr>
+            <tr>
+              <td v-for="(itemW,indexW) in weekDate" :key="indexW" class="weekDataP">{{itemW}}</td>
             </tr>
           </table>
         </div>
       </div>
       <div class="classPlan_bottom">
-        <div class="classPlan_bottomLeft">
-          <!--<el-row>-->
-          <!--<el-col v-for="(item,index) in classData" :key = "index">-->
-          <!--<div class="grid-content bg-purple">-->
-          <!--{{item}}-->
-          <!--</div>-->
-          <!--</el-col>-->
-          <!--</el-row>-->
-          <table>
-            <tr v-for="(item2,index2) in classData" :key="index2">
-              <td class="classDataP">{{item2}}</td>
-            </tr>
-          </table>
-        </div>
+        <!--<div class="classPlan_bottomLeft">-->
+          <!--<table>-->
+            <!--<tr v-for="(item2,index2) in classData" :key="index2">-->
+              <!--<td class="classDataP">{{item2}}</td>-->
+            <!--</tr>-->
+          <!--</table>-->
+        <!--</div>-->
         <div class="classPlan_bottomRight">
           <table>
             <tr>
+              <td class="classDataP" v-show = "course">1</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse">
                 <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
@@ -45,6 +37,7 @@
               </td>
             </tr>
             <tr>
+              <td class="classDataP" v-show = "course">2</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse2">
                 <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
@@ -54,6 +47,7 @@
               </td>
             </tr>
             <tr>
+              <td class="classDataP" v-show = "course">3</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse3">
                 <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
@@ -63,6 +57,7 @@
               </td>
             </tr>
             <tr>
+              <td class="classDataP" v-show = "course">4</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse4">
                 <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
@@ -72,6 +67,7 @@
               </td>
             </tr>
             <tr>
+              <td class="classDataP" v-show = "course">5</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse5">
                 <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
@@ -136,17 +132,20 @@
         </el-dialog>
 
       </div>
-
     </div>
+    <el-button type="primary" @click="next()" class="pageButton"> > </el-button>
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  import core from '../../../assets/js/core.js'
+  import moment from 'moment'
+
 
   export default {
     name: 'showTable',
-    props: ['course'],
+    props: ['course','mondayDate','weekDate'],
     data() {
       return {
         weekData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
@@ -164,6 +163,7 @@
     },
     computed: {},
     mounted() {
+      //获取课程框的高
 
     },
     methods: {
@@ -190,6 +190,43 @@
           this.alterForm.courseName = item.courseName;
           this.alterForm.courseAddress = item.courseAddress;
       },
+      //点击上一个
+      previous(){
+        this.course = '';
+     //   console.log(this.mondayDate);
+        var res = core.getYestoday(new Date(this.mondayDate));
+        res = core.getMonday(new Date(res));
+        res = moment(res).format("YYYY-MM-DD");
+     //   console.log(res)
+        this.getCourseTable(res)
+      },
+      //点击下一个
+      next(){
+        this.course = '';
+     //   console.log(this.mondayDate);
+        var res = core.getTomorrow(new Date(this.mondayDate));
+        res = core.getMonday(new Date(res));
+        res = moment(res).format("YYYY-MM-DD");
+        console.log(res)
+        this.getCourseTable(res)
+      },
+      //获取-课程表
+      getCourseTable(resDate){
+          axios.post('/teacherCMS/getCourseTable', {
+            data: {
+              courseDate: resDate,
+              className: this.$store.state.classGrade,
+            }
+          }).then((res) => {
+          //  console.log(res.data.result)
+            let resData = res.data.result;
+            if (res.data.code === 0) {
+              this.course = resData.course[0];
+              this.mondayDate = res.data.result.courseDate;
+            }
+            
+          });
+        },
     },
 
     components: {}
@@ -201,12 +238,22 @@
     margin: 0;
     padding: 0;
   }
-
+  .showTable{
+    display:flex;
+  }
+  .showTable .pageButton{
+    height: 100%;
+    margin-top: 280px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
   .showTable .classPlan {
     width: 80%;
     height: 700px;
     margin: 0 auto;
     margin-top: 25px;
+    position:relative;
+    margin-bottom:85px;
   }
 
   .showTable .classPlan .classPlan_top {
@@ -222,14 +269,14 @@
   }
 
   .showTable .classPlan .classPlan_topLeft {
-    width: 5%;
+    width: 4%;
     height: 100%;
     background: #e5e9f2;
     border: 5px solid #fff;
   }
 
   .showTable .classPlan .classPlan_topRight {
-    width: 95%;
+    width: 100%;
     height: 100%;
   }
 
@@ -239,7 +286,7 @@
   }
 
   .showTable .classPlan .classPlan_bottomRight {
-    width: 95%;
+    width: 100%;
     height: 100%;
   }
 
@@ -284,10 +331,10 @@
 
   .showTable .classDataP {
     background: #e5e9f2;
-    width: 1%;
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;
+    width: 2%;
   }
 
   .showTable .eachDataP {

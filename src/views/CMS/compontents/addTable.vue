@@ -1,6 +1,6 @@
 <template>
   <div class="addTable">
-    <el-button type="primary" @click="addAll()" class="pageButton"> < </el-button>
+    
     <div class="classPlan">
             <div class="classPlan_top">
               <div class="classPlan_topLeft"></div>
@@ -27,11 +27,14 @@
                   <tr>
                     <td class="eachDataP" v-for="(item,index) in allMyCourse.newCourse" :key = "index">
                         <el-button size="mini" type="primary" @click="addEach1(index),centerDialogVisible = true" v-show="courseIndexArr[index] == -1">添加</el-button>
+                        {{item.studyStartTime}}
+                        {{item.studyEndTime}}
                         {{item.startTime}}
                         {{item.endTime}}
                         {{item.teacher}}
                         {{item.courseName}}
                         {{item.courseAddress}}
+                        {{item.cycleTime}}
                         
                         <el-dialog
                         title="添加课程"
@@ -42,6 +45,26 @@
                         :close-on-press-escape="false"
                         center>
                             <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
+                                <el-form-item label="开始日期" prop="date1">
+                                  <el-date-picker
+                                    v-model="form.date1"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="开始日期"
+                                    :picker-options="startDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+
+                                <el-form-item label="结束日期" prop="date2">
+                                  <el-date-picker
+                                    v-model="form.date2"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="结束日期"
+                                    :picker-options="endDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+
                                 <el-form-item label="上课时间" prop="date3">
                                 <el-time-select
                                     placeholder="上课时间"
@@ -92,6 +115,14 @@
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
                                     <!--</div>-->
                                 <!--</el-select>-->
+                                </el-form-item>
+
+                                <el-form-item label="课程周期" prop="cycleTime">
+                                  <el-radio-group v-model="form.cycleTime">
+                                  <el-radio label="仅此一次"></el-radio>
+                                    <el-radio label="每周循环"></el-radio>
+                                    <el-radio label="每两周循环"></el-radio>
+                                  </el-radio-group>
                                 </el-form-item>
 
                             </el-form>
@@ -107,11 +138,14 @@
                   <tr>
                     <td class="eachDataP" v-for="(item2,index2) in allMyCourse.newCourse2" :key = "index2">
                         <el-button size="mini" type="primary" @click="addEach2(index2),centerDialogVisible2 = true" v-show="courseIndexArr2[index2] == -1">添加</el-button>
+                        {{item2.studyStartTime}}
+                        {{item2.studyEndTime}}
                         {{item2.startTime}}
                         {{item2.endTime}}
                         {{item2.teacher}}
                         {{item2.courseName}}
                         {{item2.courseAddress}}
+                        {{item2.cycleTime}}
                         
                         <el-dialog
                         title="添加课程"
@@ -122,6 +156,26 @@
                         :close-on-press-escape="false"
                         center>
                             <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
+                                <el-form-item label="开始日期" prop="date1">
+                                  <el-date-picker
+                                    v-model="form.date1"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="开始日期"
+                                    :picker-options="startDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+
+                                <el-form-item label="结束日期" prop="date2">
+                                  <el-date-picker
+                                    v-model="form.date2"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="结束日期"
+                                    :picker-options="endDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+                                
                                 <el-form-item label="上课时间" prop="date3">
                                 <el-time-select
                                     placeholder="上课时间"
@@ -172,6 +226,14 @@
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
                                     <!--</div>-->
                                 <!--</el-select>-->
+                                </el-form-item>
+
+                                <el-form-item label="课程周期" prop="cycleTime">
+                                  <el-radio-group v-model="form.cycleTime">
+                                  <el-radio label="仅此一次"></el-radio>
+                                    <el-radio label="每周循环"></el-radio>
+                                    <el-radio label="每两周循环"></el-radio>
+                                  </el-radio-group>
                                 </el-form-item>
 
                             </el-form>
@@ -185,11 +247,14 @@
                   <tr>
                     <td class="eachDataP" v-for="(item3,index3) in allMyCourse.newCourse3" :key = "index3">
                         <el-button size="mini" type="primary" @click="addEach3(index3),centerDialogVisible3 = true" v-show="courseIndexArr3[index3] == -1">添加</el-button>
+                        {{item3.studyStartTime}}
+                        {{item3.studyEndTime}}
                         {{item3.startTime}}
                         {{item3.endTime}}
                         {{item3.teacher}}
                         {{item3.courseName}}
                         {{item3.courseAddress}}
+                        {{item3.cycleTime}}
                         
                         <el-dialog
                         title="添加课程"
@@ -200,6 +265,26 @@
                         :close-on-press-escape="false"
                         center>
                             <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
+                                <el-form-item label="开始日期" prop="date1">
+                                  <el-date-picker
+                                    v-model="form.date1"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="开始日期"
+                                    :picker-options="startDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+
+                                <el-form-item label="结束日期" prop="date2">
+                                  <el-date-picker
+                                    v-model="form.date2"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="结束日期"
+                                    :picker-options="endDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+                                
                                 <el-form-item label="上课时间" prop="date3">
                                 <el-time-select
                                     placeholder="上课时间"
@@ -250,6 +335,14 @@
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
                                     <!--</div>-->
                                 <!--</el-select>-->
+                                </el-form-item>
+
+                                <el-form-item label="课程周期" prop="cycleTime">
+                                  <el-radio-group v-model="form.cycleTime">
+                                  <el-radio label="仅此一次"></el-radio>
+                                    <el-radio label="每周循环"></el-radio>
+                                    <el-radio label="每两周循环"></el-radio>
+                                  </el-radio-group>
                                 </el-form-item>
 
                             </el-form>
@@ -263,11 +356,14 @@
                   <tr>
                     <td class="eachDataP" v-for="(item4,index4) in allMyCourse.newCourse4" :key = "index4">
                         <el-button size="mini" type="primary" @click="addEach4(index4),centerDialogVisible4 = true" v-show="courseIndexArr4[index4] == -1">添加</el-button>
+                        {{item4.studyStartTime}}
+                        {{item4.studyEndTime}}
                         {{item4.startTime}}
                         {{item4.endTime}}
                         {{item4.teacher}}
                         {{item4.courseName}}
                         {{item4.courseAddress}}
+                        {{item4.cycleTime}}
                         
                         <el-dialog
                         title="添加课程"
@@ -278,6 +374,26 @@
                         :close-on-press-escape="false"
                         center>
                             <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
+                                <el-form-item label="开始日期" prop="date1">
+                                  <el-date-picker
+                                    v-model="form.date1"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="开始日期"
+                                    :picker-options="startDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+
+                                <el-form-item label="结束日期" prop="date2">
+                                  <el-date-picker
+                                    v-model="form.date2"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="结束日期"
+                                    :picker-options="endDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+                                
                                 <el-form-item label="上课时间" prop="date3">
                                 <el-time-select
                                     placeholder="上课时间"
@@ -328,6 +444,14 @@
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
                                     <!--</div>-->
                                 <!--</el-select>-->
+                                </el-form-item>
+
+                                <el-form-item label="课程周期" prop="cycleTime">
+                                  <el-radio-group v-model="form.cycleTime">
+                                  <el-radio label="仅此一次"></el-radio>
+                                    <el-radio label="每周循环"></el-radio>
+                                    <el-radio label="每两周循环"></el-radio>
+                                  </el-radio-group>
                                 </el-form-item>
 
                             </el-form>
@@ -341,11 +465,14 @@
                   <tr>
                     <td class="eachDataP" v-for="(item5,index5) in allMyCourse.newCourse5" :key = "index5">
                         <el-button size="mini" type="primary" @click="addEach5(index5),centerDialogVisible5 = true" v-show="courseIndexArr5[index5] == -1">添加</el-button>
+                        {{item5.studyStartTime}}
+                        {{item5.studyEndTime}}
                         {{item5.startTime}}
                         {{item5.endTime}}
                         {{item5.teacher}}
                         {{item5.courseName}}
                         {{item5.courseAddress}}
+                        {{item5.cycleTime}}
                         
                         <el-dialog
                         title="添加课程"
@@ -356,6 +483,26 @@
                         :close-on-press-escape="false"
                         center>
                             <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
+                                <el-form-item label="开始日期" prop="date1">
+                                  <el-date-picker
+                                    v-model="form.date1"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="开始日期"
+                                    :picker-options="startDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+
+                                <el-form-item label="结束日期" prop="date2">
+                                  <el-date-picker
+                                    v-model="form.date2"
+                                    type="date"
+                                    @change="compareTime()"
+                                    placeholder="结束日期"
+                                    :picker-options="endDatePicker">
+                                  </el-date-picker>
+                                </el-form-item>
+                                
                                 <el-form-item label="上课时间" prop="date3">
                                 <el-time-select
                                     placeholder="上课时间"
@@ -406,6 +553,14 @@
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
                                     <!--</div>-->
                                 <!--</el-select>-->
+                                </el-form-item>
+
+                                <el-form-item label="课程周期" prop="cycleTime">
+                                  <el-radio-group v-model="form.cycleTime">
+                                  <el-radio label="仅此一次"></el-radio>
+                                    <el-radio label="每周循环"></el-radio>
+                                    <el-radio label="每两周循环"></el-radio>
+                                  </el-radio-group>
                                 </el-form-item>
 
                             </el-form>
@@ -424,7 +579,6 @@
             </p>
     </div>
             
-    <el-button type="primary" @click="addAll()" class="pageButton"> > </el-button>
   </div>
     
 </template>
@@ -435,7 +589,7 @@
 
   export default {
     name: 'addTable',
-    props:['course','classGrade','date1','date2'],
+    props:['course','classGrade'],
     data() {
       return {
         username: this.$store.state.username,
@@ -443,13 +597,24 @@
         weekData:['周一','周二','周三','周四','周五','周六','周日'],
         classData:['1','2','3','4','5'],
         form:{
+          date1: '',
+          date2: '',
           date3: '',
           date4: '',
           teacher:'',
           courseName:'',
-          courseAddress:''
+          courseAddress:'',
+          cycleTime:''
         },
+        startDatePicker:this.beginDate(),
+        endDatePicker:this.processDate(),
         rules:{
+          date1: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          date2: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
           date3: [
             {required: true, message: '请选择日期', trigger: 'change'}
           ],
@@ -464,6 +629,9 @@
           ],
           courseAddress: [
             {required: true, message: '请选择上课地点', trigger: 'change'}
+          ],
+          cycleTime: [
+            { required: true, message: '请选择课程周期', trigger: 'change' }
           ],
         },
         courseIndex:'',
@@ -483,49 +651,71 @@
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
+                  
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
 
           ],
@@ -535,49 +725,70 @@
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
 
           ],
@@ -587,49 +798,71 @@
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:'',
+
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
 
           ],
@@ -639,49 +872,70 @@
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
 
           ],
@@ -691,49 +945,70 @@
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
               {
                   startTime:'',
                   endTime:'',
                   teacher:'',
                   courseName:'',
-                  courseAddress:''
+                  courseAddress:'',
+                  studyStartTime:'',
+                  studyEndTime:'',
+                  cycleTime:''
               },
 
           ],
@@ -753,6 +1028,37 @@
 
     },
     methods: {
+      //创建考试开始时间不能选择历史日期
+      beginDate(){
+        let self = this
+        return {
+          disabledDate(time){
+            return time.getTime() < Date.now() - 8.64e7;
+          }
+        }
+      },
+      //创建考试结束时间不能大于开始时间
+      processDate(){
+        let self = this
+        return {
+          disabledDate(time){
+            return time.getTime() < self.form.date1;
+          }
+        }
+      },
+      //选择后创建考试结束时间不能大于开始时间
+      compareTime(){
+      //  console.log(new Date(this.form.date1).getTime());
+      //  console.log(new Date(this.form.date2).getTime());
+        if(new Date(this.form.date1).getTime() > new Date(this.form.date2).getTime()){
+      //    console.log("xiao")
+          this.form.date2 = '';
+        }else{
+      //    console.log("da")
+        }
+      //  console.log(this.form.date1.getDay())
+        
+      },
       addEach1(index){
         this.courseIndex = index;
         this.courseIndexArr[index] = index;
@@ -765,23 +1071,34 @@
                this.allMyCourse.newCourse[i].endTime == '' ||
                this.allMyCourse.newCourse[i].teacher == '' ||
                this.allMyCourse.newCourse[i].courseName == '' ||
-               this.allMyCourse.newCourse[i].courseAddress == ''){
+               this.allMyCourse.newCourse[i].courseAddress == '' ||
+               this.allMyCourse.newCourse[i].studyStartTime == '' ||
+               this.allMyCourse.newCourse[i].studyEndTime == '' ||
+               this.allMyCourse.newCourse[i].cycleTime == ''){
                   this.courseIndexArr[i] = -1;
                }
             }
         }
       },
       addEach11(){
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
         this.allMyCourse.newCourse[this.courseIndex].startTime = this.form.date3;
         this.allMyCourse.newCourse[this.courseIndex].endTime = this.form.date4;
         this.allMyCourse.newCourse[this.courseIndex].teacher = this.form.teacher;
         this.allMyCourse.newCourse[this.courseIndex].courseName = this.form.courseName;
         this.allMyCourse.newCourse[this.courseIndex].courseAddress = this.form.courseAddress;
+        this.allMyCourse.newCourse[this.courseIndex].studyStartTime = this.form.date1;
+        this.allMyCourse.newCourse[this.courseIndex].studyEndTime = this.form.date2;
+        this.allMyCourse.newCourse[this.courseIndex].cycleTime = this.form.cycleTime;
         if(this.allMyCourse.newCourse[this.courseIndex].startTime == '' ||
                this.allMyCourse.newCourse[this.courseIndex].endTime == '' ||
                this.allMyCourse.newCourse[this.courseIndex].teacher == '' ||
                this.allMyCourse.newCourse[this.courseIndex].courseName == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].courseAddress == ''){
+               this.allMyCourse.newCourse[this.courseIndex].courseAddress == '' ||
+               this.allMyCourse.newCourse[this.courseIndex].studyStartTime == '' ||
+               this.allMyCourse.newCourse[this.courseIndex].studyEndTime == '' ||
+               this.allMyCourse.newCourse[this.courseIndex].cycleTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -792,6 +1109,9 @@
                   this.allMyCourse.newCourse[this.courseIndex].teacher = '';
                   this.allMyCourse.newCourse[this.courseIndex].courseName = '';
                   this.allMyCourse.newCourse[this.courseIndex].courseAddress = '';
+                  this.allMyCourse.newCourse[this.courseIndex].studyStartTime = '';
+                  this.allMyCourse.newCourse[this.courseIndex].studyEndTime = '';
+                  this.allMyCourse.newCourse[this.courseIndex].cycleTime = '';
                   this.centerDialogVisible = true;
                }else{
                  this.centerDialogVisible = false;
@@ -809,23 +1129,34 @@
                this.allMyCourse.newCourse2[i].endTime == '' ||
                this.allMyCourse.newCourse2[i].teacher == '' ||
                this.allMyCourse.newCourse2[i].courseName == '' ||
-               this.allMyCourse.newCourse2[i].courseAddress == ''){
+               this.allMyCourse.newCourse2[i].courseAddress == '' ||
+               this.allMyCourse.newCourse2[i].studyStartTime == '' ||
+               this.allMyCourse.newCourse2[i].studyEndTime == '' ||
+               this.allMyCourse.newCourse2[i].cycleTime == ''){
                   this.courseIndexArr2[i] = -1;
                }
             }
         }
       },
       addEach22(){
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
         this.allMyCourse.newCourse2[this.courseIndex2].startTime = this.form.date3;
         this.allMyCourse.newCourse2[this.courseIndex2].endTime = this.form.date4;
         this.allMyCourse.newCourse2[this.courseIndex2].teacher = this.form.teacher;
         this.allMyCourse.newCourse2[this.courseIndex2].courseName = this.form.courseName;
         this.allMyCourse.newCourse2[this.courseIndex2].courseAddress = this.form.courseAddress;
+        this.allMyCourse.newCourse2[this.courseIndex2].studyStartTime = this.form.date1;
+        this.allMyCourse.newCourse2[this.courseIndex2].studyEndTime = this.form.date2;
+        this.allMyCourse.newCourse2[this.courseIndex2].cycleTime = this.form.cycleTime;
         if(this.allMyCourse.newCourse2[this.courseIndex2].startTime == '' ||
                this.allMyCourse.newCourse2[this.courseIndex2].endTime == '' ||
                this.allMyCourse.newCourse2[this.courseIndex2].teacher == '' ||
                this.allMyCourse.newCourse2[this.courseIndex2].courseName == '' ||
-               this.allMyCourse.newCourse2[this.courseIndex2].courseAddress == ''){
+               this.allMyCourse.newCourse2[this.courseIndex2].courseAddress == '' ||
+               this.allMyCourse.newCourse2[this.courseIndex2].studyStartTime == '' ||
+               this.allMyCourse.newCourse2[this.courseIndex2].studyEndTime == '' ||
+               this.allMyCourse.newCourse2[this.courseIndex2].cycleTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -836,6 +1167,9 @@
                   this.allMyCourse.newCourse2[this.courseIndex2].teacher = '';
                   this.allMyCourse.newCourse2[this.courseIndex2].courseName = '';
                   this.allMyCourse.newCourse2[this.courseIndex2].courseAddress = '';
+                  this.allMyCourse.newCourse2[this.courseIndex2].studyStartTime = '';
+                  this.allMyCourse.newCourse2[this.courseIndex2].studyEndTime = '';
+                  this.allMyCourse.newCourse2[this.courseIndex2].cycleTime = '';
                   this.centerDialogVisible2 = true;
                }else{
                  this.centerDialogVisible2 = false;
@@ -853,23 +1187,34 @@
                this.allMyCourse.newCourse3[i].endTime == '' ||
                this.allMyCourse.newCourse3[i].teacher == '' ||
                this.allMyCourse.newCourse3[i].courseName == '' ||
-               this.allMyCourse.newCourse3[i].courseAddress == ''){
+               this.allMyCourse.newCourse3[i].courseAddress == '' ||
+               this.allMyCourse.newCourse3[i].studyStartTime == '' ||
+               this.allMyCourse.newCourse3[i].studyEndTime == '' ||
+               this.allMyCourse.newCourse3[i].cycleTime == ''){
                   this.courseIndexArr3[i] = -1;
                }
             }
         }
       },
       addEach33(){
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
         this.allMyCourse.newCourse3[this.courseIndex3].startTime = this.form.date3;
         this.allMyCourse.newCourse3[this.courseIndex3].endTime = this.form.date4;
         this.allMyCourse.newCourse3[this.courseIndex3].teacher = this.form.teacher;
         this.allMyCourse.newCourse3[this.courseIndex3].courseName = this.form.courseName;
         this.allMyCourse.newCourse3[this.courseIndex3].courseAddress = this.form.courseAddress;
+        this.allMyCourse.newCourse3[this.courseIndex3].studyStartTime = this.form.date1;
+        this.allMyCourse.newCourse3[this.courseIndex3].studyEndTime = this.form.date2;
+        this.allMyCourse.newCourse3[this.courseIndex3].cycleTime = this.form.cycleTime;
         if(this.allMyCourse.newCourse3[this.courseIndex3].startTime == '' ||
                this.allMyCourse.newCourse3[this.courseIndex3].endTime == '' ||
                this.allMyCourse.newCourse3[this.courseIndex3].teacher == '' ||
                this.allMyCourse.newCourse3[this.courseIndex3].courseName == '' ||
-               this.allMyCourse.newCourse3[this.courseIndex3].courseAddress == ''){
+               this.allMyCourse.newCourse3[this.courseIndex3].courseAddress == '' ||
+               this.allMyCourse.newCourse3[this.courseIndex3].studyStartTime == '' ||
+               this.allMyCourse.newCourse3[this.courseIndex3].studyEndTime == '' ||
+               this.allMyCourse.newCourse3[this.courseIndex3].cycleTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -880,6 +1225,9 @@
                   this.allMyCourse.newCourse3[this.courseIndex3].teacher = '';
                   this.allMyCourse.newCourse3[this.courseIndex3].courseName = '';
                   this.allMyCourse.newCourse3[this.courseIndex3].courseAddress = '';
+                  this.allMyCourse.newCourse3[this.courseIndex3].studyStartTime = '';
+                  this.allMyCourse.newCourse3[this.courseIndex3].studyEndTime = '';
+                  this.allMyCourse.newCourse3[this.courseIndex3].cycleTime = '';
                   this.centerDialogVisible3 = true;
                }else{
                  this.centerDialogVisible3 = false;
@@ -897,23 +1245,34 @@
                this.allMyCourse.newCourse4[i].endTime == '' ||
                this.allMyCourse.newCourse4[i].teacher == '' ||
                this.allMyCourse.newCourse4[i].courseName == '' ||
-               this.allMyCourse.newCourse4[i].courseAddress == ''){
+               this.allMyCourse.newCourse4[i].courseAddress == '' ||
+               this.allMyCourse.newCourse4[i].studyStartTime == '' ||
+               this.allMyCourse.newCourse4[i].studyEndTime == '' ||
+               this.allMyCourse.newCourse4[i].cycleTime == ''){
                   this.courseIndexArr4[i] = -1;
                }
             }
         }
       },
       addEach44(){
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
         this.allMyCourse.newCourse4[this.courseIndex4].startTime = this.form.date3;
         this.allMyCourse.newCourse4[this.courseIndex4].endTime = this.form.date4;
         this.allMyCourse.newCourse4[this.courseIndex4].teacher = this.form.teacher;
         this.allMyCourse.newCourse4[this.courseIndex4].courseName = this.form.courseName;
         this.allMyCourse.newCourse4[this.courseIndex4].courseAddress = this.form.courseAddress;
+        this.allMyCourse.newCourse4[this.courseIndex4].studyStartTime = this.form.date1;
+        this.allMyCourse.newCourse4[this.courseIndex4].studyEndTime = this.form.date2;
+        this.allMyCourse.newCourse4[this.courseIndex4].cycleTime = this.form.cycleTime;
         if(this.allMyCourse.newCourse4[this.courseIndex4].startTime == '' ||
                this.allMyCourse.newCourse4[this.courseIndex4].endTime == '' ||
                this.allMyCourse.newCourse4[this.courseIndex4].teacher == '' ||
                this.allMyCourse.newCourse4[this.courseIndex4].courseName == '' ||
-               this.allMyCourse.newCourse4[this.courseIndex4].courseAddress == ''){
+               this.allMyCourse.newCourse4[this.courseIndex4].courseAddress == '' ||
+               this.allMyCourse.newCourse4[this.courseIndex4].studyStartTime == '' ||
+               this.allMyCourse.newCourse4[this.courseIndex4].studyEndTime == '' ||
+               this.allMyCourse.newCourse4[this.courseIndex4].cycleTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -924,6 +1283,9 @@
                   this.allMyCourse.newCourse4[this.courseIndex4].teacher = '';
                   this.allMyCourse.newCourse4[this.courseIndex4].courseName = '';
                   this.allMyCourse.newCourse4[this.courseIndex4].courseAddress = '';
+                  this.allMyCourse.newCourse4[this.courseIndex4].studyStartTime = '';
+                  this.allMyCourse.newCourse4[this.courseIndex4].studyEndTime = '';
+                  this.allMyCourse.newCourse4[this.courseIndex4].cycleTime = '';
                   this.centerDialogVisible4 = true;
                }else{
                  this.centerDialogVisible4 = false;
@@ -941,23 +1303,34 @@
                this.allMyCourse.newCourse5[i].endTime == '' ||
                this.allMyCourse.newCourse5[i].teacher == '' ||
                this.allMyCourse.newCourse5[i].courseName == '' ||
-               this.allMyCourse.newCourse5[i].courseAddress == ''){
+               this.allMyCourse.newCourse5[i].courseAddress == '' ||
+               this.allMyCourse.newCourse5[i].studyStartTime == '' ||
+               this.allMyCourse.newCourse5[i].studyEndTime == '' ||
+               this.allMyCourse.newCourse5[i].cycleTime == ''){
                   this.courseIndexArr5[i] = -1;
                }
             }
         }
       },
       addEach55(){
+        this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
+        this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
         this.allMyCourse.newCourse5[this.courseIndex5].startTime = this.form.date3;
         this.allMyCourse.newCourse5[this.courseIndex5].endTime = this.form.date4;
         this.allMyCourse.newCourse5[this.courseIndex5].teacher = this.form.teacher;
         this.allMyCourse.newCourse5[this.courseIndex5].courseName = this.form.courseName;
         this.allMyCourse.newCourse5[this.courseIndex5].courseAddress = this.form.courseAddress;
+        this.allMyCourse.newCourse5[this.courseIndex5].studyStartTime = this.form.date1;
+        this.allMyCourse.newCourse5[this.courseIndex5].studyEndTime = this.form.date2;
+        this.allMyCourse.newCourse5[this.courseIndex5].cycleTime = this.form.cycleTime;
         if(this.allMyCourse.newCourse5[this.courseIndex5].startTime == '' ||
                this.allMyCourse.newCourse5[this.courseIndex5].endTime == '' ||
                this.allMyCourse.newCourse5[this.courseIndex5].teacher == '' ||
                this.allMyCourse.newCourse5[this.courseIndex5].courseName == '' ||
-               this.allMyCourse.newCourse5[this.courseIndex5].courseAddress == ''){
+               this.allMyCourse.newCourse5[this.courseIndex5].courseAddress == '' ||
+               this.allMyCourse.newCourse5[this.courseIndex5].studyStartTime == '' ||
+               this.allMyCourse.newCourse5[this.courseIndex5].studyEndTime == '' ||
+               this.allMyCourse.newCourse5[this.courseIndex5].cycleTime == ''){
                  this.$message({
                     showClose: true,
                     message: '信息不完整哦',
@@ -968,6 +1341,9 @@
                   this.allMyCourse.newCourse5[this.courseIndex5].teacher = '';
                   this.allMyCourse.newCourse5[this.courseIndex5].courseName = '';
                   this.allMyCourse.newCourse5[this.courseIndex5].courseAddress = '';
+                  this.allMyCourse.newCourse5[this.courseIndex5].studyStartTime = '';
+                  this.allMyCourse.newCourse5[this.courseIndex5].studyEndTime = '';
+                  this.allMyCourse.newCourse5[this.courseIndex5].cycleTime = '';
                   this.centerDialogVisible5 = true;
                }else{
                  this.centerDialogVisible5 = false;
@@ -976,8 +1352,7 @@
       addAll(){
 
        // console.log(this.date2)
-        this.date1 = core.formatDate("yyyy-MM-dd", new Date(this.date1));
-        this.date2 = core.formatDate("yyyy-MM-dd", new Date(this.date2));
+        
       //  console.log(this.date2)
         axios.post('/teacherCMS/newCourseTable', {
           data: {
@@ -985,8 +1360,6 @@
             userName: this.username,
             className: this.classGrade,
             allMyCourse: this.allMyCourse,
-            startTime:this.date1,
-            endTime:this.date2
           }
         }).then((res) => {
           
@@ -1002,15 +1375,6 @@
   * {
     margin: 0;
     padding: 0;
-  }
-  .addTable{
-    display:flex;
-  }
-  .addTable .pageButton{
-    height: 100%;
-    margin-top: 280px;
-    padding-top: 50px;
-    padding-bottom: 50px;
   }
   .addTable .classPlan{
     width:80%;

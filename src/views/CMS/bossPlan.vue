@@ -11,36 +11,13 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick()" v-show="showThree">
         <el-tab-pane label="授课计划表" name="first">
 
-          <show-table :course = "course"></show-table>
+          <show-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></show-table>
 
         </el-tab-pane>
         <el-tab-pane label="增加授课计划" name="second">
-          <el-form :inline="true" class="demo-form-inline" ref="form" :model="form" status-icon :rules="rules"
-                           label-width="80px">
 
-                    <el-form-item label="开始日期" prop="date1">
-                      <el-date-picker
-                        v-model="form.date1"
-                        type="date"
-                        @change="compareTime()"
-                        placeholder="开始日期"
-                        :picker-options="startDatePicker">
-                      </el-date-picker>
-                    </el-form-item>
+          <add-table :classGrade = "classGrade"></add-table>
 
-                    <el-form-item label="结束日期" prop="date2">
-                      <el-date-picker
-                        v-model="form.date2"
-                        type="date"
-                        @change="compareTime()"
-                        placeholder="结束日期"
-                        :picker-options="endDatePicker">
-                      </el-date-picker>
-                    </el-form-item>
-
-                    <add-table :classGrade = "classGrade" :date1 = "form.date1" :date2 = "form.date2" v-show="showAddTable"></add-table>
-
-                  </el-form>
         </el-tab-pane>
         <el-tab-pane label="修改授课计划" name="third">
 
@@ -69,26 +46,15 @@
         classGrade: '',
         classM:[],
         dateData:[],
-        form:{
-          date1: '',
-          date2: '',
-        },
         rules:{
-          date1: [
-            {required: true, message: '请选择日期', trigger: 'change'}
-          ],
-          date2: [
-            {required: true, message: '请选择日期', trigger: 'change'}
-          ],
           classGrade: [
             {required: true, message: '请输入班级', trigger: 'change'}
           ],
         },
-        startDatePicker:this.beginDate(),
-        endDatePicker:this.processDate(),
+        mondayDate:'',
+        weekDate:[],
         course: {},
         showThree:false,
-        showAddTable:false
       }
     },
     computed: {
@@ -103,6 +69,7 @@
       },
       //选择班级显示table，选择班级切换数据
       showThreeTable(){
+        this.course = '';
         this.$store.commit('getClassGrade',this.classGrade);
         if(this.classGrade != ''){
           this.showThree = true;
@@ -114,42 +81,6 @@
         //console.log(this.classGrade);
         this.getCourseTable(resDate)
       },
-      //选择后创建考试结束时间不能大于开始时间
-      compareTime(){
-      //  console.log(new Date(this.form.date1).getTime());
-      //  console.log(new Date(this.form.date2).getTime());
-        if(new Date(this.form.date1).getTime() > new Date(this.form.date2).getTime()){
-      //    console.log("xiao")
-          this.form.date2 = '';
-        }else{
-      //    console.log("da")
-        }
-        if(this.form.date1 != '' && this.form.date2 != ''){
-          this.showAddTable = true;
-        }else{
-
-        }
-        console.log(this.form.date1.getDay())
-        
-      },
-      //创建考试开始时间不能选择历史日期
-      beginDate(){
-        let self = this
-        return {
-          disabledDate(time){
-            return time.getTime() < Date.now() - 8.64e7;
-          }
-        }
-      },
-      //创建考试结束时间不能大于开始时间
-      processDate(){
-        let self = this
-        return {
-          disabledDate(time){
-            return time.getTime() < self.form.date1;
-          }
-        }
-      },
       //获取-课程表
       getCourseTable(resDate){
         axios.post('/teacherCMS/getCourseTable', {
@@ -158,10 +89,14 @@
             className: this.classGrade,
           }
         }).then((res) => {
+          console.log(res.data.result)
           let resData = res.data.result;
           if (res.data.code === 0) {
             this.course = resData.course[0];
           }
+          this.mondayDate = res.data.result.courseDate;
+          this.weekDate = core.getDayAll(new Date(this.mondayDate));
+          console.log(this.weekDate)
         });
       },
       //获取-班级信息
