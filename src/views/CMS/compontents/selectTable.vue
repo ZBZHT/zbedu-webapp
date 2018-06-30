@@ -28,12 +28,13 @@
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
-              <td class="eachDataP" v-for="(item3,index3) in course.newCourse">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
-              </td>
+                <td class="eachDataP" v-for="(item3,index3) in course.newCourse">
+                    <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                    <p>{{item3.teacher}}</p>
+                    <p>{{item3.courseName}}</p>
+                    <p>{{item3.courseAddress}}</p>
+                    <div class="bing"></div>
+                </td>
             </tr>
             <tr>
               <td class="classDataP2" v-show = "course">2</td>
@@ -249,7 +250,7 @@
     width: 80%;
     height: 700px;
     margin: 0 auto;
-    margin-top: 25px;
+    margin-top: 73px;
     position:relative;
     margin-bottom:85px;
   }
@@ -358,6 +359,7 @@
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;
+    position:relative;
   }
   .selectTable .eachDataP2 {
     background: #e5e9f2;
@@ -376,6 +378,20 @@
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;
+  }
+  .selectTable .bing{
+      width:160px;
+      height:120px;
+      background:#fff;
+      border-radius:10px;
+      box-shadow: 10px 9px 40px -3px;
+      display:none;
+      position:absolute;
+      bottom: 112px;
+      right: -7%;
+  }
+  .selectTable .eachDataP:hover .bing{
+    display:block;
   }
   .selectTable .classPlan_bottomLeft .grid-content {
     border-radius: 4px;

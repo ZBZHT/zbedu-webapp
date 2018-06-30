@@ -1,11 +1,10 @@
 <template>
   <div class="addTable">
-    
+
     <div class="classPlan">
             <div class="classPlan_top">
               <div class="classPlan_topLeft"></div>
               <div class="classPlan_topRight">
-
                 <table>
                   <tr>
                     <td v-for="(item,index) in weekData" :key = "index" class="weekDataP">{{item}}</td>
@@ -15,7 +14,6 @@
             </div>
             <div class="classPlan_bottom">
               <div class="classPlan_bottomLeft">
-
                 <table>
                   <tr v-for="(item2,index2) in classData" :key = "index2">
                     <td class="classDataP">{{item2}}</td>
@@ -35,16 +33,18 @@
                         {{item.courseName}}
                         {{item.courseAddress}}
                         {{item.cycleTime}}
-                        
+
                         <el-dialog
                         title="添加课程"
                         :visible.sync="centerDialogVisible"
-                        width="30%"
+                        width="600px"
                         :close-on-click-modal="false"
                         :show-close="false"
                         :close-on-press-escape="false"
                         center>
-                            <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
+                            <el-form :model="form" :rules="rules" ref="form" >
+
+                              <el-form :inline="true" :model="form" :rules="rules" ref="form">
                                 <el-form-item label="开始日期" prop="date1">
                                   <el-date-picker
                                     v-model="form.date1"
@@ -64,15 +64,17 @@
                                     :picker-options="endDatePicker">
                                   </el-date-picker>
                                 </el-form-item>
+                              </el-form>
 
+                              <el-form :inline="true" :model="form" :rules="rules" ref="form">
                                 <el-form-item label="上课时间" prop="date3">
                                 <el-time-select
                                     placeholder="上课时间"
                                     v-model="form.date3"
                                     :picker-options="{
-                                    start: '00:00',
+                                    start: '08:00',
                                     step: '00:10',
-                                    end: '23:30'
+                                    end: '20:00'
                                     }">
                                 </el-time-select>
                                 </el-form-item>
@@ -82,15 +84,16 @@
                                     placeholder="下课时间"
                                     v-model="form.date4"
                                     :picker-options="{
-                                    start: '00:00',
+                                    start: '08:00',
                                     step: '00:10',
-                                    end: '23:30'
+                                    end: '20:00'
                                     }">
                                 </el-time-select>
                                 </el-form-item>
+                              </el-form>
 
-                                <el-form-item label="课程" prop="courseName">
-                                <el-input v-model="form.courseName"></el-input>
+                                <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
+                                <el-input v-model="form.courseName" style="width: 85%;"></el-input>
                                 <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
 
                                     <!--<div v-for="item in majorM">-->
@@ -99,8 +102,8 @@
                                 <!--</el-select>-->
                                 </el-form-item>
 
-                                <el-form-item label="教师" prop="teacher">
-                                  <el-input v-model="form.teacher"></el-input>
+                                <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
+                                  <el-input v-model="form.teacher" style="width: 85%;"></el-input>
                                 <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
                                     <!--<div v-for="item in majorM">-->
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
@@ -108,8 +111,8 @@
                                 <!--</el-select>-->
                                 </el-form-item>
 
-                                <el-form-item label="地点" prop="courseAddress">
-                                  <el-input v-model="form.courseAddress"></el-input>
+                                <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
+                                  <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
                                 <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
                                     <!--<div v-for="item in majorM">-->
                                       <!--<el-option :label="item.label" :value="item.label"></el-option>-->
@@ -144,95 +147,100 @@
                         {{item2.courseName}}
                         {{item2.courseAddress}}
                         {{item2.cycleTime}}
-                        
+
                         <el-dialog
                         title="添加课程"
                         :visible.sync="centerDialogVisible2"
-                        width="30%"
+                        width="600px"
                         :close-on-click-modal="false"
                         :show-close="false"
                         :close-on-press-escape="false"
                         center>
-                            <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
-                                <el-form-item label="开始日期" prop="date1">
-                                  <el-date-picker
-                                    v-model="form.date1"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="开始日期"
-                                    :picker-options="startDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
+                          <el-form :model="form" :rules="rules" ref="form" >
 
-                                <el-form-item label="结束日期" prop="date2">
-                                  <el-date-picker
-                                    v-model="form.date2"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="结束日期"
-                                    :picker-options="endDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
-                                
-                                <el-form-item label="上课时间" prop="date3">
-                                <el-time-select
-                                    placeholder="上课时间"
-                                    v-model="form.date3"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="开始日期" prop="date1">
+                                <el-date-picker
+                                  v-model="form.date1"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="开始日期"
+                                  :picker-options="startDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
 
-                                <el-form-item label="下课时间" prop="date4">
-                                <el-time-select
-                                    placeholder="下课时间"
-                                    v-model="form.date4"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
-
-                                <el-form-item label="课程" prop="courseName">
-                                <el-input v-model="form.courseName"></el-input>
-                                <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="教师" prop="teacher">
-                                  <el-input v-model="form.teacher"></el-input>
-                                <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="地点" prop="courseAddress">
-                                  <el-input v-model="form.courseAddress"></el-input>
-                                <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-checkbox-group v-model="form.cycleTime">
-                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
-                                  </el-checkbox-group>
-                                </el-form-item>
-
+                              <el-form-item label="结束日期" prop="date2">
+                                <el-date-picker
+                                  v-model="form.date2"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="结束日期"
+                                  :picker-options="endDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
                             </el-form>
+
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="上课时间" prop="date3">
+                                <el-time-select
+                                  placeholder="上课时间"
+                                  v-model="form.date3"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+
+                              <el-form-item label="下课时间" prop="date4">
+                                <el-time-select
+                                  placeholder="下课时间"
+                                  v-model="form.date4"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+                            </el-form>
+
+                            <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
+                              <el-input v-model="form.courseName" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
+
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
+                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
+                              <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="课程周期" prop="cycleTime">
+                              <el-checkbox-group v-model="form.cycleTime">
+                                <el-checkbox label="每周循环" name="type"></el-checkbox>
+                              </el-checkbox-group>
+                            </el-form-item>
+
+                          </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="cancel2(),centerDialogVisible2 = false">取 消</el-button>
                                 <el-button type="primary" @click="addEach22()">确 定</el-button>
@@ -251,95 +259,100 @@
                         {{item3.courseName}}
                         {{item3.courseAddress}}
                         {{item3.cycleTime}}
-                        
+
                         <el-dialog
                         title="添加课程"
                         :visible.sync="centerDialogVisible3"
-                        width="30%"
+                        width="600px"
                         :close-on-click-modal="false"
                         :show-close="false"
                         :close-on-press-escape="false"
                         center>
-                            <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
-                                <el-form-item label="开始日期" prop="date1">
-                                  <el-date-picker
-                                    v-model="form.date1"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="开始日期"
-                                    :picker-options="startDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
+                          <el-form :model="form" :rules="rules" ref="form" >
 
-                                <el-form-item label="结束日期" prop="date2">
-                                  <el-date-picker
-                                    v-model="form.date2"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="结束日期"
-                                    :picker-options="endDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
-                                
-                                <el-form-item label="上课时间" prop="date3">
-                                <el-time-select
-                                    placeholder="上课时间"
-                                    v-model="form.date3"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="开始日期" prop="date1">
+                                <el-date-picker
+                                  v-model="form.date1"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="开始日期"
+                                  :picker-options="startDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
 
-                                <el-form-item label="下课时间" prop="date4">
-                                <el-time-select
-                                    placeholder="下课时间"
-                                    v-model="form.date4"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
-
-                                <el-form-item label="课程" prop="courseName">
-                                <el-input v-model="form.courseName"></el-input>
-                                <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="教师" prop="teacher">
-                                  <el-input v-model="form.teacher"></el-input>
-                                <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="地点" prop="courseAddress">
-                                  <el-input v-model="form.courseAddress"></el-input>
-                                <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-checkbox-group v-model="form.cycleTime">
-                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
-                                  </el-checkbox-group>
-                                </el-form-item>
-
+                              <el-form-item label="结束日期" prop="date2">
+                                <el-date-picker
+                                  v-model="form.date2"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="结束日期"
+                                  :picker-options="endDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
                             </el-form>
+
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="上课时间" prop="date3">
+                                <el-time-select
+                                  placeholder="上课时间"
+                                  v-model="form.date3"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+
+                              <el-form-item label="下课时间" prop="date4">
+                                <el-time-select
+                                  placeholder="下课时间"
+                                  v-model="form.date4"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+                            </el-form>
+
+                            <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
+                              <el-input v-model="form.courseName" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
+
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
+                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
+                              <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="课程周期" prop="cycleTime">
+                              <el-checkbox-group v-model="form.cycleTime">
+                                <el-checkbox label="每周循环" name="type"></el-checkbox>
+                              </el-checkbox-group>
+                            </el-form-item>
+
+                          </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="cancel3(),centerDialogVisible3 = false">取 消</el-button>
                                 <el-button type="primary" @click="addEach33()">确 定</el-button>
@@ -358,95 +371,100 @@
                         {{item4.courseName}}
                         {{item4.courseAddress}}
                         {{item4.cycleTime}}
-                        
+
                         <el-dialog
                         title="添加课程"
                         :visible.sync="centerDialogVisible4"
-                        width="30%"
+                        width="600px"
                         :close-on-click-modal="false"
                         :show-close="false"
                         :close-on-press-escape="false"
                         center>
-                            <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
-                                <el-form-item label="开始日期" prop="date1">
-                                  <el-date-picker
-                                    v-model="form.date1"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="开始日期"
-                                    :picker-options="startDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
+                          <el-form :model="form" :rules="rules" ref="form" >
 
-                                <el-form-item label="结束日期" prop="date2">
-                                  <el-date-picker
-                                    v-model="form.date2"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="结束日期"
-                                    :picker-options="endDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
-                                
-                                <el-form-item label="上课时间" prop="date3">
-                                <el-time-select
-                                    placeholder="上课时间"
-                                    v-model="form.date3"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="开始日期" prop="date1">
+                                <el-date-picker
+                                  v-model="form.date1"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="开始日期"
+                                  :picker-options="startDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
 
-                                <el-form-item label="下课时间" prop="date4">
-                                <el-time-select
-                                    placeholder="下课时间"
-                                    v-model="form.date4"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
-
-                                <el-form-item label="课程" prop="courseName">
-                                <el-input v-model="form.courseName"></el-input>
-                                <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="教师" prop="teacher">
-                                  <el-input v-model="form.teacher"></el-input>
-                                <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="地点" prop="courseAddress">
-                                  <el-input v-model="form.courseAddress"></el-input>
-                                <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-checkbox-group v-model="form.cycleTime">
-                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
-                                  </el-checkbox-group>
-                                </el-form-item>
-
+                              <el-form-item label="结束日期" prop="date2">
+                                <el-date-picker
+                                  v-model="form.date2"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="结束日期"
+                                  :picker-options="endDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
                             </el-form>
+
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="上课时间" prop="date3">
+                                <el-time-select
+                                  placeholder="上课时间"
+                                  v-model="form.date3"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+
+                              <el-form-item label="下课时间" prop="date4">
+                                <el-time-select
+                                  placeholder="下课时间"
+                                  v-model="form.date4"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+                            </el-form>
+
+                            <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
+                              <el-input v-model="form.courseName" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
+
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
+                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
+                              <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="课程周期" prop="cycleTime">
+                              <el-checkbox-group v-model="form.cycleTime">
+                                <el-checkbox label="每周循环" name="type"></el-checkbox>
+                              </el-checkbox-group>
+                            </el-form-item>
+
+                          </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="cancel4(),centerDialogVisible4 = false">取 消</el-button>
                                 <el-button type="primary" @click="addEach44()">确 定</el-button>
@@ -465,95 +483,100 @@
                         {{item5.courseName}}
                         {{item5.courseAddress}}
                         {{item5.cycleTime}}
-                        
+
                         <el-dialog
                         title="添加课程"
                         :visible.sync="centerDialogVisible5"
-                        width="30%"
+                        width="600px"
                         :close-on-click-modal="false"
                         :show-close="false"
                         :close-on-press-escape="false"
                         center>
-                            <el-form :inline="true" :model="form" :rules="rules" ref="form" label-width="100px">
-                                <el-form-item label="开始日期" prop="date1">
-                                  <el-date-picker
-                                    v-model="form.date1"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="开始日期"
-                                    :picker-options="startDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
+                          <el-form :model="form" :rules="rules" ref="form" >
 
-                                <el-form-item label="结束日期" prop="date2">
-                                  <el-date-picker
-                                    v-model="form.date2"
-                                    type="date"
-                                    @change="compareTime()"
-                                    placeholder="结束日期"
-                                    :picker-options="endDatePicker">
-                                  </el-date-picker>
-                                </el-form-item>
-                                
-                                <el-form-item label="上课时间" prop="date3">
-                                <el-time-select
-                                    placeholder="上课时间"
-                                    v-model="form.date3"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="开始日期" prop="date1">
+                                <el-date-picker
+                                  v-model="form.date1"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="开始日期"
+                                  :picker-options="startDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
 
-                                <el-form-item label="下课时间" prop="date4">
-                                <el-time-select
-                                    placeholder="下课时间"
-                                    v-model="form.date4"
-                                    :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-                                </el-time-select>
-                                </el-form-item>
-
-                                <el-form-item label="课程" prop="courseName">
-                                <el-input v-model="form.courseName"></el-input>
-                                <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="教师" prop="teacher">
-                                  <el-input v-model="form.teacher"></el-input>
-                                <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="地点" prop="courseAddress">
-                                  <el-input v-model="form.courseAddress"></el-input>
-                                <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
-                                </el-form-item>
-
-                                <el-form-item label="课程周期" prop="cycleTime">
-                                  <el-checkbox-group v-model="form.cycleTime">
-                                    <el-checkbox label="每周循环" name="type"></el-checkbox>
-                                  </el-checkbox-group>
-                                </el-form-item>
-
+                              <el-form-item label="结束日期" prop="date2">
+                                <el-date-picker
+                                  v-model="form.date2"
+                                  type="date"
+                                  @change="compareTime()"
+                                  placeholder="结束日期"
+                                  :picker-options="endDatePicker">
+                                </el-date-picker>
+                              </el-form-item>
                             </el-form>
+
+                            <el-form :inline="true" :model="form" :rules="rules" ref="form">
+                              <el-form-item label="上课时间" prop="date3">
+                                <el-time-select
+                                  placeholder="上课时间"
+                                  v-model="form.date3"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+
+                              <el-form-item label="下课时间" prop="date4">
+                                <el-time-select
+                                  placeholder="下课时间"
+                                  v-model="form.date4"
+                                  :picker-options="{
+                                    start: '08:00',
+                                    step: '00:10',
+                                    end: '20:00'
+                                    }">
+                                </el-time-select>
+                              </el-form-item>
+                            </el-form>
+
+                            <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
+                              <el-input v-model="form.courseName" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
+
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
+                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
+                              <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
+                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
+                              <!--<div v-for="item in majorM">-->
+                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
+                              <!--</div>-->
+                              <!--</el-select>-->
+                            </el-form-item>
+
+                            <el-form-item label="课程周期" prop="cycleTime">
+                              <el-checkbox-group v-model="form.cycleTime">
+                                <el-checkbox label="每周循环" name="type"></el-checkbox>
+                              </el-checkbox-group>
+                            </el-form-item>
+
+                          </el-form>
                             <span slot="footer" class="dialog-footer">
                                 <el-button @click="cancel5(),centerDialogVisible5 = false">取 消</el-button>
                                 <el-button type="primary" @click="addEach55()">确 定</el-button>
@@ -564,11 +587,11 @@
                 </table>
               </div>
             </div>
-            
+
     </div>
-            
+
   </div>
-    
+
 </template>
 
 <script>
@@ -643,7 +666,6 @@
                   studyStartTime:'',
                   studyEndTime:'',
                   cycleTime:''
-                  
               },
               {
                   startTime:'',
@@ -1001,7 +1023,6 @@
 
           ],
         },
-        
         centerDialogVisible: false,
         centerDialogVisible2: false,
         centerDialogVisible3: false,
@@ -1016,6 +1037,18 @@
 
     },
     methods: {
+      // 添加成功后提示信息
+      addSuccess(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      // 添加失败提示信息
+      addDefeat(msg) {
+        this.$message.error(msg);
+      },
       //创建考试开始时间不能选择历史日期
       beginDate(){
         let self = this
@@ -1045,25 +1078,53 @@
       //    console.log("da")
         }
       //  console.log(this.form.date1.getDay())
-        
+
       },
       addEach1(index){
         this.courseIndex = index;
         this.courseIndexArr[index] = index;
         console.log(this.courseIndexArr)
       },
+      newCourseTable(form,courseD){
+          let course1 = {
+            startTime:form.date3,
+            endTime:form.date4,
+            teacher:form.teacher,
+            courseName:form.courseName,
+            courseAddress:form.courseAddress,
+          };
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            className: this.classGrade,
+            index: this.courseIndex,
+            courseDate:courseD,
+            date1:form.date1,
+            date2:form.date2,
+            cycleTime:form.cycleTime,
+            course: course1,
+          }
+        }).then((res) => {
+          let resData = res.data;
+          if (resData.code === 0) {
+              this.addSuccess('创建成功')
+          } else if (resData.code === 1) {
+            this.addSuccess('创建错误')
+          }
+        });
+      },
+
       cancel1(){
-        for(var i = 0; i < this.courseIndexArr.length; i++){
-          if(this.courseIndexArr[i] != -1){
-            if(this.allMyCourse.newCourse[i].startTime == '' ||
-               this.allMyCourse.newCourse[i].endTime == '' ||
-               this.allMyCourse.newCourse[i].teacher == '' ||
-               this.allMyCourse.newCourse[i].courseName == '' ||
-               this.allMyCourse.newCourse[i].courseAddress == '' ||
-               this.allMyCourse.newCourse[i].studyStartTime == '' ||
-               this.allMyCourse.newCourse[i].studyEndTime == '' ||
-               this.allMyCourse.newCourse[i].cycleTime == ''){
-                  this.courseIndexArr[i] = -1;
+        for(let i = 0; i < this.courseIndexArr.length; i++){
+          if(this.courseIndexArr[i] !== -1){
+            if(this.allMyCourse.newCourse[i].startTime === '' ||
+               this.allMyCourse.newCourse[i].endTime === '' ||
+               this.allMyCourse.newCourse[i].teacher === '' ||
+               this.allMyCourse.newCourse[i].courseName === '' ||
+               this.allMyCourse.newCourse[i].courseAddress === '' ||
+               this.allMyCourse.newCourse[i].studyStartTime === '' ||
+               this.allMyCourse.newCourse[i].studyEndTime === '' ||
+               this.allMyCourse.newCourse[i].cycleTime === ''){
+               this.courseIndexArr[i] = -1;
                }
             }
         }
@@ -1079,41 +1140,31 @@
         this.allMyCourse.newCourse[this.courseIndex].studyStartTime = this.form.date1;
         this.allMyCourse.newCourse[this.courseIndex].studyEndTime = this.form.date2;
         this.allMyCourse.newCourse[this.courseIndex].cycleTime = this.form.cycleTime;
-        if(this.allMyCourse.newCourse[this.courseIndex].startTime == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].endTime == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].teacher == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].courseName == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].courseAddress == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].studyStartTime == '' ||
-               this.allMyCourse.newCourse[this.courseIndex].studyEndTime == ''){
-                 this.$message({
-                    showClose: true,
-                    message: '信息不完整哦',
-                    type: 'error'
-                  });
-                  this.allMyCourse.newCourse[this.courseIndex].startTime = '';
-                  this.allMyCourse.newCourse[this.courseIndex].endTime = '';
-                  this.allMyCourse.newCourse[this.courseIndex].teacher = '';
-                  this.allMyCourse.newCourse[this.courseIndex].courseName = '';
-                  this.allMyCourse.newCourse[this.courseIndex].courseAddress = '';
-                  this.allMyCourse.newCourse[this.courseIndex].studyStartTime = '';
-                  this.allMyCourse.newCourse[this.courseIndex].studyEndTime = '';
-                  this.allMyCourse.newCourse[this.courseIndex].cycleTime = '';
-                  this.centerDialogVisible = true;
-               }else{
-                 this.centerDialogVisible = false;
-               }
-
-        axios.post('/teacherCMS/newCourseTable', {
-          data: {
-            userType: this.userType,
-            userName: this.username,
-            className: this.classGrade,
-            allMyCourse: this.allMyCourse,
-          }
-        }).then((res) => {
-          
-        });
+        if(this.allMyCourse.newCourse[this.courseIndex].startTime === '' ||
+           this.allMyCourse.newCourse[this.courseIndex].endTime === '' ||
+           this.allMyCourse.newCourse[this.courseIndex].teacher === '' ||
+           this.allMyCourse.newCourse[this.courseIndex].courseName === '' ||
+           this.allMyCourse.newCourse[this.courseIndex].courseAddress === '' ||
+           this.allMyCourse.newCourse[this.courseIndex].studyStartTime === '' ||
+           this.allMyCourse.newCourse[this.courseIndex].studyEndTime === ''){
+             this.$message({
+                showClose: true,
+                message: '信息不完整哦',
+                type: 'error'
+              });
+              this.allMyCourse.newCourse[this.courseIndex].startTime = '';
+              this.allMyCourse.newCourse[this.courseIndex].endTime = '';
+              this.allMyCourse.newCourse[this.courseIndex].teacher = '';
+              this.allMyCourse.newCourse[this.courseIndex].courseName = '';
+              this.allMyCourse.newCourse[this.courseIndex].courseAddress = '';
+              this.allMyCourse.newCourse[this.courseIndex].studyStartTime = '';
+              this.allMyCourse.newCourse[this.courseIndex].studyEndTime = '';
+              this.allMyCourse.newCourse[this.courseIndex].cycleTime = '';
+              this.centerDialogVisible = true;
+           }else{
+             this.centerDialogVisible = false;
+           }
+           this.newCourseTable(this.form,'newCourse');
       },
       addEach2(index){
         this.courseIndex2 = index;
@@ -1121,7 +1172,7 @@
         console.log(this.courseIndexArr2)
       },
       cancel2(){
-        for(var i = 0; i < this.courseIndexArr2.length; i++){
+        for(let i = 0; i < this.courseIndexArr2.length; i++){
           if(this.courseIndexArr2[i] != -1){
             if(this.allMyCourse.newCourse2[i].startTime == '' ||
                this.allMyCourse.newCourse2[i].endTime == '' ||
@@ -1171,16 +1222,7 @@
                }else{
                  this.centerDialogVisible2 = false;
                }
-        axios.post('/teacherCMS/newCourseTable', {
-          data: {
-            userType: this.userType,
-            userName: this.username,
-            className: this.classGrade,
-            allMyCourse: this.allMyCourse,
-          }
-        }).then((res) => {
-          
-        });
+        this.newCourseTable(this.form,'newCourse2');
       },
       addEach3(index){
         this.courseIndex3 = index;
@@ -1188,7 +1230,7 @@
         console.log(this.courseIndexArr3)
       },
       cancel3(){
-        for(var i = 0; i < this.courseIndexArr3.length; i++){
+        for(let i = 0; i < this.courseIndexArr3.length; i++){
           if(this.courseIndexArr3[i] != -1){
             if(this.allMyCourse.newCourse3[i].startTime == '' ||
                this.allMyCourse.newCourse3[i].endTime == '' ||
@@ -1238,16 +1280,7 @@
                }else{
                  this.centerDialogVisible3 = false;
                }
-        axios.post('/teacherCMS/newCourseTable', {
-          data: {
-            userType: this.userType,
-            userName: this.username,
-            className: this.classGrade,
-            allMyCourse: this.allMyCourse,
-          }
-        }).then((res) => {
-          
-        });
+        this.newCourseTable(this.form,'newCourse3');
       },
       addEach4(index){
         this.courseIndex4 = index;
@@ -1255,7 +1288,7 @@
         console.log(this.courseIndexArr4)
       },
       cancel4(){
-        for(var i = 0; i < this.courseIndexArr4.length; i++){
+        for(let i = 0; i < this.courseIndexArr4.length; i++){
           if(this.courseIndexArr4[i] != -1){
             if(this.allMyCourse.newCourse4[i].startTime == '' ||
                this.allMyCourse.newCourse4[i].endTime == '' ||
@@ -1305,16 +1338,7 @@
                }else{
                  this.centerDialogVisible4 = false;
                }
-        axios.post('/teacherCMS/newCourseTable', {
-          data: {
-            userType: this.userType,
-            userName: this.username,
-            className: this.classGrade,
-            allMyCourse: this.allMyCourse,
-          }
-        }).then((res) => {
-          
-        });
+        this.newCourseTable(this.form,'newCourse4');
       },
       addEach5(index){
         this.courseIndex5 = index;
@@ -1322,7 +1346,7 @@
         console.log(this.courseIndexArr5)
       },
       cancel5(){
-        for(var i = 0; i < this.courseIndexArr5.length; i++){
+        for(let i = 0; i < this.courseIndexArr5.length; i++){
           if(this.courseIndexArr5[i] != -1){
             if(this.allMyCourse.newCourse5[i].startTime == '' ||
                this.allMyCourse.newCourse5[i].endTime == '' ||
@@ -1372,18 +1396,9 @@
                }else{
                  this.centerDialogVisible5 = false;
                }
-        axios.post('/teacherCMS/newCourseTable', {
-          data: {
-            userType: this.userType,
-            userName: this.username,
-            className: this.classGrade,
-            allMyCourse: this.allMyCourse,
-          }
-        }).then((res) => {
-          
-        });
+        this.newCourseTable(this.form,'newCourse5');
       },
-      
+
     },
 
     components: {}
@@ -1498,5 +1513,11 @@
   .addTable .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+  .addTable .el-form--inline .el-form-item {
+     margin-right: 0;
+  }
+  .addTable .eachDataP .el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 190px;
   }
 </style>
