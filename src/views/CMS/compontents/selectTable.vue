@@ -28,7 +28,7 @@
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
-                <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse">
+                <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse">
                     <p>{{item3.startTime}}~{{item3.endTime}}</p>
                     <p>{{item3.teacher}}</p>
                     <p>{{item3.courseName}}</p>
@@ -47,7 +47,7 @@
             </tr>
             <tr>
               <td class="classDataP2" v-show = "course">2</td>
-              <td @click="dialogTableVisible = true" class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
+              <td @click="openDialog(item3, index3)" class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -56,7 +56,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">3</td>
-              <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse3">
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse3">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -65,7 +65,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">4</td>
-              <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse4">
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse4">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -74,7 +74,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">5</td>
-              <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse5">
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse5">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -85,13 +85,12 @@
         </div>
 
         <el-dialog title="考勤信息" :visible.sync="dialogTableVisible">
-          <el-table :data="gridData">
-            <el-table-column property="name" label="姓名" width="120"></el-table-column>
-            <el-table-column property="here" label="出勤"></el-table-column>
-            <el-table-column property="sick" label="请假"></el-table-column>
-            <el-table-column property="late" label="迟到"></el-table-column>
-            <el-table-column property="dispear" label="缺勤"></el-table-column>
-            <el-table-column property="lateTime" label="迟到总时间"></el-table-column>
+          <el-table :data="stateList" height="450">
+            <el-table-column property="stuName" label="姓名" width="120" fixed></el-table-column>
+            <el-table-column property="classGrade" label="班级" width="120" fixed></el-table-column>
+            <el-table-column property="courseDate" label="日期"></el-table-column>
+            <el-table-column property="courseName" label="课程名"></el-table-column>
+            <el-table-column property="state" label="考勤状态"></el-table-column>
           </el-table>
         </el-dialog>
 
@@ -123,7 +122,6 @@
           courseAddress:''
         },
         dialogTableVisible: false,
-
         canvasId: '付老师',
         type: 'pie',
         width: 100,
@@ -137,6 +135,13 @@
         options: {
             title: '本节考勤'
         },
+        classGrade: this.$store.state.classGrade,
+        courseName: "计算机原理",
+        courseDate: "2018-6-18",
+        teacher: "杜伟",
+        startTime: "9:00",
+        endTime: "10:00",
+        stateList: [],
 
       }
     },
@@ -147,19 +152,7 @@
     },
     methods: {
       //重置数据
-      cancel1(){
-        for(let i = 0; i < this.courseIndexArr1.length; i++){
-          if(this.courseIndexArr1[i] !== -1){
-            if(this.allMyCourse.newCourse5[i].startTime === '' ||
-              this.allMyCourse.newCourse5[i].endTime === '' ||
-              this.allMyCourse.newCourse5[i].teacher === '' ||
-              this.allMyCourse.newCourse5[i].courseName === '' ||
-              this.allMyCourse.newCourse5[i].courseAddress === ''){
-              this.courseIndexArr5[i] = -1;
-            }
-          }
-        }
-      },
+
       //点击上一个
       previous(){
         this.course = '';
@@ -177,9 +170,45 @@
         var res = core.getTomorrow(new Date(this.mondayDate));
         res = core.getMonday(new Date(res));
         res = moment(res).format("YYYY-MM-DD");
-        console.log(res)
+        console.log(res);
         this.getCourseTable(res)
       },
+      //显示考勤信息弹窗
+      openDialog(item, index){
+        this.stateList = [];
+        this.dialogTableVisible = true;
+        axios.post('/teacherCMS/getTimeSheet', {
+          data: {
+            courseName: item.courseName,
+            courseDate: this.weekDate[index],
+            teacher: item.teacher,
+            className: this.classGrade,
+            startTime: item.startTime,
+          }
+        }).then((res) => {
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            for (let i = 0; i < resData.stateList.length; i++) {
+              resData.stateList[i].teacher = item.teacher;
+              resData.stateList[i].classGrade = this.classGrade;
+              resData.stateList[i].courseName = item.courseName;
+              resData.stateList[i].courseDate = this.weekDate[index];
+              if (resData.stateList[i].state === 0) {
+                resData.stateList[i].state = '出勤';
+              } else if (resData.stateList[i].state === 1) {
+                resData.stateList[i].state = '缺勤';
+              } else if (resData.stateList[i].state === 2) {
+                resData.stateList[i].state = '请假';
+              } else if (resData.stateList[i].state === 3) {
+                resData.stateList[i].state = '迟到';
+              }
+            }
+            console.log(resData.stateList);
+            this.stateList = resData.stateList;
+          }
+        });
+      },
+
       //获取-课程表
       getCourseTable(resDate){
           axios.post('/teacherCMS/getCourseTable', {

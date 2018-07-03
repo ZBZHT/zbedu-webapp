@@ -4,7 +4,11 @@ const Schema = mongoose.Schema;
 module.exports = new Schema(
   {
     createDate: String,
-    courseDate: String,
+    courseDate: {
+      type: String,
+      unique: true,  //索引值唯一
+      required: true, //设定是否必填
+    },
     createName: String,
     className: String,
     teachList: Array,

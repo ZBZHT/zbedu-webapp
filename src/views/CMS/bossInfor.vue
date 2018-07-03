@@ -15,34 +15,84 @@
 
         </el-tab-pane>
         <el-tab-pane label="请假审批" name="second">
-          <el-table
-            :data="vacApprove"
-            stripe
-            style="width: 100%">
-            <el-table-column prop="name" label="请假人" width="100">
-            </el-table-column>
 
-            <el-table-column prop="date" label="请假时间" width="110">
-            </el-table-column>
+          <b-card no-body>
+            <b-tabs pills card vertical>
+              <b-tab title="待审核" active>
+                <div class="waitCheck">
+                  <el-table
+                    :data="leaveMsg"
+                    stripe
+                    style="width: 100%">
+                    <el-table-column prop="stuName" label="请假人" width="120">
+                    </el-table-column>
 
-            <el-table-column prop="courseName" label="课程" width="180">
-            </el-table-column>
+                    <el-table-column prop="date" label="请假时间" width="300">
+                    </el-table-column>
 
-            <el-table-column prop="teacher" label="授课教师" width="100">
-            </el-table-column>
+                    <el-table-column prop="courseName" label="课程">
+                    </el-table-column>
 
-            <el-table-column label="操作">
-              <template slot-scope="scope">
-                <el-button
-                  size="mini"
-                  @click="ratify(scope.$index, scope.row)">批准</el-button>
-                <el-button
-                  size="mini"
-                  type="danger"
-                  @click="prohibit(scope.$index, scope.row)">不批准</el-button>
-              </template>
-            </el-table-column>
-          </el-table>
+                    <el-table-column prop="className" label="班级" width="120">
+                    </el-table-column>
+
+                    <el-table-column prop="reason" label="请假事由">
+                    </el-table-column>
+
+                    <el-table-column label="操作" width="180">
+                      <template slot-scope="scope">
+                        <el-button
+                          size="mini"
+                          @click="ratify(scope.$index, scope.row)">批准</el-button>
+                        <el-button
+                          size="mini"
+                          type="danger"
+                          @click="prohibit(scope.$index, scope.row)">不批准</el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
+
+
+              </b-tab>
+              <b-tab title="已审核">
+                <div class="waitCheck">
+                  <el-table
+                    :data="leaveMsg2"
+                    stripe
+                    style="width: 100%">
+                    <el-table-column prop="stuName" label="请假人" width="120">
+                    </el-table-column>
+
+                    <el-table-column prop="date" label="请假时间" width="300">
+                    </el-table-column>
+
+                    <el-table-column prop="courseName" label="课程">
+                    </el-table-column>
+
+                    <el-table-column prop="className" label="班级" width="100">
+                    </el-table-column>
+
+                    <el-table-column prop="reason" label="请假事由">
+                    </el-table-column>
+
+                    <el-table-column prop="state" label="请假状态" width="100">
+                    </el-table-column>
+
+                    <el-table-column label="操作" width="100">
+                      <template slot-scope="scope">
+                        <el-button
+                          size="mini"
+                          @click="ratify(scope.$index, scope.row)" v-show="leaveMsg2[scope.$index].state == '未批准'">批准</el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </div>
+
+
+              </b-tab>
+            </b-tabs>
+          </b-card>
 
         </el-tab-pane>
       </el-tabs>
@@ -76,40 +126,19 @@
         },
         mondayDate:'',
         weekDate:[],
-        course: {},
         showThree:false,
-        vacApprove: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          courseName: '新能源电池技术',
-          teacher: "付老师",
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          courseName: '新能源电池技术',
-          teacher: "付老师",
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          courseName: '新能源电池技术',
-          teacher: "付老师",
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          courseName: '新能源电池技术',
-          teacher: "付老师",
-        }],
+        leaveMsg: [],
+        leaveMsg2: [],
         course: [],
-
       }
     },
     computed: {
 
     },
     mounted() {
-        let date = moment().format("YYYY-MM-DD");
-        this.getCourseTable(date)
-        this.getClassList();
+      let date = moment().format("YYYY-MM-DD");
+      this.getCourseTable(date);
+      this.getClassList();
 
     },
     methods: {
@@ -117,7 +146,7 @@
       showThreeTable(){
         this.course = '';
         this.$store.commit('getClassGrade',this.classGrade);
-        if(this.classGrade != ''){
+        if(this.classGrade !== ''){
           this.showThree = true;
         }else{
         }
@@ -125,7 +154,8 @@
         resDate = moment(resDate).format("YYYY-MM-DD");
         //console.log(resDate)
         //console.log(this.classGrade);
-        this.getCourseTable(resDate)
+        this.getCourseTable(resDate);
+        this.getLeaveMsg();
       },
       //获取-班级信息
       getClassList() {
@@ -139,8 +169,6 @@
           this.classM = res.data.classMsg;
         });
       },
-      
-      //编辑
 
       //获取-课程表
       getCourseTable(resDate){
@@ -156,13 +184,55 @@
             this.course = resData.course[0];
             this.mondayDate = res.data.result.courseDate;
           }
-          this.mondayDate = res.data.result.courseDate;
           this.weekDate = core.getDayAll(new Date(this.mondayDate));
-        //  console.log(this.weekDate)
+          //  console.log(this.weekDate)
         });
       },
+      //获取请假信息
+      getLeaveMsg(){
+        axios.post('/teacherCMS/getLeaveMsg', {
+          data: {
+            className: this.classGrade,
+          }
+        }).then((res) => {
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            for (let i = 0; i < resData.length; i++) {
+              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + '~' + resData[i].endDate + ',' + resData[i].endTime
+              if (resData[i].state === 1) {
+                this.leaveMsg.push(resData[i])
+              } else {
+                if (resData[i].state === 0) {
+                  resData[i].state = '已批准'
+                } else if (resData[i].state === 2) {
+                  resData[i].state = '未批准'
+                }
+                this.leaveMsg2.push(resData[i])
+              }
+            }
+            console.log(this.leaveMsg);
+            console.log(this.leaveMsg2);
+          }
+        });
+      },
+      //批准-不批准
+      alterLeaveState(row, state){
+        console.log(row);
+        console.log(state);
+        /*axios.post('/teacherCMS/alterLeaveState', {
+         data: {
+         className: this.classGrade,
+         }
+         }).then((res) => {
+         let resData = res.data;
+         console.log(resData);
+
+         });*/
+      },
+      //批准
       ratify(index, row) {
-        console.log(index, row);
+        //console.log(index, row);
+        this.alterLeaveState(row, 0)
       },
       prohibit(index, row) {
         console.log(index, row);
@@ -175,7 +245,7 @@
         console.log(index, row);
       }
     },
-    
+
     components: {selectTable}
   }
 </script>
@@ -210,7 +280,47 @@
   .bossInfor .el-tabs__header {
     margin: 0 0 10px;
   }
-
+  .bossInfor .waitCheck{
+    position:absolute;
+    top:0;
+    left:10px;
+    width:100%;
+  }
+  .bossInfor .checkButtons{
+    width:80px;
+  }
+  .bossInfor .card {
+    margin-top: 3px;
+    border: none;
+  }
+  .bossInfor .card-header {
+    background-color: #d2d2d2;
+  }
+  .bossInfor .col-auto {
+    height: 38rem;
+    margin-top: 2.5rem;
+  }
+  .bossInfor .nav-pills .nav-link {
+    padding: 0.3rem 4.5rem;
+    border-bottom: 2px solid white;
+    border-radius: 0;
+  }
+  .bossInfor .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    background-color: #6a1518;
+  }
+  .bossInfor .nav-pills .nav-link.active, .nav-pills .show > a {
+    color: white;
+  }
+  .bossInfor a {
+    color: #212529;
+  }
+  .bossInfor .card-header:first-child {
+    padding: 0;
+    margin-top:-40px;
+  }
+  .bossInfor #__BVID__11__BV_tab_container_ {
+    min-width: 70%;
+  }
 
 
 </style>

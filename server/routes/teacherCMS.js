@@ -13,6 +13,8 @@ const Question = require('../app/models/Question');
 const TechCosCou = require('../app/models/TechCosCou');
 const CmsLabelTree = require('../app/models/CmsLabelTree');
 const CourseTable = require('../app/models/CourseTable');
+const TimeSheet = require('../app/models/TimeSheet');
+const StuLeave = require('../app/models/StuLeave');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
 const uploadCoursePath = "../public/resource/我的课堂/";
@@ -2244,9 +2246,9 @@ function alterTable1(course1) {
   }
 }
 //创建-课程表
-  router.post('/newCourseTable', function (req, res) {
+router.post('/newCourseTable', function (req, res) {
     let reqData = req.body.data;
-    console.log(reqData);
+    //console.log(reqData);
     let weekAll = core.getWeekAll(reqData.date1, reqData.date2);
     let reqSess = req.session.users;
     let userType = reqSess.userType;
@@ -2313,28 +2315,78 @@ function alterTable1(course1) {
     }
   });
 //修改-课程表
-  router.post('/alterCourseTable', function (req, res) {
-    let reqData = req.body.data.result;
-    let userType = req.session.users.userType;
-    console.log(reqData);
-    if (userType === 'EA' || userType === 'SA') {
-      CourseTable.findOneAndUpdate({
-        courseDate: "2018-6-19",
-        className: "镇江培训"
-      }, {
-        createDate: new Date(),
-        //teachList: reqData.teachList,
-        course: reqData.course,
-      }, function (err) {
-        if (err) {
-          console.log(err);
-        } else {
-          //console.log('修改成功userID');
-          res.status(200).send({code: 0, Msg: '更新成功',});
-        }
-      });
+/*router.post('/alterCourseTable', function (req, res) {
+  let reqData = req.body.data.result;
+  let userType = req.session.users.userType;
+  console.log(reqData);
+  if (userType === 'EA' || userType === 'SA') {
+    CourseTable.findOneAndUpdate({
+      courseDate: "2018-6-19",
+      className: "镇江培训"
+    }, {
+      createDate: new Date(),
+      //teachList: reqData.teachList,
+      course: reqData.course,
+    }, function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        //console.log('修改成功userID');
+        res.status(200).send({code: 0, Msg: '更新成功',});
+      }
+    });
+  }
+});*/
+//老师获取学生考勤
+router.post('/getTimeSheet', function (req, res) {
+  let reqData = req.body.data;
+  let userType = req.session.users.userType;
+  //console.log(reqData);
+  if (userType === 'EA' || userType === 'T' || userType === 'SA') {
+    TimeSheet.findOne({
+      courseName: reqData.courseName,
+      courseDate: reqData.courseDate,
+      teacher: reqData.teacher,
+      className: reqData.className,
+      startTime: reqData.startTime,
+    }).then(function (timeSheet) {
+      if (timeSheet !== null) {
+        res.status(200).send({code: 0, result: timeSheet, Msg: '返回成功',});
+      } else {
+        res.status(200).send({code: 1, Msg: '查找失败',});
+      }
+    });
+  }
+});
+//获取请假信息
+router.post('/getLeaveMsg', function (req, res) {
+  let reqData = req.body.data;
+  console.log(reqData);
+  StuLeave.find({
+    className: reqData.className,
+  }).then(function (stuLeave) {
+    console.log(stuLeave);
+    if (stuLeave.length !== 0) {
+      res.status(200).send({code: 0, result: stuLeave, Msg: '返回成功',});
+    } else {
+      res.status(200).send({code: 1, Msg: '查找失败',});
     }
   });
+});
+//批准请假
+router.post('/alterLeaveState', function (req, res) {
+  let reqData = req.body.data;
+  console.log(reqData);
+  StuLeave.find({
+    className: reqData.className,
+  }).then(function (stuLeave) {
+    console.log(stuLeave);
+    if (stuLeave.length !== 0) {
+      res.status(200).send({code: 0, result: stuLeave, Msg: '返回成功',});
+    } else {
+      res.status(200).send({code: 1, Msg: '查找失败',});
+    }
+  });
+});
 
-
-  module.exports = router;
+module.exports = router;

@@ -7,7 +7,6 @@ import courseIndex from '@/views/courseIndex'
 import testCenter from '@/views/testCenter'
 import exerciseCenter from '@/views/exerciseCenter'
 import competitionCenter from '@/views/competitionCenter'
-import sourceCenter from '@/views/sourceCenter'
 import test from '@/views/test'
 import realyTest from '@/views/realyTest'
 import testExercise from '@/views/testExercise'
@@ -86,15 +85,6 @@ const routes = [
         title: 'zbt大赛中心'
       },
       component:competitionCenter
-    },
-    {
-      path:'/sourceCenter',
-      name:'sourceCenter',
-      meta:{
-        require:true,
-        title: 'zbt资源中心'
-      },
-      component:sourceCenter
     },
     {
       path:'/test',
