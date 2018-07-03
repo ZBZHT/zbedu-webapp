@@ -25,252 +25,252 @@ const os = require('os');
 let courseP;
 router.use(function (req, res, next) {
   courseP = [{
-        "newCourse": [
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          }
-        ],
-        "newCourse2": [
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          }
-        ],
-        "newCourse3": [
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          }
-        ],
-        "newCourse4": [
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          }
-        ],
-        "newCourse5": [
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          },
-          {
-            "courseTime": "",
-            "teacher": "",
-            "courseName": "",
-            "courseAddress": ""
-          }
-        ]
-      }];
+    "newCourse": [
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      }
+    ],
+    "newCourse2": [
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      }
+    ],
+    "newCourse3": [
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      }
+    ],
+    "newCourse4": [
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      }
+    ],
+    "newCourse5": [
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      },
+      {
+        "courseTime": "",
+        "teacher": "",
+        "courseName": "",
+        "courseAddress": ""
+      }
+    ]
+  }];
   next();
 });
 
 //删除数组中指定元素  方法
-  function removeChildren(arr, id) {
-    let result = [];
-    for (let i = 0; i < arr.length; i++) {
-      //console.log(arr[i].id);
-      if (arr[i].id != id) {
-        result.push(arr[i]);
-      }
+function removeChildren(arr, id) {
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    //console.log(arr[i].id);
+    if (arr[i].id != id) {
+      result.push(arr[i]);
     }
-    return result;
   }
+  return result;
+}
 
-  function removeNode(arr, id) {
-    let result = [];
-    for (let i = 0; i < arr.length; i++) {
-      //console.log(arr[i].id);
-      if (arr[i].id != id) {
-        result.push(arr[i]);
-      }
+function removeNode(arr, id) {
+  let result = [];
+  for (let i = 0; i < arr.length; i++) {
+    //console.log(arr[i].id);
+    if (arr[i].id != id) {
+      result.push(arr[i]);
     }
-    return result;
   }
+  return result;
+}
 
 /* 获取目录tree */
 router.post('/labelTree', function (req, res) {
@@ -287,7 +287,7 @@ router.post('/labelTree', function (req, res) {
         labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
         labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理
         labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
-          res.status(200).send({ result: labelTree });
+        res.status(200).send({result: labelTree});
       });
     } else if (reqBody.userType === 'T') {
       CmsLabelTree.findOne({
@@ -302,7 +302,7 @@ router.post('/labelTree', function (req, res) {
         labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理
         labelTree[1].children = children;
         labelTree[2].children = children2;
-        res.status(200).send({ result: labelTree });
+        res.status(200).send({result: labelTree});
       });
     } else if (reqBody.userType === 'SA' || reqBody.userType === 'EA') {
       CmsLabelTree.findOne({
@@ -312,7 +312,7 @@ router.post('/labelTree', function (req, res) {
         labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理
         labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
 
-          res.status(200).send({ result: labelTree });
+        res.status(200).send({result: labelTree});
       });
     } else {
       res.status(404).send({
@@ -338,7 +338,7 @@ router.post('/getUserData', function (req, res) {
       //console.log(userType);
       if (userType.userType == 'SA' || userType.userType == 'EA') {
         Teacher.find({
-          userType: { "$in": ['EA','T'] }
+          userType: {"$in": ['EA', 'T']}
         }).then(function (teacher) {
           if (teacher) {
             Student.find().then(function (student) {
@@ -380,27 +380,27 @@ router.post('/delUserData', function (req, res) {
           Student.remove({userID: reqData.studentSelection[i].userID}, function (err) {
             if (err) {
               console.log(err);
-              res.status(200).send({code: 1, msg:'删除失败'});
+              res.status(200).send({code: 1, msg: '删除失败'});
             } else {
               //console.log('删除成功');
             }
           })
         }
-        res.status(200).send({code: 0, msg:'删除成功'});
+        res.status(200).send({code: 0, msg: '删除成功'});
       } else if (reqData.teacherSelection.length !== 0) {
         for (let i = 0; i < reqData.teacherSelection.length; i++) {
           Teacher.remove({userID: reqData.teacherSelection[i].userID}, function (err) {
             if (err) {
               console.log(err);
-              res.status(200).send({code: 1, msg:'删除失败'});
+              res.status(200).send({code: 1, msg: '删除失败'});
             } else {
               //console.log('删除成功');
             }
           })
         }
-        res.status(200).send({code: 0, msg:'删除成功'});
+        res.status(200).send({code: 0, msg: '删除成功'});
       }
-    }else {
+    } else {
       res.status(404).send({
         Msg: '该用户无权限',
       });
@@ -436,20 +436,20 @@ router.post('/addStu', function (req, res) {
         if (err) {
           let errMsg = err.message;
           if ((errMsg.search(addUsers.userID) !== -1) === true) {
-            res.status(200).send({ code: 1, msg: '学号重复，请核对！'});
+            res.status(200).send({code: 1, msg: '学号重复，请核对！'});
           }
           if ((errMsg.search(addUsers.IDNo) !== -1) === true) {
-            res.status(200).send({ code: 1, msg: '身份证号重复，请核对！'});
+            res.status(200).send({code: 1, msg: '身份证号重复，请核对！'});
           }
           if ((errMsg.search(addUsers.MoNo) !== -1) === true) {
-            res.status(200).send({ code: 1, msg: '手机号码重复，请核对！'});
+            res.status(200).send({code: 1, msg: '手机号码重复，请核对！'});
           }
         } else {
           console.log('Save success');
-          res.status(200).send({ code: 0, msg: '学生信息保存成功'});
+          res.status(200).send({code: 0, msg: '学生信息保存成功'});
         }
       });
-    }else {
+    } else {
       res.status(404).send({
         Msg: '用户无添加权限',
         success: 1,
@@ -474,7 +474,7 @@ router.post('/addTeach', function (req, res) {
     if (reqData.userType == 'SA' || reqData.userType == 'EA') {
       Teacher.find().then(function (idArr) {
         if (idArr.length !== 0) {
-          for (let i=0; i<idArr.length; i++) {
+          for (let i = 0; i < idArr.length; i++) {
             EE.push(idArr[i].userID)
           }
           ID = (Math.max.apply(null, EE)) + 1;
@@ -495,18 +495,18 @@ router.post('/addTeach', function (req, res) {
           if (err) {
             let errMsg = err.message;
             if ((errMsg.search(addUsers.IDNo) !== -1) === true) {
-              res.status(200).send({ code: 1, msg: '身份证号重复，请核对！'});
+              res.status(200).send({code: 1, msg: '身份证号重复，请核对！'});
             }
             if ((errMsg.search(addUsers.MoNo) !== -1) === true) {
-              res.status(200).send({ code: 1, msg: '手机号码重复，请核对！'});
+              res.status(200).send({code: 1, msg: '手机号码重复，请核对！'});
             }
           } else {
             //console.log('Save success');
-            res.status(200).send({ code: 0, msg: '教师信息保存成功'});
+            res.status(200).send({code: 0, msg: '教师信息保存成功'});
           }
         });
       });
-    }else {
+    } else {
       res.status(404).send({
         Msg: '用户无添加权限',
         success: 1,
@@ -521,7 +521,7 @@ router.post('/addTeach', function (req, res) {
 });
 
 //Excel导入用户
-router.post('/addExcelUsers', function(req, res) {
+router.post('/addExcelUsers', function (req, res) {
   try {
     let form = new formidable.IncomingForm();
     form.uploadDir = uploadsPath;//设置文件上传存放地址
@@ -543,10 +543,10 @@ router.post('/addExcelUsers', function(req, res) {
         xlsx2j({
           input: newPath,
           output: newPath + "-output.json"
-        }, function(err, result) {
-          if(err) {
+        }, function (err, result) {
+          if (err) {
             console(err);
-          }else {
+          } else {
             //console.log(result);
             if (result) {
               //格式化数据
@@ -569,7 +569,7 @@ router.post('/addExcelUsers', function(req, res) {
                       result[i].userType = 'S';
                     } else if (result[i].userType === '老师') {
                       result[i].userType = 'T';
-                    }else if (result[i].userType === '教务管理') {
+                    } else if (result[i].userType === '教务管理') {
                       result[i].userType = 'EA';
                     }
 
@@ -633,7 +633,7 @@ router.post('/addExcelUsers', function(req, res) {
                   })
 
                   .then(data => {
-                    res.status(200).send({ code: 0, msg: '学生信息保存成功' });
+                    res.status(200).send({code: 0, msg: '学生信息保存成功'});
                   });
 
               }
@@ -655,67 +655,67 @@ router.post('/addExcelUsers', function(req, res) {
 
 //更新用户信息
 router.post('/updateUser', function (req, res) {
-    let reqData = req.body.data;
-    let reqUserType = reqData.userType;
-    let reqUser = reqData.addUser;
-    let p1 = new Promise((resolve, reject) => {
-      if (reqUserType === 'SA' || reqUserType === 'EA') {
-        resolve('成功了1')
-      } else {
-        res.status(200).send({ code:1, Msg: '未登录或者该用户无权限', });
-      }
-    });
+  let reqData = req.body.data;
+  let reqUserType = reqData.userType;
+  let reqUser = reqData.addUser;
+  let p1 = new Promise((resolve, reject) => {
+    if (reqUserType === 'SA' || reqUserType === 'EA') {
+      resolve('成功了1')
+    } else {
+      res.status(200).send({code: 1, Msg: '未登录或者该用户无权限',});
+    }
+  });
 
-    Promise.all([p1]).then((result) => {
-      //console.log(result);
+  Promise.all([p1]).then((result) => {
+    //console.log(result);
+    //console.log(reqUser);
+    if (reqUser.userType === 'S' || reqUser.userType === 'O') {
+      Student.findOneAndUpdate({
+        userID: reqUser.userID
+      }, {
+        user: reqUser.user,
+        MoNo: reqUser.MoNo,
+        IDNo: reqUser.IDNo,
+        userType: reqUser.userType,
+        gender: reqUser.gender,
+        AdmDate: reqUser.AdmDate,
+        major: reqUser.major,
+        classGrade: reqUser.classGrade
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '更新失败',});
+        } else {
+          //console.log('修改成功IDNo');
+          res.status(200).send({code: 0, Msg: '更新成功',});
+        }
+      });
+
+    } else if (reqUser.userType === 'EA' || reqUser.userType === 'T') {
       //console.log(reqUser);
-      if (reqUser.userType === 'S' || reqUser.userType === 'O') {
-        Student.findOneAndUpdate({
-          userID: reqUser.userID
-        }, {
-          user: reqUser.user,
-          MoNo: reqUser.MoNo,
-          IDNo: reqUser.IDNo,
-          userType: reqUser.userType,
-          gender: reqUser.gender,
-          AdmDate: reqUser.AdmDate,
-          major: reqUser.major,
-          classGrade: reqUser.classGrade
-        }, function (err) {
-          if (err) {
-            console.log(err);
-            res.status(200).send({code:1, Msg: '更新失败', });
-          } else {
-            //console.log('修改成功IDNo');
-            res.status(200).send({code:0, Msg: '更新成功', });
-          }
-        });
-
-      } else if (reqUser.userType === 'EA' || reqUser.userType === 'T') {
-        //console.log(reqUser);
-        Teacher.findOneAndUpdate({
-          userID: reqUser.userID
-        }, {
-          user: reqUser.user,
-          //pwd: reqUser.pwd,
-          IDNo: reqUser.IDNo,
-          MoNo: reqUser.MoNo,
-          userType: reqUser.userType,
-          gender: reqUser.gender,
-        }, function (err) {
-          if (err) {
-            console.log(err);
-            //查找IDNo来更新数据
-          } else {
-            //console.log('修改成功userID');
-            res.status(200).send({ code:0, Msg: '更新成功', });
-          }
-        });
-      }
-    }).catch((error) => {
-      console.log(error);
-      res.status(200).send({ code:0, Msg: '修改出错', });
-    });
+      Teacher.findOneAndUpdate({
+        userID: reqUser.userID
+      }, {
+        user: reqUser.user,
+        //pwd: reqUser.pwd,
+        IDNo: reqUser.IDNo,
+        MoNo: reqUser.MoNo,
+        userType: reqUser.userType,
+        gender: reqUser.gender,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          //查找IDNo来更新数据
+        } else {
+          //console.log('修改成功userID');
+          res.status(200).send({code: 0, Msg: '更新成功',});
+        }
+      });
+    }
+  }).catch((error) => {
+    console.log(error);
+    res.status(200).send({code: 0, Msg: '修改出错',});
+  });
 });
 
 //修改密码
@@ -730,10 +730,10 @@ router.post('/updatePass', function (req, res) {
       }, function (err) {
         if (err) {
           console.log(err);
-          res.status(404).send({ code: 1, Msg: '更新失败', });
+          res.status(404).send({code: 1, Msg: '更新失败',});
         } else {
           console.log('密码更新成功');
-          res.status(200).send({ code: 0, Msg: '更新成功', });
+          res.status(200).send({code: 0, Msg: '更新成功',});
         }
       });
     } else if (reqData.userType == 'EA' || reqData.userType == 'T' || reqData.userType == 'SA') {
@@ -744,10 +744,10 @@ router.post('/updatePass', function (req, res) {
       }, function (err) {
         if (err) {
           console.log(err);
-          res.status(404).send({ code: 1, Msg: '更新失败', });
+          res.status(404).send({code: 1, Msg: '更新失败',});
         } else {
           console.log('密码更新成功');
-          res.status(200).send({ code: 0, Msg: '更新成功', });
+          res.status(200).send({code: 0, Msg: '更新成功',});
         }
       });
     }
@@ -771,10 +771,10 @@ router.post('/updateMoNo', function (req, res) {
       }, function (err) {
         if (err) {
           console.log(err);
-          res.status(404).send({ code: 1, Msg: '更新失败', });
+          res.status(404).send({code: 1, Msg: '更新失败',});
         } else {
           console.log('手机号更新成功');
-          res.status(200).send({ code: 0, Msg: '更新成功', });
+          res.status(200).send({code: 0, Msg: '更新成功',});
         }
       });
     } else if (reqData.userType == 'EA' || reqData.userType == 'T' || reqData.userType == 'SA') {
@@ -785,10 +785,10 @@ router.post('/updateMoNo', function (req, res) {
       }, function (err) {
         if (err) {
           console.log(err);
-          res.status(404).send({ code: 1, Msg: '更新失败', });
+          res.status(404).send({code: 1, Msg: '更新失败',});
         } else {
           console.log('手机号更新成功');
-          res.status(200).send({ code: 0, Msg: '更新成功', });
+          res.status(200).send({code: 0, Msg: '更新成功',});
         }
       });
     }
@@ -813,7 +813,7 @@ router.post('/getMyMsg', function (req, res) {
             userInfo: users
           });
         } else {
-          res.status(404).send({ code: 0 });
+          res.status(404).send({code: 0});
         }
       });
     } else if (reqD.userType === 'T' || reqD.userType === 'EA' || reqD.userType === 'SA') {
@@ -825,7 +825,7 @@ router.post('/getMyMsg', function (req, res) {
             userInfo: users
           });
         } else {
-          res.status(404).send({ code: 0 });
+          res.status(404).send({code: 0});
         }
       });
     }
@@ -842,8 +842,7 @@ router.get('/getAllTest', function (req, res) {
   let reqQ = req.query.userType;
   //console.log(reqQ);
   if (reqQ === 'T' || reqQ === 'EA' || reqQ === 'SA') {
-    Question.find({
-    }).then(function (result) {
+    Question.find({}).then(function (result) {
       res.status(200).send(result);
     });
   }
@@ -867,7 +866,7 @@ router.post('/delCheckedQ', function (req, res) {
       res.status(200).send({
         success: 0,
       });
-    }else {
+    } else {
       res.status(404).send({
         Msg: '该用户无权限',
       });
@@ -881,7 +880,7 @@ router.post('/delCheckedQ', function (req, res) {
 });
 
 //Excel导入考试题
-router.post('/addExcelTest', function(req, res) {
+router.post('/addExcelTest', function (req, res) {
 
   let form = new formidable.IncomingForm();
   form.uploadDir = addTestPath;//设置文件上传存放地址
@@ -902,10 +901,10 @@ router.post('/addExcelTest', function(req, res) {
       xlsx2j({
         input: newPath,
         output: newPath + "-output.json"
-      }, function(err, jsonResult) {
-        if(err) {
+      }, function (err, jsonResult) {
+        if (err) {
           console(err);
-        }else {
+        } else {
           if (jsonResult) {
             //格式化数据
             let numID = '';
@@ -928,14 +927,14 @@ router.post('/addExcelTest', function(req, res) {
               title6: '',
               forId: [],
             };
-            Question.find().sort({num:-1}).then(function (ques) {
+            Question.find().sort({num: -1}).then(function (ques) {
               if (ques.length != 0) {
                 numID = Number(ques[0].num);
               } else {
                 numID = 1;
               }
             }).then(function () {
-              for (let i=0; i<jsonResult.length; i++) {
+              for (let i = 0; i < jsonResult.length; i++) {
                 if (jsonResult[i].desc != '') {
                   numID = Number(numID) + 1;
                   arrSingle.num = numID;
@@ -1047,15 +1046,15 @@ router.post('/addExcelTest', function(req, res) {
               }
             }).then(function () {
               //console.log(result);
-              for (let i=0; i<result.length; i++) {
+              for (let i = 0; i < result.length; i++) {
                 if (result[i].desc !== '') {
                   let question = new Question({
                     num: result[i].num,
                     desc: result[i].desc,
                     options: result[i].options,
-                    value:result[i].value,
-                    name:result[i].name,
-                    forId:result[i].forId,
+                    value: result[i].value,
+                    name: result[i].name,
+                    forId: result[i].forId,
                     answer: result[i].answer,
                     genre: result[i].genre,
                     difficulty: result[0].difficulty,
@@ -1070,20 +1069,20 @@ router.post('/addExcelTest', function(req, res) {
                   });
                   //保存到数据库
                   question.save(function (err) {
-                     if (err) {
-                     console.log(err);
-                     } else {
-                     console.log('question Save success');
-                     }
+                    if (err) {
+                      console.log(err);
+                    } else {
+                      console.log('question Save success');
+                    }
                   });
                 }
               }
             }).then(function () {
-              res.status(200).send({ code: 0 });
+              res.status(200).send({code: 0});
               console.log('question Save success all')
             })
           } else {
-            res.status(404).send({ code: 1 });
+            res.status(404).send({code: 1});
             console.log('文件读取错误');
           }
         }
@@ -1102,9 +1101,9 @@ router.post('/getTeacherCustomCourse', function (req, res) {
         fs.mkdirSync(uploadCoursePath + username);
       }
       TechCosCou.find({
-        userID : reqData.userID,
+        userID: reqData.userID,
       }).then(function (techCosCou) {
-        if (techCosCou.length !==0) {
+        if (techCosCou.length !== 0) {
           let lab = techCosCou[0].tab;
           //console.log(techCosCou[0].tab);
           if (lab !== 0) {
@@ -1128,7 +1127,7 @@ router.post('/getTeacherCustomCourse', function (req, res) {
               }
             }
           }
-          res.status(200).send({ techCosCou: techCosCou, });
+          res.status(200).send({techCosCou: techCosCou,});
         } else if (techCosCou.length === 0) {
           let techCosCou = new TechCosCou({
             userID: reqData.userID,
@@ -1141,18 +1140,18 @@ router.post('/getTeacherCustomCourse', function (req, res) {
             } else {
               console.log('Save success');
               TechCosCou.find({
-                userID : reqData.userID,
+                userID: reqData.userID,
               }).then(function (techCosCou) {
-                res.status(200).send({ techCosCou: techCosCou, });
+                res.status(200).send({techCosCou: techCosCou,});
               });
             }
           });
         } else {
-          res.status(404).send({ Msg: '无法获取请求数据', code: 1, });
+          res.status(404).send({Msg: '无法获取请求数据', code: 1,});
         }
 
       });
-    }else {
+    } else {
       res.status(404).send({
         Msg: '用户无添加权限',
         code: 1,
@@ -1175,13 +1174,13 @@ router.post('/addCustomCourse', function (req, res) {
     if (reqData.userType == 'SA' || reqData.userType == 'EA' || reqData.userType == 'T') {
       //console.log(reqData.tab);
       TechCosCou.findOneAndUpdate({
-        userID : reqData.userID,
+        userID: reqData.userID,
       }, {
         tab: reqData.tab,
       }, function (err) {
         if (err) {
           console.log(err);
-          res.status(404).send({ Msg: '更新失败', code: 1, });
+          res.status(404).send({Msg: '更新失败', code: 1,});
         } else {
           console.log('修改成功course');
           for (i = 0; i < reqData.tab.length; i++) {
@@ -1192,7 +1191,7 @@ router.post('/addCustomCourse', function (req, res) {
               }
             }
           }
-          res.status(200).send({ Msg: '更新成功', code: 0, });
+          res.status(200).send({Msg: '更新成功', code: 0,});
         }
       });
     } else {
@@ -1210,7 +1209,7 @@ router.post('/addCustomCourse', function (req, res) {
 });
 
 //教师上传课件
-router.post('/uploadCourse', function(req, res) {
+router.post('/uploadCourse', function (req, res) {
   let reqUserType = req.session.users.userType;
   let username = req.session.users.username;
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
@@ -1228,52 +1227,52 @@ router.post('/uploadCourse', function(req, res) {
         let oldPath = files.file.path;
         let newPath = '';
         arr = fileName.split(".");
-        if (arr[arr.length-1] === 'pdf' || arr[arr.length-1] === 'ppt') {
+        if (arr[arr.length - 1] === 'pdf' || arr[arr.length - 1] === 'ppt') {
           console.log('pdf');
           //pdf/ppt的处理
-          newPath = uploadCoursePath + username +'/' + fileName;
+          newPath = uploadCoursePath + username + '/' + fileName;
           fs.rename(oldPath, newPath, function (err) {
             if (err) {
               console.log('改名失败');
-              res.status(404).send({ Msg : '改名失败', code : 1, });
+              res.status(404).send({Msg: '改名失败', code: 1,});
             }
-            fs.stat(newPath, function(err,stats){  //获取文件信息
-              if(err){
+            fs.stat(newPath, function (err, stats) {  //获取文件信息
+              if (err) {
                 return err;
               }
-              res.status(200).send({ Msg : '上传成功', code : 0, });
+              res.status(200).send({Msg: '上传成功', code: 0,});
             });
           });
-        //是微课 / 动画的处理
+          //是微课 / 动画的处理
         } else {
           console.log('动画');
-          newPath = uploadCoursePath + username +'/' + fileName;
+          newPath = uploadCoursePath + username + '/' + fileName;
           //console.log(newPath);
           fs.rename(oldPath, newPath, function (err) {
             if (err) {
               console.log('改名失败');
-              res.status(404).send({ Msg : '改名失败', code : 1, });
+              res.status(404).send({Msg: '改名失败', code: 1,});
             }
-            fs.stat(newPath, function(err,stats){  //获取文件信息
-              if(err){
+            fs.stat(newPath, function (err, stats) {  //获取文件信息
+              if (err) {
                 return err;
               }
-              res.status(200).send({ Msg : '上传成功', code : 0, });
+              res.status(200).send({Msg: '上传成功', code: 0,});
             });
           });
         }
 
       } else {
-        res.status(404).send({ Msg : '上传的文件名为空', code : 1, });
+        res.status(404).send({Msg: '上传的文件名为空', code: 1,});
       }
     });
   } else {
-    res.status(404).send({ Msg : '用户无权限或未登录', code : 1, });
+    res.status(404).send({Msg: '用户无权限或未登录', code: 1,});
   }
 });
 
 //教师上传课件--成功后处理文件
-router.post('/uploadCourseSec', function(req, res) {
+router.post('/uploadCourseSec', function (req, res) {
   let reqData = req.body.data;
   let newFileName1 = reqData.newFileName1;
   let newFileName2 = reqData.newFileName2;
@@ -1281,22 +1280,22 @@ router.post('/uploadCourseSec', function(req, res) {
   let fileType = reqData.fileType;
   let reqUserType = req.session.users.userType;
   let username = req.session.users.username;
-  let sysType=os.type();
+  let sysType = os.type();
   let newPath = '';
   //console.log(fileType);
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
 
     let arr = fileName.split(".");
-    newPath = uploadCoursePath + username +'/';
+    newPath = uploadCoursePath + username + '/';
     //console.log(newPath);
     if (!fs.existsSync(newPath + newFileName1)) {
       fs.mkdirSync(newPath + newFileName1);
     }
-    if (!fs.existsSync(newPath + newFileName1 +'/' + newFileName2 )) {
-      fs.mkdirSync(newPath + newFileName1 +'/' + newFileName2);
+    if (!fs.existsSync(newPath + newFileName1 + '/' + newFileName2)) {
+      fs.mkdirSync(newPath + newFileName1 + '/' + newFileName2);
     }
     let pdfPath = newPath + fileName;
-    let coursePath = newPath + newFileName1 +'/' + newFileName2 +'/' + arr[0] + fileType;
+    let coursePath = newPath + newFileName1 + '/' + newFileName2 + '/' + arr[0] + fileType;
     //console.log(pdfPath);
     //console.log(coursePath);
     //pdf||ppt转png
@@ -1322,13 +1321,13 @@ router.post('/uploadCourseSec', function(req, res) {
             fs.readdir(path_dir, function (err, stats) {
               //console.log(path_dir);
               //console.log(stats);
-              for (let i=0; i<=stats.length-1; i++) {
+              for (let i = 0; i <= stats.length - 1; i++) {
                 let arr1 = stats[i].split(".");
-                if (arr1[arr1.length-1] === 'png') {
+                if (arr1[arr1.length - 1] === 'png') {
                   let arr2 = arr1[0].split("-");
-                  let name1 = Number(arr2[arr2.length-1]);
+                  let name1 = Number(arr2[arr2.length - 1]);
                   let oldPath = path_dir + '/' + stats[i];
-                  let newPath = path_dir + '/' + arr2[0] + '-' + name1 + '.' + arr1[arr1.length-1];
+                  let newPath = path_dir + '/' + arr2[0] + '-' + name1 + '.' + arr1[arr1.length - 1];
                   //console.log(oldPath);
                   //console.log(newPath);
                   fs.rename(oldPath, newPath, function (err) {
@@ -1361,7 +1360,7 @@ router.post('/uploadCourseSec', function(req, res) {
     });
 
     Promise.all([p1, p2]).then((msg) => {
-      res.status(200).send({ code: 0, msg: msg});
+      res.status(200).send({code: 0, msg: msg});
       //console.log(msg)
     }).catch((error) => {
       console.log(error)
@@ -1371,25 +1370,25 @@ router.post('/uploadCourseSec', function(req, res) {
 });
 
 //教师上传微课--成功后移动文件到
-router.post('/uploadMove', function(req, res) {
+router.post('/uploadMove', function (req, res) {
   let newFileName1 = req.body.data.newFileName1;
   let newFileName2 = req.body.data.newFileName2;
   let fileName = req.body.data.fileName;
   let reqUserType = req.session.users.userType;
   let username = req.session.users.username;
-  let oldPath = uploadCoursePath + username +'/' + fileName;
-  let newPath = uploadCoursePath + username +'/'+ newFileName1 +'/'+ newFileName2 +'/'+ fileName;
+  let oldPath = uploadCoursePath + username + '/' + fileName;
+  let newPath = uploadCoursePath + username + '/' + newFileName1 + '/' + newFileName2 + '/' + fileName;
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
-    fs.rename(oldPath,newPath,function(err){
-      if(!err)
-        res.status(200).send({ Msg : '课件处理成功', code : 0, });
-        console.log("rename complete.");
+    fs.rename(oldPath, newPath, function (err) {
+      if (!err)
+        res.status(200).send({Msg: '课件处理成功', code: 0,});
+      console.log("rename complete.");
     });
   }
 });
 
 //教师上传课件
-router.post('/uploadCourse', function(req, res) {
+router.post('/uploadCourse', function (req, res) {
   let reqUserType = req.session.users.userType;
   let username = req.session.users.username;
   if (reqUserType === 'T' || reqUserType === 'EA' || reqUserType === 'SA') {
@@ -1408,75 +1407,75 @@ router.post('/uploadCourse', function(req, res) {
         let oldPath = files.file.path;
         let newPath = '';
         arr = fileName.split(".");
-        if (arr[arr.length-1] === 'pdf' || arr[arr.length-1] === 'ppt') {
+        if (arr[arr.length - 1] === 'pdf' || arr[arr.length - 1] === 'ppt') {
           //pdf/ppt的处理
-          newPath = uploadCoursePath + username +'/' + fileName;
+          newPath = uploadCoursePath + username + '/' + fileName;
           fs.rename(oldPath, newPath, function (err) {
             if (err) {
               console.log('改名失败');
-              res.status(404).send({ Msg : '改名失败', code : 1, });
+              res.status(404).send({Msg: '改名失败', code: 1,});
             }
-            fs.stat(newPath, function(err,stats){  //获取文件信息
-              if(err){
+            fs.stat(newPath, function (err, stats) {  //获取文件信息
+              if (err) {
                 return err;
               }
-              res.status(200).send({ Msg : '上传成功', code : 0, });
+              res.status(200).send({Msg: '上传成功', code: 0,});
             });
           });
           //是pdf的处理
         } else {
-          newPath = uploadCoursePath + username +'/' + fileName;
+          newPath = uploadCoursePath + username + '/' + fileName;
           //console.log(newPath);
           fs.rename(oldPath, newPath, function (err) {
             if (err) {
               console.log('改名失败');
-              res.status(404).send({ Msg : '改名失败', code : 1, });
+              res.status(404).send({Msg: '改名失败', code: 1,});
             }
-            fs.stat(newPath, function(err,stats){  //获取文件信息
-              if(err){
+            fs.stat(newPath, function (err, stats) {  //获取文件信息
+              if (err) {
                 return err;
               }
-              res.status(200).send({ Msg : '上传成功', code : 0, });
+              res.status(200).send({Msg: '上传成功', code: 0,});
             });
           });
         }
 
       } else {
-        res.status(404).send({ Msg : '上传的文件名为空', code : 1, });
+        res.status(404).send({Msg: '上传的文件名为空', code: 1,});
       }
     });
   } else {
-    res.status(404).send({ Msg : '用户无权限或未登录', code : 1, });
+    res.status(404).send({Msg: '用户无权限或未登录', code: 1,});
   }
 });
 
 //获取课程树
-router.post('/getCenterTree', function(req, res) {
+router.post('/getCenterTree', function (req, res) {
   let reqUserType = req.session.users.userType;
   if (reqUserType === 'EA' || reqUserType === 'SA') {
   } else {
     res.status(404).send({
-      Msg : '用户无权限或未登录',
-      code : 1,
+      Msg: '用户无权限或未登录',
+      code: 1,
     });
   }
 });
 
 //更新课程树
-router.post('/updateCenterTree', function(req, res) {
+router.post('/updateCenterTree', function (req, res) {
   let reqUserType = req.session.users.userType;
   if (reqUserType === 'EA' || reqUserType === 'SA') {
 
   } else {
     res.status(404).send({
-      Msg : '用户无权限或未登录',
-      code : 1,
+      Msg: '用户无权限或未登录',
+      code: 1,
     });
   }
 });
 
 //上传头像
-router.post('/uploadAvatar', function(req, res) {
+router.post('/uploadAvatar', function (req, res) {
   let form = new formidable.IncomingForm();
   form.uploadDir = "../public/resource/myAvatar";//设置头像上传存放地址
   form.maxFieldsSize = 2 * 1024 * 1024; //设置最大2M
@@ -1485,32 +1484,32 @@ router.post('/uploadAvatar', function(req, res) {
 
   form.parse(req, function (err, fields, files) {
     let arr = files.file.path.split('\\');
-    fs.writeFileSync("../../resource/myAvatar/" + arr[arr.length-1], fs.readFileSync("../public/resource/myAvatar/" + arr[arr.length-1],'utf8'));
+    fs.writeFileSync("../../resource/myAvatar/" + arr[arr.length - 1], fs.readFileSync("../public/resource/myAvatar/" + arr[arr.length - 1], 'utf8'));
     //console.log(arr[arr.length-1]);
     if (reqS.userType === 'S' || reqS.userType === 'O') {
       Student.findOneAndUpdate({
         userID: reqS.userID
-      },{
-        avatar: arr[arr.length-1]
-      },function (err) {
+      }, {
+        avatar: arr[arr.length - 1]
+      }, function (err) {
         if (err) {
-          res.status(404).send({ Msg : '上传成功', code : 0, });
+          res.status(404).send({Msg: '上传成功', code: 0,});
           console.log(err);
-        }else {
-          res.status(200).send({ Msg : '上传成功', code : 0, });
+        } else {
+          res.status(200).send({Msg: '上传成功', code: 0,});
         }
       })
     } else if (reqS.userType === 'T' || reqS.userType === 'EA' || reqS.userType === 'SA') {
       Teacher.findOneAndUpdate({
         userID: reqS.userID
-      },{
-        avatar: arr[arr.length-1]
-      },function (err) {
+      }, {
+        avatar: arr[arr.length - 1]
+      }, function (err) {
         if (err) {
-          res.status(404).send({ Msg : '上传成功', code : 0, });
+          res.status(404).send({Msg: '上传成功', code: 0,});
           console.log(err);
-        }else {
-          res.status(200).send({ Msg : '上传成功', code : 0, });
+        } else {
+          res.status(200).send({Msg: '上传成功', code: 0,});
         }
       })
     }
@@ -1520,23 +1519,22 @@ router.post('/uploadAvatar', function(req, res) {
 //获取班级和专业
 router.post('/getClass', function (req, res) {
   //console.log('jdsfjawnejkfnaef');
-  Student.find({
-  }).then(function (student) {
+  Student.find({}).then(function (student) {
     let classMsg = [];
     let majorMsg = [];
     let CC = [];
     let MM = [];
     if (student) {
-      for (let i=0; i<student.length; i++) {
+      for (let i = 0; i < student.length; i++) {
         classMsg.push(student[i].classGrade);
         majorMsg.push(student[i].major);
       }
       classMsg = core.unique(classMsg);
-      for (let i=0; i<classMsg.length; i++) {
+      for (let i = 0; i < classMsg.length; i++) {
         CC.push({label: classMsg[i]});
       }
       majorMsg = core.unique(majorMsg);
-      for (let i=0; i<majorMsg.length; i++) {
+      for (let i = 0; i < majorMsg.length; i++) {
         MM.push({label: majorMsg[i]});
       }
       res.status(200).send({
@@ -1544,86 +1542,799 @@ router.post('/getClass', function (req, res) {
         majorMsg: MM
       });
     } else {
-      res.status(404).send({ code: 0 });
+      res.status(404).send({code: 0});
     }
   });
 });
 
+
+//修改-某天的课程表方法
+function alterTable1(course1) {
+  let weekAll = core.getWeekAll(course1.date1, course1.date2);
+  if (course1.courseDate === 'newCourse') {
+    if (course1.index === 0) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.0": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 1) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.1": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 2) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.2": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 3) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.3": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 4) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.4": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 5) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.5": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 6) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.6": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 7) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse.7": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    }
+  } else if (course1.courseDate === 'newCourse2') {
+    if (course1.index === 0) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.0": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 1) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.1": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 2) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.2": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 3) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.3": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 4) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.4": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 5) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.5": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 6) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.6": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 7) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse2.7": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    }
+  } else if (course1.courseDate === 'newCourse3') {
+    if (course1.index === 0) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.0": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 1) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.1": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 2) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.2": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 3) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.3": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 4) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.4": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 5) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.5": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 6) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.6": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 7) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse3.7": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    }
+  } else if (course1.courseDate === 'newCourse4') {
+    if (course1.index === 0) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.0": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 1) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.1": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 2) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.2": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 3) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.3": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 4) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.4": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 5) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.5": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 6) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.6": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 7) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse4.7": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    }
+  } else if (course1.courseDate === 'newCourse5') {
+    if (course1.index === 0) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.0": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 1) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.1": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 2) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.2": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 3) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.3": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 4) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.4": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 5) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.5": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 6) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.6": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    } else if (course1.index === 7) {
+      for (let i = 0; i < weekAll.length; i++) {
+        CourseTable.findOneAndUpdate({
+          courseDate: weekAll[i],
+        }, {
+          createDate: moment().format("YYYY-MM-DD"),
+          $set: {"course.0.newCourse5.7": course1.course},
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            return false;
+          } else {
+            console.log('更新成功');
+            return true;
+          }
+        });
+      }
+    }
+  }
+}
 //创建-课程表
-router.post('/newCourseTable', function (req, res) {
-  let reqData = req.body.data;
-  let reqSess = req.session.users;
-  let userType = reqSess.userType;
-  let username = reqSess.username;
-  console.log(reqData);
+  router.post('/newCourseTable', function (req, res) {
+    let reqData = req.body.data;
+    console.log(reqData);
+    let weekAll = core.getWeekAll(reqData.date1, reqData.date2);
+    let reqSess = req.session.users;
+    let userType = reqSess.userType;
+    let username = reqSess.username;
+    //let reqDate = moment(reqData.reqDate).format("YYYY-MM-DD");
+    if (userType === 'EA' || userType === 'SA') {
+      let p1 = new Promise((resolve, reject) => {
+        for (let i = 0; i < weekAll.length; i++) {
+          CourseTable.findOne({
+            courseDate: weekAll[i]
+          }).then(function (courseTable) {
+            //console.log(courseTable);
+            if (courseTable === null) {
+              let courseTable = new CourseTable(
+                {
+                  createDate: moment().format('YYYY-MM-DD'),
+                  courseDate: weekAll[i],
+                  createName: username,
+                  className: reqData.className,
+                  teachList: ["张老师", "付老师"],
+                  course: courseP,
+                }
+              );
+              courseTable.save();
+            }
+          });
+        }
+        resolve('成功了1')
+      });
 
-  if (userType === 'EA' || userType === 'SA') {
-    let courseTable = new CourseTable({
-      createDate: moment().format("YYYY-MM-DD"),
-      courseDate: "2018-06-19",
-      createName: username,
-      teachList: [],
-      course: reqData.allMyCourse,
-      className: "镇江培训",
-    });
-    courseTable.save(function (err) {
-      if (err) {
-        console.log(err);
-        res.status(200).send({ code: 1, msg: '创建课程失败'});
-      } else {
-        console.log('创建课程成功');
+      let p2 = new Promise((resolve, reject) => {
+        alterTable1(reqData);
+        resolve('成功了2');
+      });
+
+      Promise.all([p1, p2]).then((result) => {
+        console.log(result);
         res.status(200).send({ code: 0, msg: '创建课程成功'});
-      }
-    });
-  }
-});
-
+      }).catch((error) => {
+        console.log(error)
+      });
+    }
+  });
 //获取-课程表
-router.post('/getCourseTable', function (req, res) {
-  let userType = req.session.users.userType;
-  let reqData = req.body.data;
-  //console.log(reqData.courseDate);
-  //console.log(reqData.className);
-  if (userType === 'EA' || userType === 'T' || userType === 'SA') {
-    CourseTable.findOne({
-      courseDate: reqData.courseDate,
-      className: reqData.className
-    }).then(function (courseTable) {
-      //console.log(courseTable);
-      if (courseTable === null) {
-        console.log('找不到该课程表');
-        res.status(200).send({ code: 1, msg:'找不到该课程表' });
-      } else {
+  router.post('/getCourseTable', function (req, res) {
+    let userType = req.session.users.userType;
+    let reqData = req.body.data;
+    //console.log(reqData.courseDate);
+    //console.log(reqData.className);
+    if (userType === 'EA' || userType === 'T' || userType === 'SA') {
+      CourseTable.findOne({
+        courseDate: reqData.courseDate,
+        className: reqData.className
+      }).then(function (courseTable) {
         //console.log(courseTable);
-        res.status(200).send({ code: 0, result: courseTable });
-      }
-    });
-  }
-});
-
+        if (courseTable === null) {
+          console.log('找不到该课程表');
+          res.status(200).send({code: 1, msg: '找不到该课程表'});
+        } else {
+          //console.log(courseTable);
+          res.status(200).send({code: 0, result: courseTable});
+        }
+      });
+    }
+  });
 //修改-课程表
-router.post('/alterCourseTable', function (req, res) {
-  let reqData = req.body.data.result;
-  let userType = req.session.users.userType;
-  console.log(reqData);
-  if (userType === 'EA' || userType === 'SA') {
-    CourseTable.findOneAndUpdate({
-      courseDate: "2018-6-19",
-      className: "镇江培训"
-    }, {
-      createDate: new Date(),
-      //teachList: reqData.teachList,
-      course: reqData.course,
-    }, function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        //console.log('修改成功userID');
-        res.status(200).send({ code:0, Msg: '更新成功', });
-      }
-    });
-  }
-});
+  router.post('/alterCourseTable', function (req, res) {
+    let reqData = req.body.data.result;
+    let userType = req.session.users.userType;
+    console.log(reqData);
+    if (userType === 'EA' || userType === 'SA') {
+      CourseTable.findOneAndUpdate({
+        courseDate: "2018-6-19",
+        className: "镇江培训"
+      }, {
+        createDate: new Date(),
+        //teachList: reqData.teachList,
+        course: reqData.course,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          //console.log('修改成功userID');
+          res.status(200).send({code: 0, Msg: '更新成功',});
+        }
+      });
+    }
+  });
 
 
-module.exports = router;
+  module.exports = router;

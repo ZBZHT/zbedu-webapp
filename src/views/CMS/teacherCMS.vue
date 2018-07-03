@@ -67,15 +67,15 @@
         </div>
         <!--我的课堂（教师）考勤汇总-->
         <div v-show="isShow703">
-          5
+          <teacher-zong></teacher-zong>
         </div>
         <!--我的课堂（学生）课堂信息-->
         <div v-show="isShow801">
-          6
+          <student-plan></student-plan>
         </div>
         <!--我的课堂（学生）考勤信息-->
         <div v-show="isShow802">
-          7
+          <student-info></student-info>
         </div>
 
       </el-row>
@@ -104,6 +104,9 @@
   import bossInfor from './bossInfor'
   import teacherPlan from './teacherPlan'
   import teacherInfor from './teacherInfor'
+  import teacherZong from './teacherZong'
+  import studentPlan from './studentPlan'
+  import studentInfo from './studentInfo'
 
   export default {
     name: 'index',
@@ -441,6 +444,9 @@
       bossInfor,
       teacherPlan,
       teacherInfor,
+      teacherZong,
+      studentPlan,
+      studentInfo,
       navgationHead, navUl, footFooter, userManager, TestBaseM, CourseM}
   }
 </script>

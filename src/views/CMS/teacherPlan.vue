@@ -1,21 +1,17 @@
 <template>
   <div class="teacherPlan">
     <el-col :span="19">
+      请选择班级
+      <el-select class="selectClass" v-model="classGrade" @change="showThreeTable()" placeholder="请选择班级">
+        <div v-for="item in classM">
+          <el-option :label="item.label" :value="item.label"></el-option>
+        </div>
+      </el-select>
 
-      <el-form>
-        <el-form-item label="请选择班级" prop="classGrade">
-          <el-select v-model="classGrade" placeholder="请选择班级">
-            <div v-for="item in classM">
-              <el-option :label="item.label" :value="item.label"></el-option>
-            </div>
-          </el-select>
-        </el-form-item>
-      </el-form>
-
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()" v-show="showThree">
         <el-tab-pane label="授课计划表" name="first">
           
-          <show-table></show-table>
+          <show-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></show-table>
 
         </el-tab-pane>
       </el-tabs>
@@ -40,30 +36,23 @@
         activeName: 'first',
         classGrade: '',
         classM:[],
-        form:{
-          date1: '',
-          date2: '',
-        },
+        dateData:[],
         rules:{
-          date1: [
-            {required: true, message: '请选择日期', trigger: 'change'}
-          ],
-          date2: [
-            {required: true, message: '请选择日期', trigger: 'change'}
-          ],
           classGrade: [
             {required: true, message: '请输入班级', trigger: 'change'}
           ],
         },
-        startDatePicker:this.beginDate(),
-        endDatePicker:this.processDate(),
+        mondayDate:'',
+        weekDate:[],
+        course: {},
+        showThree:false,
       }
     },
     computed: {
 
     },
     mounted() {
-         //请求班级、专业
+      //请求班级、专业
       axios.post('/teacherCMS/getClass', {
           data: {
             userType: this.userType
@@ -79,25 +68,38 @@
       handleClick(tab, event) {
         console.log(tab, event);
       },
-      //创建考试开始时间不能选择历史日期
-      beginDate(){
-        let self = this
-        return {
-          disabledDate(time){
-            return time.getTime() < Date.now() - 8.64e7;
-          }
+      //选择班级显示table，选择班级切换数据
+      showThreeTable(){
+        this.course = '';
+        this.$store.commit('getClassGrade',this.classGrade);
+        if(this.classGrade != ''){
+          this.showThree = true;
+        }else{
         }
+        let resDate = core.getMonday(new Date());
+        resDate = moment(resDate).format("YYYY-MM-DD");
+        //console.log(resDate)
+        //console.log(this.classGrade);
+        this.getCourseTable(resDate)
       },
-      //创建考试结束时间不能大于开始时间
-      processDate(){
-        let self = this
-        return {
-          disabledDate(time){
-            return time.getTime() < self.form.date1;
+      //获取-课程表
+      getCourseTable(resDate){
+        axios.post('/teacherCMS/getCourseTable', {
+          data: {
+            courseDate: resDate,
+            className: this.classGrade,
           }
-        }
+        }).then((res) => {
+          console.log(res.data.result)
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            this.course = resData.course[0];
+          }
+          this.mondayDate = res.data.result.courseDate;
+          this.weekDate = core.getDayAll(new Date(this.mondayDate));
+        //  console.log(this.weekDate)
+        });
       },
-
     },
     
     components: {showTable}

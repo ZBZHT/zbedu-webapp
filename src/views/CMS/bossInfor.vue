@@ -1,7 +1,7 @@
 <template>
   <div class="bossInfor">
     <el-col :span="19">
-
+      请选择班级
       <el-select class="selectClass" v-model="classGrade" @change="showThreeTable()" placeholder="请选择班级">
         <div v-for="item in classM">
           <el-option :label="item.label" :value="item.label"></el-option>

@@ -28,17 +28,26 @@
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
-                <td class="eachDataP" v-for="(item3,index3) in course.newCourse">
+                <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse">
                     <p>{{item3.startTime}}~{{item3.endTime}}</p>
                     <p>{{item3.teacher}}</p>
                     <p>{{item3.courseName}}</p>
                     <p>{{item3.courseAddress}}</p>
                     <div class="bing"></div>
+                      <!--<schart class="pie"-->
+                          <!--:canvasId="item3.teacher"-->
+                          <!--:type="type"-->
+                          <!--:width="width"-->
+                          <!--:height="height"-->
+                          <!--:data="data"-->
+                          <!--:options="options"-->
+                      <!--&gt;</schart>-->
+
                 </td>
             </tr>
             <tr>
               <td class="classDataP2" v-show = "course">2</td>
-              <td class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
+              <td @click="dialogTableVisible = true" class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -47,7 +56,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">3</td>
-              <td class="eachDataP" v-for="(item3,index3) in course.newCourse3">
+              <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse3">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -56,7 +65,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">4</td>
-              <td class="eachDataP" v-for="(item3,index3) in course.newCourse4">
+              <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse4">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -65,7 +74,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">5</td>
-              <td class="eachDataP" v-for="(item3,index3) in course.newCourse5">
+              <td @click="dialogTableVisible = true" class="eachDataP" v-for="(item3,index3) in course.newCourse5">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -75,56 +84,15 @@
           </table>
         </div>
 
-        <el-dialog
-          title="修改课程"
-          :visible.sync="centerDialogVisible1"
-          width="30%"
-          :close-on-click-modal="false"
-          :show-close="false"
-          :close-on-press-escape="false"
-          center>
-          <el-form :inline="true" :model="alterForm" ref="alterForm" label-width="100px">
-            <el-form-item label="上课时间" >
-              <el-time-select
-                placeholder="上课时间"
-                v-model="alterForm.startTime"
-                :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-              </el-time-select>
-            </el-form-item>
-
-            <el-form-item label="下课时间">
-              <el-time-select
-                placeholder="下课时间"
-                v-model="alterForm.endTime"
-                :picker-options="{
-                                    start: '00:00',
-                                    step: '00:10',
-                                    end: '23:30'
-                                    }">
-              </el-time-select>
-            </el-form-item>
-
-            <el-form-item label="课程" >
-              <el-input v-model="alterForm.courseName"></el-input>
-            </el-form-item>
-
-            <el-form-item label="教师" >
-              <el-input v-model="alterForm.teacher"></el-input>
-            </el-form-item>
-
-            <el-form-item label="地点" >
-              <el-input v-model="alterForm.courseAddress"></el-input>
-            </el-form-item>
-
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible1 = false">取 消</el-button>
-            <el-button type="primary" @click="addEach11()">确 定</el-button>
-          </span>
+        <el-dialog title="考勤信息" :visible.sync="dialogTableVisible">
+          <el-table :data="gridData">
+            <el-table-column property="name" label="姓名" width="120"></el-table-column>
+            <el-table-column property="here" label="出勤"></el-table-column>
+            <el-table-column property="sick" label="请假"></el-table-column>
+            <el-table-column property="late" label="迟到"></el-table-column>
+            <el-table-column property="dispear" label="缺勤"></el-table-column>
+            <el-table-column property="lateTime" label="迟到总时间"></el-table-column>
+          </el-table>
         </el-dialog>
 
       </div>
@@ -137,6 +105,7 @@
   import axios from 'axios'
   import core from '../../../assets/js/core.js'
   import moment from 'moment'
+  import Schart from 'vue-schart';
 
 
   export default {
@@ -153,7 +122,21 @@
           courseName:'',
           courseAddress:''
         },
-        centerDialogVisible1: false,
+        dialogTableVisible: false,
+
+        canvasId: '付老师',
+        type: 'pie',
+        width: 100,
+        height: 70,
+        data: [
+            {name: '2014', value: 1342},
+            {name: '2015', value: 2123},
+            {name: '2016', value: 1654},
+            {name: '2017', value: 1795},
+        ],
+        options: {
+            title: '本节考勤'
+        },
 
       }
     },
@@ -176,15 +159,6 @@
             }
           }
         }
-      },
-      //编辑
-      handleEdit(item) {
-          this.centerDialogVisible1 = true;
-          this.alterForm.startTime = item.startTime;
-          this.alterForm.endTime = item.endTime;
-          this.alterForm.teacher = item.teacher;
-          this.alterForm.courseName = item.courseName;
-          this.alterForm.courseAddress = item.courseAddress;
       },
       //点击上一个
       previous(){
@@ -226,7 +200,7 @@
         },
     },
 
-    components: {}
+    components: {Schart}
   }
 </script>
 
@@ -360,6 +334,7 @@
     border-radius: 15px;
     height: 108px;
     position:relative;
+    cursor:pointer;
   }
   .selectTable .eachDataP2 {
     background: #e5e9f2;
@@ -368,6 +343,7 @@
     border-bottom: 6px solid #aaa;
     border-radius: 15px;
     height: 108px;
+    cursor:pointer;
   }
   .selectTable .eachDataP p {
     margin-bottom: 0;
@@ -385,12 +361,26 @@
       background:#fff;
       border-radius:10px;
       box-shadow: 10px 9px 40px -3px;
-      display:none;
-      position:absolute;
-      bottom: 112px;
-      right: -7%;
+
+
+  }
+  .selectTable .bing{
+    display:none;
   }
   .selectTable .eachDataP:hover .bing{
+    position:absolute;
+      bottom: 112px;
+      right: -7%;
+    display:block;
+  }
+  .selectTable #can1{
+    display:none;
+  }
+
+  .selectTable .eachDataP:hover #can1{
+    position:absolute;
+      bottom: 112px;
+      right: -7%;
     display:block;
   }
   .selectTable .classPlan_bottomLeft .grid-content {

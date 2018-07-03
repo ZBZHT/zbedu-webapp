@@ -29,7 +29,7 @@
             <tr>
               <td class="classDataP" v-show = "course">1</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse">
-                <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
+                <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -39,7 +39,7 @@
             <tr>
               <td class="classDataP2" v-show = "course">2</td>
               <td class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
-                <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
+                <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -49,7 +49,7 @@
             <tr>
               <td class="classDataP" v-show = "course">3</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse3">
-                <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
+                <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -59,7 +59,7 @@
             <tr>
               <td class="classDataP" v-show = "course">4</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse4">
-                <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
+                <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -69,7 +69,7 @@
             <tr>
               <td class="classDataP" v-show = "course">5</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse5">
-                <el-button size="mini" @click="handleEdit(item3)">编辑</el-button>
+                <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -80,54 +80,79 @@
         </div>
 
         <el-dialog
-          title="修改课程"
+          title="添加课程"
           :visible.sync="centerDialogVisible1"
-          width="30%"
+          width="600px"
           :close-on-click-modal="false"
           :show-close="false"
           :close-on-press-escape="false"
           center>
-          <el-form :inline="true" :model="alterForm" ref="alterForm" label-width="100px">
-            <el-form-item label="上课时间" >
-              <el-time-select
-                placeholder="上课时间"
-                v-model="alterForm.startTime"
-                :picker-options="{
-                                    start: '00:00',
+          <el-form :model="alterForm" :rules="rules" ref="alterForm" >
+
+            <el-form :inline="true" :model="alterForm" :rules="rules" ref="alterForm">
+              <el-form-item label="开始日期" prop="date1">
+                <el-date-picker
+                  v-model="alterForm.date1"
+                  type="date"
+                  @change="compareTime()"
+                  placeholder="开始日期"
+                  :picker-options="startDatePicker">
+                </el-date-picker>
+              </el-form-item>
+
+              <el-form-item label="结束日期" prop="date2">
+                <el-date-picker
+                  v-model="alterForm.date2"
+                  type="date"
+                  @change="compareTime()"
+                  placeholder="结束日期"
+                  :picker-options="endDatePicker">
+                </el-date-picker>
+              </el-form-item>
+            </el-form>
+
+            <el-form :inline="true" :model="alterForm" :rules="rules" ref="alterForm">
+              <el-form-item label="上课时间" prop="startTime">
+                <el-time-select
+                  placeholder="上课时间"
+                  v-model="alterForm.startTime"
+                  :picker-options="{
+                                    start: '08:00',
                                     step: '00:10',
-                                    end: '23:30'
+                                    end: '20:00'
                                     }">
-              </el-time-select>
-            </el-form-item>
+                </el-time-select>
+              </el-form-item>
 
-            <el-form-item label="下课时间">
-              <el-time-select
-                placeholder="下课时间"
-                v-model="alterForm.endTime"
-                :picker-options="{
-                                    start: '00:00',
+              <el-form-item label="下课时间" prop="startTime">
+                <el-time-select
+                  placeholder="下课时间"
+                  v-model="alterForm.endTime"
+                  :picker-options="{
+                                    start: '08:00',
                                     step: '00:10',
-                                    end: '23:30'
+                                    end: '20:00'
                                     }">
-              </el-time-select>
+                </el-time-select>
+              </el-form-item>
+            </el-form>
+
+            <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
+              <el-input v-model="alterForm.courseName" style="width: 85%;"></el-input>
             </el-form-item>
 
-            <el-form-item label="课程" >
-              <el-input v-model="alterForm.courseName"></el-input>
+            <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
+              <el-input v-model="alterForm.teacher" style="width: 85%;"></el-input>
             </el-form-item>
 
-            <el-form-item label="教师" >
-              <el-input v-model="alterForm.teacher"></el-input>
-            </el-form-item>
-
-            <el-form-item label="地点" >
-              <el-input v-model="alterForm.courseAddress"></el-input>
+            <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
+              <el-input v-model="alterForm.courseAddress" style="width: 85%;"></el-input>
             </el-form-item>
 
           </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="centerDialogVisible1 = false">取 消</el-button>
-            <el-button type="primary" @click="addEach11()">确 定</el-button>
+              <el-button @click="centerDialogVisible1 = false">取 消</el-button>
+              <el-button type="primary" @click="editCourseTable(alterForm)">确 定</el-button>
           </span>
         </el-dialog>
 
@@ -151,6 +176,8 @@
         weekData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
         classData: ['1', '2', '3', '4', '5'],
         alterForm:{
+          date1:'',
+          date2:'',
           startTime: '',
           endTime: '',
           teacher:'',
@@ -158,7 +185,34 @@
           courseAddress:''
         },
         centerDialogVisible1: false,
-
+        startDatePicker:this.beginDate(),
+        endDatePicker:this.processDate(),
+        courseIndex: '',
+        newCourse: '',
+        classGrade: this.$store.state.classGrade,
+        rules:{
+          date1: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          date2: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          startTime: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          endTime: [
+            {required: true, message: '请选择日期', trigger: 'change'}
+          ],
+          teacher: [
+            {required: true, message: '请选择老师', trigger: 'change'}
+          ],
+          courseName: [
+            {required: true, message: '请选择课程名称', trigger: 'change'}
+          ],
+          courseAddress: [
+            {required: true, message: '请选择上课地点', trigger: 'change'}
+          ],
+        },
       }
     },
     computed: {},
@@ -167,6 +221,24 @@
 
     },
     methods: {
+      //创建考试开始时间不能选择历史日期
+      beginDate(){
+        let self = this;
+        return {
+          disabledDate(time){
+            return time.getTime() < Date.now() - 8.64e7;
+          }
+        }
+      },
+      //创建考试结束时间不能大于开始时间
+      processDate(){
+        let self = this
+        return {
+          disabledDate(time){
+            return time.getTime() < self.alterForm.date1;
+          }
+        }
+      },
       //重置数据
       cancel1(){
         for(let i = 0; i < this.courseIndexArr1.length; i++){
@@ -182,13 +254,47 @@
         }
       },
       //编辑
-      handleEdit(item) {
+      handleEdit(item, newCourse, index) {
           this.centerDialogVisible1 = true;
+          this.alterForm.date1 = this.weekDate[0];
+          this.alterForm.date2 = this.weekDate[6];
           this.alterForm.startTime = item.startTime;
           this.alterForm.endTime = item.endTime;
           this.alterForm.teacher = item.teacher;
           this.alterForm.courseName = item.courseName;
           this.alterForm.courseAddress = item.courseAddress;
+          this.courseIndex = index;
+          this.newCourse = newCourse;
+      },
+      //编辑->确定
+      editCourseTable(form){
+        let course1 = {
+          startTime:form.startTime,
+          endTime:form.endTime,
+          teacher:form.teacher,
+          courseName:form.courseName,
+          courseAddress:form.courseAddress,
+        };
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            className: this.classGrade,
+            index: this.courseIndex,
+            courseDate:this.newCourse,
+            date1:this.weekDate[0],
+            date2:this.weekDate[6],
+            cycleTime:'',
+            course: course1,
+          }
+        }).then((res) => {
+          let resData = res.data;
+          if (resData.code === 0) {
+            this.getCourseTable(this.weekDate[0]);
+            this.centerDialogVisible1 = false;
+            this.addSuccess('创建成功')
+          } else if (resData.code === 1) {
+            this.addSuccess('创建错误')
+          }
+        });
       },
       //点击上一个
       previous(){
@@ -215,7 +321,7 @@
           axios.post('/teacherCMS/getCourseTable', {
             data: {
               courseDate: resDate,
-              className: this.$store.state.classGrade,
+              className: this.classGrade,
             }
           }).then((res) => {
           //  console.log(res.data.result)
@@ -402,5 +508,8 @@
   .showTable .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+  .showTable .el-date-editor.el-input, .el-date-editor.el-input__inner {
+    width: 190px;
   }
 </style>

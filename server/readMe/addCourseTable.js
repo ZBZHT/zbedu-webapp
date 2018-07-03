@@ -10,8 +10,8 @@ zbt.once('open', function (callback) {
 //实例化
 let courseTable = new CourseTable(
   {
-    createDate: "2018-6-18",
-    courseDate: "2018-6-18",
+    createDate: "2018-06-18",
+    courseDate: "2018-07-02",
     createName: "琴老师",
     className: "镇江培训",
     teachList:  [ "张老师", "付老师" ],
