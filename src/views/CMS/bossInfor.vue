@@ -12,21 +12,22 @@
         <el-tab-pane label="考勤动态" name="first">
           <div class="mainContent">
             <el-row class="guidance" style="padding-top: 0;text-align: left">
-              <p style="text-align: left">课程名称：</p>
-              <p style="text-align: left">任课老师：</p>
-              <span>颜色注解 ：</span>
+              <p>
+                <span style="text-align: left">课程名称</span>
+                <span style="text-align: left">(时间)</span>
+              </p>
               <el-button size="mini" type="success">已签到</el-button>
               <el-button size="mini" type="danger">缺勤</el-button>
               <el-button size="mini" type="warning">迟到</el-button>
               <el-button size="mini" type="primary">请假</el-button>
             </el-row>
           </div>
-          <div class="currTable">
-            <div class="currTable1" v-for="item in stateList">
-              <el-button class='currTable2' size="mini" :type='item.state'>{{item.stuName}}</el-button>
-
-            </div>
-          </div>
+          <ul class="currTable">
+            <li class="currTable1" v-for="item in stateList" :style="{background:item.state}">
+              <img class="studentPng" src="../../assets/imgs/user.png">
+              <p class="studentName">{{item.stuName}}</p>
+            </li>
+          </ul>
 
         </el-tab-pane>
         <el-tab-pane label="信息查询" name="second">
@@ -153,21 +154,50 @@
         stateList: [
           {
             "stuName": "学生1",
-            "state": 'success'
+            "state": 'rgba(103,194,58,0.5)'
           },
           {
             "stuName": "学生2",
-            "state": 'danger'
+            "state": 'rgba(245,108,108,0.5)'
           },
           {
             "stuName": "学生3",
-            "state": 'warning'
+            "state": 'rgba(230,162,60,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'primary'
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'rgba(0,122,204,0.5)'
           }
-        ]
+        ],
+
       }
     },
     computed: {
@@ -233,6 +263,44 @@
           if (res.data.code === 0) {
             this.course = resData.course[0];
             this.mondayDate = res.data.result.courseDate;
+            for(var i = 0; i < this.course.newCourse.length; i++){
+              if(this.course.newCourse[i].teacher == this.$store.state.username){
+                this.course.newCourse[i].color = '#f00';
+              }else{
+                this.course.newCourse[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse2.length; i++){
+              if(this.course.newCourse2[i].teacher == this.$store.state.username){
+                this.course.newCourse2[i].color = '#f00';
+              }else{
+                this.course.newCourse2[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse3.length; i++){
+              if(this.course.newCourse3[i].teacher == this.$store.state.username){
+                this.course.newCourse3[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse3[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse4.length; i++){
+              if(this.course.newCourse4[i].teacher == this.$store.state.username){
+                this.course.newCourse4[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse4[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse5.length; i++){
+              if(this.course.newCourse5[i].teacher == this.$store.state.username){
+                this.course.newCourse5[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse5[i].color = '';
+              }
+            }
           }
           this.weekDate = core.getDayAll(new Date(this.mondayDate));
           //  console.log(this.weekDate)
@@ -393,12 +461,27 @@
     margin-bottom: 0.5rem;
   }
   .bossInfor .currTable{
+    width:80%;
+    margin:0 auto;
     padding: 10px;
     text-align: left;
   }
-  .bossInfor .currTable2{
-    float: left;
-    margin: 2px;
+  .bossInfor .currTable1{
+    width:100px;
+    height:105px;
+    border:1px solid #000;
+    border-radius:10px;
+    margin-right:20px;
+    margin-bottom:15px;
+    display:inline-block;
+    text-align:center;
+    padding:10px;
+    box-sizing:border-box;
+  }
+  .bossInfor .studentPng{
+    width:50px;
+    height:50px;
+    border-radius:50%;
   }
 
 </style>

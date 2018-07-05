@@ -34,7 +34,7 @@
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
-                <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse">
+                <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse" :style="{color:item3.color}">
                     <p>{{item3.startTime}}~{{item3.endTime}}</p>
                     <p>{{item3.teacher}}</p>
                     <p>{{item3.courseName}}</p>
@@ -48,7 +48,7 @@
             </tr>
             <tr>
               <td class="classDataP2" v-show = "course">2</td>
-              <td @click="openDialog(item3, index3)" class="eachDataP2" v-for="(item3,index3) in course.newCourse2">
+              <td @click="openDialog(item3, index3)" class="eachDataP2" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -57,7 +57,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">3</td>
-              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse3">
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse3" :style="{color:item3.color}">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -66,7 +66,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">4</td>
-              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse4">
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse4" :style="{color:item3.color}">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -75,7 +75,7 @@
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">5</td>
-              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse5">
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse5" :style="{color:item3.color}">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
@@ -86,13 +86,12 @@
         </div>
 
         <el-dialog title="考勤信息" :visible.sync="dialogTableVisible">
-          <el-table :data="stateList" height="450">
-            <el-table-column property="stuName" label="姓名" width="120" fixed></el-table-column>
-            <el-table-column property="classGrade" label="班级" width="120" fixed></el-table-column>
-            <el-table-column property="courseDate" label="日期"></el-table-column>
-            <el-table-column property="courseName" label="课程名"></el-table-column>
-            <el-table-column property="state" label="考勤状态"></el-table-column>
-          </el-table>
+          <ul class="currTable">
+            <li class="currTable1" v-for="item in stateList" :style="{background:item.state}">
+              <img class="studentPng" src="../../../assets/imgs/user.png">
+              <p class="studentName">{{item.stuName}}</p>
+            </li>
+          </ul>
         </el-dialog>
 
       </div>
@@ -341,6 +340,7 @@
         startTime: "9:00",
         endTime: "10:00",
         stateList: [],
+        
 
       }
     },
@@ -409,18 +409,18 @@
           let resData = res.data.result;
           if (res.data.code === 0) {
             for (let i = 0; i < resData.stateList.length; i++) {
-              resData.stateList[i].teacher = item.teacher;
-              resData.stateList[i].classGrade = this.classGrade;
-              resData.stateList[i].courseName = item.courseName;
-              resData.stateList[i].courseDate = this.weekDate[index];
+            //  resData.stateList[i].teacher = item.teacher;
+            //  resData.stateList[i].classGrade = this.classGrade;
+            //  resData.stateList[i].courseName = item.courseName;
+            //  resData.stateList[i].courseDate = this.weekDate[index];
               if (resData.stateList[i].state === 0) {
-                resData.stateList[i].state = '出勤';
+                resData.stateList[i].state = 'rgba(103,194,58,0.5)';
               } else if (resData.stateList[i].state === 1) {
-                resData.stateList[i].state = '缺勤';
+                resData.stateList[i].state = 'rgba(245,108,108,0.5)';
               } else if (resData.stateList[i].state === 2) {
-                resData.stateList[i].state = '请假';
+                resData.stateList[i].state = 'rgba(230,162,60,0.5)';
               } else if (resData.stateList[i].state === 3) {
-                resData.stateList[i].state = '迟到';
+                resData.stateList[i].state = 'rgba(0,122,204,0.5)';
               }
             }
             console.log(resData.stateList);
@@ -444,7 +444,46 @@
               this.mondayDate = res.data.result.courseDate;
               this.weekDate = core.getDayAll(new Date(this.mondayDate));
             }
-
+            for(var i = 0; i < resData.course[0].newCourse.length; i++){
+                  if(resData.course[0].newCourse[i].teacher == this.$store.state.username){
+                    resData.course[0].newCourse[i].color = '#f00';
+                    //console.log("nnnmmm")
+                  }else{
+                    resData.course[0].newCourse[i].color = '';
+                  }
+              }
+              for(var i = 0; i < resData.course[0].newCourse2.length; i++){
+                  if(resData.course[0].newCourse2[i].teacher == this.$store.state.username){
+                    resData.course[0].newCourse2[i].color = '#f00';
+                    //console.log("nnnmmm")
+                  }else{
+                    resData.course[0].newCourse2[i].color = '';
+                  }
+              }
+              for(var i = 0; i < resData.course[0].newCourse3.length; i++){
+                  if(resData.course[0].newCourse3[i].teacher == this.$store.state.username){
+                    resData.course[0].newCourse3[i].color = '#f00';
+                    //console.log("nnnmmm")
+                  }else{
+                    resData.course[0].newCourse3[i].color = '';
+                  }
+              }
+              for(var i = 0; i < resData.course[0].newCourse4.length; i++){
+                  if(resData.course[0].newCourse4[i].teacher == this.$store.state.username){
+                    resData.course[0].newCourse4[i].color = '#f00';
+                    //console.log("nnnmmm")
+                  }else{
+                    resData.course[0].newCourse4[i].color = '';
+                  }
+              }
+              for(var i = 0; i < resData.course[0].newCourse5.length; i++){
+                  if(resData.course[0].newCourse5[i].teacher == this.$store.state.username){
+                    resData.course[0].newCourse5[i].color = '#f00';
+                    //console.log("nnnmmm")
+                  }else{
+                    resData.course[0].newCourse5[i].color = '';
+                  }
+              }
           });
         },
     },
@@ -649,7 +688,9 @@
   .selectTable .classPlan_bottomRight .el-col {
     padding: 2px;
   }
-
+  .selectTable .el-dialog{
+    width:69%;
+  }
   .selectTable .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
@@ -719,5 +760,28 @@
     top: -150px;
     right: -40px;
     display:block;
+  }
+  .selectTable .currTable{
+    width:100%;
+    margin:0 auto;
+    padding: 10px;
+    text-align: left;
+  }
+  .selectTable .currTable1{
+    width:100px;
+    height:105px;
+    border:1px solid #000;
+    border-radius:10px;
+    margin-right:20px;
+    margin-bottom:15px;
+    display:inline-block;
+    text-align:center;
+    padding:10px;
+    box-sizing:border-box;
+  }
+  .selectTable .studentPng{
+    width:50px;
+    height:50px;
+    border-radius:50%;
   }
 </style>

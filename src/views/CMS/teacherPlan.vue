@@ -10,7 +10,7 @@
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick()" v-show="showThree">
         <el-tab-pane label="授课计划表" name="first">
-          
+
           <show-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></show-table>
 
         </el-tab-pane>
@@ -94,6 +94,44 @@
           let resData = res.data.result;
           if (res.data.code === 0) {
             this.course = resData.course[0];
+            for(var i = 0; i < this.course.newCourse.length; i++){
+              if(this.course.newCourse[i].teacher == this.$store.state.username){
+                this.course.newCourse[i].color = '#f00';
+              }else{
+                this.course.newCourse[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse2.length; i++){
+              if(this.course.newCourse2[i].teacher == this.$store.state.username){
+                this.course.newCourse2[i].color = '#f00';
+              }else{
+                this.course.newCourse2[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse3.length; i++){
+              if(this.course.newCourse3[i].teacher == this.$store.state.username){
+                this.course.newCourse3[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse3[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse4.length; i++){
+              if(this.course.newCourse4[i].teacher == this.$store.state.username){
+                this.course.newCourse4[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse4[i].color = '';
+              }
+            }
+            for(var i = 0; i < this.course.newCourse5.length; i++){
+              if(this.course.newCourse5[i].teacher == this.$store.state.username){
+                this.course.newCourse5[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse5[i].color = '';
+              }
+            }
           }
           this.mondayDate = res.data.result.courseDate;
           this.weekDate = core.getDayAll(new Date(this.mondayDate));
@@ -101,7 +139,7 @@
         });
       },
     },
-    
+
     components: {showTable}
   }
 </script>
@@ -130,5 +168,5 @@
   .teacherPlan .el-tabs--card>.el-tabs__header .el-tabs__item.is-active {
     font-size: 16px;
   }
-  
+
 </style>

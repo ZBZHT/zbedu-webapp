@@ -4,8 +4,8 @@
  *********************/
 const fs = require("fs"),
 	_ = require("lodash"),
-	os = require("os"),
-    moment = require("moment");
+	os = require("os");
+moment = require("moment");
 
 module.exports = {
 
@@ -279,9 +279,7 @@ module.exports = {
     let day = now.getDay();
     let oneDayLong = 24*60*60*1000 ;
     let MondayTime = nowTime - (day-1)*oneDayLong  ;
-    //let SundayTime =  nowTime + (7-day)*oneDayLong ;
-    let monday = new Date(MondayTime);
-    //let sunday = new Date(SundayTime);
+    let monday = moment(new Date(MondayTime)).format("YYYY-MM-DD");
     return monday;
   },
   /**
@@ -290,6 +288,7 @@ module.exports = {
    */
   getWeekAll : function (begin,end) {
     let dateAllArr = [];
+    begin = this.getMonday(begin);
     let ab = begin.split("-");
     let ae = end.split("-");
     let db = new Date();
@@ -299,11 +298,9 @@ module.exports = {
     let unixDb=db.getTime();
     let unixDe=de.getTime();
     for(let k=unixDb;k<=unixDe;){
-      dateAllArr.push((new Date(parseInt(k))));
+
+      dateAllArr.push(moment(new Date(parseInt(k))).format("YYYY-MM-DD"));
       k=k+7*24*60*60*1000;
-    }
-    for (let i = 0; i < dateAllArr.length; i++) {
-      dateAllArr[i] = this.getMonday(dateAllArr[i])
     }
     return dateAllArr;
   },
@@ -311,41 +308,41 @@ module.exports = {
    * 传入某一时间, 如：“2018-6-27”
    * 返回该日期前两天如：“2018-6-25”
    */
-  getYestoday : function (date){       
-    var yesterday_milliseconds=date.getTime();  
+  getYestoday : function (date){
+    var yesterday_milliseconds=date.getTime();
     yesterday_milliseconds = yesterday_milliseconds -(1000*60*60*24)*2;
-    var yesterday = new Date();        
-        yesterday.setTime(yesterday_milliseconds);        
-         
-    var strYear = yesterday.getFullYear();     
-    var strDay = yesterday.getDate();     
-    var strMonth = yesterday.getMonth()+1;   
-    if(strMonth<10)     
-    {     
-        strMonth="0"+strMonth;     
-    }     
-    datastr = strYear+"-"+strMonth+"-"+strDay;   
-    return datastr;   
-  },   
+    var yesterday = new Date();
+        yesterday.setTime(yesterday_milliseconds);
+
+    var strYear = yesterday.getFullYear();
+    var strDay = yesterday.getDate();
+    var strMonth = yesterday.getMonth()+1;
+    if(strMonth<10)
+    {
+        strMonth="0"+strMonth;
+    }
+    datastr = strYear+"-"+strMonth+"-"+strDay;
+    return datastr;
+  },
    /**
    * 传入某一时间, 如：“2018-6-27”
    * 返回该日期下周一
    */
-  getTomorrow : function (date){       
-    var Tomorrow_milliseconds=date.getTime();  
+  getTomorrow : function (date){
+    var Tomorrow_milliseconds=date.getTime();
     Tomorrow_milliseconds = Tomorrow_milliseconds +(1000*60*60*24)*7;
-    var Tomorrow = new Date();        
-        Tomorrow.setTime(Tomorrow_milliseconds);        
-         
-    var strYear = Tomorrow.getFullYear();     
-    var strDay = Tomorrow.getDate();     
-    var strMonth = Tomorrow.getMonth()+1;   
-    if(strMonth<10)     
-    {     
-        strMonth="0"+strMonth;     
-    }     
-    datastr = strYear+"-"+strMonth+"-"+strDay;   
-    return datastr;   
+    var Tomorrow = new Date();
+        Tomorrow.setTime(Tomorrow_milliseconds);
+
+    var strYear = Tomorrow.getFullYear();
+    var strDay = Tomorrow.getDate();
+    var strMonth = Tomorrow.getMonth()+1;
+    if(strMonth<10)
+    {
+        strMonth="0"+strMonth;
+    }
+    datastr = strYear+"-"+strMonth+"-"+strDay;
+    return datastr;
   },
   /**
    * 传入一个日期, 如：“2018-06-27”
@@ -364,5 +361,5 @@ module.exports = {
       k=k+24*60*60*1000;
     }
     return dateAllArr;
-  },   
+  },
 };

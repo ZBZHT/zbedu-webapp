@@ -20,13 +20,10 @@
             <el-table-column prop="sick" label="请假">
             </el-table-column>
 
-            <el-table-column prop="late" label="迟到">
+            <el-table-column prop="late" label="迟到(总时间)">
             </el-table-column>
 
             <el-table-column prop="dispear" label="缺勤">
-            </el-table-column>
-
-            <el-table-column prop="lateTime" label="迟到总时间">
             </el-table-column>
 
           </el-table>
