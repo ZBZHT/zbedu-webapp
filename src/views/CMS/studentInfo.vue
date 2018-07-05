@@ -2,42 +2,33 @@
   <div class="studentInfo">
     <el-col :span="19">
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick(tab, event)">
         <el-tab-pane label="信息查询" name="first">
           <el-table
             :data="tableData"
             border
             style="width: 100%">
-            <el-table-column
-              prop="name"
-              label="姓名"
-              width="180">
+            <el-table-column prop="stuName" label="姓名" width="120">
             </el-table-column>
-            <el-table-column
-              prop="class"
-              label="班级"
-              width="180">
+
+            <el-table-column prop="className" label="班级" width="180">
             </el-table-column>
-            <el-table-column
-              prop="here"
-              label="出勤">
+
+            <el-table-column prop="here" label="出勤">
             </el-table-column>
-            <el-table-column
-              prop="sick"
-              label="请假">
+
+            <el-table-column prop="sick" label="请假">
             </el-table-column>
-            <el-table-column
-              prop="late"
-              label="迟到">
+
+            <el-table-column prop="late" label="迟到">
             </el-table-column>
-            <el-table-column
-              prop="dispear"
-              label="缺勤">
+
+            <el-table-column prop="dispear" label="缺勤">
             </el-table-column>
-            <el-table-column
-              prop="lateTime"
-              label="迟到总时间">
+
+            <el-table-column prop="lateTime" label="迟到总时间">
             </el-table-column>
+
           </el-table>
         </el-tab-pane>
         <el-tab-pane label="请假信息" name="second">
@@ -48,38 +39,37 @@
           <el-dialog title="请假申请" :visible.sync="dialogFormVisible">
                 <span class="demonstration">请假时间</span>
                 <el-date-picker
-                  v-model="form.date4"
+                  v-model="form.date"
                   type="datetimerange"
                   range-separator="至"
                   start-placeholder="开始日期"
-                  end-placeholder="结束日期">
+                  end-placeholder="结束日期"
+                  :default-time="['08:00:00', '20:00:00']">
                 </el-date-picker>
-
             <el-form :model="form" ref="form">
               <el-form-item label="请假事由">
-                <el-input type="textarea" v-model="form.desc"></el-input>
+                <el-input type="textarea" v-model="form.reason"></el-input>
               </el-form-item>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
               <el-button @click="dialogFormVisible = false">取 消</el-button>
-              <el-button type="primary" @click="apply(),dialogFormVisible = false">确 定</el-button>
+              <el-button type="primary" @click="apply()">确 定</el-button>
             </div>
           </el-dialog>
 
           <el-table
             :data="tableData"
             style="width: 100%">
-            <el-table-column
-              prop="time"
-              label="请假时间"
-              width="180">
+            <el-table-column prop="stuName" label="请假人" width="120">
             </el-table-column>
-            <el-table-column
-              prop="class"
-              label="请假事由"
-              width="180">
+            <el-table-column prop="date" label="请假时间" width="280">
             </el-table-column>
+            <el-table-column prop="reason" label="请假事由">
+            </el-table-column>
+            <el-table-column prop="state" label="状态">
+            </el-table-column>
+
           </el-table>
         </el-tab-pane>
       </el-tabs>
@@ -103,13 +93,11 @@
         userType: this.$store.state.userType,
         activeName: 'first',
         dateData:[],
-        tableData: [{
-          name: '王小虎',
-        }],
+        tableData: [],
         dialogFormVisible: false,
         form: {
-          date4: [],
-          desc: ''
+          date: [],
+          reason: ''
         },
         formLabelWidth: '120px',
         endDatePicker:this.processDate(),
@@ -119,17 +107,42 @@
 
     },
     mounted() {
+        this.getStuLeaveMsg();
 
 
     },
     methods: {
       handleClick(tab, event) {
-        console.log(tab, event);
+        //console.log(tab, event);
       },
-      
+      //获取请假信息
+      getStuLeaveMsg(){
+        axios.post('/teacherCMS/getStuLeaveMsg', {
+          data: {
+            form: '',
+          }
+        }).then((res) => {
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            for (let i = 0; i < resData.length; i++) {
+              //console.log(resData[i]);
+              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + '~' + resData[i].endDate + ',' + resData[i].endTime;
+              if (resData[i].state === 0) {
+                resData[i].state = '已批准'
+              } else if (resData[i].state === 1) {
+                resData[i].state = '待审核'
+              }else if (resData[i].state === 2) {
+                resData[i].state = '未批准'
+              }
+            }
+            this.tableData = resData;
+          }
+        });
+      },
+
       //创建考试结束时间不能大于开始时间
       processDate(){
-        let self = this
+        let self = this;
         return {
           disabledDate(time){
             return time.getTime() < self.form.date1;
@@ -137,11 +150,26 @@
         }
       },
       apply(){
-        axios.post('/teacherCMS/newCourseTable', {
+        this.dialogFormVisible = false;
+        this.form.date[0] = moment(this.form.date[0]).format("YYYY-MM-DD,HH:mm");
+        this.form.date[1] = moment(this.form.date[1]).format("YYYY-MM-DD,HH:mm");
+        let date0 = this.form.date[0].split(",");
+        let date1 = this.form.date[1].split(",");
+        let leaveMsg = {
+          startDate: date0[0],
+          endDate: date1[0],
+          startTime: date0[1],
+          endTime: date1[1],
+          reason: this.form.reason,
+        };
+        axios.post('/teacherCMS/newStuLeaveMsg', {
           data: {
-            form:this.form
+            form: leaveMsg
           }
         }).then((res) => {
+            if (res.data.code === 0) {
+              this.getStuLeaveMsg();
+            }
 
         });
       }

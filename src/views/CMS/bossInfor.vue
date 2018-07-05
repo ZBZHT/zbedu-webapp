@@ -9,12 +9,32 @@
       </el-select>
 
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick" v-show="showThree">
-        <el-tab-pane label="信息查询" name="first">
+        <el-tab-pane label="考勤动态" name="first">
+          <div class="mainContent">
+            <el-row class="guidance" style="padding-top: 0;text-align: left">
+              <p style="text-align: left">课程名称：</p>
+              <p style="text-align: left">任课老师：</p>
+              <span>颜色注解 ：</span>
+              <el-button size="mini" type="success">已签到</el-button>
+              <el-button size="mini" type="danger">缺勤</el-button>
+              <el-button size="mini" type="warning">迟到</el-button>
+              <el-button size="mini" type="primary">请假</el-button>
+            </el-row>
+          </div>
+          <div class="currTable">
+            <div class="currTable1" v-for="item in stateList">
+              <el-button class='currTable2' size="mini" :type='item.state'>{{item.stuName}}</el-button>
+
+            </div>
+          </div>
+
+        </el-tab-pane>
+        <el-tab-pane label="信息查询" name="second">
 
           <select-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></select-table>
 
         </el-tab-pane>
-        <el-tab-pane label="请假审批" name="second">
+        <el-tab-pane label="请假审批" name="third">
 
           <b-card no-body>
             <b-tabs pills card vertical>
@@ -64,20 +84,20 @@
                     <el-table-column prop="stuName" label="请假人" width="120">
                     </el-table-column>
 
-                    <el-table-column prop="date" label="请假时间" width="300">
-                    </el-table-column>
+                  <el-table-column prop="date" label="请假时间" width="300">
+                  </el-table-column>
 
-                    <el-table-column prop="courseName" label="课程">
-                    </el-table-column>
+                  <el-table-column prop="courseName" label="课程">
+                  </el-table-column>
 
-                    <el-table-column prop="className" label="班级" width="100">
-                    </el-table-column>
+                  <el-table-column prop="className" label="班级" width="100">
+                  </el-table-column>
 
-                    <el-table-column prop="reason" label="请假事由">
-                    </el-table-column>
+                  <el-table-column prop="reason" label="请假事由">
+                  </el-table-column>
 
-                    <el-table-column prop="state" label="请假状态" width="100">
-                    </el-table-column>
+                  <el-table-column prop="state" label="请假状态" width="100">
+                  </el-table-column>
 
                     <el-table-column label="操作" width="100">
                       <template slot-scope="scope">
@@ -130,6 +150,24 @@
         leaveMsg: [],
         leaveMsg2: [],
         course: [],
+        stateList: [
+          {
+            "stuName": "学生1",
+            "state": 'success'
+          },
+          {
+            "stuName": "学生2",
+            "state": 'danger'
+          },
+          {
+            "stuName": "学生3",
+            "state": 'warning'
+          },
+          {
+            "stuName": "学生4",
+            "state": 'primary'
+          }
+        ]
       }
     },
     computed: {
@@ -142,6 +180,18 @@
 
     },
     methods: {
+      // 添加成功后提示信息
+      addSuccess(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      // 添加失败提示信息
+      addDefeat(msg) {
+        this.$message.error(msg);
+      },
       //选择班级显示table，选择班级切换数据
       showThreeTable(){
         this.course = '';
@@ -190,6 +240,8 @@
       },
       //获取请假信息
       getLeaveMsg(){
+        this.leaveMsg = [];
+        this.leaveMsg2 = [];
         axios.post('/teacherCMS/getLeaveMsg', {
           data: {
             className: this.classGrade,
@@ -210,32 +262,40 @@
                 this.leaveMsg2.push(resData[i])
               }
             }
-            console.log(this.leaveMsg);
-            console.log(this.leaveMsg2);
+            //console.log(this.leaveMsg);
+            //console.log(this.leaveMsg2);
           }
         });
       },
       //批准-不批准
       alterLeaveState(row, state){
-        console.log(row);
-        console.log(state);
-        /*axios.post('/teacherCMS/alterLeaveState', {
-         data: {
-         className: this.classGrade,
-         }
-         }).then((res) => {
-         let resData = res.data;
-         console.log(resData);
-
-         });*/
+        //console.log(row);
+        //console.log(state);
+        axios.post('/teacherCMS/alterLeaveState', {
+          data: {
+            leaveState: row,
+            state: state,
+          }
+        }).then((res) => {
+          let resData = res.data;
+          if (res.data.code === 0) {
+            this.addSuccess('已批准');
+            this.getLeaveMsg();
+          } else if (res.data.code === 1) {
+            this.addDefeat('修改出错')
+          }
+          console.log(resData);
+        });
       },
       //批准
       ratify(index, row) {
         //console.log(index, row);
         this.alterLeaveState(row, 0)
       },
+      //不批准
       prohibit(index, row) {
-        console.log(index, row);
+        //console.log(index, row);
+        this.alterLeaveState(row, 2)
       },
 
       handleClick(tab, event) {
@@ -321,6 +381,24 @@
   .bossInfor #__BVID__11__BV_tab_container_ {
     min-width: 70%;
   }
-
+  .bossInfor .mainContent{
+    margin:0 auto;
+    padding-left: 10px;
+    box-sizing:border-box;
+  }
+  .bossInfor .el-tabs__header{
+    margin: 0 0 10px;
+  }
+  .bossInfor p{
+    margin-bottom: 0.5rem;
+  }
+  .bossInfor .currTable{
+    padding: 10px;
+    text-align: left;
+  }
+  .bossInfor .currTable2{
+    float: left;
+    margin: 2px;
+  }
 
 </style>

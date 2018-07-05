@@ -1,5 +1,11 @@
 <template>
   <div class="selectTable">
+    <div class="colorButtons">
+      <el-button size="mini" type="success">出勤</el-button>
+      <el-button size="mini" type="danger">缺勤</el-button>
+      <el-button size="mini" type="warning">迟到</el-button>
+      <el-button size="mini" type="primary">请假</el-button>
+    </div>  
     <el-button type="primary" @click="previous()" class="pageButton"> < </el-button>
     <div class="classPlan">
       <div class="classPlan_top">
@@ -33,15 +39,10 @@
                     <p>{{item3.teacher}}</p>
                     <p>{{item3.courseName}}</p>
                     <p>{{item3.courseAddress}}</p>
-                    <div class="bing"></div>
-                      <!--<schart class="pie"-->
-                          <!--:canvasId="item3.teacher"-->
-                          <!--:type="type"-->
-                          <!--:width="width"-->
-                          <!--:height="height"-->
-                          <!--:data="data"-->
-                          <!--:options="options"-->
-                      <!--&gt;</schart>-->
+                    <!--<div class="bing"></div>-->
+                    <div :id="item3.teacher">
+
+                    </div>
 
                 </td>
             </tr>
@@ -104,14 +105,225 @@
   import axios from 'axios'
   import core from '../../../assets/js/core.js'
   import moment from 'moment'
-  import Schart from 'vue-schart';
-
+  import echarts from 'echarts'
 
   export default {
     name: 'selectTable',
     props: ['course','mondayDate','weekDate'],
     data() {
       return {
+        echarts1_option:{
+          backgroundColor: '#fff',
+          series : [
+              {
+                  type: 'pie',
+                  radius: '50%',
+                  data:[
+                    {
+                      value:28,
+                      name:'28',
+                      itemStyle: {
+                          color: 'rgb(103,194,58)'
+                      }
+                    }, 
+                    {
+                      value:1,
+                      name:'1',
+                      itemStyle: {
+                          color: 'rgb(245,108,108)'
+                      }
+                    }, 
+                    {
+                      value:1,
+                      name:'1',
+                      itemStyle: {
+                          color: 'rgb(230,162,60)'
+                      }
+                    }, 
+                    {
+                      value:0,
+                      name:'0',
+                      itemStyle: {
+                          color: 'rgb(0,122,204)'
+                      }
+                    }, 
+                  ],
+                  label: {
+                      normal: {
+                          textStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+                  labelLine: {
+                      normal: {
+                          lineStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+            }
+          ]
+        },
+        echarts2_option:{
+          backgroundColor: '#fff',
+          series : [
+              {
+                  type: 'pie',
+                  radius: '50%',
+                  data:[
+                    {
+                      value:20,
+                      name:'20',
+                      itemStyle: {
+                          color: 'rgb(103,194,58)'
+                      }
+                    }, 
+                    {
+                      value:1,
+                      name:'1',
+                      itemStyle: {
+                          color: 'rgb(245,108,108)'
+                      }
+                    }, 
+                    {
+                      value:2,
+                      name:'2',
+                      itemStyle: {
+                          color: 'rgb(230,162,60)'
+                      }
+                    }, 
+                    {
+                      value:7,
+                      name:'7',
+                      itemStyle: {
+                          color: 'rgb(0,122,204)'
+                      }
+                    }, 
+                  ],
+                  label: {
+                      normal: {
+                          textStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+                  labelLine: {
+                      normal: {
+                          lineStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+            }
+          ]
+        },
+        echarts3_option:{
+          backgroundColor: '#fff',
+          series : [
+              {
+                  type: 'pie',
+                  radius: '50%',
+                  data:[
+                    {
+                      value:25,
+                      name:'25',
+                      itemStyle: {
+                          color: 'rgb(103,194,58)'
+                      }
+                    }, 
+                    {
+                      value:0,
+                      name:'0',
+                      itemStyle: {
+                          color: 'rgb(245,108,108)'
+                      }
+                    }, 
+                    {
+                      value:5,
+                      name:'5',
+                      itemStyle: {
+                          color: 'rgb(230,162,60)'
+                      }
+                    }, 
+                    {
+                      value:5,
+                      name:'5',
+                      itemStyle: {
+                          color: 'rgb(0,122,204)'
+                      }
+                    }, 
+                  ],
+                  label: {
+                      normal: {
+                          textStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+                  labelLine: {
+                      normal: {
+                          lineStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+            }
+          ]
+        },
+        echarts4_option:{
+          backgroundColor: '#fff',
+          series : [
+              {
+                  type: 'pie',
+                  radius: '50%',
+                  data:[
+                    {
+                      value:30,
+                      name:'30',
+                      itemStyle: {
+                          color: 'rgb(103,194,58)'
+                      }
+                    }, 
+                    {
+                      value:0,
+                      name:'0',
+                      itemStyle: {
+                          color: 'rgb(245,108,108)'
+                      }
+                    }, 
+                    {
+                      value:0,
+                      name:'0',
+                      itemStyle: {
+                          color: 'rgb(230,162,60)'
+                      }
+                    }, 
+                    {
+                      value:0,
+                      name:'0',
+                      itemStyle: {
+                          color: 'rgb(0,122,204)'
+                      }
+                    }, 
+                  ],
+                  label: {
+                      normal: {
+                          textStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+                  labelLine: {
+                      normal: {
+                          lineStyle: {
+                              color: 'rgb(0, 0, 0)'
+                          }
+                      }
+                  },
+            }
+          ]
+        },
         weekData: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
         classData: ['1', '2', '3', '4', '5'],
         alterForm:{
@@ -122,19 +334,6 @@
           courseAddress:''
         },
         dialogTableVisible: false,
-        canvasId: '付老师',
-        type: 'pie',
-        width: 100,
-        height: 70,
-        data: [
-            {name: '2014', value: 1342},
-            {name: '2015', value: 2123},
-            {name: '2016', value: 1654},
-            {name: '2017', value: 1795},
-        ],
-        options: {
-            title: '本节考勤'
-        },
         classGrade: this.$store.state.classGrade,
         courseName: "计算机原理",
         courseDate: "2018-6-18",
@@ -149,8 +348,29 @@
     mounted() {
       //获取课程框的高
 
+      //获取饼
+      var fun = window.setInterval(function(){
+        if(echarts.init(document.getElementById('aa'))){
+          let myChart = echarts.init(document.getElementById('aa'));
+          console.log(myChart)
+          // 绘制图表，this.echarts1_option是数据
+          myChart.setOption(this.echarts1_option);
+          console.log("11")
+          let myChart2 = echarts.init(document.getElementById('bb'));
+          myChart2.setOption(this.echarts2_option);
+          let myChart3 = echarts.init(document.getElementById('cc'));
+          myChart3.setOption(this.echarts3_option);
+          let myChart4 = echarts.init(document.getElementById('dd'));
+          myChart4.setOption(this.echarts4_option);
+          window.clearInterval(fun);
+        }else{
+          console.log("nmnmmn")
+        }
+      }.bind(this),1000);
+
     },
     methods: {
+
       //重置数据
 
       //点击上一个
@@ -229,7 +449,7 @@
         },
     },
 
-    components: {Schart}
+    components: {}
   }
 </script>
 
@@ -378,11 +598,13 @@
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;
+    width: 100px;
   }
   .selectTable .eachDataP2 p {
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;
+    width: 100px;
   }
   .selectTable .bing{
       width:160px;
@@ -402,11 +624,10 @@
       right: -7%;
     display:block;
   }
-  .selectTable #can1{
+  .selectTable #aa{
     display:none;
   }
-
-  .selectTable .eachDataP:hover #can1{
+  .selectTable .eachDataP:hover #aa{
     position:absolute;
       bottom: 112px;
       right: -7%;
@@ -432,5 +653,71 @@
   .selectTable .row-bg {
     padding: 10px 0;
     background-color: #f9fafc;
+  }
+  .selectTable .colorButtons{
+    position:absolute;
+    top: 0;
+    right: 0;
+  }
+  .selectTable .colorButtons .el-button{
+    width:20%;
+    height:100%;
+  }
+
+  .selectTable #aa{
+    display:none;
+    width:200px;
+    height:200px;
+    overflow: inherit;
+    background:#fff;
+    z-index:9999;
+  }
+  .selectTable .eachDataP:hover #aa{
+    position:absolute;
+    top: -150px;
+    right: -40px;
+    display:block;
+  }
+  .selectTable #bb{
+    display:none;
+    width:200px;
+    height:200px;
+    overflow: inherit;
+    background:#fff;
+    z-index:9999;
+  }
+  .selectTable .eachDataP:hover #bb{
+    position:absolute;
+    top: -150px;
+    right: -40px;
+    display:block;
+  }
+  .selectTable #cc{
+    display:none;
+    width:200px;
+    height:200px;
+    overflow: inherit;
+    background:#fff;
+    z-index:9999;
+  }
+  .selectTable .eachDataP:hover #cc{
+    position:absolute;
+    top: -150px;
+    right: -40px;
+    display:block;
+  }
+  .selectTable #dd{
+    display:none;
+    width:200px;
+    height:200px;
+    overflow: inherit;
+    background:#fff;
+    z-index:9999;
+  }
+  .selectTable .eachDataP:hover #dd{
+    position:absolute;
+    top: -150px;
+    right: -40px;
+    display:block;
   }
 </style>

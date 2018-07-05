@@ -479,11 +479,13 @@
     height: 108px;
   }
   .showTable .eachDataP p {
+    width: 100px;
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;
   }
   .showTable .eachDataP2 p {
+    width: 100px;
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;

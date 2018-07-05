@@ -41,25 +41,8 @@
         activeName: 'first',
         mondayDate:'',
         weekDate:[],
-        course: {},
-        stateList: [
-          {
-            "stuName": "学生1",
-            "state": 'success'
-          },
-          {
-            "stuName": "学生2",
-            "state": 'danger'
-          },
-          {
-            "stuName": "学生3",
-            "state": 'warning'
-          },
-          {
-            "stuName": "学生4",
-            "state": 'primary'
-          }
-        ]
+        course: [],
+        stateList: []
       }
     },
     computed: {
@@ -69,8 +52,28 @@
       handleClick(tab, event) {
         console.log(tab, event);
       },
+      //获取-课程表
+      getCourseTable(resDate){
+        axios.post('/teacherCMS/getCourseTable', {
+          data: {
+            courseDate: resDate,
+            className: this.classGrade,
+          }
+        }).then((res) => {
+          console.log(res.data.result);
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            this.course = resData.course[0];
+            this.mondayDate = res.data.result.courseDate;
+            this.weekDate = core.getDayAll(new Date(this.mondayDate));
+          }
+        });
+      },
     },
     mounted() {
+      let newDate = core.getMonday(new Date());
+      newDate = moment(newDate).format("YYYY-MM-DD");
+      this.getCourseTable(newDate)
 
 
     },

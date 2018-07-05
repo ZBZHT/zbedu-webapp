@@ -338,27 +338,29 @@ router.post('/getUserData', function (req, res) {
       user: username,
     }).then(function (userType) {
       //console.log(userType);
-      if (userType.userType == 'SA' || userType.userType == 'EA') {
-        Teacher.find({
-          userType: {"$in": ['EA', 'T']}
-        }).then(function (teacher) {
-          if (teacher) {
-            Student.find().then(function (student) {
-              //console.log(teacher);
-              if (student) {
-                res.status(200).send({
-                  teacher: teacher,
-                  student: student,
-                });
-              }
-            });
-          }
-        });
-      } else {
-        res.status(404).send({
-          Msg: '该用户无权限',
-          success: 1,
-        });
+      if (userType !== null) {
+        if (userType.userType == 'SA' || userType.userType == 'EA') {
+          Teacher.find({
+            userType: {"$in": ['EA', 'T']}
+          }).then(function (teacher) {
+            if (teacher) {
+              Student.find().then(function (student) {
+                //console.log(teacher);
+                if (student) {
+                  res.status(200).send({
+                    teacher: teacher,
+                    student: student,
+                  });
+                }
+              });
+            }
+          });
+        } else {
+          res.status(404).send({
+            Msg: '该用户无权限',
+            success: 1,
+          });
+        }
       }
     });
   } else {
@@ -2295,10 +2297,34 @@ router.post('/newCourseTable', function (req, res) {
 //获取-课程表
   router.post('/getCourseTable', function (req, res) {
     let userType = req.session.users.userType;
+    let username = req.session.users.username;
     let reqData = req.body.data;
-    //console.log(reqData.courseDate);
+    //console.log(reqData);
     //console.log(reqData.className);
-    if (userType === 'EA' || userType === 'T' || userType === 'SA') {
+    let p1 = new Promise((resolve, reject) => {
+      if (userType === 'S' || userType === 'O') {
+        console.log('学生登录');
+        Student.find({
+          user: username,
+        }).then(function (stu) {
+          //console.log(stu[0].classGrade);
+          if (stu === null) {
+            console.log('找不到该课程表');
+            res.status(200).send({code: 1, msg: '登录失效或未登录'});
+          } else {
+            //console.log(stu);
+            reqData.className = stu[0].classGrade;
+            resolve('成功了1')
+          }
+        });
+      } else {
+        resolve('成功了1')
+      }
+    });
+
+    Promise.all([p1]).then((result) => {
+      console.log(reqData);
+      //console.log(result);
       CourseTable.findOne({
         courseDate: reqData.courseDate,
         className: reqData.className
@@ -2312,7 +2338,10 @@ router.post('/newCourseTable', function (req, res) {
           res.status(200).send({code: 0, result: courseTable});
         }
       });
-    }
+    }).catch((error) => {
+      console.log(error)
+    });
+
   });
 //修改-课程表
 /*router.post('/alterCourseTable', function (req, res) {
@@ -2375,10 +2404,64 @@ router.post('/getLeaveMsg', function (req, res) {
 });
 //批准请假
 router.post('/alterLeaveState', function (req, res) {
-  let reqData = req.body.data;
-  console.log(reqData);
+  let reqData = req.body.data.leaveState;
+  let userType = req.session.users.userType;
+  //console.log(reqData);
+  //console.log(req.body.data.state);
+  if (userType === 'EA' || userType === 'SA') {
+    StuLeave.findOneAndUpdate({
+      _id: reqData._id
+    }, {
+      state: req.body.data.state,
+    }, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(200).send({code: 1, Msg: '更新失败',});
+      } else {
+        console.log('密码更新成功');
+        res.status(200).send({code: 0, Msg: '更新成功',});
+      }
+    });
+  }
+});
+//学生-请假
+router.post('/newStuLeaveMsg', function (req, res) {
+  let reqData = req.body.data.form;
+  let username = req.session.users.username;
+  //console.log(reqData);
+  Student.findOne({
+    user: username,
+  }).then(function (user) {
+    //console.log(user);
+    let stuLeave = new StuLeave(
+      {
+        startDate: reqData.startDate,
+        endDate: reqData.endDate,
+        startTime: reqData.startTime,
+        endTime: reqData.endTime,
+        stuName: username,
+        className: user.classGrade,
+        reason: reqData.reason,
+        state: 1,
+      }
+    );
+    stuLeave.save(function (err) {
+      if (err) {
+        res.status(200).send({code: 1, Msg: '保存失败',});
+      } else {
+        res.status(200).send({code: 0, Msg: '保存成功',});
+      }
+    });
+  });
+
+
+});
+//学生-获取请假信息
+router.post('/getStuLeaveMsg', function (req, res) {
+  let username = req.session.users.username;
+  //console.log(reqData);
   StuLeave.find({
-    className: reqData.className,
+    stuName: username,
   }).then(function (stuLeave) {
     console.log(stuLeave);
     if (stuLeave.length !== 0) {
