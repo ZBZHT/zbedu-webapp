@@ -1,8 +1,8 @@
 <template>
   <div class="teacherInfor">
     <el-col :span="19">
-      <span style="text-align: left">课程名称</span>
-      <span style="text-align: left">(时间)</span>
+      <span style="text-align: left">{{courseName}}</span>
+      <span style="text-align: left">({{courseDate}})</span>
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="考勤动态" name="first">
           <div class="mainContent">
@@ -14,7 +14,7 @@
             </el-row>
           </div>
           <ul class="currTable">
-            <li class="currTable1" v-for="item in stateList" :style="{background:item.state}">
+            <li class="currTable1" v-for="item in stateList" :style="{background:item.bg}">
               <img class="studentPng" src="../../assets/imgs/user.png">
               <p class="studentName">{{item.stuName}}</p>
             </li>
@@ -40,50 +40,52 @@
         username: this.$store.state.username,
         userType: this.$store.state.userType,
         activeName: 'first',
+        courseName: '',
+        courseDate: '',
         stateList: [
           {
             "stuName": "学生1",
-            "state": 'rgba(103,194,58,0.5)'
+            "bg": 'rgba(103,194,58,0.5)'
           },
           {
             "stuName": "学生2",
-            "state": 'rgba(245,108,108,0.5)'
+            "bg": 'rgba(245,108,108,0.5)'
           },
           {
             "stuName": "学生3",
-            "state": 'rgba(230,162,60,0.5)'
+            "bg": 'rgba(230,162,60,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           },
           {
             "stuName": "学生4",
-            "state": 'rgba(0,122,204,0.5)'
+            "bg": 'rgba(0,122,204,0.5)'
           }
         ],
 
@@ -96,9 +98,57 @@
       handleClick(tab, event) {
         console.log(tab, event);
       },
+      getAllStuClass(){
+        axios.post('/teacherCMS/getAllStuClass', {
+          data: {
+            user: '',
+          }
+        }).then((res) => {
+          let resData = res.data;
+          //console.log(res.data.result);
+          if (resData.code === 0) {
+              this.courseName = resData.result.courseName;
+              this.courseDate = resData.result.startTime + '~' + resData.result.endTime;
+              this.getTimeSheet(resData.result)
+            //this.addSuccess('创建成功')
+          } else if (resData.code === 1) {
+            //this.addSuccess('创建错误')
+          }
+        });
+      },
+      getTimeSheet(data){
+          console.log(data);
+        axios.post('/teacherCMS/getTimeSheet', {
+          data: {
+            courseDate: data.courseDate,
+            startTime: data.startTime,
+          }
+        }).then((res) => {
+          let resData = res.data;
+          let sList = resData.result.stateList;
+          console.log(resData.result);
+          if (resData.code === 0) {
+            for (let i = 0; i < sList.length; i++) {
+              if (sList[i].state === 0) {
+                sList[i].bg = 'rgba(103,194,58,0.5)'
+              } else if (sList[i].state === 1) {
+                sList[i].bg = 'rgba(245,108,108,0.5)'
+              } else if (sList[i].state === 2) {
+                sList[i].bg = 'rgba(230,162,60,0.5)'
+              } else if (sList[i].state === 3) {
+                sList[i].bg = 'rgba(0,122,204,0.5)'
+              }
+            }
+            this.stateList = sList;
+            //this.addSuccess('创建成功')
+          } else if (resData.code === 1) {
+            //this.addSuccess('创建错误')
+          }
+        });
+      },
     },
     mounted() {
-
+        this.getAllStuClass();
 
     },
     components: {}
