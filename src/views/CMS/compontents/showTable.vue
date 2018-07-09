@@ -48,7 +48,7 @@
                 <p>{{item3.courseAddress}}</p>
                 <div class="playButs">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
             </tr>
@@ -61,7 +61,7 @@
                 <p>{{item3.courseAddress}}</p>
                 <div class="playButs">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
             </tr>
@@ -74,7 +74,7 @@
                 <p>{{item3.courseAddress}}</p>
                 <div class="playButs">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
             </tr>
@@ -87,7 +87,7 @@
                 <p>{{item3.courseAddress}}</p>
                 <div class="playButs">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
             </tr>
@@ -232,6 +232,9 @@
     },
     computed: {},
     mounted() {
+        console.log(course);
+        console.log(mondayDate);
+        console.log(weekDate);
 
     },
     methods: {
@@ -298,6 +301,7 @@
             date2:this.weekDate[6],
             cycleTime:'',
             course: course1,
+            edit: true,
           }
         }).then((res) => {
           let resData = res.data;
@@ -311,33 +315,48 @@
         });
       },
       //编辑->删除
-      deleteCourseTable(){
-        let course1 = {
-          startTime:'',
-          endTime:'',
-          teacher:'',
-          courseName:'',
-          courseAddress:'',
-        };
-        axios.post('/teacherCMS/newCourseTable', {
-          data: {
-            className: this.classGrade,
-            index: this.courseIndex,
-            courseDate:this.newCourse,
-            date1:this.weekDate[0],
-            date2:this.weekDate[6],
-            cycleTime:'',
-            course: course1,
-          }
-        }).then((res) => {
-          let resData = res.data;
-          if (resData.code === 0) {
-            this.getCourseTable(this.weekDate[0]);
-            this.centerDialogVisible1 = false;
-            this.addSuccess('删除成功')
-          } else if (resData.code === 1) {
-            this.addSuccess('删除错误')
-          }
+      deleteCourseTable(item, newCourse, index){
+        this.$confirm('此操作将永久删除, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.courseIndex = index;
+          this.newCourse = newCourse;
+          let course1 = {
+            startTime:'',
+            endTime:'',
+            teacher:'',
+            courseName:'',
+            courseAddress:'',
+          };
+          axios.post('/teacherCMS/newCourseTable', {
+            data: {
+              className: this.classGrade,
+              index: this.courseIndex,
+              courseDate:this.newCourse,
+              date1:this.weekDate[0],
+              date2:this.weekDate[6],
+              cycleTime:'',
+              course: course1,
+              edit: true,
+            }
+          }).then((res) => {
+            let resData = res.data;
+            if (resData.code === 0) {
+              this.getCourseTable(this.weekDate[0]);
+              this.centerDialogVisible1 = false;
+              this.addSuccess('删除成功')
+            } else if (resData.code === 1) {
+              this.addSuccess('删除错误')
+            }
+          });
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
         });
       },
       //点击上一个

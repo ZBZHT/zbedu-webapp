@@ -94,30 +94,20 @@
 
                                 <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
                                 <el-input v-model="form.courseName" style="width: 85%;"></el-input>
-                                <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
                                 </el-form-item>
 
                                 <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
-                                  <el-input v-model="form.teacher" style="width: 85%;"></el-input>
-                                <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
+                                  <el-select v-model="form.teacher" filterable
+                                             allow-create
+                                             default-first-option placeholder="请选择任课老师">
+                                      <div v-for="item in allTeachName">
+                                        <el-option  :key="item.label" :label="item.label" :value="item.label"></el-option>
+                                      </div>
+                                  </el-select>
                                 </el-form-item>
 
                                 <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
                                   <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
-                                <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                                    <!--<div v-for="item in majorM">-->
-                                      <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                                    <!--</div>-->
-                                <!--</el-select>-->
                                 </el-form-item>
 
                                 <el-form-item label="课程周期" prop="cycleTime">
@@ -208,30 +198,20 @@
 
                             <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
                               <el-input v-model="form.courseName" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
-                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
+                              <el-select v-model="form.teacher" filterable
+                                         allow-create
+                                         default-first-option placeholder="请选择任课老师">
+                                <div v-for="item in allTeachName">
+                                  <el-option  :key="item.label" :label="item.label" :value="item.label"></el-option>
+                                </div>
+                              </el-select>
                             </el-form-item>
 
                             <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
                               <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="课程周期" prop="cycleTime">
@@ -320,30 +300,20 @@
 
                             <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
                               <el-input v-model="form.courseName" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
-                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
+                              <el-select v-model="form.teacher" filterable
+                                         allow-create
+                                         default-first-option placeholder="请选择任课老师">
+                                <div v-for="item in allTeachName">
+                                  <el-option  :key="item.label" :label="item.label" :value="item.label"></el-option>
+                                </div>
+                              </el-select>
                             </el-form-item>
 
                             <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
                               <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="课程周期" prop="cycleTime">
@@ -432,30 +402,20 @@
 
                             <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
                               <el-input v-model="form.courseName" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
-                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
+                              <el-select v-model="form.teacher" filterable
+                                         allow-create
+                                         default-first-option placeholder="请选择任课老师">
+                                <div v-for="item in allTeachName">
+                                  <el-option  :key="item.label" :label="item.label" :value="item.label"></el-option>
+                                </div>
+                              </el-select>
                             </el-form-item>
 
                             <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
                               <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="课程周期" prop="cycleTime">
@@ -544,30 +504,20 @@
 
                             <el-form-item label="课" prop="courseName">&emsp;&nbsp;程
                               <el-input v-model="form.courseName" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseName" placeholder="请选择课程名称">-->
-
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="教" prop="teacher">&emsp;&nbsp;师
-                              <el-input v-model="form.teacher" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.teacher" placeholder="请选择任课老师">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
+                              <el-select v-model="form.teacher" filterable
+                                         allow-create
+                                         default-first-option placeholder="请选择任课老师">
+                                <div v-for="item in allTeachName">
+                                  <el-option  :key="item.label" :label="item.label" :value="item.label"></el-option>
+                                </div>
+                              </el-select>
                             </el-form-item>
 
                             <el-form-item label="地" prop="courseAddress">&emsp;&nbsp;点
                               <el-input v-model="form.courseAddress" style="width: 85%;"></el-input>
-                              <!--<el-select v-model="form.courseAddress" placeholder="请选择上课地点">-->
-                              <!--<div v-for="item in majorM">-->
-                              <!--<el-option :label="item.label" :value="item.label"></el-option>-->
-                              <!--</div>-->
-                              <!--</el-select>-->
                             </el-form-item>
 
                             <el-form-item label="课程周期" prop="cycleTime">
@@ -1027,13 +977,16 @@
         centerDialogVisible2: false,
         centerDialogVisible3: false,
         centerDialogVisible4: false,
-        centerDialogVisible5: false
+        centerDialogVisible5: false,
+        allTeachName:[],
+
       }
     },
     computed: {
 
     },
     mounted() {
+      this.getAllTeachName();
 
     },
     methods: {
@@ -1051,7 +1004,7 @@
       },
       //创建考试开始时间不能选择历史日期
       beginDate(){
-        let self = this
+        let self = this;
         return {
           disabledDate(time){
             return time.getTime() < Date.now() - 8.64e7;
@@ -1060,7 +1013,7 @@
       },
       //创建考试结束时间不能大于开始时间
       processDate(){
-        let self = this
+        let self = this;
         return {
           disabledDate(time){
             return time.getTime() < self.form.date1;
@@ -1080,11 +1033,6 @@
       //  console.log(this.form.date1.getDay())
 
       },
-      addEach1(index){
-        this.courseIndex = index;
-        this.courseIndexArr[index] = index;
-        console.log(this.courseIndexArr)
-      },
       newCourseTable(form,courseD){
           let course1 = {
             startTime:form.date3,
@@ -1102,6 +1050,7 @@
             date2:form.date2,
             cycleTime:form.cycleTime,
             course: course1,
+            edit: false,
           }
         }).then((res) => {
           let resData = res.data;
@@ -1112,7 +1061,29 @@
           }
         });
       },
+      //获取教师列表
+      getAllTeachName(){
+        axios.post('/teacherCMS/getAllTeachName', {
+          data: {
+            className: '',
+          }
+        }).then((res) => {
+          let resData = res.data.allTeachName;
+          //console.log(resData);
+          if (res.data.code === 0) {
+              this.allTeachName = res.data.allTeachName
+          } else if (resData.code === 1) {
+              console.log('未获取到教师列表');
+          }
+        });
+      },
 
+      addEach1(index){
+          console.log(this.allTeachName);
+        this.courseIndex = index;
+        this.courseIndexArr[index] = index;
+        //console.log(this.courseIndexArr)
+      },
       cancel1(){
         for(let i = 0; i < this.courseIndexArr.length; i++){
           if(this.courseIndexArr[i] !== -1){
@@ -1169,7 +1140,7 @@
       addEach2(index){
         this.courseIndex2 = index;
         this.courseIndexArr2[index] = index;
-        console.log(this.courseIndexArr2)
+        //console.log(this.courseIndexArr2)
       },
       cancel2(){
         for(let i = 0; i < this.courseIndexArr2.length; i++){
@@ -1227,7 +1198,7 @@
       addEach3(index){
         this.courseIndex3 = index;
         this.courseIndexArr3[index] = index;
-        console.log(this.courseIndexArr3)
+        //console.log(this.courseIndexArr3)
       },
       cancel3(){
         for(let i = 0; i < this.courseIndexArr3.length; i++){
@@ -1285,7 +1256,7 @@
       addEach4(index){
         this.courseIndex4 = index;
         this.courseIndexArr4[index] = index;
-        console.log(this.courseIndexArr4)
+        //console.log(this.courseIndexArr4)
       },
       cancel4(){
         for(let i = 0; i < this.courseIndexArr4.length; i++){
@@ -1343,7 +1314,7 @@
       addEach5(index){
         this.courseIndex5 = index;
         this.courseIndexArr5[index] = index;
-        console.log(this.courseIndexArr5)
+        //console.log(this.courseIndexArr5)
       },
       cancel5(){
         for(let i = 0; i < this.courseIndexArr5.length; i++){

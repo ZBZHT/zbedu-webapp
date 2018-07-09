@@ -57,6 +57,10 @@
         <div v-if="isShow602">
           <boss-infor></boss-infor>
         </div>
+        <!--课堂管理（管理员）请假审批-->
+        <div v-if="isShow603">
+          <boss-check></boss-check>
+        </div>
         <!--我的课堂（教师）课堂计划-->
         <div v-if="isShow701">
           <teacher-plan></teacher-plan>
@@ -102,6 +106,7 @@
   import TeacherCMS from './teacherCMS'
   import bossPlan from './bossPlan'
   import bossInfor from './bossInfor'
+  import bossCheck from './bossCheck'
   import teacherPlan from './teacherPlan'
   import teacherInfor from './teacherInfor'
   import teacherZong from './teacherZong'
@@ -134,6 +139,7 @@
         isShow501: false,
         isShow601: false,
         isShow602: false,
+        isShow603: false,
         isShow701: false,
         isShow702: false,
         isShow703: false,
@@ -160,6 +166,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -178,6 +185,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -196,6 +204,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -214,6 +223,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -232,6 +242,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -250,6 +261,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -268,6 +280,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -286,6 +299,7 @@
           this.isShow501 = true;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -304,6 +318,7 @@
           this.isShow501 = false;
           this.isShow601 = true;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -322,6 +337,26 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = true;
+          this.isShow603 = false;
+          this.isShow701 = false;
+          this.isShow702 = false;
+          this.isShow703 = false;
+          this.isShow801 = false;
+          this.isShow802 = false;
+        }
+        //点击课堂管理（管理员）请假审批
+        if (data.id == 603) {
+          this.isShow101 = false;
+          this.isShow102 = false;
+          this.isShow201 = false;
+          this.isShow202 = false;
+          this.isShow302 = false;
+          this.isShow301 = false;
+          this.isShow401 = false;
+          this.isShow501 = false;
+          this.isShow601 = false;
+          this.isShow602 = false;
+          this.isShow603 = true;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -339,6 +374,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = true;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -357,6 +393,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = true;
           this.isShow703 = false;
@@ -375,6 +412,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = true;
@@ -393,6 +431,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -411,6 +450,7 @@
           this.isShow501 = false;
           this.isShow601 = false;
           this.isShow602 = false;
+          this.isShow603 = false;
           this.isShow701 = false;
           this.isShow702 = false;
           this.isShow703 = false;
@@ -442,6 +482,7 @@
       GameM,
       bossPlan,
       bossInfor,
+      bossCheck,
       teacherPlan,
       teacherInfor,
       teacherZong,

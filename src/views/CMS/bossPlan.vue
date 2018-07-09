@@ -8,7 +8,7 @@
         </div>
       </el-select>
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()" v-show="showThree">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()">
         <el-tab-pane label="授课计划表" name="first">
 
           <show-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></show-table>
@@ -60,6 +60,7 @@
     },
     mounted() {
       this.getClassList();
+
     },
     methods: {
       handleClick(tab, event) {
@@ -68,11 +69,8 @@
       //选择班级显示table，选择班级切换数据
       showThreeTable(){
         this.course = '';
-        this.$store.commit('getClassGrade',this.classGrade);
-        if(this.classGrade != ''){
-          this.showThree = true;
-        }else{
-        }
+        this.classGrade = this.$store.state.classGrade;
+        this.$store.commit('getClassGrade', this.classGrade);
         let resDate = core.getMonday(new Date());
         resDate = moment(resDate).format("YYYY-MM-DD");
         //console.log(resDate)
@@ -87,7 +85,7 @@
             className: this.classGrade,
           }
         }).then((res) => {
-          console.log(res.data.result)
+          console.log(res.data.result);
           let resData = res.data.result;
           if (res.data.code === 0) {
             this.course = resData.course[0];
@@ -142,9 +140,15 @@
             userType: this.userType
           }
         }).then((res) => {
-          //console.log(res.data);
+          //console.log(res.data.classMsg[0].label);
           //this.majorM = res.data.majorMsg;
           this.classM = res.data.classMsg;
+          this.$store.commit('getClassGrade',res.data.classMsg[0].label);
+          this.classGrade = res.data.classMsg[0].label;
+
+          let resDate = core.getMonday(new Date());
+          resDate = moment(resDate).format("YYYY-MM-DD");
+          this.getCourseTable(resDate)
         });
       },
     },

@@ -1551,10 +1551,29 @@ router.post('/getClass', function (req, res) {
   });
 });
 
+//获取所有教师姓名
+router.post('/getAllTeachName', function (req, res) {
+  let userType = req.session.users.userType;
+  if (userType === 'EA' || userType === 'SA') {
+
+    Teacher.find({}).then(function (teacher) {
+      let allTeachName = [];
+      if (teacher.length !== 0) {
+        for (let i = 0; i < teacher.length; i++) {
+          allTeachName.push({label: teacher[i].user});
+        }
+        //console.log(allTeachName);
+        res.status(200).send({code: 0, allTeachName: allTeachName});
+      } else {
+        res.status(404).send({code: 1, Msg: '没有教师'});
+      }
+    });
+
+  }
+});
 
 //修改-某天的课程表方法
 function alterTable1(course1, weekAll) {
-  //console.log(weekAll);
   if (course1.courseDate === 'newCourse') {
     if (course1.index === 0) {
       for (let i = 0; i < weekAll.length; i++) {
@@ -2256,11 +2275,13 @@ router.post('/newCourseTable', function (req, res) {
     let lastWeekAll = core.getDayAll(reqData.date2);
     let date1Time = (new Date(reqData.date1)).getTime();
     let date2Time = (new Date(reqData.date2)).getTime();
-    if ((new Date(firstWeekAll[reqData.index])).getTime() < date1Time) {
-      weekAll.shift();
-    }
-    if ((new Date(lastWeekAll[reqData.index])).getTime() > date2Time) {
-      weekAll.pop()
+    if (reqData.edit === false) {
+      if ((new Date(firstWeekAll[reqData.index])).getTime() < date1Time) {
+        weekAll.shift();
+      }
+      if ((new Date(lastWeekAll[reqData.index])).getTime() > date2Time) {
+        weekAll.pop()
+      }
     }
     //console.log(weekAll);
     let reqSess = req.session.users;
@@ -2268,6 +2289,7 @@ router.post('/newCourseTable', function (req, res) {
     let username = reqSess.username;
     //let reqDate = moment(reqData.reqDate).format("YYYY-MM-DD");
     if (userType === 'EA' || userType === 'SA') {
+
       let p1 = new Promise((resolve, reject) => {
         for (let i = 0; i < weekAll.length; i++) {
           CourseTable.findOne({
@@ -2295,8 +2317,9 @@ router.post('/newCourseTable', function (req, res) {
       });
 
       Promise.all([p1]).then((result) => {
+        //console.log(reqData);
+        //console.log(weekAll);
         alterTable1(reqData,weekAll);
-        //console.log(result);
         res.status(200).send({ code: 0, msg: '创建课程成功'});
       }).catch((error) => {
         console.log(error)
@@ -2315,7 +2338,7 @@ router.post('/getCourseTable', function (req, res) {
       Student.find({
         user: username,
       }).then(function (stu) {
-        //console.log(stu[0].classGrade);
+        //console.log(stu[0]);
         if (stu === null) {
           console.log('找不到该课程表');
           res.status(200).send({code: 1, msg: '登录失效或未登录'});
@@ -2374,7 +2397,6 @@ router.post('/getLeaveMsg', function (req, res) {
   let reqData = req.body.data;
   console.log(reqData);
   StuLeave.find({
-    className: reqData.className,
   }).then(function (stuLeave) {
     console.log(stuLeave);
     if (stuLeave.length !== 0) {
@@ -2481,25 +2503,33 @@ router.post('/dellStuLeaveMsg', function (req, res) {
     }
   })
 });
-//获取某班级全部学生
+//获取当天课程信息
 router.post('/getAllStuClass', function (req, res) {
   let username = req.session.users.username;
   let userType = req.session.users.userType;
   let dayAll = core.getDayAll(moment().format("YYYY-MM-DD"));
   let className1 = '';
-  let course = '';
+  let course = {
+    courseDate: '',
+    teacher: '',
+    courseName: '',
+    startTime: "",
+    endTime: "",
+  };
   let studentAll = [];
   let result = {
     courseDate: '',
     teacher: '',
     courseName: '',
     startTime: "",
-    endTime: ""
+    endTime: "",
   };
+  //console.log(dayAll);
 
   CourseTable.findOne({        //找到班级
     courseDate: dayAll[0],
   }).then(function (courseTable) {
+    //console.log(courseTable);
     if (courseTable !== null) {
       className1 = courseTable.className;
       Student.find({          //找到班级所有学生
@@ -2510,7 +2540,7 @@ router.post('/getAllStuClass', function (req, res) {
             studentAll.push({ stuName: student[i].user, state: 1 });
           }
           let date = moment().format("YYYY-MM-DD");
-          let date1 = new Date(moment().format("YYYY-MM-DD,HH:mm")).getTime();
+          let newDate = new Date(moment().format("YYYY-MM-DD,HH:mm")).getTime();
           let stuArr = [];
           let index = 0;
           for (let i = 0; i < dayAll.length; i++) {
@@ -2523,20 +2553,30 @@ router.post('/getAllStuClass', function (req, res) {
           stuArr.push(courseTable.course[0].newCourse3[index]);
           stuArr.push(courseTable.course[0].newCourse4[index]);
           stuArr.push(courseTable.course[0].newCourse5[index]);
-          course = stuArr[0];
-          for (let i = 1; i < stuArr.length; i++) {
-            let start = new Date(moment(date + ',' + stuArr[i-1].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
-            let end = new Date(moment(date + ',' + stuArr[i].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
-            if (date1 > start && date1 < end ) {
-              course = stuArr[i];
-            }
+          let end0 = new Date(moment(date + ',' + stuArr[0].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
+          let end1 = new Date(moment(date + ',' + stuArr[1].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
+          let end2 = new Date(moment(date + ',' + stuArr[2].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
+          let end3 = new Date(moment(date + ',' + stuArr[3].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
+          let end4 = new Date(moment(date + ',' + stuArr[4].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
+
+          if (stuArr[0].endTime !=='' && newDate < end0) {
+              course = stuArr[0];
+          } else if (stuArr[1].endTime !=='' && newDate < end1) {
+              course = stuArr[1];
+          } else if (stuArr[2].endTime !=='' && newDate < end2) {
+              course = stuArr[2];
+          } else if (stuArr[3].endTime !=='' && newDate < end3) {
+              course = stuArr[3];
+          } else if (stuArr[4].endTime !=='' && newDate < end4) {
+              course = stuArr[4];
+          } else {
           }
-          //console.log(course);
-          result.courseDate = date;
           result.courseName = course.courseName;
+          result.courseDate = date;
+          result.teacher = course.teacher;
           result.startTime = course.startTime;
           result.endTime = course.endTime;
-          result.teacher = course.teacher;
+
           TimeSheet.findOne({
             courseDate: date,
             startTime: course.startTime,
@@ -2557,7 +2597,7 @@ router.post('/getAllStuClass', function (req, res) {
               timeSheet.save(function (err) {
                 if (err) {
                   console.log('创建签到表失败');
-                  res.status(200).send({code: 1, Msg: '未找到该签到表',});
+                  res.status(200).send({code: 1, Msg: '未找到该签到表3',});
                 } else {
                   console.log('创建签到表成功');
                   //console.log(result);
@@ -2566,7 +2606,7 @@ router.post('/getAllStuClass', function (req, res) {
               });
             } else {
               //console.log(result);
-              res.status(200).send({code: 0, result: result, Msg: '未找到该签到表',});
+              res.status(200).send({code: 0, result: result, Msg: '获取成功',});
             }
           });
         } else {
@@ -2574,7 +2614,7 @@ router.post('/getAllStuClass', function (req, res) {
         }
       });
     } else {
-      res.status(200).send({code: 1, Msg: '未找到该课程表',});
+      res.status(200).send({code: 1, Msg: '未找到该课程表1',});
     }
   });
 });

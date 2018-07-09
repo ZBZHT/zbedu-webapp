@@ -119,15 +119,15 @@
                   radius: '50%',
                   data:[
                     {
-                      value:28,
-                      name:'28',
+                      value:30,
+                      name:'30',
                       itemStyle: {
                           color: 'rgb(103,194,58)'
                       }
                     }, 
                     {
-                      value:1,
-                      name:'1',
+                      value:10,
+                      name:'10',
                       itemStyle: {
                           color: 'rgb(245,108,108)'
                       }

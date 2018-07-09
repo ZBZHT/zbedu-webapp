@@ -45,47 +45,47 @@
         stateList: [
           {
             "stuName": "学生1",
-            "bg": 'rgba(103,194,58,0.5)'
+            "bg": 'rgb(103,194,58)'
           },
           {
             "stuName": "学生2",
-            "bg": 'rgba(245,108,108,0.5)'
+            "bg": 'rgb(245,108,108)'
           },
           {
             "stuName": "学生3",
-            "bg": 'rgba(230,162,60,0.5)'
+            "bg": 'rgb(230,162,60)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           },
           {
             "stuName": "学生4",
-            "bg": 'rgba(0,122,204,0.5)'
+            "bg": 'rgb(64,158,255)'
           }
         ],
 
@@ -130,13 +130,13 @@
           if (resData.code === 0) {
             for (let i = 0; i < sList.length; i++) {
               if (sList[i].state === 0) {
-                sList[i].bg = 'rgba(103,194,58,0.5)'
+                sList[i].bg = 'rgb(103,194,58)'
               } else if (sList[i].state === 1) {
-                sList[i].bg = 'rgba(245,108,108,0.5)'
+                sList[i].bg = 'rgb(245,108,108)'
               } else if (sList[i].state === 2) {
-                sList[i].bg = 'rgba(230,162,60,0.5)'
+                sList[i].bg = 'rgb(230,162,60)'
               } else if (sList[i].state === 3) {
-                sList[i].bg = 'rgba(0,122,204,0.5)'
+                sList[i].bg = 'rgb(64,158,255)'
               }
             }
             this.stateList = sList;
@@ -194,7 +194,11 @@
     width:80%;
     margin:0 auto;
     padding: 10px;
-    text-align: left;
+    text-align: center;
+    box-shadow: 10px 9px 40px -3px; 
+    border:1px solid #aaa;
+    margin-top:20px;
+    margin-bottom:30px;
   }
   .teacherInfor .currTable1{
     width:100px;

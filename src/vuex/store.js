@@ -21,7 +21,8 @@ export default new Vuex.Store({
     testCode:0,
     exerciseData:'',
     competitionData:'',
-    newBannerLeft:[]
+    newBannerLeft:[],
+    classGrade:''
 },
  mutations : {
     newTitle(state,item){
@@ -68,7 +69,10 @@ export default new Vuex.Store({
     },
     newBannerLeft(state,item){
         state.newBannerLeft = item;
-    }
+    },
+    getClassGrade(state,item){
+        state.classGrade = item;
+    },
 },
  plugins: [createPersistedState()]
 })
