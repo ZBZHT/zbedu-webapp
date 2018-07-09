@@ -40,7 +40,7 @@
                     <p>{{item3.courseName}}</p>
                     <p>{{item3.courseAddress}}</p>
                     <!--<div class="bing"></div>-->
-                    <div :id="item3.teacher">
+                    <div :id="item3.id">
 
                     </div>
 
@@ -349,24 +349,7 @@
       //获取课程框的高
 
       //获取饼
-      var fun = window.setInterval(function(){
-        if(echarts.init(document.getElementById('aa'))){
-          let myChart = echarts.init(document.getElementById('aa'));
-          console.log(myChart)
-          // 绘制图表，this.echarts1_option是数据
-          myChart.setOption(this.echarts1_option);
-          console.log("11")
-          let myChart2 = echarts.init(document.getElementById('bb'));
-          myChart2.setOption(this.echarts2_option);
-          let myChart3 = echarts.init(document.getElementById('cc'));
-          myChart3.setOption(this.echarts3_option);
-          let myChart4 = echarts.init(document.getElementById('dd'));
-          myChart4.setOption(this.echarts4_option);
-          window.clearInterval(fun);
-        }else{
-          console.log("nmnmmn")
-        }
-      }.bind(this),1000);
+      this.getPie();
 
     },
     methods: {
@@ -428,9 +411,30 @@
           }
         });
       },
-
+      //获取饼
+      getPie(){
+        var fun = window.setInterval(function(){
+          if(echarts.init(document.getElementById('a1'))){
+            let myChart = echarts.init(document.getElementById('a1'));
+            //console.log(myChart)
+            // 绘制图表，this.echarts1_option是数据
+            myChart.setOption(this.echarts1_option);
+            //console.log("11")
+            let myChart2 = echarts.init(document.getElementById('a2'));
+            myChart2.setOption(this.echarts2_option);
+            let myChart3 = echarts.init(document.getElementById('a3'));
+            myChart3.setOption(this.echarts3_option);
+            let myChart4 = echarts.init(document.getElementById('a4'));
+            myChart4.setOption(this.echarts4_option);
+            window.clearInterval(fun);
+          }else{
+            //console.log("nmnmmn")
+          }
+        }.bind(this),1000);
+      },
       //获取-课程表
       getCourseTable(resDate){
+          this.getPie();
           axios.post('/teacherCMS/getCourseTable', {
             data: {
               courseDate: resDate,
@@ -445,6 +449,7 @@
               this.weekDate = core.getDayAll(new Date(this.mondayDate));
             }
             for(var i = 0; i < resData.course[0].newCourse.length; i++){
+                resData.course[0].newCourse[i].id = 'a'+ parseInt(i+1);
                   if(resData.course[0].newCourse[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse[i].color = '#f00';
                     //console.log("nnnmmm")
@@ -453,6 +458,7 @@
                   }
               }
               for(var i = 0; i < resData.course[0].newCourse2.length; i++){
+                resData.course[0].newCourse2[i].id = 'b'+ parseInt(i+1);
                   if(resData.course[0].newCourse2[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse2[i].color = '#f00';
                     //console.log("nnnmmm")
@@ -461,6 +467,7 @@
                   }
               }
               for(var i = 0; i < resData.course[0].newCourse3.length; i++){
+                resData.course[0].newCourse3[i].id = 'c'+ parseInt(i+1);
                   if(resData.course[0].newCourse3[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse3[i].color = '#f00';
                     //console.log("nnnmmm")
@@ -469,6 +476,7 @@
                   }
               }
               for(var i = 0; i < resData.course[0].newCourse4.length; i++){
+                resData.course[0].newCourse4[i].id = 'd'+ parseInt(i+1);
                   if(resData.course[0].newCourse4[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse4[i].color = '#f00';
                     //console.log("nnnmmm")
@@ -477,6 +485,7 @@
                   }
               }
               for(var i = 0; i < resData.course[0].newCourse5.length; i++){
+                resData.course[0].newCourse5[i].id = 'e'+ parseInt(i+1);
                   if(resData.course[0].newCourse5[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse5[i].color = '#f00';
                     //console.log("nnnmmm")
@@ -705,7 +714,7 @@
     height:100%;
   }
 
-  .selectTable #aa{
+  .selectTable #a1{
     display:none;
     width:200px;
     height:200px;
@@ -713,13 +722,13 @@
     background:#fff;
     z-index:9999;
   }
-  .selectTable .eachDataP:hover #aa{
+  .selectTable .eachDataP:hover #a1{
     position:absolute;
     top: -150px;
     right: -40px;
     display:block;
   }
-  .selectTable #bb{
+  .selectTable #a2{
     display:none;
     width:200px;
     height:200px;
@@ -727,13 +736,13 @@
     background:#fff;
     z-index:9999;
   }
-  .selectTable .eachDataP:hover #bb{
+  .selectTable .eachDataP:hover #a2{
     position:absolute;
     top: -150px;
     right: -40px;
     display:block;
   }
-  .selectTable #cc{
+  .selectTable #a3{
     display:none;
     width:200px;
     height:200px;
@@ -741,13 +750,13 @@
     background:#fff;
     z-index:9999;
   }
-  .selectTable .eachDataP:hover #cc{
+  .selectTable .eachDataP:hover #a3{
     position:absolute;
     top: -150px;
     right: -40px;
     display:block;
   }
-  .selectTable #dd{
+  .selectTable #a4{
     display:none;
     width:200px;
     height:200px;
@@ -755,7 +764,7 @@
     background:#fff;
     z-index:9999;
   }
-  .selectTable .eachDataP:hover #dd{
+  .selectTable .eachDataP:hover #a4{
     position:absolute;
     top: -150px;
     right: -40px;

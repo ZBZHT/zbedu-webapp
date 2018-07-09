@@ -112,6 +112,7 @@
             this.course = resData.course[0];
             this.mondayDate = res.data.result.courseDate;
             for(var i = 0; i < this.course.newCourse.length; i++){
+              this.course.newCourse[i].id = 'a'+ parseInt(i+1);
               if(this.course.newCourse[i].teacher == this.$store.state.username){
                 this.course.newCourse[i].color = '#f00';
               }else{
@@ -119,6 +120,7 @@
               }
             }
             for(var i = 0; i < this.course.newCourse2.length; i++){
+              this.course.newCourse2[i].id = 'b'+ parseInt(i+1);
               if(this.course.newCourse2[i].teacher == this.$store.state.username){
                 this.course.newCourse2[i].color = '#f00';
               }else{
@@ -126,6 +128,7 @@
               }
             }
             for(var i = 0; i < this.course.newCourse3.length; i++){
+              this.course.newCourse3[i].id = 'c'+ parseInt(i+1);
               if(this.course.newCourse3[i].teacher == this.$store.state.username){
                 this.course.newCourse3[i].color = '#f00';
                 //console.log("nnnmmm")
@@ -134,6 +137,7 @@
               }
             }
             for(var i = 0; i < this.course.newCourse4.length; i++){
+              this.course.newCourse4[i].id = 'd'+ parseInt(i+1);
               if(this.course.newCourse4[i].teacher == this.$store.state.username){
                 this.course.newCourse4[i].color = '#f00';
                 //console.log("nnnmmm")
@@ -142,6 +146,7 @@
               }
             }
             for(var i = 0; i < this.course.newCourse5.length; i++){
+              this.course.newCourse5[i].id = 'e'+ parseInt(i+1);
               if(this.course.newCourse5[i].teacher == this.$store.state.username){
                 this.course.newCourse5[i].color = '#f00';
                 //console.log("nnnmmm")

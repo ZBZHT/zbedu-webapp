@@ -2,7 +2,7 @@
   <div class="studentInfo">
     <el-col :span="19">
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick(tab, event)">
+      <el-tabs v-model="activeName" type="card">
         <el-tab-pane label="信息查询" name="first">
           <el-table
             :data="tableData"
@@ -30,7 +30,7 @@
         </el-tab-pane>
         <el-tab-pane label="请假信息" name="second">
           <div class="IamSick">
-            <el-button size="mini" type="primary" @click="dialogFormVisible = true">我要请假</el-button>
+            <el-button size="mini" type="primary" @click="stuLeave()">我要请假</el-button>
           </div>
 
           <el-dialog title="请假申请" :visible.sync="dialogFormVisible">
@@ -60,13 +60,24 @@
             style="width: 100%">
             <el-table-column prop="stuName" label="请假人" width="120">
             </el-table-column>
-            <el-table-column prop="date" label="请假时间" width="280">
+            <el-table-column prop="date1" label="请假时间" width="280">
             </el-table-column>
             <el-table-column prop="reason" label="请假事由">
             </el-table-column>
-            <el-table-column prop="state" label="状态">
+            <el-table-column prop="state" label="状态" width="120">
             </el-table-column>
-
+            <el-table-column label="操作">
+              <template slot-scope="scope">
+                <el-button size="mini"
+                           v-show="tableData[scope.$index].state != '已批准'"
+                           @click="repleay(scope.$index, scope.row)">修改</el-button>
+                <el-button size="mini"
+                           type="danger"
+                           v-show="tableData[scope.$index].state != '已批准'"
+                           @click="redelete(scope.$index, scope.row)">删除
+                </el-button>
+              </template>
+            </el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
@@ -92,6 +103,7 @@
         dateData:[],
         tableData: [],
         dialogFormVisible: false,
+        dialogFormVisible1: false,
         form: {
           date: [],
           reason: ''
@@ -106,11 +118,56 @@
     mounted() {
         this.getStuLeaveMsg();
 
-
     },
     methods: {
-      handleClick(tab, event) {
-        //console.log(tab, event);
+      // 添加成功后提示信息
+      addSuccess(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      // 添加失败提示信息
+      addDefeat(msg) {
+        this.$message.error(msg);
+      },
+      //请假
+      stuLeave(){
+          let form1 = {
+              date: [],
+              reason: ''
+            };
+        this.form = form1;
+        this.dialogFormVisible = true;
+      },
+      //修改请假
+      repleay(index,item){
+        this.form = item;
+        this.form.date = (item.date1).split("~");
+        //console.log(this.form);
+        this.dialogFormVisible = true;
+      },
+      //修改->确定
+      reapply(){
+        console.log("11")
+      },
+      //修改->删除
+      redelete(index,item){
+        console.log(item);
+        axios.post('/teacherCMS/dellStuLeaveMsg', {
+          data: {
+            item: item,
+          }
+        }).then((res) => {
+            console.log(res.data.code);
+          if (res.data.code === 0) {
+            this.getStuLeaveMsg();
+            this.addSuccess(res.data.Msg);
+          } else if (res.data.code === 1) {
+            this.addDefeat(res.data.Msg);
+          }
+        });
       },
       //获取请假信息
       getStuLeaveMsg(){
@@ -121,18 +178,22 @@
         }).then((res) => {
           let resData = res.data.result;
           if (res.data.code === 0) {
+            this.tableData = [];
             for (let i = 0; i < resData.length; i++) {
               //console.log(resData[i]);
-              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + '~' + resData[i].endDate + ',' + resData[i].endTime;
+              resData[i].date1 = resData[i].startDate + ',' +resData[i].startTime + '~' + resData[i].endDate + ',' + resData[i].endTime;
               if (resData[i].state === 0) {
-                resData[i].state = '已批准'
+                resData[i].state = '已批准';
               } else if (resData[i].state === 1) {
-                resData[i].state = '待审核'
+                resData[i].state = '待审核';
               }else if (resData[i].state === 2) {
-                resData[i].state = '未批准'
+                resData[i].state = '未批准';
               }
             }
             this.tableData = resData;
+            //console.log(this.tableData)
+          } else if (res.data.code === 1) {
+            this.tableData = []
           }
         });
       },
@@ -152,22 +213,22 @@
         this.form.date[1] = moment(this.form.date[1]).format("YYYY-MM-DD,HH:mm");
         let date0 = this.form.date[0].split(",");
         let date1 = this.form.date[1].split(",");
-        let leaveMsg = {
-          startDate: date0[0],
-          endDate: date1[0],
-          startTime: date0[1],
-          endTime: date1[1],
-          reason: this.form.reason,
-        };
+        this.form.startDate = date0[0];
+        this.form.endDate = date1[0];
+        this.form.startTime = date0[1];
+        this.form.endTime = date1[1];
+        console.log(this.form);
         axios.post('/teacherCMS/newStuLeaveMsg', {
           data: {
-            form: leaveMsg
+            form: this.form
           }
         }).then((res) => {
             if (res.data.code === 0) {
+              this.addSuccess(res.data.Msg);
               this.getStuLeaveMsg();
+            } else if (res.data.code === 1) {
+              this.addDefeat(res.data.Msg);
             }
-
         });
       }
     },

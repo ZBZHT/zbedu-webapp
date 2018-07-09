@@ -50,31 +50,31 @@
           <game-m></game-m>
         </div>
         <!--课堂管理（管理员）授课计划-->
-        <div v-show="isShow601">
+        <div v-if="isShow601">
           <boss-plan></boss-plan>
         </div>
         <!--课堂管理（管理员）考勤信息-->
-        <div v-show="isShow602">
+        <div v-if="isShow602">
           <boss-infor></boss-infor>
         </div>
         <!--我的课堂（教师）课堂计划-->
-        <div v-show="isShow701">
+        <div v-if="isShow701">
           <teacher-plan></teacher-plan>
         </div>
         <!--我的课堂（教师）考勤信息-->
-        <div v-show="isShow702">
+        <div v-if="isShow702">
           <teacher-infor></teacher-infor>
         </div>
         <!--我的课堂（教师）考勤汇总-->
-        <div v-show="isShow703">
+        <div v-if="isShow703">
           <teacher-zong></teacher-zong>
         </div>
         <!--我的课堂（学生）课堂信息-->
-        <div v-show="isShow801">
+        <div v-if="isShow801">
           <student-plan></student-plan>
         </div>
         <!--我的课堂（学生）考勤信息-->
-        <div v-show="isShow802">
+        <div v-if="isShow802">
           <student-info></student-info>
         </div>
 

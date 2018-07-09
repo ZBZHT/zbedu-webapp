@@ -29,51 +29,66 @@
             <tr>
               <td class="classDataP" v-show = "course">1</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse" :style="{color:item3.color}">
-                <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
+                <div class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP2" v-show = "course">2</td>
               <td class="eachDataP2" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
-                <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
+                <div class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">3</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse3" :style="{color:item3.color}">
-                <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
+                <div class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">4</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse4" :style="{color:item3.color}">
-                <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
+                <div class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">5</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse5" :style="{color:item3.color}">
-                <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
+                <div class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
               </td>
             </tr>
           </table>
@@ -151,7 +166,6 @@
 
           </el-form>
           <span slot="footer" class="dialog-footer">
-              <el-button type="danger" @click="deleteCourseTable()">删除</el-button>
               <el-button @click="centerDialogVisible1 = false">取 消</el-button>
               <el-button type="primary" @click="editCourseTable(alterForm)">确 定</el-button>
           </span>
@@ -218,7 +232,7 @@
     },
     computed: {},
     mounted() {
-              
+
     },
     methods: {
       //创建考试开始时间不能选择历史日期
@@ -298,7 +312,33 @@
       },
       //编辑->删除
       deleteCourseTable(){
-
+        let course1 = {
+          startTime:'',
+          endTime:'',
+          teacher:'',
+          courseName:'',
+          courseAddress:'',
+        };
+        axios.post('/teacherCMS/newCourseTable', {
+          data: {
+            className: this.classGrade,
+            index: this.courseIndex,
+            courseDate:this.newCourse,
+            date1:this.weekDate[0],
+            date2:this.weekDate[6],
+            cycleTime:'',
+            course: course1,
+          }
+        }).then((res) => {
+          let resData = res.data;
+          if (resData.code === 0) {
+            this.getCourseTable(this.weekDate[0]);
+            this.centerDialogVisible1 = false;
+            this.addSuccess('删除成功')
+          } else if (resData.code === 1) {
+            this.addSuccess('删除错误')
+          }
+        });
       },
       //点击上一个
       previous(){
@@ -393,8 +433,7 @@
   }
   .showTable{
     display:flex;
-    margin-bottom: 60px !important;
-    overflow:auto;
+    margin-bottom: 160px !important;
   }
   .showTable .pageButton{
     height: 100%;
@@ -475,7 +514,10 @@
     min-height: 54px;
     width: 98%;
   }
-
+  .showTable .playButs .el-button{
+    margin:0;
+    padding:5px;
+  }
   .showTable .classPlan_topRight .weekDataP {
     background: #e5e9f2;
     width: 183px;
