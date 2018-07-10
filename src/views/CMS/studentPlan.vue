@@ -8,13 +8,20 @@
               <p style="text-align: left">上课时间：{{stuCourse.date}}</p>
               <p style="text-align: left">课程名称：{{stuCourse.courseName}}</p>
               <p style="text-align: left">任课老师：{{stuCourse.teacher}}</p>
+              <p style="text-align: left">注：请在课前30分钟内签到</p>
               <div class="playSth">
-                <el-button type="success" @click="stuSignIn()" :disabled="false">点击签到</el-button>
+                <div v-if="showBut === true">
+                  <el-button type="success" @click="stuSignIn()" :disabled="true">点击签到</el-button>
+                </div>
+                <div v-else>
+                  <el-button type="success" @click="stuSignIn()">点击签到</el-button>
+                </div>
+
               </div>
             </el-row>
           </div>
-
         </el-tab-pane>
+
         <el-tab-pane label="课程计划" name="second">
           <show-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></show-table>
         </el-tab-pane>
@@ -43,18 +50,11 @@
         course: [],
         stateList: [],
         stuCourse: '',
-        disabled: false,
-
+        showBut: true,
       }
     },
     computed: {
-        disabled: function () {
-          let startTime = new Date(moment(this.stuCourse.courseDate + ',' + this.stuCourse.startTime).format("YYYY-MM-DD,HH:mm")).getTime();
-          let newTime = new Date().getTime() + 60*30;
-          if (newTime < startTime) {
-            return true;
-          }
-        }
+
     },
     methods: {
       // 添加成功后提示信息
@@ -114,13 +114,22 @@
         }
       }).then((res) => {
         let resCourse = res.data.result;
-        //console.log(res.data.result);
+        console.log(res.data.result);
         if (res.data.code === 0) {
+          let startTime = new Date(moment(resCourse.courseDate + ',' + resCourse.startTime).format("YYYY-MM-DD,HH:mm")).getTime();
+          let newTime = new Date().getTime() + 60*30*1000;
           resCourse.date = resCourse.startTime + "~" + resCourse.endTime;
           this.stuCourse = resCourse;
-          if (1) {
-
+          console.log(startTime);
+          console.log(newTime);
+          console.log(startTime  - newTime);
+          console.log(60*30);
+          if (newTime > startTime) {
+            this.showBut = false;
+          } else {
+            this.showBut = true;
           }
+          //console.log(this.showBut);
         }
       });
 

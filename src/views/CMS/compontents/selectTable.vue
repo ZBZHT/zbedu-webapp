@@ -5,7 +5,7 @@
       <el-button size="mini" type="danger">缺勤</el-button>
       <el-button size="mini" type="warning">迟到</el-button>
       <el-button size="mini" type="primary">请假</el-button>
-    </div>  
+    </div>
     <el-button type="primary" @click="previous()" class="pageButton"> < </el-button>
     <div class="classPlan">
       <div class="classPlan_top">
@@ -34,13 +34,17 @@
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
-                <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse" :style="{color:item3.color}">
+                <td @click="openDialog(item3, index3)" 
+                    @mouseover="mouseenter(item3, index3)" 
+                    class="eachDataP" v-for="(item3,index3) in course.newCourse" 
+                    :style="{color:item3.color}">
+                    
                     <p>{{item3.startTime}}~{{item3.endTime}}</p>
                     <p>{{item3.teacher}}</p>
                     <p>{{item3.courseName}}</p>
                     <p>{{item3.courseAddress}}</p>
                     <!--<div class="bing"></div>-->
-                    <div :id="item3.id">
+                    <div :id="item3.id" v-show="haveData == 1">
 
                     </div>
 
@@ -111,60 +115,46 @@
     props: ['course','mondayDate','weekDate'],
     data() {
       return {
-        echarts1_option:{
+        a1Echarts:{
           backgroundColor: '#fff',
           series : [
               {
                   type: 'pie',
                   radius: '50%',
                   data:[
-                    {
-                      value:30,
-                      name:'30',
-                      itemStyle: {
-                          color: 'rgb(103,194,58)'
-                      }
-                    }, 
-                    {
-                      value:10,
-                      name:'10',
-                      itemStyle: {
-                          color: 'rgb(245,108,108)'
-                      }
-                    }, 
-                    {
-                      value:1,
-                      name:'1',
-                      itemStyle: {
-                          color: 'rgb(230,162,60)'
-                      }
-                    }, 
                     {
                       value:0,
-                      name:'0',
+                      name:'',
+                      itemStyle: {
+                          color: 'rgb(103,194,58)'
+                      }
+                    },
+                    {
+                      value:0,
+                      name:'',
+                      itemStyle: {
+                          color: 'rgb(245,108,108)'
+                      }
+                    },
+                    {
+                      value:0,
+                      name:'',
+                      itemStyle: {
+                          color: 'rgb(230,162,60)'
+                      }
+                    },
+                    {
+                      value:0,
+                      name:'',
                       itemStyle: {
                           color: 'rgb(0,122,204)'
                       }
-                    }, 
+                    },
                   ],
-                  label: {
-                      normal: {
-                          textStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
-                  labelLine: {
-                      normal: {
-                          lineStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
             }
           ]
         },
-        echarts2_option:{
+        a2Echarts:{
           backgroundColor: '#fff',
           series : [
               {
@@ -172,52 +162,38 @@
                   radius: '50%',
                   data:[
                     {
-                      value:20,
-                      name:'20',
+                      value:0,
+                      name:'',
                       itemStyle: {
                           color: 'rgb(103,194,58)'
                       }
-                    }, 
+                    },
                     {
-                      value:1,
-                      name:'1',
+                      value:0,
+                      name:'',
                       itemStyle: {
                           color: 'rgb(245,108,108)'
                       }
-                    }, 
+                    },
                     {
-                      value:2,
-                      name:'2',
+                      value:0,
+                      name:'',
                       itemStyle: {
                           color: 'rgb(230,162,60)'
                       }
-                    }, 
+                    },
                     {
-                      value:7,
-                      name:'7',
+                      value:0,
+                      name:'',
                       itemStyle: {
                           color: 'rgb(0,122,204)'
                       }
-                    }, 
+                    },
                   ],
-                  label: {
-                      normal: {
-                          textStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
-                  labelLine: {
-                      normal: {
-                          lineStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
             }
           ]
         },
-        echarts3_option:{
+        a3Echarts:{
           backgroundColor: '#fff',
           series : [
               {
@@ -230,47 +206,33 @@
                       itemStyle: {
                           color: 'rgb(103,194,58)'
                       }
-                    }, 
+                    },
                     {
                       value:0,
                       name:'0',
                       itemStyle: {
                           color: 'rgb(245,108,108)'
                       }
-                    }, 
+                    },
                     {
                       value:5,
                       name:'5',
                       itemStyle: {
                           color: 'rgb(230,162,60)'
                       }
-                    }, 
+                    },
                     {
                       value:5,
                       name:'5',
                       itemStyle: {
                           color: 'rgb(0,122,204)'
                       }
-                    }, 
+                    },
                   ],
-                  label: {
-                      normal: {
-                          textStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
-                  labelLine: {
-                      normal: {
-                          lineStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
             }
           ]
         },
-        echarts4_option:{
+        a4Echarts:{
           backgroundColor: '#fff',
           series : [
               {
@@ -283,43 +245,29 @@
                       itemStyle: {
                           color: 'rgb(103,194,58)'
                       }
-                    }, 
+                    },
                     {
                       value:0,
                       name:'0',
                       itemStyle: {
                           color: 'rgb(245,108,108)'
                       }
-                    }, 
+                    },
                     {
                       value:0,
                       name:'0',
                       itemStyle: {
                           color: 'rgb(230,162,60)'
                       }
-                    }, 
+                    },
                     {
                       value:0,
                       name:'0',
                       itemStyle: {
                           color: 'rgb(0,122,204)'
                       }
-                    }, 
+                    },
                   ],
-                  label: {
-                      normal: {
-                          textStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
-                  labelLine: {
-                      normal: {
-                          lineStyle: {
-                              color: 'rgb(0, 0, 0)'
-                          }
-                      }
-                  },
             }
           ]
         },
@@ -340,7 +288,11 @@
         startTime: "9:00",
         endTime: "10:00",
         stateList: [],
-        
+        haveData:0,
+        hereData:0,
+        sickData:0,
+        lateData:0,
+        dispearData:0,
 
       }
     },
@@ -389,6 +341,7 @@
             startTime: item.startTime,
           }
         }).then((res) => {
+          console.log(res.data.result)
           let resData = res.data.result;
           if (res.data.code === 0) {
             for (let i = 0; i < resData.stateList.length; i++) {
@@ -406,29 +359,92 @@
                 resData.stateList[i].state = 'rgba(0,122,204,0.5)';
               }
             }
-            console.log(resData.stateList);
+            // console.log(resData.stateList);
             this.stateList = resData.stateList;
           }
         });
       },
+      //鼠标经过时获取数据
+      mouseenter(item, index){
+        this.haveData = 0;
+        
+        axios.post('/teacherCMS/getTimeSheet', {
+          data: {
+            courseName: item.courseName,
+            courseDate: this.weekDate[index],
+            teacher: item.teacher,
+            className: this.classGrade,
+            startTime: item.startTime,
+          }
+        }).then((res) => {
+          console.log(res.data.result)
+          let resData = res.data.result;
+          if (res.data.code === 0) {
+            this.haveData = 1;
+            for (let i = 0; i < resData.stateList.length; i++) {
+              if (resData.stateList[i].state === 0) {
+                this.hereData += 1;
+              } else if (resData.stateList[i].state === 1) {
+                this.sickData += 1;
+              } else if (resData.stateList[i].state === 2) {
+                this.lateData += 1;
+              } else if (resData.stateList[i].state === 3) {
+                this.dispearData += 1;
+              }
+            }
+            //  console.log(item);
+            //  console.log(index);
+            console.log(this.haveData)
+              var echarts = item.id + 'Echarts';
+              console.log(item.id)
+            if(item.id == 'a1'){
+              this.a1Echarts.series[0].data[0].value = this.hereData;
+              this.a1Echarts.series[0].data[0].name = this.hereData;
+              console.log(this.a1Echarts.series[0].data[0].value)
+              this.a1Echarts.series[0].data[1].value = this.sickData;
+              this.a1Echarts.series[0].data[1].name = this.sickData;
+              this.a1Echarts.series[0].data[2].value = this.lateData;
+              this.a1Echarts.series[0].data[2].name = this.lateData;
+              this.a1Echarts.series[0].data[3].value = this.dispearData;
+              this.a1Echarts.series[0].data[3].name = this.dispearData;
+            }else if(item.id == 'a2'){
+              
+              this.a2Echarts.series[0].data[0].value = this.hereData;
+              this.a2Echarts.series[0].data[0].name = this.hereData;
+              console.log(this.a2Echarts.series[0].data[0].value)
+              this.a2Echarts.series[0].data[1].value = this.sickData;
+              this.a2Echarts.series[0].data[1].name = this.sickData;
+              this.a2Echarts.series[0].data[2].value = this.lateData;
+              this.a2Echarts.series[0].data[2].name = this.lateData;
+              this.a2Echarts.series[0].data[3].value = this.dispearData;
+              this.a2Echarts.series[0].data[3].name = this.dispearData;
+            }            
+          }
+        });
+        this.hereData = 0;
+        this.sickData = 0;
+        this.lateData = 0;
+        this.dispearData = 0;
+      },
       //获取饼
       getPie(){
+        console.log(this.Echarts)
         var fun = window.setInterval(function(){
           if(echarts.init(document.getElementById('a1'))){
             let myChart = echarts.init(document.getElementById('a1'));
             //console.log(myChart)
-            // 绘制图表，this.echarts1_option是数据
-            myChart.setOption(this.echarts1_option);
+            // 绘制图表，this.a1Echarts是数据
+            myChart.setOption(this.a1Echarts);
             //console.log("11")
             let myChart2 = echarts.init(document.getElementById('a2'));
-            myChart2.setOption(this.echarts2_option);
+            myChart2.setOption(this.a2Echarts);
             let myChart3 = echarts.init(document.getElementById('a3'));
-            myChart3.setOption(this.echarts3_option);
+            myChart3.setOption(this.a3Echarts);
             let myChart4 = echarts.init(document.getElementById('a4'));
-            myChart4.setOption(this.echarts4_option);
+            myChart4.setOption(this.a4Echarts);
             window.clearInterval(fun);
           }else{
-            //console.log("nmnmmn")
+            console.log("nmnmmn")
           }
         }.bind(this),1000);
       },

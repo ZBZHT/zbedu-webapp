@@ -1,6 +1,6 @@
 <template>
   <div class="showTable">
-    <el-button type="primary" @click="previous()" class="pageButton"> < </el-button>
+    <el-button type="primary" @click="previous()" class="pageButton" icon="el-icon-d-arrow-left"></el-button>
     <div class="classPlan">
       <div class="classPlan_top">
         <!--<div class="classPlan_topLeft"></div>-->
@@ -33,22 +33,28 @@
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
-                <div class="playButs">
+                <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
+                <div v-else class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
             <tr>
-              <td class="classDataP2" v-show = "course">2</td>
-              <td class="eachDataP2" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
+              <td class="classDataP" v-show = "course">2</td>
+              <td class="eachDataP" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
                 <p>{{item3.startTime}}~{{item3.endTime}}</p>
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
-                <div class="playButs">
+                <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
+                <div v-else class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
@@ -59,9 +65,12 @@
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
-                <div class="playButs">
+                <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
+                <div v-else class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
@@ -72,9 +81,12 @@
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
-                <div class="playButs">
+                <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
+                <div v-else class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
@@ -85,9 +97,12 @@
                 <p>{{item3.teacher}}</p>
                 <p>{{item3.courseName}}</p>
                 <p>{{item3.courseAddress}}</p>
-                <div class="playButs">
+                <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
-                  <el-button size="mini" type="danger" @click="deleteCourseTable(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                  <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
+                </div>
+                <div v-else class="playButs">
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
@@ -95,7 +110,7 @@
         </div>
 
         <el-dialog
-          title="修改课程"
+          title="添加或编辑课程"
           :visible.sync="centerDialogVisible1"
           width="600px"
           :close-on-click-modal="false"
@@ -173,7 +188,7 @@
 
       </div>
     </div>
-    <el-button type="primary" @click="next()" class="pageButton"> > </el-button>
+    <el-button type="primary" @click="next()" class="pageButton" icon="el-icon-d-arrow-right"></el-button>
   </div>
 </template>
 
@@ -455,13 +470,15 @@
     margin-bottom: 160px !important;
   }
   .showTable .pageButton{
+    padding: 12px;
     height: 100%;
     margin-top: 336px;
     padding-top: 50px;
     padding-bottom: 50px;
+    font-size: 20px;
   }
   .showTable .classPlan {
-    width: 80%;
+    width: 90%;
     height: 700px;
     margin: 0 auto;
     margin-top: 25px;
@@ -533,10 +550,6 @@
     min-height: 54px;
     width: 98%;
   }
-  .showTable .playButs .el-button{
-    margin:0;
-    padding:5px;
-  }
   .showTable .classPlan_topRight .weekDataP {
     background: #e5e9f2;
     width: 183px;
@@ -562,31 +575,17 @@
     height: 108px;
     width: 2%;
   }
-  .showTable .classDataP2 {
-    background: #e5e9f2;
-    border: 5px solid #fff;
-    border-bottom: 6px solid #aaa;
-    border-radius: 15px;
-    height: 108px;
-    width: 2%;
-  }
   .showTable .eachDataP {
+    position: relative;
     background: #e5e9f2;
     width: 4%;
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;
-  }
-  .showTable .eachDataP2 {
-    background: #e5e9f2;
-    width: 4%;
-    border: 5px solid #fff;
-    border-bottom: 6px solid #aaa;
-    border-radius: 15px;
-    height: 108px;
+    padding-bottom: 22px;
   }
   .showTable .eachDataP p {
-    width: 100px;
+    width: 130px;
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;
@@ -609,6 +608,15 @@
     border-radius: 4px;
     min-height: 106px;
   }
+  .showTable .playButs .el-button{
+    margin:0;
+    padding:5px;
+  }
+  .showTable .playButs{
+    position: absolute;
+    bottom:0;
+    right:0;
+  }
 
   .showTable .classPlan_bottomRight .el-col {
     padding: 2px;
@@ -620,5 +628,8 @@
   }
   .showTable .el-date-editor.el-input, .el-date-editor.el-input__inner {
     width: 190px;
+  }
+  .showTable .el-form--inline .el-form-item {
+    margin-right: 4px;
   }
 </style>

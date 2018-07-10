@@ -8,8 +8,8 @@
         </div>
       </el-select>
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" v-show="showThree">
-        
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
+
         <el-tab-pane label="信息查询" name="first">
 
           <select-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></select-table>
@@ -28,10 +28,7 @@
                     <el-table-column prop="stuName" label="请假人" width="120">
                     </el-table-column>
 
-                    <el-table-column prop="date" label="请假时间" width="300">
-                    </el-table-column>
-
-                    <el-table-column prop="courseName" label="课程">
+                    <el-table-column prop="date" label="请假时间" width="140">
                     </el-table-column>
 
                     <el-table-column prop="className" label="班级" width="120">
@@ -65,13 +62,10 @@
                     <el-table-column prop="stuName" label="请假人" width="120">
                     </el-table-column>
 
-                  <el-table-column prop="date" label="请假时间" width="300">
+                  <el-table-column prop="date" label="请假时间" width="140">
                   </el-table-column>
 
-                  <el-table-column prop="courseName" label="课程">
-                  </el-table-column>
-
-                  <el-table-column prop="className" label="班级" width="100">
+                  <el-table-column prop="className" label="班级" width="120">
                   </el-table-column>
 
                   <el-table-column prop="reason" label="请假事由">
@@ -131,6 +125,7 @@
         leaveMsg: [],
         leaveMsg2: [],
         course: [],
+        stateList: [],
 
       }
     },
@@ -138,10 +133,10 @@
 
     },
     mounted() {
+      this.classGrade = this.$store.state.classGrade;
       let date = moment().format("YYYY-MM-DD");
       this.getCourseTable(date);
       this.getClassList();
-
     },
     methods: {
       // 添加成功后提示信息
@@ -160,10 +155,6 @@
       showThreeTable(){
         this.course = '';
         this.$store.commit('getClassGrade',this.classGrade);
-        if(this.classGrade !== ''){
-          this.showThree = true;
-        }else{
-        }
         let resDate = core.getMonday(new Date());
         resDate = moment(resDate).format("YYYY-MM-DD");
         //console.log(resDate)
@@ -255,9 +246,10 @@
           }
         }).then((res) => {
           let resData = res.data.result;
+          console.log(resData);
           if (res.data.code === 0) {
             for (let i = 0; i < resData.length; i++) {
-              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + '~' + resData[i].endDate + ',' + resData[i].endTime
+              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + resData[i].endDate + ',' + resData[i].endTime
               if (resData[i].state === 1) {
                 this.leaveMsg.push(resData[i])
               } else {
