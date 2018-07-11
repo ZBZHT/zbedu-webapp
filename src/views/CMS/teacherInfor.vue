@@ -2,24 +2,27 @@
   <div class="teacherInfor">
     <el-col :span="19">
       <span style="text-align: left">{{courseName}}</span>
-      <span style="text-align: left">({{courseDate}})</span>
+      <span style="text-align: left" v-show="showBut === true">({{courseDate}})</span>
+
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="考勤动态" name="first">
-          <div class="mainContent">
-            <el-row class="guidance" style="padding-top: 0;text-align: left">
-              <el-button size="mini" type="success">已签到</el-button>
-              <el-button size="mini" type="danger">缺勤</el-button>
-              <el-button size="mini" type="warning">迟到</el-button>
-              <el-button size="mini" type="primary">请假</el-button>
-            </el-row>
+          <div v-show="showBut === false">暂无课程</div>
+          <div v-show="showBut === true">
+            <div class="mainContent">
+              <el-row class="guidance" style="padding-top: 0;text-align: left">
+                <el-button size="mini" type="success">已签到</el-button>
+                <el-button size="mini" type="danger">缺勤</el-button>
+                <el-button size="mini" type="warning">迟到</el-button>
+                <el-button size="mini" type="primary">请假</el-button>
+              </el-row>
+            </div>
+            <ul class="currTable">
+              <li class="currTable1" v-for="item in stateList" :style="{background:item.bg}" @click="teachTimeSheet(item)">
+                <img class="studentPng" src="../../assets/imgs/user.png">
+                <p class="studentName">{{item.stuName}}</p>
+              </li>
+            </ul>
           </div>
-          <ul class="currTable">
-            <li class="currTable1" v-for="item in stateList" :style="{background:item.bg}">
-              <img class="studentPng" src="../../assets/imgs/user.png">
-              <p class="studentName">{{item.stuName}}</p>
-            </li>
-          </ul>
-
         </el-tab-pane>
       </el-tabs>
 
@@ -42,53 +45,9 @@
         activeName: 'first',
         courseName: '',
         courseDate: '',
-        stateList: [
-          {
-            "stuName": "学生1",
-            "bg": 'rgb(103,194,58)'
-          },
-          {
-            "stuName": "学生2",
-            "bg": 'rgb(245,108,108)'
-          },
-          {
-            "stuName": "学生3",
-            "bg": 'rgb(230,162,60)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          },
-          {
-            "stuName": "学生4",
-            "bg": 'rgb(64,158,255)'
-          }
-        ],
-
+        stateList: [],
+        course: '',
+        showBut:false,
       }
     },
     computed: {
@@ -98,6 +57,27 @@
       handleClick(tab, event) {
         console.log(tab, event);
       },
+      teachTimeSheet(item){
+          console.log(item);
+          if (item.isUser === false) {
+              let stuCourse = {
+                courseDate: this.course.courseDate,
+                username: item.stuName,
+                startTime: this.course.startTime,
+              };
+            axios.post('/teacherCMS/teachSignIn', {
+              data: {
+                stuCourse: stuCourse,
+              }
+            }).then((res) => {
+              //console.log(res.data.result);
+              if (res.data.code === 0) {
+                this.getTimeSheet(this.course)
+              }
+            });
+          }
+
+      },
       getAllStuClass(){
         axios.post('/teacherCMS/getAllStuClass', {
           data: {
@@ -105,19 +85,30 @@
           }
         }).then((res) => {
           let resData = res.data;
+          let resCourse = res.data.result;
           //console.log(res.data.result);
           if (resData.code === 0) {
+              this.course = resData.result;
               this.courseName = resData.result.courseName;
               this.courseDate = resData.result.startTime + '~' + resData.result.endTime;
-              this.getTimeSheet(resData.result)
+              this.getTimeSheet(this.course)
             //this.addSuccess('创建成功')
+            let startTime = new Date(moment(resCourse.courseDate + ',' + resCourse.startTime).format("YYYY-MM-DD,HH:mm")).getTime();
+            let newTime = new Date().getTime() + 60*30*1000;
+            if (newTime < startTime) {
+              this.showBut = false;
+              // console.log("y")
+            } else {
+              this.showBut = true;
+              //console.log("n")
+            }
           } else if (resData.code === 1) {
             //this.addSuccess('创建错误')
           }
         });
       },
       getTimeSheet(data){
-          console.log(data);
+          //console.log(data);
         axios.post('/teacherCMS/getTimeSheet', {
           data: {
             courseDate: data.courseDate,
@@ -126,8 +117,9 @@
         }).then((res) => {
           let resData = res.data;
           let sList = resData.result.stateList;
-          console.log(resData.result);
+          //console.log(resData.result);
           if (resData.code === 0) {
+              //this.resData = resData.result;
             for (let i = 0; i < sList.length; i++) {
               if (sList[i].state === 0) {
                 sList[i].bg = 'rgb(103,194,58)'
@@ -137,6 +129,8 @@
                 sList[i].bg = 'rgb(230,162,60)'
               } else if (sList[i].state === 3) {
                 sList[i].bg = 'rgb(64,158,255)'
+              } else if (sList[i].state === 4) {
+                sList[i].bg = '#909399'
               }
             }
             this.stateList = sList;
@@ -195,10 +189,11 @@
     margin:0 auto;
     padding: 10px;
     text-align: center;
-    box-shadow: 10px 9px 40px -3px; 
+    box-shadow: 10px 9px 40px -3px;
     border:1px solid #aaa;
     margin-top:20px;
     margin-bottom:30px;
+    border-radius: 10px;
   }
   .teacherInfor .currTable1{
     width:100px;

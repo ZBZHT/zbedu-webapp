@@ -6,7 +6,7 @@
       <el-button size="mini" type="warning">迟到</el-button>
       <el-button size="mini" type="primary">请假</el-button>
     </div>
-    <el-button type="primary" @click="previous()" class="pageButton"> < </el-button>
+    <el-button type="primary" @click="previous()" class="pageButton" icon="el-icon-d-arrow-left"></el-button>
     <div class="classPlan">
       <div class="classPlan_top">
         <!--<div class="classPlan_topLeft"></div>-->
@@ -23,67 +23,106 @@
         </div>
       </div>
       <div class="classPlan_bottom">
-        <!--<div class="classPlan_bottomLeft">-->
-          <!--<table>-->
-            <!--<tr v-for="(item2,index2) in classData" :key="index2">-->
-              <!--<td class="classDataP">{{item2}}</td>-->
-            <!--</tr>-->
-          <!--</table>-->
-        <!--</div>-->
         <div class="classPlan_bottomRight">
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
-                <td @click="openDialog(item3, index3)" 
-                    @mouseover="mouseenter(item3, index3)" 
-                    class="eachDataP" v-for="(item3,index3) in course.newCourse" 
-                    :style="{color:item3.color}">
-                    
+                <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse" :style="{color:item3.color}">
+                  <div v-show="item3.teacher !== ''">
+                    <div @mouseenter="mouseenter(item3, index3)">
+                      <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                      <p>{{item3.teacher}}</p>
+                      <p>{{item3.courseName}}</p>
+                      <p>{{item3.courseAddress}}</p>
+                      <div class="bing" v-show="item3.teacher == $store.state.username">
+                        <p>总人数：{{peopleData}}</p>
+                        <p>出勤：{{hereData}}</p>
+                        <p>请假：{{sickData}}</p>
+                        <p>迟到：{{lateData}}</p>
+                        <p>缺勤：{{dispearData}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+              <td class="classDataP" v-show = "course">2</td>
+              <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
+                <div v-show="item3.teacher !== ''">
+                  <div @mouseenter="mouseenter(item3, index3)">
                     <p>{{item3.startTime}}~{{item3.endTime}}</p>
                     <p>{{item3.teacher}}</p>
                     <p>{{item3.courseName}}</p>
                     <p>{{item3.courseAddress}}</p>
-                    <!--<div class="bing"></div>-->
-                    <div :id="item3.id" v-show="haveData == 1">
-
+                    <div class="bing" v-show="item3.teacher == $store.state.username">
+                      <p>总人数：{{peopleData}}</p>
+                      <p>出勤：{{hereData}}</p>
+                      <p>请假：{{sickData}}</p>
+                      <p>迟到：{{lateData}}</p>
+                      <p>缺勤：{{dispearData}}</p>
                     </div>
-
-                </td>
-            </tr>
-            <tr>
-              <td class="classDataP2" v-show = "course">2</td>
-              <td @click="openDialog(item3, index3)" class="eachDataP2" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                  </div>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">3</td>
               <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse3" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <div @mouseenter="mouseenter(item3, index3)">
+                    <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                    <p>{{item3.teacher}}</p>
+                    <p>{{item3.courseName}}</p>
+                    <p>{{item3.courseAddress}}</p>
+                    <div class="bing" v-show="item3.teacher == $store.state.username">
+                      <p>总人数：{{peopleData}}</p>
+                      <p>出勤：{{hereData}}</p>
+                      <p>请假：{{sickData}}</p>
+                      <p>迟到：{{lateData}}</p>
+                      <p>缺勤：{{dispearData}}</p>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">4</td>
               <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse4" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <div @mouseenter="mouseenter(item3, index3)">
+                    <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                    <p>{{item3.teacher}}</p>
+                    <p>{{item3.courseName}}</p>
+                    <p>{{item3.courseAddress}}</p>
+                    <div class="bing" v-show="item3.teacher == $store.state.username">
+                      <p>总人数：{{peopleData}}</p>
+                      <p>出勤：{{hereData}}</p>
+                      <p>请假：{{sickData}}</p>
+                      <p>迟到：{{lateData}}</p>
+                      <p>缺勤：{{dispearData}}</p>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">5</td>
               <td @click="openDialog(item3, index3)" class="eachDataP" v-for="(item3,index3) in course.newCourse5" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <div @mouseenter="mouseenter(item3, index3)">
+                    <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                    <p>{{item3.teacher}}</p>
+                    <p>{{item3.courseName}}</p>
+                    <p>{{item3.courseAddress}}</p>
+                    <div class="bing" v-show="item3.teacher == $store.state.username">
+                      <p>总人数：{{peopleData}}</p>
+                      <p>出勤：{{hereData}}</p>
+                      <p>请假：{{sickData}}</p>
+                      <p>迟到：{{lateData}}</p>
+                      <p>缺勤：{{dispearData}}</p>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
           </table>
@@ -100,7 +139,7 @@
 
       </div>
     </div>
-    <el-button type="primary" @click="next()" class="pageButton"> > </el-button>
+    <el-button type="primary" @click="next()" class="pageButton" icon="el-icon-d-arrow-right"></el-button>
   </div>
 </template>
 
@@ -288,7 +327,6 @@
         startTime: "9:00",
         endTime: "10:00",
         stateList: [],
-        haveData:0,
         hereData:0,
         sickData:0,
         lateData:0,
@@ -296,12 +334,17 @@
 
       }
     },
-    computed: {},
+    computed: {
+      peopleData(){
+        return this.hereData + this.sickData + this.lateData + this.dispearData
+      }
+        
+    },
     mounted() {
       //获取课程框的高
 
       //获取饼
-      this.getPie();
+//      this.getPie();
 
     },
     methods: {
@@ -331,7 +374,7 @@
       //显示考勤信息弹窗
       openDialog(item, index){
         this.stateList = [];
-        this.dialogTableVisible = true;
+
         axios.post('/teacherCMS/getTimeSheet', {
           data: {
             courseName: item.courseName,
@@ -344,6 +387,7 @@
           console.log(res.data.result)
           let resData = res.data.result;
           if (res.data.code === 0) {
+            this.dialogTableVisible = true;
             for (let i = 0; i < resData.stateList.length; i++) {
             //  resData.stateList[i].teacher = item.teacher;
             //  resData.stateList[i].classGrade = this.classGrade;
@@ -357,17 +401,19 @@
                 resData.stateList[i].state = 'rgba(230,162,60,0.5)';
               } else if (resData.stateList[i].state === 3) {
                 resData.stateList[i].state = 'rgba(0,122,204,0.5)';
+              } else if (resData.stateList[i].state === 4) {
+                resData.stateList[i].state = '#909399';
               }
             }
             // console.log(resData.stateList);
             this.stateList = resData.stateList;
+          }else{
+            this.dialogTableVisible = false;
           }
         });
       },
       //鼠标经过时获取数据
       mouseenter(item, index){
-        this.haveData = 0;
-        
         axios.post('/teacherCMS/getTimeSheet', {
           data: {
             courseName: item.courseName,
@@ -377,10 +423,10 @@
             startTime: item.startTime,
           }
         }).then((res) => {
-          console.log(res.data.result)
+//          console.log(res.data.result)
           let resData = res.data.result;
           if (res.data.code === 0) {
-            this.haveData = 1;
+
             for (let i = 0; i < resData.stateList.length; i++) {
               if (resData.stateList[i].state === 0) {
                 this.hereData += 1;
@@ -394,32 +440,36 @@
             }
             //  console.log(item);
             //  console.log(index);
-            console.log(this.haveData)
-              var echarts = item.id + 'Echarts';
-              console.log(item.id)
-            if(item.id == 'a1'){
-              this.a1Echarts.series[0].data[0].value = this.hereData;
-              this.a1Echarts.series[0].data[0].name = this.hereData;
-              console.log(this.a1Echarts.series[0].data[0].value)
-              this.a1Echarts.series[0].data[1].value = this.sickData;
-              this.a1Echarts.series[0].data[1].name = this.sickData;
-              this.a1Echarts.series[0].data[2].value = this.lateData;
-              this.a1Echarts.series[0].data[2].name = this.lateData;
-              this.a1Echarts.series[0].data[3].value = this.dispearData;
-              this.a1Echarts.series[0].data[3].name = this.dispearData;
-            }else if(item.id == 'a2'){
-              
-              this.a2Echarts.series[0].data[0].value = this.hereData;
-              this.a2Echarts.series[0].data[0].name = this.hereData;
-              console.log(this.a2Echarts.series[0].data[0].value)
-              this.a2Echarts.series[0].data[1].value = this.sickData;
-              this.a2Echarts.series[0].data[1].name = this.sickData;
-              this.a2Echarts.series[0].data[2].value = this.lateData;
-              this.a2Echarts.series[0].data[2].name = this.lateData;
-              this.a2Echarts.series[0].data[3].value = this.dispearData;
-              this.a2Echarts.series[0].data[3].name = this.dispearData;
-            }            
+//              var echarts = item.id + 'Echarts';
+//              console.log(item.id)
+//            if(item.id == 'a1'){
+//              this.a1Echarts.series[0].data[0].value = this.hereData;
+//              this.a1Echarts.series[0].data[0].name = this.hereData;
+//              console.log(this.a1Echarts.series[0].data[0].value)
+//              this.a1Echarts.series[0].data[1].value = this.sickData;
+//              this.a1Echarts.series[0].data[1].name = this.sickData;
+//              this.a1Echarts.series[0].data[2].value = this.lateData;
+//              this.a1Echarts.series[0].data[2].name = this.lateData;
+//              this.a1Echarts.series[0].data[3].value = this.dispearData;
+//              this.a1Echarts.series[0].data[3].name = this.dispearData;
+//            }else if(item.id == 'a2'){
+//
+//              this.a2Echarts.series[0].data[0].value = this.hereData;
+//              this.a2Echarts.series[0].data[0].name = this.hereData;
+//              console.log(this.a2Echarts.series[0].data[0].value)
+//              this.a2Echarts.series[0].data[1].value = this.sickData;
+//              this.a2Echarts.series[0].data[1].name = this.sickData;
+//              this.a2Echarts.series[0].data[2].value = this.lateData;
+//              this.a2Echarts.series[0].data[2].name = this.lateData;
+//              this.a2Echarts.series[0].data[3].value = this.dispearData;
+//              this.a2Echarts.series[0].data[3].name = this.dispearData;
+//            }
+          }else{
+
           }
+
+        }).catch((error) => {
+
         });
         this.hereData = 0;
         this.sickData = 0;
@@ -450,7 +500,7 @@
       },
       //获取-课程表
       getCourseTable(resDate){
-          this.getPie();
+          //this.getPie();
           axios.post('/teacherCMS/getCourseTable', {
             data: {
               courseDate: resDate,
@@ -528,13 +578,15 @@
     overflow:auto;
   }
   .selectTable .pageButton{
+    padding: 12px;
     height: 100%;
     margin-top: 336px;
     padding-top: 50px;
     padding-bottom: 50px;
+    font-size: 20px;
   }
   .selectTable .classPlan {
-    width: 80%;
+    width: 90%;
     height: 700px;
     margin: 0 auto;
     margin-top: 73px;
@@ -555,7 +607,7 @@
   }
 
   .selectTable .classPlan .classPlan_topLeft {
-    width: 4%;
+    width: 2.5%;
     height: 100%;
     background: #e5e9f2;
     border: 5px solid #fff;
@@ -630,7 +682,7 @@
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;
-    width: 2%;
+    width: 2.5%;
   }
   .selectTable .classDataP2 {
     background: #e5e9f2;
@@ -642,7 +694,7 @@
   }
   .selectTable .eachDataP {
     background: #e5e9f2;
-    width: 4%;
+    width: 158px;
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;
@@ -662,7 +714,7 @@
     margin-bottom: 0;
     text-align: left;
     margin-left: 6px;
-    width: 100px;
+    width: 140px;
   }
   .selectTable .eachDataP2 p {
     margin-bottom: 0;
@@ -672,7 +724,7 @@
   }
   .selectTable .bing{
       width:160px;
-      height:120px;
+      height:130px;
       background:#fff;
       border-radius:10px;
       box-shadow: 10px 9px 40px -3px;
@@ -684,9 +736,12 @@
   }
   .selectTable .eachDataP:hover .bing{
     position:absolute;
-      bottom: 112px;
-      right: -7%;
+    bottom: 119px;
+    right: -7%;
     display:block;
+    color:#000;
+    padding:10px;
+    box-sizing: border-box;
   }
   .selectTable #aa{
     display:none;
@@ -714,7 +769,7 @@
     padding: 2px;
   }
   .selectTable .el-dialog{
-    width:69%;
+    width:70%;
   }
   .selectTable .row-bg {
     padding: 10px 0;

@@ -8,7 +8,7 @@
         </div>
       </el-select>
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick" v-show="showThree">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="信息查询" name="first">
 
           <select-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></select-table>
@@ -46,7 +46,7 @@
         weekDate:[],
         showThree:false,
         course: [],
-        
+
       }
     },
     computed: {
@@ -93,8 +93,11 @@
           }
         }).then((res) => {
           //console.log(res.data);
-          //this.majorM = res.data.majorMsg;
+          this.classGrade = res.data.classMsg[0].label;
           this.classM = res.data.classMsg;
+          let resDate = core.getMonday(new Date());
+          resDate = moment(resDate).format("YYYY-MM-DD");
+          this.getCourseTable(resDate)
         });
       },
 

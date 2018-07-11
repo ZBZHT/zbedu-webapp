@@ -17,92 +17,80 @@
         </div>
       </div>
       <div class="classPlan_bottom">
-        <!--<div class="classPlan_bottomLeft">-->
-          <!--<table>-->
-            <!--<tr v-for="(item2,index2) in classData" :key="index2">-->
-              <!--<td class="classDataP">{{item2}}</td>-->
-            <!--</tr>-->
-          <!--</table>-->
-        <!--</div>-->
         <div class="classPlan_bottomRight">
           <table>
             <tr>
               <td class="classDataP" v-show = "course">1</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                  <p>{{item3.teacher}}</p>
+                  <p>{{item3.courseName}}</p>
+                  <p>{{item3.courseAddress}}</p>
+                </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
-                </div>
-                <div v-else class="playButs">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">2</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse2" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                  <p>{{item3.teacher}}</p>
+                  <p>{{item3.courseName}}</p>
+                  <p>{{item3.courseAddress}}</p>
+                </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
-                </div>
-                <div v-else class="playButs">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">3</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse3" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                  <p>{{item3.teacher}}</p>
+                  <p>{{item3.courseName}}</p>
+                  <p>{{item3.courseAddress}}</p>
+                </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
-                </div>
-                <div v-else class="playButs">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">4</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse4" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                  <p>{{item3.teacher}}</p>
+                  <p>{{item3.courseName}}</p>
+                  <p>{{item3.courseAddress}}</p>
+                </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
-                </div>
-                <div v-else class="playButs">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
             <tr>
               <td class="classDataP" v-show = "course">5</td>
               <td class="eachDataP" v-for="(item3,index3) in course.newCourse5" :style="{color:item3.color}">
-                <p>{{item3.startTime}}~{{item3.endTime}}</p>
-                <p>{{item3.teacher}}</p>
-                <p>{{item3.courseName}}</p>
-                <p>{{item3.courseAddress}}</p>
+                <div v-show="item3.teacher !== ''">
+                  <p>{{item3.startTime}}~{{item3.endTime}}</p>
+                  <p>{{item3.teacher}}</p>
+                  <p>{{item3.courseName}}</p>
+                  <p>{{item3.courseAddress}}</p>
+                </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
                   <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
-                </div>
-                <div v-else class="playButs">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">添加</el-button>
                 </div>
               </td>
             </tr>
@@ -247,9 +235,7 @@
     },
     computed: {},
     mounted() {
-        console.log(course);
-        console.log(mondayDate);
-        console.log(weekDate);
+
 
     },
     methods: {
@@ -413,6 +399,7 @@
               for(var i = 0; i < resData.course[0].newCourse.length; i++){
                   if(resData.course[0].newCourse[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse[i].color = '#f00';
+                    resData.course[0].newCourse[i].date = resData.course[0].newCourse[i].startTime + "~" + resData.course[0].newCourse[i].endTime
                     //console.log("nnnmmm")
                   }else{
                     resData.course[0].newCourse[i].color = '';
@@ -421,6 +408,8 @@
               for(var i = 0; i < resData.course[0].newCourse2.length; i++){
                   if(resData.course[0].newCourse2[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse2[i].color = '#f00';
+                    resData.course[0].newCourse2[i].date = resData.course[0].newCourse2[i].startTime + "~" + resData.course[0].newCourse2[i].endTime
+
                     //console.log("nnnmmm")
                   }else{
                     resData.course[0].newCourse2[i].color = '';
@@ -429,6 +418,8 @@
               for(var i = 0; i < resData.course[0].newCourse3.length; i++){
                   if(resData.course[0].newCourse3[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse3[i].color = '#f00';
+                    resData.course[0].newCourse3[i].date = resData.course[0].newCourse3[i].startTime + "~" + resData.course[0].newCourse3[i].endTime
+
                     //console.log("nnnmmm")
                   }else{
                     resData.course[0].newCourse3[i].color = '';
@@ -437,6 +428,8 @@
               for(var i = 0; i < resData.course[0].newCourse4.length; i++){
                   if(resData.course[0].newCourse4[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse4[i].color = '#f00';
+                    resData.course[0].newCourse4[i].date = resData.course[0].newCourse4[i].startTime + "~" + resData.course[0].newCourse4[i].endTime
+
                     //console.log("nnnmmm")
                   }else{
                     resData.course[0].newCourse4[i].color = '';
@@ -445,11 +438,14 @@
               for(var i = 0; i < resData.course[0].newCourse5.length; i++){
                   if(resData.course[0].newCourse5[i].teacher == this.$store.state.username){
                     resData.course[0].newCourse5[i].color = '#f00';
+                    resData.course[0].newCourse5[i].date = resData.course[0].newCourse5[i].startTime + "~" + resData.course[0].newCourse5[i].endTime
+
                     //console.log("nnnmmm")
                   }else{
                     resData.course[0].newCourse5[i].color = '';
                   }
               }
+              console.log(resData.course[0]);
             }
 
           });
@@ -499,7 +495,7 @@
   }
 
   .showTable .classPlan .classPlan_topLeft {
-    width: 4%;
+    width: 2.5%;
     height: 100%;
     background: #e5e9f2;
     border: 5px solid #fff;
@@ -573,12 +569,12 @@
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;
-    width: 2%;
+    width: 2.5%;
   }
   .showTable .eachDataP {
     position: relative;
     background: #e5e9f2;
-    width: 4%;
+    width: 158px;
     border: 5px solid #fff;
     border-radius: 15px;
     height: 108px;

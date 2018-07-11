@@ -14,16 +14,13 @@
                     :data="leaveMsg"
                     stripe
                     style="width: 100%">
-                    <el-table-column prop="stuName" label="请假人" width="120">
+                    <el-table-column prop="stuName" label="请假人" width="100">
                     </el-table-column>
 
-                    <el-table-column prop="date" label="请假时间" width="300">
+                    <el-table-column prop="date" label="请假时间" width="140">
                     </el-table-column>
 
-                    <el-table-column prop="courseName" label="课程">
-                    </el-table-column>
-
-                    <el-table-column prop="className" label="班级" width="120">
+                    <el-table-column prop="className" label="班级" width="150">
                     </el-table-column>
 
                     <el-table-column prop="reason" label="请假事由">
@@ -51,13 +48,13 @@
                     :data="leaveMsg2"
                     stripe
                     style="width: 100%">
-                    <el-table-column prop="stuName" label="请假人" width="120">
+                    <el-table-column prop="stuName" label="请假人" width="100">
                     </el-table-column>
 
-                  <el-table-column prop="date" label="请假时间" width="300">
+                  <el-table-column prop="date" label="请假时间" width="140">
                   </el-table-column>
 
-                  <el-table-column prop="className" label="班级" width="100">
+                  <el-table-column prop="className" label="班级" width="150">
                   </el-table-column>
 
                   <el-table-column prop="reason" label="请假事由">
@@ -127,7 +124,7 @@
           let resData = res.data.result;
           if (res.data.code === 0) {
             for (let i = 0; i < resData.length; i++) {
-              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + '~' + resData[i].endDate + ',' + resData[i].endTime
+              resData[i].date = resData[i].startDate + ',' +resData[i].startTime + resData[i].endDate + ',' + resData[i].endTime
               if (resData[i].state === 1) {
                 this.leaveMsg.push(resData[i])
               } else {
@@ -155,11 +152,10 @@
           }
         }).then((res) => {
           let resData = res.data;
+          console.log(resData);
           if (res.data.code === 0) {
-            this.addSuccess('已批准');
             this.getLeaveMsg();
           } else if (res.data.code === 1) {
-            this.addDefeat('修改出错')
           }
           console.log(resData);
         });

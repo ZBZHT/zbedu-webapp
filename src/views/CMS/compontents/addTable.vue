@@ -600,6 +600,7 @@
         courseIndex3:'',
         courseIndex4:'',
         courseIndex5:'',
+        courseIndex6:'',
         courseIndexArr:[-1,-1,-1,-1,-1,-1,-1],
         courseIndexArr2:[-1,-1,-1,-1,-1,-1,-1],
         courseIndexArr3:[-1,-1,-1,-1,-1,-1,-1],
@@ -1044,7 +1045,7 @@
         axios.post('/teacherCMS/newCourseTable', {
           data: {
             className: this.classGrade,
-            index: this.courseIndex,
+            index: this.courseIndex6,
             courseDate:courseD,
             date1:form.date1,
             date2:form.date2,
@@ -1079,8 +1080,9 @@
       },
 
       addEach1(index){
-          console.log(this.allTeachName);
+          //console.log(this.allTeachName);
         this.courseIndex = index;
+        this.courseIndex6 = index;
         this.courseIndexArr[index] = index;
         //console.log(this.courseIndexArr)
       },
@@ -1139,6 +1141,7 @@
       },
       addEach2(index){
         this.courseIndex2 = index;
+        this.courseIndex6 = index;
         this.courseIndexArr2[index] = index;
         //console.log(this.courseIndexArr2)
       },
@@ -1197,6 +1200,7 @@
       },
       addEach3(index){
         this.courseIndex3 = index;
+        this.courseIndex6 = index;
         this.courseIndexArr3[index] = index;
         //console.log(this.courseIndexArr3)
       },
@@ -1255,6 +1259,7 @@
       },
       addEach4(index){
         this.courseIndex4 = index;
+        this.courseIndex6 = index;
         this.courseIndexArr4[index] = index;
         //console.log(this.courseIndexArr4)
       },
@@ -1313,6 +1318,7 @@
       },
       addEach5(index){
         this.courseIndex5 = index;
+        this.courseIndex6 = index;
         this.courseIndexArr5[index] = index;
         //console.log(this.courseIndexArr5)
       },

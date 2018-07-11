@@ -8,7 +8,7 @@
               <p style="text-align: left">上课时间：{{stuCourse.date}}</p>
               <p style="text-align: left">课程名称：{{stuCourse.courseName}}</p>
               <p style="text-align: left">任课老师：{{stuCourse.teacher}}</p>
-              <p style="text-align: left">注：请在课前30分钟内签到</p>
+              <span class="ps">(请在课前30分钟内签到)</span>
               <div class="playSth">
                 <div v-if="showBut === true">
                   <el-button type="success" @click="stuSignIn()" :disabled="true">点击签到</el-button>
@@ -89,11 +89,11 @@
           }
         });
       },
-      //获取当前课程信息
+      //学生签到
       stuSignIn(){
         axios.post('/teacherCMS/stuSignIn', {
           data: {
-            stuCourse: this.resCourse,
+            stuCourse: this.stuCourse,
           }
         }).then((res) => {
           //console.log(res.data.result);
@@ -114,16 +114,11 @@
         }
       }).then((res) => {
         let resCourse = res.data.result;
-        console.log(res.data.result);
         if (res.data.code === 0) {
           let startTime = new Date(moment(resCourse.courseDate + ',' + resCourse.startTime).format("YYYY-MM-DD,HH:mm")).getTime();
           let newTime = new Date().getTime() + 60*30*1000;
           resCourse.date = resCourse.startTime + "~" + resCourse.endTime;
           this.stuCourse = resCourse;
-          console.log(startTime);
-          console.log(newTime);
-          console.log(startTime  - newTime);
-          console.log(60*30);
           if (newTime > startTime) {
             this.showBut = false;
           } else {
@@ -186,5 +181,14 @@
     height:100px;
     margin:0 auto;
     text-align:center;
+    position:relative;
+  }
+  .studentPlan .mainContent{
+    position:relative;
+  }
+  .studentPlan .mainContent .ps{
+    position:absolute;
+    right:56%;
+    top:105px;
   }
 </style>

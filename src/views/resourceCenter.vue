@@ -41,7 +41,9 @@
             <el-table-column width="120" class="tableName4">
               <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
-                <el-button type="text" size="mini" @click.native.prevent="fileDelete(scope.$index,msgArrLittle,scope.row)">删除</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click.native.prevent="fileDelete(scope.$index,msgArrLittle,scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -79,7 +81,9 @@
             <el-table-column width="120">
               <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.$index,courseWareArr,scope.row)">删除</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click="fileDelete(scope.$index,courseWareArr,scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -117,7 +121,9 @@
             <el-table-column width="120">
               <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.$index,videoArr,scope.row)">删除</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click="fileDelete(scope.$index,videoArr,scope.row)">删除</el-button>
               </template>
             </el-table-column>
 
@@ -156,26 +162,17 @@
             <el-table-column width="120">
               <template slot-scope="scope">
                 <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.$index,otherArr,scope.row)">删除</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click="fileDelete(scope.$index,otherArr,scope.row)">删除</el-button>
               </template>
             </el-table-column>
 
           </el-table>
         </b-tab>
 
-        <el-upload
-          class="upload-demo1"
-          action="/fileUpDown/upload"
-          ref="upload"
-          :data="label1"
-          :onError="uploadError"
-          :onSuccess="uploadSuccess"
-          :on-exceed="handleExceed"
-          :before-upload="beforeAvatarUpload"
-          :auto-upload="false">
-          <el-button class="uploadBut" size="medium " type="primary" @click="beforeAvatarUpload">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">提示: 上传的文件不可超过1000M</div>
-        </el-upload>
+        <el-button class="uploadBut1" size="medium " type="primary" @click="beforeAvatarUpload">点击上传</el-button>
+
       </b-tabs>
 
       <span class="file-up">成果收集</span>
@@ -184,13 +181,33 @@
 
     <!--文件类型对话框-->
     <el-dialog
-      title="请选择上传文件的类型"
+      title="请选择上传文件"
       :visible.sync="centerDialogVisible"
-      width="25%"
+      width="30%"
+      style="text-align:left;"
       :close-on-press-escape=false
-      :close-on-click-modal=false
-      :show-close=false
-      center>
+      :close-on-click-modal=false>
+        <el-input
+          style="width: 70%;margin-bottom: 20px;"
+          v-model="upFileName"
+          :disabled="true">
+        </el-input>
+
+        <el-upload
+          class="upload-demo1"
+          action="/fileUpDown/upload"
+          ref="upload"
+          :data="label1"
+          :on-change="chFun"
+          :show-file-list="false"
+          :onError="uploadError"
+          :onSuccess="uploadSuccess"
+          :on-exceed="handleExceed"
+          :before-upload="beforeAvatarUpload"
+          :auto-upload="false">
+          <el-button slot="trigger">选取文件</el-button>
+        </el-upload>
+
         <el-select v-model="label1.label" placeholder="请选择类型">
           <el-option
             v-for="item in options"
@@ -200,7 +217,7 @@
           </el-option>
         </el-select>
       <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="addArr">确 定</el-button>
+          <el-button type="primary" @click="addArr">确&emsp;定</el-button>
         </span>
     </el-dialog>
 
@@ -224,6 +241,7 @@
   export default {
     data () {
       return {
+        username: this.$store.state.username,
         msgArr:[],
         msgArrLittle:[],
         courseWareArr:[],
@@ -244,6 +262,7 @@
           label: '其他素材'
         }],
         label1: { label: '' },
+        upFileName: '',
       }
     },
     computed:{
@@ -267,6 +286,10 @@
           type: 'warning'
         });
       },
+      //选择文件显示文件名
+      chFun(file, fileList){
+        this.upFileName = file.name
+      },
       // 上传成功后的回调
       uploadSuccess (res, file) {
         this.msgArr = [];
@@ -281,9 +304,12 @@
       handleExceed(files, fileList) {
         this.$message.warning(`每次只能上传 1 个文件`);
       },
+      //确定上传
       addArr() {
-        if (this.label1.label === '') {
-            this.warningMsg('请选择上传文件的类型')
+        if (this.upFileName === '') {
+          this.warningMsg('请选择文件')
+        } else if (this.label1.label === '') {
+          this.warningMsg('请选择上传文件的类型')
         } else {
           console.log(this.label1);
           this.centerDialogVisible = false;
@@ -292,7 +318,8 @@
 
       },
       // 上传前弹出对话框
-      beforeAvatarUpload (file) {
+      beforeAvatarUpload () {
+        this.upFileName = '';
         this.centerDialogVisible = true;
       },
       handleClick(tab, event) {
@@ -460,10 +487,13 @@
     border-bottom: 2px solid white;
     color: #6a1518;
   }
-  .resourceCenter .upload-demo1 {
+  .resourceCenter .uploadBut1 {
     position: absolute;
     bottom: 16rem;
-    left: -12rem;
+    left: -9.5rem;
+  }
+  .resourceCenter .upload-demo1 {
+    display: inline-block;
   }
   .resourceCenter {
     position: relative;
