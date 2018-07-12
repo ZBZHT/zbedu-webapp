@@ -149,7 +149,7 @@
                   :picker-options="{
                                     start: '08:00',
                                     step: '00:10',
-                                    end: '20:00'
+                                    end: '21:00'
                                     }">
                 </el-time-select>
               </el-form-item>

@@ -5,6 +5,7 @@
 const fs = require("fs"),
 	_ = require("lodash"),
 	os = require("os");
+moment = require("moment");
 
 module.exports = {
 
@@ -268,5 +269,121 @@ module.exports = {
     for (keys[j++] in hash );
     return keys;
   },
+  /**
+   * 传入一个日期, 如：2018-6-27
+   * 返回该日期所在周的周一日期
+   */
+  getMonday : function (data) {
+    let now = new Date(data);
+    let nowTime = now.getTime() ;
+    let day = now.getDay();
+    let oneDayLong = 24*60*60*1000 ;
+    let MondayTime = nowTime - (day-1)*oneDayLong  ;
+    let monday = moment(new Date(MondayTime)).format("YYYY-MM-DD");
+    return monday;
+  },
+  /**
+   * 传入开始时间和结束时间, 如：“2018-6-27”，“2018-7-27”
+   * 返回该日期时间段所有周一日期列表数组
+   */
+  getWeekAll : function (begin,end) {
+    let dateAllArr = [];
+    begin = this.getMonday(begin);
+    let ab = begin.split("-");
+    let ae = end.split("-");
+    let db = new Date();
+    db.setUTCFullYear(ab[0], ab[1]-1, ab[2]);
+    let de = new Date();
+    de.setUTCFullYear(ae[0], ae[1]-1, ae[2]);
+    let unixDb=db.getTime();
+    let unixDe=de.getTime();
+    for(let k=unixDb;k<=unixDe;){
+
+      dateAllArr.push(moment(new Date(parseInt(k))).format("YYYY-MM-DD"));
+      k=k+7*24*60*60*1000;
+    }
+    return dateAllArr;
+  },
+    /**
+   * 传入某一时间, 如：“2018-6-27”
+   * 返回该日期前两天如：“2018-6-25”
+   */
+  getYestoday : function (date){
+    var yesterday_milliseconds=date.getTime();
+    yesterday_milliseconds = yesterday_milliseconds -(1000*60*60*24)*2;
+    var yesterday = new Date();
+        yesterday.setTime(yesterday_milliseconds);
+
+    var strYear = yesterday.getFullYear();
+    var strDay = yesterday.getDate();
+    var strMonth = yesterday.getMonth()+1;
+    if(strMonth<10)
+    {
+        strMonth="0"+strMonth;
+    }
+    datastr = strYear+"-"+strMonth+"-"+strDay;
+    return datastr;
+  },
+   /**
+   * 传入某一时间, 如：“2018-6-27”
+   * 返回该日期下周一
+   */
+  getTomorrow : function (date){
+    var Tomorrow_milliseconds=date.getTime();
+    Tomorrow_milliseconds = Tomorrow_milliseconds +(1000*60*60*24)*7;
+    var Tomorrow = new Date();
+        Tomorrow.setTime(Tomorrow_milliseconds);
+
+    var strYear = Tomorrow.getFullYear();
+    var strDay = Tomorrow.getDate();
+    var strMonth = Tomorrow.getMonth()+1;
+    if(strMonth<10)
+    {
+        strMonth="0"+strMonth;
+    }
+    datastr = strYear+"-"+strMonth+"-"+strDay;
+    return datastr;
+  },
+  /**
+   * 传入一个日期, 如：“2018-06-27”
+   * 返回该日期所在周的所有日期的列表数组
+   */
+  getDayAll : function (date) {
+    let dateAllArr = [];
+    let aa =moment(this.getMonday(date)).format("YYYY-MM-DD");
+    let ab = aa.split("-");
+    let db = new Date();
+    db.setUTCFullYear(ab[0], ab[1]-1, ab[2]);
+    let unixDb=db.getTime();
+    let unixDe=unixDb + 6*24*60*60*1000;
+    for(let k=unixDb;k<=unixDe;){
+      dateAllArr.push(moment(new Date(parseInt(k))).format("YYYY-MM-DD"));
+      k=k+24*60*60*1000;
+    }
+    return dateAllArr;
+  },
+  /**
+   * 传入开始日期和结束日期, 如：“2018-06-27” “2018-07-20”
+   * 返回时间段内所有日期的列表数组
+   */
+  getBegin_EndAll : function (begin, end) {
+    let ee = [];
+    var ab = begin.split("-");
+    var ae = end.split("-");
+    var db = new Date();
+    db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+    var de = new Date();
+    de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+    var unixDb = db.getTime();
+    var unixDe = de.getTime();
+    for (var k = unixDb; k <= unixDe;) {
+      ee.push(moment(new Date(parseInt(k))).format("YYYY-MM-DD"));
+      k = k + 24 * 60 * 60 * 1000;
+    }
+    return ee;
+  },
+
+
+
 
 };

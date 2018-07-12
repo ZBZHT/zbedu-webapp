@@ -386,7 +386,7 @@
         }).then((res) => {
           console.log(res.data.result)
           let resData = res.data.result;
-          if (res.data.code === 0) {
+          if (res.data.code === 0 && item.teacher == this.$store.state.username) {
             this.dialogTableVisible = true;
             for (let i = 0; i < resData.stateList.length; i++) {
             //  resData.stateList[i].teacher = item.teacher;

@@ -332,8 +332,10 @@ router.post('/labelTree', function (req, res) {
 
 /* 获取所有用户数据 */
 router.post('/getUserData', function (req, res) {
+
   if (req.body.data.username) {
     let username = req.body.data.username;
+
     Teacher.findOne({
       user: username,
     }).then(function (userType) {
@@ -1097,10 +1099,13 @@ router.post('/addExcelTest', function (req, res) {
 
 //教师, 获取自定义课程
 router.post('/getTeacherCustomCourse', function (req, res) {
+
   if (req.body.data) {
+
     let reqData = req.body.data;
     let username = req.session.users.username;
     if (reqData.userType === 'SA' || reqData.userType === 'EA' || reqData.userType === 'T') {
+
       if (!fs.existsSync(uploadCoursePath + username)) {
         fs.mkdirSync(uploadCoursePath + username);
       }
@@ -1522,7 +1527,6 @@ router.post('/uploadAvatar', function (req, res) {
 
 //获取班级和专业
 router.post('/getClass', function (req, res) {
-  //console.log('jdsfjawnejkfnaef');
   Student.find({}).then(function (student) {
     let classMsg = [];
     let majorMsg = [];
@@ -1571,9 +1575,70 @@ router.post('/getAllTeachName', function (req, res) {
 
   }
 });
-
+//创建签到记录
+function newTimeSheet(course1,weekDay) {
+  console.log(course1);
+  console.log(weekDay);
+  Student.find({          //找到班级所有学生
+    classGrade: course1.className,
+  }).then(function (student) {
+    if (student.length !== 0) {
+      let studentAll = [];
+      for (let i = 0; i < student.length; i++) {
+        studentAll.push({ stuName: student[i].user, state: 4 ,isUser: false,});
+      }
+      TimeSheet.findOne({
+        courseDate: weekDay,
+        startTime: course1.course.startTime,
+      }).then(function (timeSheet) {
+        //console.log(timeSheet);
+        if (timeSheet === null) {
+          let timeSheet = new TimeSheet(
+            {
+              courseName: course1.course.courseName,
+              courseDate: weekDay,
+              teacher: course1.course.teacher,
+              className: course1.className,
+              startTime: course1.course.startTime,
+              endTime: course1.course.endTime,
+              stateList: studentAll,
+            }
+          );
+          timeSheet.save(function (err) {
+            if (err) {
+              console.log('创建签到表失败');
+            } else {
+              studentAll = [];
+              console.log('创建签到表成功');
+            }
+          });
+        } else {
+          TimeSheet.updateOne({
+            courseDate: weekDay,
+            startTime: course1.course.startTime,
+          }, {
+            $set: {
+              courseName: course1.course.courseName,
+              teacher: course1.course.teacher,
+              className: course1.className,
+              endTime: course1.course.endTime,
+              stateList: studentAll,
+            }
+          }, function (err) {
+            if (err) {
+              console.log(err);
+              console.log('更新签到表失败');
+            } else {
+              console.log('更新签到表成功');
+            }
+          });
+        }
+      })
+    }
+  })
+}
 //修改-某天的课程表方法
-function alterTable1(course1, weekAll) {
+function alterTable1(course1, weekAll, edit) {
   if (course1.courseDate === 'newCourse') {
     if (course1.index === 0) {
       for (let i = 0; i < weekAll.length; i++) {
@@ -1585,10 +1650,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1602,10 +1668,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1619,10 +1686,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1636,10 +1704,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1653,10 +1722,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1670,10 +1740,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1687,10 +1758,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1704,10 +1776,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1723,10 +1796,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1740,10 +1814,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1757,10 +1832,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1774,10 +1850,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1791,10 +1868,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1808,10 +1886,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1825,10 +1904,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1842,10 +1922,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1861,10 +1942,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1878,10 +1960,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1895,10 +1978,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1912,10 +1996,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1929,10 +2014,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1946,10 +2032,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1963,10 +2050,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1980,10 +2068,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -1999,10 +2088,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2016,10 +2106,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2033,10 +2124,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2050,10 +2142,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2067,10 +2160,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2084,10 +2178,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2101,10 +2196,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2118,10 +2214,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2137,10 +2234,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2154,10 +2252,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2171,10 +2270,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2188,10 +2288,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2205,10 +2306,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2222,10 +2324,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2239,10 +2342,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2256,10 +2360,11 @@ function alterTable1(course1, weekAll) {
         }, function (err) {
           if (err) {
             console.log(err);
-            return false;
           } else {
             console.log('更新成功');
-            return true;
+            if (edit === false) {
+              newTimeSheet(course1, weekAll[i])
+            }
           }
         });
       }
@@ -2269,7 +2374,7 @@ function alterTable1(course1, weekAll) {
 //创建-课程表
 router.post('/newCourseTable', function (req, res) {
     let reqData = req.body.data;
-    console.log(reqData);
+    //console.log(reqData);
     let weekAll = core.getWeekAll(reqData.date1, reqData.date2);
     let firstWeekAll = core.getDayAll(reqData.date1);
     let lastWeekAll = core.getDayAll(reqData.date2);
@@ -2319,8 +2424,8 @@ router.post('/newCourseTable', function (req, res) {
       Promise.all([p1]).then((result) => {
         //console.log(reqData);
         //console.log(weekAll);
-        alterTable1(reqData,weekAll);
-        res.status(200).send({ code: 0, msg: '创建课程成功'});
+        alterTable1(reqData,weekAll,reqData.edit);
+        res.status(200).send({code: 0, msg: '创建课程表成功'});
       }).catch((error) => {
         console.log(error)
       });
@@ -2328,11 +2433,11 @@ router.post('/newCourseTable', function (req, res) {
   });
 //获取-课程表
 router.post('/getCourseTable', function (req, res) {
+
   let userType = req.session.users.userType;
   let username = req.session.users.username;
   let reqData = req.body.data;
   let monday = core.getMonday(reqData.courseDate);
-  console.log(reqData);
   //console.log(reqData.className);
   let p1 = new Promise((resolve, reject) => {
     if (userType === 'S' || userType === 'O') {
@@ -2379,7 +2484,7 @@ router.post('/getTimeSheet', function (req, res) {
   let reqData = req.body.data;
   let userType = req.session.users.userType;
   let dayAll = core.getDayAll(moment().format("YYYY-MM-DD"));
-  //console.log(reqData);
+  console.log(reqData);
   if (userType === 'EA' || userType === 'T' || userType === 'SA') {
     if (reqData.startTime !== '') {
       TimeSheet.findOne({
@@ -2445,7 +2550,7 @@ router.post('/getTimeSheet', function (req, res) {
 //获取请假信息
 router.post('/getLeaveMsg', function (req, res) {
   let reqData = req.body.data;
-  console.log(reqData);
+  //console.log(reqData);
   StuLeave.find({
   }).then(function (stuLeave) {
     console.log(stuLeave);
@@ -2460,6 +2565,7 @@ router.post('/getLeaveMsg', function (req, res) {
 router.post('/alterLeaveState', function (req, res) {
   let reqData = req.body.data.leaveState;
   let userType = req.session.users.userType;
+
   //console.log(reqData);
   //console.log(req.body.data.state);
   if (userType === 'EA' || userType === 'SA') {
@@ -2472,7 +2578,23 @@ router.post('/alterLeaveState', function (req, res) {
         console.log(err);
         res.status(200).send({code: 1, Msg: '更新失败',});
       } else {
-        console.log('密码更新成功');
+        console.log('更新成功');
+        let allDay = core.getBegin_EndAll(reqData.startDate, reqData.endDate);
+        for (let i = 0; i < allDay.length; i++) {
+          TimeSheet.updateOne({
+            courseDate: allDay[i],
+            "stateList.stuName": reqData.stuName,
+          }, {
+            $set: { "stateList.$.state" : 3, "stateList.$.isUser" : true }
+          }, function (err) {
+            if (err) {
+              console.log(err);
+              res.status(200).send({code: 1, Msg: '请假失败',});
+            } else {
+              console.log('已请假');
+            }
+          });
+        }
         res.status(200).send({code: 0, Msg: '更新成功',});
       }
     });
@@ -2511,6 +2633,7 @@ router.post('/newStuLeaveMsg', function (req, res) {
       startTime: reqData.startTime,
       endTime: reqData.endTime,
       reason: reqData.reason,
+      state: 1,
     },function (err) {
       if (err) {
         console.log(err);
@@ -2709,6 +2832,30 @@ router.post('/getAllStuClass', function (req, res) {
  }
  });
  });*/
+//学生-获取签到信息
+router.post('/getSignInMsg', function (req, res) {
+  let resData = req.body.data.stuCourse;
+  //console.log(resData);
+  let username = req.session.users.username;
+  let userType = req.session.users.userType;
+  if (userType === 'S' || userType === 'O') {
+    TimeSheet.findOne({
+      courseDate: resData.courseDate,
+      startTime: resData.startTime,
+    }).then(function (timeSheet) {
+      let resSheet = timeSheet.stateList;
+      for (let i = 0; i < resSheet.length; i++) {
+        if (resSheet[i].stuName === username) {
+          //console.log(resSheet[i]);
+          res.status(200).send({code: 0, result: resSheet[i], Msg: '获取状态成功',});
+        }
+      }
+      setTimeout(function () {
+        //res.status(200).send({code: 1, Msg: '获取状态失败',});
+      },100)
+    })
+  }
+});
 //学生签到
 router.post('/stuSignIn', function (req, res) {
   let resData = req.body.data.stuCourse;
@@ -2716,53 +2863,15 @@ router.post('/stuSignIn', function (req, res) {
   let username = req.session.users.username;
   let userType = req.session.users.userType;
   if (userType === 'S' || userType === 'O') {
-    TimeSheet.updateOne({
-      courseDate: resData.courseDate,
-      startTime: resData.startTime,
-      "stateList.stuName": username,
-    }, {
-      $set: { "stateList.$.state" : 0, "stateList.$.isUser" : true }
-    }, function (err) {
-      if (err) {
-        console.log(err);
-        res.status(200).send({code: 1, Msg: '签到失败',});
-      } else {
-        console.log('签到成功');
-        res.status(200).send({code: 0, Msg: '签到成功',});
-      }
-    });
-  }
-});
-//老师代签到
-router.post('/teachSignIn', function (req, res) {
-  let resData = req.body.data.stuCourse;
-  console.log(resData);
-  let userType = req.session.users.userType;
-  if (userType === 'T' || userType === 'EA') {
-    TimeSheet.findOne({
-      courseDate: resData.courseDate,
-      startTime: resData.startTime,
-    }).then(function (timeSheet) {
-      let sList = timeSheet.stateList;
-      let sListState = '';
-      //console.log(timeSheet.stateList);
-      for (let i = 0; i < sList.length; i++) {
-        console.log(sList[i]);
-        if (sList[i].stuName === resData.username) {
-          if (sList[i].state === 0) {
-            sListState = 4;
-          } else if (sList[i].state === 4) {
-            sListState = 0;
-          }
-        }
-      }
-
+    let newDate = new Date().getTime();
+    let startTime = new Date(moment(resData.courseDate + ',' + resData.startTime).format("YYYY-MM-DD,HH:mm")).getTime();
+    if (newDate <= startTime) {
       TimeSheet.updateOne({
         courseDate: resData.courseDate,
         startTime: resData.startTime,
-        "stateList.stuName": resData.username,
+        "stateList.stuName": username,
       }, {
-        $set: { "stateList.$.state" : sListState }
+        $set: { "stateList.$.state" : 0, "stateList.$.isUser" : true }
       }, function (err) {
         if (err) {
           console.log(err);
@@ -2772,8 +2881,78 @@ router.post('/teachSignIn', function (req, res) {
           res.status(200).send({code: 0, Msg: '签到成功',});
         }
       });
-    });
+    } else if (newDate > startTime) {
+      TimeSheet.updateOne({
+        courseDate: resData.courseDate,
+        startTime: resData.startTime,
+        "stateList.stuName": username,
+      }, {
+        $set: { "stateList.$.state" : 2, "stateList.$.isUser" : true }
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '签到失败',});
+        } else {
+          console.log('签到成功');
+          res.status(200).send({code: 0, Msg: '签到成功',});
+        }
+      });
+    }
   }
+});
+//老师代签到
+router.post('/teachSignIn', function (req, res) {
+  let resData = req.body.data.stuCourse;
+  console.log(resData);
+  let userType = req.session.users.userType;
+  if (userType === 'T' || userType === 'EA') {
+    let newDate = new Date().getTime();
+    let startTime = new Date(moment(resData.courseDate + ',' + resData.startTime).format("YYYY-MM-DD,HH:mm")).getTime();
+      TimeSheet.findOne({
+        courseDate: resData.courseDate,
+        startTime: resData.startTime,
+      }).then(function (timeSheet) {
+        let sList = timeSheet.stateList;
+        let sListState = '';
+        //console.log(timeSheet.stateList);
+        for (let i = 0; i < sList.length; i++) {
+          //console.log(sList[i]);
+          if (sList[i].stuName === resData.username) {
+            if (sList[i].state === 0) {
+              if (newDate <= startTime) {
+                sListState = 4;
+              } else if (newDate >= startTime) {
+                sListState = 2;
+              }
+            } else if (sList[i].state === 2) {
+                sListState = 4;
+            } else if (sList[i].state === 4) {
+              if (newDate <= startTime) {
+                sListState = 0;
+              } else if (newDate >= startTime) {
+                sListState = 2;
+              }
+            }
+          }
+        }
+
+        TimeSheet.updateOne({
+          courseDate: resData.courseDate,
+          startTime: resData.startTime,
+          "stateList.stuName": resData.username,
+        }, {
+          $set: { "stateList.$.state" : sListState }
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            res.status(200).send({code: 1, Msg: '签到失败',});
+          } else {
+            console.log('签到成功');
+            res.status(200).send({code: 0, Msg: '签到成功',});
+          }
+        });
+      });
+    }
 });
 
 

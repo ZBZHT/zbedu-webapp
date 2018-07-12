@@ -11,23 +11,23 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      "/api": 'http://192.168.2.251:8000' ,  //代理到开发服务器
-      "/readJson": 'http://192.168.2.251:8000',
-      "/readTestQuestion": 'http://192.168.2.251:8000',
-      "/testManagement": 'http://192.168.2.251:8000',
-      "/readComments": 'http://192.168.2.251:8000',
-      "/teacherCMS": 'http://192.168.2.251:8000',
-      "/fileUpDown": 'http://192.168.2.251:8000',
-      "/readResource": 'http://192.168.2.251:8000'
+      // "/api": 'http://192.168.2.251:8000' ,  //代理到开发服务器
+      // "/readJson": 'http://192.168.2.251:8000',
+      // "/readTestQuestion": 'http://192.168.2.251:8000',
+      // "/testManagement": 'http://192.168.2.251:8000',
+      // "/readComments": 'http://192.168.2.251:8000',
+      // "/teacherCMS": 'http://192.168.2.251:8000',
+      // "/fileUpDown": 'http://192.168.2.251:8000',
+      // "/readResource": 'http://192.168.2.251:8000'
 
-      // "/api": 'http://127.0.0.1:80' ,  //代理到开发服务器
-      // "/readJson": 'http://127.0.0.1:80',
-      // "/readTestQuestion": 'http://127.0.0.1:80',
-      // "/testManagement": 'http://127.0.0.1:80',
-      // "/readComments": 'http://127.0.0.1:80',
-      // "/teacherCMS": 'http://127.0.0.1:80',
-      // "/fileUpDown": 'http://127.0.0.1:80',
-      // "/readResource": 'http://127.0.0.1:80'
+      "/api": 'http://127.0.0.1:80' ,  //代理到开发服务器
+      "/readJson": 'http://127.0.0.1:80',
+      "/readTestQuestion": 'http://127.0.0.1:80',
+      "/testManagement": 'http://127.0.0.1:80',
+      "/readComments": 'http://127.0.0.1:80',
+      "/teacherCMS": 'http://127.0.0.1:80',
+      "/fileUpDown": 'http://127.0.0.1:80',
+      "/readResource": 'http://127.0.0.1:80'
 
       /*
       "/menu/header": {

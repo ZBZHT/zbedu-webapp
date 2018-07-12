@@ -177,6 +177,7 @@
           }
         }).then((res) => {
           let resData = res.data.result;
+          console.log(resData)
           if (res.data.code === 0) {
             this.tableData = [];
             for (let i = 0; i < resData.length; i++) {

@@ -362,4 +362,28 @@ module.exports = {
     }
     return dateAllArr;
   },
+  /**
+   * 传入开始日期和结束日期, 如：“2018-06-27” “2018-07-20”
+   * 返回时间段内所有日期的列表数组
+   */
+  getBegin_EndAll : function (begin, end) {
+    let ee = [];
+    var ab = begin.split("-");
+    var ae = end.split("-");
+    var db = new Date();
+    db.setUTCFullYear(ab[0], ab[1] - 1, ab[2]);
+    var de = new Date();
+    de.setUTCFullYear(ae[0], ae[1] - 1, ae[2]);
+    var unixDb = db.getTime();
+    var unixDe = de.getTime();
+    for (var k = unixDb; k <= unixDe;) {
+      ee.push(moment(new Date(parseInt(k))).format("YYYY-MM-DD"));
+      k = k + 24 * 60 * 60 * 1000;
+    }
+    return ee;
+  },
+
+
+
+
 };
