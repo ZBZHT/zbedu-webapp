@@ -190,7 +190,7 @@
                                   :picker-options="{
                                     start: '08:00',
                                     step: '00:10',
-                                    end: '21:00'
+                                    end: '20:00'
                                     }">
                                 </el-time-select>
                               </el-form-item>
@@ -496,7 +496,7 @@
                                   :picker-options="{
                                     start: '08:00',
                                     step: '00:10',
-                                    end: '20:00'
+                                    end: '22:00'
                                     }">
                                 </el-time-select>
                               </el-form-item>
@@ -1044,7 +1044,7 @@
           };
         axios.post('/teacherCMS/newCourseTable', {
           data: {
-            className: this.classGrade,
+            className: this.$store.state.classGrade,
             index: this.courseIndex6,
             courseDate:courseD,
             date1:form.date1,

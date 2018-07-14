@@ -4,7 +4,7 @@ import store from '../vuex/store'
 import HelloWorld from '@/components/HelloWorld'
 import index from '@/views/index'
 import courseIndex from '@/views/courseIndex'
-import testCenter from '@/views/testCenter'
+import hnTraining from '@/views/hnTraining'
 import exerciseCenter from '@/views/exerciseCenter'
 import competitionCenter from '@/views/competitionCenter'
 import test from '@/views/test'
@@ -53,12 +53,12 @@ const routes = [
       component:courseIndex
     },
     {
-      path:'/testCenter',
-      name:'testCenter',
+      path:'/hnTraining',
+      name:'hnTraining',
       meta:{
         title: 'zbt考试中心'
       },
-      component:testCenter
+      component:hnTraining
     },
     {
       path:'/teachTest',

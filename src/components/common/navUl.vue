@@ -103,6 +103,22 @@ export default {
             this.$router.push('/resourceCenter');
         }else if(index == 4){
             this.$router.push('/competitionCenter');
+        }else if(index == 5){
+            //获取树形数据
+            axios.get("/readJson/bannerLeftData",{
+                params:{
+                    user:234
+                }
+            }).then((res)=>{
+            console.log(res.data)
+              var data = res.data[5].children;
+            //  console.log(data[0].children[0])  
+              this.$store.commit('noTreeTitle',data[0].children[0]);
+              this.$store.commit('noTreeTitle1',data[0].children[0]);
+            }).catch(function(error){
+                console.log("error init." + error)
+            });
+            this.$router.push('/hnTraining');
         }
     }
 
@@ -139,8 +155,8 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
-        height: 60px;
+        width:50px;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -214,8 +230,8 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
-        height: 60px;
+        width:50px;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -291,7 +307,7 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
+        width:50px;
         height: 50px;
     }
     .contentui .el-row {
@@ -368,7 +384,7 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
+        width:50px;
         height: 50px;
     }
     .contentui .el-row {
@@ -444,7 +460,7 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
+        width:50px;
         height: 47px;
     }
     .contentui .el-row {

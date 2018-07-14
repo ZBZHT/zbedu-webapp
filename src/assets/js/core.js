@@ -3,155 +3,155 @@
  * 公共函数
  *********************/
 const fs = require("fs"),
-	_ = require("lodash"),
-	os = require("os");
+  _ = require("lodash"),
+  os = require("os");
 moment = require("moment");
 
 module.exports = {
 
-    /**
-     * 格式化时间文本
-     * @param {Date} text 要格式化的文本
-     * @param {String} date 时间对象
-     * @returns {String}
-     * @example
-     * $Date.format("现在是yyyy年MM月dd日 hh点mm分ss秒，星期w",new Date());
-     * y 表示年份
-     * M 大写M表示月份
-     * d 表示几号
-     * h 表示小时
-     * m 表示分
-     * s 表示秒
-     * w 表示星期几
-     **/
-    formatDate: function(text, date) {
-        var reg = /yyyy|yy|M+|d+|h+|m+|s+|q+|S|w/g;
-        text = text.replace(reg, function (pattern) {
-            var result;
-            switch (pattern) {
-                case "yyyy":
-                    result = date.getFullYear();
-                    break;
-                case "yy":
-                    result = date.getFullYear().toString().substring(2);
-                    break;
-                case "M":
-                case "MM":
-                    result = date.getMonth() + 1;
-                    break;
-                case "dd":
-                case "d":
-                    result = date.getDate();
-                    break;
-                case "hh":
-                case "h":
-                    result = date.getHours();
-                    break;
-                case "mm":
-                case "m":
-                    result = date.getMinutes();
-                    break;
-                case "ss":
-                case "s":
-                    result = date.getSeconds();
-                    break;
-                case "q":
-                    result = Math.floor((date.getMonth() + 3) / 3);
-                    break;
-                case "S":
-                    result = date.getMilliseconds();
-                    break;
-                case "w":
-                    result = "日一二三四五六".charAt(date.getDay());
-                    break;
-                default:
-                    result = "";
-                    break;
-            }
-            if (pattern.length == 2 && result.toString().length == 1) {
-                result = "0" + result;
-            }
-            return result;
-        });
-        return text;
-    },
-    /**
-     * 得到服务器信息
-     */
-    getServerInfo: function() {
-        var ipv4 = [],mac = [];
-        var networkInterfaces = os.networkInterfaces();
-        for (var key in networkInterfaces) {
-            if (networkInterfaces.hasOwnProperty(key)) {
-                var interfaces = networkInterfaces[key];
-                for(var i = 0;i < interfaces.length; i++){
-                    if(interfaces[i].family == "IPv4" && !interfaces[i].internal){
-                        ipv4.push(interfaces[i].address);
-                        mac.push(interfaces[i].mac);
-                    }
-                }
-            }
+  /**
+   * 格式化时间文本
+   * @param {Date} text 要格式化的文本
+   * @param {String} date 时间对象
+   * @returns {String}
+   * @example
+   * $Date.format("现在是yyyy年MM月dd日 hh点mm分ss秒，星期w",new Date());
+   * y 表示年份
+   * M 大写M表示月份
+   * d 表示几号
+   * h 表示小时
+   * m 表示分
+   * s 表示秒
+   * w 表示星期几
+   **/
+  formatDate: function(text, date) {
+    var reg = /yyyy|yy|M+|d+|h+|m+|s+|q+|S|w/g;
+    text = text.replace(reg, function (pattern) {
+      var result;
+      switch (pattern) {
+        case "yyyy":
+          result = date.getFullYear();
+          break;
+        case "yy":
+          result = date.getFullYear().toString().substring(2);
+          break;
+        case "M":
+        case "MM":
+          result = date.getMonth() + 1;
+          break;
+        case "dd":
+        case "d":
+          result = date.getDate();
+          break;
+        case "hh":
+        case "h":
+          result = date.getHours();
+          break;
+        case "mm":
+        case "m":
+          result = date.getMinutes();
+          break;
+        case "ss":
+        case "s":
+          result = date.getSeconds();
+          break;
+        case "q":
+          result = Math.floor((date.getMonth() + 3) / 3);
+          break;
+        case "S":
+          result = date.getMilliseconds();
+          break;
+        case "w":
+          result = "日一二三四五六".charAt(date.getDay());
+          break;
+        default:
+          result = "";
+          break;
+      }
+      if (pattern.length == 2 && result.toString().length == 1) {
+        result = "0" + result;
+      }
+      return result;
+    });
+    return text;
+  },
+  /**
+   * 得到服务器信息
+   */
+  getServerInfo: function() {
+    var ipv4 = [],mac = [];
+    var networkInterfaces = os.networkInterfaces();
+    for (var key in networkInterfaces) {
+      if (networkInterfaces.hasOwnProperty(key)) {
+        var interfaces = networkInterfaces[key];
+        for(var i = 0;i < interfaces.length; i++){
+          if(interfaces[i].family == "IPv4" && !interfaces[i].internal){
+            ipv4.push(interfaces[i].address);
+            mac.push(interfaces[i].mac);
+          }
         }
+      }
+    }
 
-        return{
-            host: os.hostname(),
-            ipv4: ipv4,
-            mac: mac
-        }
-    },
-    /**
-     * 获取服务器时间
-     */
-    getServerTime: function(){
-        return this.formatDate("[yyyy.MM.dd hh:mm:ss]",new Date());
-    },
+    return{
+      host: os.hostname(),
+      ipv4: ipv4,
+      mac: mac
+    }
+  },
+  /**
+   * 获取服务器时间
+   */
+  getServerTime: function(){
+    return this.formatDate("[yyyy.MM.dd hh:mm:ss]",new Date());
+  },
 
-    /**
-     * 获取访问者的信息
-     * @params req 请求
-     * @params data 数据对象
-     */
-    getReqInfo: function(req, data){
-        var info = {
-            ___reqTime: new Date(),
-            ___reqAddr: req ? req.connection.remoteAddress : ""
-        };
+  /**
+   * 获取访问者的信息
+   * @params req 请求
+   * @params data 数据对象
+   */
+  getReqInfo: function(req, data){
+    var info = {
+      ___reqTime: new Date(),
+      ___reqAddr: req ? req.connection.remoteAddress : ""
+    };
 
-        if(!arguments[0]){//如果没传第一个参数req
-            var schemaBase = {};
-            schemaBase["___reqTime"] = Date;
-            schemaBase["___reqAddr"] = String;
-            return schemaBase;
-        }
+    if(!arguments[0]){//如果没传第一个参数req
+      var schemaBase = {};
+      schemaBase["___reqTime"] = Date;
+      schemaBase["___reqAddr"] = String;
+      return schemaBase;
+    }
 
-        if(!arguments[1]){//如果没传第二个参数data
-            return _.assign(req.body,info);
+    if(!arguments[1]){//如果没传第二个参数data
+      return _.assign(req.body,info);
+    }else{
+      return _.assign(data,info);
+    }
+  },
+  /**
+   * 检查文件夹是否存在
+   * @params folderDir 文件夹路径
+   * @params ifCreate 如果不存在是否自动创建
+   */
+  folderExist: function(folderDir, ifCreate) {
+    fs.stat(folderDir,function(err,stats) {
+      if(!err){
+        return true;
+      }
+      if(err.errno == -2){    //文件不存在
+        if(ifCreate){
+          fs.mkdir(folderDir);
+          return true;
         }else{
-            return _.assign(data,info);
+          return false;
         }
-    },
-    /**
-     * 检查文件夹是否存在
-     * @params folderDir 文件夹路径
-     * @params ifCreate 如果不存在是否自动创建
-     */
-    folderExist: function(folderDir, ifCreate) {
-        fs.stat(folderDir,function(err,stats) {
-            if(!err){
-                return true;
-            }
-            if(err.errno == -2){    //文件不存在
-                if(ifCreate){
-                    fs.mkdir(folderDir);
-                    return true;
-                }else{
-                    return false;
-                }
-            }else{
-                return false;
-            }
-        });
-    },
+      }else{
+        return false;
+      }
+    });
+  },
   /**
    * 删除数组中指定元素
    * arr指定要删除的数组
@@ -172,17 +172,17 @@ module.exports = {
    * 返会用户类型的汉字
    */
   userType : function (user) {
-    let userT ='';
-    if (user == 'S' || user == 'O') {
+    let userT = '';
+    if (user === 'S' || user === 'O') {
       userT = '学生';
       return userT;
-    }else if(user == 'T'){
+    }else if(user === "T"){
       userT = '教师';
       return userT;
-    }else if(user == 'EA'){
+    }else if(user === "EA"){
       userT = '教务管理员';
       return userT;
-    }else if(user == 'SA'){
+    }else if(user === "SA"){
       userT = '管理员';
       return userT;
     }
@@ -304,45 +304,33 @@ module.exports = {
     }
     return dateAllArr;
   },
-    /**
+  /**
    * 传入某一时间, 如：“2018-6-27”
    * 返回该日期前两天如：“2018-6-25”
    */
   getYestoday : function (date){
-    var yesterday_milliseconds=date.getTime();
-    yesterday_milliseconds = yesterday_milliseconds -(1000*60*60*24)*2;
-    var yesterday = new Date();
-        yesterday.setTime(yesterday_milliseconds);
-
-    var strYear = yesterday.getFullYear();
-    var strDay = yesterday.getDate();
-    var strMonth = yesterday.getMonth()+1;
-    if(strMonth<10)
-    {
-        strMonth="0"+strMonth;
-    }
-    datastr = strYear+"-"+strMonth+"-"+strDay;
-    return datastr;
+    let aa =moment(this.getMonday(date)).format("YYYY-MM-DD");
+    let ab = aa.split("-");
+    let db = new Date();
+    db.setUTCFullYear(ab[0], ab[1]-1, ab[2]);
+    let unixDb=db.getTime();
+    let unixDe=unixDb - 7*24*60*60*1000;
+    let dateAllArr = moment(new Date(parseInt(unixDe))).format("YYYY-MM-DD");
+    return dateAllArr;
   },
-   /**
+  /**
    * 传入某一时间, 如：“2018-6-27”
    * 返回该日期下周一
    */
   getTomorrow : function (date){
-    var Tomorrow_milliseconds=date.getTime();
-    Tomorrow_milliseconds = Tomorrow_milliseconds +(1000*60*60*24)*7;
-    var Tomorrow = new Date();
-        Tomorrow.setTime(Tomorrow_milliseconds);
-
-    var strYear = Tomorrow.getFullYear();
-    var strDay = Tomorrow.getDate();
-    var strMonth = Tomorrow.getMonth()+1;
-    if(strMonth<10)
-    {
-        strMonth="0"+strMonth;
-    }
-    datastr = strYear+"-"+strMonth+"-"+strDay;
-    return datastr;
+    let aa =moment(this.getMonday(date)).format("YYYY-MM-DD");
+    let ab = aa.split("-");
+    let db = new Date();
+    db.setUTCFullYear(ab[0], ab[1]-1, ab[2]);
+    let unixDb=db.getTime();
+    let unixDe=unixDb + 7*24*60*60*1000;
+    let dateAllArr = moment(new Date(parseInt(unixDe))).format("YYYY-MM-DD");
+    return dateAllArr;
   },
   /**
    * 传入一个日期, 如：“2018-06-27”

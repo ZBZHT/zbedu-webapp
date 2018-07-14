@@ -149,7 +149,7 @@
                   :picker-options="{
                                     start: '08:00',
                                     step: '00:10',
-                                    end: '21:00'
+                                    end: '20:00'
                                     }">
                 </el-time-select>
               </el-form-item>
@@ -207,6 +207,9 @@
         endDatePicker:this.processDate(),
         courseIndex: '',
         newCourse: '',
+        oldDate: '',
+        oldStartTime: '',
+        modDate: '',
         classGrade: this.$store.state.classGrade,
         rules:{
           date1: [
@@ -235,6 +238,9 @@
     },
     computed: {},
     mounted() {
+      let newDate = moment().format("YYYY-MM-DD");
+      this.modDate = newDate;
+      console.log(this.modDate);
 
 
     },
@@ -250,7 +256,7 @@
       },
       //创建考试结束时间不能大于开始时间
       processDate(){
-        let self = this
+        let self = this;
         return {
           disabledDate(time){
             return time.getTime() < self.alterForm.date1;
@@ -273,6 +279,8 @@
       },
       //编辑
       handleEdit(item, newCourse, index) {
+          this.oldDate = this.weekDate[index];
+          this.oldStartTime = item.startTime;
           this.centerDialogVisible1 = true;
           this.alterForm.date1 = this.weekDate[0];
           this.alterForm.date2 = this.weekDate[6];
@@ -295,7 +303,7 @@
         };
         axios.post('/teacherCMS/newCourseTable', {
           data: {
-            className: this.classGrade,
+            className: this.$store.state.classGrade,
             index: this.courseIndex,
             courseDate:this.newCourse,
             date1:this.weekDate[0],
@@ -303,6 +311,8 @@
             cycleTime:'',
             course: course1,
             edit: true,
+            oldDate: this.oldDate,
+            oldStartTime: this.oldStartTime,
           }
         }).then((res) => {
           let resData = res.data;
@@ -322,6 +332,8 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
+          this.oldDate = this.weekDate[index];
+          this.oldStartTime = item.startTime;
           this.courseIndex = index;
           this.newCourse = newCourse;
           let course1 = {
@@ -333,7 +345,7 @@
           };
           axios.post('/teacherCMS/newCourseTable', {
             data: {
-              className: this.classGrade,
+              className: this.$store.state.classGrade,
               index: this.courseIndex,
               courseDate:this.newCourse,
               date1:this.weekDate[0],
@@ -341,6 +353,9 @@
               cycleTime:'',
               course: course1,
               edit: true,
+              oldDate: this.oldDate,
+              oldStartTime: this.oldStartTime,
+
             }
           }).then((res) => {
             let resData = res.data;
@@ -363,34 +378,31 @@
       //点击上一个
       previous(){
         this.course = '';
-     //   console.log(this.mondayDate);
-        var res = core.getYestoday(new Date(this.mondayDate));
-        res = core.getMonday(new Date(res));
-        res = moment(res).format("YYYY-MM-DD");
-     //   console.log(res)
-        this.getCourseTable(res)
+        console.log(this.modDate);
+        let res = core.getYestoday(this.modDate);
+        console.log(res);
+        this.getCourseTable(res);
       },
       //点击下一个
       next(){
         this.course = '';
-     //   console.log(this.mondayDate);
-        var res = core.getTomorrow(new Date(this.mondayDate));
-        res = core.getMonday(new Date(res));
-        res = moment(res).format("YYYY-MM-DD");
-        console.log(res)
-        this.getCourseTable(res)
+        console.log(this.modDate);
+        let res = core.getTomorrow(this.modDate);
+        console.log(res);
+        this.getCourseTable(res);
       },
       //获取-课程表
       getCourseTable(resDate){
           axios.post('/teacherCMS/getCourseTable', {
             data: {
               courseDate: resDate,
-              className: this.classGrade,
+              className: this.$store.state.classGrade,
             }
           }).then((res) => {
           //  console.log(res.data.result)
             let resData = res.data.result;
             if (res.data.code === 0) {
+              this.modDate = resDate;
               this.course = resData.course[0];
               this.mondayDate = res.data.result.courseDate;
               this.weekDate = core.getDayAll(new Date(this.mondayDate));
@@ -445,7 +457,7 @@
                     resData.course[0].newCourse5[i].color = '';
                   }
               }
-              console.log(resData.course[0]);
+              //console.log(resData.course[0]);
             }
 
           });

@@ -332,10 +332,8 @@ router.post('/labelTree', function (req, res) {
 
 /* 获取所有用户数据 */
 router.post('/getUserData', function (req, res) {
-
   if (req.body.data.username) {
     let username = req.body.data.username;
-
     Teacher.findOne({
       user: username,
     }).then(function (userType) {
@@ -581,13 +579,13 @@ router.post('/addExcelUsers', function (req, res) {
 
                     if (result[i].pwd) {
                       if (result[i].pwd === '') {
-                        result[i].pwd = md5('111111');
-                        //result[i].pwd = md5(result[i].IDNo.substring(result[i].IDNo.length-6));
+                        //result[i].pwd = md5('111111');
+                        result[i].pwd = md5(result[i].MoNo.substring(result[i].MoNo.length-4));
                       } else {
                         result[i].pwd = md5(result[i].pwd);
                       }
                     } else {
-                      result[i].pwd = md5('111111');
+                      result[i].pwd = md5(result[i].MoNo.substring(result[i].MoNo.length-4));
                     }
                     result[i].time = moment(result[i].time).format("YYYY-MM-DD");
                   })
@@ -664,6 +662,7 @@ router.post('/updateUser', function (req, res) {
   let reqData = req.body.data;
   let reqUserType = reqData.userType;
   let reqUser = reqData.addUser;
+  //console.log(reqUser);
   let p1 = new Promise((resolve, reject) => {
     if (reqUserType === 'SA' || reqUserType === 'EA') {
       resolve('成功了1')
@@ -686,7 +685,8 @@ router.post('/updateUser', function (req, res) {
         gender: reqUser.gender,
         AdmDate: reqUser.AdmDate,
         major: reqUser.major,
-        classGrade: reqUser.classGrade
+        classGrade: reqUser.classGrade,
+        pwd: reqUser.pwd,
       }, function (err) {
         if (err) {
           console.log(err);
@@ -703,7 +703,7 @@ router.post('/updateUser', function (req, res) {
         userID: reqUser.userID
       }, {
         user: reqUser.user,
-        //pwd: reqUser.pwd,
+        pwd: reqUser.pwd,
         IDNo: reqUser.IDNo,
         MoNo: reqUser.MoNo,
         userType: reqUser.userType,
@@ -1099,13 +1099,10 @@ router.post('/addExcelTest', function (req, res) {
 
 //教师, 获取自定义课程
 router.post('/getTeacherCustomCourse', function (req, res) {
-
   if (req.body.data) {
-
     let reqData = req.body.data;
     let username = req.session.users.username;
     if (reqData.userType === 'SA' || reqData.userType === 'EA' || reqData.userType === 'T') {
-
       if (!fs.existsSync(uploadCoursePath + username)) {
         fs.mkdirSync(uploadCoursePath + username);
       }
@@ -1527,6 +1524,7 @@ router.post('/uploadAvatar', function (req, res) {
 
 //获取班级和专业
 router.post('/getClass', function (req, res) {
+  //console.log('jdsfjawnejkfnaef');
   Student.find({}).then(function (student) {
     let classMsg = [];
     let majorMsg = [];
@@ -1577,8 +1575,12 @@ router.post('/getAllTeachName', function (req, res) {
 });
 //创建签到记录
 function newTimeSheet(course1,weekDay) {
-  console.log(course1);
-  console.log(weekDay);
+  //console.log(course1);
+  //console.log(weekDay);
+  let date1 = core.getDayAll(weekDay);
+  let date2 = date1[course1.index];
+  //console.log(date2);
+
   Student.find({          //找到班级所有学生
     classGrade: course1.className,
   }).then(function (student) {
@@ -1588,7 +1590,7 @@ function newTimeSheet(course1,weekDay) {
         studentAll.push({ stuName: student[i].user, state: 4 ,isUser: false,});
       }
       TimeSheet.findOne({
-        courseDate: weekDay,
+        courseDate: date2,
         startTime: course1.course.startTime,
       }).then(function (timeSheet) {
         //console.log(timeSheet);
@@ -1596,7 +1598,7 @@ function newTimeSheet(course1,weekDay) {
           let timeSheet = new TimeSheet(
             {
               courseName: course1.course.courseName,
-              courseDate: weekDay,
+              courseDate: date2,
               teacher: course1.course.teacher,
               className: course1.className,
               startTime: course1.course.startTime,
@@ -1614,7 +1616,7 @@ function newTimeSheet(course1,weekDay) {
           });
         } else {
           TimeSheet.updateOne({
-            courseDate: weekDay,
+            courseDate: date2,
             startTime: course1.course.startTime,
           }, {
             $set: {
@@ -1638,12 +1640,14 @@ function newTimeSheet(course1,weekDay) {
   })
 }
 //修改-某天的课程表方法
-function alterTable1(course1, weekAll, edit) {
+function alterTable1(course1, weekAll) {
+  //console.log(course1);
   if (course1.courseDate === 'newCourse') {
     if (course1.index === 0) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.0": course1.course},
@@ -1652,7 +1656,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1662,6 +1666,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.1": course1.course},
@@ -1670,7 +1675,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1680,6 +1685,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.2": course1.course},
@@ -1688,7 +1694,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1698,6 +1704,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.3": course1.course},
@@ -1706,7 +1713,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1716,6 +1723,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.4": course1.course},
@@ -1724,7 +1732,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1734,6 +1742,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.5": course1.course},
@@ -1742,7 +1751,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1752,6 +1761,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.6": course1.course},
@@ -1760,7 +1770,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1770,6 +1780,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse.7": course1.course},
@@ -1778,7 +1789,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1790,6 +1801,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.0": course1.course},
@@ -1798,7 +1810,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1808,6 +1820,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.1": course1.course},
@@ -1816,7 +1829,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1826,6 +1839,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.2": course1.course},
@@ -1834,7 +1848,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1844,6 +1858,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.3": course1.course},
@@ -1852,7 +1867,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1862,6 +1877,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.4": course1.course},
@@ -1870,7 +1886,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1880,6 +1896,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.5": course1.course},
@@ -1888,7 +1905,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1898,6 +1915,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.6": course1.course},
@@ -1906,7 +1924,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1916,6 +1934,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse2.7": course1.course},
@@ -1924,7 +1943,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1936,6 +1955,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.0": course1.course},
@@ -1944,7 +1964,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1954,6 +1974,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.1": course1.course},
@@ -1962,7 +1983,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1972,6 +1993,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.2": course1.course},
@@ -1980,7 +2002,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -1990,6 +2012,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.3": course1.course},
@@ -1998,7 +2021,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2008,6 +2031,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.4": course1.course},
@@ -2016,7 +2040,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2026,6 +2050,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.5": course1.course},
@@ -2034,7 +2059,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2044,6 +2069,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.6": course1.course},
@@ -2052,7 +2078,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2062,6 +2088,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse3.7": course1.course},
@@ -2070,7 +2097,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2082,6 +2109,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.0": course1.course},
@@ -2090,7 +2118,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2100,6 +2128,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.1": course1.course},
@@ -2108,7 +2137,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2118,6 +2147,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.2": course1.course},
@@ -2126,7 +2156,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2136,6 +2166,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.3": course1.course},
@@ -2144,7 +2175,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2154,6 +2185,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.4": course1.course},
@@ -2162,7 +2194,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2172,6 +2204,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.5": course1.course},
@@ -2180,7 +2213,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2190,6 +2223,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.6": course1.course},
@@ -2198,7 +2232,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2208,6 +2242,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse4.7": course1.course},
@@ -2216,7 +2251,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2228,6 +2263,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.0": course1.course},
@@ -2236,7 +2272,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2246,6 +2282,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.1": course1.course},
@@ -2254,7 +2291,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2264,6 +2301,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.2": course1.course},
@@ -2272,7 +2310,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2282,6 +2320,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.3": course1.course},
@@ -2290,7 +2329,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2300,6 +2339,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.4": course1.course},
@@ -2308,7 +2348,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2318,6 +2358,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.5": course1.course},
@@ -2326,7 +2367,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2336,6 +2377,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.6": course1.course},
@@ -2344,7 +2386,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2354,6 +2396,7 @@ function alterTable1(course1, weekAll, edit) {
       for (let i = 0; i < weekAll.length; i++) {
         CourseTable.findOneAndUpdate({
           courseDate: weekAll[i],
+          className: course1.className,
         }, {
           createDate: moment().format("YYYY-MM-DD"),
           $set: {"course.0.newCourse5.7": course1.course},
@@ -2362,7 +2405,7 @@ function alterTable1(course1, weekAll, edit) {
             console.log(err);
           } else {
             console.log('更新成功');
-            if (edit === false) {
+            if (course1.edit === false) {
               newTimeSheet(course1, weekAll[i])
             }
           }
@@ -2398,16 +2441,18 @@ router.post('/newCourseTable', function (req, res) {
       let p1 = new Promise((resolve, reject) => {
         for (let i = 0; i < weekAll.length; i++) {
           CourseTable.findOne({
+            className: reqData.className,
             courseDate: weekAll[i]
           }).then(function (courseTable) {
+            //console.log('11111');
             //console.log(courseTable);
             if (courseTable === null) {
               let courseTable = new CourseTable(
                 {
+                  className: reqData.className,
                   createDate: moment().format('YYYY-MM-DD'),
                   courseDate: weekAll[i],
                   createName: username,
-                  className: reqData.className,
                   teachList: ["张老师", "付老师"],
                   course: courseP,
                 }
@@ -2418,13 +2463,51 @@ router.post('/newCourseTable', function (req, res) {
         }
         setTimeout(function () {
           resolve('成功了1')
-        },100);
+        },500);
       });
 
-      Promise.all([p1]).then((result) => {
+      let p2 = new Promise((resolve, reject) => {
+        if (reqData.edit === true) {
+          if (reqData.course.startTime === '' || reqData.course.courseName === '') {   //删除
+            TimeSheet.remove({
+              courseDate: reqData.oldDate,
+              startTime: reqData.oldStartTime,
+            },function (err) {
+              if (err) {
+                console.log(err);
+                res.status(200).send({code: 1, Msg: '删除签到表失败',});
+              } else {
+                resolve('成功了2')
+              }
+            })
+
+          } else if (reqData.course.startTime !== '' || reqData.course.courseName !== '') {   //编辑
+            TimeSheet.findOneAndUpdate({
+              courseDate: reqData.oldDate,
+              startTime: reqData.oldStartTime,
+            }, {
+              startTime: reqData.course.startTime,
+              endTime: reqData.course.endTime,
+              courseName: reqData.course.courseName,
+              teacher: reqData.course.teacher,
+            }, function (err) {
+              if (err) {
+                console.log(err);
+                res.status(200).send({code: 1, Msg: '更新签到表失败',});
+              } else {
+                resolve('成功了2')
+              }
+            });
+          }
+        } else {
+          resolve('成功了2')
+        }
+      });
+
+      Promise.all([p1, p2]).then((result) => {
         //console.log(reqData);
         //console.log(weekAll);
-        alterTable1(reqData,weekAll,reqData.edit);
+        alterTable1(reqData,weekAll);
         res.status(200).send({code: 0, msg: '创建课程表成功'});
       }).catch((error) => {
         console.log(error)
@@ -2433,11 +2516,12 @@ router.post('/newCourseTable', function (req, res) {
   });
 //获取-课程表
 router.post('/getCourseTable', function (req, res) {
-
   let userType = req.session.users.userType;
   let username = req.session.users.username;
   let reqData = req.body.data;
   let monday = core.getMonday(reqData.courseDate);
+  console.log(reqData);
+  console.log(monday);
   //console.log(reqData.className);
   let p1 = new Promise((resolve, reject) => {
     if (userType === 'S' || userType === 'O') {
@@ -2483,64 +2567,42 @@ router.post('/getCourseTable', function (req, res) {
 router.post('/getTimeSheet', function (req, res) {
   let reqData = req.body.data;
   let userType = req.session.users.userType;
-  let dayAll = core.getDayAll(moment().format("YYYY-MM-DD"));
-  console.log(reqData);
+  //console.log(reqData);
   if (userType === 'EA' || userType === 'T' || userType === 'SA') {
     if (reqData.startTime !== '') {
       TimeSheet.findOne({
         courseDate: reqData.courseDate,
         startTime: reqData.startTime,
       }).then(function (timeSheet) {
-        //console.log(timeSheet);
-        if (timeSheet === null) {       //没有则创建
-          CourseTable.findOne({        //找到班级
-            courseDate: dayAll[0],
-          }).then(function (courseTable) {
-            //console.log(courseTable);
-            if (courseTable !== null) {
-              className1 = courseTable.className;
-              Student.find({           //找到班级所有学生
-                classGrade: className1,
-              }).then(function (student) {
-                if (student.length !== 0) {
-                  let studentAll = [];
-                  for (let i = 0; i < student.length; i++) {
-                    studentAll.push({stuName: student[i].user, state: 4, isUser: false,});
-                  }
-
-                  let timeSheet = new TimeSheet(
-                    {
-                      courseName: reqData.courseName,
-                      courseDate: reqData.courseDate,
-                      teacher: reqData.teacher,
-                      className: className1,
-                      startTime: reqData.startTime,
-                      endTime: reqData.endTime,
-                      stateList: studentAll,
-                    }
-                  );
-                  timeSheet.save(function (err) {
-                    if (err) {
-                      console.log('创建签到表失败');
-                      res.status(200).send({code: 1, Msg: '未找到该签到表3',});
-                    } else {
-                      console.log('创建签到表成功');
-                      //console.log(result);
-                      TimeSheet.findOne({
-                        courseDate: reqData.courseDate,
-                        startTime: reqData.startTime,
-                      }).then(function (timeSheet) {
-                        res.status(200).send({code: 0, result: timeSheet, Msg: '获取成功',});
-                      });
-                    }
-                  });
-                }
-              })
+        console.log(timeSheet);
+        if (timeSheet !== null) {
+          let newDate = new Date().getTime();
+          let ee = moment(timeSheet.courseDate + ',' + timeSheet.endTime).format("YYYY-MM-DD,HH:mm:ss");
+          let couDate = new Date(ee).getTime();
+          if (newDate > couDate) {
+            for (let i = 0; i < timeSheet.stateList.length; i++) {
+              if (timeSheet.stateList[i].state === 4) {
+                timeSheet.stateList[i].state = 1;
+              }
             }
-          })
+            StuLeave.findOneAndUpdate({
+              _id: timeSheet._id
+            }, {
+              stateList: timeSheet.stateList,
+            }, function (err) {
+              if (err) {
+                console.log(err);
+                res.status(200).send({code: 1, Msg: '签到更新失败',});
+              } else {
+                console.log('签到更新成功');
+              }
+            })
+          }
+          res.status(200).send({code: 0, result: timeSheet, Msg: '获取成功',});
         } else {
-          res.status(200).send({code: 0, result: timeSheet, Msg: '返回成功',});
+          res.status(200).send({code: 1, Msg: '未找到签到表',});
         }
+
       });
     } else {
       res.status(200).send({code: 1, Msg: '数据错误',});

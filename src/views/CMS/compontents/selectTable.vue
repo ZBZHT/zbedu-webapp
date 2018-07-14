@@ -338,9 +338,12 @@
       peopleData(){
         return this.hereData + this.sickData + this.lateData + this.dispearData
       }
-        
+
     },
     mounted() {
+      let newDate = moment().format("YYYY-MM-DD");
+      this.modDate = newDate;
+      console.log(this.modDate);
       //获取课程框的高
 
       //获取饼
@@ -354,22 +357,19 @@
       //点击上一个
       previous(){
         this.course = '';
-     //   console.log(this.mondayDate);
-        var res = core.getYestoday(new Date(this.mondayDate));
-        res = core.getMonday(new Date(res));
-        res = moment(res).format("YYYY-MM-DD");
-     //   console.log(res)
-        this.getCourseTable(res)
+        console.log(this.modDate);
+        let res = core.getYestoday(this.modDate);
+        console.log(res);
+        this.getCourseTable(res);
+
       },
       //点击下一个
       next(){
         this.course = '';
-     //   console.log(this.mondayDate);
-        var res = core.getTomorrow(new Date(this.mondayDate));
-        res = core.getMonday(new Date(res));
-        res = moment(res).format("YYYY-MM-DD");
+        console.log(this.modDate);
+        let res = core.getTomorrow(this.modDate);
         console.log(res);
-        this.getCourseTable(res)
+        this.getCourseTable(res);
       },
       //显示考勤信息弹窗
       openDialog(item, index){
@@ -384,9 +384,9 @@
             startTime: item.startTime,
           }
         }).then((res) => {
-          console.log(res.data.result)
+          console.log(res.data.result);
           let resData = res.data.result;
-          if (res.data.code === 0 && item.teacher == this.$store.state.username) {
+          if (res.data.code === 0) {
             this.dialogTableVisible = true;
             for (let i = 0; i < resData.stateList.length; i++) {
             //  resData.stateList[i].teacher = item.teacher;
@@ -478,7 +478,7 @@
       },
       //获取饼
       getPie(){
-        console.log(this.Echarts)
+        console.log(this.Echarts);
         var fun = window.setInterval(function(){
           if(echarts.init(document.getElementById('a1'))){
             let myChart = echarts.init(document.getElementById('a1'));
@@ -510,6 +510,7 @@
           //  console.log(res.data.result)
             let resData = res.data.result;
             if (res.data.code === 0) {
+              this.modDate = resDate;
               this.course = resData.course[0];
               this.mondayDate = res.data.result.courseDate;
               this.weekDate = core.getDayAll(new Date(this.mondayDate));

@@ -1,16 +1,19 @@
 <template>
   <div class="userManager_cont">
     <span class="headBut">
+      <div>
         <span  class="userM_But2">
           <el-button size="small" type="primary" @click="dialogFormVisible = true">添加学生</el-button>
         </span>
         <span  class="userM_But4">
-          <el-button size="small" type="primary" @click="dialogFormVisible2 = true">添加教师</el-button>
+          <el-button size="small" type="primary" style="display:inline-block;" @click="dialogFormVisible2 = true">添加教师</el-button>
         </span>
+      </div>
+      <div>
         <span class="userM_But1">
           <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
         </span>
-        <span class="userM_But3">
+        <span class="userM_But3" style="display:inline-block;">
           <el-upload
             class="upload-demo"
             action="/teacherCMS/addExcelUsers"
@@ -22,6 +25,8 @@
           <el-button size="small" type="primary">Excel导入用户</el-button>
         </el-upload>
         </span>
+      </div>
+
       </span>
 
     <!--用户管理-->
@@ -96,7 +101,7 @@
               <el-date-picker type="date" placeholder="选择日期" v-model="addStuForm.time" style="width:89%;"></el-date-picker>
             </el-form-item>
             <el-form-item label="密" prop="pwd" style="margin-left:0;margin-right:0;width:48%;">&emsp;&emsp;码
-              <el-input v-model="addStuForm.pwd" placeholder="默认密码为身份证后6位" style="width:80%;"></el-input>
+              <el-input v-model="addStuForm.pwd" placeholder="默认密码为手机号码后4位" style="width:80%;"></el-input>
             </el-form-item>
           </el-form>
         </el-form>
@@ -136,7 +141,7 @@
               <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位" style="width: 80%;"></el-input>
             </el-form-item>
             <el-form-item label="密" prop="pwd">&emsp;&emsp;码
-              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为111111" style="width: 80%;"></el-input>
+              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为手机号码后4位" style="width: 80%;"></el-input>
             </el-form-item>
           </el-form>
 
@@ -172,7 +177,7 @@
             <el-table-column prop="user" label="用户名" width="100">
             </el-table-column>
 
-            <el-table-column prop="userID" label="学号" width="120">
+            <el-table-column prop="userID" label="学号" width="100">
             </el-table-column>
 
             <el-table-column prop="IDNo" label="身份证号" width="190">
@@ -181,7 +186,7 @@
             <el-table-column prop="MoNo" label="手机号" width="130">
             </el-table-column>
 
-            <el-table-column prop="userType" label="用户类型" width="90">
+            <el-table-column prop="userType" label="类型" width="60">
             </el-table-column>
 
             <el-table-column prop="gender" label="性别" width="70">
@@ -190,13 +195,13 @@
             <el-table-column prop="time" label="入学时间" width="110">
             </el-table-column>
 
-            <el-table-column prop="major" label="专业" width="110">
+            <el-table-column prop="major" label="专业">
             </el-table-column>
 
-            <el-table-column prop="classGrade" label="班级" width="90">
+            <el-table-column prop="classGrade" label="班级" width="110">
             </el-table-column>
 
-            <el-table-column label="操作" style="width: 100px">
+            <el-table-column label="操作" style="width: 100px" width="80">
               <template slot-scope="scope">
                 <el-button size="small" class="userM_el-tableBut" type="warning"
                            @click="handleEdit(scope.$index, scope.row)">修 改
@@ -286,7 +291,7 @@
                   <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.time"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="密" prop="pwd" style="margin-left: 10px;">&emsp;&emsp;码
-                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位" style="width:80%;"></el-input>
+                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为手机号码后4位" style="width:80%;"></el-input>
                 </el-form-item>
               </el-form>
             </el-form>
@@ -322,7 +327,7 @@
             <el-table-column prop="MoNo" label="手机号" width="130">
             </el-table-column>
 
-            <el-table-column prop="userType" label="用户类型" width="90">
+            <el-table-column prop="userType" label="类型" width="70">
             </el-table-column>
 
             <el-table-column prop="gender" label="性别" width="70">
@@ -386,7 +391,7 @@
                 <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位" style="width: 80%;"></el-input>
               </el-form-item>
               <el-form-item label="密" prop="pwd">&emsp;&emsp;码
-                <el-input v-model="addTeachForm.pwd" placeholder="默认密码为111111" style="width: 80%;"></el-input>
+                <el-input v-model="addTeachForm.pwd" placeholder="默认密码为手机号码后4位" style="width: 80%;"></el-input>
               </el-form-item>
             </el-form>
 
@@ -506,7 +511,7 @@
             { min: 2, max: 4, message: '长度在 2 到 4 个汉字', trigger: 'blur' }
           ],
           pwd: [
-            { min: 6, max: 12, message: '长度在 6 到 12 位', trigger: 'blur' }
+            { min: 4, max: 12, message: '长度在 4 到 12 位', trigger: 'blur' }
           ],
           userID: [
             { required: true, message: '请输入学号', trigger: 'change' },
@@ -516,7 +521,7 @@
             { min: 15, max: 18, message: '长度在 15 到 18 位', trigger: 'blur' }
           ],
           MoNo: [
-            { min: 11, max: 11, message: '长度在 csdf 位', trigger: 'blur' }
+            { min: 11, max: 11, message: '长度为11位', trigger: 'blur' }
           ],
           userType: [
             { required: true, message: '请选择一个类型', trigger: 'change' }
@@ -782,8 +787,9 @@
 
           //处理发送的用户信息方法
           function resUserData1(data) {
-            if (data.pwd != '') {
+            if (data.pwd !== '') {
               data.pwd = md5(data.pwd);
+              //data.pwd = (data.pwd);
             } else {
               //data.pwd = this.addUserPwd;
             }
@@ -890,10 +896,11 @@
           if (teacherData.length !== 0) {
             for (let i = 0; i < teacherData.length; i++) {
               teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");
-              teacherData[i].gender = core.getGender(teacherData[i].gender);
               studentData[i].userType = core.userType(studentData[i].userType);
+              teacherData[i].gender = core.getGender(teacherData[i].gender);
               teacherData[i].num = i + 1;
             }
+            //console.log(teacherData);
             this.teachData = teacherData;
             this.total2 = this.teachData.length;
           }
@@ -1012,10 +1019,10 @@
     text-align: left;
   }
   .userManager_cont .headBut {
-    width: 200px;
+    width: 220px;
     position: absolute;
     bottom: -580px;
-    left: 2.5%;
+    left: 2%;
   }
   .userManager_cont .el-form-item__label{
     text-align: left;
