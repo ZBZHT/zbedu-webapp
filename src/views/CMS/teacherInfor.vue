@@ -117,7 +117,7 @@
         }).then((res) => {
           let resData = res.data;
           let sList = resData.result.stateList;
-          //console.log(resData.result);
+          console.log(resData.result);
           if (resData.code === 0) {
               //this.resData = resData.result;
             for (let i = 0; i < sList.length; i++) {
@@ -142,7 +142,10 @@
       },
     },
     mounted() {
-        this.getAllStuClass();
+        
+        var fun = window.setInterval(function(){
+          this.getAllStuClass();
+        }.bind(this),3000);
 
     },
     components: {}

@@ -8,7 +8,7 @@
         </div>
       </el-select>
 
-      <el-tabs v-model="activeName" type="card" @tab-click="handleClick()">
+      <el-tabs v-model="activeName" type="card" @tab-click="handleClickTabs">
         <el-tab-pane label="授课计划表" name="first">
 
           <show-table :course = "course" :mondayDate = "mondayDate" :weekDate = "weekDate"></show-table>
@@ -63,8 +63,20 @@
 
     },
     methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
+      handleClickTabs(tab) {
+        //console.log(tab);
+        if(tab._data.index == 0){
+          //console.log(this.$store.state.mondayData);
+          if(this.$store.state.mondayData){
+            console.log("11");
+            this.getCourseTable(this.$store.state.mondayData)
+          }else{
+            
+            console.log("22");
+          }
+        }else{
+          
+        }
       },
       //选择班级显示table，选择班级切换数据
       showThreeTable(){

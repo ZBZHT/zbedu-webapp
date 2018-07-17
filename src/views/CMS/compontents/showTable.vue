@@ -29,7 +29,7 @@
                   <p>{{item3.courseAddress}}</p>
                 </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA' || $store.state.userType == 'T'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
@@ -44,7 +44,7 @@
                   <p>{{item3.courseAddress}}</p>
                 </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA' || $store.state.userType == 'T'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse2', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
@@ -59,7 +59,7 @@
                   <p>{{item3.courseAddress}}</p>
                 </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA' || $store.state.userType == 'T'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse3', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
@@ -74,7 +74,7 @@
                   <p>{{item3.courseAddress}}</p>
                 </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA' || $store.state.userType == 'T'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse4', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
@@ -89,7 +89,7 @@
                   <p>{{item3.courseAddress}}</p>
                 </div>
                 <div class="playButs" v-if=" item3.courseName !== '' ">
-                  <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">编辑</el-button>
+                  <el-button size="mini" @click="handleEdit(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA' || $store.state.userType == 'T'">编辑</el-button>
                   <el-button size="mini" @click="deleteCourseTable(item3, 'newCourse5', index3)" v-show="$store.state.userType == 'EA' || $store.state.userType == 'SA'">删除</el-button>
                 </div>
               </td>
@@ -378,18 +378,26 @@
       //点击上一个
       previous(){
         this.course = '';
-        console.log(this.modDate);
-        let res = core.getYestoday(this.modDate);
-        console.log(res);
-        this.getCourseTable(res);
+        //今天日期
+        //console.log(this.modDate);
+        //上周一日期
+        let resdata = core.getYestoday(this.modDate);
+        this.$store.commit('getMonday',resdata);
+        
+        //console.log(resdata);
+        this.getCourseTable(resdata);
       },
       //点击下一个
       next(){
         this.course = '';
-        console.log(this.modDate);
-        let res = core.getTomorrow(this.modDate);
-        console.log(res);
-        this.getCourseTable(res);
+        //今天日期
+        //console.log(this.modDate);
+        //下周一日期
+        let resdata = core.getTomorrow(this.modDate);
+        this.$store.commit('getMonday',resdata);
+        
+        //console.log(this.$store.state.mondayData);
+        this.getCourseTable(resdata);
       },
       //获取-课程表
       getCourseTable(resDate){
@@ -463,7 +471,9 @@
           });
         },
     },
-
+    beforeDestroy: function () {
+      this.$store.commit('getMonday','');
+    },
     components: {}
   }
 </script>

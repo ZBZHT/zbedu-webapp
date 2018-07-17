@@ -136,7 +136,7 @@
           }
         }).then((res) => {
           let resCourse = res.data.result;
-          console.log(res.data)
+          console.log(resCourse)
           if (res.data.code === 0) {
             
               let startTime = new Date(moment(resCourse.courseDate + ',' + resCourse.startTime).format("YYYY-MM-DD,HH:mm")).getTime() - 60*30*1000;

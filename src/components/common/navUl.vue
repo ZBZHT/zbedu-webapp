@@ -46,8 +46,8 @@ export default {
                 'background':'competitionIndex.png'
             },
             {
-                'label':'互动中心',
-                'background':'interactiveIndex.png'
+                'label':'河南双师省培',
+                'background':'hnTraining.png'
             }
         ]
     }
@@ -104,21 +104,22 @@ export default {
         }else if(index == 4){
             this.$router.push('/competitionCenter');
         }else if(index == 5){
-            //获取树形数据
-            axios.get("/readJson/bannerLeftData",{
-                params:{
-                    user:234
-                }
-            }).then((res)=>{
-            console.log(res.data)
-              var data = res.data[5].children;
-            //  console.log(data[0].children[0])  
-              this.$store.commit('noTreeTitle',data[0].children[0]);
-              this.$store.commit('noTreeTitle1',data[0].children[0]);
-            }).catch(function(error){
-                console.log("error init." + error)
-            });
-            this.$router.push('/hnTraining');
+//            //获取树形数据
+//            axios.get("/readJson/bannerLeftData",{
+//                params:{
+//                    user:234
+//                }
+//            }).then((res)=>{
+//            console.log(res.data)
+//              var data = res.data[5].children;
+//            //  console.log(data[0].children[0])
+//              this.$store.commit('noTreeTitle',data[0].children[0]);
+//              this.$store.commit('noTreeTitle1',data[0].children[0]);
+//            }).catch(function(error){
+//                console.log("error init." + error)
+//            });
+//            this.$router.push('/hnTraining');
+          window.open("http://www.owdjxpt.cn/"); 
         }
     }
 
