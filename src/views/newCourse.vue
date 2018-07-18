@@ -1,331 +1,326 @@
 <template>
   <div class="newCourse-container">
     <div>
-        <navgation-head></navgation-head>
+      <navgation-head></navgation-head>
     </div>
     <div class="newCourse-content">
-        <el-row>
-            <el-col :span="6">
-              <el-tree
-                node-key="courseId"
-                :props="defaultProps"
-                :data="data"
-                accordion
-                :default-expanded-keys="[courseId1,courseId2]"
-                highlight-current
-                ref="vuetree"
-                @node-click="handleNodeClick"></el-tree>
-            </el-col>
+      <el-row>
+        <el-col :span="6">
+          <el-tree
+            node-key="courseId"
+            :props="defaultProps"
+            :data="data"
+            accordion
+            :default-expanded-keys="[courseId1,courseId2]"
+            highlight-current
+            ref="vuetree"
+            @node-click="handleNodeClick"></el-tree>
+        </el-col>
 
-            <el-col :span="18">
-                <!--教学中心-->
-                <div>
-                    <p class="exerP">{{noTree.label}}</p>
+        <el-col :span="18">
+          <!--教学中心-->
+          <div>
+            <p class="exerP">{{noTree.label}}</p>
 
-                          <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
+            <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
 
-                            <!--简介-->
-                            <el-tab-pane label="本节简介" :name="descTab">
-                                <div class="courseDescribe" >
-                                    <p class="title">课程简介：</p>
-                                    <p class="desc">{{ noTree.describe }}</p>
-                                </div>
-                            </el-tab-pane>
-
-                            <!--教材-->
-                            <el-tab-pane label="本节教材">
-                              <div id="teachingBook">
-                                <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
-                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
-                                <div id="teachingBookImg" v-for="(item,index) in teachingBooklists">
-                                  <img class="teachingBookImg" :src="item.img">
-                                </div>
-                              </div>
-
-                              <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
-
-                            </el-tab-pane>
-
-                            <!--课件-->
-                            <el-tab-pane label="教学课件">
-                              <div id="courseppt">
-                                <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
-                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
-                                  <div class="courseImg" v-for="(item,index) in lists" v-show="index == page-1" @mouseenter="mousewheel(index)">
-                                <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">-->
-                                      <img class="coursepptImg" :src="item.img">
-                                      <div class="pptPrev" @click="newPageUp(index)"></div>
-                                      <div class="pptNext" @click="newpageDown(index+2)"></div>
-                                  </div>
-
-                                  <ppt-slides
-                                  :total="total"
-                                  :size="size"
-                                  :page="page"
-                                  :changge="pageFn">
-                                  </ppt-slides>
-                                </div>
-                                <el-button type="info" round @click="appFullScreen(currpage)">全屏显示</el-button>
-
-                            </el-tab-pane>
-
-                            <!--微课-->
-                            <el-tab-pane label="教学微课">
-                                <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
-                                <div>
-                                    <video id="video-box" controls @click="videostop" :src="'resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
-                                    <!--<video id="video-box" controls @click="videostop">-->
-                                    </video>
-                                </div>
-                            </el-tab-pane>
-
-                            <!--工作页-->
-                            <el-tab-pane label="工作页">
-                              <div id="courseWorkPage">
-                                <!--<p class="devDownload" v-show="noTree.workPage"></p>-->
-                                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>-->
-                                  <div id="courseWorkPageImg" v-for="(item,index) in courseWorkPagelists">
-                                    <img class="teachingBookImg" :src="item.img">
-                                  </div>
-                              </div>
-                              <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
-
-                            </el-tab-pane>
-
-                            <!--二维动画-->
-                            <el-tab-pane label="二维动画">
-                              <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
-                              <div>
-                                <video id="flash2d" autoplay controls @click="flash2d" :src="'resource/' + this.videoPath + noTree.flash2d">
-                                </video>
-                              </div>
-                            </el-tab-pane>
-
-                            <!--课后作业-->
-                            <el-tab-pane label="课后作业">
-                                <div class="homework-box">
-                                    <div class="homework" v-for="(item,index) in homeworkData">
-                                    <p class="homeworkTitle">{{index + 1}}. {{item.desc}}</p>
-                                    <p class="homeworkDesc" v-for="(item2,index2) in item.options">{{item2}}</p>
-                                        <span class="homework_Answer">正确答案：</span>
-                                        <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
-                                    </div>
-                                </div>
-                                <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
-                            </el-tab-pane>
-
-                            <!--评论-->
-                            <el-tab-pane label="课程评价">
-                                <div class="appraise-box">
-                                    <p class="appraiseTitle">{{ appraiseMsg }}</p>
-                                    <p v-show="!commentArr.length">暂无评价</p>
-                                    <div class="comment-box">
-                                        <div v-for="(commentItem,index) in commentArr" v-show="commentItem.title === noTree.label">
-                                        <div class="text-box">
-                                            <p @click="enterUserManagement" >用户名：<a class="text-box-a" href="">{{ commentItem.user  }}</a></p>
-                                            <p >{{commentItem.text}}</p>
-                                        </div>
-                                        <div class="msg-box">
-                                            <p class="time-box">时间：{{ commentItem.time }}</p>
-                                            <p class="star">
-                                            <span  :class="{'on': commentItem.score>=0}"class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=1}" class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=2}" class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=3}" class="star-item" >
-                                            </span>
-                                            <span  :class="{'on': commentItem.score>=4}" class="star-item" >
-                                            </span>
-                                            </p>
-                                            <p class="replyNum" @click="wantReply(commentItem,index)"><a href="javascript:void(0)">回复</a></p>
-                                        </div>
-                                        <div class="reply-msg-box">
-                                            <ul v-show="replyArr.length">
-                                            <li v-for="(replyItem,index) in replyArr" v-show="replyItem.target == commentItem.user && replyItem.title ==noTree.label && replyItem.targetId == commentItem.num">
-                                                <span>{{replyItem.user}}：</span>
-                                                <span>{{replyItem.text}}</span>
-                                                <div class="replyTime-box">
-                                                <p>{{replyItem.time}}</p>
-                                                <p @click="replyToReply(replyItem,index)"><a href="javascript:void(0)">回复</a></p>
-                                                </div>
-
-                                                <div class="replyToReply-box">
-                                                <ul v-show="replyToReplyArr.length">
-                                                    <li v-for="(replytoReplyItem,index) in replyToReplyArr" v-show="replytoReplyItem.target == replyItem.user && replytoReplyItem.title == noTree.label && replytoReplyItem.targetId == replyItem.num">
-                                                    <span>{{replytoReplyItem.user}}  回复   @{{ replyItem.user }}</span>
-                                                    <span>{{replytoReplyItem.text}}</span>
-                                                    <p>{{replytoReplyItem.time}}</p>
-                                                    </li>
-                                                </ul>
-                                                </div>
-                                                <div v-show="(isAppearCommentBox1 && (currentReplyToReply === index))">
-
-                                                <textarea type="text" v-model="replyToReplyText"></textarea>
-
-                                                <button @click="submitReplyToReply(replyItem)">回复他</button>
-                                                </div>
-                                            </li>
-                                            </ul>
-                                        </div>
-                                        <div class="reply-input-box" v-show="(isAppearCommentBox && currentReplyOpen === index)">
-                                            <textarea type="text" v-model="replyText"></textarea>
-                                            <button @click="submitReply(commentItem,index)">提交回复</button>
-                                        </div>
-                                        <hr>
-                                        </div>
-                                    </div>
-                                    <p class="appraiseTitle">我要评价</p>
-
-                                    <textarea type="text" v-model="text"/>
-
-                                    <div class="shopList">
-                                        <p>请评价：</p>
-                                        <p class="all">
-
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="0" v-model="inputdata"/>
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="1" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="2" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="3" v-model="inputdata" />
-                                        <span>★</span>
-                                        <input
-                                            type="radio"
-                                            name="b"
-                                            value="4" v-model="inputdata" />
-                                        <span>★</span>
-                                        <!--<input-->
-                                        <!--type="radio"-->
-                                        <!--name="b"-->
-                                        <!--value="5" v-model="inputdata" />-->
-                                        <!--<span>★</span>-->
-
-                                        </p>
-                                        <p>{{ arrData[inputdata]}}</p>
-                                        <br>
-                                        <el-button type="success" round @click="submitComments()">提交评论</el-button>
-                                    </div>
-                                </div>
-                            </el-tab-pane>
-                          </el-tabs>
-
-
+              <!--简介-->
+              <el-tab-pane label="本节简介" :name="descTab">
+                <div class="courseDescribe" >
+                  <p class="title">课程简介：</p>
+                  <p class="desc">{{ noTree.describe }}</p>
                 </div>
-            </el-col>
-        </el-row>
+              </el-tab-pane>
+
+              <!--教材-->
+              <el-tab-pane label="本节教材">
+                <div id="teachingBook">
+                  <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
+                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
+                  <div id="teachingBookImg" v-for="(item,index) in teachingBooklists">
+                    <img class="teachingBookImg" :src="item.img">
+                  </div>
+                </div>
+
+                <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
+
+              </el-tab-pane>
+
+              <!--课件-->
+              <el-tab-pane label="教学课件">
+                <div id="courseppt">
+                  <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
+                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
+                  <div class="courseImg" v-for="(item,index) in lists" v-show="index == page-1" @mouseenter="mousewheel(index)">
+                    <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">-->
+                    <img class="coursepptImg" :src="item.img">
+                    <div class="pptPrev" @click="newPageUp(index)"></div>
+                    <div class="pptNext" @click="newpageDown(index+2)"></div>
+                  </div>
+
+                  <ppt-slides
+                    :total="total"
+                    :size="size"
+                    :page="page"
+                    :changge="pageFn">
+                  </ppt-slides>
+                </div>
+                <el-button type="info" round @click="appFullScreen(currpage)">全屏显示</el-button>
+
+              </el-tab-pane>
+
+              <!--微课-->
+              <el-tab-pane label="教学微课">
+                <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
+                <div>
+                  <video id="video-box" controls @click="videostop" :src="'resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
+                    <!--<video id="video-box" controls @click="videostop">-->
+                  </video>
+                </div>
+              </el-tab-pane>
+
+              <!--工作页-->
+              <el-tab-pane label="工作页">
+                <div id="courseWorkPage">
+                  <!--<p class="devDownload" v-show="noTree.workPage"></p>-->
+                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>-->
+                  <div id="courseWorkPageImg" v-for="(item,index) in courseWorkPagelists">
+                    <img class="teachingBookImg" :src="item.img">
+                  </div>
+                </div>
+                <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
+
+              </el-tab-pane>
+
+              <!--二维动画-->
+              <el-tab-pane label="flash动画">
+                <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
+                <div>
+                  <video id="flash2d" autoplay controls @click="flash2d" :src="'resource/' + this.videoPath + noTree.flash2d">
+                  </video>
+                </div>
+              </el-tab-pane>
+
+              <!--课后作业-->
+              <el-tab-pane label="课后作业">
+                <div class="homework-box">
+                  <div class="homework" v-for="(item,index) in homeworkData">
+                    <p class="homeworkTitle">{{index + 1}}. {{item.desc}}</p>
+                    <p class="homeworkDesc" v-for="(item2,index2) in item.options">{{item2}}</p>
+                    <span class="homework_Answer">正确答案：</span>
+                    <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
+                  </div>
+                </div>
+                <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
+              </el-tab-pane>
+
+              <!--评论-->
+              <el-tab-pane label="课程评价">
+                <div class="appraise-box">
+                  <p class="appraiseTitle">全部评价</p>
+                  <hr>
+                  <p v-show="appraiseContent.appraiseMsg.length == 0">暂无评价</p>
+                  <div class="showAppraise" v-for="(item,index) in appraiseContent.appraiseMsg">
+                    <div class="AppraiseMsg">
+                      <p class="AppraiseUser">{{item.user}}</p>
+                      <div class="AppraiseStar">
+                        <el-rate
+                          v-model="item.appShowStar"
+                          disabled
+                          show-score
+                          text-color="#ff9900"
+                          score-template="{value}">
+                        </el-rate>
+                      </div>
+                    </div>
+                    <div class="AppraiseText">
+                      {{item.text}}
+                    </div>
+                    <div class="AppraiseTime">{{item.date}}</div>
+                    <hr>
+
+                    <div class="showReplyClass">
+                      <div class="showReplyMsg">
+                        <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">【{{userName}}】老师:</p>
+                        <p class="showReplyText">{{item.replyText}}</p>
+                        <p class="AppraiseTime">{{item.replyDate}}</p>
+                      </div>
+                      <div class="replyEventButtons" v-show="userSession == 1">
+                        <el-button size="small" type="primary" @click="showReply(index)">
+                          回复
+                        </el-button>
+                        <div class="replyEvent" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">
+                          <!--<el-button size="small" type="primary" @click="showReply(index)">-->
+                          <!--修改回复-->
+                          <!--</el-button>-->
+                          <el-button size="small" @click="deleteReply(index)">
+                            删除回复
+                          </el-button>
+                        </div>
+                      </div>
+
+                      <div v-show="replyShow == index">
+                        <textarea autofocus class="replyText" type="text" v-model="replyText" />
+                        <div class="replyButtons">
+                          <el-button type="success" size="small" round @click="submitReply(index)">确定</el-button>
+                          <el-button size="small" round @click="cancelReply(index)">取消</el-button>
+                        </div>
+
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <p class="appraiseTitle">我要评价</p>
+                  <div class="IwantAppraise">
+
+                    <div class="block">
+                      <span class="demonstration">综合评价</span>
+                      <el-rate
+                        v-model="appraiseStar.value1"
+                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                      </el-rate>
+                    </div>
+                    <textarea class="AppraiseNowText" type="text" v-model="text"/>
+                  </div>
+
+                  <div class="shopList">
+                    <div class="block">
+                      <span class="demonstration">教学内容</span>
+                      <el-rate
+                        v-model="appraiseStar.value2"
+                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                      </el-rate>
+                    </div>
+                    <div class="block">
+                      <span class="demonstration">任课老师</span>
+                      <el-rate
+                        v-model="appraiseStar.value3"
+                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                      </el-rate>
+                    </div>
+
+                  </div>
+
+                  <el-button type="success" round @click="submitComments()">提交评论</el-button>
+                </div>
+              </el-tab-pane>
+            </el-tabs>
+
+
+          </div>
+        </el-col>
+      </el-row>
     </div>
 
     <div class="footer">
-        <foot-footer></foot-footer>
+      <foot-footer></foot-footer>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
-import navgationHead from '@/components/common/navgationHead'
-import pptSlides from '@/components/courseTree/pptSlides'
-import footFooter from '@/components/common/footFooter'
-import EventBus from '../assets/js/EventBus';
+  import axios from 'axios'
+  import navgationHead from '@/components/common/navgationHead'
+  import pptSlides from '@/components/courseTree/pptSlides'
+  import footFooter from '@/components/common/footFooter'
+  import EventBus from '../assets/js/EventBus';
+  import core from '../assets/js/core.js';
 
-var contentSlides = pptSlides;
-export default {
-  name: 'newCourse',
-  data () {
-    return {
-      data:[],
-      defaultProps: {
-       children: 'children',
-       label: 'label',
-       },
-      currentIndex: 0,
-      currentCourseMsg:'',
-      currentCourseTitle:'',
-      aa:'',
-      commentAllObj:[],
-      commentArr:[],
-      replyArr:[],
-      replyToReplyArr:[],
-      currentMsg:'',
-      appraiseMsg: '全部评价',
-      inputdata: 0,
-      arrData: ['一星', '两星', '三星', '四星', '五星'],
-      currentdate: '',
-      isAppearCommentBox: false,
-      isAppearCommentBox1: false,
-      text:'',
-      replyText:'',
-      replyToReplyText:'',
-      replyTime:'',
-      replyToReplyTime:'',
-      currentReplyOpen:-1,
-      currentReplyToReply:-1,
-      url:'',
-      appAnswer:false,
-      noTree11:'',
-      courseId1:'',
-      courseId2:'',
-      checkArr:[],
-      userId:this.$store.state.userID,
-      keyId:'',
-      activeName: '',
-      descTab:'0',
-      slides: [],
-      styleObject: {
-        width: '100%',
-        height: '100%'
-      },
-      slidesLength:'',
-      total:'',//总信息数
-      size:1,//每页显示信息个数不传默认6
-      page:1,//当前页码,
-      teachingBooklists: [],
-      courseWorkPagelists: [],
-      lists:[],
-      scrolled: false,
-      moutedCorusePath:[],
-      moutedHomeworkPath:[],
-      courseButtonShow:true,
-      currpage:0,
-      homeworkData:[],
-      videoPath:''
-    }
-  },
-  computed:{
-    noTree(){
-        return this.$store.state.noTree;
+  var contentSlides = pptSlides;
+  export default {
+    name: 'newCourse',
+    data () {
+      return {
+        data:[],
+        defaultProps: {
+          children: 'children',
+          label: 'label',
+        },
+        currentIndex: 0,
+        currentCourseMsg:'',
+        currentCourseTitle:'',
+        aa:'',
+        commentAllObj:[],
+        commentArr:[],
+        replyArr:[],
+        replyToReplyArr:[],
+        currentMsg:'',
+        appraiseMsg: '全部评价',
+        appraiseStar:{
+          value1:null,
+          value2:null,
+          value3:null,
+          value:7
+        },
+        appraiseContent:{
+          title:[],
+          appraiseMsg:{}
+        },
+        currentdate: '',
+        isAppearCommentBox: false,
+        isAppearCommentBox1: false,
+        text:'',
+        replyText:'',
+        replyTime:'',
+        url:'',
+        appAnswer:false,
+        noTree11:'',
+        courseId1:'',
+        courseId2:'',
+        checkArr:[],
+        userId:this.$store.state.userID,
+        userName:this.$store.state.username,
+        userType:this.$store.state.userType,
+        userSession:0,
+        replyShow:-1,
+        showReplyText:-1,
+        keyId:'',
+        activeName: '',
+        descTab:'0',
+        slides: [],
+        styleObject: {
+          width: '100%',
+          height: '100%'
+        },
+        slidesLength:'',
+        total:'',//总信息数
+        size:1,//每页显示信息个数不传默认6
+        page:1,//当前页码,
+        teachingBooklists: [],
+        courseWorkPagelists: [],
+        lists:[],
+        scrolled: false,
+        moutedCorusePath:[],
+        moutedHomeworkPath:[],
+        courseButtonShow:true,
+        currpage:0,
+        homeworkData:[],
+        videoPath:'',
+        currCourse:[],
+        appraiseIndex:[]
+      }
     },
-    noTree1(){
+    computed:{
+      noTree(){
+        return this.$store.state.noTree;
+      },
+      noTree1(){
         this.noTree11 = this.$store.state.noTree1;
 
         return this.$store.state.noTree1;
-    },
+      },
       currentTitle(){
         // for (var  i= 0; i< this.$store.state.course.children.length; i++){
-          // console.log(this.$store.state.course.children[i])
-          if (this.$store.state.course.children[0].describe){
-            this.aa = this.$store.state.course.children[0].title
-            // console.log(this.aa)
-            // console.log('======')
-          }else {
-            this.aa = this.$store.state.course.children[0].children[0].title
-            // console.log(this.aa)
-          }
+        // console.log(this.$store.state.course.children[i])
+        if (this.$store.state.course.children[0].describe){
+          this.aa = this.$store.state.course.children[0].title
+          // console.log(this.aa)
+          // console.log('======')
+        }else {
+          this.aa = this.$store.state.course.children[0].children[0].title
+          // console.log(this.aa)
+        }
         // }
 
         return this.$store.state.course;
@@ -333,179 +328,186 @@ export default {
       videoTitle(){
         return this.$store.state.noTree.videoTitle;
       }
-  },
-  created(){
+    },
+    created(){
 
 //     var _this = this
 //        this.$nextTick(function () {
 //            // 直接调用
 //            _this.refRecursion(100, 1)
 //        })
-  },
-  mounted(){
+    },
+    mounted(){
 
+      //判断当前是否是老师
+      //console.log(this.userType)
+      if(this.userType == 'EA' || this.userType == 'T'){
+        this.userSession = 1;
+        //console.log(this.userSession)
+      }else{
 
-   // var scrollbox = document.querySelector(".courseImg");
-   // console.log(document.querySelector(".courseImg"))
-   // window.addEventListener('scroll', this.handleScroll);
-   //获取树形数据
-    this.data = this.$store.state.newBannerLeft;
-    setTimeout(() => {
-      this.$refs.vuetree.setCurrentKey(this.keyId)
-    }, 20)
+      }
 
+      // var scrollbox = document.querySelector(".courseImg");
+      // console.log(document.querySelector(".courseImg"))
+      // window.addEventListener('scroll', this.handleScroll);
 
+      //获取树形数据
+      this.data = this.$store.state.newBannerLeft;
+      setTimeout(() => {
+        this.$refs.vuetree.setCurrentKey(this.keyId)
+      }, 20)
 
       //PPT页数
       this.total = this.lists.length;
       //从courseIndex页传值并默认展开
       //  console.log("sjsjs");
       //  console.log(this.$store.state.noTree1.courseId);
-        var data = this.$store.state.noTree1;
-        var id = this.$store.state.noTree1.courseId;
-        if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600 || id == 700){
+      var data = this.$store.state.noTree1;
+      var id = this.$store.state.noTree1.courseId;
+      if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600 || id == 700){
 
-            if(id == 100){
-                this.courseId1 = id;
-                this.courseId2 = 111;
-                this.keyId = 1111;
-                this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
-                this.findParent(id);
-            }else if(id == 200){
-                this.courseId1 = id;
-                this.courseId2 = 211;
-                this.keyId = 211;
-                this.$store.commit('noTreeTitle',data.children[0].children[0]);
-                this.findParent(id);
-            }else if(id == 300){
-                this.courseId1 = id;
-                this.courseId2 = 311;
-                this.keyId = 311;
-                this.$store.commit('noTreeTitle',data.children[0].children[0]);
-                this.findParent(id);
-            }else if(id == 400){
-                this.courseId1 = id;
-                this.courseId2 = 411;
-                this.keyId = 411;
-                this.$store.commit('noTreeTitle',data.children[0].children[0]);
-                this.findParent(id);
-            }else if(id == 500){
-                this.courseId1 = id;
-                this.keyId = 510;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else if(id == 600){
-                this.courseId1 = id;
-                this.keyId = 610;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else if(id == 700){
-                this.courseId1 = id;
-                this.courseId2 = 711;
-                this.keyId = 711;
-                this.$store.commit('noTreeTitle',data.children[0].children[0]);
-                this.findParent(id);
-            }
-        }else if(id > 100 && id < 200){
-            if(id == 110){
-                this.courseId1 = 100;
-                this.courseId2 = 111;
-                this.keyId = 1111;
-                this.$store.commit('noTreeTitle',data.children[0].children[0]);
-                this.findParent(id);
-            }else if(id > 110 && id < 120){
-                this.courseId1 = 100;
-                this.courseId2 = id;
-                this.keyId = id.toString()+1;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else if(id > 120 && id < 130){
-                this.courseId1 = 100;
-                this.courseId2 = id;
-                this.keyId = id.toString()+1;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else if(id == 120){
-                this.courseId1 = 100;
-                this.courseId2 = 121;
-                this.keyId = 1211;
-                this.$store.commit('noTreeTitle',data.children[0].children[0]);
-                this.findParent(id);
-            }
-        }else if(id > 200 && id < 300){
-            if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
-                this.courseId1 = 200;
-                this.courseId2 = id;
-                this.keyId = id + 1;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else{
-                this.courseId1 = 200;
-                this.courseId2 = id;
-                this.keyId = id;
-                this.$store.commit('noTreeTitle',data);
-                this.findParent(id);
-            }
-        }else if(id > 300 && id < 400){
-            if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
-                this.courseId1 = 300;
-                this.courseId2 = id;
-                this.keyId = id + 1;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else{
-                this.courseId1 = 300;
-                this.courseId2 = id;
-                this.keyId = id;
-                this.$store.commit('noTreeTitle',data);
-            }
-        }else if(id > 400 && id < 500){
-            if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
-                this.courseId1 = 400;
-                this.courseId2 = id;
-                this.keyId = id + 1;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else{
-                this.courseId1 = 400;
-                this.courseId2 = id;
-                this.keyId = id;
-                this.$store.commit('noTreeTitle',data);
-                this.findParent(id);
-            }
-        }else if(id > 500 && id < 600){
-            this.courseId1 = 500;
-            this.courseId2 = id;
-            this.keyId = id;
-            this.$store.commit('noTreeTitle',data);
-            this.findParent(id);
-        }else if(id > 600 && id < 700){
-            this.courseId1 = 600;
-            this.courseId2 = id;
-            this.keyId = id;
-            this.$store.commit('noTreeTitle',data);
-            this.findParent(id);
-        }else if(id > 700 && id < 800){
-            if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
-                this.courseId1 = 700;
-                this.courseId2 = id;
-                var nowId = parseInt(id) + 1
-                this.keyId = nowId;
-                this.$store.commit('noTreeTitle',data.children[0]);
-                this.findParent(id);
-            }else{
-                this.courseId1 = 700;
-                this.courseId2 = id;
-                this.keyId = id;
-                this.$store.commit('noTreeTitle',data);
-                this.findParent(id);
-            }
-        }else if(id > 1110 && id < 1300){
-            this.courseId1 = 100;
-            this.courseId2 = id;
-            this.keyId = id;
-            this.findParent(id);
+        if(id == 100){
+          this.courseId1 = id;
+          this.courseId2 = 111;
+          this.keyId = 1111;
+          this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
+          this.findParent(id);
+        }else if(id == 200){
+          this.courseId1 = id;
+          this.courseId2 = 211;
+          this.keyId = 211;
+          this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          this.findParent(id);
+        }else if(id == 300){
+          this.courseId1 = id;
+          this.courseId2 = 311;
+          this.keyId = 311;
+          this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          this.findParent(id);
+        }else if(id == 400){
+          this.courseId1 = id;
+          this.courseId2 = 411;
+          this.keyId = 411;
+          this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          this.findParent(id);
+        }else if(id == 500){
+          this.courseId1 = id;
+          this.keyId = 510;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else if(id == 600){
+          this.courseId1 = id;
+          this.keyId = 610;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else if(id == 700){
+          this.courseId1 = id;
+          this.courseId2 = 711;
+          this.keyId = 711;
+          this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          this.findParent(id);
         }
+      }else if(id > 100 && id < 200){
+        if(id == 110){
+          this.courseId1 = 100;
+          this.courseId2 = 111;
+          this.keyId = 1111;
+          this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          this.findParent(id);
+        }else if(id > 110 && id < 120){
+          this.courseId1 = 100;
+          this.courseId2 = id;
+          this.keyId = id.toString()+1;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else if(id > 120 && id < 130){
+          this.courseId1 = 100;
+          this.courseId2 = id;
+          this.keyId = id.toString()+1;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else if(id == 120){
+          this.courseId1 = 100;
+          this.courseId2 = 121;
+          this.keyId = 1211;
+          this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          this.findParent(id);
+        }
+      }else if(id > 200 && id < 300){
+        if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
+          this.courseId1 = 200;
+          this.courseId2 = id;
+          this.keyId = id + 1;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else{
+          this.courseId1 = 200;
+          this.courseId2 = id;
+          this.keyId = id;
+          this.$store.commit('noTreeTitle',data);
+          this.findParent(id);
+        }
+      }else if(id > 300 && id < 400){
+        if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
+          this.courseId1 = 300;
+          this.courseId2 = id;
+          this.keyId = id + 1;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else{
+          this.courseId1 = 300;
+          this.courseId2 = id;
+          this.keyId = id;
+          this.$store.commit('noTreeTitle',data);
+        }
+      }else if(id > 400 && id < 500){
+        if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
+          this.courseId1 = 400;
+          this.courseId2 = id;
+          this.keyId = id + 1;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else{
+          this.courseId1 = 400;
+          this.courseId2 = id;
+          this.keyId = id;
+          this.$store.commit('noTreeTitle',data);
+          this.findParent(id);
+        }
+      }else if(id > 500 && id < 600){
+        this.courseId1 = 500;
+        this.courseId2 = id;
+        this.keyId = id;
+        this.$store.commit('noTreeTitle',data);
+        this.findParent(id);
+      }else if(id > 600 && id < 700){
+        this.courseId1 = 600;
+        this.courseId2 = id;
+        this.keyId = id;
+        this.$store.commit('noTreeTitle',data);
+        this.findParent(id);
+      }else if(id > 700 && id < 800){
+        if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
+          this.courseId1 = 700;
+          this.courseId2 = id;
+          var nowId = parseInt(id) + 1
+          this.keyId = nowId;
+          this.$store.commit('noTreeTitle',data.children[0]);
+          this.findParent(id);
+        }else{
+          this.courseId1 = 700;
+          this.courseId2 = id;
+          this.keyId = id;
+          this.$store.commit('noTreeTitle',data);
+          this.findParent(id);
+        }
+      }else if(id > 1110 && id < 1300){
+        this.courseId1 = 100;
+        this.courseId2 = id;
+        this.keyId = id;
+        this.findParent(id);
+      }
 
 
 //    axios.get("/readJson/bannerLeftData",{
@@ -526,595 +528,583 @@ export default {
 //      }).catch(function(error){
 //          console.log("error init." + error)
 //      });
-    //评论一系列
+      //评论一系列
       this.user = this.$store.state.username;
       // console.log(this.user)
-      axios.get("/readComments/all",{
-        params:{
-          user:6666
-        }
-      }).then((res)=>{
-        // console.log(res.data.msg)
-        // console.log(res.data.result)
-        this.commentAllObj = res.data.result
-        // console.log(this.commentAllObj)
-        for (var i=0;i<this.commentAllObj.length; i++){
-            // console.log(i)
-            if (this.commentAllObj[i].type == "1"){
-              // console.log(this.commentAllObj[i])
-              // console.log(i)
-              this.commentArr.push(this.commentAllObj[i])
-            }
-            if (this.commentAllObj[i].type == "2"){
-              // console.log(this.commentAllObj[i])
-              this.replyArr.push(this.commentAllObj[i])
-            }
-            if (this.commentAllObj[i].type == "3"){
-              // console.log(this.commentAllObj[i])
-              this.replyToReplyArr.push(this.commentAllObj[i])
-            }
-        }
-        // console.log(this.qqqq)
-      }).catch(function(error){
-        console.log("评论请求错误")
-      });
-
-
-
+      this.getComment(this.moutedHomeworkPath);
     },
-  methods:{
-    //切换标签暂停视频
-    handleClickTabs(tab){
-      //console.log(tab);
-      //console.log(tab._data)
-      if(tab._data.index == 3){
-        //console.log("我是微课");
-        //this.videostop();
-      }else{
-        //console.log("爱谁谁是");
-        this.clickTabsStop();
-      }
-      if(tab._data.index == 5){
-        //console.log("我是微课");
-        //this.videostop();
-      }else{
-        //console.log("爱谁谁是");
-        this.clickTabsFlashStop();
-      }
-    },
-    //进入页面时的请求地址
-    findParent(id){
-      var data = this.$store.state.noTree1;
-      var coursePath = [];
-      var homeworkPath = [];
-      id = id.toString();
-      if(id == 100){
-        console.log(data.children[0].children[0].children)
-        homeworkPath.push(data.label);
-        homeworkPath.push(data.children[0].label);
-        homeworkPath.push(data.children[0].children[0].label);
-        homeworkPath.push(data.children[0].children[0].children[0].label);
-        coursePath.push(data.label);
-        coursePath.push(data.children[0].label);
-        coursePath.push(data.children[0].children[0].label);
-        coursePath.push(data.children[0].children[0].children[0].label);
-        coursePath.push(this.$store.state.noTree.teachingMaterial);
-      }else if(id == 200 || id == 300 || id == 400){
-        coursePath.push(data.label);
-        coursePath.push(data.children[0].label);
-        coursePath.push(data.children[0].children[0].label);
-        homeworkPath = coursePath;
-      }else if(id == 500 || id == 600){
-        coursePath.push(data.label);
-        coursePath.push(data.children[0].label);
-        homeworkPath = coursePath;
-      }else if(id > 1110 && id < 1200){
-        if(id >= 1111 && id <1120){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[0].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[0].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1120 && id <1130){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[1].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[1].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1130 && id <1140){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[2].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[2].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1140 && id <1150){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[3].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[3].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1150 && id <1160){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[4].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[4].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1160 && id <1170){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[5].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[5].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1170 && id <1180){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[6].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[6].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1180 && id <1190){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[7].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[7].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id >= 1190 && id <120){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(this.data[0].children[0].children[8].label);
-          homeworkPath.push(data.label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(this.data[0].children[0].children[8].label);
-          coursePath.push(data.label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
+    methods:{
+      //获取评论请求
+      getComment(title){
+        this.appraiseIndex = [];
+        this.appraiseContent.appraiseMsg = this.appraiseIndex;
+        axios.get("/readComments/getComment",{
+          params:{
+            user: this.userName,
+            title: title,
+          }
+        }).then((res)=>{
+          console.log(res.data.result);
+          this.appraiseIndex = res.data.result.appraiseMsg;
+          this.appraiseContent.appraiseMsg = this.appraiseIndex;
+          console.log(this.appraiseIndex)
+        }).catch(function(error){
+          console.log("评论请求错误")
+        });
+      },
+      //切换标签暂停视频
+      handleClickTabs(tab){
+        //console.log(tab);
+        //console.log(tab._data)
+        if(tab._data.index == 3){
+          //console.log("我是微课");
+          //this.videostop();
+        }else{
+          //console.log("爱谁谁是");
+          this.clickTabsStop();
         }
-      }else if(id > 100 && id < 200){
-        if(id == 110){
-          //console.log(this.data[4].label)
-          //console.log(this.data[3].children[1].label)
-          homeworkPath.push(this.data[0].label);
+        if(tab._data.index == 5){
+          //console.log("我是微课");
+          //this.videostop();
+        }else{
+          //console.log("爱谁谁是");
+          this.clickTabsFlashStop();
+        }
+      },
+      //进入页面时的请求地址
+      findParent(id){
+        var data = this.$store.state.noTree1;
+        var coursePath = [];
+        var homeworkPath = [];
+        id = id.toString();
+        if(id == 100){
+          console.log(data.children[0].children[0].children)
           homeworkPath.push(data.label);
           homeworkPath.push(data.children[0].label);
           homeworkPath.push(data.children[0].children[0].label);
-          coursePath.push(this.data[0].label);
+          homeworkPath.push(data.children[0].children[0].children[0].label);
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
           coursePath.push(data.children[0].children[0].label);
+          coursePath.push(data.children[0].children[0].children[0].label);
           coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id > 110 && id < 120){
-          homeworkPath.push(this.data[0].label);
-          homeworkPath.push(this.data[0].children[0].label);
-          homeworkPath.push(data.label);
-          homeworkPath.push(data.children[0].label);
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[0].label);
-          coursePath.push(data.label);
-          coursePath.push(data.children[0].label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id > 120 && id < 130){
-          coursePath.push(this.data[0].label);
-          coursePath.push(this.data[0].children[1].label);
-          coursePath.push(data.label);
-          coursePath.push(data.children[0].label);
-          homeworkPath = coursePath;
-        }else if(id == 120){
-          coursePath.push(this.data[0].label);
+        }else if(id == 200 || id == 300 || id == 400){
           coursePath.push(data.label);
           coursePath.push(data.children[0].label);
           coursePath.push(data.children[0].children[0].label);
           homeworkPath = coursePath;
-        }
-      }else if(id > 200 && id < 300){
-            if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
-              coursePath.push(this.data[1].label);
-              coursePath.push(data.label);
-              coursePath.push(data.children[0].label);
-              homeworkPath = coursePath;
-            }else if(id > 210 && id < 220){
-              coursePath.push(this.data[1].label);
-              coursePath.push(this.data[1].children[0].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 220 && id < 230){
-              coursePath.push(this.data[1].label);
-              coursePath.push(this.data[1].children[1].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 230 && id < 240){
-              coursePath.push(this.data[1].label);
-              coursePath.push(this.data[1].children[2].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 240 && id < 250){
-              coursePath.push(this.data[1].label);
-              coursePath.push(this.data[1].children[3].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 250 && id < 260){
-              coursePath.push(this.data[1].label);
-              coursePath.push(this.data[1].children[4].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 260 && id < 270){
-              coursePath.push(this.data[1].label);
-              coursePath.push(this.data[1].children[5].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }
+        }else if(id == 500 || id == 600){
+          coursePath.push(data.label);
+          coursePath.push(data.children[0].label);
+          homeworkPath = coursePath;
+        }else if(id > 1110 && id < 1200){
+          if(id >= 1111 && id <1120){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[0].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[0].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1120 && id <1130){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[1].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[1].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1130 && id <1140){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[2].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[2].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1140 && id <1150){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[3].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[3].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1150 && id <1160){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[4].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[4].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1160 && id <1170){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[5].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[5].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1170 && id <1180){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[6].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[6].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1180 && id <1190){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[7].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[7].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id >= 1190 && id <120){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(this.data[0].children[0].children[8].label);
+            homeworkPath.push(data.label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(this.data[0].children[0].children[8].label);
+            coursePath.push(data.label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }
+        }else if(id > 100 && id < 200){
+          if(id == 110){
+            //console.log(this.data[4].label)
+            //console.log(this.data[3].children[1].label)
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(data.label);
+            homeworkPath.push(data.children[0].label);
+            homeworkPath.push(data.children[0].children[0].label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            coursePath.push(data.children[0].children[0].label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id > 110 && id < 120){
+            homeworkPath.push(this.data[0].label);
+            homeworkPath.push(this.data[0].children[0].label);
+            homeworkPath.push(data.label);
+            homeworkPath.push(data.children[0].label);
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[0].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            coursePath.push(this.$store.state.noTree.teachingMaterial);
+          }else if(id > 120 && id < 130){
+            coursePath.push(this.data[0].label);
+            coursePath.push(this.data[0].children[1].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            homeworkPath = coursePath;
+          }else if(id == 120){
+            coursePath.push(this.data[0].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            coursePath.push(data.children[0].children[0].label);
+            homeworkPath = coursePath;
+          }
+        }else if(id > 200 && id < 300){
+          if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
+            coursePath.push(this.data[1].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            homeworkPath = coursePath;
+          }else if(id > 210 && id < 220){
+            coursePath.push(this.data[1].label);
+            coursePath.push(this.data[1].children[0].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 220 && id < 230){
+            coursePath.push(this.data[1].label);
+            coursePath.push(this.data[1].children[1].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 230 && id < 240){
+            coursePath.push(this.data[1].label);
+            coursePath.push(this.data[1].children[2].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 240 && id < 250){
+            coursePath.push(this.data[1].label);
+            coursePath.push(this.data[1].children[3].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 250 && id < 260){
+            coursePath.push(this.data[1].label);
+            coursePath.push(this.data[1].children[4].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 260 && id < 270){
+            coursePath.push(this.data[1].label);
+            coursePath.push(this.data[1].children[5].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }
         }else if(id > 300 && id < 400){
-            if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
-              coursePath.push(this.data[2].label);
-              coursePath.push(data.label);
-              coursePath.push(data.children[0].label);
-              homeworkPath = coursePath;
-            }else if(id > 310 && id < 320){
-              coursePath.push(this.data[2].label);
-              coursePath.push(this.data[2].children[0].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 320 && id < 330){
-              coursePath.push(this.data[2].label);
-              coursePath.push(this.data[2].children[1].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 330 && id < 340){
-              coursePath.push(this.data[2].label);
-              coursePath.push(this.data[2].children[2].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 340 && id < 350){
-              coursePath.push(this.data[2].label);
-              coursePath.push(this.data[2].children[3].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 350 && id < 360){
-              coursePath.push(this.data[2].label);
-              coursePath.push(this.data[2].children[4].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }
-          }else if(id > 400 && id < 500){
-            if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
-              coursePath.push(this.data[3].label);
-              coursePath.push(data.label);
-              coursePath.push(data.children[0].label);
-              homeworkPath = coursePath;
-            }else if(id > 410 && id < 420){
-              coursePath.push(this.data[3].label);
-              coursePath.push(this.data[3].children[0].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 420 && id < 430){
-              coursePath.push(this.data[3].label);
-              coursePath.push(this.data[3].children[1].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 430 && id < 440){
-              coursePath.push(this.data[3].label);
-              coursePath.push(this.data[3].children[2].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 440 && id < 450){
-              coursePath.push(this.data[3].label);
-              coursePath.push(this.data[3].children[3].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 450 && id < 460){
-              coursePath.push(this.data[3].label);
-              coursePath.push(this.data[3].children[4].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 460 && id < 470){
-              coursePath.push(this.data[3].label);
-              coursePath.push(this.data[3].children[5].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }
-          }else if(id > 500 && id < 600){
-            coursePath.push(this.data[4].label);
+          if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
+            coursePath.push(this.data[2].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            homeworkPath = coursePath;
+          }else if(id > 310 && id < 320){
+            coursePath.push(this.data[2].label);
+            coursePath.push(this.data[2].children[0].label);
             coursePath.push(data.label);
             homeworkPath = coursePath;
-          }else if(id > 600 && id < 700){
-            coursePath.push(this.data[5].label);
+          }else if(id > 320 && id < 330){
+            coursePath.push(this.data[2].label);
+            coursePath.push(this.data[2].children[1].label);
             coursePath.push(data.label);
             homeworkPath = coursePath;
-          }else if(id >= 700 && id < 800){
-            var allData = this.data;
-            //console.log(allData)
-            if(id == 700 || id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
-              if(id == 700){
-                coursePath.push(data.children[0].label);
-                coursePath.push(data.children[0].children[0].label);
-                homeworkPath = coursePath;
-                //console.log("222")
-                //console.log(coursePath)
-              }else{
-                coursePath.push(data.label);
-                coursePath.push(data.children[0].label);
-                homeworkPath = coursePath;
-              }
-            }else if(id > 710 && id < 720){
-              coursePath.push(allData[6].children[0].label);
-              coursePath.push(data.label);
+          }else if(id > 330 && id < 340){
+            coursePath.push(this.data[2].label);
+            coursePath.push(this.data[2].children[2].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 340 && id < 350){
+            coursePath.push(this.data[2].label);
+            coursePath.push(this.data[2].children[3].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 350 && id < 360){
+            coursePath.push(this.data[2].label);
+            coursePath.push(this.data[2].children[4].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }
+        }else if(id > 400 && id < 500){
+          if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
+            coursePath.push(this.data[3].label);
+            coursePath.push(data.label);
+            coursePath.push(data.children[0].label);
+            homeworkPath = coursePath;
+          }else if(id > 410 && id < 420){
+            coursePath.push(this.data[3].label);
+            coursePath.push(this.data[3].children[0].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 420 && id < 430){
+            coursePath.push(this.data[3].label);
+            coursePath.push(this.data[3].children[1].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 430 && id < 440){
+            coursePath.push(this.data[3].label);
+            coursePath.push(this.data[3].children[2].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 440 && id < 450){
+            coursePath.push(this.data[3].label);
+            coursePath.push(this.data[3].children[3].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 450 && id < 460){
+            coursePath.push(this.data[3].label);
+            coursePath.push(this.data[3].children[4].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 460 && id < 470){
+            coursePath.push(this.data[3].label);
+            coursePath.push(this.data[3].children[5].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }
+        }else if(id > 500 && id < 600){
+          coursePath.push(this.data[4].label);
+          coursePath.push(data.label);
+          homeworkPath = coursePath;
+        }else if(id > 600 && id < 700){
+          coursePath.push(this.data[5].label);
+          coursePath.push(data.label);
+          homeworkPath = coursePath;
+        }else if(id >= 700 && id < 800){
+          var allData = this.data;
+          //console.log(allData)
+          if(id == 700 || id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
+            if(id == 700){
+              coursePath.push(data.children[0].label);
+              coursePath.push(data.children[0].children[0].label);
               homeworkPath = coursePath;
-              //console.log(homeworkPath)
+              //console.log("222")
               //console.log(coursePath)
-            }else if(id > 720 && id < 730){
-              coursePath.push(allData[6].children[1].label);
+            }else{
               coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 730 && id < 740){
-              coursePath.push(allData[6].children[2].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 740 && id < 750){
-              coursePath.push(allData[6].children[3].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 750 && id < 760){
-              coursePath.push(allData[6].children[4].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 760 && id < 770){
-              coursePath.push(allData[6].children[5].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 770 && id < 780){
-              coursePath.push(allData[6].children[6].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 780 && id < 790){
-              coursePath.push(allData[6].children[7].label);
-              coursePath.push(data.label);
-              homeworkPath = coursePath;
-            }else if(id > 790 && id < 800){
-              coursePath.push(allData[6].children[8].label);
-              coursePath.push(data.label);
+              coursePath.push(data.children[0].label);
               homeworkPath = coursePath;
             }
+          }else if(id > 710 && id < 720){
+            coursePath.push(allData[6].children[0].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+            //console.log(homeworkPath)
+            //console.log(coursePath)
+          }else if(id > 720 && id < 730){
+            coursePath.push(allData[6].children[1].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 730 && id < 740){
+            coursePath.push(allData[6].children[2].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 740 && id < 750){
+            coursePath.push(allData[6].children[3].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 750 && id < 760){
+            coursePath.push(allData[6].children[4].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 760 && id < 770){
+            coursePath.push(allData[6].children[5].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 770 && id < 780){
+            coursePath.push(allData[6].children[6].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 780 && id < 790){
+            coursePath.push(allData[6].children[7].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
+          }else if(id > 790 && id < 800){
+            coursePath.push(allData[6].children[8].label);
+            coursePath.push(data.label);
+            homeworkPath = coursePath;
           }
-      //console.log(id)
-      this.moutedCorusePath = coursePath;
-      this.moutedHomeworkPath = homeworkPath;
-      coursePath = [];
-      if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800){
-        //console.log(this.moutedCorusePath)
-        //console.log(coursePath)
-        homeworkPath = [];
-        coursePath = coursePath + '我的课堂' + '/' + this.$store.state.username + '/';
-    //    console.log(this.moutedCorusePath)
-        for(var i = 0; i < this.moutedCorusePath.length; i++){
-          coursePath = coursePath + this.moutedCorusePath[i] + '/';
         }
-        this.videoPath = coursePath;
-        coursePath = coursePath + this.$store.state.noTree.teachingMaterial;
-        homeworkPath.push('我的课堂');
-        homeworkPath.push(this.$store.state.username);
-        for(var i = 0; i < this.moutedHomeworkPath.length; i++){
-          //console.log(this.moutedHomeworkPath)
-          homeworkPath.push(this.moutedHomeworkPath[i]);
-        }
-        homeworkPath.push(this.$store.state.noTree.teachingMaterial)
-      }else{
-        for(var i = 0; i < this.moutedCorusePath.length; i++){
-          coursePath = coursePath + this.moutedCorusePath[i] + '/';
-        }
-        if((id > 1110 && id < 1200) || (id >= 100 && id < 200) || (id > 110 && id < 120) || (id >= 700 && id < 800)){
-          for(var i = 0; i < this.moutedCorusePath.length - 1; i++){
-            this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+        //console.log(id)
+        this.moutedCorusePath = coursePath;
+        this.moutedHomeworkPath = homeworkPath;
+        this.currCourse = this.moutedHomeworkPath;
+        coursePath = [];
+        if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800){
+          //console.log(this.moutedCorusePath)
+          //console.log(coursePath)
+          homeworkPath = [];
+          coursePath = coursePath + '我的课堂' + '/' + this.$store.state.username + '/';
+          //    console.log(this.moutedCorusePath)
+          for(var i = 0; i < this.moutedCorusePath.length; i++){
+            coursePath = coursePath + this.moutedCorusePath[i] + '/';
           }
+          this.videoPath = coursePath;
+          coursePath = coursePath + this.$store.state.noTree.teachingMaterial;
+          homeworkPath.push('我的课堂');
+          homeworkPath.push(this.$store.state.username);
+          for(var i = 0; i < this.moutedHomeworkPath.length; i++){
+            //console.log(this.moutedHomeworkPath)
+            homeworkPath.push(this.moutedHomeworkPath[i]);
+          }
+          homeworkPath.push(this.$store.state.noTree.teachingMaterial)
         }else{
           for(var i = 0; i < this.moutedCorusePath.length; i++){
-            this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+            coursePath = coursePath + this.moutedCorusePath[i] + '/';
+          }
+          if((id > 1110 && id < 1200) || (id >= 100 && id < 200) || (id > 110 && id < 120) || (id >= 700 && id < 800)){
+            for(var i = 0; i < this.moutedCorusePath.length - 1; i++){
+              this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+            }
+          }else{
+            for(var i = 0; i < this.moutedCorusePath.length; i++){
+              this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+            }
           }
         }
-      }
 
-    console.log(coursePath)
-    //console.log(this.videoPath + this.$store.state.noTree.videoTitle[0].videoTitle)
-      //请求PPT
-      axios.post("/readResource/getPPT",{
-        data:{
-          userId:this.userId,
-          fileName: coursePath
-        }
-      }).then((res)=>{
-        //console.log(res.data.result.textBookList);
-        this.lists = res.data.result.courseList;
-        this.total = this.lists.length;
-        this.teachingBooklists = res.data.result.textBookList;
-        this.courseWorkPagelists = res.data.result.workPageList;
-      }).catch(function(error){
-        console.log("error init." + error)
-      });
-      
-      //请求课后作业
-      axios.get("/readTestQuestion/getHomeWork",{
-        params:{
+        console.log(coursePath)
+        //console.log(this.videoPath + this.$store.state.noTree.videoTitle[0].videoTitle)
+        //请求PPT
+        axios.post("/readResource/getPPT",{
+          data:{
+            userId:this.userId,
+            fileName: coursePath
+          }
+        }).then((res)=>{
+          //console.log(res.data.result.textBookList);
+          this.lists = res.data.result.courseList;
+          this.total = this.lists.length;
+          this.teachingBooklists = res.data.result.textBookList;
+          this.courseWorkPagelists = res.data.result.workPageList;
+        }).catch(function(error){
+          console.log("error init." + error)
+        });
+
+        //请求课后作业
+        axios.get("/readTestQuestion/getHomeWork",{
+          params:{
             userId:this.userId,
             checkArr:homeworkPath
-        }
-      }).then((res)=>{
+          }
+        }).then((res)=>{
           //console.log(res.data.result)
           if(res.data.result){
-          //  console.log("111"+res.data.result)
+            //  console.log("111"+res.data.result)
             this.homeworkData = res.data.result
-          //  this.$store.commit('homework',res.data.result);
+            //  this.$store.commit('homework',res.data.result);
           }else{
             //  console.log("222"+res.data.result)
             //  this.$store.commit('homework',[]);
             this.homeworkData = []
           }
           //console.log(this.homeworkData)
-      }).catch(function(error){
+        }).catch(function(error){
           console.log("error init." + error)
-      });
-      //console.log(homeworkPath)
-      //console.log(coursePath)
-    },
-    //监听scroll事件(没用到)
-    handleScroll () {
-      this.scrolled = window.scrollY;
-      alert(this.scrolled)
-    },
-    //滚轮键盘啥啥
-    mousewheel(val){
-      var _this = this;
-      var isFull = document.fullscreenElement    ||
-                   document.msFullscreenElement  ||
-                   document.mozFullScreenElement ||
-                   document.webkitFullscreenElement
-      //console.log(isFull)
-      this.currpage = val;
-      if(isFull === null){
-        document.removeEventListener('DOMMouseScroll',scrollFunc,false);
-        window.onmousewheel = document.onmousewheel = null;
-
-        //console.log("buquanping");
-      }else{
-        //console.log("quanping");
-        document.addEventListener("keydown",function(){
-          switch(event.keyCode){
-            // ←
-            case 37:
-                _this.newPageUp(val);
-                break;
-            // →
-            case 39:
-                _this.newpageDown(val + 2)
-                break;
-            // ↑
-            case 38:
-                _this.newPageUp(val);
-                break;
-            // ↓
-            case 40:
-                _this.newpageDown(val + 2)
-                break;
-            // 回车
-            case 13:
-                _this.newpageDown(val + 2)
-                break;
-          }
         });
+        //console.log(homeworkPath)
+        //console.log(coursePath)
+      },
+      //监听scroll事件(没用到)
+      handleScroll () {
+        this.scrolled = window.scrollY;
+        alert(this.scrolled)
+      },
+      //滚轮键盘啥啥
+      mousewheel(val){
+        var _this = this;
+        var isFull = document.fullscreenElement    ||
+          document.msFullscreenElement  ||
+          document.mozFullScreenElement ||
+          document.webkitFullscreenElement
+        //console.log(isFull)
+        this.currpage = val;
+        if(isFull === null){
+          document.removeEventListener('DOMMouseScroll',scrollFunc,false);
+          window.onmousewheel = document.onmousewheel = null;
 
-        var scrollFunc = function (e) {
+          //console.log("buquanping");
+        }else{
+          //console.log("quanping");
+          document.addEventListener("keydown",function(){
+            switch(event.keyCode){
+              // ←
+              case 37:
+                _this.newPageUp(val);
+                break;
+              // →
+              case 39:
+                _this.newpageDown(val + 2)
+                break;
+              // ↑
+              case 38:
+                _this.newPageUp(val);
+                break;
+              // ↓
+              case 40:
+                _this.newpageDown(val + 2)
+                break;
+              // 回车
+              case 13:
+                _this.newpageDown(val + 2)
+                break;
+            }
+          });
 
-          var direct = 0;
-          e = e || window.event;
-          if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
+          var scrollFunc = function (e) {
+
+            var direct = 0;
+            e = e || window.event;
+            if (e.wheelDelta) {  //判断浏览器IE，谷歌滑轮事件
               if (e.wheelDelta > 0) { //当滑轮向上滚动时
-              //    alert("滑轮向上滚动");
-                  _this.newPageUp(val);
+                //    alert("滑轮向上滚动");
+                _this.newPageUp(val);
               }
               if (e.wheelDelta < 0) { //当滑轮向下滚动时
-              //    alert("滑轮向下滚动");
-                  _this.newpageDown(val + 2)
+                //    alert("滑轮向下滚动");
+                _this.newpageDown(val + 2)
               }
-          } else if (e.detail) {  //Firefox滑轮事件
+            } else if (e.detail) {  //Firefox滑轮事件
               if (e.detail> 0) { //当滑轮向上滚动时
-              //    alert("滑轮向上滚动");
-                  _this.newPageUp(val);
+                //    alert("滑轮向上滚动");
+                _this.newPageUp(val);
               }
               if (e.detail< 0) { //当滑轮向下滚动时
-              //    alert("滑轮向下滚动");
-                  _this.newpageDown(val + 2)
+                //    alert("滑轮向下滚动");
+                _this.newpageDown(val + 2)
               }
+            }
+            //   ScrollText(direct);
           }
-      //   ScrollText(direct);
-      }
-      //给页面绑定滑轮滚动事件
-      if (document.addEventListener) {
-          document.addEventListener('DOMMouseScroll', scrollFunc, false);
-      }
-      //滚动滑轮触发scrollFunc方法
-        window.onmousewheel = document.onmousewheel = scrollFunc;
-    }
+          //给页面绑定滑轮滚动事件
+          if (document.addEventListener) {
+            document.addEventListener('DOMMouseScroll', scrollFunc, false);
+          }
+          //滚动滑轮触发scrollFunc方法
+          window.onmousewheel = document.onmousewheel = scrollFunc;
+        }
 
-  },
+      },
 
-    //点击左侧向上翻页
-    newPageUp(val){
-      if(val > 0 && val <= this.lists.length){
-        EventBus.$emit('newPageUp',this.pageFn(val));
-        contentSlides.methods.pageUp(1);
-        contentSlides.methods.jump(val);
-      }
-    },
-    //点击右侧向下翻页
-    newpageDown(val){
-      if(val > 0 && val <= this.lists.length){
-        EventBus.$emit('newpageDown',this.pageFn(val));
-        contentSlides.methods.pageDown(1);
-        contentSlides.methods.jump(val);
-      }else{
+      //点击左侧向上翻页
+      newPageUp(val){
+        if(val > 0 && val <= this.lists.length){
+          EventBus.$emit('newPageUp',this.pageFn(val));
+          contentSlides.methods.pageUp(1);
+          contentSlides.methods.jump(val);
+        }
+      },
+      //点击右侧向下翻页
+      newpageDown(val){
+        if(val > 0 && val <= this.lists.length){
+          EventBus.$emit('newpageDown',this.pageFn(val));
+          contentSlides.methods.pageDown(1);
+          contentSlides.methods.jump(val);
+        }else{
 
-      }
-    },
-    //PPT翻页
-    pageFn(val){
-            this.page=val;
-          //  console.log(val);
-    },
-    //递归方法默认标红实验
-    refRecursion(key, time){
-      console.log(time)
-      if(time > 10){
-        throw new Error('没有找到VueTree')
-      }
-      var tree = this.$refs.vueTree;
+        }
+      },
+      //PPT翻页
+      pageFn(val){
+        this.page=val;
+        //  console.log(val);
+      },
+      //递归方法默认标红实验
+      refRecursion(key, time){
+        console.log(time)
+        if(time > 10){
+          throw new Error('没有找到VueTree')
+        }
+        var tree = this.$refs.vueTree;
         if(tree){
           tree.setCurrentKey(key)
         }else{
           this.refRecursion(key, time + 1)
         }
 
-    },
+      },
 
 
-    //从树形传值到tabs
-    handleNodeClick(data,node) {
-      this.appAnswer = false;
-        console.log(data);
+      //从树形传值到tabs
+      handleNodeClick(data,node) {
+        this.appAnswer = false;
+        //  console.log(data);
 
 
 //      var now = this.$store.state.noTree.videoTitle[0].videoTitle;
 //      console.log(now)
 //      var url = 'http://http://127.0.0.1:8080/resource/video/courseVideoData/'+now;
 //      console.log(url)
-      var video = document.querySelector('video');
+        var video = document.querySelector('video');
 //      fetch(url)
 //          .then(response => response.blob())
 //          .then(response => {
@@ -1141,30 +1131,33 @@ export default {
 //        }
 //        xhr.send();
 
-      //  console.log(node.data.label);
-      //  console.log(node.parent.label);
-      //  console.log(node.parent.parent.label);
-      //  console.log(node.parent.parent.parent.label);
+        //  console.log(node.data.label);
+        //  console.log(node.parent.label);
+        //  console.log(node.parent.parent.label);
+        //  console.log(node.parent.parent.parent.label);
 
-      for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
-        document.getElementsByClassName("coursepptImg")[i].style.height = '100%';
-        document.getElementsByClassName("coursepptImg")[i].style.width = '100%';
-      }
-      this.homeworkData = [];
-      this.courseId1 = '';
-      this.courseId2 = '';
+        for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
+          document.getElementsByClassName("coursepptImg")[i].style.height = '100%';
+          document.getElementsByClassName("coursepptImg")[i].style.width = '100%';
+        }
+        this.homeworkData = [];
+        this.courseId1 = '';
+        this.courseId2 = '';
 
-      if(data.children){
+        if(data.children){
 
-      }else{
-        //点击新课程让课件跳转到第一页
-        EventBus.$emit('newPageUp',this.pageFn(1));
-        contentSlides.methods.pageUp(1);
-        contentSlides.methods.jump(1);
-        //点击新课程tabs标签默认第一个
-        this.activeName = this.descTab;
-        //请求课件和课后作业给后台发送的数组
-        this.checkArr = [];
+        }else{
+          //点击请求评论
+
+
+          //点击新课程让课件跳转到第一页
+          EventBus.$emit('newPageUp',this.pageFn(1));
+          contentSlides.methods.pageUp(1);
+          contentSlides.methods.jump(1);
+          //点击新课程tabs标签默认第一个
+          this.activeName = this.descTab;
+          //请求课件和课后作业给后台发送的数组
+          this.checkArr = [];
           if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){
             this.checkArr.push(node.parent.label)
             this.checkArr.push(node.label)
@@ -1198,53 +1191,57 @@ export default {
           }
           axios.get("/readTestQuestion/getHomeWork",{
             params:{
-                userId:this.userId,
-                checkArr:checkArrHomeWork
+              userId:this.userId,
+              checkArr:checkArrHomeWork
             }
           }).then((res)=>{
-              //console.log(res.data.result)
-              if(res.data.result){
-                //  console.log("1111")
-                //  this.$store.commit('homework',res.data.result);
-                this.homeworkData = res.data.result
-                console.log(this.homeworkData)
-              }else{
-                //  console.log(res.data.result)
-                //  this.$store.commit('homework',[]);
-                this.homeworkData = [];
-                console.log(this.homeworkData)
-              }
-              //console.log(this.homeworkData)
+            //console.log(res.data.result)
+            //评论的title
+            this.currCourse = checkArrHomeWork;
+            this.appraiseContent.title = this.currCourse;
+
+            if(res.data.result){
+              //  console.log("1111")
+              //  this.$store.commit('homework',res.data.result);
+              this.homeworkData = res.data.result
+              console.log(this.homeworkData)
+            }else{
+              //  console.log(res.data.result)
+              //  this.$store.commit('homework',[]);
+              this.homeworkData = [];
+              // console.log(this.homeworkData)
+            }
+            //console.log(this.homeworkData)
           }).catch(function(error){
-              console.log("error init." + error)
+            console.log("error init." + error)
           });
 
           //拼接地址
           let fileNamePath = '';
-            if(this.$store.state.noTree1.courseId > 1110 && this.$store.state.noTree1.courseId < 1200){
-              for(var i = 0; i < this.checkArr.length; i++){
-                  fileNamePath = fileNamePath + this.checkArr[i] + '/';
-              }
-              this.videoPath = fileNamePath;
-              fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
-            }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
-              for(var i = 0; i < this.checkArr.length; i++){
-                if(i == 0){
-                  fileNamePath = fileNamePath + '我的课堂' + '/' + this.$store.state.username + '/';
-                }else{
-                  fileNamePath = fileNamePath + this.checkArr[i] + '/';
-                }
-              }
-              this.videoPath = fileNamePath;
-              fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
-            }else{
-              for(var i = 0; i < this.checkArr.length; i++){
+          if(this.$store.state.noTree1.courseId > 1110 && this.$store.state.noTree1.courseId < 1200){
+            for(var i = 0; i < this.checkArr.length; i++){
+              fileNamePath = fileNamePath + this.checkArr[i] + '/';
+            }
+            this.videoPath = fileNamePath;
+            fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
+          }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
+            for(var i = 0; i < this.checkArr.length; i++){
+              if(i === 0){
+                fileNamePath = fileNamePath + '我的课堂' + '/' + this.$store.state.username + '/';
+              }else{
                 fileNamePath = fileNamePath + this.checkArr[i] + '/';
               }
-              this.videoPath = fileNamePath;
             }
-            console.log(this.$store.state.noTree1.courseId)
-            console.log(fileNamePath)
+            this.videoPath = fileNamePath;
+            fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
+          }else{
+            for(var i = 0; i < this.checkArr.length; i++){
+              fileNamePath = fileNamePath + this.checkArr[i] + '/';
+            }
+            this.videoPath = fileNamePath;
+          }
+          // console.log(this.$store.state.noTree1.courseId);
+          //console.log(fileNamePath);
           //请求课件
           axios.post("/readResource/getPPT",{
             data:{
@@ -1252,7 +1249,7 @@ export default {
               fileName: fileNamePath
             }
           }).then((res)=>{
-            console.log(res.data.result.textBookList);
+            //console.log(res.data.result.textBookList);
             this.lists = res.data.result.courseList;
             this.total = this.lists.length;
             this.teachingBooklists = res.data.result.textBookList;
@@ -1260,15 +1257,67 @@ export default {
           }).catch(function(error){
             console.log("error init." + error)
           });
-      }
-    },
-    enterUserManagement () {
-        this.$router.push('/userManagement')
+          this.getComment(checkArrHomeWork);
+        }
       },
-      dele: function (index) {
-        this.replyArr.splice(index, 1)
+      //点击显示回复
+      showReply(index){
+        this.replyShow = index;
       },
+      //取消回复
+      cancelReply(){
+        this.replyShow = -1;
+        this.replyText = '';
+      },
+      //删除回复
+      deleteReply(index){
+        this.appraiseContent.appraiseMsg[index].replyText = '';
+        this.appraiseContent.appraiseMsg[index].replyName = '';
+        this.appraiseContent.appraiseMsg[index].replyDate = '';
+        this.appraiseUpdate();
+      },
+      //评论的更新请求
+      appraiseUpdate(){
+        axios({
+          method:'get',
+          url:"/readComments/updateComment",
+          params:{
+            appraiseContent:this.appraiseContent
+          }
+        }).then(function (res) {
+          //  console.log(res.data.result)
+        })
+      },
+      //提交回复
+      submitReply(index){
+        if(this.user === ''){
+          var con = confirm("请登录");
+          if(con == true){
+            this.$router.push({path: '/loginPage'})
+          }else{
+            return false;
+          }
+        }else {
+          if (this.replyText === '') {
+            alert('回复不能为空')
+          } else {
+            //console.log(this.appraiseContent[index])
+            this.appraiseContent.appraiseMsg[index].replyText = this.replyText;
+            this.appraiseContent.appraiseMsg[index].replyName = this.userName;
+            this.appraiseContent.appraiseMsg[index].replyDate = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date());
+
+
+            //console.log(this.appraiseContent)
+            this.appraiseUpdate();
+            this.replyText = '';
+          }
+        }
+        this.showReplyText = index;
+        this.replyShow = -1;
+      },
+      //提交评论
       submitComments () {
+        //this.appraiseIndex = [];
         if(this.user === ''){
           var con = confirm("请登录");
           if(con == true){
@@ -1280,242 +1329,41 @@ export default {
           if (this.text === '') {
             alert('评论不能为空')
           } else {
-            var date = new Date()
-            var seperator1 = '-'
-            var seperator2 = ':'
-            var month = date.getMonth() + 1
-            var strDate = date.getDate()
-            if (month >= 1 && month <= 9) {
-              month = '0' + month
+            //console.log(currCourse)
+            if(this.appraiseStar.value1 == null){
+              this.appraiseStar.value1 = 0;
+            }else{
+
             }
-            if (strDate >= 0 && strDate <= 9) {
-              strDate = '0' + strDate
-            }
-            this.currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
-              + ' ' + date.getHours() + seperator2 + date.getMinutes()
-              + seperator2 + date.getSeconds()
-            this.score = this.inputdata
-            this.commentAllObj.push({
-              type:1,
-              num:this.commentAllObj.length +1 ,
-              source:"course",
-              title: this.currentCourseTitle,
-              user:this.user,
+            this.appraiseIndex.unshift({
+              user:this.userName,
+              appShowStar:this.appraiseStar.value1,
               text:this.text,
-              time:this.currentdate,
-              score:this.inputdata,
-              targetId:'',
-              target:''
+              date:core.formatDate("yyyy-MM-dd hh:mm:ss", new Date()),
+              replyText:'',
+              replyName:'',
+              replyDate:'',
+              contentAppraise:this.appraiseStar.value2,
+              teacherAppraise:this.appraiseStar.value3
             })
-            console.log(this.currentCourseTitle)
-            this.commentArr.push({
-              type:1,
-              num:this.commentAllObj.length + 1,
-              source:"course",
-              title: this.currentCourseTitle,
-              user:this.user,
-              text:this.text,
-              time:this.currentdate,
-              score:this.inputdata,
-              targetId:'',
-              target:''
-            })
+            this.appraiseContent.title = this.currCourse;
+            this.appraiseContent.appraiseMsg = this.appraiseIndex;
 
-            axios({
-              method:'get',
-              url:"/readComments/update",
-              params:{
-                type:1,
-                num:this.commentAllObj.length + 1,
-                title: this.currentCourseTitle,
-                source:"course",
-                user:this.user,
-                text:this.text,
-                time:this.currentdate,
-                score:this.inputdata,
-                targetId:'',
-                target:''
-              }
-            }).then(
-              function (res) {
-                console.log(res.data.code)
-              }
-            )
-            this.text = ''
-          }
-        }
-      },
-      wantReply(item,num){
-        if(this.user === ''){
-          var con = confirm("请登录");
-          if(con == true){
-            this.$router.push({path: '/loginPage'})
-          }else{
-            return false;
-          }
-        }else {
-          this.currentReplyOpen = num
-          this.isAppearCommentBox = true
-        }
-        // this.isAppearCommentBox = !this.isAppearCommentBox
-      },
-      submitReply(item,aa) {
-        console.log(item)
-        if (this.replyText === '') {
-          alert('评论不能为空')
-        }else {
+            this.appraiseStar.value1 = null;
+            this.appraiseStar.value2 = null;
+            this.appraiseStar.value3 = null;
 
-          var date = new Date()
-          var seperator1 = '-'
-          var seperator2 = ':'
-          var month = date.getMonth() + 1
-          var strDate = date.getDate()
-          if (month >= 1 && month <= 9) {
-            month = '0' + month
+            //console.log(this.appraiseContent)
+            this.appraiseUpdate();
+            this.text = '';
           }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
-          }
-          this.replyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + ' ' + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds()
-          // console.log(item.replyArr)
-          // console.log(item)
-          this.commentAllObj.push({
-            type:2,
-            num:this.commentAllObj.length + 1 ,
-            source:"course",
-            title: this.currentCourseTitle,
-            user:this.user,
-            text:this.text,
-            time:this.currentdate,
-            score:this.inputdata,
-            target:item.user,
-            targetId:item.num
-          })
-          this.replyArr.push({
-            type:2,
-            num:this.commentAllObj.length + 1,
-            source:"course",
-            title:this.currentCourseTitle,
-            user:this.user,
-            text:this.replyText,
-            time:this.replyTime,
-            score:'',
-            target:item.user,
-            targetId:item.num
-          })
-          axios({
-            method:'get',
-            url:"/readComments/update",
-            params:{
-              type:2,
-              num:this.commentAllObj.length + 1,
-              source:"course",
-              title:this.currentCourseTitle,
-              user:this.user,
-              text:this.replyText,
-              time:this.replyTime,
-              score:'',
-              target:item.user,
-              targetId:item.num
-            }
-          }).then(
-            function (res) {
-              console.log(res.data.code)
-            }
-          )
-          this.currentReplyOpen = -1
-          this.replyText = ''
-        }
-      },
-      replyToReply(item, num){
-        if(this.user === ''){
-          var con = confirm("请登录");
-          if(con == true){
-            this.$router.push({path: '/loginPage'})
-          }else{
-            return false;
-          }
-        }else {
-          this.currentReplyToReply = num
-          this.isAppearCommentBox1 = true
-        }
-      },
-      submitReplyToReply (item){
-        if (this.replyToReplyText === '') {
-          alert('评论不能为空')
-        }else {
-
-          var date = new Date()
-          var seperator1 = '-'
-          var seperator2 = ':'
-          var month = date.getMonth() + 1
-          var strDate = date.getDate()
-          if (month >= 1 && month <= 9) {
-            month = '0' + month
-          }
-          if (strDate >= 0 && strDate <= 9) {
-            strDate = '0' + strDate
-          }
-          this.replyToReplyTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
-            + ' ' + date.getHours() + seperator2 + date.getMinutes()
-            + seperator2 + date.getSeconds()
-          this.commentAllObj.push({
-            type:3,
-            num:this.commentAllObj.length+1,
-            source:"course",
-            title: this.currentCourseTitle,
-            user:this.user,
-            text:this.text,
-            time:this.currentdate,
-            score:this.inputdata,
-            target:item.user,
-            targetId:item.num
-          })
-          this.replyToReplyArr.push({
-            type:3,
-            num:this.commentAllObj.length +1,
-            source:"course",
-            title:this.currentCourseTitle,
-            user: this.user,
-            text: this.replyToReplyText,
-            time: this.replyToReplyTime,
-            score:'',
-            target:item.user,
-            targetId:item.num
-          })
-
-          axios({
-            method:'get',
-            url:"/readComments/update",
-            params:{
-              type:3,
-              num:this.commentAllObj.length+1,
-              source:"course",
-              title:this.currentCourseTitle,
-              user: this.user,
-              text: this.replyToReplyText,
-              time: this.replyToReplyTime,
-              score:'',
-              target:item.user,
-              targetId:item.num
-            }
-          }).then(
-            function (res) {
-              console.log(res.data.code)
-            }
-          )
-          this.replyToReplyText = ''
-          // console.log(item)
-          this.currentReplyToReply = -1
         }
       },
       //点击微课视频暂停开始
       videostop(){
         var myVideo =document.getElementById("video-box");
         if (myVideo.paused){
-            myVideo.play();
+          myVideo.play();
         }else {
           myVideo.pause();
         }
@@ -1539,7 +1387,7 @@ export default {
       flash2d(){
         var myVideo =document.getElementById("flash2d");
         if (myVideo.paused){
-            myVideo.play()
+          myVideo.play()
         }else {
           myVideo.pause()
         }
@@ -1566,13 +1414,13 @@ export default {
       },
       //类似F11的全屏
       requestFullScreen(element,val) {
-        
-      //  console.log(document.getElementsByClassName("coursepptImg")[0])
-      //  console.log(val)
-      //  console.log(pptHeight)
-      //  console.log(pptWidth)
-      //  console.log(innerHeight)
-      //  console.log(innerWidth)
+
+        //  console.log(document.getElementsByClassName("coursepptImg")[0])
+        //  console.log(val)
+        //  console.log(pptHeight)
+        //  console.log(pptWidth)
+        //  console.log(innerHeight)
+        //  console.log(innerWidth)
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
         if (requestMethod) {
           requestMethod.call(element);
@@ -1589,11 +1437,11 @@ export default {
           var innerHeight = window.innerHeight;
           var innerWidth = window.innerWidth;
           if(1.7 < pptWidth / pptHeight){
-          //  console.log(pptWidth / pptHeight)
+            //  console.log(pptWidth / pptHeight)
             element.style.width = '100%';
             element.style.height = "auto";
           }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800 && 1.7 >= pptWidth / pptHeight){
-          //  console.log(1.7)
+            //  console.log(1.7)
             var realHeight = innerHeight + 50;
             for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
               document.getElementsByClassName("coursepptImg")[i].style.height = realHeight + 'px';
@@ -1605,46 +1453,46 @@ export default {
       }
 
 
-  },
-  components:{navgationHead,pptSlides,footFooter}
-}
+    },
+    components:{navgationHead,pptSlides,footFooter}
+  }
 </script>
 
 <style>
-*{
+  *{
     margin:0;
     padding:0;
-}
-ul li{
+  }
+  ul li{
     list-style: none;
-}
-a{
+  }
+  a{
     color: inherit;
     cursor: pointer;
     text-decoration:none;
-}
-a:hover{
+  }
+  a:hover{
     text-decoration: none;
     color: #f00;
-}
-a:focus {
+  }
+  a:focus {
     color: #f00;
     text-decoration: none;
-}
-hr{
+  }
+  hr{
     margin-top: 2px;
     margin-bottom:2px;
-}
-.newCourse-content .newCourse-container{
+  }
+  .newCourse-content .newCourse-container{
     min-width:960px;
-}
-.newCourse-content{
+  }
+  .newCourse-content{
     width:100%;
     margin:0 auto;
     margin-top:6px;
     margin-bottom:80px;
-}
-.newCourse-content .courseDescribe{
+  }
+  .newCourse-content .courseDescribe{
     width:80%;
     height:400px;
     margin:0 auto;
@@ -1655,202 +1503,203 @@ hr{
     padding:25px;
     box-sizing:border-box;
     text-align:left;
-}
-.newCourse-content #teachingBook{
+  }
+  .newCourse-content #teachingBook{
     width:80%;
     margin:0 auto;
     height:700px;
     overflow:auto;
     background:rgb(82,86,89);
-}
-.newCourse-content .teachingBookImg{
+  }
+  .newCourse-content .teachingBookImg{
     width:90%;
     box-shadow: 3px -3px 15px #000;
     margin-top:35px;
-}
-.newCourse-content #courseWorkPage{
+  }
+  .newCourse-content #courseWorkPage{
     width:80%;
     margin:0 auto;
     height:700px;
     overflow:auto;
     background:rgb(82,86,89);
-}
-.newCourse-content #courseppt{
+  }
+  .newCourse-content #courseppt{
     width:100%;
-}
-.newCourse-content .courseImg{
+  }
+  .newCourse-content .courseImg{
     height:100%;
     position:relative;
     cursor:pointer;
-}
-.newCourse-content .coursepptImg{
+  }
+  .newCourse-content .coursepptImg{
     width:100%;
     height:100%;
-}
-.newCourse-content .pptPrev{
+  }
+  .newCourse-content .pptPrev{
     width:50%;
     height:100%;
     position:absolute;
     top:0;
     left:0;
-}
-.newCourse-content .pptNext{
+  }
+  .newCourse-content .pptNext{
     width:50%;
     height:100%;
     position:absolute;
     top:0;
     right:0;
-}
-.newCourse-content .courseDescribe .title{
+  }
+  .newCourse-content .courseDescribe .title{
     font-weight:bolder;
-}
-.newCourse-content .courseDescribe .desc{
+  }
+  .newCourse-content .courseDescribe .desc{
     text-indent:2em;
-}
-.newCourse-content .exerP{
+  }
+  .newCourse-content .exerP{
     font-size:20px;
     margin-bottom:20px;
-}
-.newCourse-content .devDownload{
+  }
+  .newCourse-content .devDownload{
     width:96.7%;
     height:53px;
     position:absolute;
     background:rgb(82,86,89);
-}
-.newCourse-content .el-tree-node__expand-icon {
+  }
+  .newCourse-content .el-tree-node__expand-icon {
     font-size: 16px;
-}
-.newCourse-content .el-tree-node__label{
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  overflow:hidden;
-  font-size: 16px;
-  color: #212529;
-}
-.newCourse-content .el-tree{
+  }
+  .newCourse-content .el-tree-node__label{
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+    font-size: 16px;
+    color: #212529;
+  }
+  .newCourse-content .el-tree{
     background-color: #ffffff;
     padding: 10px;
     border-radius: 3px;
     border: 1px solid #9f5355;
     text-align:left;
-}
-.newCourse-content .el-tree-node:focus>.el-tree-node__content {
+  }
+  .newCourse-content .el-tree-node:focus>.el-tree-node__content {
     background-color: #9f5355;
     color: white;
-}
-.newCourse-content .el-tree-node__content:hover{
+  }
+  .newCourse-content .el-tree-node__content:hover{
     background-color: #9f5355;
     color: white;
-}
-.newCourse-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
-  color: #212529;
-}
-.newCourse-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
-  border: 3px solid #9f5355;
-  padding:0 10px;
-  border-top: none;
-  color: #212529;
-}
-.newCourse-content .el-tabs--border-card{
+  }
+  .newCourse-content .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+    color: #212529;
+  }
+  .newCourse-content .el-tabs--border-card>.el-tabs__header .el-tabs__item {
+    border: 3px solid #9f5355;
+    padding:0 10px;
+    border-top: none;
+    color: #212529;
+    width: 120px;
+  }
+  .newCourse-content .el-tabs--border-card{
     margin-left:20px;
     border: 0;
     border-top: 4px solid #9f5355;
     box-shadow: none;
-}
-.newCourse-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
+  }
+  .newCourse-content .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active{
     background-color: #9f5355;
     color: #ffffff;
-}
-.newCourse-content .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
+  }
+  .newCourse-content .el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content{
     background-color: #9f5355;
     color: white;
-}
-.newCourse-content .el-tabs__item {
-  padding:0 60px;
-  font-size: 18px;
-  line-height: 36px;
-}
-.newCourse-content .el-tabs--border-card>.el-tabs__header{
-  border: none;
-  background-color: #ffffff;
-}
-.newCourse-content .el-tabs__nav{
+  }
+  .newCourse-content .el-tabs__item {
+    padding:0 60px;
+    font-size: 18px;
+    line-height: 36px;
+  }
+  .newCourse-content .el-tabs--border-card>.el-tabs__header{
+    border: none;
+    background-color: #ffffff;
+  }
+  .newCourse-content .el-tabs__nav{
     float:none;
-}
-.newCourse-content  .el-tabs--border-card>.el-tabs__content{
+  }
+  .newCourse-content  .el-tabs--border-card>.el-tabs__content{
     padding-bottom: 100px;
-}
-.newCourse-content .exerEngImg{
+  }
+  .newCourse-content .exerEngImg{
     width:595px;
     margin:0 auto;
     margin-bottom:20px;
-}
-.newCourse-content .exerEngImg img{
+  }
+  .newCourse-content .exerEngImg img{
     width:100%;
-}
-.newCourse-content .content-box{
-  width: 100%;
-  margin-top: 105px;
-  height: 700px;
-  position: relative;
-  padding: 0 5%;
-}
-.newCourse-content .pdf-box{
+  }
+  .newCourse-content .content-box{
+    width: 100%;
+    margin-top: 105px;
+    height: 700px;
+    position: relative;
+    padding: 0 5%;
+  }
+  .newCourse-content .pdf-box{
     width:100%;
     height: 800px;
-}
-.newCourse-content #video-box{
+  }
+  .newCourse-content #video-box{
     width:100%;
     height: 700px;
-}
-.newCourse-content #flash2d{
+  }
+  .newCourse-content #flash2d{
     width:100%;
     height: 700px;
-}
-.newCourse-content .el-col-6{
-  width: 16%;
-}
-.newCourse-content .el-tree{
-  padding: 0;
-  border: 0;
-}
-.newCourse-content .el-tree-node{
-  background-color: #d2d2d2;
-}
-.newCourse-content .el-tree-node__content{
-  border-bottom: 3px solid #ffffff;
-}
-.el-tree-node__expand-icon{
-  color: #000;
-}
-.newCourse-content .homework-box{
-  width: 100%;
-  height:400px;
-  overflow:auto;
-}
-.newCourse-content .homework{
-  margin:0 5%;
-  position: relative;
-  background: #F3F3F3;
-  text-align:left;
-}
-.newCourse-content .homework-box .homeworkTitle{
-  font-weight:bolder;
-  margin-top:20px;
-}
-.newCourse-content .homework-box .homeworkDesc{
-  margin-left:20px;
-}
-.newCourse-content .homework-box .homework_Answer{
-  margin-left:20px;
-  margin-top:10px;
-}
-.newCourse-content .appraise-box{
-      width: 90%;
-      margin:0 5%;
-      position: relative;
-      top: 20px;
-    }
+  }
+  .newCourse-content .el-col-6{
+    width: 16%;
+  }
+  .newCourse-content .el-tree{
+    padding: 0;
+    border: 0;
+  }
+  .newCourse-content .el-tree-node{
+    background-color: #d2d2d2;
+  }
+  .newCourse-content .el-tree-node__content{
+    border-bottom: 3px solid #ffffff;
+  }
+  .el-tree-node__expand-icon{
+    color: #000;
+  }
+  .newCourse-content .homework-box{
+    width: 100%;
+    height:400px;
+    overflow:auto;
+  }
+  .newCourse-content .homework{
+    margin:0 5%;
+    position: relative;
+    background: #F3F3F3;
+    text-align:left;
+  }
+  .newCourse-content .homework-box .homeworkTitle{
+    font-weight:bolder;
+    margin-top:20px;
+  }
+  .newCourse-content .homework-box .homeworkDesc{
+    margin-left:20px;
+  }
+  .newCourse-content .homework-box .homework_Answer{
+    margin-left:20px;
+    margin-top:10px;
+  }
+  .newCourse-content .appraise-box{
+    width: 90%;
+    margin:0 5%;
+    position: relative;
+    top: 20px;
+  }
   .newCourse-content .courseTitle{
     font-size: 16px;
     /*font-weight: bold;*/
@@ -1866,29 +1715,72 @@ hr{
   }
 
   .newCourse-content .appraise-box .appraiseTitle{
-    font-weight: normal;
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
-    padding: 10px;
-    margin: 0 30px;
-    border-bottom: 1px solid #ccc;
+    padding: 6px;
+    background:rgb(159,83,85);
+    width: 68px;
+    height:33px;
+    border-radius:50px;
+    color: #fff;
   }
-  .newCourse-content .appraise-box textarea{
-    margin-top: 20px;
-    /*background: linen;*/
+  .newCourse-content .AppraiseNowText{
+    margin-top: 0px;
     height: 60px;
-    width: 60%;
+    width: 70%;
     font-size: 20px;
   }
-
-  .newCourse-content .appraise-box .appraiseTitle{
-    font-weight: normal;
-    font-size: 16px;
-    text-align: left;
-    padding: 10px;
-    margin: 0 30px 30px;
-    /*background: red;*/
-    /*border-bottom: 1px solid #ccc;*/
+  .newCourse-content .IwantAppraise{
+    width: 90%;
+    margin-left: 68px;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    padding:20px;
+    box-sizing:border-box;
+    text-align:left;
+  }
+  .newCourse-content .showAppraise{
+    text-align:left;
+    margin-bottom:25px;
+    margin-left: 68px;
+  }
+  .newCourse-content .AppraiseMsg{
+    display:flex;
+  }
+  .newCourse-content .AppraiseUser{
+    font-weight:bolder;
+    font-size:15px;
+    margin-right:10px;
+  }
+  .newCourse-content .AppraiseTime{
+    text-align:right;
+    font-size:13px;
+    margin-top: 5px;
+  }
+  .newCourse-content .AppraiseText{
+    margin-left:50px;
+  }
+  .newCourse-content .replyText{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    height: 35px;
+    width: 100%;
+    font-size: 20px;
+  }
+  .newCourse-content .showReplyText{
+    margin-left:50px;
+  }
+  .newCourse-content .replyEventButtons{
+    position:relative;
+  }
+  .newCourse-content .replyEvent{
+    position:absolute;
+    top:0;
+    left:0;
+  }
+  .newCourse-content .replyButtons{
+    display:flex;
   }
   .newCourse-content .design-box{
     width: 560px;
@@ -1930,6 +1822,24 @@ hr{
   .appraise-box .text-box .text-box-a:hover{
     color: red;
     text-decoration: none;
+  }
+  .appraise-box .shopList{
+    border-top:1px dashed #ccc;
+    border-bottom:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
+    padding-top:20px;
+    padding-left:25px;
+    margin-bottom:10px;
+    width: 90%;
+    margin-left: 68px;
+  }
+  .appraise-box .block{
+    display:flex;
+    margin-bottom:12px;
+  }
+  .appraise-box .block span{
+    margin-right:2px;
   }
   .comment-box .msg-box{
     /*background: pink;*/
@@ -2017,10 +1927,6 @@ hr{
     font-weight: normal;
     margin-bottom: 5px;
   }
-  .appraise-box .shopList{
-    margin-top: 20px;
-    text-align: center;
-  }
   .appraise-box .shopList p{
     display: inline-block;
   }
@@ -2040,15 +1946,15 @@ hr{
   }
 
   .appraise-box .all>input{
-      opacity:0;
-      position:absolute;
-      width:2em;
-      height:2em;
-      margin:0;
-}
+    opacity:0;
+    position:absolute;
+    width:2em;
+    height:2em;
+    margin:0;
+  }
   .appraise-box .all>span{
-      font-size:1em;
-      color:gold;
+    font-size:1em;
+    color:gold;
 
     -webkit-transition:color
     .2s;

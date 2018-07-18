@@ -14,9 +14,11 @@ module.exports = new Schema({
   },
   IDNo: {
     type: String,
+    unique: true,  //索引值唯一
   },
   MoNo: {
     type: String,
+    unique: true,  //索引值唯一
   },
   userType: {
     type: String,
@@ -26,12 +28,7 @@ module.exports = new Schema({
   time: Date,       //入学时间
   major: String,    //专业
   avatar: String,   //头像
-
-  classGrade: {     //班级
-    type: String,
-    required: true, //设定是否必填
-  },
+  classGrade: String, //班级
   department: String,  //院系
   email: String,
-
 });

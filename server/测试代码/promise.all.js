@@ -1,11 +1,11 @@
 let p1 = new Promise((resolve, reject) => {
-  resolve('成功了')
+
+  resolve('成功了1')
 });
 
 let p2 = new Promise((resolve, reject) => {
 
-  console.log('11');
-  resolve('')
+  resolve('成功了2')
 });
 
 

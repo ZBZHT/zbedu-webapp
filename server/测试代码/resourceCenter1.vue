@@ -158,8 +158,8 @@
 
               <el-table-column width="120">
                 <template slot-scope="scope">
-                  <el-button type="text" size="mini" @click="sendName(scope.row.name)">下载</el-button>
-                  <el-button type="text" size="mini" @click="fileDelete(scope.row.name)">删除</el-button>
+                  <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
+                  <el-button type="text" size="mini" @click="fileDelete(scope.row.fileName)">删除</el-button>
                 </template>
               </el-table-column>
 

@@ -5,12 +5,12 @@ const fs = require('fs');
 const archiver = require('archiver');
 const formidable = require('formidable');
 const moment = require('moment');
-
 const fs_ext = require('../utils/fs_ext')();
 const core = require('../utils/core');
 const router = express.Router();
 
 const sysInfo = core.getServerInfo();
+const ResourceCenter = require('../app/models/ResourceCenter');
 const resourcePath = "../app/uploads/resource/";
 const uploadsPath = "../app/uploads/resource/";
 const CompPath = "../app/uploads/competition";
@@ -20,22 +20,21 @@ const zipName = "moreFiles.zip";
 
 //资源中心上传
 router.post('/upload', function(req, res) {
-
     let form = new formidable.IncomingForm();
     form.uploadDir = "../app/uploads/resource";//设置文件上传存放地址
     form.maxFieldsSize = 600 * 1024 * 1024; //设置最大600M
     form.keepExtensions = true;
 
     form.parse(req, function (err, fields, files) {
+      //console.log(fields.label);
       //旧名字
       let fileName = files.file.name;
-      console.log(fileName);
+      //console.log(fileName);
       //新名字
       let oldPath = files.file.path;
       let newPath = uploadsPath + fileName;
-      let fileMsg = [];
-      console.log(oldPath);
-      console.log(newPath);
+      //console.log(oldPath);
+      //console.log(newPath);
 
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
@@ -45,15 +44,56 @@ router.post('/upload', function(req, res) {
           if(err){
             return err;
           }
-          let obj = {
-            name: fileName,
-            size: ((stats.size) / 1000000).toFixed(2),
-            birthtime: moment(stats.birthtime).format('YYYY-MM-DD, h:mm:ss'),
-          };
-          fileMsg.push(obj);
-          res.status(200).send({
-            fileMsg : fileMsg,
-            success : 0,
+          let p1 = new Promise((resolve, reject) => {
+            ResourceCenter.find({
+              title: 'upload',
+            }).then(function (result) {
+              //console.log(result);
+              if (result === null || result.length === 0) {
+                let resourceCenter = new ResourceCenter({
+                  title: 'upload',
+                  children: [],
+                });
+                resourceCenter.save(function (err) {
+                  if (err) {
+                    console.log(err);
+                    res.status(200).send({code:1, Msg: 'resourceCenter创建失败', });
+                  } else {
+                    resolve('已创建')
+                  }
+                })
+              } else {
+                resolve('已有resourceCenter');
+              }
+            });
+          });
+
+          Promise.all([p1]).then((result) => {
+            //console.log(result);
+            ResourceCenter.findOneAndUpdate({
+              title: 'upload'
+            }, {
+              $push : {
+                children: {
+                  personName: req.session.users.username,
+                  fileName: fileName,
+                  size: ((stats.size) / 1000000).toFixed(2),
+                  birthTime: moment(stats.birthtime).format('YYYY-MM-DD, h:mm:ss'),
+                  fileType: fields.label,
+                }
+              }
+            }, function (err) {
+              if (err) {
+                console.log(err);
+                res.status(200).send({code:1, Msg: '更新失败', });
+              } else {
+                //console.log('修改成功IDNo');
+                res.status(200).send({code:0, Msg: '更新成功', });
+              }
+            });
+
+          }).catch((error) => {
+            console.log(error)
           });
         });
       });
@@ -143,28 +183,31 @@ router.get('/downComp', function(req, res) {
 
 //删除文件
 router.get('/fileDelete', function (req, res, next) {
-  try {
-  let fileName = req.query.downloadName;
-  let filePath = uploadsPath + fileName;
-      if (fileName) {
-        if (fs.statSync(filePath).isDirectory()) {// 删除文件夹
-          deleteFolder(filePath);
-        } else { // 删除单文件
-          fs.unlinkSync(filePath);
-          res.status(200).send({
-            code: 0,
-            msg: '删除文件成功',
-            fileName: fileName,
-          });
+  let delData = JSON.parse(req.query.delData);
+  let filePath = uploadsPath + delData.fileName;
+  //console.log(delData);
+  //console.log(filePath);
+  ResourceCenter.findOneAndUpdate({
+    title: 'upload'
+  }, {
+    $pull : {
+      children: delData
+    }
+  }, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(200).send({code:1, Msg: '更新失败', });
+    } else {
+      //console.log('修改成功IDNo');
+      fs.unlink(filePath,function (error) {
+        if(error){
+          console.log(error);
         }
-      }
-  }
-  catch (e) {
-    res.status(404).send({
-      err: 1,
-      msg: 'fileDelete err',
-    });
-  }
+        //console.log('删除文件成功');
+        res.status(200).send({ code: 0, msg: '删除文件成功', });
+      });
+    }
+  });
 });
 
 router.get('/files', function (req, res, next) {
@@ -195,55 +238,13 @@ router.get('/files', function (req, res, next) {
 
 //读取文件
 router.get('/loadFile',function(req, res) {
-  let fileDetailArray = [];
-  //console.log(resourcePath);
-  fs.readdir(resourcePath, function (err, files) {
-    if (!err) {
-      //console.log(files);
-      if (files.length !== 0) {
-        function start() {
-          return new Promise((resolve, reject) => {
-            resolve(files);
-          });
-        }
-
-        start()
-          .then(files => {
-            files.forEach(function (item, i, files) {
-              fs.lstat(resourcePath + files[i], function (err, stats) {
-                //console.log(resourcePath + files[i]);
-                if (!err) {
-                  let obj = {
-                    name: files[i],
-                    //type: stats.isFile() ? 1:0,
-                    //isFile: stats.isFile(),
-                    //isDirectory: stats.isDirectory(),
-                    size: ((stats.size) / 1000000).toFixed(2),
-                    birthtime: moment(stats.birthtime).format('YYYY-MM-DD, h:mm:ss'),
-                    //ctime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.ctime),   //create time
-                    //mtime: core.formatDate("yyyy-MM-dd hh:mm:ss",stats.mtime)    //modify time
-                  };
-                  fileDetailArray.push(obj);
-                  //console.log(fileDetailArray);
-                }
-              });
-            });
-            return files
-          })
-
-          .then(files => {
-            setTimeout(function () {
-              let result = {code: 0, "var": fileDetailArray, msg: '获取文件信息成功'};
-              //console.log(result);
-              res.send(result);
-            }, 200);
-
-          });
-      }
-    } else {
-      res.status(404).send({ code: 0, msg: '错误', });
-    }
+  ResourceCenter.find({
+    title: 'upload',
+  }).then(function (result) {
+    //console.log(result[0].children);
+    res.status(200).send({ code: 0, var: result[0].children, msg: '获取文件信息成功' });
   });
+
 });
 
 module.exports = router;
