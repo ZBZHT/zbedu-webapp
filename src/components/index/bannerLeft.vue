@@ -125,7 +125,7 @@
               //console.log(newBannerLeft)
             }
             this.bannerLeftData.children = newBannerLeft;
-
+            this.$store.commit('newBannerLeft',this.bannerLeftData.children);
             console.log(this.bannerLeftData)
           }
         }).catch(function(error){

@@ -1,5 +1,33 @@
 <template>
   <div class="userManager_cont">
+    <span class="headBut">
+      <div>
+        <span  class="userM_But2">
+          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加学生</el-button>
+        </span>
+        <span  class="userM_But4">
+          <el-button size="small" type="primary" style="display:inline-block;" @click="dialogFormVisible2 = true">添加教师</el-button>
+        </span>
+      </div>
+      <div>
+        <span class="userM_But1">
+          <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
+        </span>
+        <span class="userM_But3" style="display:inline-block;">
+          <el-upload
+            class="upload-demo"
+            action="/teacherCMS/addExcelUsers"
+            :onError="uploadError"
+            :onSuccess="uploadSuccess"
+            :show-file-list=false
+            :on-exceed="handleExceed"
+            accept=".xlsx,.xls">
+          <el-button size="small" type="primary">Excel导入用户</el-button>
+        </el-upload>
+        </span>
+      </div>
+
+      </span>
 
     <!--用户管理-->
     <el-col :span="19" class="el-Col">
@@ -73,7 +101,7 @@
               <el-date-picker type="date" placeholder="选择日期" v-model="addStuForm.time" style="width:89%;"></el-date-picker>
             </el-form-item>
             <el-form-item label="密" prop="pwd" style="margin-left:0;margin-right:0;width:48%;">&emsp;&emsp;码
-              <el-input v-model="addStuForm.pwd" placeholder="默认密码为身份证后6位" style="width:80%;"></el-input>
+              <el-input v-model="addStuForm.pwd" placeholder="默认密码为手机号码后4位" style="width:80%;"></el-input>
             </el-form-item>
           </el-form>
         </el-form>
@@ -113,7 +141,7 @@
               <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位" style="width: 80%;"></el-input>
             </el-form-item>
             <el-form-item label="密" prop="pwd">&emsp;&emsp;码
-              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为111111" style="width: 80%;"></el-input>
+              <el-input v-model="addTeachForm.pwd" placeholder="默认密码为手机号码后4位" style="width: 80%;"></el-input>
             </el-form-item>
           </el-form>
 
@@ -149,7 +177,7 @@
             <el-table-column prop="user" label="用户名" width="100">
             </el-table-column>
 
-            <el-table-column prop="userID" label="学号" width="120">
+            <el-table-column prop="userID" label="学号" width="100">
             </el-table-column>
 
             <el-table-column prop="IDNo" label="身份证号" width="190">
@@ -158,7 +186,7 @@
             <el-table-column prop="MoNo" label="手机号" width="130">
             </el-table-column>
 
-            <el-table-column prop="userType" label="用户类型" width="90">
+            <el-table-column prop="userType" label="类型" width="60">
             </el-table-column>
 
             <el-table-column prop="gender" label="性别" width="70">
@@ -167,13 +195,13 @@
             <el-table-column prop="time" label="入学时间" width="110">
             </el-table-column>
 
-            <el-table-column prop="major" label="专业" width="110">
+            <el-table-column prop="major" label="专业">
             </el-table-column>
 
-            <el-table-column prop="classGrade" label="班级" width="90">
+            <el-table-column prop="classGrade" label="班级" width="110">
             </el-table-column>
 
-            <el-table-column label="操作" style="width: 100px">
+            <el-table-column label="操作" style="width: 100px" width="80">
               <template slot-scope="scope">
                 <el-button size="small" class="userM_el-tableBut" type="warning"
                            @click="handleEdit(scope.$index, scope.row)">修 改
@@ -195,7 +223,7 @@
           </div>
 
           <!--修改学生对话框-->
-          <el-dialog title="修改资料"
+          <el-dialog title="修改学生资料"
                      :visible.sync="dialogFormVisible1"
                      :before-close="handleClose"
                      :close-on-click-modal="false">
@@ -263,13 +291,13 @@
                   <el-date-picker type="date" placeholder="选择日期" v-model="addUserForm1.time"></el-date-picker>
                 </el-form-item>
                 <el-form-item label="密" prop="pwd" style="margin-left: 10px;">&emsp;&emsp;码
-                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为身份证后6位" style="width:80%;"></el-input>
+                  <el-input v-model="addUserForm1.pwd" placeholder="默认密码为手机号码后4位" style="width:80%;"></el-input>
                 </el-form-item>
               </el-form>
             </el-form>
 
             <div slot="footer" class="dialog-footer">
-              <el-button type="primary" @click="reUser('addUserForm1')">确定修改</el-button>
+              <el-button type="primary" @click="updateUser('addUserForm1')">确定修改</el-button>
             </div>
           </el-dialog>
 
@@ -299,7 +327,7 @@
             <el-table-column prop="MoNo" label="手机号" width="130">
             </el-table-column>
 
-            <el-table-column prop="userType" label="用户类型" width="90">
+            <el-table-column prop="userType" label="类型" width="70">
             </el-table-column>
 
             <el-table-column prop="gender" label="性别" width="70">
@@ -335,7 +363,7 @@
         </el-tab-pane>
 
         <!--修改教师对话框-->
-        <el-dialog title="修改资料"
+        <el-dialog title="修改老师资料"
                    :visible.sync="dialogFormVisible3"
                    :before-close="handleClose"
                    :close-on-click-modal="false">
@@ -363,7 +391,7 @@
                 <el-input v-model="addTeachForm.MoNo" placeholder="手机号码位11位" style="width: 80%;"></el-input>
               </el-form-item>
               <el-form-item label="密" prop="pwd">&emsp;&emsp;码
-                <el-input v-model="addTeachForm.pwd" placeholder="默认密码为111111" style="width: 80%;"></el-input>
+                <el-input v-model="addTeachForm.pwd" placeholder="默认密码为手机号码后4位" style="width: 80%;"></el-input>
               </el-form-item>
             </el-form>
 
@@ -377,35 +405,11 @@
           </el-form>
 
           <div slot="footer" class="dialog-footer">
-            <el-button type="primary" @click="addTeach('addTeachForm')">确定修改</el-button>
+            <el-button type="primary" @click="updateUser('addTeachForm')">确定修改</el-button>
           </div>
         </el-dialog>
 
       </el-tabs>
-
-      <span class="headBut">
-        <span class="userM_But1">
-          <el-button size="small" @click="delChecked" type="danger">删除选中用户</el-button>
-        </span>
-        <span  class="userM_But2">
-          <el-button size="small" type="primary" @click="dialogFormVisible = true">添加学生</el-button>
-        </span>
-        <span  class="userM_But4">
-          <el-button size="small" type="primary" @click="dialogFormVisible2 = true">添加教师</el-button>
-        </span>
-        <span class="userM_But3">
-          <el-upload
-            class="upload-demo"
-            action="/teacherCMS/addExcelUsers"
-            :onError="uploadError"
-            :onSuccess="uploadSuccess"
-            :show-file-list=false
-            :on-exceed="handleExceed"
-            accept=".xlsx,.xls">
-          <el-button size="small" type="primary">Excel导入用户</el-button>
-        </el-upload>
-        </span>
-      </span>
 
     </el-col>
 
@@ -507,7 +511,7 @@
             { min: 2, max: 4, message: '长度在 2 到 4 个汉字', trigger: 'blur' }
           ],
           pwd: [
-            { min: 6, max: 12, message: '长度在 6 到 12 位', trigger: 'blur' }
+            { min: 4, max: 12, message: '长度在 4 到 12 位', trigger: 'blur' }
           ],
           userID: [
             { required: true, message: '请输入学号', trigger: 'change' },
@@ -517,7 +521,7 @@
             { min: 15, max: 18, message: '长度在 15 到 18 位', trigger: 'blur' }
           ],
           MoNo: [
-            { min: 11, max: 11, message: '长度在 csdf 位', trigger: 'blur' }
+            { min: 11, max: 11, message: '长度为11位', trigger: 'blur' }
           ],
           userType: [
             { required: true, message: '请选择一个类型', trigger: 'change' }
@@ -545,6 +549,7 @@
         classM: [],
         majorMV: [],
         classMV: [],
+        addUserPwd:'',
 
       }
     },
@@ -610,20 +615,29 @@
         this.addUserForm1.major = '';
         this.addUserForm1.classGrade = '';
       },
+      //重置添加添加教师
+      resetUser2() {
+        this.addTeachForm.user = '';
+        this.addTeachForm.pwd = '';
+        this.addTeachForm.IDNo = '';
+        this.addTeachForm.MoNo = '';
+        this.addTeachForm.userType = '';
+        this.addTeachForm.gender = '';
+      },
 
       //修改学生
       handleEdit(index, row) {
-          this.resetUser1();
+        this.resetUser1();
         this.addUserForm1.user = row.user;
         this.addUserForm1.userID = row.userID;
         this.addUserForm1.IDNo = row.IDNo;
         this.addUserForm1.MoNo = row.MoNo;
+        this.addUserPwd = row.pwd;
         if (row.userType === '学生') {
           this.addUserForm1.userType = 'S';
         } else if (row.userType === '外来学生') {
           this.addUserForm1.userType = 'O';
         }
-        //console.log(row);
         if (row.gender === '男') {
           this.addUserForm1.gender = '1';
         } else if (row.gender === '女') {
@@ -635,15 +649,17 @@
         this.majorMV = row.major;
         this.classMV = row.classGrade;
         this.dialogFormVisible1 = true;
-        //console.log(this.addUserForm1);
       },
       //修改老师
       handleEdit1(index, row) {
           //console.log(row);
+        this.resetUser2();
         this.addTeachForm.user = row.user;
         this.addTeachForm.IDNo = row.IDNo;
         this.addTeachForm.MoNo = row.MoNo;
+        this.addTeachForm.userID = row.userID;
         this.addTeachForm.userType = row.userType;
+        this.addUserPwd = row.pwd;
         if (row.gender === '男') {
           this.addTeachForm.gender = '1';
         } else if (row.gender === '女') {
@@ -717,6 +733,8 @@
               this.addUserSuccess('用户信息已存入数据库');
               this.resetStu();
               this.getUserData();
+            } else if (res.data.code === 1) {
+              this.addUserDefeat(res.data.msg);
             }
           });
       },
@@ -741,25 +759,50 @@
           }).then((res) => {
             if (res.data.code === 0) {
               this.addUserSuccess('添加成功');
-              this.resetStu();
+              this.resetTeach();
               this.getUserData();
+            } else if (res.data.code === 1) {
+              this.addUserDefeat(res.data.msg);
             }
           });
       },
 
       //修改用户信息
-      reUser() {
-        this.dialogFormVisible1 = false;
-        //console.log(this.addUserForm1);
-        //处理发送的用户信息方法
-        function resUserData1(data) {
-          if (data.pwd != '') {
-            data.pwd = md5(data.pwd);
+      updateUser(data) {
+        let resData1 = '';
+        let resData = '';
+        let userPwd = this.addUserPwd;
+        console.log(this.addUserPwd);
+        let p1 = new Promise((resolve, reject) => {
+          if (this.dialogFormVisible1 ===true) {
+              resData1 = this.addUserForm1;
+            resolve('成功了1')
+          } else if (this.dialogFormVisible3 ===true) {
+            resData1 = this.addTeachForm;
+            resolve('成功了')
           }
-          return data;
-        }
+        });
 
-        let resData = resUserData1(this.addUserForm1);
+        let p2 = new Promise((resolve, reject) => {
+
+          //处理发送的用户信息方法
+          function resUserData1(data) {
+            if (data.pwd !== '') {
+              data.pwd = md5(data.pwd);
+              //data.pwd = (data.pwd);
+            } else {
+              //data.pwd = this.addUserPwd;
+            }
+            //console.log(data);
+            return data;
+          }
+          resData = resUserData1(resData1);
+          //console.log(resData);
+          resolve('成功了2')
+        });
+
+        Promise.all([p1, p2]).then((result) => {
+          //console.log(result);
           axios.post('/teacherCMS/updateUser', {
             data: {
               username: this.username,
@@ -767,15 +810,22 @@
               addUser: resData
             }
           }).then((res) => {
-            if (res.data.userInfo) {
+            if (res.data.code === 0) {
               //console.log(res.data.userInfo);
               //this.teachData = res.data.userInfo;
               //this.total = this.teachData.length;
               this.addUserSuccess();
               this.resetUser1();
+              this.resetUser2();
               this.getUserData();
+              this.dialogFormVisible1 = false;
+              this.dialogFormVisible3 = false;
+              this.addUserSuccess('修改成功')
             }
           });
+        }).catch((error) => {
+          console.log(error)
+        });
       },
 
       handleSizeChange(val) {
@@ -798,6 +848,10 @@
       handleClose(done) {  //对话框关闭确认
         this.$confirm('已输入的信息未保存! 确认关闭？')
           .then(_ => {
+            this.resetStu();
+            this.resetTeach();
+            this.resetUser1();
+            this.resetUser2();
             done();
           })
           .catch(_ => {
@@ -825,7 +879,8 @@
         }).then((res) => {
           //学生
           let studentData = res.data.student;
-          if (studentData.length > 0) {
+          //console.log(studentData);
+          if (studentData.length !== 0) {
             for (let i = 0; i < studentData.length; i++) {
               studentData[i].time = moment(new Date(studentData[i].time)).format("YYYY-MM-DD");
               studentData[i].gender = core.getGender(studentData[i].gender);
@@ -837,13 +892,15 @@
           }
           //教师
           let teacherData = res.data.teacher;
-          if (teacherData.length > 0) {
+          //console.log(teacherData);
+          if (teacherData.length !== 0) {
             for (let i = 0; i < teacherData.length; i++) {
               teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");
-              teacherData[i].gender = core.getGender(teacherData[i].gender);
               studentData[i].userType = core.userType(studentData[i].userType);
+              teacherData[i].gender = core.getGender(teacherData[i].gender);
               teacherData[i].num = i + 1;
             }
+            //console.log(teacherData);
             this.teachData = teacherData;
             this.total2 = this.teachData.length;
           }
@@ -962,10 +1019,10 @@
     text-align: left;
   }
   .userManager_cont .headBut {
-    width: 120px;
+    width: 220px;
     position: absolute;
-    bottom: -500px;
-    left: 5%;
+    bottom: -580px;
+    left: 2%;
   }
   .userManager_cont .el-form-item__label{
     text-align: left;

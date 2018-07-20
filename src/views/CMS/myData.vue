@@ -314,14 +314,14 @@
         }).then((res) => {
           if (res.data.userInfo) {
             this.resUserMsg = res.data.userInfo;
-            console.log(__dirname);
+            //console.log(__dirname);
             if (res.data.userInfo.avatar === '' || res.data.userInfo.avatar === undefined) {
               this.imgSrc = '/src/assets/imgs/user.png';
             } else {
               this.imgSrc = '/resource/myAvatar/' + this.resUserMsg.avatar;
             }
 
-            console.log(this.imgSrc);
+            //console.log(this.imgSrc);
             let ee = this.resUserMsg.MoNo;
             this.userMoNo = (ee.substring(0,3)) + "****" + (ee.substring(7,11));
           }

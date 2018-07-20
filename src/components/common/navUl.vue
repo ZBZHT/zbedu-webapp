@@ -139,8 +139,8 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
-        height: 60px;
+        width:50px;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -214,8 +214,8 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
-        height: 60px;
+        width:50px;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
@@ -291,7 +291,7 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
+        width:50px;
         height: 50px;
     }
     .contentui .el-row {
@@ -368,7 +368,7 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
+        width:50px;
         height: 50px;
     }
     .contentui .el-row {
@@ -444,8 +444,8 @@ a:hover{
         box-sizing:border-box;
     }
     .contentui .indexPic{
-        width:35%;
-        height: 47px;
+        width:50px;
+        height: 50px;
     }
     .contentui .el-row {
         margin-bottom: 20px;
