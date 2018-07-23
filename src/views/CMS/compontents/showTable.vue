@@ -6,7 +6,6 @@
         <!--<div class="classPlan_topLeft"></div>-->
         <!--<div class="classPlan_topLeft" v-show = "course"></div>-->
         <div class="classPlan_topRight">
-
             <ul>
               <li v-for="(item,index) in weekData" :key="index" class="weekDataP">{{item}}</li>
             </ul>
