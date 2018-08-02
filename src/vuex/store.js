@@ -21,9 +21,15 @@ export default new Vuex.Store({
     testCode:0,
     exerciseData:'',
     competitionData:'',
-    newBannerLeft:[]
+    newBannerLeft:[],
+    classGrade:'',
+    mondayData:'',
+    activeName:''
 },
  mutations : {
+   activeName(state,item){
+     state.activeName = item;
+   },
     newTitle(state,item){
         state.course = item;
     },
@@ -68,7 +74,13 @@ export default new Vuex.Store({
     },
     newBannerLeft(state,item){
         state.newBannerLeft = item;
-    }
+    },
+    getClassGrade(state,item){
+        state.classGrade = item;
+    },
+    getMonday(state,item){
+        state.mondayData = item;
+    },
 },
  plugins: [createPersistedState()]
 })
