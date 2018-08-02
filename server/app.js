@@ -22,6 +22,7 @@ const readTestQuestionInfo = require('./routes/readTestQuestionInfo');
 const testManagement = require('./routes/testManagement');
 const fileUpDown = require('./routes/fileUpDown');
 const readResource = require('./routes/readResource');
+//const setCourse = require('./routes/setCourse');
 
 const app = express();
 
@@ -68,6 +69,7 @@ app.use('/readTestQuestionInfo', readTestQuestionInfo);//考试成绩
 app.use('/testManagement', testManagement);//考试管理
 app.use('/fileUpDown', fileUpDown);//上传下载
 app.use('/readResource', readResource);//读取ppt,视频,pdf等资源
+//app.use('/setCourse',setCourse);//设置课程
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

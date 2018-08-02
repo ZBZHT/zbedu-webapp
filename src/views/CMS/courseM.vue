@@ -7,35 +7,75 @@
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="系统课程" name="one">
 
-          <el-tree
-            :data="centerTree"
-            show-checkbox
-            node-key="id"
-            default-expand-all
-            :expand-on-click-node="false">
-                <span class="custom-tree-node" slot-scope="{ node, data }">
-                  <span>{{ node.label }}</span>
-                  <span>
-                    <el-button type="text" size="mini" @click="() => append(node, data)">
-                      添加子课程
-                    </el-button>
-                    <el-button type="text" size="mini" @click="() => addDescribe(node, data)">
-                      添加课程简介
-                    </el-button>
-                    <el-button type="text" size="mini" @click="() => uploadCourse(node, data)">
-                      上传课件
-                    </el-button>
-                    <el-button type="text" size="mini" @click="() => remove(node, data)">
-                      删除课程
-                    </el-button>
-                  </span>
-                </span>
-          </el-tree>
+          <!--<el-table class="userM_el-table" :data="centerTree.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"-->
+          <!--stripe style="width: 90%;">-->
+            <!--<el-table-column prop="label" label="课程名称">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column label="操作" style="width: 100px" >-->
+              <!--<template slot-scope="scope">-->
+                <!--<el-button size="small" class="userM_el-tableBut"-->
+                           <!--@click="handleEdit(scope.$index, scope.row)">新增为精品课程-->
+                <!--</el-button>-->
+                <!--<el-button size="small" class="userM_el-tableBut"-->
+                           <!--@click="handleEdit1(scope.$index, scope.row)">新增为推荐课程-->
+                <!--</el-button>-->
+                <!--&lt;!&ndash;<el-button size="small" class="userM_el-tableBut"&ndash;&gt;-->
+                           <!--&lt;!&ndash;@click="delChecked(scope.$index, scope.row)">删除&ndash;&gt;-->
+                <!--&lt;!&ndash;</el-button>&ndash;&gt;-->
+              <!--</template>-->
+            <!--</el-table-column>-->
+          <!--</el-table>-->
 
+          <el-tree
+            node-key="courseId"
+            :props="defaultProps"
+            :data="centerTree"
+            accordion
+            show-checkbox
+            ref="tree"
+            highlight-current
+            @check-change="handleCheckChange"></el-tree>
+          <el-button @click="getCheckedNodes">新增为精品课程</el-button>
+          <el-button @click="getCheckedNodes1">新增为推荐课程</el-button>
 
         </el-tab-pane>
-        <el-tab-pane label="精品课程" name="two">精品课程</el-tab-pane>
-        <el-tab-pane label="推荐课程" name="three">推荐课程</el-tab-pane>
+        <el-tab-pane label="精品课程" name="two">
+          <el-table class="userM_el-table" :data="bestCourseTree"
+                    stripe style="width: 90%;">
+            <el-table-column prop="label" label="课程名称">
+            </el-table-column>
+            <el-table-column label="操作" style="width: 100px" >
+              <template slot-scope="scope">
+                <el-button size="small" class="userM_el-tableBut"
+                @click="delChecked(scope.$index, scope.row)">删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </el-tab-pane>
+        <el-tab-pane label="推荐课程" name="three">
+          <el-table class="userM_el-table" :data="suggCourseTree.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"
+                    stripe style="width: 90%;">
+            <el-table-column prop="label" label="课程名称">
+            </el-table-column>
+            <el-table-column label="操作" style="width: 100px" >
+              <template slot-scope="scope">
+                <el-button size="small" class="userM_el-tableBut"
+                           @click="delChecked1(scope.$index, scope.row)">删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <!--分页显示-->
+          <el-pagination
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :current-page.sync="currentPage1"
+            :page-size="pagesize"
+            layout="prev, pager, next, jumper"
+            :total=parseInt(total1)>
+          </el-pagination>
+        </el-tab-pane>
       </el-tabs>
 
     </el-col>
@@ -54,20 +94,199 @@
     data() {
       return {
         centerTree: [],
-        activeName: 'one'
+        activeName: 'one',
+        userID:this.$store.state.userID,
+        userType:this.$store.state.userType,
+        currentPage1: 1,
+        pagesize: 10,
+        total1: '',
+        bestCourseTree:[],
+        suggCourseTree:[],
+        defaultProps: {
+          children: 'children',
+          label: 'label',
+        },
       }
     },
     computed: {},
+    mounted() {
+      this.getCenterTree();
+      this.getBestCourse();
+    },
     methods: {
-      //添加子课程
-      append(node, data) {
+      handleCheckChange(data, checked){
+//        if(!data.children){
+//          console.log(data, checked);
+//          if(checked === true){
+//            var newData = []
+//            newData.push(data)
+//            console.log(newData)
+//          }
+//        }
       },
-      //添加课程简介
-      addDescribe(node, data) {
+
+
+      //新增为推荐课程
+      getCheckedNodes1(){
+        var arr = this.$refs.tree.getCheckedNodes()
+        var newData = []
+        for(var i = 0; i < arr.length; i++){
+          if(!arr[i].children){
+            newData.push(arr[i])
+            console.log(newData)
+          }
+        }
+        axios.post('/teacherCMS/addSuggCourse', {
+          data: {
+            userType:this.userType,
+            courseInfo: newData
+          }
+        }).then((res) => {
+//          console.log(res.data)
+          if (res.data.code === 0){
+            this.addSuccess('添加成功');
+            this.getBestCourse();
+          }else if (res.data.code === 1){
+            this.$message.error('添加失败');
+          }else if (res.data.code === 2){
+            this.$message.error('推荐课程有点多哦');
+          }else if (res.data.code === 3){
+            this.$message.error('该课程已经在精品课程里了');
+          }
+        });
+//        this.getCenterTree();
       },
-      //上传课件
-      uploadCourse(node, data) {
+      //新增为精品课程
+      getCheckedNodes(){
+//        console.log(this.$refs.tree.getCheckedNodes());
+        var arr = this.$refs.tree.getCheckedNodes()
+        var newData = []
+        for(var i = 0; i < arr.length; i++){
+          if(!arr[i].children){
+            newData.push(arr[i])
+            console.log(newData)
+          }
+        }
+        axios.post('/teacherCMS/addBestCourse', {
+          data: {
+            userType:this.userType,
+            courseInfo: newData
+          }
+        }).then((res) => {
+//          console.log(res.data)
+          if (res.data.code === 0){
+            this.addSuccess('添加成功');
+            this.getBestCourse();
+          }else if (res.data.code === 1){
+            this.$message.error('添加失败');
+          }else if (res.data.code === 2){
+            this.$message.error('精品课程不能超过5个哦');
+          }else if (res.data.code === 3){
+            this.$message.error('该课程已经在精品课程里了');
+          }
+        });
+//        this.getCenterTree();
       },
+      //获取精品课程
+      //获取推荐课程
+      getBestCourse(){
+        axios.post('/teacherCMS/getBestCourse', {
+          data: {
+            userType:this.userType
+          }
+        }).then((res) => {
+//          console.log(res.data)
+          this.bestCourseTree = res.data.result[0].bestCourse;
+          this.suggCourseTree = res.data.result[0].suggCourse;
+          this.total1 = this.suggCourseTree.length;
+//          console.log(this.total1)
+//          console.log(this.bestCourseTree)
+        });
+      },
+      // 成功后提示信息
+      addSuccess(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+
+      //删除精品课程
+      delChecked(index,data){
+//        console.log(index)
+//        console.log(data)
+        var delData = []
+        for(var i = 0; i < this.bestCourseTree.length; i++){
+          if(i !== index){
+            delData.push(this.bestCourseTree[i])
+          }
+        }
+        this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.post('/teacherCMS/delBestCou', {
+            data: {
+              userType:this.userType,
+              courseInfo: delData
+            }
+          }).then((res) => {
+            console.log(res.data)
+          if (res.data.code === 0){
+            this.addSuccess('删除成功');
+            this.getBestCourse();
+          }else if (res.data.code === 1){
+            this.$message.error('删除失败');
+          }
+          });
+          this.getBestCourse();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+
+//        console.log(delData)
+      },
+      //删除推荐课程
+      delChecked1(index,data){
+        var delData = []
+        for(var i = 0; i < this.suggCourseTree.length; i++){
+          if(i !== index){
+            delData.push(this.suggCourseTree[i])
+          }
+        }
+        this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.post('/teacherCMS/delSuggCou', {
+            data: {
+              userType:this.userType,
+              courseInfo: delData
+            }
+          }).then((res) => {
+            console.log(res.data)
+            if (res.data.code === 0){
+              this.addSuccess('删除成功');
+              this.getBestCourse();
+            }else if (res.data.code === 1){
+              this.$message.error('删除失败');
+            }
+          });
+          this.getBestCourse();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
+      },
+
       //删除子节点
       remove(node, data) {
         this.$confirm('此操作将永久删除该课程, 是否继续?', '提示', {
@@ -92,7 +311,7 @@
         });
       },
       handleClick(tab, event) {
-        console.log(tab, event);
+//        console.log(tab, event);
       },
       //更新到服务器
       updateCenterTree(d) {
@@ -128,28 +347,72 @@
             userType: this.userType,
           }
         }).then((res) => {
-          let resD = res.data.techCosCou[0].course;
 
-          if (resD.length != 0) {
+//          console.log(res.data[0].children[0].children)
+//          this.centerTree = res.data[0].children[0].children;
+          var result = res.data[0].children[0].children
+          console.log(result)
+          this.centerTree = result;
+//          for(var i = 0; i < result.length; i++){
+////            if(result[i].children[0].children[0].children){
+//            if(i == 0){
+////              console.log(i)
+//              for(var j = 0; j < result[i].children[0].children.length; j++){
+//                for(var k = 0; k < result[i].children[0].children[j].children.length; k++){
+////                  console.log(result[i].children[0].children[j].children[k].label);
+//                  this.centerTree.push(
+//                    result[i].children[0].children[j].children[k]
+//                  )
+//                }
+//              }
+//              for(var j = 0; j < result[i].children[1].children.length; j++){
+//                for(var k = 0; k < result[i].children[1].children[j].children.length; k++){
+////                  console.log(result[i].children[0].children[j].children[k].label);
+//                  this.centerTree.push(
+//                    result[i].children[0].children[j].children[k]
+//                  )
+//                }
+//              }
+////              console.log(this.centerTree)
+////            }else if(result[i].children[0].children){
+//            }else if(i == 1 || i == 2 || i == 3){
+////              console.log(i)
+//              for(var j = 0; j < result[i].children.length; j++){
+//                for(var k = 0; k < result[i].children[j].children.length; k++){
+////                  console.log(result[i].children[j].children[k].label);
+//                  this.centerTree.push(
+//                    result[i].children[j].children[k]
+//                  )
+//                }
+//              }
+//            }else if(i == 4 || i == 5){
+////              console.log(i)
+////              console.log("Dpdd")
+//              for(var j = 0; j < result[i].children.length; j++){
+////                  console.log(result[i].children[j].label);
+////                  this.centerTree.push(result[i].children[j].label)
+//                this.centerTree.push(
+//                  result[i].children[j]
+//                )
+//              }
+//            }else{}
+//          }
+//          console.log(this.centerTree)
 
-          } else {
-            this.warningMsg('服务器返回错误')
-          }
-          //console.log(this.dataTree);
-        });
+        })
+      },
+      handleSizeChange(val) {
+        //console.log(`每页 ${val} 条`);
+      },
+      handleCurrentChange(val) {
+        //console.log(`当前页: ${val}`);
       },
 
 
 
 
-
     },
 
-
-    mounted() {
-        this.getCenterTree();
-
-    },
     components: {}
   }
 </script>

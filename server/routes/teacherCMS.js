@@ -15,6 +15,8 @@ const CmsLabelTree = require('../app/models/CmsLabelTree');
 const CourseTable = require('../app/models/CourseTable');
 const TimeSheet = require('../app/models/TimeSheet');
 const StuLeave = require('../app/models/StuLeave');
+const SetCourse = require('../app/models/SetCourse');
+const CenterTree = require('../app/models/CenterTree');
 const xlsx2j = require('xlsx-2-json');
 const md5 = require('js-md5');
 const uploadCoursePath = "../public/resource/我的课堂/";
@@ -1459,6 +1461,10 @@ router.post('/uploadCourse', function (req, res) {
 router.post('/getCenterTree', function (req, res) {
   let reqUserType = req.session.users.userType;
   if (reqUserType === 'EA' || reqUserType === 'SA') {
+    CenterTree.find({}).then(function (result) {
+
+      res.status(200).send(result);
+    });
   } else {
     res.status(404).send({
       Msg: '用户无权限或未登录',
@@ -1524,7 +1530,7 @@ router.post('/uploadAvatar', function (req, res) {
 
 //获取班级和专业
 router.post('/getClass', function (req, res) {
-  //console.log('jdsfjawnejkfnaef');
+  // console.log('jdsfjawnejkfnaef');
   Student.find({}).then(function (student) {
     let classMsg = [];
     let majorMsg = [];
@@ -3016,8 +3022,234 @@ router.post('/teachSignIn', function (req, res) {
       });
     }
 });
+//新增精品课程
+router.post('/addBestCourse', function (req, res) {
+  // console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    console.log(reqData)
+    SetCourse.findOne({}).then(function (result) {
+      let bestcourseContent = result.bestCourse
+      let state = 0
+      for(var i = 0; i < bestcourseContent.length; i++){
+        for(var j = 0; j < reqData.courseInfo.length; j++){
+          if(bestcourseContent[i].label === reqData.courseInfo[j].label){
+            state ++
+          }else if(bestcourseContent[i].label !== reqData.courseInfo.label){
 
+          }
+        }
 
+      }
+      if(state === 0){
+        let bestcourse = result.bestCourse
+        for(var i = 0; i < reqData.courseInfo.length; i++){
+          bestcourse.push(reqData.courseInfo[i])
+        }
+        //console.log(bestcourse)
+        let bestCourseLength = result.bestCourse.length
+        // console.log(result[0].bestCourse.length)
+        if(bestCourseLength <= 5){
+          if (reqData.userType == 'SA' || reqData.userType == 'EA') {
+            /*let setCourse = new SetCourse(
+              {
+                bestcourse: bestcourse,
+              }
+            );
+            setCourse.save(function (err) {
+              if (err) {
+                console.log('创建签到表失败');
+                res.status(200).send({code: 1, Msg: '未找到该签到表3',});
+              } else {
+                console.log('创建签到表成功');
+                //console.log(result);
+                res.status(200).send({code: 0, result: result, Msg: '获取成功',});
+              }
+            });*/
+            // console.log(bestcourse)
+            SetCourse.findOneAndUpdate({
+              _id:result._id
+            }, {
+              //$set: { "bestcourse" : newbestCourse }
+              bestCourse : bestcourse
+            }, function (err) {
+              if (err) {
+                console.log(err);
+                res.status(200).send({code: 1, Msg: '添加失败',});
+              } else {
+                console.log('添加成功');
+                res.status(200).send({code: 0, Msg: '添加成功',result:bestcourse});
+              }
+            });
+          } else {
+            res.status(404).send({
+              Msg: '用户无添加权限',
+              success: 1,
+            });
+          }
+        }else if(bestCourseLength > 5){
+          res.status(200).send({code: 2, msg: '精品课程已满'});
+        }
+      }else if(state !== 0){
+        res.status(200).send({code: 3, msg: '精品课程中包含该课程'});
+      }
+    })
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+//获取精品课程
+router.post('/getBestCourse', function (req, res){
+  // let reqData = req.body.data;
+  //console.log(reqData);
+  SetCourse.find({
+  }).then(function (restlt) {
+    // console.log(stuLeave);
+    if (restlt.length !== 0) {
+      res.status(200).send({code: 0, result: restlt, Msg: '返回成功',});
+    } else {
+      res.status(200).send({code: 1, Msg: '查找失败',});
+    }
+  });
+})
+//新增推荐课程
+router.post('/addSuggCourse', function (req, res) {
+  // console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    console.log(reqData)
+    SetCourse.findOne({}).then(function (result) {
+      let suggcourseContent = result.suggCourse
+      let state = 0
+      for(var i = 0; i < suggcourseContent.length; i++){
+        for(var j = 0; j < reqData.courseInfo.length; j++){
+          if(suggcourseContent[i].label === reqData.courseInfo[j].label){
+            state ++
+          }else if(suggcourseContent[i].label !== reqData.courseInfo.label){
 
+          }
+        }
 
+      }
+      if(state === 0){
+        let suggcourse = result.suggCourse
+        for(var i = 0; i < reqData.courseInfo.length; i++){
+          suggcourse.push(reqData.courseInfo[i])
+        }
+        //console.log(bestcourse)
+        let suggCourseLength = result.suggCourse.length
+        // console.log(result[0].bestCourse.length)
+        if(suggCourseLength <= 999999){
+          if (reqData.userType == 'SA' || reqData.userType == 'EA') {
+            SetCourse.findOneAndUpdate({
+              _id:result._id
+            }, {
+              //$set: { "bestcourse" : newbestCourse }
+              suggCourse : suggcourse
+            }, function (err) {
+              if (err) {
+                console.log(err);
+                res.status(200).send({code: 1, Msg: '添加失败',});
+              } else {
+                console.log('添加成功');
+                res.status(200).send({code: 0, Msg: '添加成功',result:suggcourse});
+              }
+            });
+          } else {
+            res.status(404).send({
+              Msg: '用户无添加权限',
+              success: 1,
+            });
+          }
+        }else{
+          res.status(200).send({code: 2, msg: '精品课程已满'});
+        }
+      }else if(state !== 0){
+        res.status(200).send({code: 3, msg: '精品课程中包含该课程'});
+      }
+    })
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+//删除精品课程
+router.post('/delBestCou', function (req, res) {
+  //console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    // let bestcourse =[]
+    // bestcourse = reqData.courseInfo
+    // console.log(bestcourse)
+    if (reqData.userType === 'SA' || reqData.userType === 'EA') {
+      console.log(reqData.courseInfo)
+      SetCourse.findOneAndUpdate({
+
+      }, {
+        //$set: { "bestcourse" : newbestCourse }
+        bestCourse : reqData.courseInfo
+      }, function (err) {
+
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '删除失败',});
+        } else {
+          console.log('添加成功');
+          res.status(200).send({code: 0, Msg: '删除成功',});
+        }
+      });
+    } else {
+      res.status(404).send({
+        Msg: '该用户无权限',
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+//删除推荐课程
+router.post('/delSuggCou', function (req, res) {
+  //console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    // let bestcourse =[]
+    // bestcourse = reqData.courseInfo
+    // console.log(bestcourse)
+    if (reqData.userType === 'SA' || reqData.userType === 'EA') {
+      console.log(reqData.courseInfo)
+      SetCourse.findOneAndUpdate({
+
+      }, {
+        //$set: { "bestcourse" : newbestCourse }
+        suggCourse : reqData.courseInfo
+      }, function (err) {
+
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '删除失败',});
+        } else {
+          console.log('添加成功');
+          res.status(200).send({code: 0, Msg: '删除成功',});
+        }
+      });
+    } else {
+      res.status(404).send({
+        Msg: '该用户无权限',
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
 module.exports = router;
