@@ -133,6 +133,7 @@
         });
       },
       setMsg: function (item) {
+        this.$store.commit('activeName','');
         //  console.log(item);
         //  console.log(this.bannerLeftData)
         var ownLabel = "";

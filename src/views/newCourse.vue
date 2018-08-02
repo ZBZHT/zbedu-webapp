@@ -47,7 +47,7 @@
               </el-tab-pane>
 
               <!--课件-->
-              <el-tab-pane label="教学课件">
+              <el-tab-pane label="教学课件" :name="descTab1">
                 <div id="courseppt">
                   <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
                   <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
@@ -70,10 +70,10 @@
               </el-tab-pane>
 
               <!--微课-->
-              <el-tab-pane label="教学微课">
+              <el-tab-pane label="教学微课" :name="descTab2">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="video-box" controls @click="videostop" :src="'resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
+                  <video id="video-box" controls @click="videostop" :src="'http://192.168.2.251:8001/resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
                     <!--<video id="video-box" controls @click="videostop">-->
                   </video>
                 </div>
@@ -96,7 +96,7 @@
               <el-tab-pane label="flash动画">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="flash2d" autoplay controls @click="flash2d" :src="'resource/' + this.videoPath + noTree.flash2d">
+                  <video id="flash2d" autoplay controls @click="flash2d" :src="'http://192.168.2.251:8001/resource/' + this.videoPath + noTree.flash2d">
                   </video>
                 </div>
               </el-tab-pane>
@@ -278,6 +278,8 @@
         keyId:'',
         activeName: '',
         descTab:'0',
+        descTab1:'2',
+        descTab2:'3',
         slides: [],
         styleObject: {
           width: '100%',
@@ -338,7 +340,13 @@
 //        })
     },
     mounted(){
-
+      if(this.$store.state.activeName === 3){
+        this.activeName = this.descTab2;
+//        console.log(this.activeName)
+      }else if(this.$store.state.activeName === 2){
+        this.activeName = this.descTab1;
+//        console.log(this.activeName)
+      }
       //判断当前是否是老师
       //console.log(this.userType)
       if(this.userType == 'EA' || this.userType == 'T'){
@@ -1156,6 +1164,8 @@
           contentSlides.methods.jump(1);
           //点击新课程tabs标签默认第一个
           this.activeName = this.descTab;
+          this.$store.commit('activeName','');
+          console.log(this.activeName)
           //请求课件和课后作业给后台发送的数组
           this.checkArr = [];
           if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){

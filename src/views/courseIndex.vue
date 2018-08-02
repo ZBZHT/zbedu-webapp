@@ -38,9 +38,9 @@
                         <div class="mask-play">
                             <div class="maskImg"><img :src="url_before + item.url"></div>
                             <div class="mask">
-                                <img @click="toPlayVideo(item)" class="play" src="src/assets/imgs/play3.png">
-                                <p @click="toPlayPdf(item)" class="ppv"><span>PPT</span></p>
-                                <p @click="toPlayVideo(item)" class="video"><span>Video</span></p>
+                                <img @click="sendRecommendVideo(item)" class="play" src="src/assets/imgs/play3.png">
+                                <p @click="sendRecommendPPT(item)" class="ppv"><span>PPT</span></p>
+                                <p @click="sendRecommendVideo(item)" class="video"><span>Video</span></p>
                             </div>
 
                         <div class="intro">
@@ -51,7 +51,7 @@
                         </div>
                         </div>
                     <p class="p" @click="sendRecommendTitle(item)">
-                        {{item.title}}
+                        {{item.label}}
                         <!--<router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link>-->
                     </p>
                     </a>
@@ -134,15 +134,34 @@ export default {
             console.log(item)
             this.$store.commit('noTreeTitle',item);
             this.$store.commit('noTreeTitle1',item);
-            this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
+            this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.label)
         },
           toPlayPdf(item) {
             console.log(item)
             this.$store.commit('noTreeTitle',item);
             this.$store.commit('noTreeTitle1',item);
-            this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
+            this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.label)
         },
+    sendRecommendVideo(item){
+      this.$store.commit('activeName',3);
+      this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+        name: 'newCourse'
+      });
+      window.open(href, '_blank')
+    },
+    sendRecommendPPT(item){
+      this.$store.commit('activeName',2);
+      this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+        name: 'newCourse'
+      });
+      window.open(href, '_blank')
+    },
     sendRecommendTitle(item){
+      this.$store.commit('activeName','');
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
       const {href} = this.$router.resolve({
@@ -157,7 +176,7 @@ export default {
         }else{
             this.rightboxHeight = 350;
         }
-        
+
         this.url = document.domain;
         axios.get("/readJson/index",{
                 params:{
@@ -165,16 +184,26 @@ export default {
                 }
             }).then((res)=>{
                 this.indexData = res.data;
-                this.bestClassData = this.indexData.bestClassData;
-                this.pageData = this.indexData.pageData;
-                this.total = this.all.length;
+//                this.bestClassData = this.indexData.bestClassData;
+//                this.pageData = this.indexData.pageData;
                 this.bottomLeftData = this.indexData.bottomLeftData;
                 this.bottomRightData = this.indexData.bottomRightData;
                 this.slides = this.indexData.slides;
             }).catch(function(error){
                 console.log("error init." + error)
             });
-
+        //获取精品课程
+        axios.post('/teacherCMS/getBestCourse', {
+          data: {
+            userType:this.userType
+          }
+        }).then((res) => {
+          //          console.log(res.data)
+          this.bestClassData = res.data.result[0].bestCourse;
+          //          console.log(this.bestClassData)
+          this.pageData = res.data.result[0].suggCourse;
+          this.total = this.all.length;
+        });
 
     },
   components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,footFooter}
@@ -393,6 +422,10 @@ hr{
     text-align:center;
     margin-top:15px;
     font-size: 18px;
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .courseIndex .bb-middle .row-a .p:hover{
     color:#f00;

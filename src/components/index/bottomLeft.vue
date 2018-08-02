@@ -3,7 +3,7 @@
 
                 <div class="mask-play-right" v-for="item in bottomLeftData">
                     <div class="maskImg"><img :src="url_before + item.url"></div>
-                    <img @click="playBottomLeftVideo(item)" class="play-right" src="src/assets/imgs/play3.png">
+                    <img @click="sendButtomLeftVideo(item)" class="play-right" src="src/assets/imgs/play3.png">
                     <p class="p" @click="sendButtomLeftTitle(item)">
                         {{item.title}}
                         <!--<router-link :to="{path:'/courseNoTree/'+item.courseId + '/title/' + item.title}">{{item.title}}</router-link>-->
@@ -33,11 +33,21 @@ export default {
       this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
     },
     sendButtomLeftTitle(item) {
+      this.$store.commit('activeName','');
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
       const {href} = this.$router.resolve({
             name: 'newCourse'
         });
+      window.open(href, '_blank')
+    },
+    sendButtomLeftVideo(item) {
+      this.$store.commit('activeName',3);
+      this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+        name: 'newCourse'
+      });
       window.open(href, '_blank')
     }
   }

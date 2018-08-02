@@ -11,19 +11,27 @@
         <b-tab title="全部教程" active>
           <el-table
             ref="multipleTable"
-            :data="msgArr"
+            :data="msgArrLittle"
             tooltip-effect="dark"
             style="width: 96%;"
             @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号" width="60">
+              <template slot-scope="scope">{{  }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
-              <template slot-scope="scope">{{ scope.row.name }}</template>
+              <template slot-scope="scope">{{ scope.row.fileName }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220" >
-              <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              <template slot-scope="scope">{{ scope.row.birthTime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip width="120">
@@ -32,8 +40,10 @@
 
             <el-table-column width="120" class="tableName4">
               <template slot-scope="scope">
-                <el-button type="text" size="mini" @click="sendName(scope.row.name)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.row.name)">删除</el-button>
+                <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click.native.prevent="fileDelete(scope.$index,msgArrLittle,scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -48,12 +58,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号" width="60">
+              <template slot-scope="scope">{{  }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
-              <template slot-scope="scope">{{ scope.row.name }}</template>
+              <template slot-scope="scope">{{ scope.row.fileName }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220">
-              <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              <template slot-scope="scope">{{ scope.row.birthTime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip width="120">
@@ -62,8 +80,10 @@
 
             <el-table-column width="120">
               <template slot-scope="scope">
-                <el-button type="text" size="mini" @click="sendName(scope.row.name)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.row.name)">删除</el-button>
+                <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click="fileDelete(scope.$index,courseWareArr,scope.row)">删除</el-button>
               </template>
             </el-table-column>
           </el-table>
@@ -78,12 +98,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号" width="60">
+              <template slot-scope="scope">{{  }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
-              <template slot-scope="scope">{{ scope.row.name }}</template>
+              <template slot-scope="scope">{{ scope.row.fileName }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220">
-              <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              <template slot-scope="scope">{{ scope.row.birthTime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip width="120">
@@ -92,8 +120,10 @@
 
             <el-table-column width="120">
               <template slot-scope="scope">
-                <el-button type="text" size="mini" @click="sendName(scope.row.name)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.row.name)">删除</el-button>
+                <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click="fileDelete(scope.$index,videoArr,scope.row)">删除</el-button>
               </template>
             </el-table-column>
 
@@ -109,12 +139,20 @@
             <el-table-column type="selection" width="55">
             </el-table-column>
 
+            <el-table-column label="序号" width="60">
+              <template slot-scope="scope">{{  }}</template>
+            </el-table-column>
+
             <el-table-column label="名称">
-              <template slot-scope="scope">{{ scope.row.name }}</template>
+              <template slot-scope="scope">{{ scope.row.fileName }}</template>
             </el-table-column>
 
             <el-table-column label="上传时间" width="220">
-              <template slot-scope="scope">{{ scope.row.birthtime }}</template>
+              <template slot-scope="scope">{{ scope.row.birthTime }}</template>
+            </el-table-column>
+
+            <el-table-column label="上传者" width="220" >
+              <template slot-scope="scope">{{ scope.row.personName }}</template>
             </el-table-column>
 
             <el-table-column label="文件大小" show-overflow-tooltip  width="120">
@@ -123,40 +161,54 @@
 
             <el-table-column width="120">
               <template slot-scope="scope">
-                <el-button type="text" size="mini" @click="sendName(scope.row.name)">下载</el-button>
-                <el-button type="text" size="mini" @click="fileDelete(scope.row.name)">删除</el-button>
+                <el-button type="text" size="mini" @click="sendName(scope.row.fileName)">下载</el-button>
+                <el-button type="text" size="mini"
+                           v-show="$store.state.username == scope.row.personName"
+                           @click="fileDelete(scope.$index,otherArr,scope.row)">删除</el-button>
               </template>
             </el-table-column>
 
           </el-table>
         </b-tab>
 
-        <el-upload
-          class="upload-demo1"
-          action="/fileUpDown/upload"
-          :onError="uploadError"
-          :beforeUpload="beforeAvatarUpload"
-          :onSuccess="uploadSuccess"
-          :on-exceed="handleExceed">
-          <el-button class="uploadBut" size="medium " type="primary">点击上传</el-button>
-          <div slot="tip" class="el-upload__tip">提示: 上传的文件不可超过1000M</div>
-        </el-upload>
+        <el-button class="uploadBut1" size="medium " type="primary" @click="beforeAvatarUpload">点击上传</el-button>
+
       </b-tabs>
 
-      <span class="file-up">文件上传</span>
+      <span class="file-up">上传下载</span>
 
     </b-card>
 
     <!--文件类型对话框-->
     <el-dialog
-      title="请选择上传文件的类型"
+      title="请选择上传文件"
       :visible.sync="centerDialogVisible"
-      width="25%"
+      width="30%"
+      style="text-align:left;"
       :close-on-press-escape=false
-      :close-on-click-modal=false
-      :show-close=false
-      center>
-        <el-select v-model="label1" placeholder="请选择类型">
+      :close-on-click-modal=false>
+        <el-input
+          style="width: 70%;margin-bottom: 20px;"
+          v-model="upFileName"
+          :disabled="true">
+        </el-input>
+
+        <el-upload
+          class="upload-demo1"
+          action="/fileUpDown/upload"
+          ref="upload"
+          :data="label1"
+          :on-change="chFun"
+          :show-file-list="false"
+          :onError="uploadError"
+          :onSuccess="uploadSuccess"
+          :on-exceed="handleExceed"
+          :before-upload="beforeAvatarUpload"
+          :auto-upload="false">
+          <el-button slot="trigger">选取文件</el-button>
+        </el-upload>
+
+        <el-select v-model="label1.label" placeholder="请选择类型">
           <el-option
             v-for="item in options"
             :key="item.label"
@@ -165,7 +217,7 @@
           </el-option>
         </el-select>
       <span slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="addArr">确 定</el-button>
+          <el-button type="primary" @click="addArr">确&emsp;定</el-button>
         </span>
     </el-dialog>
 
@@ -187,10 +239,11 @@
   import footFooter from '@/components/common/footFooter'
 
   export default {
-    name: 'sourceCenter',
     data () {
       return {
+        username: this.$store.state.username,
         msgArr:[],
+        msgArrLittle:[],
         courseWareArr:[],
         videoArr:[],
         otherArr:[],
@@ -200,13 +253,16 @@
         centerDialogVisible: false,
         url:document.domain,
         options: [{
+          label: '全部教程'
+        }, {
           label: '教学课件'
         }, {
           label: '教学微课'
         }, {
           label: '其他教材'
         }],
-        label1: '',
+        label1: { label: '' },
+        upFileName: '',
       }
     },
     computed:{
@@ -230,13 +286,16 @@
           type: 'warning'
         });
       },
-      /*上传方法*/
+      //选择文件显示文件名
+      chFun(file, fileList){
+        this.upFileName = file.name
+      },
       // 上传成功后的回调
       uploadSuccess (res, file) {
-        if (res.fileMsg[0]) {
-          this.msgArr.push(res.fileMsg[0]);
-          this.successMsg('上传成功');
-        }
+        this.msgArr = [];
+        this.loadFile();
+        this.successMsg('上传成功');
+        this.centerDialogVisible = false;
       },
       // 上传错误
       uploadError (res, file, fileList) {
@@ -245,30 +304,23 @@
       handleExceed(files, fileList) {
         this.$message.warning(`每次只能上传 1 个文件`);
       },
+      //确定上传
       addArr() {
-        if (this.label === '') {
-            this.warningMsg('请选择上传文件的类型')
+        if (this.upFileName === '') {
+          this.warningMsg('请选择文件')
+        } else if (this.label1.label === '') {
+          this.warningMsg('请选择上传文件的类型')
         } else {
+          console.log(this.label1);
           this.centerDialogVisible = false;
-          if (this.label1 === '教学课件')
-          {
-            this.courseWareArr.push(this.msgArr[this.msgArr.length-1])
-          }
-          else if (this.label1 === '教学微课')
-          {
-            this.videoArr.push(this.msgArr[this.msgArr.length-1])
-          }
-          else if (this.label1 === '其他教材')
-          {
-            this.otherArr.push(this.msgArr[this.msgArr.length-1])
-          }
+          this.$refs.upload.submit();
         }
 
       },
       // 上传前弹出对话框
-      beforeAvatarUpload (file) {
-      this.centerDialogVisible = true;
-      //this.successMsg('文件正在上传')
+      beforeAvatarUpload () {
+        this.upFileName = '';
+        this.centerDialogVisible = true;
       },
       handleClick(tab, event) {
         //console.log(tab, event);
@@ -287,6 +339,7 @@
         this.multipleSelection = val;
       },
       sendName(item){
+          console.log(item);
         axios({
           method:'get',
           url:'/fileUpDown/download',
@@ -312,33 +365,42 @@
         })
       },
       //删除文件
-      fileDelete(item){
-        axios({
-          method:'get',
-          url:'/fileUpDown/fileDelete',
-          params:{
-            downloadName:item
-          }
-        }).then((res) => { // 处理返回的文件流
-          this.successMsg('删除成功');
-          let resFileName = res.data.fileName;
-          dellArrE(this.msgArr, resFileName);
-          dellArrE(this.courseWareArr, resFileName);
-          dellArrE(this.videoArr, resFileName);
-          dellArrE(this.otherArr, resFileName);
+      fileDelete(index,rows,row){
+        if(row.personName === this.$store.state.username){
+          rows.splice(index, 1);
+          //console.log(row);
+          axios({
+            method:'get',
+            url:'/fileUpDown/fileDelete',
+            params:{
+              delData: row,
+            }
+          }).then((res) => { // 处理返回的文件流
+            this.successMsg('删除成功');
+            let resFileName = res.data.fileName;
+            dellArrE(this.msgArr, resFileName);
+            dellArrE(this.courseWareArr, resFileName);
+            dellArrE(this.videoArr, resFileName);
+            dellArrE(this.otherArr, resFileName);
 
-          function dellArrE(arr, resFileName) {
-            if (resFileName) {
-              for (let i=0; i<arr.length; i++)
-              {
-                if (arr[i].name === resFileName)
+            function dellArrE(arr, resFileName) {
+              if (resFileName) {
+                for (let i=0; i<arr.length; i++)
                 {
-                  arr.splice(i,1);
+                  if (arr[i].name === resFileName)
+                  {
+                    arr.splice(i,1);
+                  }
                 }
               }
             }
-          }
-        })
+            this.msgArr = [];
+            this.loadFile();
+          })
+        }else{
+          this.DefeatMsg('只能删除自己上传的文件哦！')
+        }
+
       },
       loadFile() {
         axios.get('/fileUpDown/loadFile',{
@@ -347,27 +409,34 @@
           }
         }).then((res)=>{
             for (let i = 0; i < res.data.var.length; i++){
-              if (res.data.var[i].size != 0){
-                this.msgArr.push(res.data.var[i])
-              }
+              this.msgArr.push(res.data.var[i]);
             }
-            for ( let j = 0; j < this.msgArr.length; j++){
-              let index = this.msgArr[j].name.split(".");
-              let suffix = index[index.length-1];
-              if (suffix === 'mp4' || suffix === 'rmvb' || suffix === 'avi'){
-                this.videoArr.push(this.msgArr[j]);
-              }else if(suffix === 'txt' || suffix === 'docx' || suffix === 'doc' || suffix === 'xlsx' || suffix === 'xls' || suffix === 'pdf' || suffix === 'ppt' || suffix === 'pptx'){
-                this.courseWareArr.push(this.msgArr[j])
-              }else {
-                this.otherArr.push(this.msgArr[j])
-              }
+            this.msgArrLittle = [];
+            this.courseWareArr = [];
+            this.videoArr = [];
+            this.otherArr = [];
+            for(let j = 0; j < this.msgArr.length; j++){
+                if(this.msgArr[j].fileType === 1){
+                  this.msgArr[j].fileType = '全部教程';
+                  this.msgArrLittle.push(this.msgArr[j]);
+                }else if(this.msgArr[j].fileType === 2){
+                  this.msgArr[j].fileType = '教学课件';
+                  this.courseWareArr.push(this.msgArr[j]);
+                }else if(this.msgArr[j].fileType === 3){
+                  this.msgArr[j].fileType = '教学微课';
+                  this.videoArr.push(this.msgArr[j]);
+                }else if(this.msgArr[j].fileType === 4){
+                  this.msgArr[j].fileType = '其它教材';
+                  this.otherArr.push(this.msgArr[j]);
+                }
             }
           }
         );
       },
+
     },
     mounted(){
-        this.loadFile();
+      this.loadFile();
 
     },
     components: {navgationHead, footFooter}
@@ -422,10 +491,13 @@
     border-bottom: 2px solid white;
     color: #6a1518;
   }
-  .resourceCenter .upload-demo1 {
+  .resourceCenter .uploadBut1 {
     position: absolute;
     bottom: 16rem;
-    left: -12rem;
+    left: -9.5rem;
+  }
+  .resourceCenter .upload-demo1 {
+    display: inline-block;
   }
   .resourceCenter {
     position: relative;

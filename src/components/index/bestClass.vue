@@ -4,13 +4,13 @@
         <div class="mask-play zz mf">
             <div class="maskImg"><img :src="url_before + item.url"></div>
             <div class="mask">
-                <img @click="playBestVideo(item)" src="src/assets/imgs/play3.png">
-                <p class="ppv" @click="playBestPdf(item)"><span>PPT</span></p>
-                <p class="ppv" @click="playBestVideo(item)"><span>Video</span></p>
+                <img @click="sendBestVideo(item)" src="src/assets/imgs/play3.png">
+                <p class="ppv" @click="sendBestPPT(item)"><span>PPT</span></p>
+                <p class="ppv" @click="sendBestVideo(item)"><span>Video</span></p>
             </div>
         </div>
         <p class="p" @click="sendBestTitle(item)">
-            {{item.title}}
+            {{item.label}}
           <!--<router-link :to="{path:'/courseNoTree/'+ item.courseId + '/label/' + item.title}">{{item.title}}</router-link>-->
         </p>
     </div>
@@ -31,7 +31,8 @@ export default {
   },
   methods: {
     sendBestTitle(item){
-        console.log(item)
+//        console.log(item)
+      this.$store.commit('activeName','');
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
       const {href} = this.$router.resolve({
@@ -39,6 +40,28 @@ export default {
         });
       window.open(href, '_blank')
     //  this.$router.push('/newCourse');
+    },
+    sendBestVideo(item){
+//      console.log(item)
+      this.$store.commit('activeName',3);
+      this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+        name: 'newCourse'
+      });
+      window.open(href, '_blank')
+      //  this.$router.push('/newCourse');
+    },
+    sendBestPPT(item){
+//      console.log(item)
+      this.$store.commit('activeName',2);
+      this.$store.commit('noTreeTitle',item);
+      this.$store.commit('noTreeTitle1',item);
+      const {href} = this.$router.resolve({
+        name: 'newCourse'
+      });
+      window.open(href, '_blank')
+      //  this.$router.push('/newCourse');
     },
 
     playBestVideo (item) {
@@ -49,13 +72,13 @@ export default {
 //                name: 'newCourse'
 //            });
 //        window.open(href, '_blank')
-      this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.title)
+      this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.label)
     },
     playBestPdf (item) {
         console.log(item)
         this.$store.commit('noTreeTitle',item);
         this.$store.commit('noTreeTitle1',item);
-      this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.title)
+      this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.label)
     }
   },
   mounted(){
