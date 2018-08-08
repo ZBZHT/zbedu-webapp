@@ -26,6 +26,8 @@
             <!--</el-table-column>-->
           <!--</el-table>-->
 
+          <el-button @click="getCheckedNodes">新增为精品课程</el-button>
+          <el-button @click="getCheckedNodes1">新增为推荐课程</el-button>
           <el-tree
             node-key="courseId"
             :props="defaultProps"
@@ -35,8 +37,7 @@
             ref="tree"
             highlight-current
             @check-change="handleCheckChange"></el-tree>
-          <el-button @click="getCheckedNodes">新增为精品课程</el-button>
-          <el-button @click="getCheckedNodes1">新增为推荐课程</el-button>
+
 
         </el-tab-pane>
         <el-tab-pane label="精品课程" name="two">
@@ -341,65 +342,77 @@
       },
       //获取课程树
       getCenterTree() {
-        axios.post('/teacherCMS/getCenterTree', {
-          data: {
-            userID: this.userID,
-            userType: this.userType,
+        axios.get("/readJson/bannerLeftData",{
+          params:{
+            user:234
           }
-        }).then((res) => {
-
-//          console.log(res.data[0].children[0].children)
-//          this.centerTree = res.data[0].children[0].children;
-          var result = res.data[0].children[0].children
-          console.log(result)
-          this.centerTree = result;
-//          for(var i = 0; i < result.length; i++){
-////            if(result[i].children[0].children[0].children){
-//            if(i == 0){
-////              console.log(i)
-//              for(var j = 0; j < result[i].children[0].children.length; j++){
-//                for(var k = 0; k < result[i].children[0].children[j].children.length; k++){
-////                  console.log(result[i].children[0].children[j].children[k].label);
-//                  this.centerTree.push(
-//                    result[i].children[0].children[j].children[k]
-//                  )
-//                }
-//              }
-//              for(var j = 0; j < result[i].children[1].children.length; j++){
-//                for(var k = 0; k < result[i].children[1].children[j].children.length; k++){
-////                  console.log(result[i].children[0].children[j].children[k].label);
-//                  this.centerTree.push(
-//                    result[i].children[0].children[j].children[k]
-//                  )
-//                }
-//              }
-////              console.log(this.centerTree)
-////            }else if(result[i].children[0].children){
-//            }else if(i == 1 || i == 2 || i == 3){
-////              console.log(i)
-//              for(var j = 0; j < result[i].children.length; j++){
-//                for(var k = 0; k < result[i].children[j].children.length; k++){
-////                  console.log(result[i].children[j].children[k].label);
-//                  this.centerTree.push(
-//                    result[i].children[j].children[k]
-//                  )
-//                }
-//              }
-//            }else if(i == 4 || i == 5){
-////              console.log(i)
-////              console.log("Dpdd")
-//              for(var j = 0; j < result[i].children.length; j++){
-////                  console.log(result[i].children[j].label);
-////                  this.centerTree.push(result[i].children[j].label)
-//                this.centerTree.push(
-//                  result[i].children[j]
-//                )
-//              }
-//            }else{}
-//          }
-//          console.log(this.centerTree)
-
+        }).then((res)=>{
+//          console.log(res.data[0].children)
+          var result = []
+          for(var i = 0; i < res.data[0].children.length - 1; i++){
+            result.push(res.data[0].children[i])
+          }
+          this.centerTree = result
         })
+//        axios.post('/teacherCMS/getCenterTree', {
+//          data: {
+//            userID: this.userID,
+//            userType: this.userType,
+//          }
+//        }).then((res) => {
+//
+////          console.log(res.data[0].children[0].children)
+////          this.centerTree = res.data[0].children[0].children;
+//          var result = res.data[0].children[0].children
+//          console.log(result)
+//          this.centerTree = result;
+////          for(var i = 0; i < result.length; i++){
+//////            if(result[i].children[0].children[0].children){
+////            if(i == 0){
+//////              console.log(i)
+////              for(var j = 0; j < result[i].children[0].children.length; j++){
+////                for(var k = 0; k < result[i].children[0].children[j].children.length; k++){
+//////                  console.log(result[i].children[0].children[j].children[k].label);
+////                  this.centerTree.push(
+////                    result[i].children[0].children[j].children[k]
+////                  )
+////                }
+////              }
+////              for(var j = 0; j < result[i].children[1].children.length; j++){
+////                for(var k = 0; k < result[i].children[1].children[j].children.length; k++){
+//////                  console.log(result[i].children[0].children[j].children[k].label);
+////                  this.centerTree.push(
+////                    result[i].children[0].children[j].children[k]
+////                  )
+////                }
+////              }
+//////              console.log(this.centerTree)
+//////            }else if(result[i].children[0].children){
+////            }else if(i == 1 || i == 2 || i == 3){
+//////              console.log(i)
+////              for(var j = 0; j < result[i].children.length; j++){
+////                for(var k = 0; k < result[i].children[j].children.length; k++){
+//////                  console.log(result[i].children[j].children[k].label);
+////                  this.centerTree.push(
+////                    result[i].children[j].children[k]
+////                  )
+////                }
+////              }
+////            }else if(i == 4 || i == 5){
+//////              console.log(i)
+//////              console.log("Dpdd")
+////              for(var j = 0; j < result[i].children.length; j++){
+//////                  console.log(result[i].children[j].label);
+//////                  this.centerTree.push(result[i].children[j].label)
+////                this.centerTree.push(
+////                  result[i].children[j]
+////                )
+////              }
+////            }else{}
+////          }
+////          console.log(this.centerTree)
+//
+//        })
       },
       handleSizeChange(val) {
         //console.log(`每页 ${val} 条`);

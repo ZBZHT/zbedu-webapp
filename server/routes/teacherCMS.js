@@ -3111,7 +3111,17 @@ router.post('/getBestCourse', function (req, res){
     if (restlt.length !== 0) {
       res.status(200).send({code: 0, result: restlt, Msg: '返回成功',});
     } else {
-      res.status(200).send({code: 1, Msg: '查找失败',});
+      let addCouData = new SetCourse({
+        bestCourse: [],
+        suggCourse: []
+      });
+      addCouData.save(function (err) {
+        if (err) {
+          console.log(err)
+        } else {
+          console.log('course Save success');
+        }
+      });
     }
   });
 })
