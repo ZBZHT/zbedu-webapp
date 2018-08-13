@@ -43,6 +43,8 @@
         <el-tab-pane label="精品课程" name="two">
           <el-table class="userM_el-table" :data="bestCourseTree"
                     stripe style="width: 90%;">
+            <el-table-column prop="num" label="序号" width="90">
+            </el-table-column>
             <el-table-column prop="label" label="课程名称">
             </el-table-column>
             <el-table-column label="操作" style="width: 100px" >
@@ -57,6 +59,8 @@
         <el-tab-pane label="推荐课程" name="three">
           <el-table class="userM_el-table" :data="suggCourseTree.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"
                     stripe style="width: 90%;">
+            <el-table-column prop="num" label="序号" width="90">
+            </el-table-column>
             <el-table-column prop="label" label="课程名称">
             </el-table-column>
             <el-table-column label="操作" style="width: 100px" >
@@ -151,8 +155,6 @@
             this.$message.error('添加失败');
           }else if (res.data.code === 2){
             this.$message.error('推荐课程有点多哦');
-          }else if (res.data.code === 3){
-            this.$message.error('该课程已经在精品课程里了');
           }
         });
 //        this.getCenterTree();
@@ -182,8 +184,6 @@
             this.$message.error('添加失败');
           }else if (res.data.code === 2){
             this.$message.error('精品课程不能超过5个哦');
-          }else if (res.data.code === 3){
-            this.$message.error('该课程已经在精品课程里了');
           }
         });
 //        this.getCenterTree();
@@ -198,7 +198,13 @@
         }).then((res) => {
 //          console.log(res.data)
           this.bestCourseTree = res.data.result[0].bestCourse;
+          for(var i = 0; i < this.bestCourseTree.length; i++){
+            this.bestCourseTree[i].num = i + 1;
+          }
           this.suggCourseTree = res.data.result[0].suggCourse;
+          for(var j = 0; j < this.suggCourseTree.length; j++){
+            this.suggCourseTree[j].num = j + 1;
+          }
           this.total1 = this.suggCourseTree.length;
 //          console.log(this.total1)
 //          console.log(this.bestCourseTree)

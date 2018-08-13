@@ -3027,21 +3027,26 @@ router.post('/addBestCourse', function (req, res) {
   // console.log(req.body.data);
   if (req.body.data) {
     let reqData = req.body.data;
-    console.log(reqData)
+
+    // console.log(reqData)
     SetCourse.findOne({}).then(function (result) {
       let bestcourseContent = result.bestCourse
-      let state = 0
       for(var i = 0; i < bestcourseContent.length; i++){
         for(var j = 0; j < reqData.courseInfo.length; j++){
           if(bestcourseContent[i].label === reqData.courseInfo[j].label){
-            state ++
+            let newArry =[]
+            for(var k = 0; k < reqData.courseInfo.length; k++){
+              if(k !== j){
+                newArry.push(reqData.courseInfo[k])
+              }
+            }
+            console.log(newArry)
+            reqData.courseInfo = newArry
           }else if(bestcourseContent[i].label !== reqData.courseInfo.label){
 
           }
         }
-
       }
-      if(state === 0){
         let bestcourse = result.bestCourse
         for(var i = 0; i < reqData.courseInfo.length; i++){
           bestcourse.push(reqData.courseInfo[i])
@@ -3090,9 +3095,6 @@ router.post('/addBestCourse', function (req, res) {
         }else if(bestCourseLength > 5){
           res.status(200).send({code: 2, msg: '精品课程已满'});
         }
-      }else if(state !== 0){
-        res.status(200).send({code: 3, msg: '精品课程中包含该课程'});
-      }
     })
   } else {
     res.status(404).send({
@@ -3133,18 +3135,23 @@ router.post('/addSuggCourse', function (req, res) {
     console.log(reqData)
     SetCourse.findOne({}).then(function (result) {
       let suggcourseContent = result.suggCourse
-      let state = 0
       for(var i = 0; i < suggcourseContent.length; i++){
         for(var j = 0; j < reqData.courseInfo.length; j++){
           if(suggcourseContent[i].label === reqData.courseInfo[j].label){
-            state ++
+            let newArry =[]
+            for(var k = 0; k < reqData.courseInfo.length; k++){
+              if(k !== j){
+                newArry.push(reqData.courseInfo[k])
+              }
+            }
+            console.log(newArry)
+            reqData.courseInfo = newArry
           }else if(suggcourseContent[i].label !== reqData.courseInfo.label){
 
           }
         }
 
       }
-      if(state === 0){
         let suggcourse = result.suggCourse
         for(var i = 0; i < reqData.courseInfo.length; i++){
           suggcourse.push(reqData.courseInfo[i])
@@ -3152,7 +3159,7 @@ router.post('/addSuggCourse', function (req, res) {
         //console.log(bestcourse)
         let suggCourseLength = result.suggCourse.length
         // console.log(result[0].bestCourse.length)
-        if(suggCourseLength <= 999999){
+        if(suggCourseLength <= 24){
           if (reqData.userType == 'SA' || reqData.userType == 'EA') {
             SetCourse.findOneAndUpdate({
               _id:result._id
@@ -3175,11 +3182,8 @@ router.post('/addSuggCourse', function (req, res) {
             });
           }
         }else{
-          res.status(200).send({code: 2, msg: '精品课程已满'});
+          res.status(200).send({code: 2, msg: '推荐课程已满'});
         }
-      }else if(state !== 0){
-        res.status(200).send({code: 3, msg: '精品课程中包含该课程'});
-      }
     })
   } else {
     res.status(404).send({
