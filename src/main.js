@@ -9,11 +9,12 @@ import store from './vuex/store'
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
+import VueDND from 'awe-dnd'
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(BootstrapVue);
+Vue.use(VueDND)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

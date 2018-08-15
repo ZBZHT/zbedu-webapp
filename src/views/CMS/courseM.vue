@@ -41,36 +41,82 @@
 
         </el-tab-pane>
         <el-tab-pane label="精品课程" name="two">
-          <el-table class="userM_el-table" :data="bestCourseTree"
-                    stripe style="width: 90%;">
-            <el-table-column prop="num" label="序号" width="90">
-            </el-table-column>
-            <el-table-column prop="label" label="课程名称">
-            </el-table-column>
-            <el-table-column label="操作" style="width: 100px" >
-              <template slot-scope="scope">
-                <el-button size="small" class="userM_el-tableBut"
-                @click="delChecked(scope.$index, scope.row)">删除
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
+
+          <!--<el-table class="userM_el-table" :data="bestCourseTree"-->
+                    <!--stripe style="width: 90%;">-->
+            <!--<el-table-column prop="num" label="序号" width="90">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="label" label="课程名称">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column label="操作" style="width: 100px" >-->
+              <!--<template slot-scope="scope">-->
+                <!--<el-button size="small" class="userM_el-tableBut"-->
+                <!--@click="delChecked(scope.$index, scope.row)">删除-->
+                <!--</el-button>-->
+              <!--</template>-->
+            <!--</el-table-column>-->
+          <!--</el-table>-->
+
+          <div class="tableL">
+            <div class="colNum">
+              <p>序号</p>
+              <div v-for="item in bestCourseTreeIndex">{{item}}</div>
+            </div>
+            <div class="colCourse">
+              <p>课程名称</p>
+              <div
+                class="color-item"
+                v-for="bestCourse in bestCourseTree"
+                v-dragging="{ item: bestCourse, list: bestCourseTree, group: 'bestCourse' }"
+                :key="bestCourse.label">{{bestCourse.label}}</div>
+            </div>
+            <div class="colDel">
+              <p>操作</p>
+              <el-button v-for="(item,index) in bestCourseTree" size="small" class="userM_el-tableBut"
+                         @click="delChecked(index,item)">删除
+              </el-button>
+            </div>
+          </div>
+
         </el-tab-pane>
         <el-tab-pane label="推荐课程" name="three">
-          <el-table class="userM_el-table" :data="suggCourseTree.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"
-                    stripe style="width: 90%;">
-            <el-table-column prop="num" label="序号" width="90">
-            </el-table-column>
-            <el-table-column prop="label" label="课程名称">
-            </el-table-column>
-            <el-table-column label="操作" style="width: 100px" >
-              <template slot-scope="scope">
-                <el-button size="small" class="userM_el-tableBut"
-                           @click="delChecked1(scope.$index, scope.row)">删除
-                </el-button>
-              </template>
-            </el-table-column>
-          </el-table>
+
+          <!--<el-table class="userM_el-table" :data="suggCourseTree.slice((currentPage1-1)*pagesize,currentPage1*pagesize)"-->
+                    <!--stripe style="width: 90%;">-->
+            <!--<el-table-column prop="num" label="序号" width="90">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column prop="label" label="课程名称">-->
+            <!--</el-table-column>-->
+            <!--<el-table-column label="操作" style="width: 100px" >-->
+              <!--<template slot-scope="scope">-->
+                <!--<el-button size="small" class="userM_el-tableBut"-->
+                           <!--@click="delChecked1(scope.$index, scope.row)">删除-->
+                <!--</el-button>-->
+              <!--</template>-->
+            <!--</el-table-column>-->
+          <!--</el-table>-->
+
+          <div class="tableL">
+            <div class="colNum">
+              <p>序号</p>
+              <div v-for="item in suggCourseTreeIndex">{{item}}</div>
+            </div>
+            <div class="colCourse">
+              <p>课程名称</p>
+              <div
+                class="color-item"
+                v-for="suggCourse in suggCourseTree"
+                v-dragging="{ item: suggCourse, list: suggCourseTree, group: 'suggCourse' }"
+                :key="suggCourse.label">{{suggCourse.label}}</div>
+            </div>
+            <div class="colDel">
+              <p>操作</p>
+              <el-button v-for="(item,index) in suggCourseTree" size="small" class="userM_el-tableBut"
+                         @click="delChecked1(index,item)">删除
+              </el-button>
+            </div>
+          </div>
+
           <!--分页显示-->
           <el-pagination
             @size-change="handleSizeChange"
@@ -106,17 +152,54 @@
         pagesize: 10,
         total1: '',
         bestCourseTree:[],
+        bestCourseTreeIndex:[],
         suggCourseTree:[],
+        suggCourseTreeIndex:[],
         defaultProps: {
           children: 'children',
           label: 'label',
         },
+
       }
     },
     computed: {},
     mounted() {
       this.getCenterTree();
       this.getBestCourse();
+      this.$dragging.$on('dragged', ({ value }) => {
+//        console.log(value)
+        if(value.group == 'bestCourse'){
+          axios.post('/teacherCMS/updateBestCourse', {
+            data: {
+              userType:this.userType,
+              courseInfo: value.list
+            }
+          }).then((res) => {
+//          console.log(res.data)
+            if (res.data.code === 0){
+//            this.addSuccess('更新成功');
+            }else if (res.data.code === 1){
+              this.$message.error('更新失败');
+            }
+          });
+        }else if(value.group == 'suggCourse'){
+//          console.log('我是小可爱')
+          axios.post('/teacherCMS/updateSuggCourse', {
+            data: {
+              userType:this.userType,
+              courseInfo: value.list
+            }
+          }).then((res) => {
+//          console.log(res.data)
+            if (res.data.code === 0){
+//            this.addSuccess('更新成功');
+            }else if (res.data.code === 1){
+              this.$message.error('更新失败');
+            }
+          });
+        }
+
+      })
     },
     methods: {
       handleCheckChange(data, checked){
@@ -197,13 +280,17 @@
           }
         }).then((res) => {
 //          console.log(res.data)
+          this.bestCourseTreeIndex = []
+          this.suggCourseTreeIndex = []
           this.bestCourseTree = res.data.result[0].bestCourse;
           for(var i = 0; i < this.bestCourseTree.length; i++){
-            this.bestCourseTree[i].num = i + 1;
+//            this.bestCourseTree[i].num = i + 1;
+            this.bestCourseTreeIndex.push(i+1)
           }
           this.suggCourseTree = res.data.result[0].suggCourse;
           for(var j = 0; j < this.suggCourseTree.length; j++){
-            this.suggCourseTree[j].num = j + 1;
+//            this.suggCourseTree[j].num = j + 1;
+            this.suggCourseTreeIndex.push(j+1)
           }
           this.total1 = this.suggCourseTree.length;
 //          console.log(this.total1)
@@ -256,7 +343,7 @@
           });
         });
 
-//        console.log(delData)
+        console.log(delData)
       },
       //删除推荐课程
       delChecked1(index,data){
@@ -475,4 +562,40 @@
      background-color: #d9d9d9;
   }
 */
+  .courseM_cont .tableL{
+    width:90%;
+    background: #fff;
+    display:flex;
+    padding:10px;
+    box-sizing: border-box;
+    margin-bottom:30px;
+  }
+  .courseM_cont .tableL p{
+    line-height: 23px;
+    font-size: 14px;
+    font-weight: bolder;
+    color:rgb(144,147,158);
+  }
+  .courseM_cont .colDel{
+    width:6%;
+    text-align:left;
+    font-size: 14px;
+    line-height: 35px;
+  }
+  .courseM_cont .colNum{
+    width:9%;
+    text-align:left;
+    font-size: 14px;
+    line-height: 35px;
+  }
+  .courseM_cont .colCourse{
+    width:46%;
+    text-align:left;
+    font-size: 14px;
+    line-height: 35px;
+    cursor: pointer;
+  }
+  .courseM_cont .colDel .el-button{
+    margin-left:0px;
+  }
 </style>

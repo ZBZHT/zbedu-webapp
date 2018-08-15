@@ -3103,6 +3103,41 @@ router.post('/addBestCourse', function (req, res) {
     });
   }
 });
+//更新精品课程顺序
+router.post('/updateBestCourse', function (req, res) {
+  // console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    console.log(reqData)
+    SetCourse.findOne({}).then(function (result) {
+        if (reqData.userType == 'SA' || reqData.userType == 'EA') {
+          SetCourse.findOneAndUpdate({
+            _id:result._id
+          }, {
+            bestCourse : reqData.courseInfo
+          }, function (err) {
+            if (err) {
+              console.log(err);
+              res.status(200).send({code: 1, Msg: '更新失败',});
+            } else {
+              console.log('添加成功');
+              res.status(200).send({code: 0, Msg: '更新成功',result:reqData.courseInfo});
+            }
+          });
+        } else {
+          res.status(404).send({
+            Msg: '用户无添加权限',
+            success: 1,
+          });
+        }
+    })
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
 //获取精品课程
 router.post('/getBestCourse', function (req, res){
   // let reqData = req.body.data;
@@ -3183,6 +3218,41 @@ router.post('/addSuggCourse', function (req, res) {
           }
         }else{
           res.status(200).send({code: 2, msg: '推荐课程已满'});
+        }
+    })
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+//更新推荐课程顺序
+router.post('/updateSuggCourse', function (req, res) {
+  // console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    console.log(reqData)
+    SetCourse.findOne({}).then(function (result) {
+        if (reqData.userType == 'SA' || reqData.userType == 'EA') {
+          SetCourse.findOneAndUpdate({
+            _id:result._id
+          }, {
+            suggCourse : reqData.courseInfo
+          }, function (err) {
+            if (err) {
+              console.log(err);
+              res.status(200).send({code: 1, Msg: '添加失败',});
+            } else {
+              console.log('添加成功');
+              res.status(200).send({code: 0, Msg: '添加成功',result:reqData.courseInfo});
+            }
+          });
+        } else {
+          res.status(404).send({
+            Msg: '用户无添加权限',
+            success: 1,
+          });
         }
     })
   } else {
