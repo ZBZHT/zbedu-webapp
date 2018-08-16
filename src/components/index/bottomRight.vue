@@ -11,7 +11,7 @@
             <div id="container">
                 <div id="content1" class="content" :class="{dispear : !dispear}">
                     <div class="bb-item" v-for="(item,index) in bottomRightData">
-                        <span class="num" 
+                        <span class="num"
                         :class="{top3 : index <= 2}" v-show="item.title">
                             {{item.num}}
                         </span>
@@ -34,6 +34,7 @@
 </template>
 
 <script>
+  import axios from 'axios'
 export default {
   name: 'bottomRight',
   props :['bottomRightData'],
@@ -41,14 +42,36 @@ export default {
     return {
       msg: 'bottomRight',
       top3:true,
-      dispear:true
+      dispear:true,
+      userType:this.$store.state.userType,
+      userName:this.$store.state.username,
     }
   },
-  
+
   methods:{
+      //我的足迹添加
+      myFootPrint(item){
+        axios.post('/teacherCMS/addMyfoot', {
+          data: {
+            userName:this.userName,
+            userType:this.userType,
+            courseInfo: item
+          }
+        }).then((res) => {
+          console.log(res.data)
+          if (res.data.code === 0){
+  //            this.addSuccess('更新成功');
+          }else if (res.data.code === 1){
+  //          this.$message.error('更新失败');
+          }
+        });
+      },
+      //点击下右侧标题
       sendRecommendTitle(item){
         this.$store.commit('noTreeTitle',item);
         this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item)
         const {href} = this.$router.resolve({
                 name: 'newCourse'
             });
@@ -56,7 +79,7 @@ export default {
       },
       enter1:function(){
         return this.dispear = true
-      },  
+      },
 
       enter2:function(){
         return this.dispear = false

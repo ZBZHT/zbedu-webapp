@@ -3336,4 +3336,117 @@ router.post('/delSuggCou', function (req, res) {
     });
   }
 });
+//新增我的足迹
+router.post('/addMyfoot', function (req, res) {
+  let reqData = req.body.data;
+  // console.log(reqData)
+  let reqUserType = reqData.userType
+  let myFootArray = []
+    if (reqUserType === 'S' || reqUserType === 'O') {
+      Student.findOne({
+        user: reqData.userName
+      }).then(function (result) {
+        myFootArray = result.myFootprint
+        console.log(myFootArray)
+        // for(var i = 0; i < myFootArray.length; i++){
+        //   console.log(myFootArray[i].label)
+        //   console.log(reqData.courseInfo.label)
+        //   if(myFootArray[i].label === reqData.courseInfo.label){
+        //
+        //
+        //     // for(var j = 0; j < myFootArray.length; j++){
+        //     //   // console.log(k)
+        //     //   // console.log(i)
+        //     //   if(j !== i){
+        //     //     let newArray = []
+        //     //     newArray.push(myFootArray[j])
+        //     //     myFootArray = newArray
+        //     //   }
+        //     // }
+        //
+        //   }else if(myFootArray[i].label !== reqData.courseInfo.label){
+        //
+        //   }
+        // }
+        myFootArray.unshift(reqData.courseInfo)
+        // console.log(myFootArray)
+        Student.findOneAndUpdate({
+          user: reqData.userName
+        }, {
+          myFootprint: myFootArray
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            res.status(200).send({code: 1, Msg: '添加失败',});
+          } else {
+            //console.log('修改成功IDNo');
+            res.status(200).send({code: 0, Msg: '添加成功',});
+          }
+        });
+      })
+    } else if (reqUserType === 'EA' || reqUserType === 'T') {
+      //console.log(reqUser);
+      Teacher.findOne({
+        user: reqData.userName
+      }).then(function (result) {
+        myFootArray = result.myFootprint
+        myFootArray.push(reqData.courseInfo)
+        Teacher.findOneAndUpdate({
+          user: reqData.userName
+        }, {
+          myFootprint: myFootArray
+        }, function (err) {
+          if (err) {
+            console.log(err);
+            res.status(200).send({code: 1, Msg: '添加失败',});
+          } else {
+            //console.log('修改成功IDNo');
+            res.status(200).send({code: 0, Msg: '添加成功',});
+          }
+        });
+      })
+    }
+});
+//获取我的足迹
+router.post('/getMyfoot', function (req, res) {
+  let reqData = req.body.data;
+  console.log(reqData)
+  let reqUserType = reqData.userType
+  let myFootArray = []
+  if (reqUserType === 'S' || reqUserType === 'O') {
+    Student.findOne({
+      user: reqData.userName
+    }).then(function (result) {
+      myFootArray = result.myFootprint
+      if (myFootArray) {
+        res.status(200).send({code: 0, result: myFootArray, Msg: '返回成功',});
+      } else {
+        res.status(200).send({code: 1, Msg: '返回失败',});
+      }
+    })
+
+  } else if (reqUserType === 'EA' || reqUserType === 'T') {
+    //console.log(reqUser);
+    Teacher.findOne({
+      user: reqData.userName
+    }).then(function (result) {
+
+      myFootArray = result.myFootprint
+      myFootArray.push(reqData.courseInfo)
+      Teacher.findOneAndUpdate({
+        user: reqData.userName
+      }, {
+        myFootprint: myFootArray
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '添加失败',});
+        } else {
+          //console.log('修改成功IDNo');
+          res.status(200).send({code: 0, Msg: '添加成功',});
+        }
+      });
+    })
+  }
+});
 module.exports = router;

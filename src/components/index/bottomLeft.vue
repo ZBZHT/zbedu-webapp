@@ -15,36 +15,61 @@
 </template>
 
 <script>
-
+import axios from 'axios'
 export default {
   name: 'bottomLeft',
   props :['bottomLeftData'],
   data () {
     return {
       msg: 'bottomLeft',
-      url_before:'src/assets/imgs/'
+      url_before:'src/assets/imgs/',
+      userType:this.$store.state.userType,
+      userName:this.$store.state.username,
     }
   },
   methods: {
-    playBottomLeftVideo(item) {
-      console.log(item)
-      this.$store.commit('noTreeTitle',item);
-      this.$store.commit('noTreeTitle1',item);
-      this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
+//    playBottomLeftVideo(item) {
+//      console.log(item)
+//      this.$store.commit('noTreeTitle',item);
+//      this.$store.commit('noTreeTitle1',item);
+//      this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
+//    },
+    //我的足迹添加
+    myFootPrint(item){
+      axios.post('/teacherCMS/addMyfoot', {
+        data: {
+          userName:this.userName,
+          userType:this.userType,
+          courseInfo: item
+        }
+      }).then((res) => {
+        console.log(res.data)
+        if (res.data.code === 0){
+//            this.addSuccess('更新成功');
+        }else if (res.data.code === 1){
+//          this.$message.error('更新失败');
+        }
+      });
     },
+    //点击标题
     sendButtomLeftTitle(item) {
       this.$store.commit('activeName','');
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      //添加item至我的足迹请求
+      this.myFootPrint(item)
       const {href} = this.$router.resolve({
             name: 'newCourse'
         });
       window.open(href, '_blank')
     },
+    //点击图片
     sendButtomLeftVideo(item) {
       this.$store.commit('activeName',3);
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      //添加item至我的足迹请求
+      this.myFootPrint(item)
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });

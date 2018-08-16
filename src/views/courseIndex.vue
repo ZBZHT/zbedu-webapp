@@ -92,6 +92,8 @@ export default {
 
   data () {
     return {
+      userType:this.$store.state.userType,
+      userName:this.$store.state.username,
       msg: 'index',
       indexData:'',
       leftData:'',
@@ -142,28 +144,54 @@ export default {
             this.$store.commit('noTreeTitle1',item);
             this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.label)
         },
+    //我的足迹添加
+    myFootPrint(item){
+      axios.post('/teacherCMS/addMyfoot', {
+        data: {
+          userName:this.userName,
+          userType:this.userType,
+          courseInfo: item
+        }
+      }).then((res) => {
+        console.log(res.data)
+        if (res.data.code === 0){
+          //            this.addSuccess('更新成功');
+        }else if (res.data.code === 1){
+          //          this.$message.error('更新失败');
+        }
+      });
+    },
+    //点击图片或video按钮
     sendRecommendVideo(item){
       this.$store.commit('activeName',3);
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      //添加item至我的足迹请求
+      this.myFootPrint(item)
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });
       window.open(href, '_blank')
     },
+    //点击PPT按钮
     sendRecommendPPT(item){
       this.$store.commit('activeName',2);
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      //添加item至我的足迹请求
+      this.myFootPrint(item)
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });
       window.open(href, '_blank')
     },
+    //点击标题
     sendRecommendTitle(item){
       this.$store.commit('activeName','');
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      //添加item至我的足迹请求
+      this.myFootPrint(item)
       const {href} = this.$router.resolve({
             name: 'newCourse'
         });

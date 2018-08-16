@@ -27,5 +27,6 @@ module.exports = new Schema({
   },
   gender: Number,
   time: Date,
-  avatar: String  //头像
+  avatar: String,  //头像
+  myFootprint:Array,
 });

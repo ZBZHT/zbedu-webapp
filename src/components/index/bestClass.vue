@@ -26,37 +26,62 @@ export default {
   data () {
     return {
       msg: 'bestClass',
-      url_before:'src/assets/imgs/'
+      url_before:'src/assets/imgs/',
+      userType:this.$store.state.userType,
+      userName:this.$store.state.username,
     }
   },
   methods: {
+    //我的足迹添加
+    myFootPrint(item){
+      axios.post('/teacherCMS/addMyfoot', {
+        data: {
+          userName:this.userName,
+          userType:this.userType,
+          courseInfo: item
+        }
+      }).then((res) => {
+          console.log(res.data)
+        if (res.data.code === 0){
+//            this.addSuccess('更新成功');
+        }else if (res.data.code === 1){
+//          this.$message.error('更新失败');
+        }
+      });
+    },
+    //点击课程题目时
     sendBestTitle(item){
 //        console.log(item)
       this.$store.commit('activeName','');
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      this.myFootPrint(item)
       const {href} = this.$router.resolve({
             name: 'newCourse'
         });
       window.open(href, '_blank')
     //  this.$router.push('/newCourse');
     },
+    //点击图片或者video按钮时
     sendBestVideo(item){
 //      console.log(item)
       this.$store.commit('activeName',3);
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      this.myFootPrint(item);
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });
       window.open(href, '_blank')
       //  this.$router.push('/newCourse');
     },
+    //点击PPT按钮时
     sendBestPPT(item){
 //      console.log(item)
       this.$store.commit('activeName',2);
       this.$store.commit('noTreeTitle',item);
       this.$store.commit('noTreeTitle1',item);
+      this.myFootPrint(item);
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });
@@ -64,6 +89,7 @@ export default {
       //  this.$router.push('/newCourse');
     },
 
+    //以下暂时没用
     playBestVideo (item) {
         console.log(item)
         this.$store.commit('noTreeTitle',item);

@@ -380,34 +380,46 @@
           this.courseId2 = 111;
           this.keyId = 1111;
           this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0].children[0].children[0])
           this.findParent(id);
         }else if(id == 200){
           this.courseId1 = id;
           this.courseId2 = 211;
           this.keyId = 211;
           this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0].children[0])
           this.findParent(id);
         }else if(id == 300){
           this.courseId1 = id;
           this.courseId2 = 311;
           this.keyId = 311;
           this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0].children[0])
           this.findParent(id);
         }else if(id == 400){
           this.courseId1 = id;
           this.courseId2 = 411;
           this.keyId = 411;
           this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0].children[0])
           this.findParent(id);
         }else if(id == 500){
           this.courseId1 = id;
           this.keyId = 510;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else if(id == 600){
           this.courseId1 = id;
           this.keyId = 610;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else if(id == 700){
           this.courseId1 = id;
@@ -422,24 +434,32 @@
           this.courseId2 = 111;
           this.keyId = 1111;
           this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0].children[0])
           this.findParent(id);
         }else if(id > 110 && id < 120){
           this.courseId1 = 100;
           this.courseId2 = id;
           this.keyId = id.toString()+1;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else if(id > 120 && id < 130){
           this.courseId1 = 100;
           this.courseId2 = id;
           this.keyId = id.toString()+1;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else if(id == 120){
           this.courseId1 = 100;
           this.courseId2 = 121;
           this.keyId = 1211;
           this.$store.commit('noTreeTitle',data.children[0].children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0].children[0])
           this.findParent(id);
         }
       }else if(id > 200 && id < 300){
@@ -448,12 +468,16 @@
           this.courseId2 = id;
           this.keyId = id + 1;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else{
           this.courseId1 = 200;
           this.courseId2 = id;
           this.keyId = id;
           this.$store.commit('noTreeTitle',data);
+          //添加item至我的足迹请求
+          this.myFootPrint(data)
           this.findParent(id);
         }
       }else if(id > 300 && id < 400){
@@ -462,12 +486,16 @@
           this.courseId2 = id;
           this.keyId = id + 1;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else{
           this.courseId1 = 300;
           this.courseId2 = id;
           this.keyId = id;
           this.$store.commit('noTreeTitle',data);
+          //添加item至我的足迹请求
+          this.myFootPrint(data)
         }
       }else if(id > 400 && id < 500){
         if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
@@ -475,12 +503,16 @@
           this.courseId2 = id;
           this.keyId = id + 1;
           this.$store.commit('noTreeTitle',data.children[0]);
+          //添加item至我的足迹请求
+          this.myFootPrint(data.children[0])
           this.findParent(id);
         }else{
           this.courseId1 = 400;
           this.courseId2 = id;
           this.keyId = id;
           this.$store.commit('noTreeTitle',data);
+          //添加item至我的足迹请求
+          this.myFootPrint(data)
           this.findParent(id);
         }
       }else if(id > 500 && id < 600){
@@ -488,12 +520,16 @@
         this.courseId2 = id;
         this.keyId = id;
         this.$store.commit('noTreeTitle',data);
+        //添加item至我的足迹请求
+          this.myFootPrint(data)
         this.findParent(id);
       }else if(id > 600 && id < 700){
         this.courseId1 = 600;
         this.courseId2 = id;
         this.keyId = id;
         this.$store.commit('noTreeTitle',data);
+        //添加item至我的足迹请求
+          this.myFootPrint(data)
         this.findParent(id);
       }else if(id > 700 && id < 800){
         if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
@@ -1155,9 +1191,7 @@
         if(data.children){
 
         }else{
-          //点击请求评论
-
-
+          
           //点击新课程让课件跳转到第一页
           EventBus.$emit('newPageUp',this.pageFn(1));
           contentSlides.methods.pageUp(1);
@@ -1186,6 +1220,8 @@
           //点击新课程存本地的资源
           this.$store.commit('noTreeTitle',data);
           this.$store.commit('noTreeTitle1',data);
+          //添加item至我的足迹请求
+          this.myFootPrint(data)
           //请求课后作业
           var checkArrHomeWork = this.checkArr;
           if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
@@ -1460,7 +1496,24 @@
 
           }
         }
-      }
+      },
+      //我的足迹添加
+      myFootPrint(item){
+        axios.post('/teacherCMS/addMyfoot', {
+          data: {
+            userName:this.userName,
+            userType:this.userType,
+            courseInfo: item
+          }
+        }).then((res) => {
+          console.log(res.data)
+          if (res.data.code === 0){
+  //            this.addSuccess('更新成功');
+          }else if (res.data.code === 1){
+  //          this.$message.error('更新失败');
+          }
+        });
+      },
 
 
     },

@@ -8,19 +8,16 @@
         <el-tab-pane label="历史浏览" name="first">
 
           <el-table
-            :data="tableData"
+            :data="myFootData"
             style="width: 100%">
 
             <el-table-column label="序号" type="index" width="60">
             </el-table-column>
 
-            <el-table-column prop="date" label="浏览日期" width="180">
+            <el-table-column prop="label" label="课程名称" width="220">
             </el-table-column>
 
-            <el-table-column prop="name" label="课程名称" width="180">
-            </el-table-column>
-
-            <el-table-column prop="address" label="课程简介">
+            <el-table-column prop="describe" label="课程简介" width="600">
             </el-table-column>
 
             <el-table-column label="操作">
@@ -54,38 +51,74 @@
     name: 'myFootprint',
     data() {
       return {
-        data: [],
         activeName: 'first',
         tableData: [],
+        userType:this.$store.state.userType,
+        userName:this.$store.state.username,
+        myFootData:[],
       }
     },
     computed: {},
+    mounted() {
+      this.getMyFootData()
+    },
     methods: {
+      //获取我的足迹数据
+      getMyFootData(){
+        axios.post('/teacherCMS/getMyfoot', {
+          data: {
+            userName:this.userName,
+            userType:this.userType,
+          }
+        }).then((res) => {
+          console.log(res.data)
+          if (res.data.code === 0){
+            this.myFootData = res.data.result
+          }else if (res.data.code === 1){
+//            this.$message.error('更新失败');
+          }
+        });
+      },
+      //我的足迹添加
+      myFootPrint(item){
+        axios.post('/teacherCMS/addMyfoot', {
+          data: {
+            userName:this.userName,
+            userType:this.userType,
+            courseInfo: item
+          }
+        }).then((res) => {
+          console.log(res.data)
+          if (res.data.code === 0){
+//            this.addSuccess('更新成功');
+          }else if (res.data.code === 1){
+//          this.$message.error('更新失败');
+          }
+        });
+      },
       handleClick(tab, event) {
         console.log(tab, event);
       },
-      handleEdit(index, row) {
-        console.log(index, row);
+      //进入课程
+      handleEdit(index, item) {
+        console.log(index, item);
+        this.$store.commit('activeName','');
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item)
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
+        });
+        window.open(href, '_blank')
+        this.getMyFootData()
       },
       handleDelete(index, row) {
         console.log(index, row);
       },
 
     },
-    mounted() {
-     /* axios.post('/teacherCMS/userManager', {
-        data: {
-          username: this.username,
-          userType: this.userType
-        }
-      }).then((res) => {
-        if (res.data.userInfo.length > 0) {
-          this.dataManager = res.data.userInfo;
-          this.total = this.dataManager.length
-        }
-      });*/
 
-    },
     components: {}
   }
 </script>

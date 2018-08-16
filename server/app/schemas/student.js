@@ -31,4 +31,5 @@ module.exports = new Schema({
   classGrade: String, //班级
   department: String,  //院系
   email: String,
+  myFootprint:Array,
 });
