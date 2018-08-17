@@ -470,7 +470,7 @@
       //  console.log(this.treeData);
         setTimeout(() => {
           this.$refs.treeData.setCurrentKey(201)
-        }, 20)
+        }, 300)
       })
     },
     components: {

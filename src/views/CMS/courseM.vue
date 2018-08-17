@@ -72,7 +72,7 @@
             </div>
             <div class="colDel">
               <p>操作</p>
-              <el-button v-for="(item,index) in bestCourseTree" size="small" class="userM_el-tableBut"
+              <el-button v-for="(item,index) in bestCourseTree" size="small" class="userM_el-tableBut" :key = "index"
                          @click="delChecked(index,item)">删除
               </el-button>
             </div>
@@ -111,7 +111,7 @@
             </div>
             <div class="colDel">
               <p>操作</p>
-              <el-button v-for="(item,index) in suggCourseTree" size="small" class="userM_el-tableBut"
+              <el-button v-for="(item,index) in suggCourseTree" size="small" class="userM_el-tableBut" :key = "index"
                          @click="delChecked1(index,item)">删除
               </el-button>
             </div>

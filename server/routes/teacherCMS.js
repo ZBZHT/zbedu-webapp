@@ -3343,38 +3343,44 @@ router.post('/addMyfoot', function (req, res) {
   let reqUserType = reqData.userType
   let myFootArray = []
     if (reqUserType === 'S' || reqUserType === 'O') {
+      // console.log("1")
       Student.findOne({
         user: reqData.userName
       }).then(function (result) {
+        // console.log("2")
         myFootArray = result.myFootprint
-        console.log(myFootArray)
-        // for(var i = 0; i < myFootArray.length; i++){
-        //   console.log(myFootArray[i].label)
-        //   console.log(reqData.courseInfo.label)
-        //   if(myFootArray[i].label === reqData.courseInfo.label){
-        //
-        //
-        //     // for(var j = 0; j < myFootArray.length; j++){
-        //     //   // console.log(k)
-        //     //   // console.log(i)
-        //     //   if(j !== i){
-        //     //     let newArray = []
-        //     //     newArray.push(myFootArray[j])
-        //     //     myFootArray = newArray
-        //     //   }
-        //     // }
-        //
-        //   }else if(myFootArray[i].label !== reqData.courseInfo.label){
-        //
-        //   }
-        // }
+        let myFootPrint = []
+        myFootPrint = result.myFootprint
+        let newArray = [];
+        for(var i = 0; i < myFootArray.length; i++){
+          if(myFootArray[i].label === reqData.courseInfo.label){
+            let index = ''
+            index = i
+            // console.log(index)
+            for(var j = 0; j < myFootPrint.length; j++){
+              if(j !== index){
+                newArray.push(myFootPrint[j])
+                myFootArray = newArray
+                // console.log(newArray)
+                // console.log(myFootArray)
+              }
+            }
+          }else{
+            if(myFootArray.length >= 10){
+              myFootArray.pop(myFootArray[9])
+              console.log(myFootArray)
+            }
+          }
+        }
+
         myFootArray.unshift(reqData.courseInfo)
-        // console.log(myFootArray)
+        // console.log("3")
         Student.findOneAndUpdate({
           user: reqData.userName
         }, {
           myFootprint: myFootArray
         }, function (err) {
+          // console.log("4")
           if (err) {
             console.log(err);
             res.status(200).send({code: 1, Msg: '添加失败',});
@@ -3384,18 +3390,46 @@ router.post('/addMyfoot', function (req, res) {
           }
         });
       })
-    } else if (reqUserType === 'EA' || reqUserType === 'T') {
+    } else if (reqUserType === 'SA' || reqUserType === 'EA' || reqUserType === 'T') {
       //console.log(reqUser);
       Teacher.findOne({
         user: reqData.userName
       }).then(function (result) {
+        // console.log("2")
         myFootArray = result.myFootprint
-        myFootArray.push(reqData.courseInfo)
+        let myFootPrint = []
+        myFootPrint = result.myFootprint
+        console.log()
+        let newArray = [];
+        for(var i = 0; i < myFootArray.length; i++){
+          if(myFootArray[i].label === reqData.courseInfo.label){
+            let index = ''
+            index = i
+            // console.log(index)
+            for(var j = 0; j < myFootPrint.length; j++){
+              if(j !== index){
+                newArray.push(myFootPrint[j])
+                myFootArray = newArray
+                // console.log(newArray)
+                // console.log(myFootArray)
+              }
+            }
+          }else{
+            if(myFootArray.length >= 10){
+              myFootArray.pop(myFootArray[9])
+              console.log(myFootArray)
+            }
+          }
+        }
+
+        myFootArray.unshift(reqData.courseInfo)
+        // console.log("3")
         Teacher.findOneAndUpdate({
           user: reqData.userName
         }, {
           myFootprint: myFootArray
         }, function (err) {
+          // console.log("4")
           if (err) {
             console.log(err);
             res.status(200).send({code: 1, Msg: '添加失败',});
@@ -3430,23 +3464,63 @@ router.post('/getMyfoot', function (req, res) {
     Teacher.findOne({
       user: reqData.userName
     }).then(function (result) {
-
       myFootArray = result.myFootprint
-      myFootArray.push(reqData.courseInfo)
+      if (myFootArray) {
+        res.status(200).send({code: 0, result: myFootArray, Msg: '返回成功',});
+      } else {
+        res.status(200).send({code: 1, Msg: '返回失败',});
+      }
+    })
+  }
+});
+//删除我的足迹
+router.post('/delMyfoot', function (req, res) {
+  //console.log(req.body.data);
+  if (req.body.data) {
+    let reqData = req.body.data;
+    // let bestcourse =[]
+    // bestcourse = reqData.courseInfo
+    // console.log(bestcourse)
+    if (reqData.userType === 'SA' || reqData.userType === 'EA'|| reqData.userType === 'T') {
+      console.log(reqData.courseInfo)
       Teacher.findOneAndUpdate({
         user: reqData.userName
       }, {
-        myFootprint: myFootArray
+        //$set: { "bestcourse" : newbestCourse }
+        myFootprint : reqData.courseInfo
       }, function (err) {
+
         if (err) {
           console.log(err);
-          res.status(200).send({code: 1, Msg: '添加失败',});
+          res.status(200).send({code: 1, Msg: '删除失败',});
         } else {
-          //console.log('修改成功IDNo');
-          res.status(200).send({code: 0, Msg: '添加成功',});
+          console.log('添加成功');
+          res.status(200).send({code: 0, Msg: '删除成功',});
         }
       });
-    })
+    } else if (reqData.userType === 'S' || reqData.userType === 'O') {
+      console.log(reqData.courseInfo)
+      Student.findOneAndUpdate({
+        user: reqData.userName
+      }, {
+        //$set: { "bestcourse" : newbestCourse }
+        myFootprint : reqData.courseInfo
+      }, function (err) {
+
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '删除失败',});
+        } else {
+          console.log('添加成功');
+          res.status(200).send({code: 0, Msg: '删除成功',});
+        }
+      });
+    }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
   }
 });
 module.exports = router;

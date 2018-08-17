@@ -113,8 +113,50 @@
         window.open(href, '_blank')
         this.getMyFootData()
       },
+      // 成功后提示信息
+      addSuccess(msg) {
+        this.$message({
+          showClose: true,
+          message: msg,
+          type: 'success'
+        });
+      },
+      //删除记录课程
       handleDelete(index, row) {
-        console.log(index, row);
+//        console.log(index, row);
+        var delData = []
+        for(var i = 0; i < this.myFootData.length; i++){
+          if(i !== index){
+            delData.push(this.myFootData[i])
+          }
+        }
+        this.$confirm('此操作将删除该课程, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          axios.post('/teacherCMS/delMyfoot', {
+            data: {
+              userType:this.userType,
+              userName:this.userName,
+              courseInfo: delData
+            }
+          }).then((res) => {
+//            console.log(res.data)
+            if (res.data.code === 0){
+              this.addSuccess('删除成功');
+              this.getMyFootData();
+            }else if (res.data.code === 1){
+              this.$message.error('删除失败');
+            }
+          });
+          this.getMyFootData();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       },
 
     },
