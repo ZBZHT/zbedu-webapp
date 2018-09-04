@@ -12,10 +12,10 @@
                 <div id="content1" class="content" :class="{dispear : !dispear}">
                     <div class="bb-item" v-for="(item,index) in bottomRightData">
                         <span class="num"
-                        :class="{top3 : index <= 2}" v-show="item.title">
-                            {{item.num}}
+                        :class="{top3 : index <= 2}">
+                            {{index + 1}}
                         </span>
-                        <b @click="sendRecommendTitle(item)">{{item.title}}</b>
+                        <b @click="sendRecommendTitle(item)">{{item.label}}</b>
                     </div>
                 </div>
 
@@ -49,6 +49,17 @@ export default {
   },
 
   methods:{
+      //为热门课程给每个课程计数
+      countForHot(item){
+        axios.post('/teacherCMS/countHot', {
+          data: {
+            courseInfo: item
+          }
+        }).then((res) => {
+          console.log(res.data)
+
+        });
+      },
       //我的足迹添加
       myFootPrint(item){
         axios.post('/teacherCMS/addMyfoot', {
@@ -72,6 +83,7 @@ export default {
         this.$store.commit('noTreeTitle1',item);
         //添加item至我的足迹请求
         this.myFootPrint(item)
+        this.countForHot(item)
         const {href} = this.$router.resolve({
                 name: 'newCourse'
             });

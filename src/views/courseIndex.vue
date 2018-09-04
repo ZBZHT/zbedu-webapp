@@ -36,12 +36,16 @@
                     v-if="index >= (page-1)*6 && index <= (page-1)*6 + 5">
                     <a>
                         <div class="mask-play">
-                            <div class="maskImg"><img :src="url_before + item.url"></div>
-                            <div class="mask">
-                                <img @click="sendRecommendVideo(item)" class="play" src="src/assets/imgs/play3.png">
-                                <p @click="sendRecommendPPT(item)" class="ppv"><span>PPT</span></p>
-                                <p @click="sendRecommendVideo(item)" class="video"><span>Video</span></p>
-                            </div>
+                            <!--<div class="maskImg"><img :src="url_before + item.url"></div>-->
+                          <div class="maskImg">
+                            <!--<img src="src/assets/imgs/bestclass1.png">-->
+                            <p>{{item.label}}</p>
+                          </div>
+                          <div class="mask">
+                              <img @click="sendRecommendVideo(item)" class="play" src="src/assets/imgs/play3.png">
+                              <p @click="sendRecommendPPT(item)" class="ppv"><span>PPT</span></p>
+                              <p @click="sendRecommendVideo(item)" class="video"><span>Video</span></p>
+                          </div>
 
                         <div class="intro">
                             <span class="jianjie">
@@ -144,6 +148,17 @@ export default {
             this.$store.commit('noTreeTitle1',item);
             this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.label)
         },
+    //为热门课程给每个课程计数
+    countForHot(item){
+      axios.post('/teacherCMS/countHot', {
+        data: {
+          courseInfo: item
+        }
+      }).then((res) => {
+        console.log(res.data)
+
+      });
+    },
     //我的足迹添加
     myFootPrint(item){
       axios.post('/teacherCMS/addMyfoot', {
@@ -168,6 +183,7 @@ export default {
       this.$store.commit('noTreeTitle1',item);
       //添加item至我的足迹请求
       this.myFootPrint(item)
+      this.countForHot(item)
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });
@@ -180,6 +196,7 @@ export default {
       this.$store.commit('noTreeTitle1',item);
       //添加item至我的足迹请求
       this.myFootPrint(item)
+      this.countForHot(item)
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });
@@ -192,6 +209,7 @@ export default {
       this.$store.commit('noTreeTitle1',item);
       //添加item至我的足迹请求
       this.myFootPrint(item)
+      this.countForHot(item)
       const {href} = this.$router.resolve({
             name: 'newCourse'
         });
@@ -215,7 +233,7 @@ export default {
 //                this.bestClassData = this.indexData.bestClassData;
 //                this.pageData = this.indexData.pageData;
                 this.bottomLeftData = this.indexData.bottomLeftData;
-                this.bottomRightData = this.indexData.bottomRightData;
+//                this.bottomRightData = this.indexData.bottomRightData;
                 this.slides = this.indexData.slides;
             }).catch(function(error){
                 console.log("error init." + error)
@@ -226,10 +244,11 @@ export default {
             userType:this.userType
           }
         }).then((res) => {
-          //          console.log(res.data)
+                    console.log(res.data)
           this.bestClassData = res.data.result[0].bestCourse;
           //          console.log(this.bestClassData)
           this.pageData = res.data.result[0].suggCourse;
+          this.bottomRightData = res.data.result[0].countForHot;
           this.total = this.all.length;
         });
 
@@ -324,10 +343,21 @@ hr{
 .courseIndex .mask-play .maskImg{
     width:169px;
     height:100px;
+    background: url("../../src/assets/imgs/bestclass2.png") no-repeat;
+    background-size:100% 100%;
+    padding-top:18% !important;
+    padding:5%;
+    box-sizing: border-box;
 }
 .courseIndex .mask-play .maskImg img{
     width:100%;
     height:100%;
+}
+.courseIndex .mask-play .maskImg p{
+  font-weight:bolder;
+  font-size:18px;
+  color:#000;
+  text-align: center;
 }
 .courseIndex .mask>img{
     margin-top:20px;

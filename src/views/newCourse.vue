@@ -362,6 +362,30 @@
 
       //获取树形数据
       this.data = this.$store.state.newBannerLeft;
+
+//      axios.get("/readJson/bannerLeftData",{
+//        params:{
+//             user:234
+//        }
+
+//      axios.post('/teacherCMS/getCenterTree', {
+//        data: {
+//          userID: this.userID,
+//          userType: this.userType,
+//        }
+//      }).then((res)=>{
+//        console.log(res.data[0].children)
+//        console.log(res.data[0].children[0])
+//          this.data = res.data[0].children[0].children;
+//
+////        var _this = this
+////        this.$nextTick(function () {
+////        _this.refRecursion(100, 1)
+////        })
+//      }).catch(function(error){
+//          console.log("error init." + error)
+//      });
+
       setTimeout(() => {
         this.$refs.vuetree.setCurrentKey(this.keyId)
       }, 20)
@@ -553,25 +577,6 @@
         this.findParent(id);
       }
 
-
-//    axios.get("/readJson/bannerLeftData",{
-//        params:{
-//             user:234
-//        }
-//      }).then((res)=>{
-//          this.data = res.data[0].children;
-//          //console.log(this.data[0].label)
-//          //console.log(this.$refs.vuetree);
-//          setTimeout(() => {
-//            this.$refs.vuetree.setCurrentKey(this.keyId)
-//          }, 20)
-////        var _this = this
-////        this.$nextTick(function () {
-////        _this.refRecursion(100, 1)
-////        })
-//      }).catch(function(error){
-//          console.log("error init." + error)
-//      });
       //评论一系列
       this.user = this.$store.state.username;
       // console.log(this.user)
@@ -1191,7 +1196,7 @@
         if(data.children){
 
         }else{
-          
+
           //点击新课程让课件跳转到第一页
           EventBus.$emit('newPageUp',this.pageFn(1));
           contentSlides.methods.pageUp(1);
@@ -1513,6 +1518,15 @@
   //          this.$message.error('更新失败');
           }
         });
+        //为热门课程给每个课程计数
+          axios.post('/teacherCMS/countHot', {
+            data: {
+              courseInfo: item
+            }
+          }).then((res) => {
+            console.log(res.data)
+
+          });
       },
 
 

@@ -1460,7 +1460,7 @@ router.post('/uploadCourse', function (req, res) {
 //获取课程树
 router.post('/getCenterTree', function (req, res) {
   let reqUserType = req.session.users.userType;
-  if (reqUserType === 'EA' || reqUserType === 'SA') {
+  if (reqUserType === 'EA' || reqUserType === 'SA' || reqUserType === 'S' || reqUserType === 'T' || reqUserType === 'O') {
     CenterTree.find({}).then(function (result) {
 
       res.status(200).send(result);
@@ -3516,6 +3516,67 @@ router.post('/delMyfoot', function (req, res) {
         }
       });
     }
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+//为热门课程给每个课程计数
+router.post('/countHot', function (req, res) {
+  if (req.body.data) {
+    let reqData = req.body.data;
+    let clickNew = ''
+    // console.log(reqData)
+    SetCourse.findOne({}).then(function (result) {
+      // console.log(result.countForHot)
+      let countForHot = result.countForHot
+      let newArray = [];
+      for(var i = 0; i < countForHot.length; i++){
+      if(countForHot[i].label === reqData.courseInfo.label){
+        clickNew = countForHot[i].clickNum
+        let index = ''
+        index = i
+        // console.log(index)
+        for(var j = 0; j < countForHot.length; j++){
+          if(j !== index){
+            newArray.push(countForHot[j])
+
+            // console.log(newArray)
+            // console.log(myFootArray)
+          }
+
+        }
+        countForHot = newArray
+        console.log()
+      }else{
+        if(countForHot.length >= 6){
+          countForHot.pop(countForHot[5])
+          console.log(countForHot)
+        }
+      }
+    }
+      // console.log(countForHot)
+      reqData.courseInfo.clickNum += clickNew + 1
+      console.log(reqData.courseInfo.clickNum)
+      countForHot.unshift(reqData.courseInfo)
+
+      SetCourse.findOneAndUpdate({
+        _id:result._id
+      }, {
+        //$set: { "bestcourse" : newbestCourse }
+        countForHot : countForHot
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '添加失败',});
+        } else {
+          console.log('添加成功');
+          res.status(200).send({code: 0, Msg: '添加成功',result:countForHot});
+        }
+      });
+    })
   } else {
     res.status(404).send({
       Msg: '无法获取请求数据',

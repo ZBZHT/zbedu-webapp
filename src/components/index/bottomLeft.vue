@@ -34,6 +34,17 @@ export default {
 //      this.$store.commit('noTreeTitle1',item);
 //      this.$router.push('/playVideo/'+item.courseId + '/video/' + item.title)
 //    },
+    //为热门课程给每个课程计数
+    countForHot(item){
+      axios.post('/teacherCMS/countHot', {
+        data: {
+          courseInfo: item
+        }
+      }).then((res) => {
+        console.log(res.data)
+
+      });
+    },
     //我的足迹添加
     myFootPrint(item){
       axios.post('/teacherCMS/addMyfoot', {
@@ -58,6 +69,7 @@ export default {
       this.$store.commit('noTreeTitle1',item);
       //添加item至我的足迹请求
       this.myFootPrint(item)
+      this.countForHot(item)
       const {href} = this.$router.resolve({
             name: 'newCourse'
         });
@@ -70,6 +82,7 @@ export default {
       this.$store.commit('noTreeTitle1',item);
       //添加item至我的足迹请求
       this.myFootPrint(item)
+      this.countForHot(item)
       const {href} = this.$router.resolve({
         name: 'newCourse'
       });

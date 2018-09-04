@@ -74,20 +74,29 @@
         secondData:[],
         thirdData:[],
         teachingPPTimg:[],
-        videoTitle:[]
+        videoTitle:[],
+        userID:this.$store.state.userID,
+        userType:this.$store.state.userType,
       }
     },
     methods: {
       letBannerLeft(){
-        axios.get("/readJson/bannerLeftData",{
-          params:{
-            user:234
+//        this.bannerLeftData = res.data[0]
+//        axios.get("/readJson/bannerLeftData",{
+//          params:{
+//            user:234
+//          }
+        axios.post('/teacherCMS/getCenterTree', {
+          data: {
+            userID: this.userID,
+            userType: this.userType,
           }
         }).then((res)=>{
+          console.log(res.data[0].children[0])
           if(this.$store.state.userType != "S"){
             //   console.log("111")
             //   console.log(this.$store.state.userType)
-            this.bannerLeftData = res.data[0];
+            this.bannerLeftData = res.data[0].children[0];
             var lastData = res.data[0];
             //      console.log(lastData.children[6])
             //      console.log(this.bannerLeftData[0].children[6])
@@ -114,7 +123,7 @@
 
           }else{
             console.log("222")
-            this.bannerLeftData = res.data[0];
+            this.bannerLeftData = res.data[0].children[0];
             var newBannerLeft = [];
             //    console.log(this.bannerLeftData.children.length -1);
             for(var i = 0; i < this.bannerLeftData.children.length; i++){

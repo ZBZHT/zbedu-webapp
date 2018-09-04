@@ -2,12 +2,16 @@
 <div class="best-class">
     <div class="five-box" v-for="item in bestClassData">
         <div class="mask-play zz mf">
-            <div class="maskImg"><img :src="url_before + item.url"></div>
-            <div class="mask">
-                <img @click="sendBestVideo(item)" src="src/assets/imgs/play3.png">
-                <p class="ppv" @click="sendBestPPT(item)"><span>PPT</span></p>
-                <p class="ppv" @click="sendBestVideo(item)"><span>Video</span></p>
-            </div>
+            <!--<div class="maskImg"><img :src="url_before + item.url"></div>-->
+          <div class="maskImg">
+            <!--<img src="src/assets/imgs/bestclass1.png">-->
+            <p>{{item.label}}</p>
+          </div>
+          <div class="mask">
+            <img @click="sendBestVideo(item)" src="src/assets/imgs/play3.png">
+            <p class="ppv" @click="sendBestPPT(item)"><span>PPT</span></p>
+            <p class="ppv" @click="sendBestVideo(item)"><span>Video</span></p>
+          </div>
         </div>
         <p class="p" @click="sendBestTitle(item)">
             {{item.label}}
@@ -47,6 +51,15 @@ export default {
         }else if (res.data.code === 1){
 //          this.$message.error('更新失败');
         }
+      });
+      //为热门课程给每个课程计数
+      axios.post('/teacherCMS/countHot', {
+        data: {
+          courseInfo: item
+        }
+      }).then((res) => {
+        console.log(res.data)
+
       });
     },
     //点击课程题目时
@@ -167,17 +180,27 @@ a:hover{
     overflow: hidden;
 }
 .mf{
-    width:171px;
+    width:169px;
     height:100px;
     margin-bottom:40px;
 }
 .mask-play .maskImg{
     width:169px;
     height:100px;
+    background: url("../../../src/assets/imgs/bestclass2.png") no-repeat;
+    background-size:100% 100%;
+    padding-top:18% !important;
+    padding:5%;
+    box-sizing: border-box;
 }
 .mask-play .maskImg img{
     width:100%;
     height:100%;
+}
+.mask-play .maskImg p{
+    font-weight:bolder;
+    font-size:18px;
+    color:#000;
 }
 .mask-play .mask{
     width:171px;
