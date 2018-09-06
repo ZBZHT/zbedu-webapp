@@ -1047,9 +1047,13 @@
             let resD = res.data.techCosCou[0].tab;
             this.resDataForm = resD;
             if (this.dataForm == '') {
-              this.dataForm = (this.resDataForm[0].children);
+                if (this.resDataForm[0] !== undefined) {
+                  this.dataForm = (this.resDataForm[0].children);
+                }
             }
-            this.editableTabsValue = (this.resDataForm[0].label);
+            if (this.resDataForm[0] !== undefined) {
+              this.editableTabsValue = (this.resDataForm[0].label);
+            }
           } else {
             this.warningMsg('服务器返回错误')
           }

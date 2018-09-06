@@ -347,7 +347,7 @@ router.post('/getUserData', function (req, res) {
           }).then(function (teacher) {
             if (teacher) {
               Student.find().then(function (student) {
-                //console.log(student);
+                console.log(student);
                 if (student) {
                   res.status(200).send({
                     teacher: teacher,
@@ -2859,47 +2859,6 @@ router.post('/getAllStuClass', function (req, res) {
     }
   });
 });
-//学生获取课堂信息--手机端
-/*router.post('/getStuCourse', function (req, res) {
- let username = req.session.users.username;
- let userType = req.session.users.userType;
-
- let course = '';
-
- CourseTable.findOne({        //找到班级
- courseDate: dayAll[0],
- }).then(function (courseTable) {
- if (courseTable !== null) {
- let dayAll = core.getDayAll(moment().format("YYYY-MM-DD"));
- let date = moment().format("YYYY-MM-DD");
- let date1 = new Date(moment().format("YYYY-MM-DD,HH:mm")).getTime();
- let stuArr = [];
- let index = 0;
- for (let i = 0; i < dayAll.length; i++) {
- if (dayAll[i] === date) {
- index = i;
- }
- }
- stuArr.push(courseTable.course[0].newCourse[index]);
- stuArr.push(courseTable.course[0].newCourse2[index]);
- stuArr.push(courseTable.course[0].newCourse3[index]);
- stuArr.push(courseTable.course[0].newCourse4[index]);
- stuArr.push(courseTable.course[0].newCourse5[index]);
- course = stuArr[0];
- for (let i = 1; i < stuArr.length; i++) {
- let start = new Date(moment(date + ',' + stuArr[i-1].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
- let end = new Date(moment(date + ',' + stuArr[i].endTime).format("YYYY-MM-DD,HH:mm")).getTime();
- if (date1 > start && date1 < end ) {
- course = stuArr[i];
- }
- }
- console.log(course);
- //res.status(200).send({code: 0, result: course, Msg: '获取成功',});
- } else {
- res.status(200).send({code: 1, Msg: '未找到该课程表',});
- }
- });
- });*/
 //学生-获取签到信息
 router.post('/getSignInMsg', function (req, res) {
   let resData = req.body.data.stuCourse;
@@ -3161,7 +3120,7 @@ router.post('/getBestCourse', function (req, res){
       });
     }
   });
-})
+});
 //新增推荐课程
 router.post('/addSuggCourse', function (req, res) {
   // console.log(req.body.data);
@@ -3339,27 +3298,28 @@ router.post('/delSuggCou', function (req, res) {
 //新增我的足迹
 router.post('/addMyfoot', function (req, res) {
   let reqData = req.body.data;
-  // console.log(reqData)
-  let reqUserType = reqData.userType
-  let myFootArray = []
+  reqData.courseInfo.time = moment().format("YYYY-MM-DD HH:mm:ss");
+  //console.log(reqData.courseInfo);
+  let reqUserType = reqData.userType;
+  let myFootArray = [];
     if (reqUserType === 'S' || reqUserType === 'O') {
       // console.log("1")
       Student.findOne({
         user: reqData.userName
       }).then(function (result) {
         // console.log("2")
-        myFootArray = result.myFootprint
-        let myFootPrint = []
-        myFootPrint = result.myFootprint
+        myFootArray = result.myFootprint;
+        let myFootPrint = [];
+        myFootPrint = result.myFootprint;
         let newArray = [];
         for(var i = 0; i < myFootArray.length; i++){
           if(myFootArray[i].label === reqData.courseInfo.label){
-            let index = ''
-            index = i
+            let index = '';
+            index = i;
             // console.log(index)
             for(var j = 0; j < myFootPrint.length; j++){
               if(j !== index){
-                newArray.push(myFootPrint[j])
+                newArray.push(myFootPrint[j]);
                 myFootArray = newArray
                 // console.log(newArray)
                 // console.log(myFootArray)
@@ -3367,13 +3327,13 @@ router.post('/addMyfoot', function (req, res) {
             }
           }else{
             if(myFootArray.length >= 10){
-              myFootArray.pop(myFootArray[9])
+              myFootArray.pop(myFootArray[9]);
               console.log(myFootArray)
             }
           }
         }
 
-        myFootArray.unshift(reqData.courseInfo)
+        myFootArray.unshift(reqData.courseInfo);
         // console.log("3")
         Student.findOneAndUpdate({
           user: reqData.userName
@@ -3395,20 +3355,20 @@ router.post('/addMyfoot', function (req, res) {
       Teacher.findOne({
         user: reqData.userName
       }).then(function (result) {
-        // console.log("2")
-        myFootArray = result.myFootprint
-        let myFootPrint = []
-        myFootPrint = result.myFootprint
-        console.log()
+         //console.log("2");
+        //console.log(result);
+        myFootArray = result.myFootprint;
+        let myFootPrint = [];
+        myFootPrint = result.myFootprint;
         let newArray = [];
         for(var i = 0; i < myFootArray.length; i++){
           if(myFootArray[i].label === reqData.courseInfo.label){
-            let index = ''
-            index = i
+            let index = '';
+            index = i;
             // console.log(index)
             for(var j = 0; j < myFootPrint.length; j++){
               if(j !== index){
-                newArray.push(myFootPrint[j])
+                newArray.push(myFootPrint[j]);
                 myFootArray = newArray
                 // console.log(newArray)
                 // console.log(myFootArray)
@@ -3416,13 +3376,13 @@ router.post('/addMyfoot', function (req, res) {
             }
           }else{
             if(myFootArray.length >= 10){
-              myFootArray.pop(myFootArray[9])
+              myFootArray.pop(myFootArray[9]);
               console.log(myFootArray)
             }
           }
         }
 
-        myFootArray.unshift(reqData.courseInfo)
+        myFootArray.unshift(reqData.courseInfo);
         // console.log("3")
         Teacher.findOneAndUpdate({
           user: reqData.userName
@@ -3444,14 +3404,14 @@ router.post('/addMyfoot', function (req, res) {
 //获取我的足迹
 router.post('/getMyfoot', function (req, res) {
   let reqData = req.body.data;
-  console.log(reqData)
-  let reqUserType = reqData.userType
-  let myFootArray = []
+  //console.log(reqData)
+  let reqUserType = reqData.userType;
+  let myFootArray = [];
   if (reqUserType === 'S' || reqUserType === 'O') {
     Student.findOne({
       user: reqData.userName
     }).then(function (result) {
-      myFootArray = result.myFootprint
+      myFootArray = result.myFootprint;
       if (myFootArray) {
         res.status(200).send({code: 0, result: myFootArray, Msg: '返回成功',});
       } else {
@@ -3459,12 +3419,13 @@ router.post('/getMyfoot', function (req, res) {
       }
     })
 
-  } else if (reqUserType === 'EA' || reqUserType === 'T') {
+  } else if (reqUserType === 'EA' || reqUserType === 'T' || reqUserType === 'SA') {
     //console.log(reqUser);
     Teacher.findOne({
       user: reqData.userName
     }).then(function (result) {
-      myFootArray = result.myFootprint
+      myFootArray = result.myFootprint;
+      //console.log(myFootArray);
       if (myFootArray) {
         res.status(200).send({code: 0, result: myFootArray, Msg: '返回成功',});
       } else {
@@ -3482,7 +3443,7 @@ router.post('/delMyfoot', function (req, res) {
     // bestcourse = reqData.courseInfo
     // console.log(bestcourse)
     if (reqData.userType === 'SA' || reqData.userType === 'EA'|| reqData.userType === 'T') {
-      console.log(reqData.courseInfo)
+      //console.log(reqData.courseInfo);
       Teacher.findOneAndUpdate({
         user: reqData.userName
       }, {
@@ -3499,7 +3460,7 @@ router.post('/delMyfoot', function (req, res) {
         }
       });
     } else if (reqData.userType === 'S' || reqData.userType === 'O') {
-      console.log(reqData.courseInfo)
+      //console.log(reqData.courseInfo);
       Student.findOneAndUpdate({
         user: reqData.userName
       }, {
@@ -3527,17 +3488,17 @@ router.post('/delMyfoot', function (req, res) {
 router.post('/countHot', function (req, res) {
   if (req.body.data) {
     let reqData = req.body.data;
-    let clickNew = ''
+    let clickNew = '';
     // console.log(reqData)
     SetCourse.findOne({}).then(function (result) {
       // console.log(result.countForHot)
-      let countForHot = result.countForHot
+      let countForHot = result.countForHot;
       let newArray = [];
       for(var i = 0; i < countForHot.length; i++){
       if(countForHot[i].label === reqData.courseInfo.label){
-        clickNew = countForHot[i].clickNum
-        let index = ''
-        index = i
+        clickNew = countForHot[i].clickNum;
+        let index = '';
+        index = i;
         // console.log(index)
         for(var j = 0; j < countForHot.length; j++){
           if(j !== index){
@@ -3548,19 +3509,31 @@ router.post('/countHot', function (req, res) {
           }
 
         }
-        countForHot = newArray
+        countForHot = newArray;
         console.log()
       }else{
         if(countForHot.length >= 6){
           countForHot.pop(countForHot[5])
-          console.log(countForHot)
+          // console.log(countForHot)
         }
       }
     }
       // console.log(countForHot)
-      reqData.courseInfo.clickNum += clickNew + 1
-      console.log(reqData.courseInfo.clickNum)
-      countForHot.unshift(reqData.courseInfo)
+      reqData.courseInfo.clickNum += clickNew + 1;
+      //console.log(reqData.courseInfo.clickNum);
+      countForHot.unshift(reqData.courseInfo);
+      for(var i = 0; i < countForHot.length; i++){
+        for(var j = i + 1; j < countForHot.length; j++){
+          if(countForHot[i].clickNum < countForHot[j].clickNum){
+            let bottom = '';
+            bottom = countForHot[i]
+            countForHot[i] = countForHot[j]
+            countForHot[j] = bottom
+          }else{
+
+          }
+        }
+      }
 
       SetCourse.findOneAndUpdate({
         _id:result._id
@@ -3576,6 +3549,115 @@ router.post('/countHot', function (req, res) {
           res.status(200).send({code: 0, Msg: '添加成功',result:countForHot});
         }
       });
+    })
+  } else {
+    res.status(404).send({
+      Msg: '无法获取请求数据',
+      success: 1,
+    });
+  }
+});
+//学霸排行相关
+router.post('/studentHot', function (req, res) {
+  if (req.body.data) {
+    let reqData = req.body.data;
+    let clickNew = '';
+    let stuhot = [];
+    let studentHotArray = []
+    // console.log(reqData)
+    // SetCourse.findOne({}).then(function (result) {
+    //   stuhot = result.studentHot;
+    // });
+
+    Student.findOne({
+      user: reqData.name
+    }).then(function (result) {
+      clickNew = result.clickNum + 1;
+      console.log(result)
+      console.log(clickNew)
+      // if(stuhot.length === 0){
+      //   stuhot.push(result)
+      // }else if(stuhot.length > 0){
+      //   for(var i = 0; i < stuhot.length; i++){
+      //     // console.log(stuhot[i])
+      //     if(reqData.name === stuhot[i].user){
+      //       clickNew = result.clickNum + 1;
+      //       break
+      //     }else{
+      //       clickNew = result.clickNum + 1;
+      //       stuhot.push(result)
+      //       break
+      //     }
+      //   }
+      //   console.log("vvv")
+      // }
+      // for(var k = 0; k < stuhot.length; k++){
+      //   for(var j = k + 1; j < stuhot.length; j++){
+      //     if(stuhot[k].clickNum < stuhot[j].clickNum){
+      //       let bottom = '';
+      //       bottom = stuhot[k]
+      //       stuhot[k] = stuhot[j]
+      //       stuhot[j] = bottom
+      //     }else{
+      //
+      //     }
+      //   }
+      // }
+      // if(stuhot.length >= 8){
+      //   stuhot.pop(stuhot[7])
+      //   console.log("aaa")
+      // }
+
+      Student.findOneAndUpdate({
+        user: reqData.name
+      }, {
+        //$set: { "bestcourse" : newbestCourse }
+        clickNum : clickNew
+      }, function (err) {
+        if (err) {
+          console.log(err);
+          res.status(200).send({code: 1, Msg: '失败',});
+        } else {
+          // console.log(stuhot)
+          Student.find({}).then(function (stu) {
+            stuhot = stu
+            if (stuhot.length !== 0) {
+              for(var k = 0; k < stuhot.length; k++){
+                for(var j = k + 1; j < stuhot.length; j++){
+                  if(stuhot[k].clickNum < stuhot[j].clickNum){
+                    let bottom = '';
+                    bottom = stuhot[k]
+                    stuhot[k] = stuhot[j]
+                    stuhot[j] = bottom
+                  }else{
+
+                  }
+                }
+              }
+              for(var h = 0; h < 8; h++){
+                if(stuhot[h].clickNum !== 0){
+                  studentHotArray.push(stuhot[h])
+                }
+              }
+              SetCourse.findOneAndUpdate({}, {
+                //$set: { "bestcourse" : newbestCourse }
+                studentHot : studentHotArray
+              }, function (err) {
+                if (err) {
+                  console.log(err);
+                  res.status(200).send({code: 1, Msg: '失败',});
+                } else {
+                  console.log('成功');
+                  res.status(200).send({code: 0, Msg: '成功',result:studentHotArray});
+                }
+              });
+            } else {
+              res.status(404).send({code: 1, Msg: '没有学生'});
+            }
+          });
+        }
+      });
+
     })
   } else {
     res.status(404).send({

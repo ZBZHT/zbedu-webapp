@@ -3,5 +3,6 @@ const Schema = mongoose.Schema;
 module.exports = new Schema({
   bestCourse: Array,
   suggCourse: Array,
-  countForHot: Array
+  countForHot: Array,
+  studentHot:Array,
 });

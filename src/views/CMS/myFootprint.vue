@@ -17,10 +17,12 @@
             <el-table-column prop="label" label="课程名称" width="220">
             </el-table-column>
 
-            <el-table-column prop="describe" label="课程简介" width="600">
+            <el-table-column prop="describe" label="课程简介">
+            </el-table-column>
+            <el-table-column prop="time" label="浏览时间" width="160">
             </el-table-column>
 
-            <el-table-column label="操作">
+            <el-table-column label="操作" width="200">
               <template slot-scope="scope">
                 <el-button
                   size="mini"

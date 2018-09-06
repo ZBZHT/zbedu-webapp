@@ -20,12 +20,12 @@
                 </div>
 
                 <div id="content2" class="content" :class="{dispear}">
-                    <div class="bb-itemName" v-for="(item,index) in bottomRightData">
+                    <div class="bb-itemName" v-for="(item,index) in bottomRightName">
                         <span class="num"
-                         :class="{top3 : index <= 2}" v-show="item.name">
-                            {{item.num}}
+                         :class="{top3 : index <= 2}">
+                            {{index + 1}}
                          </span>
-                        <b>{{item.name}}</b>
+                        <b>{{item.user}}</b>
                     </div>
                 </div>
 
@@ -45,15 +45,33 @@ export default {
       dispear:true,
       userType:this.$store.state.userType,
       userName:this.$store.state.username,
+      bottomRightName:[]
     }
   },
-
+  mounted(){
+    axios.post('/teacherCMS/getBestCourse', {
+      data: {
+        userType:this.userType
+      }
+    }).then((res) => {
+      console.log(res.data)
+      this.bottomRightName = res.data.result[0].studentHot;
+    });
+  },
   methods:{
       //为热门课程给每个课程计数
       countForHot(item){
         axios.post('/teacherCMS/countHot', {
           data: {
             courseInfo: item
+          }
+        }).then((res) => {
+          console.log(res.data)
+
+        });
+        axios.post('/teacherCMS/studentHot', {
+          data: {
+            name: this.userName,
           }
         }).then((res) => {
           console.log(res.data)

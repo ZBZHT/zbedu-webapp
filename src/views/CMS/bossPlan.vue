@@ -1,4 +1,5 @@
 <template>
+  <!--授课计划-->
   <div class="bossPlan">
     <el-col :span="19">
       请选择班级
@@ -68,14 +69,13 @@
         if(tab._data.index == 0){
           //console.log(this.$store.state.mondayData);
           if(this.$store.state.mondayData){
-            console.log("11");
+            //console.log("11");
             this.getCourseTable(this.$store.state.mondayData)
           }else{
-            
-            console.log("22");
+            //console.log("22");
           }
         }else{
-          
+
         }
       },
       //选择班级显示table，选择班级切换数据
@@ -97,51 +97,50 @@
             className: this.classGrade,
           }
         }).then((res) => {
-          console.log(res.data.result);
-          let resData = res.data.result;
           if (res.data.code === 0) {
+            let resData = res.data.result;
             this.course = resData.course[0];
-          }
-          for(var i = 0; i < this.course.newCourse.length; i++){
-            if(this.course.newCourse[i].teacher == this.$store.state.username){
-              this.course.newCourse[i].color = '#f00';
-            }else{
-              this.course.newCourse[i].color = '';
+            for(var i = 0; i < this.course.newCourse.length; i++){
+              if(this.course.newCourse[i].teacher == this.$store.state.username){
+                this.course.newCourse[i].color = '#f00';
+              }else{
+                this.course.newCourse[i].color = '';
+              }
             }
-          }
-          for(var i = 0; i < this.course.newCourse2.length; i++){
-            if(this.course.newCourse2[i].teacher == this.$store.state.username){
-              this.course.newCourse2[i].color = '#f00';
-            }else{
-              this.course.newCourse2[i].color = '';
+            for(var i = 0; i < this.course.newCourse2.length; i++){
+              if(this.course.newCourse2[i].teacher == this.$store.state.username){
+                this.course.newCourse2[i].color = '#f00';
+              }else{
+                this.course.newCourse2[i].color = '';
+              }
             }
-          }
-          for(var i = 0; i < this.course.newCourse3.length; i++){
-            if(this.course.newCourse3[i].teacher == this.$store.state.username){
-              this.course.newCourse3[i].color = '#f00';
-              //console.log("nnnmmm")
-            }else{
-              this.course.newCourse3[i].color = '';
+            for(var i = 0; i < this.course.newCourse3.length; i++){
+              if(this.course.newCourse3[i].teacher == this.$store.state.username){
+                this.course.newCourse3[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse3[i].color = '';
+              }
             }
-          }
-          for(var i = 0; i < this.course.newCourse4.length; i++){
-            if(this.course.newCourse4[i].teacher == this.$store.state.username){
-              this.course.newCourse4[i].color = '#f00';
-              //console.log("nnnmmm")
-            }else{
-              this.course.newCourse4[i].color = '';
+            for(var i = 0; i < this.course.newCourse4.length; i++){
+              if(this.course.newCourse4[i].teacher == this.$store.state.username){
+                this.course.newCourse4[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse4[i].color = '';
+              }
             }
-          }
-          for(var i = 0; i < this.course.newCourse5.length; i++){
-            if(this.course.newCourse5[i].teacher == this.$store.state.username){
-              this.course.newCourse5[i].color = '#f00';
-              //console.log("nnnmmm")
-            }else{
-              this.course.newCourse5[i].color = '';
+            for(var i = 0; i < this.course.newCourse5.length; i++){
+              if(this.course.newCourse5[i].teacher == this.$store.state.username){
+                this.course.newCourse5[i].color = '#f00';
+                //console.log("nnnmmm")
+              }else{
+                this.course.newCourse5[i].color = '';
+              }
             }
+            this.mondayDate = res.data.result.courseDate;
+            this.weekDate = core.getDayAll(new Date(this.mondayDate));
           }
-          this.mondayDate = res.data.result.courseDate;
-          this.weekDate = core.getDayAll(new Date(this.mondayDate));
         //  console.log(this.weekDate)
         });
       },

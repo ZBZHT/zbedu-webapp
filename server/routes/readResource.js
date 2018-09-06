@@ -9,16 +9,18 @@ const core = require('../utils/core');
 const router = express.Router();
 const resourcePath = "../public/resource/";
 const resPath = "/resource/";
+const ffmpeg = require('ffmpeg');
 
 /* GET index.json */
 router.post('/getPPT', function (req, res) {
+  //console.log(req.body);
   let pList = {
     courseList:[],
     textBookList:[],
     workPageList:[],
   };
   let fileName = req.body.data.fileName;
-  //console.log(fileName);
+
   if (fileName !== '') {
     //处理路径
     let fileNameArr1 = fileName.split(".");
@@ -187,6 +189,64 @@ router.post('/getPPT', function (req, res) {
 
 });
 
+router.post('/getVideo', function (req, res) {
+  console.log(__dirname);
+  let fileUrl = req.body.fileUrl;
+  /*res.writeHead(200, {'Content-Type': 'video/mp4'});
+  var rs = fs.createReadStream(resourcePath + fileUrl);
+  rs.pipe(res);*/
+
+
+  try {
+    new ffmpeg(resourcePath + fileUrl, function (err, video) {
+      if (!err) {
+        console.log(video.metadata.video);
+      } else {
+        console.log('Error: ' + err);
+      }
+    });
+  } catch (e) {
+    console.log(e.code);
+    console.log(e.msg);
+  }
+
+
+
+    /*var file = path.resolve(resourcePath + fileUrl);
+    fs.stat(file, function(err, stats) {
+      if (err) {
+        console.log(err);
+        console.log('111错误');
+      }
+      var range = req.headers.range;
+      if (!range) {
+        // 416 Wrong range
+        return res.sendStatus(416);
+      }
+      var positions = range.replace(/bytes=/, "").split("-");
+      var start = parseInt(positions[0], 10);
+      var total = stats.size;
+      var end = positions[1] ? parseInt(positions[1], 10) : total - 1;
+      var chunksize = (end - start) + 1;
+
+      res.writeHead(206, {
+        "Content-Range": "bytes " + start + "-" + end + "/" + total,
+        "Accept-Ranges": "bytes",
+        "Content-Length": chunksize,
+        "Content-Type": "video/mp4"
+      });
+
+      var stream = fs.createReadStream(file, { start: start, end: end })
+        .on("open", function() {
+          stream.pipe(res);
+        }).on("error", function(err) {
+          res.end(err);
+        });
+    });*/
+
+
+
+  });
 
 
 module.exports = router;

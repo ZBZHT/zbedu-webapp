@@ -158,6 +158,14 @@ export default {
         console.log(res.data)
 
       });
+      axios.post('/teacherCMS/studentHot', {
+        data: {
+          name: this.userName,
+        }
+      }).then((res) => {
+        console.log(res.data)
+
+      });
     },
     //我的足迹添加
     myFootPrint(item){

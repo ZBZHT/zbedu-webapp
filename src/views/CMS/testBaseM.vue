@@ -14,9 +14,9 @@
             @selection-change="changeFun"
             style="width: 99%; margin-top: 10px">
 
-            <el-table-column type="selection" width="50"></el-table-column>
+            <el-table-column type="selection" width="40"></el-table-column>
 
-            <el-table-column prop="num" label="序号" width="80">
+            <el-table-column prop="num" label="序号" width="70">
             </el-table-column>
 
             <el-table-column prop="desc" label="试题内容">
@@ -436,6 +436,9 @@
     position: absolute;
     bottom: -560px;
     left: 5%;
+  }
+  .testBaseM_cont .el-table .cell {
+    line-height: 20px;
   }
 
 </style>

@@ -1527,6 +1527,14 @@
             console.log(res.data)
 
           });
+        axios.post('/teacherCMS/studentHot', {
+          data: {
+            name: this.userName,
+          }
+        }).then((res) => {
+          console.log(res.data)
+
+        });
       },
 
 

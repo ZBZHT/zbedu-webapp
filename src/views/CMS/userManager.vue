@@ -327,7 +327,7 @@
             <el-table-column prop="MoNo" label="手机号" width="130">
             </el-table-column>
 
-            <el-table-column prop="userType" label="类型" width="70">
+            <el-table-column prop="userType" label="类型" width="100">
             </el-table-column>
 
             <el-table-column prop="gender" label="性别" width="70">
@@ -652,13 +652,17 @@
       },
       //修改老师
       handleEdit1(index, row) {
-          //console.log(row);
+          console.log(row);
         this.resetUser2();
         this.addTeachForm.user = row.user;
         this.addTeachForm.IDNo = row.IDNo;
         this.addTeachForm.MoNo = row.MoNo;
         this.addTeachForm.userID = row.userID;
-        this.addTeachForm.userType = row.userType;
+        if (row.userType === "教师") {
+          this.addTeachForm.userType = "T";
+        } else if (row.userType === "教务管理员") {
+          this.addTeachForm.userType = "EA";
+        }
         this.addUserPwd = row.pwd;
         if (row.gender === '男') {
           this.addTeachForm.gender = '1';
@@ -771,33 +775,23 @@
       updateUser(data) {
         let resData1 = '';
         let resData = '';
-        let userPwd = this.addUserPwd;
-        console.log(this.addUserPwd);
+        //let userPwd = this.addUserPwd;
+        //console.log(this.addUserPwd);
         let p1 = new Promise((resolve, reject) => {
-          if (this.dialogFormVisible1 ===true) {
+          if (this.dialogFormVisible1 === true) {
               resData1 = this.addUserForm1;
             resolve('成功了1')
-          } else if (this.dialogFormVisible3 ===true) {
+          } else if (this.dialogFormVisible3 === true) {
             resData1 = this.addTeachForm;
             resolve('成功了')
           }
         });
 
         let p2 = new Promise((resolve, reject) => {
-
+          console.log(resData1);
           //处理发送的用户信息方法
-          function resUserData1(data) {
-            if (data.pwd !== '') {
-              data.pwd = md5(data.pwd);
-              //data.pwd = (data.pwd);
-            } else {
-              //data.pwd = this.addUserPwd;
-            }
-            //console.log(data);
-            return data;
-          }
-          resData = resUserData1(resData1);
-          //console.log(resData);
+          resData1.pwd = md5(resData1.pwd);
+          console.log(resData1);
           resolve('成功了2')
         });
 
@@ -807,7 +801,7 @@
             data: {
               username: this.username,
               userType: this.userType,
-              addUser: resData
+              addUser: resData1
             }
           }).then((res) => {
             if (res.data.code === 0) {
@@ -878,7 +872,9 @@
           }
         }).then((res) => {
           //学生
+          //console.log(res.data.student);
           let studentData = res.data.student;
+          let teacherData = res.data.teacher;
           //console.log(studentData);
           if (studentData.length !== 0) {
             for (let i = 0; i < studentData.length; i++) {
@@ -891,12 +887,11 @@
             this.total1 = this.stuData.length;
           }
           //教师
-          let teacherData = res.data.teacher;
           //console.log(teacherData);
           if (teacherData.length !== 0) {
             for (let i = 0; i < teacherData.length; i++) {
               teacherData[i].time = moment(new Date(teacherData[i].time)).format("YYYY-MM-DD");
-              studentData[i].userType = core.userType(studentData[i].userType);
+              teacherData[i].userType = core.userType(teacherData[i].userType);
               teacherData[i].gender = core.getGender(teacherData[i].gender);
               teacherData[i].num = i + 1;
             }
@@ -1034,5 +1029,8 @@
   }
   .userManager_cont .el-radio-group{
     margin-left: 10px;
+  }
+  .userManager_cont .el-pagination__editor.el-input{
+    margin-right: 12px;
   }
 </style>

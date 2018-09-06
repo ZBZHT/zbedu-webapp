@@ -31,5 +31,6 @@ module.exports = new Schema({
   classGrade: String, //班级
   department: String,  //院系
   email: String,
+  clickNum:Number, //用户点击数
   myFootprint:Array,
 });

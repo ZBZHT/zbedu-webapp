@@ -18,6 +18,7 @@ let a = new Teacher({
   userType: 'SA',
   gender: 1,
   AdmDate: new Date(),
+  clickNum:0,
 });
 
 
