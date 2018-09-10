@@ -148,14 +148,25 @@
         currentPage: 1,
         dialogVisible: false,
         multipleSelection:[],
-        changeColor:{ backgroundColor: '#9f5355' }
+        changeColor:{ backgroundColor: '#9f5355' },
+        dataID: '',
       }
     },
     computed: {},
     methods: {
-      handleNodeClick(data,node,store) {
+      handleNodeClick(data) {
+          /*,node,store*/
+        if (data !== undefined) {
+          this.dataID = data.id;
+        }else if(this.$store.state.cmsID !== '' || this.$store.state.cmsID !== undefined){
+          this.dataID = this.$store.state.cmsID;
+        }else {
+          this.dataID = 201;
+        }
+        this.$store.commit('cmsID',this.dataID);
+
         //点击用户管理
-        if (data.id == 101) {
+        if (this.dataID == 101) {
           this.isShow101 = true;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -174,7 +185,7 @@
           this.isShow802 = false;
         }
         //点击题库管理
-        if (data.id == 102) {
+        if (this.dataID == 102) {
           this.isShow101 = false;
           this.isShow102 = true;
           this.isShow201 = false;
@@ -193,7 +204,7 @@
           this.isShow802 = false;
         }
         //点击我的资料
-        if (data.id == 201) {
+        if (this.dataID == 201) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = true;
@@ -212,7 +223,7 @@
           this.isShow802 = false;
         }
         //点击我的足迹
-        if (data.id == 202) {
+        if (this.dataID == 202) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -231,7 +242,7 @@
           this.isShow802 = false;
         }
         //点击课程设置
-        if (data.id == 302) {
+        if (this.dataID == 302) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -250,7 +261,7 @@
           this.isShow802 = false;
         }
         //点击我的课程
-        if (data.id == 301) {
+        if (this.dataID == 301) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -269,7 +280,7 @@
           this.isShow802 = false;
         }
         //点击我的考试
-        if (data.id == 401) {
+        if (this.dataID == 401) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -288,7 +299,7 @@
           this.isShow802 = false;
         }
         //点击我的大赛
-        if (data.id == 501) {
+        if (this.dataID == 501) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -307,7 +318,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（管理员）授课计划
-        if (data.id == 601) {
+        if (this.dataID == 601) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -326,7 +337,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（管理员）考勤信息
-        if (data.id == 602) {
+        if (this.dataID == 602) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -345,7 +356,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（管理员）请假审批
-        if (data.id == 603) {
+        if (this.dataID == 603) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -363,7 +374,7 @@
           this.isShow801 = false;
           this.isShow802 = false;
         }//点击课堂管理（教师）课堂计划
-        if (data.id == 701) {
+        if (this.dataID == 701) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -382,7 +393,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（教师）考勤信息
-        if (data.id == 702) {
+        if (this.dataID == 702) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -401,7 +412,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（教师）考勤汇总
-        if (data.id == 703) {
+        if (this.dataID == 703) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -420,7 +431,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（学生）课堂信息
-        if (data.id == 801) {
+        if (this.dataID == 801) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -439,7 +450,7 @@
           this.isShow802 = false;
         }
         //点击课堂管理（学生）考勤信息
-        if (data.id == 802) {
+        if (this.dataID == 802) {
           this.isShow101 = false;
           this.isShow102 = false;
           this.isShow201 = false;
@@ -467,11 +478,31 @@
         }
       }).then((res) => {
         this.treeData = res.data.result;
-      //  console.log(this.treeData);
-        setTimeout(() => {
-          this.$refs.treeData.setCurrentKey(201)
-        }, 300)
-      })
+
+        //console.log('22');
+        //console.log(this.$store.state.cmsID);
+        if (this.$store.state.cmsID === undefined || this.$store.state.cmsID === '') {
+          //console.log('11');
+          //console.log(this.$store.state.cmsID);
+          setTimeout(() => {
+            this.$refs.treeData.setCurrentKey(201);
+            this.dataID = 201;
+            this.handleNodeClick();
+          }, 20);
+        }else {
+
+          //console.log(this.$store.state.cmsID);
+          setTimeout(() => {
+            this.$refs.treeData.setCurrentKey(this.$store.state.cmsID);
+            this.dataID = this.$store.state.cmsID;
+            //console.log('33');
+            //console.log(this.dataID);
+            this.handleNodeClick();
+          }, 20);
+        }
+
+      });
+
     },
     components: {
       MyFootprint,

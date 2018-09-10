@@ -1,7 +1,7 @@
 <template>
   <div class="myData_cont">
 
-    <!--我的资料-->
+    <!--我的信息-->
       <el-col :span="16">
         <el-card>
           <el-col :span="6">
@@ -91,6 +91,7 @@
         :on-preview="handlePictureCardPreview"
         accept=".jpg, .jpeg, .png, .bmp"
         :auto-upload="false"
+        :on-success="handleAvatarSuccess"
         :on-remove="handleRemove">
 
         <i class="el-icon-plus"></i>
@@ -220,6 +221,15 @@
           message: msg,
           type: 'success'
         });
+      },
+      //上传成功后的回调
+      handleAvatarSuccess(res, file, fileList) {
+          //console.log('11');
+        console.log(fileList);
+          if (res.code === 0) {
+            this.getMyMsg();
+            fileList.length = 0;
+          }
       },
       handleClose(done) {
         done();

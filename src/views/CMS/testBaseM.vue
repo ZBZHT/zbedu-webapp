@@ -32,7 +32,7 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini" type="warning"
-                  @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
+                  @click="handleEdit1(scope.$index, scope.row)">编 辑</el-button>
               </template>
             </el-table-column>
 
@@ -51,6 +51,49 @@
           </div>
 
         </el-tab-pane>
+
+        <!--编辑对话框-->
+        <el-dialog title="修改考试题"
+                   :visible.sync="dialogFormVisible3"
+                   :close-on-click-modal="false">
+
+          <el-form :model="editForm" label-width="80px" ref="editForm" class="demo-addUserForm">
+
+            <el-form-item label="序号" style="width: 120px;margin-bottom: 12px">
+              <el-input :disabled="true" v-model="editForm.num"></el-input>
+            </el-form-item>
+
+            <el-form-item label="试题内容">
+              <el-input type="textarea" :rows="1" v-model="editForm.desc"></el-input>
+            </el-form-item>
+
+            <el-form-item label="选项1" style="margin-bottom: 0">
+              <el-input type="textarea" :rows="1" v-model="editForm.options[0]"></el-input>
+            </el-form-item>
+            <el-form-item label="选项2" style="margin-bottom: 0">
+              <el-input type="textarea" :rows="1" v-model="editForm.options[1]"></el-input>
+            </el-form-item>
+            <el-form-item label="选项3" v-show="editForm.options[2] !== undefined">
+              <el-input type="textarea" :rows="1" v-model="editForm.options[2]"></el-input>
+            </el-form-item>
+            <el-form-item label="选项4" v-show="editForm.options[3] !== undefined">
+              <el-input type="textarea" :rows="1" v-model="editForm.options[3]"></el-input>
+            </el-form-item>
+            <el-form :inline="true" :model="editForm" ref="editForm" style="margin-left: 40px">
+              <el-form-item label="专业">
+                <el-input v-model="editForm.major"></el-input>
+              </el-form-item>
+              <el-form-item label="答案">
+                <el-input v-model="editForm.answer"></el-input>
+              </el-form-item>
+            </el-form>
+
+          </el-form>
+
+          <div slot="footer" class="dialog-footer">
+            <el-button type="primary" @click="updateTestBase('editForm')">确定修改</el-button>
+          </div>
+        </el-dialog>
 
         <el-tab-pane label="查询" name="second">
 
@@ -187,6 +230,10 @@
         multipleSelection: [],  //复选框
         choiceData: [],  //选择题
         checkingData: [],  //判断题
+        dialogFormVisible3: false,
+        editForm: {
+          options:[],
+        },
       }
     },
     computed: {},
@@ -280,6 +327,36 @@
         this.$message.error(msg);
       },
 
+      //编辑
+      handleEdit1(index, row) {
+
+        this.editForm = row;
+        console.log(this.editForm);
+        console.log(this.editForm.options[3]);
+
+        this.dialogFormVisible3 = true;
+
+      },
+      //更新题库
+      updateTestBase(data) {
+        axios.post('/teacherCMS/updateTestBase', {
+          data: {
+            username: this.username,
+            userType: this.userType,
+            testBase: this.editForm
+          }
+        }).then((res) => {
+          if (res.data.code === 0) {
+            //console.log(res.data.userInfo);
+            //this.teachData = res.data.userInfo;
+            //this.total = this.teachData.length;
+            this.getAllTest();
+            this.dialogFormVisible3 = false;
+            this.addUserSuccess('修改成功')
+          }
+        });
+      },
+
       //删除用户信息方法
       delChecked() {
         this.$confirm('此操作将永久删除用户信息, 是否继续?', '提示', {
@@ -332,6 +409,7 @@
           });
         });
       },
+      //获取所有题库信息
       getAllTest() {
         axios.get('/teacherCMS/getAllTest', {
           params: {
@@ -439,6 +517,9 @@
   }
   .testBaseM_cont .el-table .cell {
     line-height: 20px;
+  }
+  .testBaseM_cont .el-dialog__body {
+    text-align: left;
   }
 
 </style>

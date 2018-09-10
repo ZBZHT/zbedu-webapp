@@ -347,7 +347,7 @@ router.post('/getUserData', function (req, res) {
           }).then(function (teacher) {
             if (teacher) {
               Student.find().then(function (student) {
-                console.log(student);
+                //console.log(student);
                 if (student) {
                   res.status(200).send({
                     teacher: teacher,
@@ -779,7 +779,7 @@ router.post('/updateMoNo', function (req, res) {
       }, function (err) {
         if (err) {
           console.log(err);
-          res.status(404).send({code: 1, Msg: '更新失败',});
+          res.status(200).send({code: 1, Msg: '更新失败',});
         } else {
           console.log('手机号更新成功');
           res.status(200).send({code: 0, Msg: '更新成功',});
@@ -852,6 +852,30 @@ router.get('/getAllTest', function (req, res) {
   if (reqQ === 'T' || reqQ === 'EA' || reqQ === 'SA') {
     Question.find({}).then(function (result) {
       res.status(200).send(result);
+    });
+  }
+});
+//题库管理--更新题库
+router.post('/updateTestBase', function (req, res) {
+  let reqData = req.body.data;
+  delete reqData.testBase.num;
+  console.log(reqData);
+  if (reqData.userType === 'EA' || reqData.userType === 'SA') {
+    Question.findOneAndUpdate({
+      _id: reqData.testBase._id
+    }, {
+      desc: reqData.testBase.desc,
+      answer: reqData.testBase.answer,
+      major: reqData.testBase.major,
+      options: reqData.testBase.options,
+    }, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(200).send({code: 1, Msg: '更新失败',});
+      } else {
+        console.log('更新成功');
+        res.status(200).send({code: 0, Msg: '更新成功',});
+      }
     });
   }
 });
