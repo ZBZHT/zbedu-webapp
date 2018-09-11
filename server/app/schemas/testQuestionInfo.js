@@ -22,6 +22,7 @@ module.exports = new Schema({
   currIsId: Array,
   error: Array,
   sorce: Number,
+  showGradeState:Number,   //0:表示未公布成绩   2:表示已经公布成绩
   startTestTime: Date,
   testTimeMinutes:Number,
   testTimeSeconds:Number,
@@ -32,6 +33,8 @@ module.exports = new Schema({
   date2: Date,
   date3: String,
   date4: String,
+  date5: String,
+  date6: String,
   timeHour: Number,
   timeMin: String,
   allScore: Number,

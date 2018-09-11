@@ -249,7 +249,7 @@
                         v-model="form.date2"
                         type="date"
                         placeholder="结束日期"
-                        @blur="writeEnd();compareTime()"
+                        @blur="writeEnd();compareTime();showGrade()"
                         :picker-options="endDatePicker">
                       </el-date-picker>
                     </el-form-item>
@@ -257,7 +257,7 @@
                     <el-form-item label="结束时间">
                       <el-time-select
                         placeholder="结束时间"
-                        @blur="compareTime()"
+                        @blur="compareTime();showGrade()"
                         v-model="form.date4"
                         :picker-options="{
                           start: '00:00',
@@ -324,6 +324,26 @@
                       </el-select>
                     </el-form-item>
 
+                    <el-form-item label="公布成绩" prop="date2">
+                      <el-date-picker
+                        v-model="form.date5"
+                        type="date"
+                        placeholder="公布成绩日期"
+                        :picker-options="gradeDatePicker">
+                      </el-date-picker>
+                    </el-form-item>
+
+                    <el-form-item>
+                      <el-time-select
+                        v-model="form.date6"
+                        @blur="showGradeTime()"
+                        :picker-options="{
+                          start: '00:00',
+                          step: '00:30',
+                          end: '23:30'
+                        }">
+                      </el-time-select>
+                    </el-form-item>
                     <p>
                       <el-button type="primary" @click="compareTime1()">立即创建</el-button>
                     </p>
@@ -539,6 +559,8 @@
           date2: '',
           date3: '',
           date4: '',
+          date5: '',
+          date6: '',
           num: '',
           timeHour: 2,
           timeMin: 0,
@@ -606,6 +628,7 @@
         scoreData: [],
         startDatePicker:this.beginDate(),
         endDatePicker:this.processDate(),
+        gradeDatePicker:this.showGradeDate(),
         height:window.innerHeight,
         majorM:[],
         classM:[],
@@ -638,6 +661,15 @@
         return {
           disabledDate(time){
             return time.getTime() < self.form.date1;
+          }
+        }
+      },
+      //公布成绩时间不能大于考试结束时间
+      showGradeDate(){
+        let self = this
+        return {
+          disabledDate(time){
+            return time.getTime() < self.form.date2;
           }
         }
       },
@@ -752,6 +784,21 @@
           }
         }
       },
+      //公布成绩时间不能在考试结束时间之前
+      showGradeTime(){
+          var newDateHour = parseInt(this.form.date4.split(":")[0]);
+          var chooseHour = parseInt(this.form.date6.split(":")[0]);
+          if(chooseHour <= newDateHour) {
+            this.$message({
+              showClose: true,
+              message: '请设置公布成绩时间在考试结束时间之后',
+              type: 'error'
+            });
+            this.form.date6 = this.form.date4;
+          }else{
+
+          }
+      },
       //判断时长
       compareTime(){
 
@@ -789,6 +836,13 @@
         }else if(moment(this.form.date1).format("YYYY-MM-DD") != moment(this.form.date2).format("YYYY-MM-DD")){
           this.form.timeHour = 2;
           this.form.timeMin = 0;
+        }
+      },
+      //初始化公布成绩时间
+      showGrade(){
+        if(this.form.date2){
+          this.form.date5 = this.form.date2;
+          this.form.date6 = this.form.date4;
         }
       },
       //考试时长不能超过时间选择器
@@ -870,6 +924,7 @@
       onSubmit(formName) {
         this.form.date1 = core.formatDate("yyyy-MM-dd", new Date(this.form.date1));
         this.form.date2 = core.formatDate("yyyy-MM-dd", new Date(this.form.date2));
+        this.form.date5 = core.formatDate("yyyy-MM-dd", new Date(this.form.date5));
         //console.log(this.form.date1)
         //console.log(this.form.date2)
       //  this.form.date3 = core.formatDate("hh:mm:ss", new Date(this.form.date3));
@@ -888,6 +943,8 @@
             date2: this.form.date2,
             date3: this.form.date3,
             date4: this.form.date4,
+            date5: this.form.date5,
+            date6: this.form.date6,
             num: this.form.num,
             timeHour: this.form.timeHour,
             timeMin: this.form.timeMin,
@@ -923,6 +980,8 @@
         this.form.date2 = '';
         this.form.date3 = '';
         this.form.date4 = '';
+        this.form.date5 = '';
+        this.form.date6 = '';
         this.form.timeHour = 2;
         this.form.timeMin = 0;
         this.form.allScore = 100;

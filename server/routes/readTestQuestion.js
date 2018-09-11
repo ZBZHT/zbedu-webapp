@@ -199,6 +199,44 @@ router.get('/stuHistoryTestData', function (req, res) {
       }, 500);
     }
   });
+  //修改公布考试的状态码
+  TestQuestionInfo.find({
+    user: reqUser,
+    showGradeState: 0,
+  }).then(function (result) {
+    let nowTime = moment(new Date()).unix();
+    let hosTime = '';
+    if (result.length !== 0) {
+      for (let i=0; i<=result.length-1; i++) {
+        hosTime = moment(result[i].date5).format("YYYY-MM-DD") + "," + result[i].date6;
+        let EE = moment(hosTime).unix();
+        if (Number(nowTime) >= Number(EE)) {
+          TestQuestionInfo.findOneAndUpdate({  //改变考试答案状态为2
+              id: result[i].id,
+            }, {
+              showGradeState: 2,
+            },
+            function (err) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log('TeachNewTestQ更新showGradeState=2成功');
+                TestQuestionInfo.update({  //改变考试答案状态为2
+                  theme: result[i].theme,
+                },{$set:{showGradeState: 2}},{multi: true},function (err) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log('TestQuestionInfo更新showGradeState=2成功');
+                  }
+                })
+              }
+            });
+
+        }
+      }
+    }
+  });
 });
 
 //学生,创建练习
