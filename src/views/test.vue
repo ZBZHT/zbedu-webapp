@@ -42,20 +42,21 @@
                 <span class="data-p-title">考试总分:</span>
                 <span class="data-p-desc">{{testOnlineData.allScore}}</span>
               </p>
-              <p>
+
                 <span class="data-p-title">考试说明:</span>
-              <p> 1. 考生考前15分钟到达考场，由监考人员核验考生准考证、有效身份证件。</p>
-              <p> 2. 考生只准携带必要的考试文具（如钢笔，圆珠笔等）入场，不得携带任何书籍资料、通讯设备、数据存储设备、智能电子设备等辅助工具及其它未经允许的物品。</p>
-              <p> 3. 考生请核验屏幕上显示的姓名、如有不符，请重新登录</p>
-              <p> 4. 在自己核验无误后，等待监考人员统一指令开始进行正式考试。</p>
-              <p> 5. 考试开始30分钟后，迟到考生不得进入考场。</p>
-              <p> 6. 考试时间由系统自动控制，计时结束后系统将自动退出作答界面。</p>
-              <p> 7. 考生在考场内应保持安静，严格遵守考场纪律，对于违反考场规定、不服从监考人员管理和作弊者将按按规定给予处罚。</p>
-              <p> 8. 考试过程中，如出现死机或系统错误等，应立刻停止操作，举手与监考人员联系。</p>
-              <p> 9. 考生点击交卷后，举手与监考人员联系，等监考人员确认考生交卷正常后，方可离开。</p>
-              <p> 10. 考生离开考场后，不准在考场附近逗留和交谈。</p>
-              <p> 11. 考生应自觉服从监考人员管理，不得以任何理由防碍监考人员正常工作。</p>
-              </p>
+                <p> 1. 考生考前15分钟到达考场，由监考人员核验考生准考证、有效身份证件。</p>
+                <p> 2. 考生只准携带必要的考试文具（如钢笔，圆珠笔等）入场，不得携带任何书籍资料、通讯设备、数据存储设备、智能电子设备等辅助工具及其它未经允许的物品。</p>
+                <p> 3. 考生请核验屏幕上显示的姓名、如有不符，请重新登录</p>
+                <p> 4. 在自己核验无误后，等待监考人员统一指令开始进行正式考试。</p>
+                <p> 5. 考试开始30分钟后，迟到考生不得进入考场。</p>
+                <p> 6. 考试时间由系统自动控制，计时结束后系统将自动退出作答界面。</p>
+                <p> 7. 考生在考场内应保持安静，严格遵守考场纪律，对于违反考场规定、不服从监考人员管理和作弊者将按按规定给予处罚。</p>
+                <p> 8. 考试过程中，如出现死机或系统错误等，应立刻停止操作，举手与监考人员联系。</p>
+                <p> 9. 考生点击交卷后，举手与监考人员联系，等监考人员确认考生交卷正常后，方可离开。</p>
+                <p> 10. 考生离开考场后，不准在考场附近逗留和交谈。</p>
+                <p> 11. 考生应自觉服从监考人员管理，不得以任何理由防碍监考人员正常工作。</p>
+                <p> 12. 考试成绩最早将在考试结束后可由考生自行查询</p>
+
             </div>
             <div class="sureBtn">
               <el-checkbox v-model="Iagree" v-if="!still_btn">我已阅读以上内容，点击进入考试开始倒计时</el-checkbox>
@@ -154,13 +155,15 @@
 
                 <el-table-column label="分数" width="100">
                   <template slot-scope="scope">
-                    <span>{{ scope.row.sorce }}</span>
+                    <span v-if="showGradeState === 0">暂无</span>
+                    <span v-if="showGradeState === 2">{{ scope.row.sorce }}</span>
                   </template>
                 </el-table-column>
 
                 <el-table-column label="查看试卷">
                   <template slot-scope="scope">
-                    <el-button size="mini" type="primary" @click="getOriginPaper(scope.$index, scope.row)">
+                    <span v-if="showGradeState === 0">暂无</span>
+                    <el-button v-if="showGradeState === 2" size="mini" type="primary" @click="getOriginPaper(scope.$index, scope.row)">
                       查看
                     </el-button>
                   </template>
@@ -168,7 +171,8 @@
 
                 <el-table-column label="错题分析">
                   <template slot-scope="scope">
-                    <el-button size="mini" type="primary" @click="getErrorPaper(scope.$index, scope.row)">
+                    <span v-if="showGradeState === 0">暂无</span>
+                    <el-button v-if="showGradeState === 2" size="mini" type="primary" @click="getErrorPaper(scope.$index, scope.row)">
                       查看
                     </el-button>
                   </template>
@@ -190,7 +194,7 @@
 
               <!--查看试卷弹出框-->
                 <el-dialog title="查看试卷"
-                           width="39%"
+                           width="83%"
                            :before-close="handleClose"
                            :visible.sync="dialogTableVisible1">
                   <div v-for="(item2,index2) in originPaper.question">
@@ -222,7 +226,7 @@
 
                 <!--查看错题分析-->
                 <el-dialog title="错题分析"
-                           width="39%"
+                           width="83%"
                            :before-close="handleClose"
                            :visible.sync="dialogTableVisible2">
                   <div v-for="(item3,index3) in ErrorPaper">
@@ -426,7 +430,7 @@
 
                 <!--查看练习试卷弹出框-->
                 <el-dialog title="查看练习试卷"
-                           width="39%"
+                           width="83%"
                            :before-close="handleClose"
                            :visible.sync="dialogTableVisible3">
                   <div v-for="(item2,index2) in exerciseOriginPaper.question">
@@ -458,7 +462,7 @@
 
                 <!--查看错题分析-->
                 <el-dialog title="错题分析"
-                           width="39%"
+                           width="83%"
                            :before-close="handleClose"
                            :visible.sync="dialogTableVisible4">
                   <div v-for="(item3,index3) in exerciseErrorPaper">
@@ -622,7 +626,8 @@
         exerciseErrorPaper:[],
         dialogTableVisible4: false,
         exerciseInfo:[],
-        height:window.innerHeight
+        height:window.innerHeight,
+        showGradeState:''
       }
     },
     computed:{
@@ -1007,7 +1012,9 @@
             user: this.user,
           }
         }).then((res) => {
-        //  console.log("res.data")
+          console.log(res.data)
+          console.log(res.data.testQuestionInfo[0].showGradeState)
+          this.showGradeState = res.data.testQuestionInfo[0].showGradeState
         //  console.log(res.data.testQuestionInfo)
           let resTestData = res.data.testQuestionInfo;
         //  let resTestInfoData = res.data.testQuestionInfo;
