@@ -25,7 +25,7 @@ module.exports = new Schema({
   timeHour: String,
   timeMin: String,
   major: String,
-  classGrade: String,
+  classGrade: Array,
   newData: Date,
   allScore: Number,
   question: [],

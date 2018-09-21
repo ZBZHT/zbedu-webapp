@@ -106,7 +106,8 @@ function distTestQuestion(req, res, next) {
         testResult.testItemsNum.push(testItems[i].num)
       }
       Student.find({
-        major: reqQ.major
+        major: reqQ.major,
+        classGrade: { "$in": reqQ.classGrade }
       }).then(function (stu) {
         TestQuestionInfo.find({
         }).sort({currTestNum:-1}).then(function (testQ) {
@@ -242,9 +243,9 @@ router.get('/update', function (req, res) {
 // 提交
 router.get('/submitQuestionInfo', function (req, res) {
   let reqQ = req.query;
-  //console.log(reqTestQuestion);
-    TestQuestionInfo.findOneAndUpdate({
-        currTestNum: reqQ.currTestNum
+  //console.log(reqQ);
+  TestQuestionInfo.findOneAndUpdate({
+      currTestNum: reqQ.currTestNum
     }, {
       state: 2,
       startTime: reqQ.startTime,

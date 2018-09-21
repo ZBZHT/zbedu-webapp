@@ -23,7 +23,7 @@
             </div>
             <div class="rightBox">
                 <div class="testOnline" v-show="currIndex === 0">
-                    
+
                     <div class="content">
                         <div class="data">
                             <p class="data-p">{{testAllData.theme}}</p>
@@ -193,7 +193,7 @@ export default {
         if(_this.minutesAll >= 0){
             _this.timeInterval();
         }else{
-            
+
         }
 
         _this.dispear = !_this.dispear;
@@ -224,7 +224,7 @@ export default {
         _this.currentdate = _this.nowTime.getFullYear() + seperator1 + month + seperator1 + strDate
         + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
 
-     
+
     }.bind(this),500)
 
   },
@@ -280,7 +280,7 @@ export default {
           console.log("2222")
           console.log(res.data)
         if (res.data.state == 1) {
-          
+
         } else {
           this.TestNum = res.data.testLength;
         }
@@ -338,137 +338,137 @@ export default {
       });
     },
 
-            submit:function () {
-                this.sorce = 0;
-                this.error = [];
-                var everyScore = parseInt(this.testAllData.allScore  / this.textQuestionData.length);
-                console.log(this.textQuestionData.length);
-                //console.log(this.picked)
-                for(var i = 0;i < this.QidArr.length;i++){
-                    if(this.QidArr[i] != null && this. QidArr[i] != ''){
-                        //console.log(this.QidArr[i]-1);
-                        //console.log("asd"+this.picked[i])
-                        if(this.textQuestionData[i].answer == this.picked[i]){
-                            this.sorce += everyScore;
-                        }else{
-                            //console.log(this.picked[i])
-                            this.error.push(i+1);
-                        }
-                    }else{
-                        //console.log(i+"123456");
-                        this.null.push(i+1);
-                    }
-                }
-                setTimeout(function(){
-                    window.clearInterval(this.interval);
-                    axios({
-                        method:'get',
-                        url:"/readTestQuestionInfo/submitQuestionInfo",
-                        params:{
-                            user:this.user,
-                            currTestNum:this.testQuestion,
-                            startTime:this.currentdate,
-                            currAnswer:this.picked,
-                            currState:this.isCheckArr,
-                            error:this.error,
-                            sorce:this.sorce,
-                            testTimeMinutes:this.minutes,
-                            testTimeSeconds:this.seconds,
-                            isCheckNum:this.isCheckNum
-                        }
-                    }).then(
-                        function (res) {
-                        console.log(res);
-                          if (res.data.code == 0) {
-                            //alert(this.sorce);
-                            alert("提交成功");
-                            window.opener.location.reload();
-                            window.close();
-                          } else {
-                            this.errorMsg('未提交成功')
-                          }
-                        }
-                    );
-                }.bind(this),200);
-                //alert(this.sorce + "==" + this.error + "==" + this.null);
-            },
-            num:function (n) {
-                return n<10 ? "0" + n : "" + n
-            },
-
-            myAnswer:function(id,index){
-                this.lengthData = this.textQuestionData.length;
-                this.QidArr[index] = id;
-                console.log(this.QidArr);
-                if(this.isCheckArr[index] != true){
-                    this.isCheckNumA += 1;
-                }
-
-            //    var a = 0;
-            //    for(var i = 0;i < this.QidArr.length;i++){
-            //        if(this.QidArr[i] != null){
-            //            a+=1;
-            //            this.isCheckNum = this.isCheckNum + a ;
-            //        }else{
-            //           console.log(this.QidArr[i])
-            //        }
-            //    }
-                this.$set(this.isCheckArr,index,true);
-                this.$set(this.tipIcon,index,false);
-
-                axios({
-                        method:'get',
-                        url:"/readTestQuestionInfo/update",
-                        params:{
-                            user:this.user,
-                            currTestId:this.$route.params.testId,
-                            currTestNum:this.testQuestion,
-                            startTime:this.currentdate,
-                            currAnswer:this.picked,
-                            currIsId:this.QidArr,
-                            currState:this.isCheckArr,
-                            error:this.error,
-                            sorce:this.sorce,
-                            startTimeHours:this.hours,
-                            startTimeMinutes:this.minute,
-                            startTimeSeconds:this.second,
-                            testTimeMinutes:this.minutes,
-                            testTimeSeconds:this.seconds,
-                            isCheckNum:this.isCheckNum
-                        }
-                    }).then((res)=>{
-
-                        })
-            },
-            myNum:function(index2){
-                this.myNumber = index2;
-                console.log(this.myNumber)
-            },
-            tip(index){
-                this.$set(this.classItem,index,true)
-                this.$set(this.tipIcon,index,true)
-            },
-            myFunction(event){
-                var con = confirm("考试未完成，点击确定将帮您提交");
-                if(con){
-                    this.submit();
+    submit:function () {
+        this.sorce = 0;
+        this.error = [];
+        var everyScore = parseInt(this.testAllData.allScore  / this.textQuestionData.length);
+        console.log(this.textQuestionData.length);
+        //console.log(this.picked)
+        for(var i = 0;i < this.QidArr.length;i++){
+            if(this.QidArr[i] != null && this. QidArr[i] != ''){
+                //console.log(this.QidArr[i]-1);
+                //console.log("asd"+this.picked[i])
+                if(this.textQuestionData[i].answer == this.picked[i]){
+                    this.sorce += everyScore;
                 }else{
-                    console.log("mamamama")
+                    //console.log(this.picked[i])
+                    this.error.push(i+1);
                 }
-            },
-            testManagen(){
-                axios({
-                  method:'get',
-                  url:"/testManagement/testManagement",
-                  params:{
-                      user:this.user
-                  }
-                  }).then((res)=>{
-                      this.userMessageData = res.data;
-                      console.log(res.data)
-                  })
+            }else{
+                //console.log(i+"123456");
+                this.null.push(i+1);
             }
+        }
+        setTimeout(function(){
+            window.clearInterval(this.interval);
+            axios({
+                method:'get',
+                url:"/readTestQuestionInfo/submitQuestionInfo",
+                params:{
+                    user:this.user,
+                    currTestNum:this.testQuestion,
+                    startTime:this.currentdate,
+                    currAnswer:this.picked,
+                    currState:this.isCheckArr,
+                    error:this.error,
+                    sorce:this.sorce,
+                    testTimeMinutes:this.minutes,
+                    testTimeSeconds:this.seconds,
+                    isCheckNum:this.isCheckNum
+                }
+            }).then(
+                function (res) {
+                console.log(res);
+                  if (res.data.code == 0) {
+                    //alert(this.sorce);
+                    alert("提交成功");
+                    window.opener.location.reload();
+                    window.close();
+                  } else {
+                    this.errorMsg('未提交成功')
+                  }
+                }
+            );
+        }.bind(this),200);
+        //alert(this.sorce + "==" + this.error + "==" + this.null);
     },
+    num:function (n) {
+        return n<10 ? "0" + n : "" + n
+    },
+
+    myAnswer:function(id,index){
+        this.lengthData = this.textQuestionData.length;
+        this.QidArr[index] = id;
+        console.log(this.QidArr);
+        if(this.isCheckArr[index] != true){
+            this.isCheckNumA += 1;
+        }
+
+    //    var a = 0;
+    //    for(var i = 0;i < this.QidArr.length;i++){
+    //        if(this.QidArr[i] != null){
+    //            a+=1;
+    //            this.isCheckNum = this.isCheckNum + a ;
+    //        }else{
+    //           console.log(this.QidArr[i])
+    //        }
+    //    }
+        this.$set(this.isCheckArr,index,true);
+        this.$set(this.tipIcon,index,false);
+
+        axios({
+                method:'get',
+                url:"/readTestQuestionInfo/update",
+                params:{
+                    user:this.user,
+                    currTestId:this.$route.params.testId,
+                    currTestNum:this.testQuestion,
+                    startTime:this.currentdate,
+                    currAnswer:this.picked,
+                    currIsId:this.QidArr,
+                    currState:this.isCheckArr,
+                    error:this.error,
+                    sorce:this.sorce,
+                    startTimeHours:this.hours,
+                    startTimeMinutes:this.minute,
+                    startTimeSeconds:this.second,
+                    testTimeMinutes:this.minutes,
+                    testTimeSeconds:this.seconds,
+                    isCheckNum:this.isCheckNum
+                }
+            }).then((res)=>{
+
+                })
+    },
+    myNum:function(index2){
+        this.myNumber = index2;
+        console.log(this.myNumber)
+    },
+    tip(index){
+        this.$set(this.classItem,index,true)
+        this.$set(this.tipIcon,index,true)
+    },
+    myFunction(event){
+        var con = confirm("考试未完成，点击确定将帮您提交");
+        if(con){
+            this.submit();
+        }else{
+            console.log("mamamama")
+        }
+    },
+    testManagen(){
+        axios({
+          method:'get',
+          url:"/testManagement/testManagement",
+          params:{
+              user:this.user
+          }
+          }).then((res)=>{
+              this.userMessageData = res.data;
+              console.log(res.data)
+          })
+    }
+  },
   components:{testHead,Modal,navUser,footFooter}
 
 }

@@ -319,18 +319,18 @@ router.get('/stuNewExercise', function (req, res) {
 router.get('/getTestExercise', function (req, res) {
   //console.log(reqUser);
   let reqUser = req.query.user;
-  //console.log(reqUser);
-  TestQuestionInfo.findOne({
+  TestQuestionInfo.find({
     user: reqUser,
     state: 1,
     currTestType: 106,
-  }).then(function (info) {
-    if (info) {
+  }).sort({currTestNum:-1}).then(function (info) {
+    if (info.length !== 0) {
       Question.find({
-        num: { "$in": info.question }
+        num: { "$in": info[0].question }
       }).then(function (result) {
-        info.question = result;
-        res.end(JSON.stringify({ testQuestion: info }));
+        //console.log(result);
+        info[0].question = result;
+        res.end(JSON.stringify({ testQuestion: info[0] }));
       });
     } else {
       res.end(JSON.stringify({code : 1, msg: '未找到数据'}));

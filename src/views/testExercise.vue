@@ -140,8 +140,9 @@
         interval: {},
         TestNum: 0,
         fullscreenLoading: false,
-        testQuestion: '',
-        height:window.innerHeight
+        currTestNum: '',
+        height:window.innerHeight,
+        testAllData:'',
 
       }
     },
@@ -169,7 +170,7 @@
       window.removeEventListener('resize', this.handleResize)
     },
     mounted(){
-      window.addEventListener('resize', this.handleResize)
+      window.addEventListener('resize', this.handleResize);
       setTimeout(function(){
         //var allTestNum = this.$store.state.allTestNum ;
         //var url = document.domain;
@@ -183,7 +184,6 @@
           }else if(_this.minutes == 0 && _this.seconds == 0){
             _this.seconds = 0;
             window.clearInterval(time);
-            console.log("111");
           }else{
             _this.seconds -= 1
           };
@@ -227,7 +227,7 @@
           + ' ' + _this.nowTime.getHours() + seperator2 + _this.minute + seperator2 + _this.second;
 
         this.getTestQ();
-        this.getTestQuesInfo();
+        //this.getTestQuesInfo();
       }.bind(this),500)
 
     },
@@ -251,22 +251,18 @@
         }
       },
       getTestQ() {
-        //console.log(this.toTestData[0]);
         axios.get("/readTestQuestion/getTestExercise", {
           params: {
             user: this.user,
           }
         }).then((res) => {
-            console.log("2222")
-            console.log(res.data)
-            console.log(res.data.testQuestion.question)
           if (res.data.testQuestion.state == 1 && res.data.testQuestion.currTestType == 106) {
+            console.log("11")
+              console.log(res.data);
+            this.testAllData = res.data.testQuestion;
+            this.currTestNum = res.data.testQuestion.currTestNum;
             this.textQuestionData = res.data.testQuestion.question;
-        //    console.log(this.textQuestionData)
             this.minutes = parseInt(res.data.testQuestion.timeHour *60) + parseInt(res.data.testQuestion.timeMin);
-        //    console.log(this.minutes)
-        //    console.log(res.data.testQuestion.timeHour)
-        //    console.log(res.data.testQuestion.timeMin)
             this.AllLength = res.data.testQuestion.question.length;
           } else {
             this.TestNum = res.data.testQuestion.testLength;
@@ -284,16 +280,17 @@
           }
         }).then((res) => {
           //考试题的唯一编号
-          this.testQuestion = res.data.testQuestion;
+//          console.log("111")
+//          console.log(res.data);
+          this.currTestNum = res.data.currTestNum;
           this.startTestTime = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date(res.data.startTime));
-        //  console.log("333333")
-        //  console.log(res.data)
           if(res.data.state == 1 && res.data.currTestType == 106){
             this.picked = res.data.currAnswer;
             this.QidArr = res.data.currIsId;
             this.isCheckArr = res.data.currState;
             this.isCheckNum = res.data.isCheckNum;
           }
+          console.log(this.currTestNum);
         }).catch(function (error) {
           console.log("错误")
         });
@@ -304,14 +301,27 @@
       },
 
       submit:function () {
+        this.sorce=0;
+        this.error = [];
+        for(var i = 0;i < this.QidArr.length;i++){
+          if(this.QidArr[i] != null && this. QidArr[i] != ''){
+            if(this.textQuestionData[i].answer == this.picked[i]){
+
+              this.sorce += 1;
+            }else{
+              this.error.push(i+1);
+            }
+          }else{
+            this.null.push(i+1);
+          }
+        }
+        this.$store.commit('stillBtn',false);
         setTimeout(function(){
           window.clearInterval(this.interval);
-          axios({
-            method:'get',
-            url:"/readTestQuestionInfo/submitQuestionInfo",
+          axios.get("/readTestQuestionInfo/submitQuestionInfo",{
             params:{
               user:this.user,
-              testQuestion:this.testQuestion,
+              currTestNum:this.currTestNum,
               startTime:this.currentdate,
               currAnswer:this.picked,
               currState:this.isCheckArr,
@@ -335,31 +345,6 @@
             }
           );
         }.bind(this),200);
-
-        this.sorce=0;
-        this.error = [];
-        console.log(this.QidArr);
-        for(var i = 0;i < this.QidArr.length;i++){
-          if(this.QidArr[i] != null && this. QidArr[i] != ''){
-            //console.log(this.QidArr[i]-1+"==========this.QidArr[i]-1");
-            //console.log("asd"+this.picked[i])
-            //console.log(this.textQuestionData)
-            if(this.textQuestionData[i].answer == this.picked[i]){
-
-              this.sorce += 5;
-            }else{
-              //console.log(this.picked[i])
-              this.error.push(i+1);
-            }
-          }else{
-            console.log(i+"123456");
-            this.null.push(i+1);
-          }
-        }
-        this.$store.commit('stillBtn',false);
-
-        //    alert(this.sorce + "==" + this.error + "==" + this.null);
-        //    this.$router.go(0);
       },
       num:function (n) {
         return n<10 ? "0" + n : "" + n
@@ -396,15 +381,12 @@
         }
       },
       testManagen(){
-        axios({
-          method:'get',
-          url:"/testManagement/testManagement",
+        axios.get("/testManagement/testManagement",{
           params:{
             user:this.user
           }
         }).then((res)=>{
           this.userMessageData = res.data;
-          console.log(res.data)
         })
       }
     },

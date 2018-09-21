@@ -317,9 +317,9 @@
                     </el-form-item>
 
                     <el-form-item label="班级" prop="classGrade">
-                      <el-select v-model="form.classGrade" placeholder="请选择班级">
+                      <el-select v-model="form.classGrade" multiple placeholder="请选择班级">
                         <div v-for="item in classM">
-                          <el-option :label="item.label" :value="item.label"></el-option>
+                          <el-option :label="item.label" :key="item.label" :value="item.label"></el-option>
                         </div>
                       </el-select>
                     </el-form-item>
@@ -736,7 +736,7 @@
       getCheckedNodes() {
         this.form.name = [];
         this.form.nameId = [];
-        console.log(this.$refs.tree.getCheckedNodes());
+//        console.log(this.$refs.tree.getCheckedNodes());
         var arr = this.$refs.tree.getCheckedNodes();
         for (var i = 0; i < arr.length; i++) {
         //  console.log(arr[i].label);
