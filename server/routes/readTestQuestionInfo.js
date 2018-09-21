@@ -153,6 +153,8 @@ function distTestQuestion(req, res, next) {
               timeHour: reqQ.timeHour,
               timeMin: reqQ.timeMin,
               allScore: reqQ.allScore,
+              major: reqQ.major,
+              classGrade: stu[i].classGrade,
             });
             testQuestionInfo.question = testResult.testItemsNum;
             testQuestionInfo.save(function (err) {

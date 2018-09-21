@@ -395,13 +395,33 @@
 
               <el-table-column label="操作">
                 <template slot-scope="scope">
-                  <el-button size="mini" type="primary" @click="scoreManData(scope.$index, scope.row)">
-                    查看成绩
-                  </el-button>
-                  <el-button size="mini" type="primary" @click="exportExcel1(scope.$index, scope.row)">
-                    导出成绩
-                  </el-button>
+                  <el-button type="text" @click="scoreManData(scope.$index, scope.row)">查看成绩</el-button>
+
+                  <el-dialog title="选择班级" :visible.sync="dialogTableVisible44">
+                    <!--<el-dialog-->
+                      <!--width="30%"-->
+                      <!--title="内层 Dialog"-->
+                      <!--:visible.sync="dialogTableVisible4"-->
+                      <!--append-to-body>-->
+                    <!--</el-dialog>-->
+                    <el-radio v-for="(item,index) in classGradeText"
+                              :label="item"
+                              v-model="radioClass">{{item}}</el-radio>
+                    <div slot="footer" class="dialog-footer">
+                      <el-button  type="primary" @click="scoreManDataIn(radioClass)">确定
+                        <!--<template>-->
+                          <!--<el-button size="mini" type="primary" @click="scoreManData(scope.$index, scope.row)">-->
+                            <!--查看成绩-->
+                          <!--</el-button>-->
+                          <!--<el-button size="mini" type="primary" @click="exportExcel1(scope.$index, scope.row)">-->
+                            <!--导出成绩-->
+                          <!--</el-button>-->
+                        <!--</template>-->
+                      </el-button>
+                    </div>
+                  </el-dialog>
                 </template>
+
               </el-table-column>
 
             </el-table>
@@ -423,12 +443,12 @@
                        width="59%"
                        :before-close="handleClose"
                        :visible.sync="dialogTableVisible4">
-              <el-table id="out-table" style="width: 97%; margin-left: 16px" :data="checkGradesData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)">
+              <el-table id="out-table" style="width: 97%; margin-left: 16px" :data="radioGradeArray.slice((currentPage2-1)*pagesize,currentPage2*pagesize)">
 
-                <el-table-column label="序号" width="60">
-                  <template slot-scope="scope">
-                    <span>{{ scope.row.num }}</span>
-                  </template>
+                <el-table-column label="序号" type="index" width="60">
+                  <!--<template slot-scope="scope">-->
+                    <!--<span>{{ scope.row.num }}</span>-->
+                  <!--</template>-->
                 </el-table-column>
 
                 <el-table-column label="姓名" width="80">
@@ -623,6 +643,7 @@
         dialogTableVisible2: false,
         dialogTableVisible3: false,
         dialogTableVisible4: false,
+        dialogTableVisible44: false,
         toMoreData: [],
         toHistoryData: [],
         scoreData: [],
@@ -632,6 +653,10 @@
         height:window.innerHeight,
         majorM:[],
         classM:[],
+        classGradeText:[],
+        radioClass:'',
+        radioGradeArray:[],
+        radioButton:'',
       };
     },
 
@@ -1053,14 +1078,34 @@
       },
       //成绩管理, 查看成绩
       scoreManData(index, row) {
+        console.log("11")
+        console.log(row)
         this.getCheckGrades(row);
-        this.dialogTableVisible4 = true;
+        this.dialogTableVisible44 = true;
         row.date1 = moment(row.date1).format("YYYY-MM-DD");
         row.date2 = moment(row.date2).format("YYYY-MM-DD");
         row.newData = core.formatDate("yyyy-MM-dd", new Date(row.newData));
         this.toHistoryData.push(row);
         //console.log(this.toHistoryData);
 
+      },
+      scoreManDataIn(radioClass){
+        this.dialogTableVisible4 = true;
+//        this.radioButton = 1
+//        console.log(radioClass)
+        this.radioGradeArray = []
+        for(var i = 0; i < this.checkGradesData.length; i++){
+          console.log(this.checkGradesData[i])
+//          for(var j = 0; j < this.radioGradeArray.length; j++){
+//            this.checkGradesData[i].num = j + 1
+//            break
+//          }
+
+          if(this.checkGradesData[i].classGrade === radioClass){
+            this.radioGradeArray.push(this.checkGradesData[i])
+          }
+        }
+        this.total3 = this.radioGradeArray.length;
       },
       //关闭三个弹窗,清空数组
       handleClose(done) {
@@ -1079,7 +1124,19 @@
         }).then((res) => {
           //console.log(res.data);
           let resData = res.data.result;
-          console.log(resData);
+//          console.log("22")
+//          console.log(resData);
+          this.classGradeText = []
+          for(var i = 0; i < resData.length; i++){
+            this.classGradeText.push(resData[i].classGrade)
+//            console.log(this.classGradeText)
+          }
+          for(var j = 1; j < this.classGradeText.length; j++){
+            if(this.classGradeText[j] == this.classGradeText[j - 1]){
+              this.classGradeText.splice(j,1)
+            }
+          }
+//          console.log(this.classGradeText)
           for (let i = 0; i < resData.length; i++) {
               if (resData[i].startTime !== null) {
                 resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
@@ -1092,7 +1149,7 @@
           }
           this.checkGradesData = [];
           this.checkGradesData = resData;
-          this.total3 = this.checkGradesData.length;
+
           //console.log(this.checkGradesData);
         });
       },
@@ -1118,7 +1175,7 @@
           }
           this.checkGradesData = [];
           this.checkGradesData = resData;
-          this.total3 = this.checkGradesData.length;
+
           //console.log(this.checkGradesData);
           this.exportExcel();
         });
