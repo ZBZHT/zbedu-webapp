@@ -405,6 +405,7 @@
                       <!--append-to-body>-->
                     <!--</el-dialog>-->
                     <el-radio v-for="(item,index) in classGradeText"
+                              :key = "index"
                               :label="item"
                               v-model="radioClass">{{item}}</el-radio>
                     <div slot="footer" class="dialog-footer">

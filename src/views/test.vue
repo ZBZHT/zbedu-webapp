@@ -155,28 +155,28 @@
 
                 <el-table-column label="分数" width="100">
                   <template slot-scope="scope">
-                    <span v-if="showGradeState === 0">暂无</span>
-                    <span v-if="showGradeState === 2">{{ scope.row.sorce }}</span>
+                    <span v-if="scope.row.isShowGrade === 0">待公布</span>
+                    <span v-if="scope.row.isShowGrade === 2">{{ scope.row.sorce }}</span>
                   </template>
                 </el-table-column>
 
-                <el-table-column label="查看试卷">
+                <el-table-column label="试卷分析">
                   <template slot-scope="scope">
-                    <span v-if="showGradeState === 0">暂无</span>
-                    <el-button v-if="showGradeState === 2" size="mini" type="primary" @click="getOriginPaper(scope.$index, scope.row)">
+                    <span v-if="scope.row.isShowGrade === 0">待公布</span>
+                    <el-button v-if="scope.row.isShowGrade === 2" size="mini" type="primary" @click="getOriginPaper(scope.$index, scope.row)">
                       查看
                     </el-button>
                   </template>
                 </el-table-column>
 
-                <el-table-column label="错题分析">
-                  <template slot-scope="scope">
-                    <span v-if="showGradeState === 0">暂无</span>
-                    <el-button v-if="showGradeState === 2" size="mini" type="primary" @click="getErrorPaper(scope.$index, scope.row)">
-                      查看
-                    </el-button>
-                  </template>
-                </el-table-column>
+                <!--<el-table-column label="错题分析">-->
+                  <!--<template slot-scope="scope">-->
+                    <!--<span v-if="showGradeState === 0">暂无</span>-->
+                    <!--<el-button v-if="showGradeState === 2" size="mini" type="primary" @click="getErrorPaper(scope.$index, scope.row)">-->
+                      <!--查看-->
+                    <!--</el-button>-->
+                  <!--</template>-->
+                <!--</el-table-column>-->
 
               </el-table>
 
@@ -193,11 +193,13 @@
               </div>
 
               <!--查看试卷弹出框-->
-                <el-dialog title="查看试卷"
+                <el-dialog title="试卷分析"
                            width="83%"
                            :before-close="handleClose"
                            :visible.sync="dialogTableVisible1">
                   <div v-for="(item2,index2) in originPaper.question">
+                    <i class="el-icon-error" v-if="item2.stateTip == 0"></i>
+                    <i class="el-icon-success" v-if="item2.stateTip == 1"></i>
                     <span class="desctitle">
                         {{index2 + 1}}.{{item2[0].desc}}
                     </span>
@@ -221,32 +223,35 @@
                           </label>
                       </li>
                     </ul>
+                    <span>
+                        正确答案：{{item2[0].answer}}
+                    </span>
                   </div>
                 </el-dialog>
 
                 <!--查看错题分析-->
-                <el-dialog title="错题分析"
-                           width="83%"
-                           :before-close="handleClose"
-                           :visible.sync="dialogTableVisible2">
-                  <div v-for="(item3,index3) in ErrorPaper">
-                    <span class="desctitle">
-                      <img src="../assets/imgs/err.jpg">
-                      {{index3 + 1}}.{{item3[0].desc}}
-                    </span>
-                    <ul class="ans">
-                      <li>
-                          {{item3[0].options[0]}}
-                          {{item3[0].options[1]}}
-                          {{item3[0].options[2]}}
-                          {{item3[0].options[3]}}
-                      </li>
-                    </ul>
-                    <span>
-                        正确答案：{{item3[0].answer}}
-                    </span>
-                  </div>
-                </el-dialog>
+                <!--<el-dialog title="错题分析"-->
+                           <!--width="83%"-->
+                           <!--:before-close="handleClose"-->
+                           <!--:visible.sync="dialogTableVisible2">-->
+                  <!--<div v-for="(item3,index3) in ErrorPaper">-->
+                    <!--<span class="desctitle">-->
+                      <!--<img src="../assets/imgs/err.jpg">-->
+                      <!--{{index3 + 1}}.{{item3[0].desc}}-->
+                    <!--</span>-->
+                    <!--<ul class="ans">-->
+                      <!--<li>-->
+                          <!--{{item3[0].options[0]}}-->
+                          <!--{{item3[0].options[1]}}-->
+                          <!--{{item3[0].options[2]}}-->
+                          <!--{{item3[0].options[3]}}-->
+                      <!--</li>-->
+                    <!--</ul>-->
+                    <!--<span>-->
+                        <!--正确答案：{{item3[0].answer}}-->
+                    <!--</span>-->
+                  <!--</div>-->
+                <!--</el-dialog>-->
 
             </el-tab-pane>
 
@@ -303,11 +308,11 @@
                 <el-form class="test-exercise-form" ref="stuform" :model="stuform" status-icon :rules="rules"
                          label-width="80px">
                   <el-form-item label="练习内容" prop="name">
-                    <el-dropdown>
+                    <el-dropdown trigger="click">
                         <span class="el-dropdown-link">
                             <div class="elinput">
                                 <ul>
-                                    <li v-for="item in stuform.name">{{item}}/</li>
+                                    <li v-for="(item,index) in stuform.name">{{item}} <span v-if="index != indexSpan"> |&nbsp </span></li>
                                 </ul>
                             </div>
                         </span>
@@ -336,7 +341,7 @@
                   </el-form-item>
 
                   <el-form-item label="考试时长">
-                    <el-col :span="6">
+                    <el-col :span="4">
                       <el-form-item prop="timeHour">
                         <el-select v-model="stuform.timeHour" placeholder="请选择小时" @change="isMin">
                           <el-option label="0" value="0"></el-option>
@@ -346,7 +351,7 @@
                         </el-select>
                       </el-form-item>
                     </el-col>
-                    <el-col class="line" :span="1">小时</el-col>
+                    <!--<el-col class="line" :span="1">小时</el-col>-->
                     <el-col :span="6">
                       <el-form-item prop="timeMin">
                         <el-select v-model="stuform.timeMin" placeholder="请选择分钟">
@@ -359,7 +364,7 @@
                         </el-select>
                       </el-form-item>
                     </el-col>
-                    <el-col class="line" :span="1">分钟</el-col>
+                    <!--<el-col class="line" :span="1">分钟</el-col>-->
                   </el-form-item>
 
                   <el-button type="primary" @click="submitForm('stuform')">开始练习</el-button>
@@ -399,6 +404,12 @@
                     </template>
                   </el-table-column>
 
+                  <el-table-column label="分数" width="120">
+                    <template slot-scope="scope">
+                      <span>{{ scope.row.sorce }}</span>
+                    </template>
+                  </el-table-column>
+
                   <el-table-column label="查看练习试卷">
                     <template slot-scope="scope">
                       <el-button size="mini" type="primary" @click="getExercisePaper(scope.$index, scope.row)">
@@ -407,13 +418,13 @@
                     </template>
                   </el-table-column>
 
-                  <el-table-column label="练习错题分析">
-                    <template slot-scope="scope">
-                      <el-button size="mini" type="primary" @click="getExerciseError(scope.$index, scope.row)">
-                        查看
-                      </el-button>
-                    </template>
-                  </el-table-column>
+                  <!--<el-table-column label="练习错题分析">-->
+                    <!--<template slot-scope="scope">-->
+                      <!--<el-button size="mini" type="primary" @click="getExerciseError(scope.$index, scope.row)">-->
+                        <!--查看-->
+                      <!--</el-button>-->
+                    <!--</template>-->
+                  <!--</el-table-column>-->
                 </el-table>
 
                 <!--分页显示-->
@@ -434,6 +445,8 @@
                            :before-close="handleClose"
                            :visible.sync="dialogTableVisible3">
                   <div v-for="(item2,index2) in exerciseOriginPaper.question">
+                    <i class="el-icon-error" v-if="item2.stateTip == 0"></i>
+                    <i class="el-icon-success" v-if="item2.stateTip == 1"></i>
                     <span class="desctitle">
                         {{index2 + 1}}.{{item2[0].desc}}
                     </span>
@@ -457,32 +470,35 @@
                           </label>
                       </li>
                     </ul>
+                    <span>
+                        正确答案：{{item2[0].answer}}
+                    </span>
                   </div>
                 </el-dialog>
 
                 <!--查看错题分析-->
-                <el-dialog title="错题分析"
-                           width="83%"
-                           :before-close="handleClose"
-                           :visible.sync="dialogTableVisible4">
-                  <div v-for="(item3,index3) in exerciseErrorPaper">
-                    <span class="desctitle">
-                      <img src="../assets/imgs/err.jpg">
-                      {{index3 + 1}}.{{item3[0].desc}}
-                    </span>
-                    <ul class="ans">
-                      <li>
-                          {{item3[0].options[0]}}
-                          {{item3[0].options[1]}}
-                          {{item3[0].options[2]}}
-                          {{item3[0].options[3]}}
-                      </li>
-                    </ul>
-                    <span>
-                        正确答案：{{item3[0].answer}}
-                    </span>
-                  </div>
-                </el-dialog>
+                <!--<el-dialog title="错题分析"-->
+                           <!--width="83%"-->
+                           <!--:before-close="handleClose"-->
+                           <!--:visible.sync="dialogTableVisible4">-->
+                  <!--<div v-for="(item3,index3) in exerciseErrorPaper">-->
+                    <!--<span class="desctitle">-->
+                      <!--<img src="../assets/imgs/err.jpg">-->
+                      <!--{{index3 + 1}}.{{item3[0].desc}}-->
+                    <!--</span>-->
+                    <!--<ul class="ans">-->
+                      <!--<li>-->
+                          <!--{{item3[0].options[0]}}-->
+                          <!--{{item3[0].options[1]}}-->
+                          <!--{{item3[0].options[2]}}-->
+                          <!--{{item3[0].options[3]}}-->
+                      <!--</li>-->
+                    <!--</ul>-->
+                    <!--<span>-->
+                        <!--正确答案：{{item3[0].answer}}-->
+                    <!--</span>-->
+                  <!--</div>-->
+                <!--</el-dialog>-->
 
               </el-tab-pane>
             </el-tabs>
@@ -537,8 +553,8 @@
         stuform: {
           name: [],
           nameId: [],
-          timeHour: 2,
-          timeMin: 0,
+          timeHour: '',
+          timeMin: '',
           num: ''
         },
         rules: {
@@ -627,7 +643,8 @@
         dialogTableVisible4: false,
         exerciseInfo:[],
         height:window.innerHeight,
-        showGradeState:''
+        showGradeState:[],
+        indexSpan:'',
       }
     },
     computed:{
@@ -705,8 +722,20 @@
       //查看试卷弹出框
       getOriginPaper(index, row){
         this.dialogTableVisible1 = true;
-        console.log(row);
-      //  console.log(row.question)
+        console.log("11")
+//        console.log(row);
+        for(var i = 0; i < row.question.length; i++){
+          let newRow = row.question[i]
+//          console.log(newRow[0].answer)
+//          console.log(row.currAnswer[i])
+          if(newRow[0].answer === row.currAnswer[i]){
+            newRow.stateTip = 1
+          }else{
+            newRow.stateTip = 0
+          }
+        }
+//        console.log(row.question)
+
         this.originPaper = row;
       },
       //查看错题分析弹出框
@@ -728,6 +757,16 @@
       getExercisePaper(index, row){
         this.dialogTableVisible3 = true;
         console.log(row);
+        for(var i = 0; i < row.question.length; i++){
+          let newRow = row.question[i]
+//          console.log(newRow[0].answer)
+//          console.log(row.currAnswer[i])
+          if(newRow[0].answer === row.currAnswer[i]){
+            newRow.stateTip = 1
+          }else{
+            newRow.stateTip = 0
+          }
+        }
         this.exerciseOriginPaper = row;
       },
       //查看练习错题分析弹出框
@@ -1012,9 +1051,12 @@
             user: this.user,
           }
         }).then((res) => {
-          console.log(res.data)
-          console.log(res.data.testQuestionInfo[0].showGradeState)
-          this.showGradeState = res.data.testQuestionInfo[0].showGradeState
+//          console.log(res.data)
+          console.log("22")
+          console.log(res.data.testQuestionInfo)
+          for(var i = 0; i < res.data.testQuestionInfo.length; i++){
+            this.showGradeState.push(res.data.testQuestionInfo[i].showGradeState)
+          }
         //  console.log(res.data.testQuestionInfo)
           let resTestData = res.data.testQuestionInfo;
         //  let resTestInfoData = res.data.testQuestionInfo;
@@ -1031,7 +1073,10 @@
         //    resTestData[i].error = resTestInfoData[i].error;
           }
           this.historyTestData = resTestData;
-          console.log(resTestData);
+          for(var i = 0; i < this.historyTestData.length; i++){
+            this.historyTestData[i].isShowGrade = this.showGradeState[i]
+          }
+//          console.log(resTestData);
         //  console.log(resTestInfoData);
           this.total = this.historyTestData.length;
         });
@@ -1102,6 +1147,7 @@
         for (var i = 0; i < arr.length; i++) {
           this.stuform.name.push(arr[i].label);
           this.stuform.nameId.push(arr[i].courseId);
+          this.indexSpan = i;
         }
       },
       handleClick(data) {
@@ -1113,6 +1159,7 @@
             user: this.user,
           }
         }).then((res) => {
+          console.log("333")
           console.log(res.data.testQuestionInfo)
           let resTestData = res.data.testQuestionInfo;
         //  let resTestInfoData = res.data.testQuestion;
@@ -1557,5 +1604,11 @@
   .test_T .el-dialog{
     height:61%;
     overflow:auto;
+  }
+  .test_T .el-icon-error{
+    color:rgb(220,78,65);
+  }
+  .test_T .el-icon-success{
+    color:rgb(25,161,96);
   }
 </style>

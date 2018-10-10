@@ -21,7 +21,7 @@
                     <div class="phoneApp">
                         手机客户端
                         <div class="phoneAppHover">
-                            <img class="phoneAppImg" src="../../assets/imgs/客户端.jpg">
+                            <img class="phoneAppImg" src="../../assets/imgs/客户端.png">
                         </div>
                     </div>
                     <div class="user_bn" v-if="nickName">

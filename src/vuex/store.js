@@ -24,7 +24,8 @@ export default new Vuex.Store({
     newBannerLeft:[],
     classGrade:'',
     mondayData:'',
-    activeName:''
+    activeName:'',
+    cmsID:'',
 },
  mutations : {
    activeName(state,item){
@@ -80,6 +81,9 @@ export default new Vuex.Store({
     },
     getMonday(state,item){
         state.mondayData = item;
+    },
+   cmsID(state,item){
+        state.cmsID = item;
     },
 },
  plugins: [createPersistedState()]

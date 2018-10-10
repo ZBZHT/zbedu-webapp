@@ -27,7 +27,7 @@ router.get('/index', function (req, res) {
 });
 router.get('/bannerLeftData', function (req, res) {
     res.setHeader("Content-Type", "application/json");
-    /*CenterTree.findOneAndUpdate({
+    CenterTree.findOneAndUpdate({
       name: 'centerTree'
     }, {
       newTime: new Date(),
@@ -41,7 +41,7 @@ router.get('/bannerLeftData', function (req, res) {
       } else {
         console.log('更新centerTree成功');
       }
-    });*/
+    });
     res.end(JSON.stringify(bannerLeftData));
 });
 router.get('/login', function (req, res) {

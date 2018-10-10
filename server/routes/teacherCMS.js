@@ -3596,9 +3596,10 @@ router.post('/studentHot', function (req, res) {
     Student.findOne({
       user: reqData.name
     }).then(function (result) {
-      clickNew = result.clickNum + 1;
-      console.log(result)
-      console.log(clickNew)
+      //console.log('11');
+      if (result !== null) {
+        clickNew = result.clickNum + 1;
+      }
       // if(stuhot.length === 0){
       //   stuhot.push(result)
       // }else if(stuhot.length > 0){
