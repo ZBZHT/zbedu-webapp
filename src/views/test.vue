@@ -694,7 +694,7 @@
       window.removeEventListener('resize', this.handleResize)
     },
     mounted() {
-      window.addEventListener('resize', this.handleResize)
+      window.addEventListener('resize', this.handleResize);
       this.testNow();
     },
     watch: {
@@ -722,7 +722,7 @@
       //查看试卷弹出框
       getOriginPaper(index, row){
         this.dialogTableVisible1 = true;
-        console.log("11")
+        //console.log("11")
 //        console.log(row);
         for(var i = 0; i < row.question.length; i++){
           let newRow = row.question[i]
@@ -756,7 +756,7 @@
       //查看练习试卷弹出框
       getExercisePaper(index, row){
         this.dialogTableVisible3 = true;
-        console.log(row);
+        //console.log(row);
         for(var i = 0; i < row.question.length; i++){
           let newRow = row.question[i]
 //          console.log(newRow[0].answer)
@@ -773,7 +773,7 @@
       getExerciseError(index, row){
         this.dialogTableVisible4 = true;
 
-        console.log(row);
+        //console.log(row);
       //  console.log(row.error);
         for(var i = 0; i < row.error.length; i++){
           for(var j = 0; j < row.question.length; j++){
