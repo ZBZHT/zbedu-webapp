@@ -9,9 +9,8 @@
                             <p> <img class="unm" src="../../assets/imgs/unm.png"> </p>
                                 <input name="fname" type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号" autocomplete="on" autofocus="autofocus">
                             <p> <img class="psw" src="../../assets/imgs/psw.png"> </p>
-
-                                <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
-                                <span class="checkPassword" v-show="checkPassword">用户名或密码错误</span>
+                              <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
+                              <span class="checkPassword" v-show="checkPassword">用户名或密码错误</span>
                         </form>
                     </template>
                 </div>
@@ -28,112 +27,117 @@
 <script>
 import axios from 'axios'
 import md5 from 'js-md5'
+import Bus from '../../assets/js/Bus.js'
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import core from '../../assets/js/core.js'
     export default {
         name: 'v-modal',
         data: function() {
             return {
-                show: false,
-                type: '',
-                message: '',
-                slot: null,
-                title: '',
-                callback: null,
-                username: '',
-                inputType: 'text',
-                username: '',
-                password:'',
-                nickName:'',
-                url:'',
-                checkPassword:false
+              show: false,
+              type: '',
+              message: '',
+              slot: null,
+              title: '',
+              callback: null,
+              username: '',
+              inputType: 'text',
+              password:'',
+              nickName:'',
+              url:'',
+              checkPassword:false,
+              loginPath:'/',
             }
         },
 
         mounted(){
             this.url = document.domain;
         },
-        methods: {
-            modal: function(message, title) {
-                if (typeof message === 'string') {
-                    this.message = message;
-                    this.slot = null;
-                } else if (typeof message === 'object' && message.slot) {
-                    this.slot = message.slot;
-                }
-                this.title = title;
-                this.callback = null;
-                this.username = '';
-                this.password = '';
-                this.show = true;
-            },
-            modalPrompt: function(params = {}) {
-                this.type = 'prompt';
-                this.modal(params.message, params.title || '输入');
-                this.callback = params.callback;
-                this.inputType = params.options.inputType || 'text';
-            },
+      created() {
+        Bus.$on('change', (msg) => { //Hub接收事件
+          this.show = true;
+          this.type = 'prompt';
+        });
+      },
+      methods: {
+          modal: function(message, title) {
+              if (typeof message === 'string') {
+                  this.message = message;
+                  this.slot = null;
+              } else if (typeof message === 'object' && message.slot) {
+                  this.slot = message.slot;
+              }
+              this.title = title;
+              this.callback = null;
+              this.username = '';
+              this.password = '';
+              this.show = true;
+          },
+          modalPrompt: function(params = {}) {
+              this.type = 'prompt';
+              this.modal(params.message, params.title || '输入');
+              this.callback = params.callback;
+              this.inputType = params.options.inputType || 'text';
+          },
 
-            cancel: function() {
-                var self = this;
-                this.show = false;
-                setTimeout(function() {
-                    if (self.callback) {
-                        self.callback(self.type == 'prompt' ? undefined : false);
-                    }
-                }, 0);
-                this.checkPassword = false;
-            },
-            login(){
-                if(this.username == "" || this.password == ""){
-                    alert("请输入用户名或密码")
-                }else{
-                    /*请求存有用户账号的json文件*/
-                    axios({
-                        method: 'post',
-                        url: '/api/user/login',
-                        data: {
-                            username: this.username,
-                            password: md5(this.password)
-                        },
-                        withCredentials: true
-                        }).then((res)=>{
-                            console.log(res.data);
-                        /*传值是 0:登陆成功, 1: 已登陆, 2:用户名或密码错误 */
-                        if(res.data.code == 0){
-                 //           setCookie('username',this.username)
-                                setTimeout(function(){
-                                    this.nickName = res.data.username;
-                                    this.$store.commit('username',res.data.username);
-                                    this.$store.commit('userType',res.data.userType);
-                                    this.$store.commit('userTypeC',core.userType(res.data.userType));
-                                    this.$store.commit('userID',res.data.userID);
-                                    this.$emit("receive",this.nickName);
-                                    this.$router.push('/');
-                                    this.show = false;
-                                //    this.$router.go(0);
-                                }.bind(this),0.1)
-                        }else if(res.data.code == 1){
-                //            setCookie('username',this.username)
-                                setTimeout(function(){
-                                    this.nickName = res.data.username;
-                                    this.$store.commit('username',res.data.username);
-                                    this.$store.commit('userType',res.data.userType);
-                                    this.$store.commit('userTypeC',core.userType(res.data.userType));
-                                    this.$store.commit('userID',res.data.userID);
-                                    this.$emit("receive",this.nickName);
-                                    this.$router.push('/');
-                                    this.show = false;
-                                //   this.$router.go(0);
-                                }.bind(this),0.1)
-                        }else if(res.data.code == 2){
-                            this.checkPassword = true;
-                        }
-                  })
-              };
-              
+          cancel: function() {
+            this.show = false;
+            var self = this;
+            if (self.callback) {
+              self.callback(self.type == 'prompt' ? undefined : false);
             }
-        }
+              this.checkPassword = false;
+          },
+          login(){
+              if(this.username === "" || this.password === ""){
+                  alert("请输入用户名或密码")
+              }else{
+                  /*请求存有用户账号的json文件*/
+                  axios({
+                      method: 'post',
+                      url: '/api/user/login',
+                      data: {
+                          username: this.username,
+                          password: md5(this.password)
+                      },
+                      withCredentials: true
+                      }).then((res)=>{
+                      /*传值是 0:登陆成功, 1: 已登陆, 2:用户名或密码错误 */
+                      if(res.data.code === 0){
+                        this.show = false;
+                        setTimeout(function(){
+                          //console.log('11');
+                          this.nickName = res.data.username;
+                          this.$store.commit('username',res.data.username);
+                          this.$store.commit('userType',res.data.userType);
+                          this.$store.commit('userTypeC',core.userType(res.data.userType));
+                          this.$store.commit('userID',res.data.userID);
+                          this.$emit("receive",this.nickName);
+                          this.$router.push(this.loginPath);
+                        //    this.$router.go(0);
+                        }.bind(this),0.5);
+                        console.log(this.show);
+                      }else if(res.data.code === 1){
+              //            setCookie('username',this.username)
+                              setTimeout(function(){
+                                  this.nickName = res.data.username;
+                                  this.$store.commit('username',res.data.username);
+                                  this.$store.commit('userType',res.data.userType);
+                                  this.$store.commit('userTypeC',core.userType(res.data.userType));
+                                  this.$store.commit('userID',res.data.userID);
+                                  this.$emit("receive",this.nickName);
+                                  this.$router.push(this.loginPath);
+                                  this.show = false;
+                              //   this.$router.go(0);
+                              }.bind(this),0.1)
+                      }else if(res.data.code === 2){
+                          this.checkPassword = true;
+                      }
+                })
+            }
+
+          }
+      }
     }
 </script>
 
@@ -145,7 +149,7 @@ import core from '../../assets/js/core.js'
   width: 100%;
   bottom: 0;
   background-color: rgba(51, 51, 51, 0.5);
-  z-index: 50;
+  z-index: 9999;
   display: flex;
   justify-content: center;
   align-items: center;

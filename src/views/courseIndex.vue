@@ -3,32 +3,32 @@
     <div class="nav">
         <navgation-head></navgation-head>
     </div>
+    <!--登录-->
+    <div class="login">
+      <login-cousre></login-cousre>
+    </div>
     <div class="banner" :style="{height: rightboxHeight + 'px'}">
         <div class="left-menu">
-
             <!--<banner-left :bannerLeftData = "bannerLeftData"></banner-left>-->
             <banner-left></banner-left>
-
         </div>
         <div class="rightbox">
             <swipe :slides="slides" :inv="inv" :style="styleObject"></swipe>
         </div>
     </div>
 
-    <span class="title">精品课程</span>
+    <div class="title">精品课程</div>
     <div class="best-class">
-
         <bestClass :bestClassData = "bestClassData"></bestClass>
-
     </div>
 
     <div class="bottom-box">
         <div class="bb-left">
-            <span class="bb-span">猜你感兴趣</span>
+            <span class="bb-span">&thinsp;猜你感兴趣</span>
             <bottom-left :bottomLeftData = "bottomLeftData"></bottom-left>
         </div>
         <div class="bb-middle">
-        <span class="title">实战推荐</span>
+        <p class="title">实战推荐</p>
             <div class="shizhan">
               <ul>
                 <li class="row-a"
@@ -38,8 +38,13 @@
                         <div class="mask-play">
                             <!--<div class="maskImg"><img :src="url_before + item.url"></div>-->
                           <div class="maskImg">
-                            <!--<img src="src/assets/imgs/bestclass1.png">-->
-                            <p>{{item.label}}</p>
+                            <img v-if="index % 6 == 0" src="src/assets/imgs/bestclass11.png">
+                            <img v-if="index % 6 == 1" src="src/assets/imgs/bestclass12.png">
+                            <img v-if="index % 6 == 2" src="src/assets/imgs/bestclass13.png">
+                            <img v-if="index % 6 == 3" src="src/assets/imgs/bestclass14.png">
+                            <img v-if="index % 6 == 4" src="src/assets/imgs/bestclass15.png">
+                            <img v-if="index % 6 == 5" src="src/assets/imgs/bestclass16.png">
+                            <!--<p>{{item.label}}</p>-->
                           </div>
                           <div class="mask">
                               <img @click="sendRecommendVideo(item)" class="play" src="src/assets/imgs/play3.png">
@@ -69,9 +74,11 @@
             :changge="pageFn">
             </mo-paging>
         </div>
+      <!--课程排行，学霸排行-->
         <div class="bb-right">
             <bottom-right :bottomRightData = "bottomRightData"></bottom-right>
         </div>
+
     </div>
 
     <div class="footer">
@@ -90,6 +97,8 @@ import bestClass from '@/components/index/bestClass'
 import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
 import bottomRight from '@/components/index/bottomRight'
+import loginCousre from '@/components/common/Login';
+import Bus from '.././assets/js/Bus.js'
 
 export default {
   name: 'index',
@@ -131,23 +140,23 @@ export default {
           }
       },
   methods:{
-              //页码切换执行方法
-          pageFn(val){
-            this.page=val;
-            console.log(val);
-        },
-          toPlayVideo(item) {
-            console.log(item)
-            this.$store.commit('noTreeTitle',item);
-            this.$store.commit('noTreeTitle1',item);
-            this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.label)
-        },
-          toPlayPdf(item) {
-            console.log(item)
-            this.$store.commit('noTreeTitle',item);
-            this.$store.commit('noTreeTitle1',item);
-            this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.label)
-        },
+    //页码切换执行方法
+      pageFn(val){
+        this.page=val;
+        console.log(val);
+      },
+        toPlayVideo(item) {
+          //console.log(item)
+          this.$store.commit('noTreeTitle',item);
+          this.$store.commit('noTreeTitle1',item);
+          this.$router.push('/playVideo/'+ item.courseId + '/video/' + item.label)
+      },
+        toPlayPdf(item) {
+          //console.log(item)
+          this.$store.commit('noTreeTitle',item);
+          this.$store.commit('noTreeTitle1',item);
+          this.$router.push('/playPdf/'+item.courseId + '/pdf/' + item.label)
+      },
     //为热门课程给每个课程计数
     countForHot(item){
       axios.post('/teacherCMS/countHot', {
@@ -176,7 +185,7 @@ export default {
           courseInfo: item
         }
       }).then((res) => {
-        console.log(res.data)
+        //console.log(res.data)
         if (res.data.code === 0){
           //            this.addSuccess('更新成功');
         }else if (res.data.code === 1){
@@ -186,42 +195,54 @@ export default {
     },
     //点击图片或video按钮
     sendRecommendVideo(item){
-      this.$store.commit('activeName',3);
-      this.$store.commit('noTreeTitle',item);
-      this.$store.commit('noTreeTitle1',item);
-      //添加item至我的足迹请求
-      this.myFootPrint(item)
-      this.countForHot(item)
-      const {href} = this.$router.resolve({
-        name: 'newCourse'
-      });
-      window.open(href, '_blank')
+      if (this.$store.state.username !== '') {
+        this.$store.commit('activeName',3);
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item);
+        this.countForHot(item);
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
+        });
+        window.open(href, '_blank')
+      } else {
+        Bus.$emit('change','/courseIndex'); //Hub触发事件
+      }
     },
     //点击PPT按钮
     sendRecommendPPT(item){
-      this.$store.commit('activeName',2);
-      this.$store.commit('noTreeTitle',item);
-      this.$store.commit('noTreeTitle1',item);
-      //添加item至我的足迹请求
-      this.myFootPrint(item)
-      this.countForHot(item)
-      const {href} = this.$router.resolve({
-        name: 'newCourse'
-      });
-      window.open(href, '_blank')
+      if (this.$store.state.username !== '') {
+        this.$store.commit('activeName',2);
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item);
+        this.countForHot(item);
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
+        });
+        window.open(href, '_blank')
+      } else {
+        Bus.$emit('change','/courseIndex'); //Hub触发事件
+      }
     },
     //点击标题
     sendRecommendTitle(item){
-      this.$store.commit('activeName','');
-      this.$store.commit('noTreeTitle',item);
-      this.$store.commit('noTreeTitle1',item);
-      //添加item至我的足迹请求
-      this.myFootPrint(item)
-      this.countForHot(item)
-      const {href} = this.$router.resolve({
-            name: 'newCourse'
+      if (this.$store.state.username !== '') {
+        this.$store.commit('activeName','');
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item);
+        this.countForHot(item);
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
         });
-      window.open(href, '_blank')
+        window.open(href, '_blank')
+      } else {
+        Bus.$emit('change','/courseIndex'); //Hub触发事件
+      }
     }
   },
   mounted(){
@@ -252,7 +273,7 @@ export default {
             userType:this.userType
           }
         }).then((res) => {
-                    console.log(res.data)
+          //console.log(res.data);
           this.bestClassData = res.data.result[0].bestCourse;
           //          console.log(this.bestClassData)
           this.pageData = res.data.result[0].suggCourse;
@@ -261,17 +282,18 @@ export default {
         });
 
     },
-  components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,footFooter}
+  components:{navgationHead,bannerLeft,swipe,bestClass,bottomLeft,bottomRight,moPaging,footFooter,loginCousre}
 }
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  background-color: #f0f3ef;
 }
 *{
     margin:0;
@@ -298,15 +320,27 @@ hr{
     margin-bottom:2px;
 }
 .courseIndex .title{
-    font-size:20px;
-    font-weight:bolder;
+  margin:0 auto;
+  width:960px;
+  text-align: left;
+  font-size: 22px;
+  font-weight: 200;
+  color: #333;
+}
+.courseIndex .bb-middle .title{
+  width: 582px;
+  text-align: left;
+  margin-left: 14px;
+  font-size: 22px;
+  font-weight: 200;
+  color: #333;
 }
 .courseIndex .banner{
   width:960px;
   margin:0 auto;
   position:relative;
   display:flex;
-  margin-bottom:75px;
+  margin-bottom:40px;
   margin-top: 25px;
 }
 .courseIndex .left-menu{
@@ -351,15 +385,16 @@ hr{
 .courseIndex .mask-play .maskImg{
     width:169px;
     height:100px;
-    background: url("../../src/assets/imgs/bestclass2.png") no-repeat;
+    /*background: url("../../src/assets/imgs/bestclass2.png") no-repeat;*/
     background-size:100% 100%;
-    padding-top:18% !important;
-    padding:5%;
-    box-sizing: border-box;
+    /*padding-top:18% !important;*/
+    /*padding:5%;*/
+    /*box-sizing: border-box;*/
 }
 .courseIndex .mask-play .maskImg img{
     width:100%;
     height:100%;
+  border-radius: 10px;
 }
 .courseIndex .mask-play .maskImg p{
   font-weight:bolder;
@@ -385,11 +420,13 @@ hr{
   display:flex;
 }
 .courseIndex .bb-left{
-    width:156px;
-    height: 490px;
-    box-shadow: 10px 10px 30px #ccc;
-    margin-top:20px;
-    margin-right:30px;
+  background: #f1eded;
+  padding-left: 12px;
+  padding-top: 4px;
+  width:156px;
+  height: 490px;
+  box-shadow: 10px 10px 30px #ccc;
+  margin-top:20px;
 }
 .courseIndex .bb-span{
     color:#222;
@@ -398,7 +435,7 @@ hr{
     height: 20px;
     line-height: 20px;
     padding-left: 2px;
-    border-left:4px solid #e4393c;
+    border-left:2px solid #e4393c;
     margin-right:25px;
 }
 .courseIndex .bb-right{
@@ -409,10 +446,11 @@ hr{
     padding-right:0;
 }
 .courseIndex .bb-middle{
-    width:582px;
-    height:630px;
-    margin-right:33px;
-    margin-top:15px;
+  width:582px;
+  height:510px;
+  margin-left: 30px;
+  margin-right:33px;
+  margin-top:15px;
 }
 .courseIndex .shizhan{
     width:580px;
@@ -431,12 +469,14 @@ hr{
     margin-left:53px;
 }
 .courseIndex .row-a{
-    width:169px;
-    height:100px;
-    margin-top:5px;
-    display:inline-block;
-    margin-right:20px;
-    margin-bottom:88px;
+
+  width:169px;
+  height: 100px;
+  margin-top:5px;
+  display:inline-block;
+  margin-right:20px;
+  margin-bottom:88px;
+  background: #f1eded;
 }
 .courseIndex .ppv{
     width:37px;
@@ -463,11 +503,10 @@ hr{
     height:70px;
     border-radius: 15px;
     background: rgba(200,200,200,1);
-    color:#fff;
-    padding:10px;
+    padding:6px;
     display: none;
     position: absolute;
-    top:-71px;
+    top:-72px;
     left:5px;
     overflow: hidden;
     -webkit-line-clamp: 3;
@@ -487,7 +526,7 @@ hr{
 .courseIndex .bb-middle .row-a .p{
     text-align:center;
     margin-top:15px;
-    font-size: 18px;
+    font-size: 14px;
     display: -webkit-box;
     overflow: hidden;
     -webkit-line-clamp: 1;
@@ -545,4 +584,8 @@ hr{
             color: #fff !important;;
             cursor: default;
         }
+.courseIndex .best-class {
+  width: 960px;
+  margin: 0 auto;
+}
 </style>

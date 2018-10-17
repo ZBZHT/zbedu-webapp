@@ -1,13 +1,13 @@
 <template>
-  <div>
+  <div class="bannerLeft">
     <div v-for="(item,index) in bannerLeftData.children">
       <div class="item-a">
         <a @click="setMsg(item)">
           <!--<router-link :to="{path:'/course' + '/label/'+ item.label}">-->
           <span class="item-b">
-                            <span class="bleft">{{item.label}}</span>
-                            <b class="jiantou"> > </b>
-                        </span>
+              <span class="bleft">{{item.label}}</span>
+              <b class="jiantou"> > </b>
+          </span>
           <!--</router-link>-->
         </a>
         <div class="hiddenbox">
@@ -33,11 +33,17 @@
         </div>
       </div>
     </div>
+
+    <!--<div class="loginBanner">
+      <modal ref="modal" @receive="modal"></modal>
+    </div>-->
   </div>
 </template>
 
 <script>
   import axios from 'axios'
+  //import Modal from '@/components/common/Login'
+  import Bus from '../../assets/js/Bus.js'
   export default {
     name: 'bannerLeft',
 //  props:['bannerLeftData'],
@@ -92,7 +98,7 @@
             userType: this.userType,
           }
         }).then((res)=>{
-          console.log(res.data[0].children[0])
+          //console.log(res.data[0].children[0]);
           if(this.$store.state.userType != "S"){
             //   console.log("111")
             //   console.log(this.$store.state.userType)
@@ -122,7 +128,7 @@
             this.$store.commit('newBannerLeft',this.bannerLeftData.children);
 
           }else{
-            console.log("222")
+            //console.log("222")
             this.bannerLeftData = res.data[0].children[0];
             var newBannerLeft = [];
             //    console.log(this.bannerLeftData.children.length -1);
@@ -135,47 +141,55 @@
             }
             this.bannerLeftData.children = newBannerLeft;
             this.$store.commit('newBannerLeft',this.bannerLeftData.children);
-            console.log(this.bannerLeftData)
+            //console.log(this.bannerLeftData)
           }
         }).catch(function(error){
           console.log("error init." + error)
         });
       },
+
       setMsg: function (item) {
-        this.$store.commit('activeName','');
-        //  console.log(item);
-        //  console.log(this.bannerLeftData)
-        var ownLabel = "";
-        for(var i = 0; i < item.label.length; i++){
-          if(i == item.label.length - 2 || i == item.label.length - 1)
-            ownLabel = ownLabel + item.label[i];
-        }
-        // console.log(ownLabel)
-        if(ownLabel == "课堂" && item.children.length == 0){
-          this.$message({
-            showClose: true,
-            message: '还没有自己的课程呢。。请在个人中心添加',
-            type: 'error'
-          });
-        }else{
-          if(item.children){
-            this.$store.commit('noTreeTitle1',item);
-            //  this.$router.push('/course' + '/label/'+ item.label);
-            const {href} = this.$router.resolve({
-              name: 'newCourse'
-            });
-            window.open(href, '_blank')
-            //this.$router.replace('/newCourse');
-          }else{
-            this.$store.commit('noTreeTitle1',item);
-            //  window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
-            //  this.$router.replace('/newCourse');
-            const {href} = this.$router.resolve({
-              name: 'newCourse'
-            });
-            window.open(href, '_blank')
+          if (this.$store.state.username !== '') {
+            this.$store.commit('activeName','');
+            //  console.log(item);
+            //  console.log(this.bannerLeftData)
+            var ownLabel = "";
+            for(var i = 0; i < item.label.length; i++){
+              if(i == item.label.length - 2 || i == item.label.length - 1)
+                ownLabel = ownLabel + item.label[i];
+            }
+            // console.log(ownLabel)
+            if(ownLabel === "课堂" && item.children.length === 0){
+              this.$message({
+                showClose: true,
+                message: '还没有自己的课程呢。。请在个人中心添加',
+                type: 'error'
+              });
+            }else{
+              if(item.children){
+                this.$store.commit('noTreeTitle1',item);
+                //  this.$router.push('/course' + '/label/'+ item.label);
+
+                const {href} = this.$router.resolve({
+                  name: 'newCourse'
+                });
+                window.open(href, '_blank')
+                //this.$router.replace('/newCourse');
+              }else{
+                this.$store.commit('noTreeTitle1',item);
+                //  window.open('/courseNoTree/'+ item.courseId + '/label/' + item.label);
+                //  this.$router.replace('/newCourse');
+                const {href} = this.$router.resolve({
+                  name: 'newCourse'
+                });
+                window.open(href, '_blank')
+              }
+            }
+          } else {
+            Bus.$emit('change','/courseIndex'); //Hub触发事件
           }
-        }
+
+
 
       }
     },
@@ -198,10 +212,10 @@
             userType: this.$store.state.userType,
           }
         }).then((res)=>{
-          console.log(res.data)
+          //console.log(res.data);
           var tab = res.data.techCosCou[0].tab;
           for(var i = 0; i < tab.length; i++){
-            this.thirdData = []
+            this.thirdData = [];
             for(var j = 0; j < tab[i].course.length; j++){
               var ii = i + 1;
               var jj = j + 1;
@@ -239,8 +253,9 @@
           console.log("error init." + error)
         });
       }
-
     },
+
+    //components:{Modal}
   }
 </script>
 
@@ -316,7 +331,7 @@
     top:0;
     left:161px;
     display: none;
-    z-index:9999;
+    z-index:100;
     cursor: auto;
     overflow: auto;
     text-align:left;

@@ -1,8 +1,11 @@
 <template>
-  <div class="footer-bigbox">
-    <div class="footer-box">
-      Copyright © 2016 南京中邦智慧教育科技有限公司
-      <a style="text-decoration:underline" href="http://www.zbttchina.com/zbtH5/">http://www.zbttchina.com/</a>
+  <div class="footer-bigbox-1">
+    <div class="footer-box-1">
+      <p>
+        Copyright © 2016 南京中邦智慧教育科技有限公司
+        <!--{{belong}}-->
+        <a style="text-decoration:underline" href="http://www.zbttchina.com/zbtH5/">http://www.zbttchina.com/</a>
+      </p>
     </div>
   </div>
 </template>
@@ -26,23 +29,22 @@
 </script>
 
 <style scoped>
-  .footer-bigbox{
+  .footer-bigbox-1{
     width: 100%;
     height: 44px;
     background-color: #000;
+    position:fixed;
     bottom:0;
   }
-  .footer-box{
+  .footer-box-1{
     color: #ddd;
     margin: 0 auto;
     width: 960px;
     height: 44px;
-    line-height: 44px;
     font-size: 12px;
     text-align: center;
   }
   p{
-    height: 44px;
     line-height:44px;
   }
   .row1{

@@ -1,5 +1,5 @@
 <template>
-        <div class="bb-right">
+        <div class="bot-right">
             <ul id="tab">
                 <li v-on:mouseenter="enter1">
                     <a class="bb-a">课程排行</a> <br/>
@@ -15,7 +15,7 @@
                         :class="{top3 : index <= 2}">
                             {{index + 1}}
                         </span>
-                        <b @click="sendRecommendTitle(item)">{{item.label}}</b>
+                        <p @click="sendRecommendTitle(item)">{{item.label}}</p>
                     </div>
                 </div>
 
@@ -25,7 +25,7 @@
                          :class="{top3 : index <= 2}">
                             {{index + 1}}
                          </span>
-                        <b>{{item.user}}</b>
+                        <p>{{item.user}}</p>
                     </div>
                 </div>
 
@@ -35,7 +35,9 @@
 
 <script>
   import axios from 'axios'
-export default {
+  import Bus from '../../assets/js/Bus.js'
+
+  export default {
   name: 'bottomRight',
   props :['bottomRightData'],
   data () {
@@ -97,15 +99,19 @@ export default {
       },
       //点击下右侧标题
       sendRecommendTitle(item){
-        this.$store.commit('noTreeTitle',item);
-        this.$store.commit('noTreeTitle1',item);
-        //添加item至我的足迹请求
-        this.myFootPrint(item)
-        this.countForHot(item)
-        const {href} = this.$router.resolve({
-                name: 'newCourse'
-            });
-        window.open(href, '_blank')
+        if (this.$store.state.username !== '') {
+          this.$store.commit('noTreeTitle',item);
+          this.$store.commit('noTreeTitle1',item);
+          //添加item至我的足迹请求
+          this.myFootPrint(item);
+          this.countForHot(item);
+          const {href} = this.$router.resolve({
+            name: 'newCourse'
+          });
+          window.open(href, '_blank')
+        } else {
+          Bus.$emit('change','/courseIndex'); //Hub触发事件
+        }
       },
       enter1:function(){
         return this.dispear = true
@@ -158,64 +164,80 @@ ul.tab li a{
 }
 #content1{
   width: 156px;
-    height: 450px;
-    position: absolute;
-    top: 0;
-    left: -24px;
-    text-align:left;
-    margin-left: 23px;
+  height: 450px;
+  position: absolute;
+  top: 0;
+  left: -24px;
+  text-align:left;
+  margin-left: 23px;
 }
 #content2{
-     width: 156px;
-    height: 450px;
-    position: absolute;
-    top: 0;
-    left: -41px;
-    text-align:left;
-    margin-left: 40px;
+  width: 156px;
+  height: 450px;
+  position: absolute;
+  top: 0;
+  left: -41px;
+  text-align:left;
+  margin-left: 40px;
+  background: #f1eded;
 }
 .dispear{
     display:none;
 }
 #tab li:first-child,#content1{
-    background-color: #fff;
+    background-color: #f1eded;
 }
 #tab li:first-child,#content2{
-    background-color: #fff;
+    background-color: #f1eded;
 }
 .bb-a{
-    color:#222;
-    font-size: 17px;
-    float: left;
-    height: 20px;
-    line-height: 20px;
-    padding-left: 2px;
-    border-left:4px solid #e4393c;
-    margin-right:4px;
-    margin-bottom:11px;
+  color:#222;
+  font-size: 17px;
+  float: left;
+  height: 20px;
+  line-height: 20px;
+  padding-left: 2px;
+  border-left:2px solid #e4393c;
+  margin-right:4px;
+  margin-bottom:11px;
+  padding-right: 2px;
 }
 .bb-a:hover{
     background:#ccc;
 }
-.bb-right .bb-item{
-    margin-bottom: 20px;
+.bot-right {
+  padding-top: 10px;
+  background-color: #f0f3ef;
 }
-.bb-right .bb-itemName{
-    margin-bottom: 37px;
+.bot-right .bb-item{
+    margin-bottom: 10px;
 }
-.bb-right .bb-item .top3,
-.bb-right .bb-itemName .top3{
+.bot-right .bb-itemName{
+    margin-bottom: 10px;
+}
+.bot-right .bb-item .top3,
+.bot-right .bb-itemName .top3{
     background:#e4393c !important;
 }
-.bb-right .bb-item .num,
-.bb-right .bb-itemName .num{
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    font-size: 12px;
-    color: #fff;
-    text-align: center;
-    background: #a6a6a6;
-    margin-right: 5px;
+.bot-right p {
+  display: inline-block;
+  width: 120px;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.bot-right .num {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  font-size: 12px;
+  color: #fff;
+  line-height: 16px;
+  text-align: center;
+  background: #a6a6a6;
+  border-radius: 10px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 </style>

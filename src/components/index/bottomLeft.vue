@@ -16,6 +16,7 @@
 
 <script>
 import axios from 'axios'
+import Bus from '../../assets/js/Bus.js'
 export default {
   name: 'bottomLeft',
   props :['bottomLeftData'],
@@ -72,29 +73,37 @@ export default {
     },
     //点击标题
     sendButtomLeftTitle(item) {
-      this.$store.commit('activeName','');
-      this.$store.commit('noTreeTitle',item);
-      this.$store.commit('noTreeTitle1',item);
-      //添加item至我的足迹请求
-      this.myFootPrint(item)
-      this.countForHot(item)
-      const {href} = this.$router.resolve({
-            name: 'newCourse'
+      if (this.$store.state.username !== '') {
+        this.$store.commit('activeName','');
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item);
+        this.countForHot(item);
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
         });
-      window.open(href, '_blank')
+        window.open(href, '_blank')
+      } else {
+        Bus.$emit('change','/courseIndex'); //Hub触发事件
+      }
     },
     //点击图片
     sendButtomLeftVideo(item) {
-      this.$store.commit('activeName',3);
-      this.$store.commit('noTreeTitle',item);
-      this.$store.commit('noTreeTitle1',item);
-      //添加item至我的足迹请求
-      this.myFootPrint(item)
-      this.countForHot(item)
-      const {href} = this.$router.resolve({
-        name: 'newCourse'
-      });
-      window.open(href, '_blank')
+      if (this.$store.state.username !== '') {
+        this.$store.commit('activeName',3);
+        this.$store.commit('noTreeTitle',item);
+        this.$store.commit('noTreeTitle1',item);
+        //添加item至我的足迹请求
+        this.myFootPrint(item);
+        this.countForHot(item);
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
+        });
+        window.open(href, '_blank')
+      } else {
+        Bus.$emit('change','/courseIndex'); //Hub触发事件
+      }
     }
   }
 }
@@ -121,6 +130,7 @@ a:focus {
     color: #e4393c;
     text-decoration: none;
 }
+/*    background: #f1eded;*/
 .bb-left-case{
     margin-bottom: 45px;
     margin-top:25px;
@@ -129,15 +139,18 @@ a:focus {
 .bb-left img{
     margin-top:10px;
 }
-.bb-left .p{
+.bb-left-case .p{
     margin-top:10px;
     margin-left: 23px;
-    font-size: 16px;
+    font-size: 14px;
     width: 134px;
     cursor: pointer;
 }
 .bb-left .p:hover{
     color:#f00;
+}
+.mask-play-right {
+  margin-top: 12px;
 }
 .mask-play-right .play-right{
     position: relative;
@@ -154,6 +167,7 @@ a:focus {
     width:100%;
     height:100%;
     margin-left: 22px;
+  border-radius: 10px;
 }
 div.mask-play-right:hover .play-right{
     display: block;

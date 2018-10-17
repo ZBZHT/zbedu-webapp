@@ -1,4 +1,5 @@
 <template>
+  <!--首页-->
   <div class="index-container">
     <div class="nav">
         <navgation-head></navgation-head>
@@ -21,7 +22,7 @@
     </div>
 
     <div class="footer">
-        <foot-footer></foot-footer>
+        <foot-footer_1></foot-footer_1>
     </div>
   </div>
 </template>
@@ -30,7 +31,7 @@
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
 import navUl from '@/components/common/navUl'
-import footFooter from '@/components/common/footFooter'
+import footFooter_1 from '@/components/common/footFooter_1'
 
 export default {
   name: 'index',
@@ -59,7 +60,7 @@ export default {
     window.addEventListener('resize', this.handleResize)
 
   },
-  components:{navgationHead,navUl,footFooter}
+  components:{navgationHead,navUl,footFooter_1}
 }
 </script>
 

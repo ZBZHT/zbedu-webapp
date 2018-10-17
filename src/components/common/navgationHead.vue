@@ -8,6 +8,7 @@
             </router-link>
         </div>
         <img class="headerbg" src="../../assets/imgs/header.png">
+        <p class="mainTitle">{{mainTitle}}</p>
         <div class="nav-collapse">
             <!--<div class="collapse-title">-->
                 <!--<span>ZBT</span>-->
@@ -31,7 +32,6 @@
                             </div>
                             <a v-text="nickName+ '(' + $store.state.userTypeC + ')'" v-if="nickName" class="username" :value="nickName"></a>
                         </router-link>
-
                         <div class="userhover" v-if="nickName">
                             <router-link :to="{path:'/teacherCMS'}">
                                 <span class="usermine">我的</span>
@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <a class="login" v-if="!nickName" @click="simplePrompt">请登录</a>
-                            <modal ref="modal" @receive="modal"></modal>
+                        <modal ref="modal" @receive="modal"></modal>
                 </li>
             </ul>
         </div>
@@ -73,7 +73,8 @@ export default {
       nickName:'',
       currentNavData: '',
       url:'',
-      userId:''
+      userId:'',
+      mainTitle:''
     }
   },
   mounted(){
@@ -81,12 +82,32 @@ export default {
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
 
         setTimeout(function(){
-                    if(this.$store.state.username){
-                    this.nickName = this.$store.state.username;
-
-                };
+            if(this.$store.state.username){
+            this.nickName = this.$store.state.username;
+          }
         }.bind(this),200);
         modalEventBind(this.$refs.modal);
+//        显示logo后面的标题
+      //console.log(this.$route.path);
+        if(this.$route.path === '/'){
+
+        }else if(this.$route.path === '/teacherCMS'){
+          this.mainTitle = '个人中心'
+        }else if(this.$route.path === '/courseIndex'){
+          this.mainTitle = '教学中心'
+        }else if(this.$route.path === '/newCourse'){
+          this.mainTitle = '教学中心'
+        }else if(this.$route.path === '/exerciseCenter'){
+          this.mainTitle = '实训中心'
+        }else if(this.$route.path === '/resourceCenter'){
+          this.mainTitle = '资源中心'
+        }else if(this.$route.path === '/competitionCenter'){
+          this.mainTitle = '大赛中心'
+        }else if(this.$route.path === '/teachTest'){
+          this.mainTitle = '考试中心'
+        }else if(this.$route.path === '/test'){
+          this.mainTitle = '考试中心'
+        }
   },
   methods: {
       logOut(){
@@ -194,6 +215,12 @@ a:hover{
     font-size:30px;
     font-weight:bolder;
 }
+.zbt-nav .mainTitle{
+  position: absolute;
+  left: 373px;
+  top: 38px;
+  font-size: 28px;
+}
 .list{
     margin-left:43px;
 }
@@ -223,7 +250,7 @@ a:hover{
   position:absolute;
   top:31px;
   left:-35px;
-  z-index:9999;
+  z-index:100;
   width: 150px;
   display:none;
 }
@@ -232,7 +259,7 @@ a:hover{
 }
 .username{
     position:absolute;
-    top:60px;
+    top:56px;
     right:42px;
 }
 .user a{
@@ -276,12 +303,11 @@ a:hover{
     height:52px;
     background:#ddd;
     position:absolute;
-    top:86px;
+    top:84px;
     right:34px;
-    z-index:1000;
-    border-radius:24px;
+    z-index:200;
+    border-radius:20px;
     display:none;
-
 }
 .user_bn:hover .userhover{
     display:block;

@@ -1155,32 +1155,32 @@
         });
       },
       //导出Excel成绩
-      exportExcel1(index, row) {
-        axios.get("/readTestQuestion/checkGradesData", {
-          params: {
-            username: this.user,
-            theme: row.theme,
-          }
-        }).then((res) => {
-          //console.log(res.data);
-          let resData = res.data.result;
-          for (let i = 0; i < resData.length; i++) {
-            if (resData[i].startTime !== null) {
-              resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
-            } else {
-              resData[i].startTime = '';
-            }
-            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
-            resData[i].historyTestDataIndex = i;
-            resData[i].num = i + 1;
-          }
-          this.checkGradesData = [];
-          this.checkGradesData = resData;
-
-          //console.log(this.checkGradesData);
-          this.exportExcel();
-        });
-      },
+//      exportExcel1(index, row) {
+//        axios.get("/readTestQuestion/checkGradesData", {
+//          params: {
+//            username: this.user,
+//            theme: row.theme,
+//          }
+//        }).then((res) => {
+//          //console.log(res.data);
+//          let resData = res.data.result;
+//          for (let i = 0; i < resData.length; i++) {
+//            if (resData[i].startTime !== null) {
+//              resData[i].startTime = moment(resData[i].startTime).format("YYYY-MM-DD hh:mm:ss");
+//            } else {
+//              resData[i].startTime = '';
+//            }
+//            resData[i].currTestType = core.getCurrTestType(resData[i].currTestType);
+//            resData[i].historyTestDataIndex = i;
+//            resData[i].num = i + 1;
+//          }
+//          this.checkGradesData = [];
+//          this.checkGradesData = resData;
+//
+//          //console.log(this.checkGradesData);
+//          this.exportExcel();
+//        });
+//      },
       formatJson(filterVal, jsonData) {
         return jsonData.map(v => filterVal.map(j => v[j]))
       },
@@ -1191,7 +1191,7 @@
           const { export_json_to_excel } = require('.././json2excel/Export2Excel');
           const tHeader = ['序号','姓名','考试题目','开始时间','考试类型','成绩',];
           const filterVal = ['num', 'user', 'theme', 'startTime', 'currTestType', 'sorce',];
-          const data = this.formatJson(filterVal, this.checkGradesData);
+          const data = this.formatJson(filterVal, this.radioGradeArray);
           const name = this.checkGradesData[0].theme;
           export_json_to_excel(tHeader, data, name);
         })

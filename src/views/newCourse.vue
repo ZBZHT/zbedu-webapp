@@ -73,7 +73,7 @@
               <el-tab-pane label="教学微课" :name="descTab2">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="video-box" controls @click="videostop" :src="'http://192.168.2.251:8001/resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
+                  <video id="video-box" controls @click="videostop" :src="'http://192.168.1.251:8001/resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
                     <!--<video id="video-box" controls @click="videostop">-->
                   </video>
                 </div>
@@ -96,7 +96,7 @@
               <el-tab-pane label="flash动画">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="flash2d" autoplay controls @click="flash2d" :src="'http://192.168.2.251:8001/resource/' + this.videoPath + noTree.flash2d">
+                  <video id="flash2d" autoplay controls @click="flash2d" :src="'http://192.168.1.251:8001/resource/' + this.videoPath + noTree.flash2d">
                   </video>
                 </div>
               </el-tab-pane>

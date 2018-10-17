@@ -19,6 +19,7 @@
 
 <script>
 import axios from 'axios'
+import Bus from '../../assets/js/Bus.js'
 export default {
   name: 'navUl',
 //  props:['navData'],
@@ -46,8 +47,8 @@ export default {
                 'background':'competitionIndex.png'
             },
             {
-                'label':'互动中心',
-                'background':'interactiveIndex.png'
+                'label':'个人中心',
+                'background':'user.png'
             }
         ]
     }
@@ -70,42 +71,49 @@ export default {
   },
   methods: {
       fobLink(index){
-        if(index == 0){
+        if(index === 0){
             this.$router.push('/courseIndex');
-        }else if(index == 1){
+        }else if (this.$store.state.username !== '') { //登录
+          if(index === 1){
+            console.log();
             this.$router.push('/exerciseCenter');
-        }else if(index == 2 && this.$store.state.userType == "SA"){
+          }else if(index == 2 && this.$store.state.userType == "SA"){
             const {href} = this.$router.resolve({
-                name: 'teachTest'
+              name: 'teachTest'
             });
             window.open(href, '_blank')
-        }else if(index == 2 && this.$store.state.userType == ""){
+          }else if(index == 2 && this.$store.state.userType == ""){
             const {href} = this.$router.resolve({
-                name: 'test'
+              name: 'test'
             });
             window.open(href, '_blank')
-        }else if(index == 2 && this.$store.state.userType == "S"){
+          }else if(index == 2 && this.$store.state.userType == "S"){
             const {href} = this.$router.resolve({
-                name: 'test'
+              name: 'test'
             });
             window.open(href, '_blank')
-        }else if(index == 2 && this.$store.state.userType == "EA"){
+          }else if(index == 2 && this.$store.state.userType == "EA"){
             const {href} = this.$router.resolve({
-                name: 'teachTest'
+              name: 'teachTest'
             });
             window.open(href, '_blank')
-        }else if(index == 2 && this.$store.state.userType == "T"){
+          }else if(index == 2 && this.$store.state.userType == "T"){
             const {href} = this.$router.resolve({
-                name: 'teachTest'
+              name: 'teachTest'
             });
             window.open(href, '_blank')
-        }else if(index == 3){
+          }else if(index == 3){
             this.$router.push('/resourceCenter');
-        }else if(index == 4){
+          }else if(index == 4){
             this.$router.push('/competitionCenter');
+          }else if(index == 5){
+            this.$router.push('/teacherCMS');
+          }
+        } else {
+          Bus.$emit('change','show'); //Hub触发事件
         }
-    }
 
+    }
   }
 }
 </script>
