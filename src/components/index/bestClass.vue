@@ -27,7 +27,6 @@
 
 <script>
 import axios from 'axios'
-import Bus from '../../assets/js/Bus.js'
 export default {
   name: 'bestClass',
   props:['bestClassData'],
@@ -86,7 +85,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     },
     //点击图片或者video按钮时
@@ -101,7 +100,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     },
     //点击PPT按钮时
@@ -116,7 +115,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     },
 

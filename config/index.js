@@ -27,7 +27,8 @@ module.exports = {
       "/readComments": 'http://127.0.0.1:80',
       "/teacherCMS": 'http://127.0.0.1:80',
       "/fileUpDown": 'http://127.0.0.1:80',
-      "/readResource": 'http://127.0.0.1:80'
+      "/readResource": 'http://127.0.0.1:80',
+      "/trainManager": 'http://127.0.0.1:80'
 
       /*
       "/menu/header": {

@@ -25,21 +25,21 @@
                             <img class="phoneAppImg" src="../../assets/imgs/客户端.png">
                         </div>
                     </div>
-                    <div class="user_bn" v-if="nickName">
+                    <div class="user_bn" v-if="$store.state.username !== ''">
                         <router-link :to="{path:'/teacherCMS'}">
-                            <div class="userPic" v-if="nickName">
+                            <div class="userPic" v-if="$store.state.username !== ''">
                                 <img src="../../assets/imgs/user.png">
                             </div>
-                            <a v-text="nickName+ '(' + $store.state.userTypeC + ')'" v-if="nickName" class="username" :value="nickName"></a>
+                            <a v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'" v-if="$store.state.username !== ''" class="username" :value="$store.state.username"></a>
                         </router-link>
-                        <div class="userhover" v-if="nickName">
+                        <div class="userhover" v-if="$store.state.username !== ''">
                             <router-link :to="{path:'/teacherCMS'}">
                                 <span class="usermine">我的</span>
                             </router-link>
-                            <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
+                            <span :value="$store.state.username" v-if="$store.state.username !== ''" class="logOut" @click="logOut">注销</span>
                         </div>
                     </div>
-                    <a class="login" v-if="!nickName" @click="simplePrompt">请登录</a>
+                    <a class="login" v-if="$store.state.username === ''" @click="simplePrompt">请登录</a>
                         <modal ref="modal" @receive="modal"></modal>
                 </li>
             </ul>
@@ -82,7 +82,7 @@ export default {
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
 
         setTimeout(function(){
-            if(this.$store.state.username){
+            if(this.$store.state.username !== ''){
             this.nickName = this.$store.state.username;
           }
         }.bind(this),200);
@@ -112,25 +112,25 @@ export default {
   methods: {
       logOut(){
           /*删除cookie*/
-           axios({
-                method: 'post',
-                url: '/api/user/logout',
-                withCredentials: true
-                }).then((res)=>{
-                        if(res.data.code == 3){
-                            console.log(res.data.code);
-                        //    delCookie('username');
-                            this.username = '';
-                            this.password = '';
-                            this.nickName = '';
-                        }
-                  });
-           this.$store.commit('username','');
-           this.$store.commit('userType','');
-           this.$store.commit('userTypeC','');
-           this.$router.push('/');
-        //   this.$router.go(0);
+        this.$store.commit('username','');
+        this.$store.commit('userType','');
+        this.$store.commit('userTypeC','');
         this.$store.commit('testCode',0);
+        this.$router.push('/');
+           axios({
+              method: 'post',
+              url: '/api/user/logout',
+              withCredentials: true
+              }).then((res)=>{
+                  if(res.data.code === 3){
+                      console.log(res.data.code);
+                  //    delCookie('username');
+                      this.username = '';
+                      this.password = '';
+                      this.nickName = '';
+                  }
+                });
+
       },
       prompt: function(message, title, callback, options) {
             if (typeof title === 'function') {
@@ -141,9 +141,10 @@ export default {
             EventBus.$emit('prompt', {message: message, title: title, callback: callback, options: options || {}});
         },
       simplePrompt() {
-                this.prompt((username) => {
+        this.$store.commit('loginPage',true);
+                /*this.prompt((username) => {
                     alert(username);
-                });
+                });*/
             },
       modal:function(nickName){
           this.nickName = nickName;

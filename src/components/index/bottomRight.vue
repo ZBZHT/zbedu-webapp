@@ -1,41 +1,39 @@
 <template>
         <div class="bot-right">
-            <ul id="tab">
-                <li v-on:mouseenter="enter1">
-                    <a class="bb-a">课程排行</a> <br/>
-                </li>
-                <li v-on:mouseenter="enter2">
-                    <a class="bb-a">学霸排行</a> <br/>
-                </li>
-            </ul>
-            <div id="container">
-                <div id="content1" class="content" :class="{dispear : !dispear}">
-                    <div class="bb-item" v-for="(item,index) in bottomRightData">
-                        <span class="num"
-                        :class="{top3 : index <= 2}">
-                            {{index + 1}}
-                        </span>
-                        <p @click="sendRecommendTitle(item)">{{item.label}}</p>
-                    </div>
-                </div>
+          <el-tabs type="border-card">
 
-                <div id="content2" class="content" :class="{dispear}">
-                    <div class="bb-itemName" v-for="(item,index) in bottomRightName">
-                        <span class="num"
-                         :class="{top3 : index <= 2}">
-                            {{index + 1}}
-                         </span>
-                        <p>{{item.user}}</p>
-                    </div>
-                </div>
+            <el-tab-pane label="课程排行">
+              <el-table
+                :data="bottomRightData"
+                :show-header="false"
+                @cell-click="sendRecommendTitle"
+                style="width: 100%">
+                <el-table-column type="index" width="20">
+                </el-table-column>
 
-            </div>
+                <el-table-column prop="label" style="width: 130px;">
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+
+            <el-tab-pane label="学霸排行">
+              <el-table
+                :data="bottomRightName"
+                :show-header="false"
+                style="width: 100%">
+                <el-table-column type="index" width="20">
+                </el-table-column>
+                <el-table-column prop="user" style="width: 130px;">
+                </el-table-column>
+              </el-table>
+            </el-tab-pane>
+
+          </el-tabs>
         </div>
 </template>
 
 <script>
   import axios from 'axios'
-  import Bus from '../../assets/js/Bus.js'
 
   export default {
   name: 'bottomRight',
@@ -47,7 +45,7 @@
       dispear:true,
       userType:this.$store.state.userType,
       userName:this.$store.state.username,
-      bottomRightName:[]
+      bottomRightName:[],
     }
   },
   mounted(){
@@ -56,7 +54,6 @@
         userType:this.userType
       }
     }).then((res) => {
-      console.log(res.data)
       this.bottomRightName = res.data.result[0].studentHot;
     });
   },
@@ -68,7 +65,7 @@
             courseInfo: item
           }
         }).then((res) => {
-          console.log(res.data)
+          //console.log(res.data)
 
         });
         axios.post('/teacherCMS/studentHot', {
@@ -76,7 +73,7 @@
             name: this.userName,
           }
         }).then((res) => {
-          console.log(res.data)
+          //console.log(res.data)
 
         });
       },
@@ -89,7 +86,6 @@
             courseInfo: item
           }
         }).then((res) => {
-          console.log(res.data)
           if (res.data.code === 0){
   //            this.addSuccess('更新成功');
           }else if (res.data.code === 1){
@@ -98,21 +94,21 @@
         });
       },
       //点击下右侧标题
-      sendRecommendTitle(item){
-        if (this.$store.state.username !== '') {
-          this.$store.commit('noTreeTitle',item);
-          this.$store.commit('noTreeTitle1',item);
-          //添加item至我的足迹请求
-          this.myFootPrint(item);
-          this.countForHot(item);
-          const {href} = this.$router.resolve({
-            name: 'newCourse'
-          });
-          window.open(href, '_blank')
-        } else {
-          Bus.$emit('change','/courseIndex'); //Hub触发事件
-        }
-      },
+    sendRecommendTitle(row){
+      if (this.$store.state.username !== '') {
+        this.$store.commit('noTreeTitle',row);
+        this.$store.commit('noTreeTitle1',row);
+        //添加item至我的足迹请求
+        this.myFootPrint(row);
+        this.countForHot(row);
+        const {href} = this.$router.resolve({
+          name: 'newCourse'
+        });
+        window.open(href, '_blank')
+      } else {
+        this.$store.commit('loginPage',true);
+      }
+    },
       enter1:function(){
         return this.dispear = true
       },
@@ -125,72 +121,44 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 *{
     margin:0;
     padding:0;
 }
-ul li{
+.bot-right ul li{
     list-style: none;
 }
-a {
+.bot-right a {
     color: inherit;
     cursor: pointer;
 }
-a:hover{
+.bot-right a:hover{
     text-decoration: none;
     color:#f00;
 }
-a:focus {
+.bot-right a:focus {
     color: #f00;
     text-decoration: none;
 }
-b:hover{
+.bot-right b:hover{
     color:#f00;
     cursor:pointer;
 }
-#container{
+.bot-right #container{
     position:absolute;;
 }
-#tab{
+.bot-right #tab{
     display:flex;
     position: relative;
 }
-#tab li{
+.bot-right #tab li{
     float: left;
 }
-ul.tab li a{
+.bot-right ul.tab li a{
     display:inline-block;
 }
-#content1{
-  width: 156px;
-  height: 450px;
-  position: absolute;
-  top: 0;
-  left: -24px;
-  text-align:left;
-  margin-left: 23px;
-}
-#content2{
-  width: 156px;
-  height: 450px;
-  position: absolute;
-  top: 0;
-  left: -41px;
-  text-align:left;
-  margin-left: 40px;
-  background: #f1eded;
-}
-.dispear{
-    display:none;
-}
-#tab li:first-child,#content1{
-    background-color: #f1eded;
-}
-#tab li:first-child,#content2{
-    background-color: #f1eded;
-}
-.bb-a{
+.bot-right .bb-a{
   color:#222;
   font-size: 17px;
   float: left;
@@ -202,11 +170,10 @@ ul.tab li a{
   margin-bottom:11px;
   padding-right: 2px;
 }
-.bb-a:hover{
+.bot-right .bb-a:hover{
     background:#ccc;
 }
 .bot-right {
-  padding-top: 10px;
   background-color: #f0f3ef;
 }
 .bot-right .bb-item{
@@ -240,4 +207,47 @@ ul.tab li a{
   margin-left: 5px;
   margin-right: 5px;
 }
+.bot-right .el-tabs__item {
+  padding: 0;
+  font-size: 17px;
+  padding-left: 4px;
+  padding-right: 4px;
+  /*background-color: #f1eded;*/
+}
+.bot-right .el-tabs--border-card>.el-tabs__content {
+  display: block;
+  height: 451px;
+  background-color: #f1eded;
+}
+.bot-right .el-tabs--border-card {
+  border: none;
+  -webkit-box-shadow: none;
+
+}
+.bot-right .el-tabs--border-card>.el-tabs__header .el-tabs__item.is-active {
+  background-color: #f1eded;
+  color: #7A1213;
+}
+.bot-right .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+  color: #7A1213;
+}
+  .bot-right .el-tabs--bottom .el-tabs--left .el-tabs__item:nth-child(2), .el-tabs--bottom .el-tabs--right .el-tabs__item:nth-child(2), .el-tabs--bottom.el-tabs--border-card .el-tabs__item:nth-child(2), .el-tabs--bottom.el-tabs--card .el-tabs__item:nth-child(2), .el-tabs--top .el-tabs--left .el-tabs__item:nth-child(2), .el-tabs--top .el-tabs--right .el-tabs__item:nth-child(2), .el-tabs--top.el-tabs--border-card .el-tabs__item:nth-child(2), .el-tabs--top.el-tabs--card .el-tabs__item:nth-child(2) {
+    padding-left: 6px;
+  }
+  .bot-right .el-tabs--bottom .el-tabs--left .el-tabs__item:last-child, .el-tabs--bottom .el-tabs--right .el-tabs__item:last-child, .el-tabs--bottom.el-tabs--border-card .el-tabs__item:last-child, .el-tabs--bottom.el-tabs--card .el-tabs__item:last-child, .el-tabs--top .el-tabs--left .el-tabs__item:last-child, .el-tabs--top .el-tabs--right .el-tabs__item:last-child, .el-tabs--top.el-tabs--border-card .el-tabs__item:last-child, .el-tabs--top.el-tabs--card .el-tabs__item:last-child {
+    padding-right: 6px;
+  }
+  .bot-right .el-table th, .el-table tr {
+    background-color: #f1eded;
+    text-align: left;
+  }
+  .bot-right .el-table td, .el-table th.is-leaf {
+    border-bottom: 1px solid #ccc;
+  }
+  .bot-right .el-table .cell {
+    line-height: 20px;
+  }
+  .bot-right .el-table .cell, .el-table th div, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+    padding-left: 4px;
+  }
 </style>

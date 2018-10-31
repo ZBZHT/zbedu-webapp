@@ -169,7 +169,6 @@
               if(item.children){
                 this.$store.commit('noTreeTitle1',item);
                 //  this.$router.push('/course' + '/label/'+ item.label);
-
                 const {href} = this.$router.resolve({
                   name: 'newCourse'
                 });
@@ -186,11 +185,8 @@
               }
             }
           } else {
-            Bus.$emit('change','/courseIndex'); //Hub触发事件
+            this.$store.commit('loginPage',true);
           }
-
-
-
       }
     },
     mounted(){

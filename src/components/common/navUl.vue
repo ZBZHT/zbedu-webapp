@@ -75,7 +75,6 @@ export default {
             this.$router.push('/courseIndex');
         }else if (this.$store.state.username !== '') { //登录
           if(index === 1){
-            console.log();
             this.$router.push('/exerciseCenter');
           }else if(index == 2 && this.$store.state.userType == "SA"){
             const {href} = this.$router.resolve({
@@ -110,7 +109,7 @@ export default {
             this.$router.push('/teacherCMS');
           }
         } else {
-          Bus.$emit('change','show'); //Hub触发事件
+          this.$store.commit('loginPage',true);
         }
 
     }

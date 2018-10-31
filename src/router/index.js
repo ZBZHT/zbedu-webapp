@@ -44,6 +44,13 @@ const routes = [
         title: 'zbt首页'
       },
       component:index
+      // children: [{
+      //   path: 'courseIndex',
+      //   component: ''
+      // },{
+      //
+      // }
+      // ]
     },
     {
       path:'/courseIndex',

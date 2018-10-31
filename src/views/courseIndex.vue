@@ -98,11 +98,9 @@ import bottomLeft from '@/components/index/bottomLeft'
 import moPaging from '@/components/index/moPaging'
 import bottomRight from '@/components/index/bottomRight'
 import loginCousre from '@/components/common/Login';
-import Bus from '.././assets/js/Bus.js'
 
 export default {
   name: 'index',
-
   data () {
     return {
       userType:this.$store.state.userType,
@@ -143,7 +141,7 @@ export default {
     //页码切换执行方法
       pageFn(val){
         this.page=val;
-        console.log(val);
+        //console.log(val);
       },
         toPlayVideo(item) {
           //console.log(item)
@@ -207,7 +205,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     },
     //点击PPT按钮
@@ -224,7 +222,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     },
     //点击标题
@@ -241,7 +239,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     }
   },
@@ -259,10 +257,7 @@ export default {
                 }
             }).then((res)=>{
                 this.indexData = res.data;
-//                this.bestClassData = this.indexData.bestClassData;
-//                this.pageData = this.indexData.pageData;
                 this.bottomLeftData = this.indexData.bottomLeftData;
-//                this.bottomRightData = this.indexData.bottomRightData;
                 this.slides = this.indexData.slides;
             }).catch(function(error){
                 console.log("error init." + error)
@@ -273,9 +268,7 @@ export default {
             userType:this.userType
           }
         }).then((res) => {
-          //console.log(res.data);
           this.bestClassData = res.data.result[0].bestCourse;
-          //          console.log(this.bestClassData)
           this.pageData = res.data.result[0].suggCourse;
           this.bottomRightData = res.data.result[0].countForHot;
           this.total = this.all.length;

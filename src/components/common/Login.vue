@@ -1,27 +1,19 @@
 <template>
-    <transition name="modal">
-        <div id="v-modal-wrap" v-show="show">
-            <div id="v-modal-dialog">
-
-                <div id="v-modal-body">
-                    <template v-if="type == 'prompt'">
-                        <form class="v-modal-prompt-form">
-                            <p> <img class="unm" src="../../assets/imgs/unm.png"> </p>
-                                <input name="fname" type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号" autocomplete="on" autofocus="autofocus">
-                            <p> <img class="psw" src="../../assets/imgs/psw.png"> </p>
-                              <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
-                              <span class="checkPassword" v-show="checkPassword">用户名或密码错误</span>
-                        </form>
-                    </template>
-                </div>
-                <div id="v-modal-footer">
-                    <button class="v-modal-btn primary" @click="login()">确定</button>
-                    <button class="v-modal-btn slave" @click="cancel()">取消</button>
-                </div>
-
-            </div>
+    <div class="loginPage">
+      <el-dialog title="请登录" :visible.sync="$store.state.loginPage" width="30%">
+        <form class="v-modal-prompt-form">
+          <p> <img class="unm" src="../../assets/imgs/unm.png"> </p>
+          <input name="fname" type="text" ref="input" v-model="username" class="v-modal-input" placeholder="昵称/ID/身份证号/手机号" autocomplete="on" autofocus="autofocus">
+          <p> <img class="psw" src="../../assets/imgs/psw.png"> </p>
+          <input name="fpassword" type="password" ref="input" v-model="password" class="v-modal-input" placeholder="密码" @keyup.enter="login" autocomplete="new-password" >
+          <span class="checkPassword" v-show="checkPassword">用户名或密码错误</span>
+        </form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="$store.commit('loginPage',false)">取 消</el-button>
+          <el-button type="primary" @click="login">确 定</el-button>
         </div>
-    </transition>
+      </el-dialog>
+    </div>
 </template>
 
 <script>
@@ -31,11 +23,8 @@ import Bus from '../../assets/js/Bus.js'
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import core from '../../assets/js/core.js'
     export default {
-        name: 'v-modal',
         data: function() {
             return {
-              show: false,
-              type: '',
               message: '',
               slot: null,
               title: '',
@@ -46,7 +35,6 @@ import core from '../../assets/js/core.js'
               nickName:'',
               url:'',
               checkPassword:false,
-              loginPath:'/',
             }
         },
 
@@ -60,39 +48,12 @@ import core from '../../assets/js/core.js'
         });
       },
       methods: {
-          modal: function(message, title) {
-              if (typeof message === 'string') {
-                  this.message = message;
-                  this.slot = null;
-              } else if (typeof message === 'object' && message.slot) {
-                  this.slot = message.slot;
-              }
-              this.title = title;
-              this.callback = null;
-              this.username = '';
-              this.password = '';
-              this.show = true;
-          },
-          modalPrompt: function(params = {}) {
-              this.type = 'prompt';
-              this.modal(params.message, params.title || '输入');
-              this.callback = params.callback;
-              this.inputType = params.options.inputType || 'text';
-          },
-
-          cancel: function() {
-            this.show = false;
-            var self = this;
-            if (self.callback) {
-              self.callback(self.type == 'prompt' ? undefined : false);
-            }
-              this.checkPassword = false;
-          },
           login(){
               if(this.username === "" || this.password === ""){
                   alert("请输入用户名或密码")
               }else{
                   /*请求存有用户账号的json文件*/
+                  let _this = this;
                   axios({
                       method: 'post',
                       url: '/api/user/login',
@@ -103,37 +64,28 @@ import core from '../../assets/js/core.js'
                       withCredentials: true
                       }).then((res)=>{
                       /*传值是 0:登陆成功, 1: 已登陆, 2:用户名或密码错误 */
+                      console.log(res.data);
                       if(res.data.code === 0){
-                        this.show = false;
-                        setTimeout(function(){
-                          //console.log('11');
-                          this.nickName = res.data.username;
-                          this.$store.commit('username',res.data.username);
-                          this.$store.commit('userType',res.data.userType);
-                          this.$store.commit('userTypeC',core.userType(res.data.userType));
-                          this.$store.commit('userID',res.data.userID);
-                          this.$emit("receive",this.nickName);
-                          this.$router.push(this.loginPath);
-                        //    this.$router.go(0);
-                        }.bind(this),0.5);
-                        console.log(this.show);
+                        _this.nickName = res.data.username;
+                        this.$store.commit('username',res.data.username);
+                        this.$store.commit('userType',res.data.userType);
+                        this.$store.commit('userTypeC',core.userType(res.data.userType));
+                        this.$store.commit('userID',res.data.userID);
+                        this.$emit("receive",_this.nickName);
+                        this.$store.commit('loginPage',false);
                       }else if(res.data.code === 1){
-              //            setCookie('username',this.username)
-                              setTimeout(function(){
-                                  this.nickName = res.data.username;
-                                  this.$store.commit('username',res.data.username);
-                                  this.$store.commit('userType',res.data.userType);
-                                  this.$store.commit('userTypeC',core.userType(res.data.userType));
-                                  this.$store.commit('userID',res.data.userID);
-                                  this.$emit("receive",this.nickName);
-                                  this.$router.push(this.loginPath);
-                                  this.show = false;
-                              //   this.$router.go(0);
-                              }.bind(this),0.1)
+                        this.$store.commit('loginPage',false);
+                        _this.nickName = res.data.username;
+                        this.$store.commit('username',res.data.username);
+                        this.$store.commit('userType',res.data.userType);
+                        this.$store.commit('userTypeC',core.userType(res.data.userType));
+                        this.$store.commit('userID',res.data.userID);
+                        this.$emit("receive",_this.nickName);
+                        this.$router.push('/');
                       }else if(res.data.code === 2){
-                          this.checkPassword = true;
+                        _this.checkPassword = true;
                       }
-                })
+                });
             }
 
           }
@@ -142,6 +94,12 @@ import core from '../../assets/js/core.js'
 </script>
 
 <style>
+  .loginPage .el-dialog {
+    border-radius: 16px;
+  }
+  .loginPage .el-dialog__body {
+    padding: 12px 20px;
+  }
 #v-modal-wrap {
   position: fixed;
   top: 0;

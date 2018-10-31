@@ -57,6 +57,19 @@ export default {
   },
   mounted(){
 
+    axios.get("/api/user/getServerIP", { //获取服务器ip请求
+      params: {
+        user: 234
+      }
+    }).then((res) => {
+      if (res.data.code === 0) {
+        this.$store.commit('serverIP',res.data.serverIP.Ip);
+      }
+      //console.log(this.$store.state.serverIP);
+    }).catch(function (error) {
+      console.log("error init." + error)
+    });
+
     window.addEventListener('resize', this.handleResize)
 
   },

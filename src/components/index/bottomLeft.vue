@@ -16,7 +16,6 @@
 
 <script>
 import axios from 'axios'
-import Bus from '../../assets/js/Bus.js'
 export default {
   name: 'bottomLeft',
   props :['bottomLeftData'],
@@ -63,7 +62,6 @@ export default {
           courseInfo: item
         }
       }).then((res) => {
-        console.log(res.data)
         if (res.data.code === 0){
 //            this.addSuccess('更新成功');
         }else if (res.data.code === 1){
@@ -85,7 +83,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     },
     //点击图片
@@ -102,7 +100,7 @@ export default {
         });
         window.open(href, '_blank')
       } else {
-        Bus.$emit('change','/courseIndex'); //Hub触发事件
+        this.$store.commit('loginPage',true);
       }
     }
   }
