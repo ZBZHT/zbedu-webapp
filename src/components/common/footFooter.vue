@@ -25,7 +25,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .footer-bigbox{
     width: 100%;
     height: 44px;
@@ -41,11 +41,11 @@
     font-size: 12px;
     text-align: center;
   }
-  p{
+  .footer-bigbox p{
     height: 44px;
     line-height:44px;
   }
-  .row1{
+  .footer-bigbox .row1{
     margin-bottom: 5px;
   }
   @media screen and (max-width: 580px){

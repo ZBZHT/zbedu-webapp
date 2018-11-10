@@ -20,13 +20,13 @@ const zipName = "moreFiles.zip";
 
 //资源中心上传
 router.post('/upload', function(req, res) {
+
     let form = new formidable.IncomingForm();
     form.uploadDir = "../app/uploads/resource";//设置文件上传存放地址
     form.maxFieldsSize = 600 * 1024 * 1024; //设置最大600M
     form.keepExtensions = true;
 
     form.parse(req, function (err, fields, files) {
-      //console.log(fields.label);
       //旧名字
       let fileName = files.file.name;
       //console.log(fileName);
@@ -35,6 +35,15 @@ router.post('/upload', function(req, res) {
       let newPath = uploadsPath + fileName;
       //console.log(oldPath);
       //console.log(newPath);
+      if (fields.label === '全部教程') {
+        fields.label = 1
+      } else if (fields.label === '教学课件') {
+        fields.label = 2
+      } else if (fields.label === '教学微课') {
+        fields.label = 3
+      } else if (fields.label === '其他教材') {
+        fields.label = 4
+      }
 
       fs.rename(oldPath, newPath, function (err) {
         if (err) {
@@ -48,7 +57,7 @@ router.post('/upload', function(req, res) {
             ResourceCenter.find({
               title: 'upload',
             }).then(function (result) {
-              //console.log(result);
+              console.log('11');
               if (result === null || result.length === 0) {
                 let resourceCenter = new ResourceCenter({
                   title: 'upload',
@@ -69,7 +78,6 @@ router.post('/upload', function(req, res) {
           });
 
           Promise.all([p1]).then((result) => {
-            //console.log(result);
             ResourceCenter.findOneAndUpdate({
               title: 'upload'
             }, {
@@ -187,27 +195,28 @@ router.get('/fileDelete', function (req, res, next) {
   let filePath = uploadsPath + delData.fileName;
   //console.log(delData);
   //console.log(filePath);
-  ResourceCenter.findOneAndUpdate({
-    title: 'upload'
-  }, {
-    $pull : {
-      children: delData
+  fs.unlink(filePath, function (error) {
+    if (error) {
+      console.log(error);
     }
-  }, function (err) {
-    if (err) {
-      console.log(err);
-      res.status(200).send({code:1, Msg: '更新失败', });
-    } else {
-      //console.log('修改成功IDNo');
-      fs.unlink(filePath,function (error) {
-        if(error){
-          console.log(error);
-        }
-        //console.log('删除文件成功');
-        res.status(200).send({ code: 0, msg: '删除文件成功', });
-      });
-    }
+    console.log('删除文件成功');
+    ResourceCenter.findOneAndUpdate({
+      title: 'upload'
+    }, {
+      $pull: {
+        children: delData
+      }
+    }, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(200).send({code: 1, Msg: '更新失败',});
+      } else {
+        console.log('修改成功IDNo');
+        res.status(200).send({code: 0, msg: '删除文件成功',});
+      }
+    });
   });
+
 });
 
 router.get('/files', function (req, res, next) {
@@ -242,7 +251,7 @@ router.get('/loadFile',function(req, res) {
     title: 'upload',
   }).then(function (result) {
     //console.log(result[0].children);
-    res.status(200).send({ code: 0, var: result[0].children, msg: '获取文件信息成功' });
+    res.status(200).send({ code: 0, result: result[0].children, msg: '获取文件信息成功' });
   });
 
 });

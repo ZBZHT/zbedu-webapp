@@ -26,6 +26,8 @@ export default new Vuex.Store({
     mondayData:'',
     activeName:'',
     cmsID:'',
+    loginPage:false, //登录页面显示-关闭
+    serverIP: '',//后台返回的服务器ip
 },
  mutations : {
    activeName(state,item){
@@ -82,9 +84,15 @@ export default new Vuex.Store({
     getMonday(state,item){
         state.mondayData = item;
     },
-   cmsID(state,item){
+    cmsID(state,item){
         state.cmsID = item;
     },
+   loginPage(state,item){
+     state.loginPage = item;
+   },
+   serverIP(state,item){
+     state.serverIP = item;
+   }
 },
  plugins: [createPersistedState()]
 })

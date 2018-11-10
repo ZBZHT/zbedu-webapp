@@ -279,7 +279,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -320,7 +320,7 @@ hr{
   font-weight: 200;
   color: #333;
 }
-.courseIndex .bb-middle .title{
+.courseIndex .bottom-box .bb-middle .title{
   width: 582px;
   text-align: left;
   margin-left: 14px;
@@ -412,7 +412,7 @@ hr{
   margin-bottom:20px;
   display:flex;
 }
-.courseIndex .bb-left{
+.courseIndex .bottom-box .bb-left{
   background: #f1eded;
   padding-left: 12px;
   padding-top: 4px;
@@ -421,7 +421,7 @@ hr{
   box-shadow: 10px 10px 30px #ccc;
   margin-top:20px;
 }
-.courseIndex .bb-span{
+.courseIndex .bottom-box .bb-span{
     color:#222;
     font-size: 18px;
     float: left;
@@ -431,27 +431,27 @@ hr{
     border-left:2px solid #e4393c;
     margin-right:25px;
 }
-.courseIndex .bb-right{
+.courseIndex .bottom-box .bb-right{
     width:156px;
     height: 490px;
     box-shadow: 10px 10px 30px #ccc;
     margin-top:20px;
     padding-right:0;
 }
-.courseIndex .bb-middle{
+.courseIndex .bottom-box .bb-middle{
   width:582px;
   height:510px;
   margin-left: 30px;
   margin-right:33px;
   margin-top:15px;
 }
-.courseIndex .shizhan{
+.courseIndex .bottom-box .shizhan{
     width:580px;
     height:422px;
     margin-top:18px;
     margin-left:15px;
 }
-.courseIndex .shizhan>ul{
+.courseIndex .bottom-box .shizhan>ul{
     text-align:left;
 }
 .courseIndex .mask-play{
@@ -462,7 +462,6 @@ hr{
     margin-left:53px;
 }
 .courseIndex .row-a{
-
   width:169px;
   height: 100px;
   margin-top:5px;
@@ -572,11 +571,12 @@ hr{
         }
 
         .courseIndex .pagination_page_active {
-            border-color: #e4393c;
-            background-color: #e4393c;
-            color: #fff !important;;
-            cursor: default;
+          border-color: #e4393c;
+          background-color: #e4393c;
+          color: #fff !important;;
+          cursor: default;
         }
+
 .courseIndex .best-class {
   width: 960px;
   margin: 0 auto;

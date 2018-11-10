@@ -253,16 +253,17 @@
         centerDialogVisible: false,
         url:document.domain,
         options: [{
-          label: '全部教程'
+          label: '全部教程',
         }, {
-          label: '教学课件'
+          label: '教学课件',
         }, {
-          label: '教学微课'
+          label: '教学微课',
         }, {
-          label: '其他教材'
+          label: '其他教材',
         }],
-        label1: { label: '' },
+        label1: { label: '' ,fileType: ''},
         upFileName: '',
+        fileType: ''
       }
     },
     computed:{
@@ -403,32 +404,34 @@
 
       },
       loadFile() {
+          console.log('111');
         axios.get('/fileUpDown/loadFile',{
           params:{
             user:6666
           }
         }).then((res)=>{
-            for (let i = 0; i < res.data.var.length; i++){
-              this.msgArr.push(res.data.var[i]);
-            }
-            this.msgArrLittle = [];
-            this.courseWareArr = [];
-            this.videoArr = [];
-            this.otherArr = [];
-            for(let j = 0; j < this.msgArr.length; j++){
+            console.log(res.data);
+            if (res.data.code === 0) {
+              for (let i = 0; i < res.data.result.length; i++){
+                this.msgArr.push(res.data.result[i]);
+              }
+              this.msgArrLittle = [];
+              this.courseWareArr = [];
+              this.videoArr = [];
+              this.otherArr = [];
+              console.log(res.data.result.length);
+              for(let j = 0; j < res.data.result.length; j++){
                 if(this.msgArr[j].fileType === 1){
-                  this.msgArr[j].fileType = '全部教程';
                   this.msgArrLittle.push(this.msgArr[j]);
                 }else if(this.msgArr[j].fileType === 2){
-                  this.msgArr[j].fileType = '教学课件';
+                    console.log(this.msgArr[j]);
                   this.courseWareArr.push(this.msgArr[j]);
                 }else if(this.msgArr[j].fileType === 3){
-                  this.msgArr[j].fileType = '教学微课';
                   this.videoArr.push(this.msgArr[j]);
                 }else if(this.msgArr[j].fileType === 4){
-                  this.msgArr[j].fileType = '其它教材';
                   this.otherArr.push(this.msgArr[j]);
                 }
+              }
             }
           }
         );

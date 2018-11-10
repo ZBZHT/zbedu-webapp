@@ -73,7 +73,7 @@
               <el-tab-pane label="教学微课" :name="descTab2">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="video-box" controls @click="videostop" :src="'http://' + $store.state.serverIP + ':8001/resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
+                  <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="'http://' + $store.state.serverIP + ':8001/resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
                     <!--<video id="video-box" controls @click="videostop">-->
                   </video>
                 </div>
@@ -96,7 +96,7 @@
               <el-tab-pane label="flash动画">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="flash2d" autoplay controls @click="flash2d" :src="'http://' + $store.state.serverIP + ':8001/resource/' + this.videoPath + noTree.flash2d">
+                  <video id="flash2d" autoplay controls="controls" controlslist="nodownload" @click="flash2d" :src="'http://' + $store.state.serverIP + ':8001/resource/' + this.videoPath + noTree.flash2d">
                   </video>
                 </div>
               </el-tab-pane>
@@ -141,7 +141,7 @@
 
                     <div class="showReplyClass">
                       <div class="showReplyMsg">
-                        <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">【{{userName}}】老师:</p>
+                        <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">【{{item.user}}】老师:</p>
                         <p class="showReplyText">{{item.replyText}}</p>
                         <p class="AppraiseTime">{{item.replyDate}}</p>
                       </div>
