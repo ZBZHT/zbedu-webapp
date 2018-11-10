@@ -3,6 +3,7 @@ const router = express.Router();
 const Students = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const Session = require('../app/models/Session');
+const Ip = require('../app/models/Ip');
 const _ = require('lodash');
 
 //定义返回格式
@@ -270,5 +271,19 @@ router.post('/user/logout', function (req, res) {
     }
   });
 });
+
+//获取服务器ip
+router.get('/user/getServerIP', function (req, res) {
+  Ip.findOne({
+  }).then(function (result) {
+    console.log(result);
+    if (result === null) {
+      res.status(200).send({Msg: '数据库存储的ip为空', code: 1,});
+    } else {
+      res.status(200).send({Msg: '获取ip成功', code: 0, serverIP: result});
+    }
+  })
+});
+
 
 module.exports = router;

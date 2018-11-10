@@ -1,0 +1,27 @@
+//考勤表
+{
+  "courseName": "计算机原理",
+  "courseDate": "2018-06-18",
+  "teacher": "杜伟",
+  "startTime": "09:00",
+  "endTime": "10:00",
+  "className": "镇江培训",
+  "stateList": [
+    {
+      "stuName": "学生1",
+      "state": 0
+    },
+    {
+      "stuName": "学生2",
+      "state": 1
+    },
+    {
+      "stuName": "学生3",
+      "state": 2
+    },
+    {
+      "stuName": "学生4",
+      "state": 3
+    }
+  ]
+}

@@ -5,6 +5,7 @@ const fs = require("fs");
 const path = require('path');
 const glob = require('glob');
 const formidable = require('formidable');
+const bannerLeftData = require('../app/mock/bannerLeftData.json');
 const uploadsPath = "../app/uploads/addUser/";
 const addTestPath = "../app/uploads/addTest/";
 const Student = require('../app/models/Student');
@@ -23,7 +24,6 @@ const uploadCoursePath = "../public/resource/我的课堂/";
 const core = require('../utils/core');
 const moment = require('moment');
 const ppt2png = require('ppt2png');
-const pdf = require('pdf-poppler');
 const os = require('os');
 
 let courseP;
@@ -291,6 +291,9 @@ router.post('/labelTree', function (req, res) {
         labelTree = removeNode(labelTree, 300);  //传入要删除的Node id
         labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理
         labelTree = removeNode(labelTree, 700);  //删除教师的课堂管理
+        let children3 = labelTree[2].children;
+        childrenC = removeChildren(children3, 502);  //传入要删除的Children id资讯管理
+        labelTree[2].children = childrenC;
         res.status(200).send({result: labelTree});
       });
     } else if (reqBody.userType === 'T') {
@@ -300,12 +303,15 @@ router.post('/labelTree', function (req, res) {
         let labelTree = tree.children;
         let childrenE = labelTree[1].children;
         let children1 = labelTree[2].children;
+        let children3 = labelTree[4].children;
         children = removeChildren(childrenE, 101);  //传入要删除的Children id
         children2 = removeChildren(children1, 302);  //传入要删除的Children id
+        childrenC = removeChildren(children3, 502);  //传入要删除的Children id资讯管理
         labelTree = removeNode(labelTree, 600);  //删除管理员的课堂管理
         labelTree = removeNode(labelTree, 800);  //删除学生的课堂管理
         labelTree[1].children = children;
         labelTree[2].children = children2;
+        labelTree[4].children = childrenC;
         res.status(200).send({result: labelTree});
       });
     } else if (reqBody.userType === 'SA' || reqBody.userType === 'EA') {
@@ -1125,8 +1131,13 @@ router.post('/addExcelTest', function (req, res) {
 
 //教师, 获取自定义课程
 router.post('/getTeacherCustomCourse', function (req, res) {
-  if (req.body.data) {
-    let reqData = req.body.data;
+  let reqData = req.body.data;
+  if (req.session.users === undefined) {
+    res.status(404).send({
+      Msg: '未登录或是无权限',
+      code: 1,
+    });
+  } else {
     let username = req.session.users.username;
     if (reqData.userType === 'SA' || reqData.userType === 'EA' || reqData.userType === 'T') {
       if (!fs.existsSync(uploadCoursePath + username)) {
@@ -1183,19 +1194,15 @@ router.post('/getTeacherCustomCourse', function (req, res) {
         }
 
       });
-    } else {
+    } else if (reqData.userType === '') {
       res.status(404).send({
-        Msg: '用户无添加权限',
+        Msg: '未登录或是无权限',
         code: 1,
       });
     }
-  } else {
-    res.status(404).send({
-      Msg: '无法获取请求数据',
-      code: 1,
-    });
   }
-});
+
+})
 
 //教师, 添加自定义课程
 router.post('/addCustomCourse', function (req, res) {
@@ -1341,6 +1348,7 @@ router.post('/uploadCourseSec', function (req, res) {
 
     let p2 = new Promise((resolve, reject) => {
       if (sysType !== 'linux') {
+        let pdf = require('pdf-poppler');
         let opts = {
           format: 'png',
           out_dir: coursePath,
@@ -1483,18 +1491,25 @@ router.post('/uploadCourse', function (req, res) {
 
 //获取课程树
 router.post('/getCenterTree', function (req, res) {
-  let reqUserType = req.session.users.userType;
-  if (reqUserType === 'EA' || reqUserType === 'SA' || reqUserType === 'S' || reqUserType === 'T' || reqUserType === 'O') {
-    CenterTree.find({}).then(function (result) {
-
-      res.status(200).send(result);
-    });
-  } else {
-    res.status(404).send({
-      Msg: '用户无权限或未登录',
-      code: 1,
-    });
-  }
+  res.setHeader("Content-Type", "application/json");
+  CenterTree.findOneAndUpdate({
+    name: 'centerTree'
+  }, {
+    newTime: new Date(),
+    children: bannerLeftData,
+  }, function (err) {
+    if (err) {
+      console.log(err);
+      res.status(404).send({
+        Msg: '更新失败',
+      });
+    } else {
+      console.log('更新centerTree成功');
+      CenterTree.find({}).then(function (result) {
+        res.status(200).send(result);
+      });
+    }
+  });
 });
 
 //更新课程树

@@ -22,6 +22,7 @@ const readTestQuestionInfo = require('./routes/readTestQuestionInfo');
 const testManagement = require('./routes/testManagement');
 const fileUpDown = require('./routes/fileUpDown');
 const readResource = require('./routes/readResource');
+const trainManager = require('./routes/trainManager');
 //const setCourse = require('./routes/setCourse');
 
 const app = express();
@@ -61,14 +62,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/api', proxy('localhost:8080'));
 //app.use('/api', proxy({ target: 'http://localhost:8080', changeOrigin: true ,}));
 app.use('/teacherCMS', teacherCMS);//后台管理
-app.use('/api', api);//登录
-app.use('/readJson', readJson);//读取json文件
-app.use('/readComments', readComments);//读取评论数据
-app.use('/readTestQuestion', readTestQuestion);//读取考试数据
-app.use('/readTestQuestionInfo', readTestQuestionInfo);//考试成绩
-app.use('/testManagement', testManagement);//考试管理
-app.use('/fileUpDown', fileUpDown);//上传下载
-app.use('/readResource', readResource);//读取ppt,视频,pdf等资源
+app.use('/api', api);                                    //登录
+app.use('/readJson', readJson);                          //读取json文件
+app.use('/readComments', readComments);                  //读取评论数据
+app.use('/readTestQuestion', readTestQuestion);          //读取考试数据
+app.use('/readTestQuestionInfo', readTestQuestionInfo);  //考试成绩
+app.use('/testManagement', testManagement);              //考试管理
+app.use('/fileUpDown', fileUpDown);                      //上传下载
+app.use('/readResource', readResource);                  //读取ppt,视频,pdf等资源
+app.use('/trainManager', trainManager);                  //物联网实训相关
 //app.use('/setCourse',setCourse);//设置课程
 
 // catch 404 and forward to error handler

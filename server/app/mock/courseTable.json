@@ -1,0 +1,268 @@
+//教务管理课程表
+{
+  "createDate": "2018-06-18",
+  "courseDate": "2018-06-20",
+  "createName": "琴老师",
+  "className": "镇江培训",
+  "teachList": [
+    "张老师",
+    "付老师"
+  ],
+  "course":
+    {
+      "newCourse": [
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术1",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术2",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术3",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术4",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术5",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "courseName": "新能源电池技术6",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术7",
+          "courseAddress": "某某5楼"
+        }
+      ],
+      "newCourse2": [
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        }
+      ],
+      "newCourse3": [
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        }
+      ],
+      "newCourse4": [
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        }
+      ],
+      "newCourse5": [
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        },
+        {
+          "startTime": "9:00",
+          "endTime": "10:00",
+          "teacher": "付老师",
+          "courseName": "新能源电池技术",
+          "courseAddress": "某某5楼"
+        }
+      ]
+    }
+}

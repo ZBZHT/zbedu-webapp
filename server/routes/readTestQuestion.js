@@ -220,14 +220,14 @@ router.get('/stuHistoryTestData', function (req, res) {
               if (err) {
                 console.log(err);
               } else {
-                console.log('TeachNewTestQ更新showGradeState=2成功');
+                //console.log('TeachNewTestQ更新showGradeState=2成功');
                 TestQuestionInfo.update({  //改变考试答案状态为2
                   theme: result[i].theme,
                 },{$set:{showGradeState: 2}},{multi: true},function (err) {
                   if (err) {
                     console.log(err);
                   } else {
-                    console.log('TestQuestionInfo更新showGradeState=2成功');
+                    //console.log('TestQuestionInfo更新showGradeState=2成功');
                   }
                 })
               }
@@ -242,7 +242,7 @@ router.get('/stuHistoryTestData', function (req, res) {
 //学生,创建练习
 router.get('/stuNewExercise', function (req, res) {
   let reqQ = req.query;
-  console.log(reqQ);
+  //console.log(reqQ);
   Question.find(
   ).then(function (question) {
     let testItems = core.getArrayItems(question, reqQ.num);
@@ -306,7 +306,7 @@ router.get('/stuNewExercise', function (req, res) {
             if (err) {
               console.log(err);
             } else {
-              console.log('Success!');
+              //console.log('Success!');
               res.end(JSON.stringify({code: 0,msg: '练习创建成功'}));
             }
           });
@@ -355,7 +355,7 @@ router.get('/stuHistoryPractice', function (req, res) {
         })
       });
       setTimeout(function(){
-        console.log(testQuestionInfo);
+        //console.log(testQuestionInfo);
         res.end(JSON.stringify({
           testQuestionInfo: testQuestionInfo
         }));

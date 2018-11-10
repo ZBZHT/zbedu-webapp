@@ -1,13 +1,14 @@
 #!/usr/bin/env node
-
 // Module dependencies.
 const app = require('../app');
 const debug = require('debug')('login2:server');
 const http = require('http');
 const mongoose = require('mongoose');
+const Ip = require('../app/models/Ip');
+const os = require('os');
 
 // Get port from environment and store in Express.
-var port = normalizePort(process.env.PORT || '80');
+var port = normalizePort(process.env.PORT || '8000');
 app.set('port', port);
 
 // Create HTTP server.
@@ -20,12 +21,57 @@ mongoose.connect('mongodb://127.0.0.1:27017/zbt',function (err,zbt) {
     if (err) {
         console.log('数据库连接失败');
     }else {
-        console.log('数据库连接成功 : 80');
-        server.listen(80);
+        console.log('数据库连接成功 : 8000');
+        server.listen(port);
         server.on('error', onError);
         server.on('listening', onListening);
+        updateIP();
     }
 });
+
+//获取服务器ip并更新到mongodb
+function updateIP() {
+  let IP = '';
+  let ifaces=os.networkInterfaces();
+  for (var dev in ifaces) {
+    var alias = 0;
+    ifaces[dev].forEach(function (details) {
+      if (details.family === 'IPv4') {
+        if (details.address === '127.0.0.1') {
+            return
+        } else {
+          IP = details.address;
+        }
+        ++alias;
+      }
+    });
+  }
+  Ip.findOne({}).then(function (result) {
+    if (result === null) {
+      let ip = new Ip({
+        Ip: IP,
+      });
+      ip.save(function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('IP更新成功:' + IP);
+        }
+      });
+    } else {
+      Ip.findOneAndUpdate({
+      }, {
+        Ip: IP,
+      }, function (err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log('IP更新成功:' + IP);
+        }
+      });
+    }
+  })
+}
 
 //Normalize a port into a number, string, or false.
 function normalizePort(val) {

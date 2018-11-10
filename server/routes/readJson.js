@@ -57,5 +57,4 @@ router.get('/test', function (req, res) {
     res.end(JSON.stringify(test));
 });
 
-
 module.exports = router;
