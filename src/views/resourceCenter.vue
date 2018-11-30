@@ -440,7 +440,6 @@
     },
     mounted(){
       this.loadFile();
-
     },
     components: {navgationHead, footFooter}
   }

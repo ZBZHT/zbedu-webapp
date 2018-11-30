@@ -5,6 +5,11 @@
     <el-col :span="19">
         <div class="teacherList">
           <div class="teacherListName">请选择带队教师</div>
+          <video-player class="vjs-custom-skin" ref="videoPlayer" :options="playerOptions">
+          </video-player>
+
+
+
           <!--教师列表-->
           <el-table class="userM_el-table" :data="teachData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)"
                     @selection-change="changeTeacher"
@@ -105,7 +110,7 @@
               layout="prev, pager, next, jumper"
               :total=parseInt(total1)>
             </el-pagination>
-          </div>          
+          </div>
         </div>
     </el-col>
 
@@ -121,6 +126,14 @@
     name: 'gameM',
     data() {
       return {
+        playerOptions: {
+          autoplay: false,
+          controls: true,
+          sources: [{
+            type: 'video/mp4',
+            src: 'http://192.168.0.251/resource/新能源汽车/纯电动汽车/充电系统检修/充电桩结构原理及性能介绍/充电桩结构原理及性能介绍.mp4'
+          }]
+        },
         username: this.$store.state.username,
         userType: this.$store.state.userType,
         teachData: [{

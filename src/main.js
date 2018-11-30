@@ -10,6 +10,11 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueDND from 'awe-dnd'
+import VideoPlayer from 'vue-video-player'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
+require('videojs-flash')
+Vue.use(VideoPlayer)
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);

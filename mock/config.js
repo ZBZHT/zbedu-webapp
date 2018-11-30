@@ -5,7 +5,7 @@ const path = require('path');
 const config = {
   '/api/menu/header': {
     method: 'get',
-    data: './test.json'
+    data: './modeConfig.json'
   },
   '/menu/header/nav': {
     method: 'get',

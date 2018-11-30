@@ -42,7 +42,6 @@ export default {
     }
   },
   computed:{
-
   },
   methods:{
     handleResize (event) {
@@ -56,22 +55,19 @@ export default {
     window.removeEventListener('resize', this.handleResize)
   },
   mounted(){
-
     axios.get("/api/user/getServerIP", { //获取服务器ip请求
       params: {
         user: 234
       }
     }).then((res) => {
       if (res.data.code === 0) {
-        this.$store.commit('serverIP',res.data.serverIP.Ip);
+        this.$store.commit('serverIP',res.data.serverIP);
       }
       //console.log(this.$store.state.serverIP);
     }).catch(function (error) {
       console.log("error init." + error)
     });
-
     window.addEventListener('resize', this.handleResize)
-
   },
   components:{navgationHead,navUl,footFooter_1}
 }

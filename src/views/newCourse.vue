@@ -73,7 +73,7 @@
               <el-tab-pane label="教学微课" :name="descTab2">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="'http://' + $store.state.serverIP + ':8001/resource/' + this.videoPath + noTree.videoTitle[0].videoTitle">
+                  <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="videoAdr + this.videoPath + noTree.videoTitle[0].videoTitle">
                     <!--<video id="video-box" controls @click="videostop">-->
                   </video>
                 </div>
@@ -96,7 +96,7 @@
               <el-tab-pane label="flash动画">
                 <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
                 <div>
-                  <video id="flash2d" autoplay controls="controls" controlslist="nodownload" @click="flash2d" :src="'http://' + $store.state.serverIP + ':8001/resource/' + this.videoPath + noTree.flash2d">
+                  <video id="flash2d" autoplay controls="controls" controlslist="nodownload" @click="flash2d" :src="videoAdr + this.videoPath + noTree.flash2d">
                   </video>
                 </div>
               </el-tab-pane>
@@ -300,7 +300,8 @@
         homeworkData:[],
         videoPath:'',
         currCourse:[],
-        appraiseIndex:[]
+        appraiseIndex:[],
+        videoAdr: ''
       }
     },
     computed:{
@@ -340,6 +341,7 @@
 //        })
     },
     mounted(){
+      this.videoAdr = 'http://' + this.$store.state.serverIP + '/resource/'
 
       if(this.$store.state.activeName === 3){
         this.activeName = this.descTab2;

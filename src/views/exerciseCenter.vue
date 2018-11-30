@@ -19,7 +19,7 @@
             </el-col>
 
             <el-col :span="18" id="setHeight">
-                <!--教学设备-->
+                <!--教学设备展示-->
                 <div v-show="is697">
                     <p class="exerP">{{exerLabel}}</p>
                     <el-tabs type="border-card">
@@ -119,10 +119,12 @@
                       <el-table-column label="操作" width="260">
                         <template slot-scope="scope">
                           <el-button size="mini" type="danger"
-                                     @click="">打开
+                                     v-show="scope.row.onOff === 'off'"
+                                     @click="openUserTrain(scope.$index, scope.row)">打开
                           </el-button>
                           <el-button size="mini" type="success"
-                                     @click="">关闭
+                                     v-show="scope.row.onOff === 'on'"
+                                     @click="closeUserTrain(scope.$index, scope.row)">关闭
                           </el-button>
                           <el-button size="mini" type="success"
                                      @click="editTrain(scope.$index, scope.row)">编辑
@@ -142,6 +144,7 @@
                   <!--添加故障弹窗-->
                   <el-dialog
                     title="自定义故障"
+                    id="userDialog"
                     class="userDialog"
                     :visible.sync="dialogVisible"
                     width="630px"
@@ -212,7 +215,10 @@ export default {
       userTrainValue: [],
       input: '',
       Source: '故障列表',
-      dialogVisible: false
+      editOrAdd: '',
+      oldUserTrainName: [],
+      dialogVisible: false,
+      dialogTitle: '自定义故障',
     }
   },
   computed:{
@@ -247,31 +253,62 @@ export default {
     //添加自定义故障
     addUserTrain() {
       let that = this;
-      function vi() {
-        let ee = that.resData.userFault;
-        for (let i = 0; i < ee.length; i++) {
-          if (that.input === ee[i].userTrainName) {
-            return false
-          } else {
+      if (this.editOrAdd === 'edit') {
+        that.editUserTrain()
+      } else {
+
+        function vi() {
+          let ee = that.resData.userFault;
+          for (let i = 0; i < ee.length; i++) {
+            if (that.input === ee[i].userTrainName) {
+              return false
+            } else {
               return true
+            }
           }
         }
+        if (this.input === '') {
+          this.warningMsg("故障别名不能为空!")
+        } else if (vi() === false) {
+          this.warningMsg("名字重复,请换个试试!")
+        } else if (this.userTrainValue.length === 0) {
+          this.warningMsg("请选择故障!")
+        } else {
+          let userTrain = {
+            userTrainName: this.input,
+            children: this.userTrainValue
+          };
+          axios.post('/trainManager/addUserTrain', {
+            data: {
+              userTrain: userTrain,
+              userID: this.resData.userID
+            }
+          }).then((res) => {
+            console.log(res.data.code);
+            if (res.data.code === 0) {
+              this.dialogVisible = false;
+              this.input = '';
+              this.userTrainValue = '';
+              this.getTrainData();
+            }
+          }).catch(function (error) {
+            console.log("error init." + error)
+          });
+        }
+
       }
-      if (this.input === '') {
-        this.warningMsg("故障别名不能为空!")
-      } else if (vi() === false) {
-        this.warningMsg("名字重复,请换个试试!")
-      } else if (this.userTrainValue.length === 0) {
-        this.warningMsg("请选择故障!")
-      } else {
+    },
+    //编辑自定义故障
+    editUserTrain() {
         let userTrain = {
           userTrainName: this.input,
           children: this.userTrainValue
         };
-        axios.post('/trainManager/addUserTrain', {
+        axios.post('/trainManager/editUserTrain', {
           data: {
             userTrain: userTrain,
-            userID: this.resData.userID
+            userID: this.resData.userID,
+            oldUserTrainName: this.oldUserTrainName
           }
         }).then((res) => {
           console.log(res.data.code);
@@ -279,18 +316,20 @@ export default {
             this.dialogVisible = false;
             this.input = '';
             this.userTrainValue = '';
+            this.oldUserTrainName = [];
             this.getTrainData();
           }
         }).catch(function (error) {
           console.log("error init." + error)
         });
-      }
     },
 
     //弹窗关闭
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
+          this.userTrainValue = [];
+          this.input = '';
           done();
         })
         .catch(_ => {});
@@ -308,6 +347,17 @@ export default {
     },
     //编辑
     editTrain(index, row) {
+      console.log(index);
+      console.log(row);
+      this.dialogVisible = true;
+      this.oldUserTrainName.push(row.userTrainName);
+      this.editOrAdd = 'edit';
+      this.input = row.userTrainName;
+
+      for (let i = 0; i < row.children.length; i++) {
+        this.userTrainValue.push(row.children[i].num)
+      }
+      console.log(this.userTrainValue);
 
     },
     //删除
@@ -351,7 +401,8 @@ export default {
         });
       });
     },
-    //发送指定命令
+
+    //发送单个指令/开关
     onOff(index, row) {
       let tIndex = this.tableData[index];
       axios.post('/trainManager/onOffControl', {
@@ -373,6 +424,50 @@ export default {
         console.log("error init." + error)
       });
     },
+    //发送多个指令/开关
+    userOnOff(index, row) {
+        let that = this;
+      function yibu(onOff) {
+        return new Promise(function (resolve, reject) {
+            axios.post('/trainManager/onOffControl', {
+              data: {
+                command: onOff,
+                courseName: 'SW16'
+              }
+            }).then((res) => {
+              //console.log(res.data);
+              if (res.data.code === 0) {
+                resolve();
+                //console.log(that.tableData1[index]);
+              }
+              //this.updateTrain();
+            }).catch(function (error) {
+              console.log("error init." + error)
+            });
+        });
+      }
+      let start = new Promise(function (resolve) {
+        resolve();
+      });
+
+      for (let i = 0; i < row.children.length; i++) {
+        let onOff = row.onOff + row.children[i].num;
+        start = start.then(function () {
+          return yibu(onOff)
+        }).then(function () {
+          if ((i+1) === row.children.length) {
+            if (row.onOff === 'off') {
+              row.onOff = 'on'
+            } else if (row.onOff === 'on') {
+              row.onOff = 'off'
+            }
+            that.updateUserTrain(row)
+          }
+        })
+      }
+
+    },
+
     //开关状态更新到数据库
     updateTrain() {
       axios.post('/trainManager/updateTrain', {
@@ -394,9 +489,40 @@ export default {
       });
 
     },
+    //自定义故障更新到数据库
+    updateUserTrain(row) {
+        //console.log(row);
+        //console.log(this.resData.userID);
+      axios.post('/trainManager/updateUserTrain', {
+        data: {
+          command: row,
+          userID: this.resData.userID
+        }
+      }).then((res) => {
+        //console.log(res.data);
+        if (res.data.code === 0) {
+          resolve();
+          //console.log(that.tableData1[index]);
+        }
+        //this.updateTrain();
+      }).catch(function (error) {
+        console.log("error init." + error)
+      });
+
+    },
+
+    //自定义开
+    openUserTrain(index, row) {
+      this.userOnOff(index, row);
+    },
+    //自定义关
+    closeUserTrain(index, row) {
+      this.userOnOff(index, row);
+    },
+
     //开
     openTrain(index, row) {
-      //console.log(index, row);
+      console.log(index, row);
       if (this.tableData[index].onOff === 'off') {
         this.onOff(index, row)
       }
@@ -408,6 +534,7 @@ export default {
         this.onOff(index, row)
       }
     },
+
     //获取实训数据/自定义故障
     getTrainData() {
       axios.post('/trainManager/getTrain', {
@@ -457,6 +584,7 @@ export default {
     handleNodeClick(data) {
       //右侧显示不同页面
       //console.log(data);
+      console.log(this.$refs.extree);
 
       var id = data.id;
       if (id.toString() >= '1000' && id.toString() < '2000') {
@@ -489,7 +617,7 @@ export default {
 
   },
   mounted(){
-    this.Train1();
+    this.Train1();          //获取屏幕高度
     this.getTrainData();   //获取实训数据
     this.getCenterTree();  //获取左边列表
 

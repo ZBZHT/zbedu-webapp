@@ -35,8 +35,8 @@ module.exports = {
         target: "http://localhost:8080",
         bypass: function(req,res,proxyOptions) {
           console.log('Skipping proxy for brower request.');
-          res.sendFile('/mock/test.json');
-          return '/mock/test.json';
+          res.sendFile('/mock/modeConfig.json');
+          return '/mock/modeConfig.json';
         }
 
       }
@@ -46,7 +46,7 @@ module.exports = {
 
     // Various Dev Server settings
     host: '127.0.0.1', // can be overwritten by process.env.HOST
-    port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8081, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
@@ -93,7 +93,7 @@ module.exports = {
      * Source Maps
      */
 
-    productionSourceMap: true,
+    productionSourceMap: false,
     // https://webpack.js.org/configuration/devtool/#production
     devtool: '#source-map',
 

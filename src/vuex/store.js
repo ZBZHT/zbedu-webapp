@@ -2,9 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex);
-
-
-
 export default new Vuex.Store({
  state : {
     username:'',
@@ -27,7 +24,7 @@ export default new Vuex.Store({
     activeName:'',
     cmsID:'',
     loginPage:false, //登录页面显示-关闭
-    serverIP: '',//后台返回的服务器ip
+    serverIP: ''//后台返回的服务器ip
 },
  mutations : {
    activeName(state,item){
