@@ -82,9 +82,9 @@
                       :data="tableData"
                       max-height="470"
                       style="width: 100%">
-                      <el-table-column label="序号" type="index" width="50">
+                      <el-table-column label="序号" type="index" width="150">
                       </el-table-column>
-                      <el-table-column property="name" label="故障名称" width="180">
+                      <el-table-column property="name" label="故障名称" width="400">
                       </el-table-column>
                       <el-table-column label="操作">
                         <template slot-scope="scope">
@@ -95,6 +95,9 @@
                           <el-button size="mini" type="success"
                                      v-show="scope.row.onOff === 'on'"
                                      @click="closeTrain(scope.$index, scope.row)">关闭
+                          </el-button>
+                          <el-button size="mini" type="success"
+                                     @click="editOnOffTrain(scope.$index, scope.row)">编辑
                           </el-button>
                         </template>
                       </el-table-column>
@@ -173,7 +176,18 @@
                   </span>
                   </el-dialog>
 
-
+                  <!--编辑开关故障弹窗-->
+                  <el-dialog
+                    title="请输入故障名称"
+                    :visible.sync="dialogVisible1"
+                    width="30%"
+                    :before-close="handleClose">
+                    <el-input v-model="input1" placeholder="请输入故障名称"></el-input>
+                    <span slot="footer" class="dialog-footer">
+                      <el-button @click="dialogVisible1 = false">取 消</el-button>
+                      <el-button type="primary" @click="edit1(input1)">确 定</el-button>
+                    </span>
+                  </el-dialog>
 
                 </el-tabs>
 
@@ -218,7 +232,10 @@ export default {
       editOrAdd: '',
       oldUserTrainName: [],
       dialogVisible: false,
+      dialogVisible1: false,
       dialogTitle: '自定义故障',
+      input1: '',
+      editOnOffTrainIndex: '',
     }
   },
   computed:{
@@ -233,7 +250,7 @@ export default {
     },
   },
   methods: {
-    //警告信息提示
+    // 警告信息提示
     warningMsg(msg) {
       this.$message({
         showClose: true,
@@ -241,7 +258,7 @@ export default {
         type: 'warning'
       });
     },
-    //成功信息提示
+    // 成功信息提示
     successMsg(msg) {
       this.$message({
         showClose: true,
@@ -249,8 +266,20 @@ export default {
         type: 'success'
       });
     },
+    // 编辑开关名称
+    editOnOffTrain (index, row) {
+      this.dialogVisible1 = true
+      this.editOnOffTrainIndex = index
+      this.input1 = row.name
+    },
+    edit1 () {
+      this.tableData[this.editOnOffTrainIndex].name = this.input1
+      this.updateTrain()
+      this.dialogVisible1 = false
 
-    //添加自定义故障
+    },
+
+    // 添加自定义故障
     addUserTrain() {
       let that = this;
       if (this.editOrAdd === 'edit') {
@@ -298,7 +327,7 @@ export default {
 
       }
     },
-    //编辑自定义故障
+    // 编辑自定义故障
     editUserTrain() {
         let userTrain = {
           userTrainName: this.input,
@@ -324,7 +353,7 @@ export default {
         });
     },
 
-    //弹窗关闭
+    // 弹窗关闭
     handleClose(done) {
       this.$confirm('确认关闭？')
         .then(_ => {
@@ -332,23 +361,24 @@ export default {
           this.input = '';
           done();
         })
-        .catch(_ => {});
+        .catch(_ => {
+        });
     },
 
-    //获取屏幕高度
+    // 获取屏幕高度
     Train1() {
       let hh = window.innerHeight - 185 - 44;
       let domHeight = document.getElementById("setHeight1");
-      console.log(hh);
-      console.log(domHeight.clientHeight);
+//      console.log(hh);
+//      console.log(domHeight.clientHeight);
       if (hh > domHeight.clientHeight) {
         domHeight.style.height = hh + 'px';
       }
     },
-    //编辑
+    // 编辑自定义故障
     editTrain(index, row) {
-      console.log(index);
-      console.log(row);
+//      console.log(index);
+//      console.log(row);
       this.dialogVisible = true;
       this.oldUserTrainName.push(row.userTrainName);
       this.editOrAdd = 'edit';
@@ -357,10 +387,9 @@ export default {
       for (let i = 0; i < row.children.length; i++) {
         this.userTrainValue.push(row.children[i].num)
       }
-      console.log(this.userTrainValue);
-
+//      console.log(this.userTrainValue);
     },
-    //删除
+    // 删除
     deleteUserTrain(index, row) {
         console.log(index);
         console.log(row);
@@ -544,7 +573,7 @@ export default {
         }
       }).then((res) => {
         if (res.data.code === 0) {
-            console.log(this.resData);
+//            console.log(this.resData);
           this.resData = res.data.result;
           this.tableData = this.resData.historyFault;
           let arr = this.resData.userFault;
@@ -573,7 +602,7 @@ export default {
           user: 234
         }
       }).then((res) => {
-        console.log(res.data[0].children[1].children);
+//        console.log(res.data[0].children[1].children);
         this.data = res.data[0].children[1].children;
         this.$refs.extree.setCurrentKey(this.keyId)
 
@@ -584,7 +613,7 @@ export default {
     handleNodeClick(data) {
       //右侧显示不同页面
       //console.log(data);
-      console.log(this.$refs.extree);
+//      console.log(this.$refs.extree);
 
       var id = data.id;
       if (id.toString() >= '1000' && id.toString() < '2000') {
@@ -620,8 +649,6 @@ export default {
     this.Train1();          //获取屏幕高度
     this.getTrainData();   //获取实训数据
     this.getCenterTree();  //获取左边列表
-
-
 
     //默认展开，标红
     var id = this.$store.state.exerciseData.id;
@@ -819,7 +846,7 @@ export default {
   }
 
   .e-content-tree .shiyan .shiyan-1 .el-table .cell {
-    text-align: center;
+    text-align: left;
   }
 
   .e-content-tree {
