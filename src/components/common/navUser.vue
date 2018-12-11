@@ -4,14 +4,19 @@
         <div class="userPic" v-if="nickName">
             <img src="../../assets/imgs/user.png">
         </div>
-        <a v-text="nickName + '(' + userId + ')'" v-if="nickName" class="username" :value="nickName"></a>
-    </router-link>
-        <div class="userhover">
-            <router-link :to="{path:'/teacherCMS'}">
-                <span class="usermine">我的</span>
-            </router-link>
-            <span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>
+        <div class="username" v-if="$store.state.username !== ''">
+          <a v-text="nickName + '(' + userId + ')'" v-if="nickName" :value="nickName"></a>
+          <p class="logOut">待考试</p>
+          <p class="logOut">待实训</p>
+          <p class="logOut" @click="logOut">注销</p>
         </div>
+    </router-link>
+        <!--<div class="userhover">-->
+            <!--<router-link :to="{path:'/teacherCMS'}">-->
+                <!--<span class="usermine">我的</span>-->
+            <!--</router-link>-->
+            <!--<span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>-->
+        <!--</div>-->
 
 </div>
 </template>
@@ -112,43 +117,47 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 *{
-    margin:0;
-    padding:0;
+  margin:0;
+  padding:0;
 }
 ul li{
-    list-style: none;
+  list-style: none;
 }
 a {
-    color: inherit;
-    cursor: pointer;
+  color: inherit;
+  cursor: pointer;
 }
 a:hover{
-    text-decoration: none;
+  text-decoration: none;
 }
 .user_bn{
-    position:relative;
+  position:relative;
 }
 .userhover{
-    font-size:15px;
-    width:144px;
-    height:30px;
-    background:#ddd;
-    position:absolute;
-    top:80px;
-    right:29%;
-    z-index:1000;
-    border-radius:24px;
-    display:none;
+  /*font-size:15px;*/
+  /*width:144px;*/
+  /*height:30px;*/
+  /*background:#ddd;*/
+  /*position:absolute;*/
+  /*top:80px;*/
+  /*right:29%;*/
+  /*z-index:1000;*/
+  /*border-radius:24px;*/
+  /*display:none;*/
 }
 .user_bn:hover .userhover{
     display:block;
 }
 .username{
-    width:65%;
-    font-size:16px;
-    position:absolute;
-    top:60px;
-    right:16%;
+  width:65%;
+  font-size:16px;
+  position:absolute;
+  top: -25px;
+  right: -6%;
+  text-align: left;
+}
+.username a:hover{
+  color:#f00;
 }
 .user a{
   font-size:16px;
@@ -162,31 +171,28 @@ a:hover{
   margin-top:6px;
 }
 .user_bn .userPic{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    overflow:hidden;
-    margin: 0 auto;
-    margin-top: -80px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  overflow:hidden;
+  margin-top: -46px;
+  margin-left: 14px;
 }
 .user_bn .userPic img{
-    width:100%;
-}
-.logOut{
-    position:absolute;
-    top:6px;
-    right:30px;
-    cursor: pointer;
+  width:100%;
 }
 .usermine{
-    position:absolute;
-    top:6px;
-    right:89px;
+  position:absolute;
+  top:6px;
+  right:89px;
 }
 .usermine:hover{
-    color:#f00;
+  color:#f00;
+}
+.logOut{
+  font-size:14px;
 }
 .logOut:hover{
-    color:#f00;
+  color:#f00;
 }
 </style>

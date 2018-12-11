@@ -333,62 +333,23 @@
       }
     },
     created(){
-
-//     var _this = this
-//        this.$nextTick(function () {
-//            // 直接调用
-//            _this.refRecursion(100, 1)
-//        })
     },
     mounted(){
-      this.videoAdr = 'http://' + this.$store.state.serverIP + '/resource/'
+      this.videoAdr = 'http://' + this.$store.state.serverIP + ':8000/resource/'
 
       if(this.$store.state.activeName === 3){
         this.activeName = this.descTab2;
-//        console.log(this.activeName)
       }else if(this.$store.state.activeName === 2){
         this.activeName = this.descTab1;
-//        console.log(this.activeName)
       }
       //判断当前是否是老师
-      //console.log(this.userType)
       if(this.userType == 'EA' || this.userType == 'T'){
         this.userSession = 1;
-        //console.log(this.userSession)
       }else{
 
       }
-
-      // var scrollbox = document.querySelector(".courseImg");
-      // console.log(document.querySelector(".courseImg"))
-      // window.addEventListener('scroll', this.handleScroll);
-
       //获取树形数据
       this.data = this.$store.state.newBannerLeft;
-
-//      axios.get("/readJson/bannerLeftData",{
-//        params:{
-//             user:234
-//        }
-
-//      axios.post('/teacherCMS/getCenterTree', {
-//        data: {
-//          userID: this.userID,
-//          userType: this.userType,
-//        }
-//      }).then((res)=>{
-//        console.log(res.data[0].children)
-//        console.log(res.data[0].children[0])
-//          this.data = res.data[0].children[0].children;
-//
-////        var _this = this
-////        this.$nextTick(function () {
-////        _this.refRecursion(100, 1)
-////        })
-//      }).catch(function(error){
-//          console.log("error init." + error)
-//      });
-
       setTimeout(() => {
         this.$refs.vuetree.setCurrentKey(this.keyId)
         console.log('11111');
@@ -1149,46 +1110,43 @@
 
       //从树形传值到tabs
       handleNodeClick(data,node) {
+        // 点击获取树结构各节点组成路径
+        let url_1 = []
+        console.log(node)
+        let videoPath = ''
+        let pptPath = ''
+        let bookPath = ''
+        let workPath = ''
+        let flashPath = ''
+        if (node.parent.parent.parent.parent.label !== undefined) {
+          url_1.push(node.parent.parent.parent.parent.label)
+        }
+        if (node.parent.parent.parent.label !== undefined) {
+          url_1.push(node.parent.parent.parent.label)
+        }
+        if (node.parent.parent.label !== undefined) {
+          url_1.push(node.parent.parent.label)
+        }
+        if (node.parent.label !== undefined) {
+          url_1.push(node.parent.label)
+        }
+        if (node.label !== undefined) {
+          url_1.push(node.label)
+        }
+        videoPath = url_1.join('/') + '/' + data.videoTitle[0].videoTitle
+        bookPath = url_1.join('/') + '/' + data.teachingBook
+        pptPath = url_1.join('/') + '/' + data.teachingMaterial
+        workPath = url_1.join('/') + '/' + data.workPage
+        flashPath = url_1.join('/') + '/' + data.flash2d
+        console.log(videoPath)
+        console.log(bookPath)
+        console.log(pptPath)
+        console.log(workPath)
+        console.log(flashPath)
+
+
         this.appAnswer = false;
-        //  console.log(data);
-
-
-//      var now = this.$store.state.noTree.videoTitle[0].videoTitle;
-//      console.log(now)
-//      var url = 'http://http://127.0.0.1:8080/resource/video/courseVideoData/'+now;
-//      console.log(url)
         var video = document.querySelector('video');
-//      fetch(url)
-//          .then(response => response.blob())
-//          .then(response => {
-//              const url = URL.createObjectURL(response)
-//              video.onload = () => URL.revokeObjectURL(response)
-//              video.src = url
-//          })
-
-
-//        var video = document.getElementById("video");
-//        window.URL = window.URL || window.webkitURL;
-//        var xhr = new XMLHttpRequest();
-//        xhr.open("GET", url, true);
-//
-//        xhr.responseType = "blob";
-//        xhr.onload = function() {
-//          if (this.status == 200) {
-//                var blob = this.response;
-//                video.onload = function(e) {
-//                    window.URL.revokeObjectURL(video.src);
-//                };
-//                video.src = window.URL.createObjectURL(blob);
-//              }
-//        }
-//        xhr.send();
-
-        //  console.log(node.data.label);
-        //  console.log(node.parent.label);
-        //  console.log(node.parent.parent.label);
-        //  console.log(node.parent.parent.parent.label);
-
         for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
           document.getElementsByClassName("coursepptImg")[i].style.height = '100%';
           document.getElementsByClassName("coursepptImg")[i].style.width = '100%';
@@ -1250,23 +1208,14 @@
               checkArr:checkArrHomeWork
             }
           }).then((res)=>{
-            //console.log(res.data.result)
-            //评论的title
             this.currCourse = checkArrHomeWork;
             this.appraiseContent.title = this.currCourse;
 
             if(res.data.result){
-              //  console.log("1111")
-              //  this.$store.commit('homework',res.data.result);
               this.homeworkData = res.data.result
-              console.log(this.homeworkData)
             }else{
-              //  console.log(res.data.result)
-              //  this.$store.commit('homework',[]);
               this.homeworkData = [];
-              // console.log(this.homeworkData)
             }
-            //console.log(this.homeworkData)
           }).catch(function(error){
             console.log("error init." + error)
           });
@@ -1295,8 +1244,8 @@
             }
             this.videoPath = fileNamePath;
           }
-          // console.log(this.$store.state.noTree1.courseId);
-          //console.log(fileNamePath);
+          console.log('1111')
+          console.log(this.videoPath)
           //请求课件
           axios.post("/readResource/getPPT",{
             data:{
@@ -1528,7 +1477,7 @@
               courseInfo: item
             }
           }).then((res) => {
-            console.log(res.data)
+            //  console.log(res.data)
 
           });
         axios.post('/teacherCMS/studentHot', {

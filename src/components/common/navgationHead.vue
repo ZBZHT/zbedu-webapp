@@ -30,14 +30,19 @@
                             <div class="userPic" v-if="$store.state.username !== ''">
                                 <img src="../../assets/imgs/user.png">
                             </div>
-                            <a v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'" v-if="$store.state.username !== ''" class="username" :value="$store.state.username"></a>
+                            <div class="username" v-if="$store.state.username !== ''">
+                              <a v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'" :value="$store.state.username"></a>
+                              <p class="logOut">待考试</p>
+                              <p class="logOut">待实训</p>
+                              <p class="logOut" @click="logOut">注销</p>
+                            </div>
                         </router-link>
-                        <div class="userhover" v-if="$store.state.username !== ''">
-                            <router-link :to="{path:'/teacherCMS'}">
-                                <span class="usermine">我的</span>
-                            </router-link>
-                            <span :value="$store.state.username" v-if="$store.state.username !== ''" class="logOut" @click="logOut">注销</span>
-                        </div>
+                        <!--<div class="userhover" v-if="$store.state.username !== ''">-->
+                            <!--<router-link :to="{path:'/teacherCMS'}">-->
+                                <!--<span class="usermine">我的</span>-->
+                            <!--</router-link>-->
+                            <!--<span :value="$store.state.username" v-if="$store.state.username !== ''">注销</span>-->
+                        <!--</div>-->
                     </div>
                     <a class="login" v-if="$store.state.username === ''" @click="simplePrompt">请登录</a>
                         <modal ref="modal" @receive="modal"></modal>
@@ -197,24 +202,24 @@ a:hover{
     z-index: 9999;
 }
 .zbt-nav .headerbg{
-    position:absolute;
-    left:140px;
-    top:0px;
-    height:94px;
-    width: 80%;
+  position:absolute;
+  left:140px;
+  top:0px;
+  height:94px;
+  width: 80%;
 }
 .nav-collapse{
-    width:800px;
-    display:flex;
+  width:800px;
+  display:flex;
 }
 .nav-collapse .collapse-title{
-    width:366px;
-    padding-top:11px;
-    padding-left:16px;
+  width:366px;
+  padding-top:11px;
+  padding-left:16px;
 }
 .nav-collapse p{
-    font-size:30px;
-    font-weight:bolder;
+  /*font-size:30px;*/
+  /*font-weight:bolder;*/
 }
 .zbt-nav .mainTitle{
   position: absolute;
@@ -223,13 +228,13 @@ a:hover{
   font-size: 28px;
 }
 .list{
-    margin-left:43px;
+  margin-left:43px;
 }
 .search{
-    width:196px;
-    height:32px;
-    border-radius:5px;
-    margin-right:260px;
+  width:196px;
+  height:32px;
+  border-radius:5px;
+  margin-right:260px;
 }
 .user{
   display:flex;
@@ -259,9 +264,14 @@ a:hover{
   width:100%;
 }
 .username{
-    position:absolute;
-    top:56px;
-    right:42px;
+  text-align: left;
+  position:absolute;
+  top:0;
+  right:-26px;
+  font-size: 14px;
+}
+.username a:hover{
+  color:#f00;
 }
 .user a{
   font-size:16px;
@@ -279,57 +289,58 @@ a:hover{
   border-radius: 20px;
 }
 .user p{
-  margin-top:6px;
+  /*margin-top:6px;*/
 }
 .user .userPic{
-    width:60px;
-    height:60px;
-    border-radius:50%;
-    overflow:hidden;
-    position: absolute;
-    top: 0px;
-    right: 86px;
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  overflow:hidden;
+  position: absolute;
+  top: 14px;
+  right: 130px;
 }
 .user .userPic img{
-    width:100%;
+  width:100%;
 }
 .user_bn{
-    position:relative;
-    width: 155px;
-    height: 84px;
-    margin-top: -50px;
+  /*border: 1px solid #000;*/
+  position:relative;
+  width: 200px;
+  height: 84px;
+  margin-top: -56px;
 }
 .userhover{
-    width:160px;
-    height:52px;
-    background:#ddd;
-    position:absolute;
-    top:84px;
-    right:34px;
-    z-index:200;
-    border-radius:20px;
-    display:none;
+  width:160px;
+  height:52px;
+  background:#ddd;
+  position:absolute;
+  top:84px;
+  right:34px;
+  z-index:200;
+  border-radius:20px;
+  display:none;
 }
 .user_bn:hover .userhover{
-    display:block;
+  display:block;
 }
 .usermine{
-    font-size:16px;
-    position:absolute;
-    top:14px;
-    right:98px;
+  font-size:16px;
+  position:absolute;
+  top:14px;
+  right:98px;
 }
 .logOut{
-    font-size:16px;
-    position:absolute;
-    top:14px;
-    right:27px;
-    cursor: pointer;
+  /*font-size:16px;*/
+  /*position:absolute;*/
+  /*top:14px;*/
+  /*right:27px;*/
+  /*cursor: pointer;*/
 }
 .usermine:hover{
-    color:#f00;
+  color:#f00;
 }
 .logOut:hover{
-    color:#f00;
+  color:#f00;
 }
 </style>
