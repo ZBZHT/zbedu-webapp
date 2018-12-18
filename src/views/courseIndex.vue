@@ -529,53 +529,53 @@ hr{
 }
 
 .courseIndex .pageination_align {
-            text-align: center
-        }
+    text-align: center
+}
 
-        .courseIndex .pageination {
-            color: #48576a;
-            font-size: 12px;
-            display: inline-block;
-            user-select: none;
-        }
+.courseIndex .pageination {
+    color: #48576a;
+    font-size: 12px;
+    display: inline-block;
+    user-select: none;
+}
 
-        .courseIndex .pagination_page {
-            padding: 0 4px;
-            border: 1px solid #d1dbe5;
-            border-right: 0;
-            background: #fff;
-            font-size: 13px;
-            min-width: 28px;
-            height: 28px;
-            line-height: 28px;
-            cursor: pointer;
-            box-sizing: border-box;
-            text-align: center;
-            float: left;
-            margin-right:5px;
-            border-radius:5px;
-        }
+.courseIndex .pagination_page {
+    padding: 0 4px;
+    border: 1px solid #d1dbe5;
+    border-right: 0;
+    background: #fff;
+    font-size: 13px;
+    min-width: 28px;
+    height: 28px;
+    line-height: 28px;
+    cursor: pointer;
+    box-sizing: border-box;
+    text-align: center;
+    float: left;
+    margin-right:5px;
+    border-radius:5px;
+}
 
-        .courseIndex .pagination_page_right {
-            border-right: 1px solid #d1dbe5;
-        }
+.courseIndex .pagination_page_right {
+    border-right: 1px solid #d1dbe5;
+}
 
-        .courseIndex .pagination_page:hover {
-            color: #e4393c;
-        }
+.courseIndex .pagination_page:hover {
+    color: #e4393c;
+}
 
-        .courseIndex .disabled {
-            color: #e4e4e4 !important;
-            background-color: #fff;
-            cursor: not-allowed;
-        }
+.courseIndex .disabled {
+    color: #e4e4e4 !important;
+    background-color: #fff;
+    cursor: not-allowed;
+}
 
-        .courseIndex .pagination_page_active {
-          border-color: #e4393c;
-          background-color: #e4393c;
-          color: #fff !important;;
-          cursor: default;
-        }
+.courseIndex .pagination_page_active {
+  border-color: #e4393c;
+  background-color: #e4393c;
+  color: #fff !important;;
+  cursor: default;
+}
 
 .courseIndex .best-class {
   width: 960px;

@@ -599,4 +599,8 @@
   .CMS_cont .block .el-button {
     float: left;
   }
+  .CMS_cont .footer .footer-bigbox{
+    bottom:0;
+    position: fixed;
+  }
 </style>

@@ -30,13 +30,18 @@
                             <div class="userPic" v-if="$store.state.username !== ''">
                                 <img src="../../assets/imgs/user.png">
                             </div>
-                            <div class="username" v-if="$store.state.username !== ''">
-                              <a v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'" :value="$store.state.username"></a>
-                              <p class="logOut">待考试</p>
-                              <p class="logOut">待实训</p>
-                              <p class="logOut" @click="logOut">注销</p>
-                            </div>
                         </router-link>
+                        <div class="username" v-if="$store.state.username !== ''">
+                          <a @click="clickName" v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'"
+                             :value="$store.state.username"></a>
+                          <el-badge :value="waitTestData" class="item">
+                            <p class="waitDo" @click="clickWaitText">待考试</p>
+                          </el-badge>
+                          <el-badge :value="3" class="item">
+                            <p class="waitDo" @click="clickWaitExer">待实训</p>
+                          </el-badge>
+                          <p class="logOut" @click="logOut">注销</p>
+                        </div>
                         <!--<div class="userhover" v-if="$store.state.username !== ''">-->
                             <!--<router-link :to="{path:'/teacherCMS'}">-->
                                 <!--<span class="usermine">我的</span>-->
@@ -79,11 +84,12 @@ export default {
       currentNavData: '',
       url:'',
       userId:'',
-      mainTitle:''
+      mainTitle:'',
+      waitTestData: 0
     }
   },
   mounted(){
-
+      this.getWaitTestData()
       /*页面挂载获取cookie，如果存在username的cookie，则不需登录*/
 
         setTimeout(function(){
@@ -115,13 +121,36 @@ export default {
         }
   },
   methods: {
+      //    获取待考试数目
+      getWaitTestData () {
+        axios.get("/readTestQuestionInfo/stuToTestData", {
+          params: {
+            user: this.user,
+          }
+        }).then((res) => {
+          this.waitTestData = res.data.length
+//          console.log(res.data.length)
+        });
+      },
+      //    点击名字跳转我的中心
+      clickName () {
+        this.$router.push('/teacherCMS')
+      },
+      //    点击待考试
+      clickWaitText () {
+        this.$router.push('/test')
+      },
+      //    点击待实训
+      clickWaitExer () {
+        this.$router.push('/exerciseCenter')
+      },
+      //    撤销
       logOut(){
           /*删除cookie*/
         this.$store.commit('username','');
         this.$store.commit('userType','');
         this.$store.commit('userTypeC','');
         this.$store.commit('testCode',0);
-        this.$router.push('/');
            axios({
               method: 'post',
               url: '/api/user/logout',
@@ -135,6 +164,7 @@ export default {
                       this.nickName = '';
                   }
                 });
+        this.$router.push('/');
 
       },
       prompt: function(message, title, callback, options) {
@@ -268,21 +298,28 @@ a:hover{
   position:absolute;
   top:0;
   right:-26px;
+  font-size: 12px;
+}
+.username a{
   font-size: 14px;
 }
 .username a:hover{
   color:#f00;
 }
 .user a{
-  font-size:16px;
-  color:inherit;
-  /*background: pink;*/
   display: inline-block;
-  height: 23px;
   width: 140px;
-  /*text-align: right;*/
   margin-top:5px;
-
+  height:25px;
+}
+.el-badge {
+  display: block;
+  left: -96px;
+}
+.username .el-badge__content{
+  height: 16px;
+  line-height: 16px;
+  padding: 0 4px;
 }
 .user .login{
   border: 1px solid rgb(106,21,24);
@@ -299,45 +336,28 @@ a:hover{
   position: absolute;
   top: 14px;
   right: 130px;
+  z-index: 1;
 }
 .user .userPic img{
   width:100%;
 }
 .user_bn{
-  /*border: 1px solid #000;*/
-  position:relative;
+  position: relative;
   width: 200px;
-  height: 84px;
+  height: 91px;
   margin-top: -56px;
+  box-shadow: 0 0 10px 2px #ccc;
 }
-.userhover{
-  width:160px;
-  height:52px;
-  background:#ddd;
-  position:absolute;
-  top:84px;
-  right:34px;
-  z-index:200;
-  border-radius:20px;
-  display:none;
-}
-.user_bn:hover .userhover{
-  display:block;
-}
-.usermine{
-  font-size:16px;
-  position:absolute;
-  top:14px;
-  right:98px;
+.waitDo{
+  position: relative;
+  right: -95px;
+  margin-bottom:3px;
+  cursor: pointer;
 }
 .logOut{
-  /*font-size:16px;*/
-  /*position:absolute;*/
-  /*top:14px;*/
-  /*right:27px;*/
-  /*cursor: pointer;*/
+  cursor: pointer;
 }
-.usermine:hover{
+.waitDo:hover{
   color:#f00;
 }
 .logOut:hover{

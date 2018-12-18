@@ -4,8 +4,11 @@
       <navgation-head></navgation-head>
     </div>
     <div class="newCourse-content">
-      <el-row>
-        <el-col :span="6">
+      <div class="findTree" @mouseover="showTree" @mouseout="disTree">
+        <span class="showTree">
+          <i class="el-icon-d-arrow-right icon-right"></i>
+        </span>
+        <div class="oTree" v-show="showTreeData === 1">
           <el-tree
             node-key="courseId"
             :props="defaultProps"
@@ -15,202 +18,203 @@
             highlight-current
             ref="vuetree"
             @node-click="handleNodeClick"></el-tree>
-        </el-col>
+        </div>
+      </div>
 
-        <el-col :span="18">
-          <!--教学中心-->
-          <div>
-            <p class="exerP">{{noTree.label}}</p>
 
-            <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
+      <div class="oCourse" id="oCourse">
+        <!--教学中心-->
+        <div>
+          <p class="exerP">{{noTree.label}}</p>
 
-              <!--简介-->
-              <el-tab-pane label="本节简介" :name="descTab">
-                <div class="courseDescribe" >
-                  <p class="title">课程简介：</p>
-                  <p class="desc">{{ noTree.describe }}</p>
+          <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
+
+            <!--简介-->
+            <el-tab-pane label="本节简介" :name="descTab">
+              <div class="courseDescribe" >
+                <p class="title">课程简介：</p>
+                <p class="desc">{{ noTree.describe }}</p>
+              </div>
+            </el-tab-pane>
+
+            <!--教材-->
+            <el-tab-pane label="本节教材">
+              <div id="teachingBook">
+                <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
+                <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
+                <div id="teachingBookImg" v-for="(item,index) in teachingBooklists">
+                  <img class="teachingBookImg" :src="item.img">
                 </div>
-              </el-tab-pane>
+              </div>
 
-              <!--教材-->
-              <el-tab-pane label="本节教材">
-                <div id="teachingBook">
-                  <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
-                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
-                  <div id="teachingBookImg" v-for="(item,index) in teachingBooklists">
-                    <img class="teachingBookImg" :src="item.img">
+              <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
+
+            </el-tab-pane>
+
+            <!--课件-->
+            <el-tab-pane label="教学课件" :name="descTab1">
+              <div id="courseppt">
+                <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
+                <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
+                <div class="courseImg" v-for="(item,index) in lists" v-show="index == page-1" @mouseenter="mousewheel(index)">
+                  <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">-->
+                  <img class="coursepptImg" :src="item.img">
+                  <div class="pptPrev" @click="newPageUp(index)"></div>
+                  <div class="pptNext" @click="newpageDown(index+2)"></div>
+                </div>
+
+                <ppt-slides
+                  :total="total"
+                  :size="size"
+                  :page="page"
+                  :changge="pageFn">
+                </ppt-slides>
+              </div>
+              <el-button type="info" round @click="appFullScreen(currpage)">全屏显示</el-button>
+
+            </el-tab-pane>
+
+            <!--微课-->
+            <el-tab-pane label="教学微课" :name="descTab2">
+              <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
+              <div>
+                <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="videoAdr + this.videoPath + noTree.videoTitle[0].videoTitle">
+                  <!--<video id="video-box" controls @click="videostop">-->
+                </video>
+              </div>
+            </el-tab-pane>
+
+            <!--工作页-->
+            <el-tab-pane label="工作页">
+              <div id="courseWorkPage">
+                <!--<p class="devDownload" v-show="noTree.workPage"></p>-->
+                <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>-->
+                <div id="courseWorkPageImg" v-for="(item,index) in courseWorkPagelists">
+                  <img class="teachingBookImg" :src="item.img">
+                </div>
+              </div>
+              <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
+
+            </el-tab-pane>
+
+            <!--二维动画-->
+            <el-tab-pane label="flash动画">
+              <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
+              <div>
+                <video id="flash2d" autoplay controls="controls" controlslist="nodownload" @click="flash2d" :src="videoAdr + this.videoPath + noTree.flash2d">
+                </video>
+              </div>
+            </el-tab-pane>
+
+            <!--课后作业-->
+            <el-tab-pane label="课后作业">
+              <div class="homework-box">
+                <div class="homework" v-for="(item,index) in homeworkData">
+                  <p class="homeworkTitle">{{index + 1}}. {{item.desc}}</p>
+                  <p class="homeworkDesc" v-for="(item2,index2) in item.options">{{item2}}</p>
+                  <span class="homework_Answer">正确答案：</span>
+                  <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
+                </div>
+              </div>
+              <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
+            </el-tab-pane>
+
+            <!--评论-->
+            <el-tab-pane label="课程评价">
+              <div class="appraise-box">
+                <p class="appraiseTitle">全部评价</p>
+                <hr>
+                <p v-show="appraiseContent.appraiseMsg.length == 0">暂无评价</p>
+                <div class="showAppraise" v-for="(item,index) in appraiseContent.appraiseMsg">
+                  <div class="AppraiseMsg">
+                    <p class="AppraiseUser">{{item.user}}</p>
+                    <div class="AppraiseStar">
+                      <el-rate
+                        v-model="item.appShowStar"
+                        disabled
+                        show-score
+                        text-color="#ff9900"
+                        score-template="{value}">
+                      </el-rate>
+                    </div>
                   </div>
-                </div>
-
-                <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
-
-              </el-tab-pane>
-
-              <!--课件-->
-              <el-tab-pane label="教学课件" :name="descTab1">
-                <div id="courseppt">
-                  <!--<p class="devDownload" v-show="noTree.teachingMaterial"></p>-->
-                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingMaterial" class="pdf-box" type="application/pdf"></embed>-->
-                  <div class="courseImg" v-for="(item,index) in lists" v-show="index == page-1" @mouseenter="mousewheel(index)">
-                    <!--<div class="courseImg" v-for="(item,index) in lists" v-if="index == page-1">-->
-                    <img class="coursepptImg" :src="item.img">
-                    <div class="pptPrev" @click="newPageUp(index)"></div>
-                    <div class="pptNext" @click="newpageDown(index+2)"></div>
+                  <div class="AppraiseText">
+                    {{item.text}}
                   </div>
-
-                  <ppt-slides
-                    :total="total"
-                    :size="size"
-                    :page="page"
-                    :changge="pageFn">
-                  </ppt-slides>
-                </div>
-                <el-button type="info" round @click="appFullScreen(currpage)">全屏显示</el-button>
-
-              </el-tab-pane>
-
-              <!--微课-->
-              <el-tab-pane label="教学微课" :name="descTab2">
-                <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
-                <div>
-                  <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="videoAdr + this.videoPath + noTree.videoTitle[0].videoTitle">
-                    <!--<video id="video-box" controls @click="videostop">-->
-                  </video>
-                </div>
-              </el-tab-pane>
-
-              <!--工作页-->
-              <el-tab-pane label="工作页">
-                <div id="courseWorkPage">
-                  <!--<p class="devDownload" v-show="noTree.workPage"></p>-->
-                  <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>-->
-                  <div id="courseWorkPageImg" v-for="(item,index) in courseWorkPagelists">
-                    <img class="teachingBookImg" :src="item.img">
-                  </div>
-                </div>
-                <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
-
-              </el-tab-pane>
-
-              <!--二维动画-->
-              <el-tab-pane label="flash动画">
-                <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
-                <div>
-                  <video id="flash2d" autoplay controls="controls" controlslist="nodownload" @click="flash2d" :src="videoAdr + this.videoPath + noTree.flash2d">
-                  </video>
-                </div>
-              </el-tab-pane>
-
-              <!--课后作业-->
-              <el-tab-pane label="课后作业">
-                <div class="homework-box">
-                  <div class="homework" v-for="(item,index) in homeworkData">
-                    <p class="homeworkTitle">{{index + 1}}. {{item.desc}}</p>
-                    <p class="homeworkDesc" v-for="(item2,index2) in item.options">{{item2}}</p>
-                    <span class="homework_Answer">正确答案：</span>
-                    <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
-                  </div>
-                </div>
-                <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
-              </el-tab-pane>
-
-              <!--评论-->
-              <el-tab-pane label="课程评价">
-                <div class="appraise-box">
-                  <p class="appraiseTitle">全部评价</p>
+                  <div class="AppraiseTime">{{item.date}}</div>
                   <hr>
-                  <p v-show="appraiseContent.appraiseMsg.length == 0">暂无评价</p>
-                  <div class="showAppraise" v-for="(item,index) in appraiseContent.appraiseMsg">
-                    <div class="AppraiseMsg">
-                      <p class="AppraiseUser">{{item.user}}</p>
-                      <div class="AppraiseStar">
-                        <el-rate
-                          v-model="item.appShowStar"
-                          disabled
-                          show-score
-                          text-color="#ff9900"
-                          score-template="{value}">
-                        </el-rate>
-                      </div>
-                    </div>
-                    <div class="AppraiseText">
-                      {{item.text}}
-                    </div>
-                    <div class="AppraiseTime">{{item.date}}</div>
-                    <hr>
 
-                    <div class="showReplyClass">
-                      <div class="showReplyMsg">
-                        <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">【{{item.user}}】老师:</p>
-                        <p class="showReplyText">{{item.replyText}}</p>
-                        <p class="AppraiseTime">{{item.replyDate}}</p>
-                      </div>
-                      <div class="replyEventButtons" v-show="userSession == 1">
-                        <el-button size="small" type="primary" @click="showReply(index)">
-                          回复
+                  <div class="showReplyClass">
+                    <div class="showReplyMsg">
+                      <p class="AppraiseUser" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">【{{item.user}}】老师:</p>
+                      <p class="showReplyText">{{item.replyText}}</p>
+                      <p class="AppraiseTime">{{item.replyDate}}</p>
+                    </div>
+                    <div class="replyEventButtons" v-show="userSession == 1">
+                      <el-button size="small" type="primary" @click="showReply(index)">
+                        回复
+                      </el-button>
+                      <div class="replyEvent" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">
+                        <!--<el-button size="small" type="primary" @click="showReply(index)">-->
+                        <!--修改回复-->
+                        <!--</el-button>-->
+                        <el-button size="small" @click="deleteReply(index)">
+                          删除回复
                         </el-button>
-                        <div class="replyEvent" v-show="appraiseContent.appraiseMsg[index].replyText != '' ">
-                          <!--<el-button size="small" type="primary" @click="showReply(index)">-->
-                          <!--修改回复-->
-                          <!--</el-button>-->
-                          <el-button size="small" @click="deleteReply(index)">
-                            删除回复
-                          </el-button>
-                        </div>
                       </div>
+                    </div>
 
-                      <div v-show="replyShow == index">
-                        <textarea autofocus class="replyText" type="text" v-model="replyText" />
-                        <div class="replyButtons">
-                          <el-button type="success" size="small" round @click="submitReply(index)">确定</el-button>
-                          <el-button size="small" round @click="cancelReply(index)">取消</el-button>
-                        </div>
-
+                    <div v-show="replyShow == index">
+                      <textarea autofocus class="replyText" type="text" v-model="replyText" />
+                      <div class="replyButtons">
+                        <el-button type="success" size="small" round @click="submitReply(index)">确定</el-button>
+                        <el-button size="small" round @click="cancelReply(index)">取消</el-button>
                       </div>
 
                     </div>
-                  </div>
-
-                  <p class="appraiseTitle">我要评价</p>
-                  <div class="IwantAppraise">
-
-                    <div class="block">
-                      <span class="demonstration">综合评价</span>
-                      <el-rate
-                        v-model="appraiseStar.value1"
-                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                      </el-rate>
-                    </div>
-                    <textarea class="AppraiseNowText" type="text" v-model="text"/>
-                  </div>
-
-                  <div class="shopList">
-                    <div class="block">
-                      <span class="demonstration">教学内容</span>
-                      <el-rate
-                        v-model="appraiseStar.value2"
-                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                      </el-rate>
-                    </div>
-                    <div class="block">
-                      <span class="demonstration">任课老师</span>
-                      <el-rate
-                        v-model="appraiseStar.value3"
-                        :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
-                      </el-rate>
-                    </div>
 
                   </div>
-
-                  <el-button type="success" round @click="submitComments()">提交评论</el-button>
                 </div>
-              </el-tab-pane>
-            </el-tabs>
+
+                <p class="appraiseTitle">我要评价</p>
+                <div class="IwantAppraise">
+
+                  <div class="block">
+                    <span class="demonstration">综合评价</span>
+                    <el-rate
+                      v-model="appraiseStar.value1"
+                      :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                    </el-rate>
+                  </div>
+                  <textarea class="AppraiseNowText" type="text" v-model="text"/>
+                </div>
+
+                <div class="shopList">
+                  <div class="block">
+                    <span class="demonstration">教学内容</span>
+                    <el-rate
+                      v-model="appraiseStar.value2"
+                      :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                    </el-rate>
+                  </div>
+                  <div class="block">
+                    <span class="demonstration">任课老师</span>
+                    <el-rate
+                      v-model="appraiseStar.value3"
+                      :colors="['#99A9BF', '#F7BA2A', '#FF9900']">
+                    </el-rate>
+                  </div>
+
+                </div>
+
+                <el-button type="success" round @click="submitComments()">提交评论</el-button>
+              </div>
+            </el-tab-pane>
+          </el-tabs>
 
 
-          </div>
-        </el-col>
-      </el-row>
+        </div>
+      </div>
     </div>
 
     <div class="footer">
@@ -301,7 +305,8 @@
         videoPath:'',
         currCourse:[],
         appraiseIndex:[],
-        videoAdr: ''
+        videoAdr: '',
+        showTreeData: 0
       }
     },
     computed:{
@@ -548,6 +553,13 @@
       this.getComment(this.moutedHomeworkPath);
     },
     methods:{
+      //      展示树形
+      showTree () {
+        this.showTreeData = 1
+      },
+      disTree () {
+        this.showTreeData = 0
+      },
       //获取评论请求
       getComment(title){
         this.appraiseIndex = [];
@@ -1111,38 +1123,38 @@
       //从树形传值到tabs
       handleNodeClick(data,node) {
         // 点击获取树结构各节点组成路径
-        let url_1 = []
-        console.log(node)
-        let videoPath = ''
-        let pptPath = ''
-        let bookPath = ''
-        let workPath = ''
-        let flashPath = ''
-        if (node.parent.parent.parent.parent.label !== undefined) {
-          url_1.push(node.parent.parent.parent.parent.label)
-        }
-        if (node.parent.parent.parent.label !== undefined) {
-          url_1.push(node.parent.parent.parent.label)
-        }
-        if (node.parent.parent.label !== undefined) {
-          url_1.push(node.parent.parent.label)
-        }
-        if (node.parent.label !== undefined) {
-          url_1.push(node.parent.label)
-        }
-        if (node.label !== undefined) {
-          url_1.push(node.label)
-        }
-        videoPath = url_1.join('/') + '/' + data.videoTitle[0].videoTitle
-        bookPath = url_1.join('/') + '/' + data.teachingBook
-        pptPath = url_1.join('/') + '/' + data.teachingMaterial
-        workPath = url_1.join('/') + '/' + data.workPage
-        flashPath = url_1.join('/') + '/' + data.flash2d
-        console.log(videoPath)
-        console.log(bookPath)
-        console.log(pptPath)
-        console.log(workPath)
-        console.log(flashPath)
+//        let url_1 = []
+//        console.log(node)
+//        let videoPath = ''
+//        let pptPath = ''
+//        let bookPath = ''
+//        let workPath = ''
+//        let flashPath = ''
+//        if (node.parent.parent.parent.parent.label) {
+//          url_1.push(node.parent.parent.parent.parent.label)
+//        }
+//        if (node.parent.parent.parent.label) {
+//          url_1.push(node.parent.parent.parent.label)
+//        }
+//        if (node.parent.parent.label) {
+//          url_1.push(node.parent.parent.label)
+//        }
+//        if (node.parent.label) {
+//          url_1.push(node.parent.label)
+//        }
+//        if (node.label) {
+//          url_1.push(node.label)
+//        }
+//        videoPath = url_1.join('/') + '/' + data.videoTitle[0].videoTitle
+//        bookPath = url_1.join('/') + '/' + data.teachingBook
+//        pptPath = url_1.join('/') + '/' + data.teachingMaterial
+//        workPath = url_1.join('/') + '/' + data.workPage
+//        flashPath = url_1.join('/') + '/' + data.flash2d
+//        console.log(videoPath)
+//        console.log(bookPath)
+//        console.log(pptPath)
+//        console.log(workPath)
+//        console.log(flashPath)
 
 
         this.appAnswer = false;
@@ -1521,14 +1533,36 @@
     margin-top: 2px;
     margin-bottom:2px;
   }
-  .newCourse-content .newCourse-container{
+  .newCourse-container .newCourse-content {
     min-width:960px;
-  }
-  .newCourse-content{
     width:100%;
     margin:0 auto;
     margin-top:6px;
     margin-bottom:80px;
+    display: flex;
+  }
+  .newCourse-content .findTree{
+    width:1.5%;
+    height:100px;
+    margin-top: 100px;
+    box-shadow: 0 0 15px 8px #9f5355;
+  }
+  .newCourse-content .oTree{
+    width:250px;
+    position: absolute;
+    top: 190px;
+    z-index: 1;
+    overflow: auto;
+    max-height:768px;
+  }
+  .newCourse-content .icon-right{
+    line-height:100px;
+    color:#9f5355;
+    font-weight: bolder;
+  }
+  .newCourse-content .oCourse{
+    width:98.5%;
+    z-index: 0;
   }
   .newCourse-content .courseDescribe{
     width:80%;

@@ -6,19 +6,25 @@
     </div>
 
     <div class="e-content-tree">
-        <el-row  id="setHeight1">
-            <el-col :span="6">
-              <el-tree
-                node-key="id"
-                :default-expanded-keys="[courseId1,courseId2]"
-                :props="defaultProps"
-                :data="data"
-                highlight-current
-                ref="extree"
-                @node-click="handleNodeClick"></el-tree>
-            </el-col>
+        <div id="setHeight1">
+              <div class="findTree" @mouseover="showTree" @mouseout="disTree">
+                <span class="showTree" v-show="showTreeData === 0">
+                  <i class="el-icon-d-arrow-right icon-right"></i>
+                </span>
+                <div class="oTree" v-show="showTreeData === 1">
+                  <el-tree
+                    node-key="id"
+                    :default-expanded-keys="[courseId1,courseId2]"
+                    :props="defaultProps"
+                    :data="data"
+                    highlight-current
+                    ref="extree"
+                    @node-click="handleNodeClick">
+                  </el-tree>
+                </div>
+              </div>
 
-            <el-col :span="18" id="setHeight">
+            <div class="oCourse" id="setHeight">
                 <!--教学设备展示-->
                 <div v-show="is697">
                     <p class="exerP">{{exerLabel}}</p>
@@ -193,8 +199,8 @@
 
               </div>
 
-            </el-col>
-        </el-row>
+            </div>
+        </div>
     </div>
 
     <div class="footer">
@@ -236,6 +242,7 @@ export default {
       dialogTitle: '自定义故障',
       input1: '',
       editOnOffTrainIndex: '',
+      showTreeData: 0
     }
   },
   computed:{
@@ -250,6 +257,13 @@ export default {
     },
   },
   methods: {
+    //      展示树形
+    showTree () {
+      this.showTreeData = 1
+    },
+    disTree () {
+      this.showTreeData = 0
+    },
     // 警告信息提示
     warningMsg(msg) {
       this.$message({
@@ -367,7 +381,7 @@ export default {
 
     // 获取屏幕高度
     Train1() {
-      let hh = window.innerHeight - 185 - 44;
+      let hh = window.innerHeight - 185 - 64;
       let domHeight = document.getElementById("setHeight1");
 //      console.log(hh);
 //      console.log(domHeight.clientHeight);
@@ -711,7 +725,33 @@ export default {
     margin-top: 6px;
     margin-bottom: 80px;
   }
-
+  .e-content-tree #setHeight1{
+    width: 100%;
+    display: flex;
+  }
+  .e-content-tree .findTree{
+    width:1.5%;
+    height:100px;
+    margin-top: 100px;
+    box-shadow: 0 0 15px 8px #9f5355;
+  }
+  .e-content-tree .oTree{
+    width:250px;
+    position: absolute;
+    top: 82px;
+    z-index: 1;
+    overflow: auto;
+    max-height:768px;
+  }
+  .e-content-tree .icon-right{
+    line-height:100px;
+    color:#9f5355;
+    font-weight: bolder;
+  }
+  .e-content-tree .oCourse{
+    z-index: 0;
+    width:98.5%;
+  }
   .e-content-tree .exerP {
     font-size: 20px;
     margin-bottom: 20px;

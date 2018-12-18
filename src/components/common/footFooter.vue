@@ -30,7 +30,6 @@
     width: 100%;
     height: 44px;
     background-color: #000;
-    bottom:0;
   }
   .footer-box{
     color: #ddd;
