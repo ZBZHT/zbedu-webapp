@@ -4,21 +4,27 @@
       <navgation-head></navgation-head>
     </div>
     <div class="newCourse-content">
-      <div class="findTree" @mouseover="showTree" @mouseout="disTree">
-        <span class="showTree">
+      <div class="completeLeft" @mouseover="showTree" @mouseout="disTree">
+        <div class="findTree" v-show="showTreeData !== 1">
+          <span class="showTree">
           <i class="el-icon-d-arrow-right icon-right"></i>
         </span>
-        <div class="oTree" v-show="showTreeData === 1">
-          <el-tree
-            node-key="courseId"
-            :props="defaultProps"
-            :data="data"
-            accordion
-            :default-expanded-keys="[courseId1,courseId2]"
-            highlight-current
-            ref="vuetree"
-            @node-click="handleNodeClick"></el-tree>
         </div>
+        <transition enter-active-class="fadeIn" leave-active-class="fadeOut">
+          <div class="oTree animated" v-show="showTreeData === 1">
+            <p class="nail"></p>
+            <el-tree
+              node-key="courseId"
+              :props="defaultProps"
+              :data="data"
+              accordion
+              :default-expanded-keys="[courseId1,courseId2]"
+              highlight-current
+              ref="vuetree"
+              @node-click="handleNodeClick"></el-tree>
+          </div>
+        </transition>
+
       </div>
 
 
@@ -553,6 +559,9 @@
       this.getComment(this.moutedHomeworkPath);
     },
     methods:{
+//      fade () {
+//        document.getElementById("Tree").addClass('animated title')
+//      },
       //      展示树形
       showTree () {
         this.showTreeData = 1
@@ -1541,22 +1550,35 @@
     margin-bottom:80px;
     display: flex;
   }
-  .newCourse-content .findTree{
+  .newCourse-content .completeLeft{
     width:1.5%;
-    height:100px;
+    height:200px;
     margin-top: 100px;
+    /*border: 1px solid #000;*/
+  }
+  .newCourse-content .findTree{
+    width:100%;
+    height:100%;
     box-shadow: 0 0 15px 8px #9f5355;
   }
   .newCourse-content .oTree{
-    width:250px;
+    width:360px;
     position: absolute;
     top: 190px;
     z-index: 1;
     overflow: auto;
     max-height:768px;
   }
+  .newCourse-content .el-tree{
+    width:95%;
+  }
+  .newCourse-content .nail{
+    width:15px;
+    height:15px;
+    border: 3px solid #000;
+  }
   .newCourse-content .icon-right{
-    line-height:100px;
+    line-height:200px;
     color:#9f5355;
     font-weight: bolder;
   }

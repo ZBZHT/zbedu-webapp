@@ -11,6 +11,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import VueDND from 'awe-dnd'
 import VideoPlayer from 'vue-video-player'
+import animated from 'animate.css'
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
 require('videojs-flash')
@@ -20,6 +21,8 @@ Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.use(BootstrapVue);
 Vue.use(VueDND)
+Vue.use(animated);
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
