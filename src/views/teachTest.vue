@@ -1291,7 +1291,6 @@
 
   .teach_Test .leftBox .userPicFont {
     height: 19%;
-    padding-top: 94px;
     background: rgb(150,150,150);
   }
 

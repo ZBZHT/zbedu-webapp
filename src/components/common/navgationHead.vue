@@ -295,10 +295,11 @@ a:hover{
 }
 .username{
   text-align: left;
-  position:absolute;
-  top:0;
-  right:-26px;
+  position: absolute;
+  top: 0;
+  right: -3px;
   font-size: 12px;
+  width: 104px;
 }
 .username a{
   font-size: 14px;
@@ -308,13 +309,12 @@ a:hover{
 }
 .user a{
   display: inline-block;
-  width: 140px;
   margin-top:5px;
   height:25px;
 }
 .el-badge {
   display: block;
-  left: -96px;
+  left: -62px;
 }
 .username .el-badge__content{
   height: 16px;
@@ -324,6 +324,7 @@ a:hover{
 .user .login{
   border: 1px solid rgb(106,21,24);
   border-radius: 20px;
+  width: 140px;
 }
 .user p{
   /*margin-top:6px;*/
@@ -350,7 +351,7 @@ a:hover{
 }
 .waitDo{
   position: relative;
-  right: -95px;
+  right: -62px;
   margin-bottom:3px;
   cursor: pointer;
 }

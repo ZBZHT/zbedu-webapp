@@ -161,7 +161,7 @@ a:hover{
   display: flex;
   align-items: center;
   padding-left:22%;
-  padding-top: 40px;
+  padding-top: 33px;
   box-sizing: border-box;
 }
 .user_bn:hover .userhover{

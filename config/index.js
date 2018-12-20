@@ -18,7 +18,8 @@ module.exports = {
       "/readComments": 'http://192.168.0.251:8000',
       "/teacherCMS": 'http://192.168.0.251:8000',
       "/fileUpDown": 'http://192.168.0.251:8000',
-      "/readResource": 'http://192.168.0.251:8000'
+      "/readResource": 'http://192.168.0.251:8000',
+      "/trainManager": 'http://192.168.0.251:8000'
 
       // "/api": 'http://127.0.0.1:80' ,  //代理到开发服务器
       // "/readJson": 'http://127.0.0.1:80',

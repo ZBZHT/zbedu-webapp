@@ -6,201 +6,212 @@
     </div>
 
     <div class="e-content-tree">
-        <div id="setHeight1">
-              <div class="findTree" @mouseover="showTree" @mouseout="disTree">
-                <span class="showTree" v-show="showTreeData === 0">
-                  <i class="el-icon-d-arrow-right icon-right"></i>
-                </span>
-                <div class="oTree" v-show="showTreeData === 1">
-                  <el-tree
-                    node-key="id"
-                    :default-expanded-keys="[courseId1,courseId2]"
-                    :props="defaultProps"
-                    :data="data"
-                    highlight-current
-                    ref="extree"
-                    @node-click="handleNodeClick">
-                  </el-tree>
-                </div>
-              </div>
-
-            <div class="oCourse" id="setHeight">
-                <!--教学设备展示-->
-                <div v-show="is697">
-                    <p class="exerP">{{exerLabel}}</p>
-                    <el-tabs type="border-card">
-                        <el-tab-pane label="设备展示">
-                            <div class="exerEngImg" v-for="item in exerEngImg">
-                                <img :src=" '/resource/imgs/' + item.engImage">
-                            </div>
-                        </el-tab-pane>
-                        <el-tab-pane label="设备参数">
-                            <div class="exerEngRule">
-                                <p class="devDownload" v-show="exerEngRule"></p>
-                                <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
-                                    <param name="_Version" value="65539">
-                                    <param name="_ExtentX" value="20108">
-                                    <param name="_ExtentY" value="10866">
-                                    <param name="_StockProps" value="0">
-                                    <param name="SRC" value="teachingMaterial">
-                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
-                                    </object>
-                                </object>
-                            </div>
-                        </el-tab-pane>
-                        <el-tab-pane label="设备说明">设备说明</el-tab-pane>
-                    </el-tabs>
-                </div>
-
-                <!--实训中心设计-->
-                <div v-show="is926">
-                <p class="exerP">{{exerLabel}}</p>
-                    <el-tabs type="border-card">
-                        <el-tab-pane label="实训中心效果图">
-                            <div class="exerEngImg">
-                                <img :src=" '/resource/imgs/' + exerEngImg">
-                            </div>
-                        </el-tab-pane>
-                        <el-tab-pane label="实训中心配置">
-                            <div class="exerEngRule">
-                                <p class="devDownload" v-show="exerEngRule"></p>
-                                <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
-                                    <param name="_Version" value="65539">
-                                    <param name="_ExtentX" value="20108">
-                                    <param name="_ExtentY" value="10866">
-                                    <param name="_StockProps" value="0">
-                                    <param name="SRC" value="teachingMaterial">
-                                    <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
-                                    </object>
-                                </object>
-                            </div>
-                        </el-tab-pane>
-                    </el-tabs>
-                </div>
-
-              <!--实训实验设计-->
-              <div class="shiyan" v-show="is3000">
-                <p class="exerP">{{exerLabel}}</p>
-                <el-tabs type="border-card" class="shiyan-1">
-                  <el-tab-pane label="故障实验">
-
-                    <el-table
-                      :data="tableData"
-                      max-height="470"
-                      style="width: 100%">
-                      <el-table-column label="序号" type="index" width="150">
-                      </el-table-column>
-                      <el-table-column property="name" label="故障名称" width="400">
-                      </el-table-column>
-                      <el-table-column label="操作">
-                        <template slot-scope="scope">
-                          <el-button size="mini" type="danger"
-                                     v-show="scope.row.onOff === 'off'"
-                                     @click="openTrain(scope.$index, scope.row)">打开
-                          </el-button>
-                          <el-button size="mini" type="success"
-                                     v-show="scope.row.onOff === 'on'"
-                                     @click="closeTrain(scope.$index, scope.row)">关闭
-                          </el-button>
-                          <el-button size="mini" type="success"
-                                     @click="editOnOffTrain(scope.$index, scope.row)">编辑
-                          </el-button>
-                        </template>
-                      </el-table-column>
-                    </el-table>
-
-                  </el-tab-pane>
-                  <el-tab-pane label="自定义故障" class="tab-train">
-                    <el-table
-                      :data="tableData1"
-                      style="width: 85%">
-                      <el-table-column label="序号" type="index" width="50">
-                      </el-table-column>
-                      <el-table-column property="userTrainName" label="故障别名" width="180">
-                      </el-table-column>
-                      <el-table-column label="故障名">
-                        <template slot-scope="scope">
-                          <span v-for="item in scope.row.children">
-                            {{item.name}}
-                          </span>
-                        </template>
-                      </el-table-column>
-                      <el-table-column label="操作" width="260">
-                        <template slot-scope="scope">
-                          <el-button size="mini" type="danger"
-                                     v-show="scope.row.onOff === 'off'"
-                                     @click="openUserTrain(scope.$index, scope.row)">打开
-                          </el-button>
-                          <el-button size="mini" type="success"
-                                     v-show="scope.row.onOff === 'on'"
-                                     @click="closeUserTrain(scope.$index, scope.row)">关闭
-                          </el-button>
-                          <el-button size="mini" type="success"
-                                     @click="editTrain(scope.$index, scope.row)">编辑
-                          </el-button>
-                          <el-button size="mini" type="danger"
-                                     @click="deleteUserTrain(scope.$index, scope.row)">删除
-                          </el-button>
-                        </template>
-                      </el-table-column>
-                    </el-table>
-
-                    <el-button type="success" class="but-addTrain"
-                               @click="dialogVisible = true">添加故障
-                    </el-button>
-                  </el-tab-pane>
-
-                  <!--添加故障弹窗-->
-                  <el-dialog
-                    title="自定义故障"
-                    id="userDialog"
-                    class="userDialog"
-                    :visible.sync="dialogVisible"
-                    width="630px"
-                    :before-close="handleClose">
-
-                    <el-input v-model="input"
-                              class="input-1"
-                              placeholder="请输入自定义故障别名"></el-input>
-
-                    <!--穿梭框-->
-                    <el-transfer class="shiyan-2"
-                                 filterable
-                                 v-model="userTrainValue"
-                                 :titles="[Source, input + ' 列表']"
-                                 :button-texts="['撤销', '选定']"
-                                 :props="{
-                                  key: 'num',
-                                  label: 'name'
-                                }"
-                                 :data="tableData">
-                    </el-transfer>
-
-                    <span slot="footer" class="dialog-footer">
-                    <el-button @click="dialogVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="addUserTrain()">确 定</el-button>
-                  </span>
-                  </el-dialog>
-
-                  <!--编辑开关故障弹窗-->
-                  <el-dialog
-                    title="请输入故障名称"
-                    :visible.sync="dialogVisible1"
-                    width="30%"
-                    :before-close="handleClose">
-                    <el-input v-model="input1" placeholder="请输入故障名称"></el-input>
-                    <span slot="footer" class="dialog-footer">
-                      <el-button @click="dialogVisible1 = false">取 消</el-button>
-                      <el-button type="primary" @click="edit1(input1)">确 定</el-button>
-                    </span>
-                  </el-dialog>
-
-                </el-tabs>
-
-              </div>
-
+      <div id="setHeight1">
+        <div class="completeLeft" @mouseover="showTree" @mouseout="disTree">
+          <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
+            <div class="findTree" v-show="showTreeData !== 1">
+              <span class="showTree" v-show="showTreeData === 0">
+                <i class="el-icon-d-arrow-right icon-right"></i>
+              </span>
             </div>
+          </transition>
+
+          <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
+            <div class="oTree animated" v-show="showTreeData === 1">
+              <el-tree
+                node-key="id"
+                :default-expanded-keys="[courseId1,courseId2]"
+                :props="defaultProps"
+                :data="data"
+                highlight-current
+                ref="extree"
+                @node-click="handleNodeClick">
+              </el-tree>
+            </div>
+          </transition>
         </div>
+
+        <div class="oCourse" id="setHeight">
+            <!--教学设备展示-->
+            <div v-show="is697">
+                <p class="exerP">{{exerLabel}}</p>
+                <el-tabs type="border-card">
+                    <el-tab-pane label="设备展示">
+                        <div class="exerEngImg" v-for="item in exerEngImg">
+                            <img :src=" '/resource/imgs/' + item.engImage">
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="设备参数">
+                        <div class="exerEngRule">
+                            <p class="devDownload" v-show="exerEngRule"></p>
+                            <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                <param name="_Version" value="65539">
+                                <param name="_ExtentX" value="20108">
+                                <param name="_ExtentY" value="10866">
+                                <param name="_StockProps" value="0">
+                                <param name="SRC" value="teachingMaterial">
+                                <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                </object>
+                            </object>
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="设备说明">设备说明</el-tab-pane>
+                </el-tabs>
+            </div>
+
+            <!--实训中心设计-->
+            <div v-show="is926">
+            <p class="exerP">{{exerLabel}}</p>
+                <el-tabs type="border-card">
+                    <el-tab-pane label="实训中心效果图">
+                        <div class="exerEngImg">
+                            <img :src=" '/resource/imgs/' + exerEngImg">
+                        </div>
+                    </el-tab-pane>
+                    <el-tab-pane label="实训中心配置">
+                        <div class="exerEngRule">
+                            <p class="devDownload" v-show="exerEngRule"></p>
+                            <object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" border="0">
+                                <param name="_Version" value="65539">
+                                <param name="_ExtentX" value="20108">
+                                <param name="_ExtentY" value="10866">
+                                <param name="_StockProps" value="0">
+                                <param name="SRC" value="teachingMaterial">
+                                <object :data="'/resource/pdf/' + exerEngRule" type="application/pdf" class="pdf-box">
+                                </object>
+                            </object>
+                        </div>
+                    </el-tab-pane>
+                </el-tabs>
+            </div>
+
+          <!--实训实验设计-->
+          <div class="shiyan" v-show="is3000">
+            <p class="exerP">{{exerLabel}}</p>
+            <el-tabs type="border-card" class="shiyan-1">
+              <el-tab-pane label="故障实验">
+
+                <el-table
+                  :data="tableData"
+                  max-height="470"
+                  style="width: 100%">
+                  <el-table-column label="序号" type="index" width="150">
+                  </el-table-column>
+                  <el-table-column property="name" label="故障名称" width="400">
+                  </el-table-column>
+                  <el-table-column label="操作">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="danger"
+                                 v-show="scope.row.onOff === 'off'"
+                                 @click="openTrain(scope.$index, scope.row)">打开
+                      </el-button>
+                      <el-button size="mini" type="success"
+                                 v-show="scope.row.onOff === 'on'"
+                                 @click="closeTrain(scope.$index, scope.row)">关闭
+                      </el-button>
+                      <el-button size="mini" type="success"
+                                 @click="editOnOffTrain(scope.$index, scope.row)">编辑
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+
+              </el-tab-pane>
+              <el-tab-pane label="自定义故障" class="tab-train">
+                <el-table
+                  :data="tableData1"
+                  style="width: 85%">
+                  <el-table-column label="序号" type="index" width="50">
+                  </el-table-column>
+                  <el-table-column property="userTrainName" label="故障别名" width="180">
+                  </el-table-column>
+                  <el-table-column label="故障名">
+                    <template slot-scope="scope">
+                      <span v-for="item in scope.row.children">
+                        {{item.name}}
+                      </span>
+                    </template>
+                  </el-table-column>
+                  <el-table-column label="操作" width="260">
+                    <template slot-scope="scope">
+                      <el-button size="mini" type="danger"
+                                 v-show="scope.row.onOff === 'off'"
+                                 @click="openUserTrain(scope.$index, scope.row)">打开
+                      </el-button>
+                      <el-button size="mini" type="success"
+                                 v-show="scope.row.onOff === 'on'"
+                                 @click="closeUserTrain(scope.$index, scope.row)">关闭
+                      </el-button>
+                      <el-button size="mini" type="success"
+                                 @click="editTrain(scope.$index, scope.row)">编辑
+                      </el-button>
+                      <el-button size="mini" type="danger"
+                                 @click="deleteUserTrain(scope.$index, scope.row)">删除
+                      </el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+
+                <el-button type="success" class="but-addTrain"
+                           @click="dialogVisible = true">添加故障
+                </el-button>
+              </el-tab-pane>
+
+              <!--添加故障弹窗-->
+              <el-dialog
+                title="自定义故障"
+                id="userDialog"
+                class="userDialog"
+                :visible.sync="dialogVisible"
+                width="630px"
+                :before-close="handleClose">
+
+                <el-input v-model="input"
+                          class="input-1"
+                          placeholder="请输入自定义故障别名"></el-input>
+
+                <!--穿梭框-->
+                <el-transfer class="shiyan-2"
+                             filterable
+                             v-model="userTrainValue"
+                             :titles="[Source, input + ' 列表']"
+                             :button-texts="['撤销', '选定']"
+                             :props="{
+                              key: 'num',
+                              label: 'name'
+                            }"
+                             :data="tableData">
+                </el-transfer>
+
+                <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="addUserTrain()">确 定</el-button>
+              </span>
+              </el-dialog>
+
+              <!--编辑开关故障弹窗-->
+              <el-dialog
+                title="请输入故障名称"
+                :visible.sync="dialogVisible1"
+                width="30%"
+                :before-close="handleClose">
+                <el-input v-model="input1" placeholder="请输入故障名称"></el-input>
+                <span slot="footer" class="dialog-footer">
+                  <el-button @click="dialogVisible1 = false">取 消</el-button>
+                  <el-button type="primary" @click="edit1(input1)">确 定</el-button>
+                </span>
+              </el-dialog>
+
+            </el-tabs>
+
+          </div>
+
+          <!--EX360整车实训-->
+          <div v-show="is3102">
+            <vehicle-training></vehicle-training>
+          </div>
+        </div>
+     </div>
     </div>
 
     <div class="footer">
@@ -212,6 +223,7 @@
 <script>
 import axios from 'axios'
 import navgationHead from '@/components/common/navgationHead'
+import vehicleTraining from '@/components/exerciseCenter/vehicleTraining'
 import footFooter from '@/components/common/footFooter'
 
 export default {
@@ -227,6 +239,7 @@ export default {
       is697: true,
       is926: false,
       is3000: false,
+      is3102: false,
       courseId1: 1000,
       courseId2: 1100,
       keyId: '',
@@ -626,7 +639,7 @@ export default {
     },
     handleNodeClick(data) {
       //右侧显示不同页面
-      //console.log(data);
+      console.log(data);
 //      console.log(this.$refs.extree);
 
       var id = data.id;
@@ -636,26 +649,34 @@ export default {
         this.is697 = true;
         this.is926 = false;
         this.is3000 = false;
+        this.is3102 = false;
       } else if (id.toString() >= '2000' && id.toString() < '3000') {
         //console.log("aaaa")
         //console.log(id.toString())
         this.is697 = false;
         this.is3000 = false;
         this.is926 = true;
+        this.is3102 = false;
       } else if (id.toString() >= '3000' && id.toString() < '4000') {
-        this.is697 = false;
-        this.is926 = false;
-        this.is3000 = true;
+        if (id.toString() !== '3102') {
+          this.is697 = false;
+          this.is926 = false;
+          this.is3000 = true;
+          this.is3102 = false;
+        } else {
+          this.is697 = false;
+          this.is926 = false;
+          this.is3000 = false;
+          this.is3102 = true;
+        }
         if (id.toString() >= '3101' && id.toString() < '3200') {
           this.getTrainData(data);
         }
       }
       //刷新保存数据
-      if (data.children) {
-
-      } else {
-        this.$store.commit('exerciseData', data)
-      }
+      this.$store.commit('exerciseData', data)
+      this.courseId1 = '';
+      this.courseId2 = '';
     }
 
   },
@@ -666,6 +687,7 @@ export default {
 
     //默认展开，标红
     var id = this.$store.state.exerciseData.id;
+    console.log('id',id)
     if(id >= 1000 && id < 2000){
         this.courseId1 = 1000;
         this.courseId2 = id;
@@ -680,7 +702,7 @@ export default {
       this.keyId = id;
     }
   },
-  components:{navgationHead,footFooter}
+  components:{navgationHead,vehicleTraining,footFooter}
 }
 </script>
 
@@ -729,24 +751,36 @@ export default {
     width: 100%;
     display: flex;
   }
-  .e-content-tree .findTree{
+  .e-content-tree .completeLeft{
     width:1.5%;
-    height:100px;
+    height:200px;
     margin-top: 100px;
+    /*border: 1px solid #000;*/
+  }
+  .e-content-tree .findTree{
+    width:100%;
+    height:100%;
     box-shadow: 0 0 15px 8px #9f5355;
+    border-radius: 0px 5px 5px 0px;
   }
   .e-content-tree .oTree{
-    width:250px;
+    width:300px;
     position: absolute;
-    top: 82px;
+    top: 80px;
     z-index: 1;
     overflow: auto;
-    max-height:768px;
+    max-height:668px;
   }
   .e-content-tree .icon-right{
-    line-height:100px;
+    line-height:200px;
     color:#9f5355;
     font-weight: bolder;
+  }
+  .e-content-tree .animated {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
   }
   .e-content-tree .oCourse{
     z-index: 0;

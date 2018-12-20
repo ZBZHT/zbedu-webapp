@@ -30,7 +30,6 @@
               @node-click="handleNodeClick"></el-tree>
           </div>
         </transition>
-
       </div>
 
       <div class="oCourse" id="oCourse">
