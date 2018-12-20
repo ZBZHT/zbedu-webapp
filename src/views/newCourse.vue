@@ -5,14 +5,20 @@
     </div>
     <div class="newCourse-content">
       <div class="completeLeft" @mouseover="showTree" @mouseout="disTree">
-        <div class="findTree" v-show="showTreeData !== 1">
-          <span class="showTree">
-          <i class="el-icon-d-arrow-right icon-right"></i>
-        </span>
-        </div>
-        <transition enter-active-class="fadeIn" leave-active-class="fadeOut">
-          <div class="oTree animated" v-show="showTreeData === 1">
-            <p class="nail"></p>
+        <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
+          <div class="findTree" v-show="showTreeData !== 1 || clickShow !== 1">
+            <span class="showTree">
+              <i class="el-icon-d-arrow-right icon-right"></i>
+            </span>
+          </div>
+        </transition>
+
+        <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
+          <div id="OTREE" class="oTree animated" v-show="showTreeData === 1 || clickShow === 1">
+            <!--<p class="nail" @click="clickNail">-->
+              <!--<i class="iconfont iconfont1">&#xe79f;</i>-->
+            <!--</p>-->
+            <!--<p v-drag>123</p>-->
             <el-tree
               node-key="courseId"
               :props="defaultProps"
@@ -26,7 +32,6 @@
         </transition>
 
       </div>
-
 
       <div class="oCourse" id="oCourse">
         <!--教学中心-->
@@ -312,7 +317,52 @@
         currCourse:[],
         appraiseIndex:[],
         videoAdr: '',
-        showTreeData: 0
+        showTreeData: 0,
+        clickShow: 0,
+        oTreePositionX: '',
+        oTreePositionY: '',
+        firstXY: 0
+      }
+    },
+    //    自定义拖动
+    directives:{
+      drag1(el){
+        el.onmousedown = function(e){
+          //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
+          var divx = e.clientX - document.getElementById('OTREE').offsetLeft;
+          var divy = e.clientY - document.getElementById('OTREE').offsetTop;
+          //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
+          document.onmousemove = function(e){
+            //获取移动后div的位置：鼠标位置-divx/divy
+            var l = e.clientX - divx;
+            var t = e.clientY - divy;
+            document.getElementById('OTREE').style.left=l+'px';
+            document.getElementById('OTREE').style.top=t+'px';
+          }
+          document.onmouseup = function(e){
+            document.onmousemove = null;
+            document.onmouseup = null;
+          }
+        }
+      },
+      drag(el){
+        el.onmousedown = function(e){
+          //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
+          var divx = e.clientX - document.getElementById('lll').offsetLeft;
+          var divy = e.clientY - document.getElementById('lll').offsetTop;
+          //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
+          document.onmousemove = function(e){
+            //获取移动后div的位置：鼠标位置-divx/divy
+            var l = e.clientX - divx;
+            var t = e.clientY - divy;
+            document.getElementById('lll').style.left=l+'px';
+            document.getElementById('lll').style.top=t+'px';
+          }
+          document.onmouseup = function(e){
+            document.onmousemove = null;
+            document.onmouseup = null;
+          }
+        }
       }
     },
     computed:{
@@ -559,12 +609,23 @@
       this.getComment(this.moutedHomeworkPath);
     },
     methods:{
+      //      钉子
+      clickNail () {
+        console.log(this.showTreeData)
+        if (this.clickShow === 0) {
+          this.clickShow = 1
+        } else {
+          this.clickShow = 0
+        }
+      },
 //      fade () {
 //        document.getElementById("Tree").addClass('animated title')
 //      },
       //      展示树形
       showTree () {
         this.showTreeData = 1
+//        document.getElementById('OTREE').style.left=0+'px';
+//        document.getElementById('OTREE').style.top=190+'px';
       },
       disTree () {
         this.showTreeData = 0
@@ -1560,6 +1621,7 @@
     width:100%;
     height:100%;
     box-shadow: 0 0 15px 8px #9f5355;
+    border-radius: 0px 5px 5px 0px;
   }
   .newCourse-content .oTree{
     width:360px;
@@ -1570,12 +1632,25 @@
     max-height:768px;
   }
   .newCourse-content .el-tree{
-    width:95%;
+    width:92%;
   }
   .newCourse-content .nail{
     width:15px;
     height:15px;
-    border: 3px solid #000;
+    /*border: 3px solid #000;*/
+    cursor: pointer;
+    position: absolute;
+    top:0;
+    right: 11px;
+  }
+  .newCourse-content .iconfont1{
+    font-size: 20px;
+  }
+  .newCourse-content .animated {
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
   }
   .newCourse-content .icon-right{
     line-height:200px;

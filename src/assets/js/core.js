@@ -368,5 +368,33 @@ module.exports = {
       k = k + 24 * 60 * 60 * 1000
     }
     return ee
+  },
+  splitFileName: function (text) {
+    var pattern = /\.{1}[a-zA-Z\d]{1,}$/
+    if (pattern.exec(text) !== null) {
+        return (text.slice(0, pattern.exec(text).index))
+    } else {
+        return text
+    }
+  },
+  quickSort: function (arr1) {
+    var quickSort1 = function (arr) {
+      if (arr.length <= 1) {
+          return arr
+      }
+      var pivotIndex = Math.floor(arr.length / 2)
+      var pivot = arr.splice(pivotIndex, 1)[0]
+      var left = []
+      var right = []
+      for (var i = 0; i < arr.length; i++) {
+          if ((arr[i]) < (pivot)) {
+              left.push(arr[i])
+          } else {
+              right.push(arr[i])
+          }
+      }
+      return quickSort1(left).concat([pivot], quickSort1(right))
+    }
+    return quickSort1(arr1)
   }
 }

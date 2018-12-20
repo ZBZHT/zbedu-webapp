@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd" >
+<!--
+2013-9-30: Created.
+-->
+<svg>
+<metadata>
+Created by iconfont
+</metadata>
+<defs>
+
+<font id="iconfont" horiz-adv-x="1024" >
+  <font-face
+    font-family="iconfont"
+    font-weight="500"
+    font-stretch="normal"
+    units-per-em="1024"
+    ascent="896"
+    descent="-128"
+  />
+    <missing-glyph />
+    
+    <glyph glyph-name="nail-fixed" unicode="&#59295;" d="M334.72 283.84L127.36 491.264l85.12 85.184L390.016 504.96l275.968 214.4-72.32 72.32L678.912 876.8l82.944-82.88 0.192 0.128L928 628.16l-0.192-0.256 82.944-82.944-85.12-85.184-72.32 72.256L638.848 256l71.488-177.408-85.12-85.184-207.488 207.36-255.36-255.296-82.944 82.944 255.36 255.36z"  horiz-adv-x="1024" />
+
+    
+
+
+  </font>
+</defs></svg>
