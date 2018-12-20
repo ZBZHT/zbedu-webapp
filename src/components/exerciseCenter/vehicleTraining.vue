@@ -7,7 +7,7 @@
   </div>
   <div class="trainingContent">
     <div class="highPressure" v-show="currPage === 0">
-      <img src="../../assets/imgs/9b6cc0fc6b19d0cd0007754244d5b2a1.png">
+      <img src="../../assets/imgs/vehicleTraining1.png">
     </div>
     <div class="airConditioning" v-show="currPage === 1">
 222
