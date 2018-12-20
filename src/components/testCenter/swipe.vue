@@ -1,7 +1,7 @@
 <template>
   <div class="slide-show" @mouseover="clearInv" @mouseout="runInv">
     <transition-group tag="ul" class='slide-ul' :name="name">
-      <li v-for="(item, index) in slides" :key="item" v-show="index===nowIndex">
+      <li v-for="(item, index) in slides" :key="index + 1" v-show="index===nowIndex">
         <a :href="item.href" :target="target">
           <img :src="url_before + item.src" alt="">
         </a>

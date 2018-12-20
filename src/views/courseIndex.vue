@@ -111,7 +111,7 @@ export default {
       bestClassData:'',
       pageData:'',
       bottomLeftData:'',
-      bottomRightData:'',
+      bottomRightData:[],
       bannerLeftData:'',
       imgArray:'',
       total:'',//总信息数
