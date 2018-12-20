@@ -56,7 +56,6 @@ a:hover{
 }
 .vehicleTraining{
   width:60%;
-  height:468px;
   margin:0 auto;
   border:1px solid #000;
   margin-top:40px;
