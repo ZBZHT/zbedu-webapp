@@ -29,9 +29,9 @@
 
 <script>
 import axios from 'axios'
-import navgationHead from '@/components/common/navgationHead'
-import navUl from '@/components/common/navUl'
-import footFooter_1 from '@/components/common/footFooter_1'
+import navgationHead from '../components/common/navgationHead'
+import navUl from '../components/common/navUl'
+import footFooter_1 from '../components/common/footFooter_1'
 
 export default {
   name: 'index',

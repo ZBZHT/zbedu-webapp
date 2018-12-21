@@ -26,14 +26,15 @@
                         </div>
                     </div>
                     <div class="user_bn" v-if="$store.state.username !== ''">
-                        <router-link :to="{path:'/teacherCMS'}">
+                        <router-link class="userPic1" :to="{path:'/teacherCMS'}">
                             <div class="userPic" v-if="$store.state.username !== ''">
                                 <img src="../../assets/imgs/user.png">
                             </div>
+                          <a class="username1" @click="clickName" v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'"
+                             :value="$store.state.username"></a>
                         </router-link>
                         <div class="username" v-if="$store.state.username !== ''">
-                          <a @click="clickName" v-text="$store.state.username+ '(' + $store.state.userTypeC + ')'"
-                             :value="$store.state.username"></a>
+
                           <el-badge :value="waitTestData" class="item">
                             <p class="waitDo" @click="clickWaitText">待考试</p>
                           </el-badge>
@@ -60,7 +61,7 @@
 
 <script>
 import axios from 'axios'
-import Modal from '@/components/common/Login';
+import Modal from '../../components/common/Login';
 import {setCookie,getCookie,delCookie} from '../../assets/js/cookie.js'
 import modalEventBind from '../../assets/js/ModalEventBind';
 import EventBus from '../../assets/js/EventBus';
@@ -294,12 +295,18 @@ a:hover{
   width:100%;
 }
 .username{
-  text-align: left;
   position: absolute;
-  top: 0;
-  right: -3px;
-  font-size: 12px;
+  text-align: left;
+  top: 12px;
+  left: 164px;
+  font-size: 14px;
   width: 104px;
+}
+.username >>> .el-badge__content.is-fixed {
+  top: 10px;
+}
+.username .waitDo {
+  right: -48px;
 }
 .username a{
   font-size: 14px;
@@ -335,8 +342,8 @@ a:hover{
   border-radius:50%;
   overflow:hidden;
   position: absolute;
-  top: 14px;
-  right: 130px;
+  top: 5px;
+  right: 150px;
   z-index: 1;
 }
 .user .userPic img{
@@ -344,10 +351,19 @@ a:hover{
 }
 .user_bn{
   position: relative;
-  width: 200px;
+  width: 250px;
   height: 91px;
-  margin-top: -56px;
+  margin-top: -62px;
   box-shadow: 0 0 10px 2px #ccc;
+}
+.user_bn .userPic1 {
+  display: block;
+  width: 140px;
+  text-align: center;
+}
+.user_bn .username1 {
+  text-align: center;
+  margin-top: 64px;
 }
 .waitDo{
   position: relative;
