@@ -34,7 +34,6 @@
                              :value="$store.state.username"></a>
                         </router-link>
                         <div class="username" v-if="$store.state.username !== ''">
-
                           <el-badge :value="waitTestData" class="item">
                             <p class="waitDo" @click="clickWaitText">待考试</p>
                           </el-badge>
@@ -298,7 +297,7 @@ a:hover{
   position: absolute;
   text-align: left;
   top: 12px;
-  left: 164px;
+  left: 184px;
   font-size: 14px;
   width: 104px;
 }
@@ -351,14 +350,14 @@ a:hover{
 }
 .user_bn{
   position: relative;
-  width: 250px;
+  width: 270px;
   height: 91px;
   margin-top: -62px;
   box-shadow: 0 0 10px 2px #ccc;
 }
 .user_bn .userPic1 {
   display: block;
-  width: 140px;
+  width: 180px;
   text-align: center;
 }
 .user_bn .username1 {

@@ -523,7 +523,7 @@
   import footFooter from '@/components/common/footFooter'
   import Modal from '@/components/testCenter/modal';
   import core from '../assets/js/core.js';
-  import navUser from '@/components/common/navUser';
+  import navUser from '../components/common/navUser';
 
   export default {
     name: 'teachTest',
@@ -1290,7 +1290,7 @@
   }
 
   .teach_Test .leftBox .userPicFont {
-    height: 19%;
+    height: 110px;
     background: rgb(150,150,150);
   }
 

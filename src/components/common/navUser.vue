@@ -1,28 +1,21 @@
 <template>
 <div class="user_bn">
-    <router-link :to="{path:'/teacherCMS'}">
+    <router-link class="userPic1" :to="{path:'/teacherCMS'}">
         <div class="userPic" v-if="nickName">
             <img src="../../assets/imgs/user.png">
         </div>
+      <a @click="clickName" v-text="nickName + '(' + userId + ')'" v-if="nickName" :value="nickName"></a>
     </router-link>
-        <div class="username" v-if="$store.state.username !== ''">
-          <a @click="clickName" v-text="nickName + '(' + userId + ')'" v-if="nickName" :value="nickName"></a>
-          <el-badge :value="waitTestData" class="item">
-            <p class="waitDo" @click="clickWaitText">待考试</p>
-          </el-badge>
-          <el-badge :value="3" class="item">
-            <p class="waitDo" @click="clickWaitExer">待实训</p>
-          </el-badge>
-          <p class="logOut" @click="logOut">注销</p>
-        </div>
 
-        <!--<div class="userhover">-->
-            <!--<router-link :to="{path:'/teacherCMS'}">-->
-                <!--<span class="usermine">我的</span>-->
-            <!--</router-link>-->
-            <!--<span :value="nickName" v-if="nickName" class="logOut" @click="logOut">注销</span>-->
-        <!--</div>-->
-
+    <div class="username" v-if="$store.state.username !== ''">
+      <el-badge :value="waitTestData" class="item">
+        <p class="waitDo" @click="clickWaitText">待考试</p>
+      </el-badge>
+      <el-badge :value="3" class="item">
+        <p class="waitDo" @click="clickWaitExer">待实训</p>
+      </el-badge>
+      <p class="logOut" @click="logOut">注销</p>
+    </div>
 </div>
 </template>
 
@@ -160,12 +153,17 @@ a:hover{
   /*position:relative;*/
   display: flex;
   align-items: center;
-  padding-left:22%;
-  padding-top: 33px;
+  padding-top: 18px;
   box-sizing: border-box;
 }
 .user_bn:hover .userhover{
     display:block;
+}
+.user_bn .userPic1 {
+  display: block;
+  width: 240px;
+  text-align: center;
+
 }
 .username{
   width:65%;
@@ -174,6 +172,10 @@ a:hover{
   /*top: -25px;*/
   /*right: -6%;*/
   text-align: left;
+}
+.username >>> .el-badge__content.is-fixed {
+  top: 10px;
+  right: 2px;
 }
 .username a:hover{
   color:#f00;
@@ -200,7 +202,7 @@ a:hover{
   border-radius:50%;
   overflow:hidden;
   z-index: 1;
-  margin-right:10px;
+  margin-left: 42px;
 }
 .user_bn .userPic img{
   width:100%;
