@@ -61,9 +61,11 @@ a:hover{
   margin-top:40px;
   text-align: left;
 }
-  .vehicleTraining .tabTitle{
-    display: inline-block;
-    width:5%;
-
-  }
+.vehicleTraining .tabTitle{
+  display: inline-block;
+  width:5%;
+}
+.vehicleTraining .highPressure{
+  width:100%;
+}
 </style>

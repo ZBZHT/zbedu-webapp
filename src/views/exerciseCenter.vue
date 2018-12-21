@@ -753,7 +753,7 @@ export default {
   }
   .e-content-tree .completeLeft{
     width:1.5%;
-    height:200px;
+    height:155px;
     margin-top: 100px;
     /*border: 1px solid #000;*/
   }
@@ -766,13 +766,13 @@ export default {
   .e-content-tree .oTree{
     width:300px;
     position: absolute;
-    top: 80px;
+    top: 100px;
     z-index: 1;
     overflow: auto;
     max-height:668px;
   }
   .e-content-tree .icon-right{
-    line-height:200px;
+    line-height:155px;
     color:#9f5355;
     font-weight: bolder;
   }
