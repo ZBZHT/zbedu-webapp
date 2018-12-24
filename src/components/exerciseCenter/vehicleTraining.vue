@@ -49,8 +49,11 @@
       <i class="iconfont iconfont1" v-show="whichGramShow === 1">&#xe60d;</i>
     </div>
   </div>
-  <div class="multimeterTruth" id="multimeterTruthID" v-drag>
-    <img class="coursepptImg" v-show="clickMultimeterData === 1" src="../../assets/imgs/multimeter.png">
+  <div class="multimeterTruth">
+    <img id="multimeterTruthID"
+         class="coursepptImg"
+         v-show="clickMultimeterData === 1"
+         src="../../assets/imgs/multimeter.png">
   </div>
   <div class="datagramTruth">
     <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
@@ -72,32 +75,53 @@ export default {
       whichShow: '',
       whichGramShow: '',
       clickMultimeterData: 0,
-      clickGramData: 0
+      clickGramData: 0,
+      dom:''
     }
   },
   //    自定义拖动
-  directives:{
-    drag(el){
-      el.onmousedown = function(e){
-        //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
-        var divx = e.clientX - document.getElementById('multimeterTruthID').offsetLeft;
-        var divy = e.clientY - document.getElementById('multimeterTruthID').offsetTop;
-        //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
-        document.onmousemove = function(e){
-          //获取移动后div的位置：鼠标位置-divx/divy
-          var l = e.clientX - divx;
-          var t = e.clientY - divy;
-          document.getElementById('multimeterTruthID').style.left=l+'px';
-          document.getElementById('multimeterTruthID').style.top=t+'px';
-        }
-        document.onmouseup = function(e){
-          document.onmousemove = null;
-          document.onmouseup = null;
-        }
-      }
-    }
-  },
+//  directives:{
+//    drag(el){
+//      el.onmousedown = function(e){
+//        //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
+//        var divx = e.clientX - document.getElementById('multimeterTruthID').offsetLeft;
+//        var divy = e.clientY - document.getElementById('multimeterTruthID').offsetTop;
+//        //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
+//        document.onmousemove = function(e){
+//          //获取移动后div的位置：鼠标位置-divx/divy
+//          var l = e.clientX - divx;
+//          var t = e.clientY - divy;
+//          document.getElementById('multimeterTruthID').style.left=l+'px';
+//          document.getElementById('multimeterTruthID').style.top=t+'px';
+//        }
+//        document.onmouseup = function(e){
+//          document.onmousemove = null;
+//          document.onmouseup = null;
+//        }
+//      }
+//      el.mouseup = e => {
+//        el.onmousemove = null
+//      }
+//    }
+//  },
   methods: {
+//    drop(ev)
+//    {
+//      ev.preventDefault();
+//      ev.target.appendChild(this.dom)
+//      console.log('drop',ev)
+//      console.log('drop',this.dom)
+//    },
+//    allowDrop(ev)
+//    {
+//      ev.preventDefault();
+//    },
+//    drag(ev)
+//    {
+//      this.dom = ev.target
+//      console.log(ev)
+//      console.log(this.dom)
+//    },
 //    切换标签
     handleClickTabs(tab){
 
@@ -121,8 +145,8 @@ export default {
 //  点击工具
     clickMultimeter () {
       if (this.clickMultimeterData === 0) {
-        document.getElementById('multimeterTruthID').style.top=80+'px';
-        document.getElementById('multimeterTruthID').style.left=77+'%';
+//        document.getElementById('multimeterTruthID').style.top=80+'px';
+//        document.getElementById('multimeterTruthID').style.left=77+'%';
         this.clickMultimeterData = 1
       } else {
         this.clickMultimeterData = 0
