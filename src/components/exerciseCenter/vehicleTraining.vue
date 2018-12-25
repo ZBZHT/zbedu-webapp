@@ -13,15 +13,20 @@
       <!--<img src="../../assets/imgs/vehicleTraining2.png">-->
     <!--</div>-->
   <!--</div>-->
-  <el-tabs type="border-card" v-model="activeName" @tab-click="handleClickTabs">
-    <!--简介-->
+  <!--最大化-->
+    <div id="fullScreen" @click="appFullScreen">
+      <i class="iconfont iconfont2">&#xe630;</i>
+    </div>
+  <el-tabs id="tabsCenter" type="border-card" v-model="activeName" @tab-click="handleClickTabs">
+
+    <!--高压-->
     <el-tab-pane label="高压">
       <div class="courseImg">
-        <img class="coursepptImg" src="../../assets/imgs/vehicleTraining2.png">
+        <img id="tabsCenter1" class="coursepptImg" src="../../assets/imgs/vehicleTraining2.png">
       </div>
     </el-tab-pane>
 
-    <!--课件-->
+    <!--空调-->
     <el-tab-pane label="空调">
       <div class="courseImg">
         <img class="coursepptImg" src="../../assets/imgs/vehicleTraining1.png">
@@ -29,9 +34,6 @@
     </el-tab-pane>
 
   </el-tabs>
-  <div class="fullScreen" @click="appFullScreen">
-    <i class="iconfont iconfont2">&#xe630;</i>
-  </div>
 
   <div class="tool">
     <div class="multimeter"
@@ -72,23 +74,25 @@ export default {
       whichShow: '',
       whichGramShow: '',
       clickMultimeterData: 0,
-      clickGramData: 0
+      clickGramData: 0,
+      fullScreen: false
     }
   },
   //    自定义拖动
   directives:{
     drag(el){
       el.onmousedown = function(e){
+          let elId = document.getElementById('multimeterTruthID')
         //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
-        var divx = e.clientX - document.getElementById('multimeterTruthID').offsetLeft;
-        var divy = e.clientY - document.getElementById('multimeterTruthID').offsetTop;
+        var divx = e.clientX - elId.offsetLeft;
+        var divy = e.clientY - elId.offsetTop;
         //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
         document.onmousemove = function(e){
           //获取移动后div的位置：鼠标位置-divx/divy
           var l = e.clientX - divx;
           var t = e.clientY - divy;
-          document.getElementById('multimeterTruthID').style.left=l+'px';
-          document.getElementById('multimeterTruthID').style.top=t+'px';
+          elId.style.left=l+'px';
+          elId.style.top=t+'px';
         }
         document.onmouseup = function(e){
           document.onmousemove = null;
@@ -98,24 +102,6 @@ export default {
     }
   },
   methods: {
-//    drop(ev)
-//    {
-//      ev.preventDefault();
-//      ev.target.appendChild(this.dom)
-//      console.log('drop',ev)
-//      console.log('drop',this.dom)
-//    },
-//    allowDrop(ev)
-//    {
-//      ev.preventDefault();
-//    },
-//    drag(ev)
-//    {
-//      this.dom = ev.target
-//      console.log(ev)
-//      console.log(this.dom)
-//    },
-//    切换标签
     handleClickTabs(tab){
 
     },
@@ -155,34 +141,47 @@ export default {
     },
 //    全屏显示
     appFullScreen () {
-      var elem = document.getElementById("courseppt");
-      var requestMethod = elem.requestFullScreen || elem.webkitRequestFullScreen || elem.mozRequestFullScreen || elem.msRequestFullScreen;
-      if (requestMethod) {
-        requestMethod.call(elem);
-      } else if (typeof window.ActiveXObject !== "undefined") {
-        var wscript = new ActiveXObject("WScript.Shell");
-        if (wscript !== null) {
-          wscript.SendKeys(122);
+        console.log(screen.width + "*" + screen.height)
+      let elem = document.getElementById("courseppt");
+      let tabsCenter = document.getElementById('tabsCenter')
+      let tabsCenter1 = document.getElementById('tabsCenter1')
+      let fullScreen = document.getElementById('fullScreen')
+      if (this.fullScreen === false) {
+        function launchFullscreen(element) {
+          if(element.requestFullscreen) {
+            element.requestFullscreen();
+          } else if(element.mozRequestFullScreen) {
+            element.mozRequestFullScreen();
+          } else if(element.webkitRequestFullscreen) {
+            element.webkitRequestFullscreen();
+          } else if(element.msRequestFullscreen) {
+            element.msRequestFullscreen();
+          }
         }
+        launchFullscreen(elem)
+        this.fullScreen = true
+
+        console.log(elem.style)
+        let cen = (screen.height - tabsCenter1.style.height + 40) / 2
+        console.log(cen)
+        tabsCenter.style.marginTop = 40 + 'px'
+        fullScreen.style.top = 40 + 'px'
+
+      } else if (this.fullScreen === true) {
+        function exitFullscreen() {
+          if(document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if(document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+          } else if(document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
+          }
+        }
+        exitFullscreen(elem)
+        this.fullScreen = false
+        tabsCenter.style.marginTop = 0 + 'px'
+        fullScreen.style.top = 0 + 'px'
       }
-//      if (elem == document.getElementById("courseppt")) {
-//        var pptHeight = document.getElementsByClassName("coursepptImg").offsetHeight;
-//        var pptWidth = document.getElementsByClassName("coursepptImg").offsetWidth;
-//        var innerHeight = window.innerHeight;
-//        var innerWidth = window.innerWidth;
-//        if(1.7 < pptWidth / pptHeight){
-//          //  console.log(pptWidth / pptHeight)
-//          elem.style.width = '100%';
-//          elem.style.height = "auto";
-//        }else if(1.7 >= pptWidth / pptHeight){
-//          //  console.log(1.7)
-//          var realHeight = innerHeight + 50;
-//          for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
-//            document.getElementsByClassName("coursepptImg").style.height = realHeight + 'px';
-//            document.getElementsByClassName("coursepptImg").style.width = "auto";
-//          }
-//        }
-//      }
     }
   },
   mounted(){
@@ -212,11 +211,12 @@ a:hover{
   height:auto;
   margin:0 auto;
   box-shadow: 0 0 15px 8px #ccc;
-  margin-top:40px;
+  margin-top:10px;
   text-align: left;
   min-width: 960px;
   position: relative;
   overflow: hidden;
+  z-index: 300;
 }
 .vehicleTraining .courseImg{
   height:100%;
@@ -227,6 +227,9 @@ a:hover{
   width:100%;
   height:100%;
   /*border: 3px solid #000;*/
+}
+.vehicleTraining >>> .el-tabs--border-card>.el-tabs__content{
+  padding: 0;
 }
 .vehicleTraining .el-tabs--border-card>.el-tabs__header .el-tabs__item:not(.is-disabled):hover {
   color: #212529;
@@ -330,12 +333,12 @@ a:hover{
   bottom:15px;
   right:15px;
 }
-.vehicleTraining .fullScreen{
+.vehicleTraining #fullScreen{
   position: absolute;
   top:0;
   right:6px;
   cursor: pointer;
-  z-index: 99;
+  z-index: 400;
 }
 .vehicleTraining .iconfont2{
  font-size: 22px;
