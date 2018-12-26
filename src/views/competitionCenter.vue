@@ -160,16 +160,16 @@
             <div v-for="(item,index) in teacherList">
               <el-tab-pane :label="item">
                 <div class="competitionAdd" v-for="(item2,index2) in studentList" v-show="index == index2">
-                  <div v-for="(item3,index3) in item2">
+                  <div class="competitionAdd1" v-for="(item3,index3) in item2">
+
+                    <div id="convas1">
+                      <span id="aaa" @mousedown="move" @touchmove="move"></span>
+                      <canvas id="tutorial"></canvas>
 
 
-                    <div id="aaa" @mousedown="move" @touchmove="move">
 
                     </div>
-                    <!--<div id="bbb"
-                         @mousedown="onmousedown" @touchstart="onmousedown"
-                         @mouseup="onmouseup($event)" @touchend="onmouseup($event)">
-                    </div>-->
+
                     clientX: {{clientX}}
                     clientY: {{clientY}}
                     layerX: {{layerX}}
@@ -182,10 +182,6 @@
                       {{positionX}}
                       {{positionY}}
                     </div>
-                    <!--<div id="aaa" @mousedown="move">       &lt;!&ndash;绑定按下事件&ndash;&gt;
-                      {{positionX}}
-                      {{positionY}}
-                    </div>-->
 
                     <div class="studentName" v-for="(item4,index4) in item3">
                       {{item4}}
@@ -260,7 +256,6 @@
         positionX: 0,
         positionY: 0
 
-
       }
     },
     computed: {
@@ -269,13 +264,30 @@
       }
     },
     watch: {
-      clientX (val, oldVal) {
-        console.log(val)
-        console.log(oldVal)
-      }
+
     },
     methods: {
       /* click和touch事件 */
+      draw(){
+        var ctx = document.getElementById('tutorial').getContext('2d');
+
+        // 绿色矩形
+        ctx.beginPath();
+        ctx.lineWidth="4";
+        ctx.strokeStyle="green";
+        ctx.rect(30,30,50,50);
+        ctx.stroke();
+
+        ctx.fillStyle = "rgb(200,0,0)";
+        //绘制矩形
+        ctx.fillRect (10, 10, 55, 50);
+
+        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
+        ctx.fillRect (30, 30, 55, 50);
+//        ctx.fill()
+
+      },
+
       move(e){
         if (e.touches) {
 //          console.log('touch事件')
@@ -283,8 +295,8 @@
             console.log(e);
             let odiv = e.touches[0].target;
             var touches = e.touches[0];
-            let disX = touches.clientX - odiv.offsetLeft + 34
-            let disY = touches.clientY - odiv.offsetTop + 26
+            let disX = touches.clientX - odiv.offsetLeft
+            let disY = touches.clientY - odiv.offsetTop
             document.addEventListener("touchmove",function(e) {
               var touches = e.touches[0];
               let left = touches.clientX - disX;
@@ -298,32 +310,33 @@
 
         } else {
 
-//          console.log('鼠标事件')
-//          this.clientX = e.clientX
-//          this.clientY = e.clientY
-//          this.layerX = e.layerX
-//          this.layerY = e.layerY
-//          this.offsetX = e.offsetX
-//          this.offsetY = e.offsetY
-//          this.pageX = e.pageX
-//          this.pageY = e.pageY
+          console.log('鼠标事件')
+          this.clientX = e.clientX
+          this.clientY = e.clientY
+          this.layerX = e.layerX
+          this.layerY = e.layerY
+          this.offsetX = e.offsetX
+          this.offsetY = e.offsetY
+          this.pageX = e.pageX
+          this.pageY = e.pageY
           let odiv = e.target;
 
           //算出鼠标相对元素的位置
-          let disX = e.clientX - odiv.offsetLeft + 34
-          let disY = e.clientY - odiv.offsetTop + 26
+
+          let disX = e.clientX - odiv.offsetLeft
+          let disY = e.clientY - odiv.offsetTop
           this.clientX = e.clientX
           this.clientY = e.clientY
           document.onmousemove = (e) => {       //鼠标按下并移动的事件
             //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
-            let left = e.clientX - disX;
-            let top = e.clientY - disY;
+            let left = e.clientX - disX
+            let top = e.clientY - disY
             //绑定元素位置到positionX和positionY上面
             this.positionX = top
-            this.positionY = left
+            this.positionY = left + 50
             //移动当前元素
-            odiv.style.left = left + 'px';
-            odiv.style.top = top + 'px';
+            odiv.style.left = left + 'px'
+            odiv.style.top = top + 'px'
           };
           document.onmouseup = (e) => {
             document.onmousemove = null;
@@ -418,6 +431,7 @@
           this.is926 = false;
           this.is123 = false;
           this.isYXS = true;
+          this.draw()
         }
         //刷新保存数据
         if (data.children) {
@@ -432,6 +446,7 @@
 
     },
     mounted(){
+
       axios.get("/readJson/bannerLeftData", {
         params: {
           user: 234
@@ -495,22 +510,33 @@
     background-color: #ffffff;
   }
 
-  #aaa {
-    position: relative; /*定位*/
-    top: 10px;
-    left: 10px;
-    width: 200px;
-    height: 200px;
-    background-image: url('../assets/imgs/logo.png'); /*设置一下背景*/
+  #convas1 {
+    position: relative;
+    z-index: 500;
+    width: 700px;
+    height: 300px;
+    border:1px solid red;
   }
+  #aaa {
+    display: block;
+    z-index: 9999;
+    position: absolute; /*定位*/
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background: url('../assets/imgs/logo.png') no-repeat; /*设置一下背景*/
+    background-size:100px 100px;
+  }
+  #tutorial {
+    position: absolute;
+    top:0;
+    left:0;
+    border:1px solid blue;
+    background-color: cornsilk;
+    width: 300px;
+    height: 300px;
 
-  #bbb {
-    position: relative; /*定位*/
-    top: 10px;
-    left: 10px;
-    width: 200px;
-    height: 200px;
-    background-image: url('../assets/imgs/logo.png'); /*设置一下背景*/
   }
 
   a {
@@ -736,6 +762,9 @@
     box-sizing: border-box;
     text-align: left;
     position: relative;
+  }
+  .competitionCenter-content .competitionAdd .competitionAdd1 {
+    border: 1px red;
   }
 
   #yidongImg {
