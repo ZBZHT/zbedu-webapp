@@ -222,9 +222,9 @@
 
 <script>
 import axios from 'axios'
-import navgationHead from '@/components/common/navgationHead'
-import vehicleTraining from '@/components/exerciseCenter/vehicleTraining'
-import footFooter from '@/components/common/footFooter'
+import navgationHead from '../components/common/navgationHead'
+import vehicleTraining from '../components/exerciseCenter/vehicleTraining'
+import footFooter from '../components/common/footFooter'
 
 export default {
   name: 'exerciseCenter',

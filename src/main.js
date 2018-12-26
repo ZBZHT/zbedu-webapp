@@ -19,11 +19,12 @@ require('vue-video-player/src/custom-theme.css')
 require('videojs-flash')
 Vue.use(VideoPlayer)
 
-Vue.config.productionTip = false;
-Vue.use(ElementUI);
-Vue.use(BootstrapVue);
+Vue.config.productionTip = false
+Vue.use(ElementUI)
+Vue.use(BootstrapVue)
 Vue.use(VueDND)
-Vue.use(animated);
+Vue.use(animated)
+
 
 /* eslint-disable no-new */
 new Vue({

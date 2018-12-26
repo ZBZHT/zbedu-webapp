@@ -75,7 +75,8 @@ export default {
       whichGramShow: '',
       clickMultimeterData: 0,
       clickGramData: 0,
-      fullScreen: false
+      fullScreen: false,
+      clientHeight: '',
     }
   },
   //    自定义拖动
@@ -99,6 +100,11 @@ export default {
           document.onmouseup = null;
         }
       }
+    }
+  },
+  watch: {
+    clientHeight: function () {
+        console.log(this.clientHeight)
     }
   },
   methods: {
@@ -141,33 +147,34 @@ export default {
     },
 //    全屏显示
     appFullScreen () {
-        console.log(screen.width + "*" + screen.height)
       let elem = document.getElementById("courseppt");
       let tabsCenter = document.getElementById('tabsCenter')
-      let tabsCenter1 = document.getElementById('tabsCenter1')
       let fullScreen = document.getElementById('fullScreen')
+      let tabsCenter1 = document.getElementById('tabsCenter1')
+      let cen = ''
+
       if (this.fullScreen === false) {
-        function launchFullscreen(element) {
-          if(element.requestFullscreen) {
-            element.requestFullscreen();
-          } else if(element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-          } else if(element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen();
-          } else if(element.msRequestFullscreen) {
-            element.msRequestFullscreen();
+        var rfs = elem.requestFullScreen || elem.webkitRequestFullScreen ||
+          elem.mozRequestFullScreen || elem.msRequestFullScreen;
+        if (typeof rfs != "undefined" && rfs) {
+          rfs.call(elem);
+        } else if (typeof window.ActiveXObject != "undefined") {
+          var wscript = new ActiveXObject("WScript.Shell");
+          if (wscript != null) {
+            wscript.SendKeys("{F11}");
           }
         }
-        launchFullscreen(elem)
         this.fullScreen = true
 
-        console.log(elem.style)
-        let cen = (screen.height - tabsCenter1.style.height + 40) / 2
-        console.log(cen)
-        tabsCenter.style.marginTop = 40 + 'px'
-        fullScreen.style.top = 40 + 'px'
+        setTimeout(function () {
+          let outHeight =  parseInt(window.getComputedStyle(tabsCenter).height)
+          cen = (screen.height - outHeight) / 2
+          tabsCenter.style.marginTop = cen + 'px'
+          fullScreen.style.top = cen + 'px'
+        },100)
 
       } else if (this.fullScreen === true) {
+          console.log(window.ActiveXObject)
         function exitFullscreen() {
           if(document.exitFullscreen) {
             document.exitFullscreen();
@@ -179,12 +186,16 @@ export default {
         }
         exitFullscreen(elem)
         this.fullScreen = false
-        tabsCenter.style.marginTop = 0 + 'px'
-        fullScreen.style.top = 0 + 'px'
+        setTimeout(function () {
+          tabsCenter.style.marginTop = 0 + 'px'
+          fullScreen.style.top = 0 + 'px'
+        }, 100)
       }
     }
   },
   mounted(){
+
+
 
   }
 }

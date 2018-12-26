@@ -21,6 +21,8 @@
     "fs": "^0.0.1-security",
     "js-md5": "^0.7.3",
     "jsonexcel": "^2.0.3",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "moment": "^2.21.0",
     "node-xlsx": "^0.12.0",
     "script-loader": "^0.7.2",
