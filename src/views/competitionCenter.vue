@@ -271,24 +271,17 @@
       draw(){
         var ctx = document.getElementById('tutorial').getContext('2d');
 
-        // 绿色矩形
         ctx.beginPath();
-        ctx.lineWidth="4";
-        ctx.strokeStyle="green";
-        ctx.rect(30,30,50,50);
-        ctx.stroke();
-
-        ctx.fillStyle = "rgb(200,0,0)";
-        //绘制矩形
-        ctx.fillRect (10, 10, 55, 50);
-
-        ctx.fillStyle = "rgba(0, 0, 200, 0.5)";
-        ctx.fillRect (30, 30, 55, 50);
-//        ctx.fill()
+        ctx.moveTo(50, 50);
+        ctx.lineTo(200, 50);
+        ctx.lineTo(200, 200);
+        ctx.closePath(); //虽然我们只绘制了两条线段，但是closePath会closePath，仍然是一个3角形
+        ctx.stroke(); //描边。stroke不会自动closePath()
 
       },
 
       move(e){
+
         if (e.touches) {
 //          console.log('touch事件')
           document.addEventListener("touchstart",function(e){
@@ -322,7 +315,6 @@
           let odiv = e.target;
 
           //算出鼠标相对元素的位置
-
           let disX = e.clientX - odiv.offsetLeft
           let disY = e.clientY - odiv.offsetTop
           this.clientX = e.clientX
@@ -536,7 +528,6 @@
     background-color: cornsilk;
     width: 300px;
     height: 300px;
-
   }
 
   a {
