@@ -33,6 +33,16 @@
       </div>
     </el-tab-pane>
 
+
+
+    <!--波动图-->
+    <div class="datagramTruth">
+      <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
+        <div id="echarts" v-show="whichGramShow === 1 || clickGramData === 1">
+
+        </div>
+      </transition>
+    </div>
   </el-tabs>
 
   <div class="tool">
@@ -54,17 +64,13 @@
   <div class="multimeterTruth" id="multimeterTruthID" v-drag v-show="clickMultimeterData === 1">
     <!--<div class="coursepptImg"></div>-->
   </div>
-  <div class="datagramTruth">
-    <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
-      <img class="coursepptImg animated" v-show="whichGramShow === 1 || clickGramData === 1" src="../../assets/imgs/datagram.png">
-    </transition>
 
-  </div>
 </div>
 </template>
 
 <script>
 import axios from 'axios'
+import echarts from 'echarts/echarts.all'
 export default {
   name: 'vehicleTraining',
   data () {
@@ -103,9 +109,9 @@ export default {
     }
   },
   watch: {
-    clientHeight: function () {
+/*    clientHeight: function () {
         console.log(this.clientHeight)
-    }
+    }*/
   },
   methods: {
     handleClickTabs(tab){
@@ -195,6 +201,27 @@ export default {
   },
   mounted(){
 
+    var myChart = echarts.init(document.getElementById('echarts'))
+    var option = {
+      title: {
+        text: 'ECharts 入门示例'
+      },
+      tooltip: {},
+      legend: {
+        data:['销量']
+      },
+      xAxis: {
+        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+      },
+      yAxis: {},
+      series: [{
+        name: '销量',
+        type: 'bar',
+        data: [5, 20, 36, 10, 10, 20]
+      }]
+    };
+    myChart.setOption(option);
+
 
 
   }
@@ -238,6 +265,11 @@ a:hover{
   width:100%;
   height:100%;
   /*border: 3px solid #000;*/
+}
+.vehicleTraining #echarts {
+  width: 300px;
+  height: 200px;
+  border: 3px solid #000;
 }
 .vehicleTraining >>> .el-tabs--border-card>.el-tabs__content{
   padding: 0;
