@@ -38,7 +38,10 @@
     <!--波动图-->
     <div class="datagramTruth">
       <transition enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
-        <div id="echarts" v-show="whichGramShow === 1 || clickGramData === 1">
+        <div class="echartsB" v-show="whichGramShow === 1 || clickGramData === 1">
+          <div id="echarts">
+
+          </div>
 
         </div>
       </transition>
@@ -62,7 +65,6 @@
     </div>
   </div>
   <div class="multimeterTruth" id="multimeterTruthID" v-drag v-show="clickMultimeterData === 1">
-    <!--<div class="coursepptImg"></div>-->
   </div>
 
 </div>
@@ -70,7 +72,8 @@
 
 <script>
 import axios from 'axios'
-import echarts from 'echarts/echarts.all'
+import moment from 'moment'
+import echarts from 'echarts/dist/echarts.common.min'
 export default {
   name: 'vehicleTraining',
   data () {
@@ -83,6 +86,24 @@ export default {
       clickGramData: 0,
       fullScreen: false,
       clientHeight: '',
+      setInterval: '',
+      echartsOption: {
+        title: {
+          left: 'left',
+          text: '时间',
+        },
+        xAxis: {
+          type: 'category',
+          data: []
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [{
+          type: 'line',
+          data: []
+        }]
+      }
     }
   },
   //    自定义拖动
@@ -109,11 +130,57 @@ export default {
     }
   },
   watch: {
-/*    clientHeight: function () {
-        console.log(this.clientHeight)
-    }*/
+    whichGramShow: function (whichGramShow) {
+      let that = this
+      let xAxisData = that.echartsOption.xAxis.data
+      let seriesData = that.echartsOption.series[0].data
+
+      function upEcharts() {
+        let myChart = echarts.init(document.getElementById('echarts'))
+        let time = moment(new Date()).format('HH:mm:ss')
+        /*设置x、y坐标*/
+        let xAxisDataTime = moment(new Date()).format('mm:ss')
+        let num = Math.floor(Math.random() * 10 + 1)
+
+        if (xAxisData.length < 59) {
+          xAxisData.push(xAxisDataTime)
+          seriesData.push(num)
+        }
+        if (xAxisData.length >= 59) {
+          xAxisData.shift()
+          xAxisData.push(xAxisDataTime)
+          seriesData.shift()
+          seriesData.push(num)
+        }
+        /*设置title*/
+        that.echartsOption.title.text = time
+
+        myChart.setOption(that.echartsOption)
+        if (whichGramShow === '') {
+          clearInterval(that.setInterval);
+        }
+      }
+
+      upEcharts()
+
+      if (whichGramShow === 1) {
+        that.setInterval = setInterval(function () {
+          upEcharts()
+        }, 1000)
+      }
+      /*
+       xAxisData = []
+       seriesData = []
+       that.echartsOption.xAxis.data = []
+       that.echartsOption.series[0].data = []
+      */
+    }
   },
   methods: {
+    upEcharts () {
+
+
+    },
     handleClickTabs(tab){
 
     },
@@ -201,27 +268,6 @@ export default {
   },
   mounted(){
 
-    var myChart = echarts.init(document.getElementById('echarts'))
-    var option = {
-      title: {
-        text: 'ECharts 入门示例'
-      },
-      tooltip: {},
-      legend: {
-        data:['销量']
-      },
-      xAxis: {
-        data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-      },
-      yAxis: {},
-      series: [{
-        name: '销量',
-        type: 'bar',
-        data: [5, 20, 36, 10, 10, 20]
-      }]
-    };
-    myChart.setOption(option);
-
 
 
   }
@@ -266,10 +312,16 @@ a:hover{
   height:100%;
   /*border: 3px solid #000;*/
 }
-.vehicleTraining #echarts {
-  width: 300px;
-  height: 200px;
-  border: 3px solid #000;
+.vehicleTraining .echartsB {
+  width: 370px;
+  height: 180px;
+  background-color: #fff;
+}
+#echarts {
+  width: 340px;
+  height: 180px;
+  border: 1px solid #000;
+  background-color: #fff;
 }
 .vehicleTraining >>> .el-tabs--border-card>.el-tabs__content{
   padding: 0;

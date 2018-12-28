@@ -153,7 +153,7 @@
         </div>
 
         <!--预选赛啊-->
-        <div v-show="isYXS">
+        <div v-show="isYXS" id="isYXS">
           <p class="exerP">{{competitionData.label}}</p>
 
           <el-tabs type="border-card" v-model="activeName">
@@ -162,13 +162,9 @@
                 <div class="competitionAdd" v-for="(item2,index2) in studentList" v-show="index == index2">
                   <div class="competitionAdd1" v-for="(item3,index3) in item2">
 
-                    <div id="convas1">
-                      <span id="aaa" @mousedown="move" @touchmove="move"></span>
-                      <canvas id="tutorial"></canvas>
+                    <span id="aaa" @mousedown="move" @touchmove="move">
 
-
-
-                    </div>
+                    </span>
 
                     clientX: {{clientX}}
                     clientY: {{clientY}}
@@ -268,28 +264,16 @@
     },
     methods: {
       /* click和touch事件 */
-      draw(){
-        var ctx = document.getElementById('tutorial').getContext('2d');
-
-        ctx.beginPath();
-        ctx.moveTo(50, 50);
-        ctx.lineTo(200, 50);
-        ctx.lineTo(200, 200);
-        ctx.closePath(); //虽然我们只绘制了两条线段，但是closePath会closePath，仍然是一个3角形
-        ctx.stroke(); //描边。stroke不会自动closePath()
-
-      },
 
       move(e){
-
         if (e.touches) {
 //          console.log('touch事件')
           document.addEventListener("touchstart",function(e){
             console.log(e);
             let odiv = e.touches[0].target;
             var touches = e.touches[0];
-            let disX = touches.clientX - odiv.offsetLeft
-            let disY = touches.clientY - odiv.offsetTop
+            let disX = touches.clientX - odiv.offsetLeft + 34
+            let disY = touches.clientY - odiv.offsetTop + 26
             document.addEventListener("touchmove",function(e) {
               var touches = e.touches[0];
               let left = touches.clientX - disX;
@@ -315,8 +299,9 @@
           let odiv = e.target;
 
           //算出鼠标相对元素的位置
-          let disX = e.clientX - odiv.offsetLeft
-          let disY = e.clientY - odiv.offsetTop
+
+          let disX = e.clientX - odiv.offsetLeft + 34
+          let disY = e.clientY - odiv.offsetTop + 26
           this.clientX = e.clientX
           this.clientY = e.clientY
           document.onmousemove = (e) => {       //鼠标按下并移动的事件
@@ -325,7 +310,7 @@
             let top = e.clientY - disY
             //绑定元素位置到positionX和positionY上面
             this.positionX = top
-            this.positionY = left + 50
+            this.positionY = left
             //移动当前元素
             odiv.style.left = left + 'px'
             odiv.style.top = top + 'px'
@@ -419,11 +404,11 @@
             this.isYXS = false;
           }
         } else if (id == 5000) {
-          this.is697 = false;
-          this.is926 = false;
-          this.is123 = false;
-          this.isYXS = true;
-          this.draw()
+          this.is697 = false
+          this.is926 = false
+          this.is123 = false
+          this.isYXS = true
+//          document.getElementById('isYXS').style.display=''
         }
         //刷新保存数据
         if (data.children) {
@@ -502,17 +487,10 @@
     background-color: #ffffff;
   }
 
-  #convas1 {
-    position: relative;
-    z-index: 500;
-    width: 700px;
-    height: 300px;
-    border:1px solid red;
-  }
   #aaa {
     display: block;
     z-index: 9999;
-    position: absolute; /*定位*/
+    position: relative; /*定位*/
     top: 0;
     left: 0;
     width: 100px;
@@ -521,13 +499,10 @@
     background-size:100px 100px;
   }
   #tutorial {
-    position: absolute;
-    top:0;
-    left:0;
-    border:1px solid blue;
-    background-color: cornsilk;
-    width: 300px;
-    height: 300px;
+    border:1px solid red;
+    position: relative; /*定位*/
+    top: 0;
+    left: 0;
   }
 
   a {
