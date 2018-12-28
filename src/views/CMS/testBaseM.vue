@@ -32,7 +32,8 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini" type="warning"
-                  @click="handleEdit1(scope.$index, scope.row)">编 辑</el-button>
+                  @click="handleEdit1(scope.$index, scope.row)">编 辑
+                </el-button>
               </template>
             </el-table-column>
 
@@ -148,7 +149,8 @@
               <template slot-scope="scope">
                 <el-button
                   size="mini" type="warning"
-                  @click="handleEdit(scope.$index, scope.row)">编 辑</el-button>
+                  @click="handleEdit(scope.$index, scope.row)">编 辑
+                </el-button>
               </template>
             </el-table-column>
 
@@ -203,19 +205,19 @@
     data() {
       return {
         data: [],
-        url:document.domain,
-        user:this.$store.state.username,
+        url: document.domain,
+        user: this.$store.state.username,
         form: {
-          theme:'',
+          theme: '',
           name: [],
-          nameId:[],
+          nameId: [],
           region: '',
           date1: '',
           date2: '',
           date3: '',
           date4: '',
-          num:'',
-          time:''
+          num: '',
+          time: ''
         },
         currentPage1: 1,
         currentPage2: 1,
@@ -232,7 +234,7 @@
         checkingData: [],  //判断题
         dialogFormVisible3: false,
         editForm: {
-          options:[],
+          options: [],
         },
       }
     },
@@ -279,11 +281,11 @@
       //本来考试主题显示在input的func
       handleCheckChange(data, checked, indeterminate) {
         console.log(data, checked, indeterminate);
-        if(checked == true){
+        if (checked == true) {
           //    this.form.name.push(data.label);
-        }else{
-          for(var i = 0;i < this.form.name.length;i++){
-            if(this.form.name[i] == data.label){
+        } else {
+          for (var i = 0; i < this.form.name.length; i++) {
+            if (this.form.name[i] == data.label) {
               //    core.remove(this.form.name, i);
             }
           }
@@ -295,7 +297,7 @@
         this.form.nameId = [];
         //console.log(this.$refs.tree.getCheckedNodes());
         var arr = this.$refs.tree.getCheckedNodes();
-        for(var i = 0;i < arr.length;i++){
+        for (var i = 0; i < arr.length; i++) {
           //console.log(arr[i].label);
           this.form.name.push(arr[i].label);
           this.form.nameId.push(arr[i].courseId);
@@ -375,17 +377,17 @@
             if (res.data.success == 0) {
               //删除单个
               if (this.multipleSelection.length == 1) {
-                for (let j=0; j<this.dataManager.length; j++){
+                for (let j = 0; j < this.dataManager.length; j++) {
                   if (this.multipleSelection[0].userID == this.dataManager[j].userID) {
                     let ee = core.remove(this.dataManager, this.dataManager[j]);
                     this.dataManager = ee;
                     //console.log(this.dataManager);
                   }
                 }
-              }else {
+              } else {
                 //删除多个
-                for (let i=0; i<this.multipleSelection.length; i++) {
-                  for (let j=0; j<this.dataManager.length; j++){
+                for (let i = 0; i < this.multipleSelection.length; i++) {
+                  for (let j = 0; j < this.dataManager.length; j++) {
                     if (this.multipleSelection[i].userID == this.dataManager[j].userID) {
                       let ee = core.remove(this.dataManager, this.dataManager[j]);
                       this.dataManager = ee;
@@ -398,7 +400,7 @@
                 type: 'success',
                 message: '删除成功!'
               });
-            }else {
+            } else {
               console.log('返回错误')
             }
           });
@@ -419,20 +421,32 @@
         }).then((res) => {
           if (res.data) {
             let resData = res.data;
-            for (let i=0; i<resData.length; i++) {
+            for (let i = 0; i < resData.length; i++) {
               resData[i].num = i + 1;
             }
             this.choiceData = resData;
             this.total1 = this.choiceData.length;
           }
-
-          //console.log(this.choiceData);
         });
       },
+      getQueryList () {
+        axios.get('/teacherCMS/getAllTest', {
+          params: {
+            user: this.username,
+            userType: this.userType
+          }
+        }).then((res) => {
+            console.log(res.data)
+          if (res.data) {
+
+          }
+        });
+      }
 
     },
     mounted() {
-        this.getAllTest()
+      this.getAllTest()
+      this.getQueryList()
 
     },
     components: {}
@@ -444,33 +458,41 @@
     margin: 0;
     padding: 0;
   }
+
   .testBaseM_cont .el-table .cell {
     max-height: 38px;
   }
-  .testBaseM_cont .elinput{
-    width:486px;
-    height:34px;
-    border:1px solid #ccc;
-    border-radius:4px;
-    overflow:auto;
+
+  .testBaseM_cont .elinput {
+    width: 486px;
+    height: 34px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    overflow: auto;
     background-color: #fff;
     margin-bottom: -14px;
   }
-  .testBaseM_cont .elinput ul li{
-    display:inline-block;
+
+  .testBaseM_cont .elinput ul li {
+    display: inline-block;
   }
-  .buttons .el-button{
-    width:100%;
+
+  .buttons .el-button {
+    width: 100%;
   }
-  .testBaseM_cont .buttons .el-button{
-    margin-top:22px;
+
+  .testBaseM_cont .buttons .el-button {
+    margin-top: 22px;
   }
-  .testBaseM_cont .headBut{
+
+  .testBaseM_cont .headBut {
     float: left;
   }
-  .dropdown{
-    width:488px;
+
+  .dropdown {
+    width: 488px;
   }
+
   .testBaseM_cont .el-table-column--selection .cell {
     padding-left: 0;
     margin-left: 10px;
@@ -479,45 +501,56 @@
   .testBaseM_cont .block .el-button {
     float: left;
   }
+
   .testBaseM_cont span {
     display: inline-block;
   }
-  .testBaseM_cont .userM_But1,.userM_But2 {
+
+  .testBaseM_cont .userM_But1, .userM_But2 {
     margin-bottom: 10px;
   }
+
   .testBaseM_cont .el-dialog {
     width: 650px;
   }
-  .testBaseM_cont .el-tabs--card>.el-tabs__header .el-tabs__nav{
+
+  .testBaseM_cont .el-tabs--card > .el-tabs__header .el-tabs__nav {
     border-width: 1px 1px 0 0;
     border-color: #9f5355;
     border-style: solid;
   }
-  .testBaseM_cont .el-tabs--card>.el-tabs__header{
+
+  .testBaseM_cont .el-tabs--card > .el-tabs__header {
     border-width: 0 0 1px 0;
     border-color: #9f5355;
     border-style: solid;
     margin: 0;
   }
-  .testBaseM_cont .el-tabs--card>.el-tabs__header .el-tabs__item{
+
+  .testBaseM_cont .el-tabs--card > .el-tabs__header .el-tabs__item {
     border-left: 1px solid #9f5355;
     font-size: 16px;
   }
+
   .testBaseM_cont .el-table td, .el-table th {
     height: 40px;
   }
+
   .testBaseM_cont {
     position: relative;
   }
+
   .testBaseM_cont .headBut {
     width: 120px;
     position: absolute;
     bottom: -560px;
     left: 5%;
   }
+
   .testBaseM_cont .el-table .cell {
     line-height: 20px;
   }
+
   .testBaseM_cont .el-dialog__body {
     text-align: left;
   }
