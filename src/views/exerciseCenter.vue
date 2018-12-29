@@ -1,11 +1,11 @@
 <template>
   <!--实训中心-->
-  <div class="e-content">
+  <div class="e-content" id="e-content">
     <div>
         <navgation-head></navgation-head>
     </div>
 
-    <div class="e-content-tree">
+    <div class="e-content-tree" id="e-content-tree">
       <div id="setHeight1">
         <div class="completeLeft" @mouseover="showTree" @mouseout="disTree">
           <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
@@ -701,6 +701,12 @@ export default {
       this.courseId2 = id;
       this.keyId = id;
     }
+
+    // 设置footer高度
+    let eContent = document.getElementById('e-content')
+    let eContentTree = document.getElementById('e-content-tree')
+    let ee = document.documentElement.clientHeight - (eContent.clientHeight - eContentTree.clientHeight)
+    eContentTree.style.minHeight = ee + 'px'
   },
   components:{navgationHead,vehicleTraining,footFooter}
 }
@@ -745,7 +751,6 @@ export default {
     width: 100%;
     margin: 0 auto;
     margin-top: 6px;
-    margin-bottom: 80px;
   }
   .e-content-tree #setHeight1{
     width: 100%;

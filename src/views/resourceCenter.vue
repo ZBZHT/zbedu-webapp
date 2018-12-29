@@ -4,7 +4,7 @@
       <navgation-head></navgation-head>
     </div>
 
-    <div class="resourceCenter">
+    <div class="resourceCenter" id="resourceCenter1">
 
     <b-card no-body>
       <b-tabs pills card vertical>
@@ -440,6 +440,14 @@
     },
     mounted(){
       this.loadFile();
+
+      // 设置footer高度
+      let resourceCenter = document.getElementById('resourceCenter')
+      let resourceCenter1 = document.getElementById('resourceCenter1')
+      let ee = document.documentElement.clientHeight - (resourceCenter.clientHeight - resourceCenter1.clientHeight)
+      let aa = resourceCenter1.getElementsByClassName('col-auto')
+      aa[0].style.height = ee - 40 + 'px'
+
     },
     components: {navgationHead, footFooter}
   }
@@ -461,7 +469,6 @@
     background-color: #d2d2d2;
   }
   .resourceCenter .col-auto {
-    height: 38rem;
     margin-top: 2.5rem;
   }
   .resourceCenter .nav-pills .nav-link {
@@ -495,7 +502,7 @@
   }
   .resourceCenter .uploadBut1 {
     position: absolute;
-    bottom: 16rem;
+    top: 16rem;
     left: -9.5rem;
   }
   .resourceCenter .upload-demo1 {
