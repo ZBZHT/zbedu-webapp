@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="teacherCMS" id="teacherCMS">
     <div>
       <navgation-head></navgation-head>
     </div>
-    <div class="CMS_cont">
+    <div class="CMS_cont" id="CMS_cont">
 
       <el-row>
         <el-col :span="4">
@@ -500,8 +500,13 @@
             this.handleNodeClick();
           }, 20);
         }
+      })
 
-      });
+    // 设置footer高度
+      let CMS_cont = document.getElementById('CMS_cont')
+      let teacherCMS = document.getElementById('teacherCMS')
+      let ee = document.documentElement.clientHeight - (teacherCMS.clientHeight - CMS_cont.clientHeight)
+      CMS_cont.style.minHeight = ee + 'px'
 
     },
     components: {
@@ -539,6 +544,9 @@
   .CMS_cont {
     min-height: 38.7rem;
     background-color: #f0f3ef;
+  }
+  .teacherCMS .footer {
+
   }
 
   .CMS_cont .el-tree-node__expand-icon {
@@ -599,8 +607,9 @@
   .CMS_cont .block .el-button {
     float: left;
   }
-  .CMS_cont .footer .footer-bigbox{
-    bottom:0;
-    position: fixed;
+
+  .teacherCMS .footer {
+
   }
+
 </style>
