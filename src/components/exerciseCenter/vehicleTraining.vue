@@ -22,7 +22,7 @@
     <!--高压-->
     <el-tab-pane label="高压">
       <div class="courseImg">
-        <img id="tabsCenter1" class="coursepptImg" src="../../assets/imgs/vehicleTraining2.png">
+        <img id="tabsCenter1" class="coursepptImg" src="../../assets/imgs/vehicleTraining2.jpg">
         <canvas id="canvas">
         </canvas>
       </div>
@@ -31,7 +31,7 @@
     <!--空调-->
     <el-tab-pane label="空调">
       <div class="courseImg">
-        <img class="coursepptImg" src="../../assets/imgs/vehicleTraining1.png">
+        <img class="coursepptImg" src="../../assets/imgs/vehicleTraining1.jpg">
       </div>
     </el-tab-pane>
 
@@ -107,9 +107,9 @@ export default {
       },
       balls:[],
       circles:[
-        {x:0.37,y:0.54,color:'red'},
-        {x:0.38,y:0.54,color:'black'},
-        {x:0.38,y:0.55,color:'red'}
+        {x:365.4,y:294.8,color:'red'},
+        {x:375.4,y:294.8,color:'black'},
+        {x:375.4,y:304.8,color:'red'}
       ],
       clientHeight: '',
       clientWidth: window.innerWidth
@@ -236,6 +236,19 @@ export default {
       let cen = ''
 
       if (this.fullScreen === false) {
+        for(var i = 0; i < this.circles.length; i++){
+          var radius = 3.5
+          this.aBall={
+            radius:radius,
+            x:this.circles[i].x * this.clientWidth / 1024,
+            y:this.circles[i].y * this.clientHeight / 577,
+//          x:this.circles[i].x * this.clientWidth,
+//          y:this.circles[i].y * this.clientHeight,
+            color:this.circles[i].color
+          }
+          this.balls[i]=this.aBall;
+          console.log('22',this.aBall)
+        }
         var rfs = elem.requestFullScreen || elem.webkitRequestFullScreen ||
           elem.mozRequestFullScreen || elem.msRequestFullScreen;
         if (typeof rfs != "undefined" && rfs) {
@@ -256,6 +269,19 @@ export default {
         },100)
 
       } else if (this.fullScreen === true) {
+        for(var i = 0; i < this.circles.length; i++){
+          var radius = 2.8
+          this.aBall={
+            radius:radius,
+            x:this.circles[i].x * 1024 / this.clientWidth,
+            y:this.circles[i].y * 577 / this.clientHeight,
+//          x:this.circles[i].x * this.clientWidth,
+//          y:this.circles[i].y * this.clientHeight,
+            color:this.circles[i].color
+          }
+          this.balls[i]=this.aBall;
+          console.log('33',this.aBall)
+        }
 //          console.log(window.ActiveXObject)
         function exitFullscreen() {
           if(document.exitFullscreen) {
@@ -312,15 +338,17 @@ export default {
         var radius = 2.8
         this.aBall={
           radius:radius,
-          x:this.circles[i].x * this.clientWidth,
-          y:this.circles[i].y * this.clientHeight,
+          x:this.circles[i].x,
+          y:this.circles[i].y,
+//          x:this.circles[i].x * this.clientWidth,
+//          y:this.circles[i].y * this.clientHeight,
           color:this.circles[i].color
         }
-        console.log('this.circles[i].x',this.circles[i].x)
-        console.log('clientWidth',this.clientWidth)
-        console.log('this.circles[i].y',this.circles[i].y)
-        console.log('clientHeight',this.clientHeight)
-        console.log(this.aBall)
+//        console.log('this.circles[i].x',this.circles[i].x)
+//        console.log('clientWidth',this.clientWidth)
+//        console.log('this.circles[i].y',this.circles[i].y)
+//        console.log('clientHeight',this.clientHeight)
+        console.log('11',this.aBall)
         this.balls[i]=this.aBall;
       }
     },
@@ -367,7 +395,7 @@ a:hover{
     text-decoration: none;
 }
 .vehicleTraining{
-  width:65%;
+  width:1024px;
   height:auto;
   margin:0 auto;
   box-shadow: 0 0 15px 8px #ccc;
