@@ -1274,7 +1274,6 @@
     min-width: 960px;
     width: 100%;
     margin: 0 auto;
-    margin-bottom: 40px;
     border: 1px solid #6a1518;
   }
   .teach_Test .question {
