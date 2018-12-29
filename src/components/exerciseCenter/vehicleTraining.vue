@@ -23,6 +23,8 @@
     <el-tab-pane label="高压">
       <div class="courseImg">
         <img id="tabsCenter1" class="coursepptImg" src="../../assets/imgs/vehicleTraining2.png">
+        <canvas id="canvas">
+        </canvas>
       </div>
     </el-tab-pane>
 
@@ -85,7 +87,6 @@ export default {
       clickMultimeterData: 0,
       clickGramData: 0,
       fullScreen: false,
-      clientHeight: '',
       setInterval: '',
       echartsOption: {
         title: {
@@ -103,7 +104,15 @@ export default {
           type: 'line',
           data: []
         }]
-      }
+      },
+      balls:[],
+      circles:[
+        {x:0.37,y:0.54,color:'red'},
+        {x:0.38,y:0.54,color:'black'},
+        {x:0.38,y:0.55,color:'red'}
+      ],
+      clientHeight: '',
+      clientWidth: window.innerWidth
     }
   },
   //    自定义拖动
@@ -247,7 +256,7 @@ export default {
         },100)
 
       } else if (this.fullScreen === true) {
-          console.log(window.ActiveXObject)
+//          console.log(window.ActiveXObject)
         function exitFullscreen() {
           if(document.exitFullscreen) {
             document.exitFullscreen();
@@ -264,11 +273,78 @@ export default {
           fullScreen.style.top = 0 + 'px'
         }, 100)
       }
+    },
+//    监听鼠标位置
+    detect(){
+      var _this = this
+      //鼠标点击canvas，获取的鼠标点击的位置(x,y)
+      this.canvas.onmousemove = function (e){
+        var x=e.clientX-_this.canvas.getBoundingClientRect().left;
+        var y=e.clientY-_this.canvas.getBoundingClientRect().top;
+        _this.draw(x,y);
+      }
+    },
+//    画布显示balls数据
+    draw(x,y){
+//      console.log(x)
+      this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+      for( var i = 0 ; i < this.balls.length ; i ++ ){
+        this.ctx.beginPath();
+        this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
+        if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
+          console.log('yes',this.balls[i].x,this.balls[i].y)
+//          this.ctx.clearRect(0, 0, 100, 100);
+          this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius+2,0,2*Math.PI)
+        }else{
+//          console.log('bai')
+        }
+        this.ctx.fillStyle=this.balls[i].color
+//        this.ctx.closePath()
+        this.ctx.fill();
+
+      }
+    },
+//    计算完的数据给balls
+    first() {
+//      console.log(this.circles)
+//      console.log(this.circles[0].x)
+      for(var i = 0; i < this.circles.length; i++){
+        var radius = 2.8
+        this.aBall={
+          radius:radius,
+          x:this.circles[i].x * this.clientWidth,
+          y:this.circles[i].y * this.clientHeight,
+          color:this.circles[i].color
+        }
+        console.log('this.circles[i].x',this.circles[i].x)
+        console.log('clientWidth',this.clientWidth)
+        console.log('this.circles[i].y',this.circles[i].y)
+        console.log('clientHeight',this.clientHeight)
+        console.log(this.aBall)
+        this.balls[i]=this.aBall;
+      }
+    },
+//    监听canvas宽高
+    handleResize (event) {
+      this.clientWidth = document.getElementById("tabsCenter1").offsetWidth
+      this.clientHeight = document.getElementById("tabsCenter1").clientHeight
+      this.canvas.width = this.clientWidth
+      this.canvas.height = this.clientHeight
     }
   },
   mounted(){
-
-
+    var canvas = document.getElementById("canvas");
+    this.canvas = canvas
+    this.ctx = this.canvas.getContext("2d")
+    canvas.addEventListener("mousemove",this.detect())
+    this.clientWidth = this.clientWidth * 0.65
+    this.clientHeight = this.clientWidth / 1.85
+//    console.log(this.clientWidth)
+//    console.log(this.clientHeight)
+    canvas.width = this.clientWidth
+    canvas.height = this.clientHeight
+    this.first()
+    window.addEventListener('resize', this.handleResize)
 
   }
 }
@@ -316,6 +392,11 @@ a:hover{
   width: 370px;
   height: 180px;
   background-color: #fff;
+}
+.vehicleTraining #canvas{
+  position:absolute;
+  top:0;
+  left:0;
 }
 #echarts {
   width: 340px;
