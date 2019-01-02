@@ -323,7 +323,7 @@
     width: 104px;
   }
 
-  .username > > > .el-badge__content.is-fixed {
+  .username >>> .el-badge__content.is-fixed {
     top: 10px;
   }
 
