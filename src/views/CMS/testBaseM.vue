@@ -98,36 +98,20 @@
 
         <el-tab-pane label="查询" name="second">
 
-          <el-dropdown>
-        <span class="el-dropdown-link">
+          <el-select v-model="state1" filterable placeholder="请选择查询内容" style="margin-top: 10px">
+            <el-option
+              v-for="item in restaurants"
+              :key="item.value"
+              :value="item.value">
+            </el-option>
 
-           <span class="elinput">
-              <ul>
-                  <li v-for="item in form.name">{{item}}/</li>
-              </ul>
-          </span>
-        </span>
-            <el-dropdown-menu slot="dropdown" class="dropdown">
-              <div class="treeModle">
-                <el-tree
-                  :data="data"
-                  ref="tree"
-                  show-checkbox
-                  node-key="id"
-                  @check-change="handleCheckChange"
-                  @node-click="handleClick">
-                </el-tree>
-              </div>
-              <div class="buttons">
-                <el-button type="primary" @click="getCheckedNodes">确定</el-button>
-              </div>
-            </el-dropdown-menu>
-          </el-dropdown>
+          </el-select>
+          <el-button type="primary" :loading='queryLoading' size="medium" @click="getQueryList">查 询</el-button>
 
           <!--显示查询列表-->
           <el-table
             class="userM_el-table"
-            :data="checkingData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)"
+            :data="queryData.slice((currentPage2-1)*pagesize,currentPage2*pagesize)"
             @selection-change="changeFun"
             style="width: 99%; margin-top: 10px">
 
@@ -169,6 +153,7 @@
           </div>
 
         </el-tab-pane>
+
       </el-tabs>
 
       <!--按钮-->
@@ -230,12 +215,16 @@
         testBaseMTableData: [],
         currentRow: null,
         multipleSelection: [],  //复选框
-        choiceData: [],  //选择题
-        checkingData: [],  //判断题
+        choiceData: [],  // 全部题
+        queryData: [],  //查询题
         dialogFormVisible3: false,
         editForm: {
           options: [],
         },
+        queryLoading: false,
+        restaurants: [],
+        state1: '',
+        state2: ''
       }
     },
     computed: {},
@@ -246,9 +235,6 @@
       },
       handleSizeChange(val) {
         //console.log(`每页 ${val} 条`);
-      },
-      handleCurrentChange(val) {
-        //console.log(`当前页: ${val}`);
       },
       // 上传前判断是不是Excel文件
       beforeAvatarUpload(file) {
@@ -411,7 +397,7 @@
           });
         });
       },
-      //获取所有题库信息
+      //获取所有题库信息，提取查询关键字
       getAllTest() {
         axios.get('/teacherCMS/getAllTest', {
           params: {
@@ -419,35 +405,62 @@
             userType: this.userType
           }
         }).then((res) => {
+
           if (res.data) {
             let resData = res.data;
+            let queryArr = [];
             for (let i = 0; i < resData.length; i++) {
               resData[i].num = i + 1;
+              if (resData[i].major !== '') {
+                queryArr.push(resData[i].major)
+              }
+              if (resData[i].title1 !== '') {
+                queryArr.push(resData[i].title1)
+              }
+              if (resData[i].title2 !== '') {
+                queryArr.push(resData[i].title2)
+              }
+              if (resData[i].title3 !== '') {
+                queryArr.push(resData[i].title3)
+              }
+              if (resData[i].title4 !== '') {
+                queryArr.push(resData[i].title4)
+              }
+              if (resData[i].title5 !== '') {
+                queryArr.push(resData[i].title5)
+              }
+              if (resData[i].title6 !== '') {
+                queryArr.push(resData[i].title6)
+              }
             }
             this.choiceData = resData;
             this.total1 = this.choiceData.length;
+            queryArr = core.unique(queryArr)
+            for (let i = 0; i < queryArr.length; i++) {
+              this.restaurants.push({"value": queryArr[i]})
+            }
           }
         });
       },
+
+      // 根据关键字查询
       getQueryList () {
-        axios.get('/teacherCMS/getAllTest', {
-          params: {
-            user: this.username,
-            userType: this.userType
+        this.queryData = []
+        this.total2 = ''
+        let index = 1;
+        for (let i = 0; i < this.choiceData.length; i++) {
+          //console.log(this.choiceData[i])
+          if (this.choiceData[i].major === this.state1) {
+            this.choiceData[i].num = index
+            this.queryData.push(this.choiceData[i])
+            index = index + 1
           }
-        }).then((res) => {
-            console.log(res.data)
-          if (res.data) {
-
-          }
-        });
-      }
-
+        }
+        this.total2 = this.queryData.length;
+      },
     },
     mounted() {
       this.getAllTest()
-      this.getQueryList()
-
     },
     components: {}
   }
