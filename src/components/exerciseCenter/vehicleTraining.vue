@@ -22,7 +22,7 @@
       <!--高压-->
       <el-tab-pane label="高压">
         <div class="courseImg">
-          <img id="tabsCenter1" class="coursepptImg" src="../../assets/imgs/vehicleTraining2.jpg">
+          <img id="tabsCenter1" class="coursepptImg" src="../../assets/imgs/vehicleTraining02.jpg">
           <canvas id="canvas">
           </canvas>
         </div>
@@ -31,7 +31,7 @@
       <!--空调-->
       <el-tab-pane label="空调">
         <div class="courseImg">
-          <img class="coursepptImg" src="../../assets/imgs/vehicleTraining1.jpg">
+          <img class="coursepptImg" src="../../assets/imgs/vehicleTraining01.jpg">
         </div>
       </el-tab-pane>
 
@@ -107,12 +107,13 @@
         },
         balls:[],
         circles:[
-          {x:365.4,y:294.8,color:'red'},
-          {x:375.4,y:294.8,color:'black'},
-          {x:375.4,y:304.8,color:'red'}
+          {x:343.5,y:276.5,a:[340.5,273.5],b:[346.5,273.5],c:[346.5,279.5],d:[340.5,279.5],color:'red'},
+          {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],color:'black'},
+          {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],color:'red'}
         ],
         clientHeight: '',
-        clientWidth: window.innerWidth
+        clientWidth: window.innerWidth,
+        isFull: 0
       }
     },
     //    自定义拖动
@@ -227,19 +228,7 @@
         let tabsCenter1 = document.getElementById('tabsCenter1')
         let cen = ''
         if (this.fullScreen === false) {
-          for(var i = 0; i < this.circles.length; i++){
-            var radius = 3.5
-            this.aBall={
-              radius:radius,
-              x:this.circles[i].x * this.clientWidth / 1024,
-              y:this.circles[i].y * this.clientHeight / 577,
-//          x:this.circles[i].x * this.clientWidth,
-//          y:this.circles[i].y * this.clientHeight,
-              color:this.circles[i].color
-            }
-            this.balls[i]=this.aBall;
-            console.log('22',this.aBall)
-          }
+          this.isFull = 1
           var rfs = elem.requestFullScreen || elem.webkitRequestFullScreen ||
             elem.mozRequestFullScreen || elem.msRequestFullScreen;
           if (typeof rfs != "undefined" && rfs) {
@@ -258,19 +247,7 @@
             fullScreen.style.top = cen + 'px'
           },100)
         } else if (this.fullScreen === true) {
-          for(var i = 0; i < this.circles.length; i++){
-            var radius = 2.8
-            this.aBall={
-              radius:radius,
-              x:this.circles[i].x * 1024 / this.clientWidth,
-              y:this.circles[i].y * 577 / this.clientHeight,
-//          x:this.circles[i].x * this.clientWidth,
-//          y:this.circles[i].y * this.clientHeight,
-              color:this.circles[i].color
-            }
-            this.balls[i]=this.aBall;
-            console.log('33',this.aBall)
-          }
+          this.isFull = 0
 //          console.log(window.ActiveXObject)
           function exitFullscreen() {
             if(document.exitFullscreen) {
@@ -305,6 +282,9 @@
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           this.ctx.beginPath();
+          this.ctx.strokeRect(this.balls[i].a[0], this.balls[i].a[1], 10, 10)
+          this.ctx.closePath()
+          this.ctx.beginPath();
           this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
           if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
             console.log('yes',this.balls[i].x,this.balls[i].y)
@@ -330,6 +310,10 @@
             y:this.circles[i].y,
 //          x:this.circles[i].x * this.clientWidth,
 //          y:this.circles[i].y * this.clientHeight,
+            a:[this.circles[i].a[0],this.circles[i].a[1]],
+            b:[this.circles[i].b[0],this.circles[i].b[1]],
+            c:[this.circles[i].c[0],this.circles[i].c[1]],
+            d:[this.circles[i].d[0],this.circles[i].d[1]],
             color:this.circles[i].color
           }
 //        console.log('this.circles[i].x',this.circles[i].x)
@@ -339,6 +323,7 @@
           console.log('11',this.aBall)
           this.balls[i]=this.aBall;
         }
+        this.draw(0,0)
       },
 //    监听canvas宽高
       handleResize (event) {
@@ -346,6 +331,44 @@
         this.clientHeight = document.getElementById("tabsCenter1").clientHeight
         this.canvas.width = this.clientWidth
         this.canvas.height = this.clientHeight
+        if (this.isFull === 0) {
+          for(var i = 0; i < this.circles.length; i++){
+            var radius = 2.8
+            this.aBall={
+              radius:radius,
+              x:this.circles[i].x * 1024 / this.clientWidth,
+              y:this.circles[i].y * 577 / this.clientHeight,
+              a:[this.circles[i].a[0] * 1024 / this.clientWidth,this.circles[i].a[1] * 577 / this.clientHeight],
+              b:[this.circles[i].b[0] * 1024 / this.clientWidth,this.circles[i].b[1] * 577 / this.clientHeight],
+              c:[this.circles[i].c[0] * 1024 / this.clientWidth,this.circles[i].c[1] * 577 / this.clientHeight],
+              d:[this.circles[i].d[0] * 1024 / this.clientWidth,this.circles[i].d[1] * 577 / this.clientHeight],
+//          x:this.circles[i].x * this.clientWidth,
+//          y:this.circles[i].y * this.clientHeight,
+              color:this.circles[i].color
+            }
+            this.balls[i]=this.aBall;
+            console.log('33',this.aBall)
+          }
+        } else {
+          for(var i = 0; i < this.circles.length; i++){
+            var radius = 3.5
+            this.aBall={
+              radius:radius,
+              x:this.circles[i].x * this.clientWidth / 1024,
+              y:this.circles[i].y * this.clientHeight / 577,
+              a:[this.circles[i].a[0] * this.clientWidth / 1024,this.circles[i].a[1] * this.clientHeight / 577],
+              b:[this.circles[i].b[0] * this.clientWidth / 1024,this.circles[i].b[1] * this.clientHeight / 577],
+              c:[this.circles[i].c[0] * this.clientWidth / 1024,this.circles[i].c[1] * this.clientHeight / 577],
+              d:[this.circles[i].d[0] * this.clientWidth / 1024,this.circles[i].d[1] * this.clientHeight / 577],
+//          x:this.circles[i].x * this.clientWidth,
+//          y:this.circles[i].y * this.clientHeight,
+              color:this.circles[i].color
+            }
+            this.balls[i]=this.aBall;
+            console.log('22',this.aBall)
+          }
+        }
+        this.draw(0,0)
       }
     },
     mounted(){
