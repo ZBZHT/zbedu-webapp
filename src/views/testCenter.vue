@@ -54,26 +54,30 @@ export default {
       for( var i = 0 ; i < this.balls.length ; i ++ ){
         this.ctx.beginPath();
 //        this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
-        this.ctx.moveTo(this.balls[i].a[0],this.balls[i].a[1])
-        this.ctx.lineTo(this.balls[i].b[0],this.balls[i].b[1])
-        this.ctx.lineTo(this.balls[i].c[0],this.balls[i].c[1])
-        this.ctx.lineTo(this.balls[i].d[0],this.balls[i].d[1])
+//        this.ctx.moveTo(this.balls[i].a[0],this.balls[i].a[1])
+//        this.ctx.lineTo(this.balls[i].b[0],this.balls[i].b[1])
+//        this.ctx.lineTo(this.balls[i].c[0],this.balls[i].c[1])
+//        this.ctx.lineTo(this.balls[i].d[0],this.balls[i].d[1])
+        this.ctx.strokeRect(this.balls[i].a[0], this.balls[i].a[1], 10, 10)
+        this.ctx.closePath()
+        this.ctx.beginPath();
+        this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
         if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
           console.log('yes',this.balls[i].x,this.balls[i].y)
 //          this.ctx.clearRect(0, 0, 100, 100);
-//          this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius+2,0,2*Math.PI)
-          this.ctx.moveTo(this.balls[i].a[0]-1,this.balls[i].a[1]-1)
-          this.ctx.lineTo(this.balls[i].b[0]+1,this.balls[i].b[1]-1)
-          this.ctx.lineTo(this.balls[i].c[0]+1,this.balls[i].c[1]+1)
-          this.ctx.lineTo(this.balls[i].d[0]-1,this.balls[i].d[1]+1)
-          this.ctx.closePath()
-          this.ctx.stroke();
+          this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius+2,0,2*Math.PI)
+//          this.ctx.moveTo(this.balls[i].a[0]-1,this.balls[i].a[1]-1)
+//          this.ctx.lineTo(this.balls[i].b[0]+1,this.balls[i].b[1]-1)
+//          this.ctx.lineTo(this.balls[i].c[0]+1,this.balls[i].c[1]+1)
+//          this.ctx.lineTo(this.balls[i].d[0]-1,this.balls[i].d[1]+1)
+//          this.ctx.closePath()
+//          this.ctx.stroke();
         }else{
 //          console.log('bai')
         }
-//        this.ctx.fillStyle=this.balls[i].color
+        this.ctx.fillStyle=this.balls[i].color
         this.ctx.closePath()
-        this.ctx.stroke();
+        this.ctx.fill();
       }
     },
     first() {
