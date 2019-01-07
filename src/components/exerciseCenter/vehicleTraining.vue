@@ -111,89 +111,96 @@
 //          {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],color:'black'},
 //          {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],color:'#f00'}
 //        ],
-        mLPoint:[147,292],
+        mLPoint:[[147,292],[423,289]],
         mLcircles:[
-          {x:0,y:0,color:'#ec851c',id:10001,name:1},
-          {x:1,y:0,color:'#ec851c'},
-          {x:4,y:0,color:'#f00'},
-          {x:5,y:0,color:'#ec851c'},
-          {x:6,y:0,color:'#000'},
-          {x:7,y:0,color:'#000'},
-          {x:8,y:0,color:'#000'},
-          {x:9,y:0,color:'#000'},
-          {x:10,y:0,color:'#000'},
-          {x:11,y:0,color:'#000'},
-          {x:12,y:0,color:'#000'},
-          {x:13,y:0,color:'#000'},
-          {x:14,y:0,color:'#000'},
-          {x:15,y:0,color:'#000'},
-          {x:16,y:0,color:'#000'},
-          {x:17,y:0,color:'#000'},
-          {x:18,y:0,color:'#000'},
-          {x:19,y:0,color:'#000'},
-          {x:20,y:0,color:'#000'},
-          {x:21,y:0,color:'#000'},
-          {x:22,y:0,color:'#ec851c'},
-          {x:0.5,y:1.5,color:'#ec851c'},
-          {x:4,y:1,color:'#f00'},
-          {x:5,y:1,color:'#ec851c'},
-          {x:6,y:1,color:'#000'},
-          {x:7,y:1,color:'#000'},
-          {x:8,y:1,color:'#000'},
-          {x:9,y:1,color:'#000'},
-          {x:10,y:1,color:'#000'},
-          {x:11,y:1,color:'#000'},
-          {x:12,y:1,color:'#000'},
-          {x:13,y:1,color:'#000'},
-          {x:14,y:1,color:'#000'},
-          {x:15,y:1,color:'#f00'},
-          {x:16,y:1,color:'#f00'},
-          {x:17,y:1,color:'#000'},
-          {x:18,y:1,color:'#f00'},
-          {x:19,y:1,color:'#f00'},
-          {x:20,y:1,color:'#000'},
-          {x:21,y:1,color:'#f00'},
-          {x:22,y:1,color:'#000'},
-          {x:4,y:2,color:'#f00'},
-          {x:5,y:2,color:'#000'},
-          {x:6,y:2,color:'#000'},
-          {x:7,y:2,color:'#000'},
-          {x:8,y:2,color:'#000'},
-          {x:9,y:2,color:'#000'},
-          {x:10,y:2,color:'#000'},
-          {x:11,y:2,color:'#000'},
-          {x:12,y:2,color:'#000'},
-          {x:13,y:2,color:'#f00'},
-          {x:14,y:2,color:'#000'},
-          {x:15,y:2,color:'#000'},
-          {x:16,y:2,color:'#000'},
-          {x:17,y:2,color:'#000'},
-          {x:18,y:2,color:'#000'},
-          {x:19,y:2,color:'#000'},
-          {x:20,y:2,color:'#000'},
-          {x:21,y:2,color:'#000'},
-          {x:22,y:2,color:'#000'},
-          {x:0,y:3,color:'#ec851c'},
-          {x:1,y:3,color:'#ec851c'},
-          {x:4,y:3,color:'#f00'},
-          {x:5,y:3,color:'#000'},
-          {x:6,y:3,color:'#000'},
-          {x:7,y:3,color:'#ec851c'},
-          {x:8,y:3,color:'#000'},
-          {x:9,y:3,color:'#f00'},
-          {x:10,y:3,color:'#000'},
-          {x:11,y:3,color:'#ec851c'},
-          {x:12,y:3,color:'#000'},
-          {x:13,y:3,color:'#ec851c'},
-          {x:14,y:3,color:'#000'},
-          {x:15,y:3,color:'#000'},
-          {x:16,y:3,color:'#000'},
-          {x:17,y:3,color:'#000'},
-          {x:18,y:3,color:'#ec851c'},
-          {x:19,y:3,color:'#ec851c'},
-          {x:20,y:3,color:'#000'},
-          {x:21,y:3,color:'#f00'},
-          {x:22,y:3,color:'#f00'},
+          [
+            {x:0,y:0,color:'#ec851c',id:10001,name:1},
+            {x:1,y:0,color:'#ec851c'},
+            {x:4,y:0,color:'#f00'},
+            {x:5,y:0,color:'#ec851c'},
+            {x:6,y:0,color:'#000'},
+            {x:7,y:0,color:'#000'},
+            {x:8,y:0,color:'#000'},
+            {x:9,y:0,color:'#000'},
+            {x:10,y:0,color:'#000'},
+            {x:11,y:0,color:'#000'},
+            {x:12,y:0,color:'#000'},
+            {x:13,y:0,color:'#000'},
+            {x:14,y:0,color:'#000'},
+            {x:15,y:0,color:'#000'},
+            {x:16,y:0,color:'#000'},
+            {x:17,y:0,color:'#000'},
+            {x:18,y:0,color:'#000'},
+            {x:19,y:0,color:'#000'},
+            {x:20,y:0,color:'#000'},
+            {x:21,y:0,color:'#000'},
+            {x:22,y:0,color:'#ec851c'},
+            {x:0.5,y:1.5,color:'#ec851c'},
+            {x:4,y:1,color:'#f00'},
+            {x:5,y:1,color:'#ec851c'},
+            {x:6,y:1,color:'#000'},
+            {x:7,y:1,color:'#000'},
+            {x:8,y:1,color:'#000'},
+            {x:9,y:1,color:'#000'},
+            {x:10,y:1,color:'#000'},
+            {x:11,y:1,color:'#000'},
+            {x:12,y:1,color:'#000'},
+            {x:13,y:1,color:'#000'},
+            {x:14,y:1,color:'#000'},
+            {x:15,y:1,color:'#f00'},
+            {x:16,y:1,color:'#f00'},
+            {x:17,y:1,color:'#000'},
+            {x:18,y:1,color:'#f00'},
+            {x:19,y:1,color:'#f00'},
+            {x:20,y:1,color:'#000'},
+            {x:21,y:1,color:'#f00'},
+            {x:22,y:1,color:'#000'},
+            {x:4,y:2,color:'#f00'},
+            {x:5,y:2,color:'#000'},
+            {x:6,y:2,color:'#000'},
+            {x:7,y:2,color:'#000'},
+            {x:8,y:2,color:'#000'},
+            {x:9,y:2,color:'#000'},
+            {x:10,y:2,color:'#000'},
+            {x:11,y:2,color:'#000'},
+            {x:12,y:2,color:'#000'},
+            {x:13,y:2,color:'#f00'},
+            {x:14,y:2,color:'#000'},
+            {x:15,y:2,color:'#000'},
+            {x:16,y:2,color:'#000'},
+            {x:17,y:2,color:'#000'},
+            {x:18,y:2,color:'#000'},
+            {x:19,y:2,color:'#000'},
+            {x:20,y:2,color:'#000'},
+            {x:21,y:2,color:'#000'},
+            {x:22,y:2,color:'#000'},
+            {x:0,y:3,color:'#ec851c'},
+            {x:1,y:3,color:'#ec851c'},
+            {x:4,y:3,color:'#f00'},
+            {x:5,y:3,color:'#000'},
+            {x:6,y:3,color:'#000'},
+            {x:7,y:3,color:'#ec851c'},
+            {x:8,y:3,color:'#000'},
+            {x:9,y:3,color:'#f00'},
+            {x:10,y:3,color:'#000'},
+            {x:11,y:3,color:'#ec851c'},
+            {x:12,y:3,color:'#000'},
+            {x:13,y:3,color:'#ec851c'},
+            {x:14,y:3,color:'#000'},
+            {x:15,y:3,color:'#000'},
+            {x:16,y:3,color:'#000'},
+            {x:17,y:3,color:'#000'},
+            {x:18,y:3,color:'#ec851c'},
+            {x:19,y:3,color:'#ec851c'},
+            {x:20,y:3,color:'#000'},
+            {x:21,y:3,color:'#f00'},
+            {x:22,y:3,color:'#f00'},
+          ],
+          [
+            {x:0,y:0,color:'#ec851c',id:10001,name:1},
+            {x:1,y:0,color:'#ec851c'},
+            {x:2,y:0,color:'#ec851c'},
+          ]
         ],
         clientHeight: 0,
         clientWidth: window.innerWidth,
@@ -327,8 +334,11 @@
           }
           this.fullScreen = true
           setTimeout(function () {
-            let outHeight =  parseInt(window.getComputedStyle(tabsCenter).height)
+            let outHeight =  document.getElementById("tabsCenter").clientHeight
             cen = (screen.height - outHeight) / 2
+            console.log(screen.height)
+            console.log(outHeight)
+            console.log(cen)
             tabsCenter.style.marginTop = cen + 'px'
             fullScreen.style.top = cen + 'px'
           },100)
@@ -367,21 +377,25 @@
 //      console.log(x)
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         for( var i = 0 ; i < this.balls.length ; i ++ ){
-          this.ctx.beginPath();
-          this.ctx.strokeRect(this.balls[i].a[0] - 0.5, this.balls[i].a[1] - 0.5, this.balls[i].diameter, this.balls[i].diameter)
-          this.ctx.closePath()
-          this.ctx.beginPath();
-          this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
-          if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
-            console.log('yes',this.balls[i].x,this.balls[i].y)
+          var currDraw = this.balls[i]
+//          console.log('currDraw',currDraw)
+          for(var j = 0 ; j < currDraw.length ; j ++){
+            this.ctx.beginPath();
+            this.ctx.strokeRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter)
+//          this.ctx.closePath()
+//          this.ctx.beginPath();
+            this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius,0,2*Math.PI);
+            if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
+              console.log('yes',currDraw[j].x,currDraw[j].y)
 //          this.ctx.clearRect(0, 0, 100, 100);
-            this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius+1,0,2*Math.PI)
-          }else{
+              this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius+1,0,2*Math.PI)
+            }else{
 //          console.log('bai')
-          }
-          this.ctx.fillStyle=this.balls[i].color
+            }
+            this.ctx.fillStyle=currDraw[j].color
 //        this.ctx.closePath()
-          this.ctx.fill();
+            this.ctx.fill();
+          }
         }
       },
 //    计算完的数据给balls
@@ -389,23 +403,31 @@
 //      console.log(this.mLcircles)
 //      console.log(this.mLcircles[0].x)
         for(var i = 0; i < this.mLcircles.length; i++){
-          var radius = 2.4
-          this.aBall={
-            radius:radius,
-            diameter:radius * 3,
-            x:this.mLcircles[i].x * 10.1 + this.mLPoint[0] + (radius * 3) / 2 - 0.5,
-            y:this.mLcircles[i].y * 10.1 + this.mLPoint[1] + (radius * 3) / 2 - 0.5,
+          var currArrayCircles = this.mLcircles[i]
+          var currPoint = this.mLPoint[i]
+          var drawOne = []
+          for(var j = 0; j < currArrayCircles.length; j++){
+            var radius = 2.4
+            this.aBall={
+              radius:radius,
+              diameter:radius * 3,
+              x:currArrayCircles[j].x * 10.1 + currPoint[0] + (radius * 3) / 2 - 0.5,
+              y:currArrayCircles[j].y * 10.1 + currPoint[1] + (radius * 3) / 2 - 0.5,
 //          x:this.mLcircles[i].x * this.clientWidth,
 //          y:this.mLcircles[i].y * this.clientHeight,
-            a:[this.mLcircles[i].x * 10.1 + this.mLPoint[0],this.mLcircles[i].y * 10.1 + this.mLPoint[1]],
-            color:this.mLcircles[i].color
-          }
+              a:[currArrayCircles[j].x * 10.1 + currPoint[0],currArrayCircles[j].y * 10.1 + currPoint[1]],
+              color:currArrayCircles[j].color
+            }
 //        console.log('this.mLcircles[i].x',this.mLcircles[i].x)
 //        console.log('clientWidth',this.clientWidth)
 //        console.log('this.mLcircles[i].y',this.mLcircles[i].y)
 //        console.log('clientHeight',this.clientHeight)
-          console.log('11',this.aBall)
-          this.balls[i]=this.aBall;
+//          console.log('11',this.aBall)
+            drawOne.push(this.aBall);
+//            console.log('drawOne',drawOne)
+          }
+          this.balls.push(drawOne);
+//          console.log(this.balls)
         }
         this.draw(0,0)
       },
@@ -417,37 +439,54 @@
         this.canvas.height = this.clientHeight
         this.ratioX = this.clientWidth / 1024
         this.ratioY = this.clientHeight / 577
-        if (this.isFull === 0) {
-//          缩小
+        if (this.mLcircles.length) {
           for(var i = 0; i < this.mLcircles.length; i++){
-            var radius = 2.4 * (1 / this.ratioX)
-            this.aBall={
-              radius:radius,
-              diameter:radius * 3,
-              x:(this.mLcircles[i].x * 10.1 + this.mLPoint[0] +  radius*this.ratioX+0.5) * (1 / this.ratioX),
-              y:(this.mLcircles[i].y * 10.1 + this.mLPoint[1] +  radius*this.ratioX+0.5) * (1 / this.ratioY),
-              a:[(this.mLcircles[i].x * 10.1 + this.mLPoint[0]) * (1 / this.ratioX), (this.mLcircles[i].y * 10.1 + this.mLPoint[1]) * (1 / this.ratioY)],
-              color:this.mLcircles[i].color
+//            console.log(this.mLcircles.length)
+            var currArrayCircles = this.mLcircles[i]
+            var currPoint = this.mLPoint[i]
+            var drawOne = []
+            if (this.isFull === 0){
+              //          缩小
+              for(var j = 0; j < currArrayCircles.length; j++){
+                if(currArrayCircles.length){
+//                  console.log(currArrayCircles.length)
+                  var radius = 2.4 * (1 / this.ratioX)
+                  this.aBall={
+                    radius:radius,
+                    diameter:radius * 3,
+                    x:(currArrayCircles[j].x * 10.1 + currPoint[0] +  radius*this.ratioX+0.5) * (1 / this.ratioX),
+                    y:(currArrayCircles[j].y * 10.1 + currPoint[1] +  radius*this.ratioX+0.5) * (1 / this.ratioY),
+                    a:[(currArrayCircles[j].x * 10.1 + currPoint[0]) * (1 / this.ratioX), (currArrayCircles[j].y * 10.1 + currPoint[1]) * (1 / this.ratioY)],
+                    color:currArrayCircles[j].color
+                  }
+                  drawOne.push(this.aBall);
+//            console.log('33',this.aBall)
+                }
+
+              }
+            } else {
+              //          放大
+              for(var j = 0; j < currArrayCircles.length; j++){
+                if(currArrayCircles.length){
+//                  console.log(currArrayCircles.length)
+                  var radius = 2.4 * (this.ratioX)
+                  this.aBall={
+                    radius:radius,
+                    diameter:radius * 3,
+                    x:(currArrayCircles[j].x * 10.1 + currPoint[0] + radius/this.ratioX+1 ) * (this.ratioX),
+                    y:(currArrayCircles[j].y * 10.1 + currPoint[1] + radius/this.ratioX+1) * (this.ratioY),
+                    a:[(currArrayCircles[j].x * 10.1 + currPoint[0]) * (this.ratioX), (currArrayCircles[j].y * 10.1 + currPoint[1]) * (this.ratioY)],
+                    color:currArrayCircles[j].color
+                  }
+                  drawOne.push(this.aBall);
+//            console.log('22',this.aBall)
+                }
+              }
             }
-            this.balls[i]=this.aBall;
-            console.log('33',this.aBall)
-          }
-        } else {
-//          放大
-          for(var i = 0; i < this.mLcircles.length; i++){
-            var radius = 2.4 * (this.ratioX)
-            this.aBall={
-              radius:radius,
-              diameter:radius * 3,
-              x:(this.mLcircles[i].x * 10.1 + this.mLPoint[0] + radius/this.ratioX+1 ) * (this.ratioX),
-              y:(this.mLcircles[i].y * 10.1 + this.mLPoint[1] + radius/this.ratioX+1) * (this.ratioY),
-              a:[(this.mLcircles[i].x * 10.1 + this.mLPoint[0]) * (this.ratioX), (this.mLcircles[i].y * 10.1 + this.mLPoint[1]) * (this.ratioY)],
-              color:this.mLcircles[i].color
-            }
-            this.balls[i]=this.aBall;
-            console.log('22',this.aBall)
+            this.balls[i] = drawOne;
           }
         }
+
         this.draw(0,0)
       }
     },
