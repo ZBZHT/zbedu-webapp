@@ -36,9 +36,17 @@ export default {
     var canvas = document.getElementById("canvas");
     this.canvas = canvas
     this.ctx = this.canvas.getContext("2d")
+    this.ooo()
     canvas.addEventListener("mousemove",this.detect())
   },
   methods:{
+    ooo(){
+      let img = new Image();
+      img.onload = function(){
+        this.ctx.drawImage(img, 0, 0)
+      }
+      img.src="src/assets/imgs/red.png";
+    },
     detect(){
       var _this = this
       //鼠标点击canvas，获取的鼠标点击的位置(x,y)

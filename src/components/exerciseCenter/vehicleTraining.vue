@@ -66,9 +66,41 @@
         <i class="iconfont iconfont1" v-show="whichGramShow === 1">&#xe60d;</i>
       </div>
     </div>
-    <div class="multimeterTruth" id="multimeterTruthID" v-drag v-show="clickMultimeterData === 1">
+    <div class="multimeterTruth"
+         id="multimeterTruthID"
+         @mousedown="move"
+         @touchmove="move"
+         v-show="clickMultimeterData === 1">
+      <div class="multimeterTruthDiv" id="multimeterTruthDiv">
+        {{multimeterTruthDivData}}
+      </div>
+      <!--<p class="multimeterTruthOff" @click="clickZhuan">off</p>-->
+      <!--<p class="multimeterTruthV">V</p>-->
+      <!--<p class="multimeterTruthV0">V0</p>-->
+      <!--<p class="multimeterTruthV1">V1</p>-->
+      <!--<p class="multimeterTruthV2">V2</p>-->
+      <!--<p class="multimeterTruthV3">V3</p>-->
+      <!--<p class="multimeterTruthV4">V4</p>-->
+      <!--<p class="multimeterTruthV5">V5</p>-->
+      <!--<p class="multimeterTruthV6">V6</p>-->
+      <p class="multimeterTruthV"
+         @click="clickZhuan(index)"
+         v-for="(item,index) in multimeterTruthV"
+         :class="currIndex === index ? 'multimeterTruthVchoose' : '' "
+         :id="multimeterTruthVId(index)">
+        {{item}}
+      </p>
+      <div class="multimeterTruthTransform" id="multimeterTruthTransform">
+        <!--<img src="../../assets/imgs/zhuan.png">-->
+      </div>
     </div>
-
+    <div class="electroprobe"
+         @mousedown="move"
+         @touchmove="move"
+         v-show="clickMultimeterData === 1">
+      <div class="electroprobeBlack" id="electroprobeBlack"></div>
+      <div class="electroprobeRed" id="electroprobeRed"></div>
+    </div>
   </div>
 </template>
 
@@ -80,6 +112,11 @@
     name: 'vehicleTraining',
     data () {
       return {
+        multimeterTruthV:['off','V','V0','V1','V2','V3','V4','V5','V6'],
+        currIndex:0,
+        windowWidth: 0,
+        windowHeight: 0,
+        clickmultimeterTruth: 0,
         activeName: '',
         showGramData: 0,
         whichShow: '',
@@ -206,32 +243,49 @@
         clientWidth: window.innerWidth,
         isFull: 0,
         ratioX: 0,
-        ratioY: 0
+        ratioY: 0,
+        clientX: 0,
+        clientY: 0,
+        layerX: 0,
+        layerY: 0,
+        offsetX: 0,
+        offsetY: 0,
+        pageX: 0,
+        pageY: 0,
+        positionX: 0,
+        positionY: 0,
+        multimeterTruthDivData:10,
+        eleX:0,
+        eleY:0,
+        preRedX:50,
+        preRedY:50,
+        preBlackX:100,
+        preBlackY:100
       }
     },
     //    自定义拖动
-    directives:{
-      drag(el){
-        el.onmousedown = function(e){
-          let elId = document.getElementById('multimeterTruthID')
-          //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
-          var divx = e.clientX - elId.offsetLeft;
-          var divy = e.clientY - elId.offsetTop;
-          //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
-          document.onmousemove = function(e){
-            //获取移动后div的位置：鼠标位置-divx/divy
-            var l = e.clientX - divx;
-            var t = e.clientY - divy;
-            elId.style.left=l+'px';
-            elId.style.top=t+'px';
-          }
-          document.onmouseup = function(e){
-            document.onmousemove = null;
-            document.onmouseup = null;
-          }
-        }
-      }
-    },
+//    directives:{
+//      drag(el){
+//        el.onmousedown = function(e){
+//          let elId = document.getElementById('multimeterTruthID')
+//          //获取鼠标点击处分别与div左边和上边的距离：鼠标位置-div位置
+//          var divx = e.clientX - elId.offsetLeft;
+//          var divy = e.clientY - elId.offsetTop;
+//          //包含在onmousedown里，表示点击后才移动，为防止鼠标移出div，使用document.onmousemove
+//          document.onmousemove = function(e){
+//            //获取移动后div的位置：鼠标位置-divx/divy
+//            var l = e.clientX - divx;
+//            var t = e.clientY - divy;
+//            elId.style.left=l+'px';
+//            elId.style.top=t+'px';
+//          }
+//          document.onmouseup = function(e){
+//            document.onmousemove = null;
+//            document.onmouseup = null;
+//          }
+//        }
+//      }
+//    },
     watch: {
       whichGramShow: function (whichGramShow) {
         let that = this
@@ -272,9 +326,147 @@
          that.echartsOption.xAxis.data = []
          that.echartsOption.series[0].data = []
         */
+      },
+      clientX (clientX) {
+//        console.log(this.clientX)
+        this.clientX = clientX
       }
     },
     methods: {
+//      生成电压符号ID
+      multimeterTruthVId(index){
+        return "multimeterTruthV" + index
+      },
+//      点击电压旋转
+      clickZhuan(index){
+        console.log(index)
+        this.currIndex = index
+        document.getElementById("multimeterTruthTransform").style.transform = "rotate(" + 22.5 * index + "deg)"
+      },
+      insert () {
+        var _this = this
+        var currEle = ''
+        let img = ['imgR','imgB']
+        let imgSrc = ['src/assets/imgs/red.png','src/assets/imgs/black.png']
+        let imgL = [50,100]
+
+        for(var i = 0; i < img.length; i++){
+           img[i] = new Image();
+           img[i].src=imgSrc[i];
+          _this.ctx.drawImage(img[i],imgL[i],imgL[i],25,180);
+          _this.canvas.onmousedown=function (e) {
+            console.log(e)
+            var x0,y0
+            x0 = e.clientX-_this.canvas.getBoundingClientRect().left;
+            y0 = e.clientY-_this.canvas.getBoundingClientRect().top - 90;
+            console.log(x0,y0)
+            if (_this.preRedX<=x0 && x0<=_this.preRedX+25&&_this.preRedY<=y0<=_this.preRedY+180){
+//                console.log(_this.preRedX)
+//                console.log(x0)
+//                console.log(_this.preRedY)
+//                console.log(y0)
+//                _this.ctx.drawImage(img[0], x1 - 12, y1, 25, 180);
+//                _this.preRedX = x0
+//                _this.preRedY = y0
+              currEle = 1
+              console.log(currEle)
+            } else if (_this.preBlackX<=x0<=_this.preBlackX+25&&_this.preBlackY<=y0<=_this.preBlackY+180){
+//                _this.ctx.drawImage(img[1], x1 - 12, y1, 25, 180);
+//                _this.preBlackX = x1
+//                _this.preBlackY = y1
+              currEle = 2
+              console.log(currEle)
+            }
+            _this.canvas.onmousemove = function (e) {
+              var x1,y1
+              x1 = e.clientX-_this.canvas.getBoundingClientRect().left;
+              y1 = e.clientY-_this.canvas.getBoundingClientRect().top - 90;
+//              console.log(x1,y1)
+//                console.log(e)
+              _this.draw(x1, y1);
+              if(currEle === 1){
+                _this.ctx.drawImage(img[0], x1 - 12, y1, 25, 180);
+                _this.preRedX = x0
+                _this.preRedY = y0
+              }else if(currEle === 2){
+                _this.ctx.drawImage(img[1], x1 - 12, y1, 25, 180);
+                _this.preBlackX = x1
+                _this.preBlackY = y1
+              }
+            };
+
+            _this.canvas.onmouseup = function () {
+              _this.canvas.onmousemove = null;
+              _this.canvas.onmouseup = null;
+            };
+          }
+        }
+
+      },
+      //      click和touch事件
+      move(e){
+        if (e.touches) {
+//          console.log('touch事件')
+          document.addEventListener("touchstart",function(e){
+            console.log(e);
+            let odiv = e.touches[0].target;
+            var touches = e.touches[0];
+            let disX = touches.clientX - odiv.offsetLeft + 34
+            let disY = touches.clientY - odiv.offsetTop + 26
+            document.addEventListener("touchmove",function(e) {
+              var touches = e.touches[0];
+              let left = touches.clientX - disX;
+              let top = touches.clientY - disY;
+              this.positionX = top
+              this.positionY = left
+              odiv.style.left = left + "px";
+              odiv.style.top = top + "px";
+            },false)
+          },false)
+
+        } else {
+            this.clientX = e.clientX
+            this.clientY = e.clientY
+            this.layerX = e.layerX
+            this.layerY = e.layerY
+            this.offsetX = e.offsetX
+            this.offsetY = e.offsetY
+            this.pageX = e.pageX
+            this.pageY = e.pageY
+
+//          console.log('鼠标事件')
+          var str = e.target.id.substring(0,10)
+//          console.log(e)
+          if (str === 'multimeter') {
+            var odiv = document.getElementById('multimeterTruthID');
+          } else {
+            var odiv = e.target
+          }
+          //算出鼠标相对元素的位置
+
+          let disX = e.clientX - odiv.offsetLeft
+          let disY = e.clientY - odiv.offsetTop
+          this.clientX = e.clientX
+          this.clientY = e.clientY
+          document.onmousemove = (e) => {       //鼠标按下并移动的事件
+            //用鼠标的位置减去鼠标相对元素的位置，得到元素的位置
+            let left = e.clientX - disX
+            let top = e.clientY - disY
+            //绑定元素位置到positionX和positionY上面
+            this.positionX = top
+            this.positionY = left
+            //移动当前元素
+            odiv.style.left = left + 'px'
+            odiv.style.top = top + 'px'
+//           console.log(e)
+          };
+          document.onmouseup = (e) => {
+            document.onmousemove = null;
+            document.onmouseup = null;
+          };
+
+        }
+      },
       upEcharts () {
       },
       handleClickTabs(tab){
@@ -299,11 +491,12 @@
       clickMultimeter () {
         if (this.clickMultimeterData === 0) {
           document.getElementById('multimeterTruthID').style.top=80+'px';
-          document.getElementById('multimeterTruthID').style.left=77+'%';
+          document.getElementById('multimeterTruthID').style.left=75+'%';
           this.clickMultimeterData = 1
         } else {
           this.clickMultimeterData = 0
         }
+        this.draw(0,0)
       },
 //  点击图表
       clickDatagram () {
@@ -369,12 +562,20 @@
         this.canvas.onmousemove = function (e){
           var x=e.clientX-_this.canvas.getBoundingClientRect().left;
           var y=e.clientY-_this.canvas.getBoundingClientRect().top;
+//          console.log(e)
           _this.draw(x,y);
+
+
+
+
+
+
         }
       },
 //    画布显示balls数据
       draw(x,y){
-//      console.log(x)
+//        console.log(x)
+//        console.log(y)
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
@@ -385,6 +586,9 @@
 //          this.ctx.closePath()
 //          this.ctx.beginPath();
             this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius,0,2*Math.PI);
+            if (this.clickMultimeterData === 1) {
+              this.insert()
+            }
             if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
               console.log('yes',currDraw[j].x,currDraw[j].y)
 //          this.ctx.clearRect(0, 0, 100, 100);
@@ -392,6 +596,16 @@
             }else{
 //          console.log('bai')
             }
+//            console.log('currX1',this.eleX)
+//            console.log('currY1',this.eleY)
+            if(this.ctx.isPointInPath(this.eleX,this.eleY)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
+              console.log('yes',currDraw[j].x,currDraw[j].y)
+//          this.ctx.clearRect(0, 0, 100, 100);
+              this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius+1,0,2*Math.PI)
+            }else{
+//          console.log('bai')
+            }
+
             this.ctx.fillStyle=currDraw[j].color
 //        this.ctx.closePath()
             this.ctx.fill();
@@ -491,12 +705,18 @@
       }
     },
     mounted(){
+      this.windowWidth = this.clientWidth
+      this.windowHeight = window.innerHeight
+      console.log(this.clientWidth)
+      console.log(this.windowHeight)
       var canvas = document.getElementById("canvas");
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
       canvas.addEventListener("mousemove",this.detect())
-      this.clientWidth = this.clientWidth * 0.65
-      this.clientHeight = this.clientWidth / 1.85
+//      this.clientWidth = this.clientWidth * 0.65
+//      this.clientHeight = this.clientWidth / 1.85
+      this.clientWidth = 1024
+      this.clientHeight = 577
       this.ratioX = this.clientWidth / 1024
       this.ratioY = this.clientHeight / 577
 //    console.log(this.clientWidth)
@@ -556,6 +776,7 @@
     position:absolute;
     top:0;
     left:0;
+    /*z-index: -1;*/
   }
   #echarts {
     width: 340px;
@@ -655,12 +876,104 @@
     font-size: 30px;
   }
   .vehicleTraining .multimeterTruth{
-    width:150px;
+    width:220px;
     height:300px;
     position: absolute;
     top:80px;
     right:80px;
     background: url(../../assets/imgs/multimeter.png) no-repeat;
+    background-size: cover;
+    /*pointer-events: none;*/
+  }
+  .vehicleTraining .multimeterTruth .multimeterTruthV{
+    position: absolute;
+    color: #fff;
+    font-size: 12px;
+    z-index:99;
+    cursor: pointer;
+  }
+  .vehicleTraining .multimeterTruth .multimeterTruthVchoose{
+    color: #f00;
+    font-weight: bolder;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV0{
+    top: 180px;
+    left: 63px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV1{
+    top: 165px;
+    left: 72px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV2{
+    top: 151px;
+    left: 75px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV3{
+    top: 142px;
+    left: 89px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV4{
+    top: 138px;
+    left: 105px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV5{
+    top: 142px;
+    left: 122px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV6{
+    top: 151px;
+    left: 137px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV7{
+    top: 165px;
+    left: 145px;
+  }
+  .vehicleTraining .multimeterTruth #multimeterTruthV8{
+    top: 180px;
+    left: 147px;
+  }
+  .vehicleTraining .multimeterTruth .multimeterTruthDiv{
+    width: 39.5%;
+    height: 14%;
+    background: #a3afa1;
+    position: absolute;
+    top: 50px;
+    right: 64px;
+    text-align: right;
+    box-sizing: border-box;
+    padding-top: 10%;
+    padding-right: 1%;
+  }
+  .vehicleTraining .multimeterTruth .multimeterTruthTransform{
+    width: 37.5%;
+    height: 27%;
+    position: absolute;
+    top: 146px;
+    right: 66px;
+    background: url(../../assets/imgs/zhuan.png) no-repeat;
+    background-size: cover;
+  }
+  .vehicleTraining .electroprobeBlack{
+    width: 25px;
+    height: 180px;
+    position: absolute;
+    bottom: 28px;
+    right: 165px;
+    background: url(../../assets/imgs/black.png) no-repeat;
+    background-size: cover;
+    /*pointer-events: none;*/
+    /*z-index: 1;*/
+  }
+  .vehicleTraining .electroprobeRed{
+    width: 25px;
+    height: 180px;
+    position: absolute;
+    bottom: 25px;
+    right: 66px;
+    background: url(../../assets/imgs/red.png) no-repeat;
+    background-size: cover;
+    /*pointer-events: none;*/
+    /*z-index: 1;*/
   }
   .vehicleTraining .datagramTruth{
     width:300px;
