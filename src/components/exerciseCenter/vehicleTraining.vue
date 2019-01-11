@@ -289,16 +289,16 @@
 //      }
 //    },
     watch: {
-      whichGramShow: function (whichGramShow) {
 
-      }
     },
     methods: {
-      upEcharts () {
+      upEcharts() {
+        console.log("789410")
         let that = this
         clearInterval(that.setInterval)
         let xAxisData = that.echartsOption.xAxis.data
         let seriesData = that.echartsOption.series[0].data
+
         function upEcharts1() {
           let myChart = echarts.init(document.getElementById('echarts'))
           let time = moment(new Date()).format('HH:mm:ss')
@@ -328,24 +328,19 @@
            clearInterval(that.setInterval);
            }*/
         }
+
         /*调用方法更新数据*/
         upEcharts1()
         that.setInterval = setInterval(function () {
           upEcharts1()
         }, 1000)
         /*
-         xAxisData = []
-         seriesData = []
-         that.echartsOption.xAxis.data = []
-         that.echartsOption.series[0].data = []
-         */
+           xAxisData = []
+           seriesData = []
+           that.echartsOption.xAxis.data = []
+           that.echartsOption.series[0].data = []
+           */
       },
-      clientX (clientX) {
-//        console.log(this.clientX)
-        this.clientX = clientX
-      }
-    },
-    methods: {
 //      生成电压符号ID
       multimeterTruthVId(index){
         return "multimeterTruthV" + index
@@ -479,8 +474,6 @@
           };
 
         }
-      },
-      upEcharts () {
       },
       handleClickTabs(tab){
       },
