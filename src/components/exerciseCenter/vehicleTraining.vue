@@ -101,6 +101,7 @@
       <div class="electroprobeBlack" id="electroprobeBlack"></div>
       <div class="electroprobeRed" id="electroprobeRed"></div>
     </div>
+    {{NewpreBlackX}}
   </div>
 </template>
 
@@ -146,99 +147,99 @@
         },
         balls:[],
 //        mLcircles:[
-//          {x:343.5,y:276.5,a:[340.5,273.5],b:[346.5,273.5],c:[346.5,279.5],d:[340.5,279.5],color:'#f00'},
-//          {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],color:'black'},
-//          {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],color:'#f00'}
+//          {x:343.5,y:276.5,a:[340.5,273.5],b:[346.5,273.5],c:[346.5,279.5],d:[340.5,279.5],id:1,color:'#f00'},
+//          {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],id:1,color:'black'},
+//          {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],id:1,color:'#f00'}
 //        ],
         mLPoint:[[147,292],[423,289]],
         mLcircles:[
           [
-            {x:0,y:0,color:'#ec851c',id:10001,name:1},
-            {x:1,y:0,color:'#ec851c'},
-            {x:4,y:0,color:'#f00'},
-            {x:5,y:0,color:'#ec851c'},
-            {x:6,y:0,color:'#000'},
-            {x:7,y:0,color:'#000'},
-            {x:8,y:0,color:'#000'},
-            {x:9,y:0,color:'#000'},
-            {x:10,y:0,color:'#000'},
-            {x:11,y:0,color:'#000'},
-            {x:12,y:0,color:'#000'},
-            {x:13,y:0,color:'#000'},
-            {x:14,y:0,color:'#000'},
-            {x:15,y:0,color:'#000'},
-            {x:16,y:0,color:'#000'},
-            {x:17,y:0,color:'#000'},
-            {x:18,y:0,color:'#000'},
-            {x:19,y:0,color:'#000'},
-            {x:20,y:0,color:'#000'},
-            {x:21,y:0,color:'#000'},
-            {x:22,y:0,color:'#ec851c'},
-            {x:0.5,y:1.5,color:'#ec851c'},
-            {x:4,y:1,color:'#f00'},
-            {x:5,y:1,color:'#ec851c'},
-            {x:6,y:1,color:'#000'},
-            {x:7,y:1,color:'#000'},
-            {x:8,y:1,color:'#000'},
-            {x:9,y:1,color:'#000'},
-            {x:10,y:1,color:'#000'},
-            {x:11,y:1,color:'#000'},
-            {x:12,y:1,color:'#000'},
-            {x:13,y:1,color:'#000'},
-            {x:14,y:1,color:'#000'},
-            {x:15,y:1,color:'#f00'},
-            {x:16,y:1,color:'#f00'},
-            {x:17,y:1,color:'#000'},
-            {x:18,y:1,color:'#f00'},
-            {x:19,y:1,color:'#f00'},
-            {x:20,y:1,color:'#000'},
-            {x:21,y:1,color:'#f00'},
-            {x:22,y:1,color:'#000'},
-            {x:4,y:2,color:'#f00'},
-            {x:5,y:2,color:'#000'},
-            {x:6,y:2,color:'#000'},
-            {x:7,y:2,color:'#000'},
-            {x:8,y:2,color:'#000'},
-            {x:9,y:2,color:'#000'},
-            {x:10,y:2,color:'#000'},
-            {x:11,y:2,color:'#000'},
-            {x:12,y:2,color:'#000'},
-            {x:13,y:2,color:'#f00'},
-            {x:14,y:2,color:'#000'},
-            {x:15,y:2,color:'#000'},
-            {x:16,y:2,color:'#000'},
-            {x:17,y:2,color:'#000'},
-            {x:18,y:2,color:'#000'},
-            {x:19,y:2,color:'#000'},
-            {x:20,y:2,color:'#000'},
-            {x:21,y:2,color:'#000'},
-            {x:22,y:2,color:'#000'},
-            {x:0,y:3,color:'#ec851c'},
-            {x:1,y:3,color:'#ec851c'},
-            {x:4,y:3,color:'#f00'},
-            {x:5,y:3,color:'#000'},
-            {x:6,y:3,color:'#000'},
-            {x:7,y:3,color:'#ec851c'},
-            {x:8,y:3,color:'#000'},
-            {x:9,y:3,color:'#f00'},
-            {x:10,y:3,color:'#000'},
-            {x:11,y:3,color:'#ec851c'},
-            {x:12,y:3,color:'#000'},
-            {x:13,y:3,color:'#ec851c'},
-            {x:14,y:3,color:'#000'},
-            {x:15,y:3,color:'#000'},
-            {x:16,y:3,color:'#000'},
-            {x:17,y:3,color:'#000'},
-            {x:18,y:3,color:'#ec851c'},
-            {x:19,y:3,color:'#ec851c'},
-            {x:20,y:3,color:'#000'},
-            {x:21,y:3,color:'#f00'},
-            {x:22,y:3,color:'#f00'},
+            {x:0,y:0,id:0,color:'#ec851c',name:1},
+            {x:1,y:0,id:1,color:'#ec851c'},
+            {x:4,y:0,id:2,color:'#f00'},
+            {x:5,y:0,id:3,color:'#ec851c'},
+            {x:6,y:0,id:4,color:'#000'},
+            {x:7,y:0,id:5,color:'#000'},
+            {x:8,y:0,id:6,color:'#000'},
+            {x:9,y:0,id:7,color:'#000'},
+            {x:10,y:0,id:8,color:'#000'},
+            {x:11,y:0,id:9,color:'#000'},
+            {x:12,y:0,id:10,color:'#000'},
+            {x:13,y:0,id:11,color:'#000'},
+            {x:14,y:0,id:12,color:'#000'},
+            {x:15,y:0,id:13,color:'#000'},
+            {x:16,y:0,id:14,color:'#000'},
+            {x:17,y:0,id:15,color:'#000'},
+            {x:18,y:0,id:16,color:'#000'},
+            {x:19,y:0,id:17,color:'#000'},
+            {x:20,y:0,id:18,color:'#000'},
+            {x:21,y:0,id:19,color:'#000'},
+            {x:22,y:0,id:20,color:'#ec851c'},
+            {x:0.5,y:1.5,id:21,color:'#ec851c'},
+            {x:4,y:1,id:22,color:'#f00'},
+            {x:5,y:1,id:1,color:'#ec851c'},
+            {x:6,y:1,id:1,color:'#000'},
+            {x:7,y:1,id:1,color:'#000'},
+            {x:8,y:1,id:1,color:'#000'},
+            {x:9,y:1,id:1,color:'#000'},
+            {x:10,y:1,id:1,color:'#000'},
+            {x:11,y:1,id:1,color:'#000'},
+            {x:12,y:1,id:1,color:'#000'},
+            {x:13,y:1,id:1,color:'#000'},
+            {x:14,y:1,id:1,color:'#000'},
+            {x:15,y:1,id:1,color:'#f00'},
+            {x:16,y:1,id:1,color:'#f00'},
+            {x:17,y:1,id:1,color:'#000'},
+            {x:18,y:1,id:1,color:'#f00'},
+            {x:19,y:1,id:1,color:'#f00'},
+            {x:20,y:1,id:1,color:'#000'},
+            {x:21,y:1,id:1,color:'#f00'},
+            {x:22,y:1,id:1,color:'#000'},
+            {x:4,y:2,id:1,color:'#f00'},
+            {x:5,y:2,id:1,color:'#000'},
+            {x:6,y:2,id:1,color:'#000'},
+            {x:7,y:2,id:1,color:'#000'},
+            {x:8,y:2,id:1,color:'#000'},
+            {x:9,y:2,id:1,color:'#000'},
+            {x:10,y:2,id:1,color:'#000'},
+            {x:11,y:2,id:1,color:'#000'},
+            {x:12,y:2,id:1,color:'#000'},
+            {x:13,y:2,id:1,color:'#f00'},
+            {x:14,y:2,id:1,color:'#000'},
+            {x:15,y:2,id:1,color:'#000'},
+            {x:16,y:2,id:1,color:'#000'},
+            {x:17,y:2,id:1,color:'#000'},
+            {x:18,y:2,id:1,color:'#000'},
+            {x:19,y:2,id:1,color:'#000'},
+            {x:20,y:2,id:1,color:'#000'},
+            {x:21,y:2,id:1,color:'#000'},
+            {x:22,y:2,id:1,color:'#000'},
+            {x:0,y:3,id:1,color:'#ec851c'},
+            {x:1,y:3,id:1,color:'#ec851c'},
+            {x:4,y:3,id:1,color:'#f00'},
+            {x:5,y:3,id:1,color:'#000'},
+            {x:6,y:3,id:1,color:'#000'},
+            {x:7,y:3,id:1,color:'#ec851c'},
+            {x:8,y:3,id:1,color:'#000'},
+            {x:9,y:3,id:1,color:'#f00'},
+            {x:10,y:3,id:1,color:'#000'},
+            {x:11,y:3,id:1,color:'#ec851c'},
+            {x:12,y:3,id:1,color:'#000'},
+            {x:13,y:3,id:1,color:'#ec851c'},
+            {x:14,y:3,id:1,color:'#000'},
+            {x:15,y:3,id:1,color:'#000'},
+            {x:16,y:3,id:1,color:'#000'},
+            {x:17,y:3,id:1,color:'#000'},
+            {x:18,y:3,id:1,color:'#ec851c'},
+            {x:19,y:3,id:1,color:'#ec851c'},
+            {x:20,y:3,id:1,color:'#000'},
+            {x:21,y:3,id:1,color:'#f00'},
+            {x:22,y:3,id:1,color:'#f00'},
           ],
           [
-            {x:0,y:0,color:'#ec851c',id:10001,name:1},
-            {x:1,y:0,color:'#ec851c'},
-            {x:2,y:0,color:'#ec851c'},
+            {x:0,y:0,id:1,color:'#ec851c'},
+            {x:1,y:0,id:1,color:'#ec851c'},
+            {x:2,y:0,id:1,color:'#ec851c'},
           ]
         ],
         clientHeight: 0,
@@ -246,23 +247,28 @@
         isFull: 0,
         ratioX: 0,
         ratioY: 0,
-        clientX: 0,
-        clientY: 0,
-        layerX: 0,
-        layerY: 0,
-        offsetX: 0,
-        offsetY: 0,
-        pageX: 0,
-        pageY: 0,
+//        clientX: 0,
+//        clientY: 0,
+//        layerX: 0,
+//        layerY: 0,
+//        offsetX: 0,
+//        offsetY: 0,
+//        pageX: 0,
+//        pageY: 0,
         positionX: 0,
         positionY: 0,
         multimeterTruthDivData:10,
-        eleX:0,
-        eleY:0,
-        preRedX:50,
-        preRedY:50,
-        preBlackX:100,
-        preBlackY:100
+//        eleX:0,
+//        eleY:0,
+        XYoption:{
+          preRedX:0,
+          preRedY:0,
+          preBlackX:0,
+          preBlackY:0,
+        },
+        NewpreBlackX:0,
+        NewpreBlackY:0,
+
       }
     },
     //    自定义拖动
@@ -289,7 +295,19 @@
 //      }
 //    },
     watch: {
-
+      XYoption:{//深度监听，可监听到对象、数组的变化
+        handler(NpreBlackX, OpreBlackX){
+          this.draw(NpreBlackX)
+//          console.log(NpreBlackX)
+        },
+        deep:true
+      }
+    },
+    computed:{
+//      preBlackX(){
+//        return this.preBlackX
+//        this.aaa(this.preBlackX)
+//      }
     },
     methods: {
       upEcharts() {
@@ -352,64 +370,26 @@
         document.getElementById("multimeterTruthTransform").style.transform = "rotate(" + 22.5 * index + "deg)"
       },
       insert () {
-        var _this = this
-        var currEle = ''
-        let img = ['imgR','imgB']
-        let imgSrc = ['src/assets/imgs/red.png','src/assets/imgs/black.png']
-        let imgL = [50,100]
+        var stage=new createjs.Stage("canvas");
+        createjs.Ticker.setFPS(30);
+        createjs.Ticker.addEventListener("tick",stage);
 
-        for(var i = 0; i < img.length; i++){
-           img[i] = new Image();
-           img[i].src=imgSrc[i];
-          _this.ctx.drawImage(img[i],imgL[i],imgL[i],25,180);
-          _this.canvas.onmousedown=function (e) {
-            console.log(e)
-            var x0,y0
-            x0 = e.clientX-_this.canvas.getBoundingClientRect().left;
-            y0 = e.clientY-_this.canvas.getBoundingClientRect().top - 90;
-            console.log(x0,y0)
-            if (_this.preRedX<=x0 && x0<=_this.preRedX+25&&_this.preRedY<=y0<=_this.preRedY+180){
-//                console.log(_this.preRedX)
-//                console.log(x0)
-//                console.log(_this.preRedY)
-//                console.log(y0)
-//                _this.ctx.drawImage(img[0], x1 - 12, y1, 25, 180);
-//                _this.preRedX = x0
-//                _this.preRedY = y0
-              currEle = 1
-              console.log(currEle)
-            } else if (_this.preBlackX<=x0<=_this.preBlackX+25&&_this.preBlackY<=y0<=_this.preBlackY+180){
-//                _this.ctx.drawImage(img[1], x1 - 12, y1, 25, 180);
-//                _this.preBlackX = x1
-//                _this.preBlackY = y1
-              currEle = 2
-              console.log(currEle)
-            }
-            _this.canvas.onmousemove = function (e) {
-              var x1,y1
-              x1 = e.clientX-_this.canvas.getBoundingClientRect().left;
-              y1 = e.clientY-_this.canvas.getBoundingClientRect().top - 90;
-//              console.log(x1,y1)
-//                console.log(e)
-              _this.draw(x1, y1);
-              if(currEle === 1){
-                _this.ctx.drawImage(img[0], x1 - 12, y1, 25, 180);
-                _this.preRedX = x0
-                _this.preRedY = y0
-              }else if(currEle === 2){
-                _this.ctx.drawImage(img[1], x1 - 12, y1, 25, 180);
-                _this.preBlackX = x1
-                _this.preBlackY = y1
-              }
-            };
-
-            _this.canvas.onmouseup = function () {
-              _this.canvas.onmousemove = null;
-              _this.canvas.onmouseup = null;
-            };
-          }
-        }
-
+        var image=new createjs.Bitmap("src/assets/imgs/black.png");
+        stage.addChild(image);
+//        stage.update();
+        var oldX;
+        var oldY;
+        image.addEventListener("mousedown",function(e){
+          oldX= e.stageX;
+          oldY= e.stageY;
+        });
+        image.addEventListener("pressmove", function (e) {
+          e.target.x+= e.stageX-oldX;
+          e.target.y+= e.stageY-oldY;
+          oldX= e.stageX;
+          oldY= e.stageY;
+        });
+//        this.draw(0,0)
       },
       //      click和touch事件
       move(e){
@@ -433,14 +413,14 @@
           },false)
 
         } else {
-            this.clientX = e.clientX
-            this.clientY = e.clientY
-            this.layerX = e.layerX
-            this.layerY = e.layerY
-            this.offsetX = e.offsetX
-            this.offsetY = e.offsetY
-            this.pageX = e.pageX
-            this.pageY = e.pageY
+//            this.clientX = e.clientX
+//            this.clientY = e.clientY
+//            this.layerX = e.layerX
+//            this.layerY = e.layerY
+//            this.offsetX = e.offsetX
+//            this.offsetY = e.offsetY
+//            this.pageX = e.pageX
+//            this.pageY = e.pageY
 
 //          console.log('鼠标事件')
           var str = e.target.id.substring(0,10)
@@ -502,7 +482,7 @@
         } else {
           this.clickMultimeterData = 0
         }
-        this.draw(0,0)
+        this.drawPen()
       },
 //  点击图表
       clickDatagram () {
@@ -564,6 +544,8 @@
       },
 //    监听鼠标位置
       detect(){
+
+        var stage = new createjs.Stage("canvas");
         var _this = this
         //鼠标点击canvas，获取的鼠标点击的位置(x,y)
         this.canvas.onmousemove = function (e){
@@ -572,42 +554,109 @@
           _this.draw(x,y);
         }
       },
-//    画布显示balls数据
-      draw(x,y){
-//      console.log(x)
-        this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
+      drawPen(){
+        var stage = new createjs.Stage("canvas");
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
-//          console.log('currDraw',currDraw)
           for(var j = 0 ; j < currDraw.length ; j ++){
-            this.ctx.beginPath();
-            this.ctx.strokeRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter)
-//          this.ctx.closePath()
-//          this.ctx.beginPath();
-            this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius,0,2*Math.PI);
-            if (this.clickMultimeterData === 1) {
-              this.insert()
+            var shape=new createjs.Shape();
+            var graphics=shape.graphics;
+            var circle = new createjs.Shape();
+            graphics.beginStroke("000");
+            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
+            stage.addChild(shape);
+            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
+            stage.addChild(circle);
+            stage.update();
+          }
+        }
+        var _this = this
+        createjs.Ticker.setFPS(30);
+        createjs.Ticker.addEventListener("tick",stage);
+        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+//        imageB.transform(0.5,0,0,0.5,0,0);
+        imageB.scaleX= 0.5
+        imageB.scaleY= 0.5
+        stage.addChild(imageB);
+        var oldX;
+        var oldY;
+        imageB.addEventListener("mousedown",function(e){
+          oldX= e.stageX;
+          oldY= e.stageY;
+        });
+        imageB.addEventListener("pressmove", function (e) {
+          e.target.x+= e.stageX-oldX;
+          e.target.y+= e.stageY-oldY;
+          oldX= e.stageX;
+          oldY= e.stageY;
+//                console.log(e)
+//                console.log(e.target.x)
+//                console.log(e.target.y)
+          _this.XYoption.preBlackX = e.target.x
+          _this.XYoption.preBlackY = e.target.y
+//                console.log(_this.preBlackX)
+        });
+        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+        imageR.scaleX= 0.5
+        imageR.scaleY= 0.5
+        imageR.width = 25
+        imageR.height = 180
+        stage.addChild(imageR);
+//        stage.update();
+        var oldX;
+        var oldY;
+        imageR.addEventListener("mousedown",function(e){
+          oldX= e.stageX;
+          oldY= e.stageY;
+        });
+        imageR.addEventListener("pressmove", function (e) {
+          e.target.x+= e.stageX-oldX;
+          e.target.y+= e.stageY-oldY;
+          oldX= e.stageX;
+          oldY= e.stageY;
+          _this.XYoption.preRedX = e.target.x
+          _this.XYoption.preRedY = e.target.y
+        });
+      },
+//    画布显示balls数据
+      draw(XYoptions){
+        var stage = new createjs.Stage("canvas");
+
+        for( var i = 0 ; i < this.balls.length ; i ++ ){
+          var currDraw = this.balls[i]
+//          console.log(currDraw)
+          for(var j = 0 ; j < currDraw.length ; j ++){
+            if(i === this.balls.length - 1 && j === currDraw.length - 1 && this.clickMultimeterData === 1){
+
             }
-            if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
-              console.log('yes',currDraw[j].x,currDraw[j].y)
-//          this.ctx.clearRect(0, 0, 100, 100);
-              this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius+1,0,2*Math.PI)
-            }else{
-//          console.log('bai')
-            }
-//            console.log('currX1',this.eleX)
-//            console.log('currY1',this.eleY)
-            if(this.ctx.isPointInPath(this.eleX,this.eleY)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
-              console.log('yes',currDraw[j].x,currDraw[j].y)
-//          this.ctx.clearRect(0, 0, 100, 100);
-              this.ctx.arc(currDraw[j].x,currDraw[j].y,currDraw[j].radius+1,0,2*Math.PI)
-            }else{
-//          console.log('bai')
+            var shape=new createjs.Shape();
+            var graphics=shape.graphics;
+            var circle = new createjs.Shape();
+            graphics.beginStroke("000");
+            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
+            stage.addChild(shape);
+            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
+            stage.addChild(circle);
+//            console.log(XYoptions)
+//            console.log(this.preBlackY)
+            if (circle.hitTest(XYoptions.preRedX+20, XYoptions.preRedY)) {
+              console.log("yeye",currDraw[j].id)
+              console.log(currDraw[j].a[0], currDraw[j].a[1])
+              console.log(circle.graphics.command.radius)
+              createjs.Tween.get(circle).to({
+                scaleX : 10,
+                scaleY : 10
+              }, 200)
+//              circle.graphics.command.radius='10'
+
+//              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,20);
+//              stage.addChild(circle);
+//              stage.update(circle);
+
             }
 
-            this.ctx.fillStyle=currDraw[j].color
-//        this.ctx.closePath()
-            this.ctx.fill();
+//            console.log(circle.hitTest(XYoptions.preBlackX, XYoptions.preBlackY))
+
           }
         }
       },
@@ -629,7 +678,8 @@
 //          x:this.mLcircles[i].x * this.clientWidth,
 //          y:this.mLcircles[i].y * this.clientHeight,
               a:[currArrayCircles[j].x * 10.1 + currPoint[0],currArrayCircles[j].y * 10.1 + currPoint[1]],
-              color:currArrayCircles[j].color
+              color:currArrayCircles[j].color,
+              id:currArrayCircles[j].id
             }
 //        console.log('this.mLcircles[i].x',this.mLcircles[i].x)
 //        console.log('clientWidth',this.clientWidth)
@@ -642,7 +692,24 @@
           this.balls.push(drawOne);
 //          console.log(this.balls)
         }
-        this.draw(0,0)
+        this.drawPoint()
+      },
+      drawPoint(){
+        var stage = new createjs.Stage("canvas");
+        for( var i = 0 ; i < this.balls.length ; i ++ ){
+          var currDraw = this.balls[i]
+          for(var j = 0 ; j < currDraw.length ; j ++){
+            var shape=new createjs.Shape();
+            var graphics=shape.graphics;
+            var circle = new createjs.Shape();
+            graphics.beginStroke("000");
+            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
+            stage.addChild(shape);
+            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
+            stage.addChild(circle);
+            stage.update();
+          }
+        }
       },
 //    监听canvas宽高
       handleResize (event) {
@@ -711,7 +778,7 @@
       var canvas = document.getElementById("canvas");
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
-      canvas.addEventListener("mousemove",this.detect())
+//      canvas.addEventListener("mousemove",this.detect())
 //      this.clientWidth = this.clientWidth * 0.65
 //      this.clientHeight = this.clientWidth / 1.85
       this.clientWidth = 1024
