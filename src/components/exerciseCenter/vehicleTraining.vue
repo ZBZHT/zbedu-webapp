@@ -127,7 +127,7 @@
         setInterval: '',
         echartsOption: {
           title: {
-            left: 'left',
+            left: 'center',
             text: '时间',
           },
           xAxis: {
@@ -139,7 +139,9 @@
           },
           series: [{
             type: 'line',
-            data: []
+            data: [],
+            smooth: true,
+            showSymbol: false
           }]
         },
         balls:[],
@@ -288,44 +290,55 @@
 //    },
     watch: {
       whichGramShow: function (whichGramShow) {
+
+      }
+    },
+    methods: {
+      upEcharts () {
         let that = this
+        clearInterval(that.setInterval)
         let xAxisData = that.echartsOption.xAxis.data
         let seriesData = that.echartsOption.series[0].data
-        function upEcharts() {
+        function upEcharts1() {
           let myChart = echarts.init(document.getElementById('echarts'))
           let time = moment(new Date()).format('HH:mm:ss')
           /*设置x、y坐标*/
           let xAxisDataTime = moment(new Date()).format('mm:ss')
           let num = Math.floor(Math.random() * 10 + 1)
           if (xAxisData.length < 59) {
+            if (xAxisData.length === 0) {
+              for (let i = 0; i < 58; i++) {
+                xAxisData.push('')
+                seriesData.push('')
+              }
+            }
             xAxisData.push(xAxisDataTime)
             seriesData.push(num)
-          }
-          if (xAxisData.length >= 59) {
+          } else if (xAxisData.length >= 59) {
             xAxisData.shift()
             xAxisData.push(xAxisDataTime)
             seriesData.shift()
             seriesData.push(num)
           }
+
           /*设置title*/
           that.echartsOption.title.text = time
           myChart.setOption(that.echartsOption)
-          if (whichGramShow === '') {
-            clearInterval(that.setInterval);
-          }
+          /*if (whichGramShow === '') {
+           clearInterval(that.setInterval);
+           }*/
         }
-        upEcharts()
-        if (whichGramShow === 1) {
-          that.setInterval = setInterval(function () {
-            upEcharts()
-          }, 1000)
-        }
+        /*调用方法更新数据*/
+        upEcharts1()
+        that.setInterval = setInterval(function () {
+          upEcharts1()
+        }, 1000)
         /*
          xAxisData = []
          seriesData = []
          that.echartsOption.xAxis.data = []
          that.echartsOption.series[0].data = []
-        */
+         */
       },
       clientX (clientX) {
 //        console.log(this.clientX)
@@ -500,6 +513,7 @@
       },
 //  点击图表
       clickDatagram () {
+        this.upEcharts()
         if (this.clickGramData === 0) {
           this.clickGramData = 1
         } else {
@@ -562,20 +576,12 @@
         this.canvas.onmousemove = function (e){
           var x=e.clientX-_this.canvas.getBoundingClientRect().left;
           var y=e.clientY-_this.canvas.getBoundingClientRect().top;
-//          console.log(e)
           _this.draw(x,y);
-
-
-
-
-
-
         }
       },
 //    画布显示balls数据
       draw(x,y){
-//        console.log(x)
-//        console.log(y)
+//      console.log(x)
         this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
@@ -776,7 +782,6 @@
     position:absolute;
     top:0;
     left:0;
-    /*z-index: -1;*/
   }
   #echarts {
     width: 340px;
