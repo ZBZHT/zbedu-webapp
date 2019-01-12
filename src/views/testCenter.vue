@@ -33,7 +33,8 @@ export default {
       circle.graphics.beginFill("DeepSkyBlue").drawCircle(110, 110, 50);
       stage.addChild(circle);
     console.log(circle.hitTest(stage.mouseX, stage.mouseY))
-
+    var image = new createjs.Bitmap("src/assets/imgs/black.png");
+    stage.addChild(image);
       stage.update();
 
 
@@ -41,13 +42,12 @@ export default {
 //        createjs.Ticker.addEventListener("tick",stage);
 
 
-    var image = new createjs.Bitmap("src/assets/imgs/black.png");
-    stage.addChild(image);
-    createjs.Ticker.addEventListener("tick", handleTick);
-    function handleTick(event) {
-      image.x += 10;
-      stage.update();
-    }
+
+//    createjs.Ticker.addEventListener("tick", handleTick);
+//    function handleTick(event) {
+//      image.x += 10;
+//      stage.update();
+//    }
   },
   methods:{
 

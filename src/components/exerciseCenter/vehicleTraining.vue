@@ -98,8 +98,8 @@
          @mousedown="move"
          @touchmove="move"
          v-show="clickMultimeterData === 1">
-      <div class="electroprobeBlack" id="electroprobeBlack"></div>
-      <div class="electroprobeRed" id="electroprobeRed"></div>
+      <!--<div class="electroprobeBlack" id="electroprobeBlack"></div>-->
+      <!--<div class="electroprobeRed" id="electroprobeRed"></div>-->
     </div>
     {{NewpreBlackX}}
   </div>
@@ -369,28 +369,28 @@
         this.currIndex = index
         document.getElementById("multimeterTruthTransform").style.transform = "rotate(" + 22.5 * index + "deg)"
       },
-      insert () {
-        var stage=new createjs.Stage("canvas");
-        createjs.Ticker.setFPS(30);
-        createjs.Ticker.addEventListener("tick",stage);
-
-        var image=new createjs.Bitmap("src/assets/imgs/black.png");
-        stage.addChild(image);
-//        stage.update();
-        var oldX;
-        var oldY;
-        image.addEventListener("mousedown",function(e){
-          oldX= e.stageX;
-          oldY= e.stageY;
-        });
-        image.addEventListener("pressmove", function (e) {
-          e.target.x+= e.stageX-oldX;
-          e.target.y+= e.stageY-oldY;
-          oldX= e.stageX;
-          oldY= e.stageY;
-        });
-//        this.draw(0,0)
-      },
+//      insert () {
+//        var stage=new createjs.Stage("canvas");
+//        createjs.Ticker.setFPS(30);
+//        createjs.Ticker.addEventListener("tick",stage);
+//
+//        var image=new createjs.Bitmap("src/assets/imgs/black.png");
+//        stage.addChild(image);
+////        stage.update();
+//        var oldX;
+//        var oldY;
+//        image.addEventListener("mousedown",function(e){
+//          oldX= e.stageX;
+//          oldY= e.stageY;
+//        });
+//        image.addEventListener("pressmove", function (e) {
+//          e.target.x+= e.stageX-oldX;
+//          e.target.y+= e.stageY-oldY;
+//          oldX= e.stageX;
+//          oldY= e.stageY;
+//        });
+////        this.draw(0,0)
+//      },
       //      click和touch事件
       move(e){
         if (e.touches) {
@@ -479,12 +479,21 @@
           document.getElementById('multimeterTruthID').style.top=80+'px';
           document.getElementById('multimeterTruthID').style.left=75+'%';
           this.clickMultimeterData = 1
+//          this.drawPen()
+
         } else {
           this.clickMultimeterData = 0
+//          this.clearPen()
         }
-        this.drawPen()
+        this.drawPoint()
       },
-//  点击图表
+      clearPen(){
+        var stage = new createjs.Stage("canvas");
+//        stage.removeChild(imageB);
+        stage.removeAllChildren();
+        stage.update();
+      },
+//    点击图表
       clickDatagram () {
         this.upEcharts()
         if (this.clickGramData === 0) {
@@ -554,81 +563,79 @@
           _this.draw(x,y);
         }
       },
-      drawPen(){
-        var stage = new createjs.Stage("canvas");
-        for( var i = 0 ; i < this.balls.length ; i ++ ){
-          var currDraw = this.balls[i]
-          for(var j = 0 ; j < currDraw.length ; j ++){
-            var shape=new createjs.Shape();
-            var graphics=shape.graphics;
-            var circle = new createjs.Shape();
-            graphics.beginStroke("000");
-            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-            stage.addChild(shape);
-            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-            stage.addChild(circle);
-            stage.update();
-          }
-        }
-        var _this = this
-        createjs.Ticker.setFPS(30);
-        createjs.Ticker.addEventListener("tick",stage);
-        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-//        imageB.transform(0.5,0,0,0.5,0,0);
-        imageB.scaleX= 0.5
-        imageB.scaleY= 0.5
-        stage.addChild(imageB);
-        var oldX;
-        var oldY;
-        imageB.addEventListener("mousedown",function(e){
-          oldX= e.stageX;
-          oldY= e.stageY;
-        });
-        imageB.addEventListener("pressmove", function (e) {
-          e.target.x+= e.stageX-oldX;
-          e.target.y+= e.stageY-oldY;
-          oldX= e.stageX;
-          oldY= e.stageY;
-//                console.log(e)
-//                console.log(e.target.x)
-//                console.log(e.target.y)
-          _this.XYoption.preBlackX = e.target.x
-          _this.XYoption.preBlackY = e.target.y
-//                console.log(_this.preBlackX)
-        });
-        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
-        imageR.scaleX= 0.5
-        imageR.scaleY= 0.5
-        imageR.width = 25
-        imageR.height = 180
-        stage.addChild(imageR);
-//        stage.update();
-        var oldX;
-        var oldY;
-        imageR.addEventListener("mousedown",function(e){
-          oldX= e.stageX;
-          oldY= e.stageY;
-        });
-        imageR.addEventListener("pressmove", function (e) {
-          e.target.x+= e.stageX-oldX;
-          e.target.y+= e.stageY-oldY;
-          oldX= e.stageX;
-          oldY= e.stageY;
-          _this.XYoption.preRedX = e.target.x
-          _this.XYoption.preRedY = e.target.y
-        });
-      },
+//      drawPen(){
+//        var stage = new createjs.Stage("canvas");
+////        for( var i = 0 ; i < this.balls.length ; i ++ ){
+////          var currDraw = this.balls[i]
+////          for(var j = 0 ; j < currDraw.length ; j ++){
+////            var shape=new createjs.Shape();
+////            var graphics=shape.graphics;
+////            var circle = new createjs.Shape();
+////            graphics.beginStroke("000");
+////            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
+////            stage.addChild(shape);
+////            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
+////            stage.addChild(circle);
+////            stage.update();
+////          }
+////        }
+////        this.drawPoint()
+//        var _this = this
+//        createjs.Ticker.setFPS(30);
+//        createjs.Ticker.addEventListener("tick",_this.stage);
+//        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+////        imageB.transform(0.5,0,0,0.5,0,0);
+//        imageB.scaleX= 0.3
+//        imageB.scaleY= 0.3
+//        _this.stage.addChild(imageB);
+//        var oldX;
+//        var oldY;
+//        imageB.addEventListener("mousedown",function(e){
+//          oldX= e.stageX;
+//          oldY= e.stageY;
+//        });
+//        imageB.addEventListener("pressmove", function (e) {
+//          e.target.x+= e.stageX-oldX;
+//          e.target.y+= e.stageY-oldY;
+//          oldX= e.stageX;
+//          oldY= e.stageY;
+////                console.log(e)
+////                console.log(e.target.x)
+////                console.log(e.target.y)
+//          _this.XYoption.preBlackX = e.target.x
+//          _this.XYoption.preBlackY = e.target.y
+////                console.log(_this.preBlackX)
+//        });
+//        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+//        imageR.scaleX= 0.3
+//        imageR.scaleY= 0.3
+//        imageR.width = 25
+//        imageR.height = 180
+//        _this.stage.addChild(imageR);
+////        stage.update();
+//        var oldX;
+//        var oldY;
+//        imageR.addEventListener("mousedown",function(e){
+//          oldX= e.stageX;
+//          oldY= e.stageY;
+//        });
+//        imageR.addEventListener("pressmove", function (e) {
+//          e.target.x+= e.stageX-oldX;
+//          e.target.y+= e.stageY-oldY;
+//          oldX= e.stageX;
+//          oldY= e.stageY;
+//          _this.XYoption.preRedX = e.target.x
+//          _this.XYoption.preRedY = e.target.y
+//        });
+////        this.drawPoint()
+//      },
 //    画布显示balls数据
       draw(XYoptions){
         var stage = new createjs.Stage("canvas");
-
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
 //          console.log(currDraw)
           for(var j = 0 ; j < currDraw.length ; j ++){
-            if(i === this.balls.length - 1 && j === currDraw.length - 1 && this.clickMultimeterData === 1){
-
-            }
             var shape=new createjs.Shape();
             var graphics=shape.graphics;
             var circle = new createjs.Shape();
@@ -695,7 +702,10 @@
         this.drawPoint()
       },
       drawPoint(){
+        var _this = this
         var stage = new createjs.Stage("canvas");
+        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
           for(var j = 0 ; j < currDraw.length ; j ++){
@@ -709,6 +719,74 @@
             stage.addChild(circle);
             stage.update();
           }
+        }
+        if (this.clickMultimeterData === 1) {
+//              this.drawPen()
+          createjs.Ticker.setFPS(30);
+          createjs.Ticker.addEventListener("tick",stage);
+
+//        imageB.transform(0.5,0,0,0.5,0,0);
+          imageB.scaleX= 0.3
+          imageB.scaleY= 0.3
+          stage.addChild(imageB);
+          var oldX;
+          var oldY;
+          imageB.addEventListener("mousedown",function(e){
+            oldX= e.stageX;
+            oldY= e.stageY;
+          });
+          imageB.addEventListener("pressmove", function (e) {
+            e.target.x+= e.stageX-oldX;
+            e.target.y+= e.stageY-oldY;
+            oldX= e.stageX;
+            oldY= e.stageY;
+//                console.log(e)
+//                console.log(e.target.x)
+//                console.log(e.target.y)
+            _this.XYoption.preBlackX = e.target.x
+            _this.XYoption.preBlackY = e.target.y
+//                console.log(_this.preBlackX)
+          });
+
+          imageR.scaleX= 0.3
+          imageR.scaleY= 0.3
+          imageR.width = 25
+          imageR.height = 180
+          stage.addChild(imageR);
+//        stage.update();
+          var oldX;
+          var oldY;
+          imageR.addEventListener("mousedown",function(e){
+            oldX= e.stageX;
+            oldY= e.stageY;
+          });
+          imageR.addEventListener("pressmove", function (e) {
+            e.target.x+= e.stageX-oldX;
+            e.target.y+= e.stageY-oldY;
+            oldX= e.stageX;
+            oldY= e.stageY;
+            _this.XYoption.preRedX = e.target.x
+            _this.XYoption.preRedY = e.target.y
+          });
+//          console.log(stage)
+//          console.log(imageR)
+        } else {
+          createjs.Ticker.setFPS(30);
+          createjs.Ticker.addEventListener("tick",stage);
+
+//        imageB.transform(0.5,0,0,0.5,0,0);
+          imageB.scaleX= 0.3
+          imageB.scaleY= 0.3
+          stage.addChild(imageB);
+          var oldX;
+          var oldY;
+          imageR.scaleX= 0.3
+          imageR.scaleY= 0.3
+          imageR.width = 25
+          imageR.height = 180
+          stage.addChild(imageR);
+          stage.removeChild(imageR,imageB);
+          stage.update();
         }
       },
 //    监听canvas宽高
@@ -767,7 +845,7 @@
           }
         }
 
-        this.draw(0,0)
+        this.drawPoint()
       }
     },
     mounted(){
@@ -778,6 +856,9 @@
       var canvas = document.getElementById("canvas");
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
+//      this.stage = new createjs.Stage("canvas");
+//      this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+//      this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
 //      canvas.addEventListener("mousemove",this.detect())
 //      this.clientWidth = this.clientWidth * 0.65
 //      this.clientHeight = this.clientWidth / 1.85
