@@ -50,6 +50,7 @@
       </div>
     </el-tabs>
 
+    <!--工具-->
     <div class="tool">
       <div class="multimeter"
            @click="clickMultimeter"
@@ -64,6 +65,7 @@
            @mouseover="showGram(1)" @mouseout="disGram(1)">
         <i class="el-icon-d-arrow-left icon-left" v-show="whichGramShow === '' || whichShow === 0"></i>
         <i class="iconfont iconfont1" v-show="whichGramShow === 1">&#xe60d;</i>
+
       </div>
     </div>
     <div class="multimeterTruth"
@@ -71,8 +73,12 @@
          @mousedown="move"
          @touchmove="move"
          v-show="clickMultimeterData === 1">
+      <div v-if="showJoint === 1">
+        <img class="blackJoint" id="blackJoint" src="../../assets/imgs/blackJoint.png" alt="">
+        <img class="blackJoint redJoint" id="redJoint" src="../../assets/imgs/redJoint.png" alt="">
+      </div>
       <div class="multimeterTruthDiv" id="multimeterTruthDiv">
-        {{multimeterTruthDivData}}
+        {{multimeterTruthDivData}}V
       </div>
       <!--<p class="multimeterTruthOff" @click="clickZhuan">off</p>-->
       <!--<p class="multimeterTruthV">V</p>-->
@@ -84,7 +90,7 @@
       <!--<p class="multimeterTruthV5">V5</p>-->
       <!--<p class="multimeterTruthV6">V6</p>-->
       <p class="multimeterTruthV"
-         @click="clickZhuan(index)"
+         @click="clickZhuan(index,item)"
          v-for="(item,index) in multimeterTruthV"
          :class="currIndex === index ? 'multimeterTruthVchoose' : '' "
          :id="multimeterTruthVId(index)">
@@ -113,7 +119,7 @@
     name: 'vehicleTraining',
     data () {
       return {
-        multimeterTruthV:['off','V','V0','V1','V2','V3','V4','V5','V6'],
+        multimeterTruthV:['off','V','','','Ω','','','A'],
         currIndex:0,
         windowWidth: 0,
         windowHeight: 0,
@@ -257,7 +263,7 @@
 //        pageY: 0,
         positionX: 0,
         positionY: 0,
-        multimeterTruthDivData:10,
+        multimeterTruthDivData: 0,
 //        eleX:0,
 //        eleY:0,
         XYoption:{
@@ -268,6 +274,9 @@
         },
         NewpreBlackX:0,
         NewpreBlackY:0,
+        showJoint: 0,
+        isRed:false,
+        isBlack:false
 
       }
     },
@@ -311,7 +320,6 @@
     },
     methods: {
       upEcharts() {
-        console.log("789410")
         let that = this
         clearInterval(that.setInterval)
         let xAxisData = that.echartsOption.xAxis.data
@@ -322,17 +330,21 @@
           let time = moment(new Date()).format('HH:mm:ss')
           /*设置x、y坐标*/
           let xAxisDataTime = moment(new Date()).format('mm:ss')
-          let num = Math.floor(Math.random() * 10 + 1)
-          if (xAxisData.length < 59) {
+          let num = Math.floor(Math.random() * 5 + 1)
+          num = Number('3.' + num)
+          let date1 = 59
+          let date2 = 58
+          that.multimeterTruthDivData = num
+          if (xAxisData.length < date1) {
             if (xAxisData.length === 0) {
-              for (let i = 0; i < 58; i++) {
+              for (let i = 0; i < date2; i++) {
                 xAxisData.push('')
                 seriesData.push('')
               }
             }
             xAxisData.push(xAxisDataTime)
             seriesData.push(num)
-          } else if (xAxisData.length >= 59) {
+          } else if (xAxisData.length >= date1) {
             xAxisData.shift()
             xAxisData.push(xAxisDataTime)
             seriesData.shift()
@@ -364,33 +376,17 @@
         return "multimeterTruthV" + index
       },
 //      点击电压旋转
-      clickZhuan(index){
-        console.log(index)
+      clickZhuan(index,item){
+        // console.log(index)
+        // console.log(item)
+        if (item == 'off') {
+          this.showJoint = 0
+        } else {
+          this.showJoint = 1
+        }
         this.currIndex = index
-        document.getElementById("multimeterTruthTransform").style.transform = "rotate(" + 22.5 * index + "deg)"
+        document.getElementById("multimeterTruthTransform").style.transform = "rotate(" + 23 * index + "deg)"
       },
-//      insert () {
-//        var stage=new createjs.Stage("canvas");
-//        createjs.Ticker.setFPS(30);
-//        createjs.Ticker.addEventListener("tick",stage);
-//
-//        var image=new createjs.Bitmap("src/assets/imgs/black.png");
-//        stage.addChild(image);
-////        stage.update();
-//        var oldX;
-//        var oldY;
-//        image.addEventListener("mousedown",function(e){
-//          oldX= e.stageX;
-//          oldY= e.stageY;
-//        });
-//        image.addEventListener("pressmove", function (e) {
-//          e.target.x+= e.stageX-oldX;
-//          e.target.y+= e.stageY-oldY;
-//          oldX= e.stageX;
-//          oldY= e.stageY;
-//        });
-////        this.draw(0,0)
-//      },
       //      click和touch事件
       move(e){
         if (e.touches) {
@@ -431,7 +427,6 @@
             var odiv = e.target
           }
           //算出鼠标相对元素的位置
-
           let disX = e.clientX - odiv.offsetLeft
           let disY = e.clientY - odiv.offsetTop
           this.clientX = e.clientX
@@ -476,8 +471,8 @@
 //  点击工具
       clickMultimeter () {
         if (this.clickMultimeterData === 0) {
-          document.getElementById('multimeterTruthID').style.top=80+'px';
-          document.getElementById('multimeterTruthID').style.left=75+'%';
+          document.getElementById('multimeterTruthID').style.top = 60 + 'px';
+          document.getElementById('multimeterTruthID').style.right = 170 + 'px';
           this.clickMultimeterData = 1
 //          this.drawPen()
 
@@ -487,19 +482,18 @@
         }
         this.drawPoint()
       },
-      clearPen(){
-        var stage = new createjs.Stage("canvas");
-//        stage.removeChild(imageB);
-        stage.removeAllChildren();
-        stage.update();
-      },
 //    点击图表
       clickDatagram () {
-        this.upEcharts()
         if (this.clickGramData === 0) {
           this.clickGramData = 1
+          this.upEcharts()
+          console.log()
         } else {
           this.clickGramData = 0
+          clearInterval(this.setInterval)
+          this.multimeterTruthDivData = 0
+          this.echartsOption.xAxis.data = []
+          this.echartsOption.series[0].data = []
         }
       },
 //    全屏显示
@@ -563,78 +557,21 @@
           _this.draw(x,y);
         }
       },
-//      drawPen(){
-//        var stage = new createjs.Stage("canvas");
-////        for( var i = 0 ; i < this.balls.length ; i ++ ){
-////          var currDraw = this.balls[i]
-////          for(var j = 0 ; j < currDraw.length ; j ++){
-////            var shape=new createjs.Shape();
-////            var graphics=shape.graphics;
-////            var circle = new createjs.Shape();
-////            graphics.beginStroke("000");
-////            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-////            stage.addChild(shape);
-////            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-////            stage.addChild(circle);
-////            stage.update();
-////          }
-////        }
-////        this.drawPoint()
-//        var _this = this
-//        createjs.Ticker.setFPS(30);
-//        createjs.Ticker.addEventListener("tick",_this.stage);
-//        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-////        imageB.transform(0.5,0,0,0.5,0,0);
-//        imageB.scaleX= 0.3
-//        imageB.scaleY= 0.3
-//        _this.stage.addChild(imageB);
-//        var oldX;
-//        var oldY;
-//        imageB.addEventListener("mousedown",function(e){
-//          oldX= e.stageX;
-//          oldY= e.stageY;
-//        });
-//        imageB.addEventListener("pressmove", function (e) {
-//          e.target.x+= e.stageX-oldX;
-//          e.target.y+= e.stageY-oldY;
-//          oldX= e.stageX;
-//          oldY= e.stageY;
-////                console.log(e)
-////                console.log(e.target.x)
-////                console.log(e.target.y)
-//          _this.XYoption.preBlackX = e.target.x
-//          _this.XYoption.preBlackY = e.target.y
-////                console.log(_this.preBlackX)
-//        });
-//        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
-//        imageR.scaleX= 0.3
-//        imageR.scaleY= 0.3
-//        imageR.width = 25
-//        imageR.height = 180
-//        _this.stage.addChild(imageR);
-////        stage.update();
-//        var oldX;
-//        var oldY;
-//        imageR.addEventListener("mousedown",function(e){
-//          oldX= e.stageX;
-//          oldY= e.stageY;
-//        });
-//        imageR.addEventListener("pressmove", function (e) {
-//          e.target.x+= e.stageX-oldX;
-//          e.target.y+= e.stageY-oldY;
-//          oldX= e.stageX;
-//          oldY= e.stageY;
-//          _this.XYoption.preRedX = e.target.x
-//          _this.XYoption.preRedY = e.target.y
-//        });
-////        this.drawPoint()
-//      },
 //    画布显示balls数据
       draw(XYoptions){
         var stage = new createjs.Stage("canvas");
+        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+        imageB.scaleX= 0.3
+        imageB.scaleY= 0.3
+        stage.addChild(imageB);
+
+        imageR.scaleX= 0.3
+        imageR.scaleY= 0.3
+        stage.addChild(imageR);
+
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
-//          console.log(currDraw)
           for(var j = 0 ; j < currDraw.length ; j ++){
             var shape=new createjs.Shape();
             var graphics=shape.graphics;
@@ -644,33 +581,62 @@
             stage.addChild(shape);
             circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
             stage.addChild(circle);
-//            console.log(XYoptions)
-//            console.log(this.preBlackY)
-            if (circle.hitTest(XYoptions.preRedX+20, XYoptions.preRedY)) {
+//            红表笔检测
+            if (circle.hitTest(XYoptions.preRedX+10, XYoptions.preRedY)) {
+//              createjs.Ticker.setFPS(30);
+//              createjs.Ticker.addEventListener("tick",stage);
+//                imageR.rotation = -40
+//                imageR.x=XYoptions.preRedX
+//                imageR.y=XYoptions.preRedY
+////                      circle.graphics.command.radius=10
+////                  stage.addChild(imageR);
               console.log("yeye",currDraw[j].id)
-              console.log(currDraw[j].a[0], currDraw[j].a[1])
-              console.log(circle.graphics.command.radius)
-              createjs.Tween.get(circle).to({
-                scaleX : 10,
-                scaleY : 10
-              }, 200)
-//              circle.graphics.command.radius='10'
+              this.isRed = true
+//              console.log(this.isRed)
+//              console.log(currDraw[j].a[0], currDraw[j].a[1])
+//              console.log(circle.graphics.command.radius)
 
-//              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,20);
-//              stage.addChild(circle);
-//              stage.update(circle);
-
+            } else {
+//              this.isRed = false
+//              console.log(this.isRed)
+//              var _this = this
+//              var oldX;
+//              var oldY;
+//
+//              imageR.addEventListener("mousedown",function(e){
+//                imageR.rotation = 0
+//                oldX= e.stageX;
+//                oldY= e.stageY;
+//              });
+//              imageR.addEventListener("pressmove", function (e) {
+//                e.target.x+= e.stageX-oldX;
+//                e.target.y+= e.stageY-oldY;
+//                oldX= e.stageX;
+//                oldY= e.stageY;
+//                _this.XYoption.preRedX = e.target.x
+//                _this.XYoption.preRedY = e.target.y
+//              });
             }
-
-//            console.log(circle.hitTest(XYoptions.preBlackX, XYoptions.preBlackY))
-
+//            黑表笔检测
+            if (circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY)) {
+              this.isBlack = true
+//              console.log(this.isBlack)
+              console.log("yeye",currDraw[j].id)
+            }else{
+//              this.isBlack = false
+//              console.log(this.isBlack)
+            }
           }
+        }
+
+        if(this.isBlack && this.isBlack){
+          this.multimeterTruthDivData = 560
+        }else{
+          this.multimeterTruthDivData = 0
         }
       },
 //    计算完的数据给balls
       first() {
-//      console.log(this.mLcircles)
-//      console.log(this.mLcircles[0].x)
         for(var i = 0; i < this.mLcircles.length; i++){
           var currArrayCircles = this.mLcircles[i]
           var currPoint = this.mLPoint[i]
@@ -704,8 +670,8 @@
       drawPoint(){
         var _this = this
         var stage = new createjs.Stage("canvas");
-        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+        var imageB = new createjs.Bitmap("src/assets/imgs/black.png");
+        var imageR = new createjs.Bitmap("src/assets/imgs/red.png");
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
           for(var j = 0 ; j < currDraw.length ; j ++){
@@ -726,6 +692,8 @@
           createjs.Ticker.addEventListener("tick",stage);
 
 //        imageB.transform(0.5,0,0,0.5,0,0);
+          imageB.x = 850
+          imageB.y = 70
           imageB.scaleX= 0.3
           imageB.scaleY= 0.3
           stage.addChild(imageB);
@@ -748,6 +716,8 @@
 //                console.log(_this.preBlackX)
           });
 
+          imageR.x = 900
+          imageR.y = 70
           imageR.scaleX= 0.3
           imageR.scaleY= 0.3
           imageR.width = 25
@@ -1025,11 +995,20 @@
     width:220px;
     height:300px;
     position: absolute;
-    top:80px;
-    right:80px;
+    top:50px;
+    right:50px;
     background: url(../../assets/imgs/multimeter.png) no-repeat;
     background-size: cover;
     /*pointer-events: none;*/
+  }
+  .vehicleTraining .multimeterTruth .blackJoint{
+    width:14px;
+    position: absolute;
+    top: 237px;
+    left: 93px;
+  }
+  .vehicleTraining .multimeterTruth .redJoint{
+    left: 119px;
   }
   .vehicleTraining .multimeterTruth .multimeterTruthV{
     position: absolute;
@@ -1044,7 +1023,7 @@
   }
   .vehicleTraining .multimeterTruth #multimeterTruthV0{
     top: 180px;
-    left: 63px;
+    left: 64px;
   }
   .vehicleTraining .multimeterTruth #multimeterTruthV1{
     top: 165px;
@@ -1060,7 +1039,7 @@
   }
   .vehicleTraining .multimeterTruth #multimeterTruthV4{
     top: 138px;
-    left: 105px;
+    left: 108px;
   }
   .vehicleTraining .multimeterTruth #multimeterTruthV5{
     top: 142px;
@@ -1072,7 +1051,7 @@
   }
   .vehicleTraining .multimeterTruth #multimeterTruthV7{
     top: 165px;
-    left: 145px;
+    left: 147px;
   }
   .vehicleTraining .multimeterTruth #multimeterTruthV8{
     top: 180px;
