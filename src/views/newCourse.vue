@@ -16,7 +16,7 @@
         <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
           <div id="OTREE" class="oTree animated" v-show="showTreeData === 1 || clickShow === 1">
             <!--<p class="nail" @click="clickNail">-->
-              <!--<i class="iconfont iconfont1">&#xe79f;</i>-->
+            <!--<i class="iconfont iconfont1">&#xe79f;</i>-->
             <!--</p>-->
             <!--<p v-drag>123</p>-->
             <el-tree
@@ -24,7 +24,7 @@
               :props="defaultProps"
               :data="data"
               accordion
-              :default-expanded-keys="[courseId1,courseId2]"
+              :default-expanded-keys="[courseId1]"
               highlight-current
               ref="vuetree"
               @node-click="handleNodeClick"></el-tree>
@@ -49,6 +49,7 @@
 
             <!--教材-->
             <el-tab-pane label="本节教材">
+              <!--<img class="introImg" :src="introList2" alt="">-->
               <div id="teachingBook">
                 <!--<p class="devDownload" v-show="noTree.teachingBook"></p>-->
                 <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.teachingBook" class="pdf-box"></embed>-->
@@ -57,7 +58,8 @@
                 </div>
               </div>
 
-              <el-button type="info" round @click="teachingBookFullScreen()">全屏显示</el-button>
+              <el-button type="info" round @click="teachingBookFullScreen()"
+                         style="margin-top: 10px">全屏显示</el-button>
 
             </el-tab-pane>
 
@@ -80,15 +82,17 @@
                   :changge="pageFn">
                 </ppt-slides>
               </div>
-              <el-button type="info" round @click="appFullScreen(currpage)">全屏显示</el-button>
+              <el-button type="info" round @click="appFullScreen(currpage)"
+                         style="margin-top: -10px">全屏显示</el-button>
 
             </el-tab-pane>
 
             <!--微课-->
             <el-tab-pane label="教学微课" :name="descTab2">
+              <!--<img class="introImg" :src="introList3" alt="">-->
               <!--<div  v-for="(item,index) in noTree.videoTitle" v-if="index == 0">-->
               <div>
-                <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="videoAdr + this.videoPath + noTree.videoTitle[0].videoTitle">
+                <video id="video-box" controls="controls" controlslist="nodownload" @click="videostop" :src="videoAdr + this.videoPath">
                   <!--<video id="video-box" controls @click="videostop">-->
                 </video>
               </div>
@@ -96,6 +100,7 @@
 
             <!--工作页-->
             <el-tab-pane label="工作页">
+              <!--<img class="introImg" :src="introList4" alt="">-->
               <div id="courseWorkPage">
                 <!--<p class="devDownload" v-show="noTree.workPage"></p>-->
                 <!--<embed :src="'/resource/pdf/coursePdfData/' + noTree.workPage" class="pdf-box"></embed>-->
@@ -103,7 +108,8 @@
                   <img class="teachingBookImg" :src="item.img">
                 </div>
               </div>
-              <el-button type="info" round @click="workPageFullScreen()">全屏显示</el-button>
+              <el-button type="info" round @click="workPageFullScreen()"
+                         style="margin-top: 10px">全屏显示</el-button>
 
             </el-tab-pane>
 
@@ -117,7 +123,7 @@
             </el-tab-pane>
 
             <!--课后作业-->
-            <el-tab-pane label="课后作业">
+            <el-tab-pane label="课后作业" >
               <div class="homework-box">
                 <div class="homework" v-for="(item,index) in homeworkData">
                   <p class="homeworkTitle">{{index + 1}}. {{item.desc}}</p>
@@ -126,11 +132,13 @@
                   <span class="homeworkAnswer" v-if="appAnswer">{{item.answer}}</span>
                 </div>
               </div>
-              <el-button type="success" round @click="appearAnswer()">点击显示正确答案</el-button>
+              <el-button type="success" round @click="appearAnswer()"
+                         style="margin-top: 10px">点击显示正确答案</el-button>
             </el-tab-pane>
 
             <!--评论-->
             <el-tab-pane label="课程评价">
+              <!--<img class="introImg" :src="introList5" alt="">-->
               <div class="appraise-box">
                 <p class="appraiseTitle">全部评价</p>
                 <hr>
@@ -217,9 +225,11 @@
 
                 </div>
 
-                <el-button type="success" round @click="submitComments()">提交评论</el-button>
+                <el-button type="success" round @click="submitComments()"
+                           style="margin-top: 10px">提交评论</el-button>
               </div>
             </el-tab-pane>
+
           </el-tabs>
 
 
@@ -227,7 +237,7 @@
       </div>
     </div>
 
-    <div class="footer">
+    <div class="footer" style="margin-top: 20px">
       <foot-footer></foot-footer>
     </div>
   </div>
@@ -320,7 +330,12 @@
         clickShow: 0,
         oTreePositionX: '',
         oTreePositionY: '',
-        firstXY: 0
+        firstXY: 0,
+        introList1: '',
+        introList2: '',
+        introList3: '',
+        introList4: '',
+        introList5: '',
       }
     },
     //    自定义拖动
@@ -374,17 +389,11 @@
         return this.$store.state.noTree1;
       },
       currentTitle(){
-        // for (var  i= 0; i< this.$store.state.course.children.length; i++){
-        // console.log(this.$store.state.course.children[i])
         if (this.$store.state.course.children[0].describe){
           this.aa = this.$store.state.course.children[0].title
-          // console.log(this.aa)
-          // console.log('======')
         }else {
           this.aa = this.$store.state.course.children[0].children[0].title
-          // console.log(this.aa)
         }
-        // }
 
         return this.$store.state.course;
       },
@@ -392,11 +401,10 @@
         return this.$store.state.noTree.videoTitle;
       }
     },
-    created(){
+    watch: {
     },
     mounted(){
       this.videoAdr = 'http://' + this.$store.state.serverIP + ':8000/resource/'
-
       if(this.$store.state.activeName === 3){
         this.activeName = this.descTab2;
       }else if(this.$store.state.activeName === 2){
@@ -405,221 +413,67 @@
       //判断当前是否是老师
       if(this.userType == 'EA' || this.userType == 'T'){
         this.userSession = 1;
-      }else{
-
       }
       //获取树形数据
-      this.data = this.$store.state.newBannerLeft;
-      setTimeout(() => {
-        this.$refs.vuetree.setCurrentKey(this.keyId)
-        console.log('11111');
-      }, 20)
+      let leftData = this.$store.state.newBannerLeft
+      this.data = leftData
 
       //PPT页数
       this.total = this.lists.length;
       //从courseIndex页传值并默认展开
-      //  console.log("sjsjs");
-      //  console.log(this.$store.state.noTree1.courseId);
-      var data = this.$store.state.noTree1;
-      var id = this.$store.state.noTree1.courseId;
-      if(id == 100 || id == 200 || id == 300 || id == 400 || id == 500 || id == 600 || id == 700){
-
-        if(id == 100){
-          this.courseId1 = id;
-          this.courseId2 = 111;
-          this.keyId = 1111;
-          this.$store.commit('noTreeTitle',data.children[0].children[0].children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0].children[0].children[0])
-          this.findParent(id);
-        }else if(id == 200){
-          this.courseId1 = id;
-          this.courseId2 = 211;
-          this.keyId = 211;
-          this.$store.commit('noTreeTitle',data.children[0].children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0].children[0])
-          this.findParent(id);
-        }else if(id == 300){
-          this.courseId1 = id;
-          this.courseId2 = 311;
-          this.keyId = 311;
-          this.$store.commit('noTreeTitle',data.children[0].children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0].children[0])
-          this.findParent(id);
-        }else if(id == 400){
-          this.courseId1 = id;
-          this.courseId2 = 411;
-          this.keyId = 411;
-          this.$store.commit('noTreeTitle',data.children[0].children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0].children[0])
-          this.findParent(id);
-        }else if(id == 500){
-          this.courseId1 = id;
-          this.keyId = 510;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else if(id == 600){
-          this.courseId1 = id;
-          this.keyId = 610;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else if(id == 700){
-          this.courseId1 = id;
-          this.courseId2 = 711;
-          this.keyId = 711;
-          this.$store.commit('noTreeTitle',data.children[0].children[0]);
-          this.findParent(id);
+      var idR = this.$store.state.noTree1.courseId;
+      // 找出data中idR对应的第一个children
+      let id = ''
+      let idItem = []
+      function getID(data) {
+        for (let i = 0; i < data.length; i++) {
+          let obj = data[i]
+          if (obj.courseId == idR) {
+            if (obj.children) {
+              if (obj.children[0].children) {
+                let obj1 = obj.children[0].children[0]
+                if (obj1.children) {
+                } else {
+                  id = obj1.courseId
+                  idItem = obj1
+                }
+              } else {
+                id = obj.children[0].courseId
+                idItem = obj.children[0]
+              }
+            } else {
+              id = obj.courseId
+              idItem = obj
+            }
+          } else {
+            if (obj.children) {
+              getID(obj.children)
+            }
+          }
         }
-      }else if(id > 100 && id < 200){
-        if(id == 110){
-          this.courseId1 = 100;
-          this.courseId2 = 111;
-          this.keyId = 1111;
-          this.$store.commit('noTreeTitle',data.children[0].children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0].children[0])
-          this.findParent(id);
-        }else if(id > 110 && id < 120){
-          this.courseId1 = 100;
-          this.courseId2 = id;
-          this.keyId = id.toString()+1;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else if(id > 120 && id < 130){
-          this.courseId1 = 100;
-          this.courseId2 = id;
-          this.keyId = id.toString()+1;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else if(id == 120){
-          this.courseId1 = 100;
-          this.courseId2 = 121;
-          this.keyId = 1211;
-          this.$store.commit('noTreeTitle',data.children[0].children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0].children[0])
-          this.findParent(id);
-        }
-      }else if(id > 200 && id < 300){
-        if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
-          this.courseId1 = 200;
-          this.courseId2 = id;
-          this.keyId = id + 1;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else{
-          this.courseId1 = 200;
-          this.courseId2 = id;
-          this.keyId = id;
-          this.$store.commit('noTreeTitle',data);
-          //添加item至我的足迹请求
-          this.myFootPrint(data)
-          this.findParent(id);
-        }
-      }else if(id > 300 && id < 400){
-        if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
-          this.courseId1 = 300;
-          this.courseId2 = id;
-          this.keyId = id + 1;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else{
-          this.courseId1 = 300;
-          this.courseId2 = id;
-          this.keyId = id;
-          this.$store.commit('noTreeTitle',data);
-          //添加item至我的足迹请求
-          this.myFootPrint(data)
-        }
-      }else if(id > 400 && id < 500){
-        if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
-          this.courseId1 = 400;
-          this.courseId2 = id;
-          this.keyId = id + 1;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          //添加item至我的足迹请求
-          this.myFootPrint(data.children[0])
-          this.findParent(id);
-        }else{
-          this.courseId1 = 400;
-          this.courseId2 = id;
-          this.keyId = id;
-          this.$store.commit('noTreeTitle',data);
-          //添加item至我的足迹请求
-          this.myFootPrint(data)
-          this.findParent(id);
-        }
-      }else if(id > 500 && id < 600){
-        this.courseId1 = 500;
-        this.courseId2 = id;
-        this.keyId = id;
-        this.$store.commit('noTreeTitle',data);
-        //添加item至我的足迹请求
-          this.myFootPrint(data)
-        this.findParent(id);
-      }else if(id > 600 && id < 700){
-        this.courseId1 = 600;
-        this.courseId2 = id;
-        this.keyId = id;
-        this.$store.commit('noTreeTitle',data);
-        //添加item至我的足迹请求
-          this.myFootPrint(data)
-        this.findParent(id);
-      }else if(id > 700 && id < 800){
-        if(id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
-          this.courseId1 = 700;
-          this.courseId2 = id;
-          var nowId = parseInt(id) + 1
-          this.keyId = nowId;
-          this.$store.commit('noTreeTitle',data.children[0]);
-          this.findParent(id);
-        }else{
-          this.courseId1 = 700;
-          this.courseId2 = id;
-          this.keyId = id;
-          this.$store.commit('noTreeTitle',data);
-          this.findParent(id);
-        }
-      }else if(id > 1110 && id < 1300){
-        this.courseId1 = 100;
-        this.courseId2 = id;
-        this.keyId = id;
-        this.findParent(id);
       }
+      getID(this.data)
+      this.courseId1 = id
+      setTimeout(() => {
+        this.$refs.vuetree.setCurrentKey(id)
+      }, 20)
+      this.myFootPrint(idItem)
+      this.findParent(id);
+      this.$store.commit('noTreeTitle', idItem);
 
       //评论一系列
       this.user = this.$store.state.username;
-      // console.log(this.user)
       this.getComment(this.moutedHomeworkPath);
     },
     methods:{
       //      钉子
       clickNail () {
-        console.log(this.showTreeData)
         if (this.clickShow === 0) {
           this.clickShow = 1
         } else {
           this.clickShow = 0
         }
       },
-//      fade () {
-//        document.getElementById("Tree").addClass('animated title')
-//      },
       //      展示树形
       showTree () {
         this.showTreeData = 1
@@ -639,396 +493,99 @@
             title: title,
           }
         }).then((res)=>{
-          console.log(res.data.result);
           this.appraiseIndex = res.data.result.appraiseMsg;
           this.appraiseContent.appraiseMsg = this.appraiseIndex;
-          console.log(this.appraiseIndex)
         }).catch(function(error){
           console.log("评论请求错误")
         });
       },
       //切换标签暂停视频
       handleClickTabs(tab){
-        //console.log(tab);
-        //console.log(tab._data)
-        if(tab._data.index == 3){
-          //console.log("我是微课");
-          //this.videostop();
-        }else{
-          //console.log("爱谁谁是");
-          this.clickTabsStop();
+        if(tab._data.index !== 3){
+          this.clickTabsStop()
         }
-        if(tab._data.index == 5){
-          //console.log("我是微课");
-          //this.videostop();
-        }else{
-          //console.log("爱谁谁是");
-          this.clickTabsFlashStop();
+        if(tab._data.index !== 5){
+//          this.clickTabsFlashStop()
         }
       },
       //进入页面时的请求地址
       findParent(id){
-        var data = this.$store.state.noTree1;
         var coursePath = [];
         var homeworkPath = [];
+        let videoPath1 = ''
+        let objNode = ''
+        this.introList1 = ''
+        this.introList2 = ''
+        this.introList3 = ''
+        this.introList4 = ''
+        this.introList5 = ''
         id = id.toString();
-        if(id == 100){
-          console.log(data.children[0].children[0].children)
-          homeworkPath.push(data.label);
-          homeworkPath.push(data.children[0].label);
-          homeworkPath.push(data.children[0].children[0].label);
-          homeworkPath.push(data.children[0].children[0].children[0].label);
-          coursePath.push(data.label);
-          coursePath.push(data.children[0].label);
-          coursePath.push(data.children[0].children[0].label);
-          coursePath.push(data.children[0].children[0].children[0].label);
-          coursePath.push(this.$store.state.noTree.teachingMaterial);
-        }else if(id == 200 || id == 300 || id == 400){
-          coursePath.push(data.label);
-          coursePath.push(data.children[0].label);
-          coursePath.push(data.children[0].children[0].label);
-          homeworkPath = coursePath;
-        }else if(id == 500 || id == 600){
-          coursePath.push(data.label);
-          coursePath.push(data.children[0].label);
-          homeworkPath = coursePath;
-        }else if(id > 1110 && id < 1200){
-          if(id >= 1111 && id <1120){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[0].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[0].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1120 && id <1130){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[1].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[1].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1130 && id <1140){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[2].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[2].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1140 && id <1150){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[3].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[3].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1150 && id <1160){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[4].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[4].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1160 && id <1170){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[5].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[5].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1170 && id <1180){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[6].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[6].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1180 && id <1190){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[7].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[7].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id >= 1190 && id <120){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(this.data[0].children[0].children[8].label);
-            homeworkPath.push(data.label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(this.data[0].children[0].children[8].label);
-            coursePath.push(data.label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }
-        }else if(id > 100 && id < 200){
-          if(id == 110){
-            //console.log(this.data[4].label)
-            //console.log(this.data[3].children[1].label)
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(data.label);
-            homeworkPath.push(data.children[0].label);
-            homeworkPath.push(data.children[0].children[0].label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            coursePath.push(data.children[0].children[0].label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id > 110 && id < 120){
-            homeworkPath.push(this.data[0].label);
-            homeworkPath.push(this.data[0].children[0].label);
-            homeworkPath.push(data.label);
-            homeworkPath.push(data.children[0].label);
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[0].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            coursePath.push(this.$store.state.noTree.teachingMaterial);
-          }else if(id > 120 && id < 130){
-            coursePath.push(this.data[0].label);
-            coursePath.push(this.data[0].children[1].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            homeworkPath = coursePath;
-          }else if(id == 120){
-            coursePath.push(this.data[0].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            coursePath.push(data.children[0].children[0].label);
-            homeworkPath = coursePath;
-          }
-        }else if(id > 200 && id < 300){
-          if(id == 210 || id == 220 || id == 230 || id == 240 || id == 250 || id == 260){
-            coursePath.push(this.data[1].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            homeworkPath = coursePath;
-          }else if(id > 210 && id < 220){
-            coursePath.push(this.data[1].label);
-            coursePath.push(this.data[1].children[0].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 220 && id < 230){
-            coursePath.push(this.data[1].label);
-            coursePath.push(this.data[1].children[1].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 230 && id < 240){
-            coursePath.push(this.data[1].label);
-            coursePath.push(this.data[1].children[2].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 240 && id < 250){
-            coursePath.push(this.data[1].label);
-            coursePath.push(this.data[1].children[3].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 250 && id < 260){
-            coursePath.push(this.data[1].label);
-            coursePath.push(this.data[1].children[4].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 260 && id < 270){
-            coursePath.push(this.data[1].label);
-            coursePath.push(this.data[1].children[5].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }
-        }else if(id > 300 && id < 400){
-          if(id == 310 || id == 320 || id == 330 || id == 340 || id == 350){
-            coursePath.push(this.data[2].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            homeworkPath = coursePath;
-          }else if(id > 310 && id < 320){
-            coursePath.push(this.data[2].label);
-            coursePath.push(this.data[2].children[0].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 320 && id < 330){
-            coursePath.push(this.data[2].label);
-            coursePath.push(this.data[2].children[1].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 330 && id < 340){
-            coursePath.push(this.data[2].label);
-            coursePath.push(this.data[2].children[2].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 340 && id < 350){
-            coursePath.push(this.data[2].label);
-            coursePath.push(this.data[2].children[3].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 350 && id < 360){
-            coursePath.push(this.data[2].label);
-            coursePath.push(this.data[2].children[4].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }
-        }else if(id > 400 && id < 500){
-          if(id == 410 || id == 420 || id == 430 || id == 440 || id == 450 || id == 460){
-            coursePath.push(this.data[3].label);
-            coursePath.push(data.label);
-            coursePath.push(data.children[0].label);
-            homeworkPath = coursePath;
-          }else if(id > 410 && id < 420){
-            coursePath.push(this.data[3].label);
-            coursePath.push(this.data[3].children[0].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 420 && id < 430){
-            coursePath.push(this.data[3].label);
-            coursePath.push(this.data[3].children[1].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 430 && id < 440){
-            coursePath.push(this.data[3].label);
-            coursePath.push(this.data[3].children[2].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 440 && id < 450){
-            coursePath.push(this.data[3].label);
-            coursePath.push(this.data[3].children[3].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 450 && id < 460){
-            coursePath.push(this.data[3].label);
-            coursePath.push(this.data[3].children[4].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 460 && id < 470){
-            coursePath.push(this.data[3].label);
-            coursePath.push(this.data[3].children[5].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }
-        }else if(id > 500 && id < 600){
-          coursePath.push(this.data[4].label);
-          coursePath.push(data.label);
-          homeworkPath = coursePath;
-        }else if(id > 600 && id < 700){
-          coursePath.push(this.data[5].label);
-          coursePath.push(data.label);
-          homeworkPath = coursePath;
-        }else if(id >= 700 && id < 800){
-          var allData = this.data;
-          //console.log(allData)
-          if(id == 700 || id == 710 || id == 720 || id == 730 || id == 740 || id == 750 || id == 760 || id == 770 || id == 780 || id == 790){
-            if(id == 700){
-              coursePath.push(data.children[0].label);
-              coursePath.push(data.children[0].children[0].label);
-              homeworkPath = coursePath;
-              //console.log("222")
-              //console.log(coursePath)
-            }else{
-              coursePath.push(data.label);
-              coursePath.push(data.children[0].label);
-              homeworkPath = coursePath;
-            }
-          }else if(id > 710 && id < 720){
-            coursePath.push(allData[6].children[0].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-            //console.log(homeworkPath)
-            //console.log(coursePath)
-          }else if(id > 720 && id < 730){
-            coursePath.push(allData[6].children[1].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 730 && id < 740){
-            coursePath.push(allData[6].children[2].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 740 && id < 750){
-            coursePath.push(allData[6].children[3].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 750 && id < 760){
-            coursePath.push(allData[6].children[4].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 760 && id < 770){
-            coursePath.push(allData[6].children[5].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 770 && id < 780){
-            coursePath.push(allData[6].children[6].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 780 && id < 790){
-            coursePath.push(allData[6].children[7].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }else if(id > 790 && id < 800){
-            coursePath.push(allData[6].children[8].label);
-            coursePath.push(data.label);
-            homeworkPath = coursePath;
-          }
-        }
-        //console.log(id)
-        this.moutedCorusePath = coursePath;
-        this.moutedHomeworkPath = homeworkPath;
-        this.currCourse = this.moutedHomeworkPath;
-        coursePath = [];
-        if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800){
-          //console.log(this.moutedCorusePath)
-          //console.log(coursePath)
-          homeworkPath = [];
-          coursePath = coursePath + '我的课堂' + '/' + this.$store.state.username + '/';
-          //    console.log(this.moutedCorusePath)
-          for(var i = 0; i < this.moutedCorusePath.length; i++){
-            coursePath = coursePath + this.moutedCorusePath[i] + '/';
-          }
-          this.videoPath = coursePath;
-          coursePath = coursePath + this.$store.state.noTree.teachingMaterial;
-          homeworkPath.push('我的课堂');
-          homeworkPath.push(this.$store.state.username);
-          for(var i = 0; i < this.moutedHomeworkPath.length; i++){
-            //console.log(this.moutedHomeworkPath)
-            homeworkPath.push(this.moutedHomeworkPath[i]);
-          }
-          homeworkPath.push(this.$store.state.noTree.teachingMaterial)
-        }else{
-          for(var i = 0; i < this.moutedCorusePath.length; i++){
-            coursePath = coursePath + this.moutedCorusePath[i] + '/';
-          }
-          if((id > 1110 && id < 1200) || (id >= 100 && id < 200) || (id > 110 && id < 120) || (id >= 700 && id < 800)){
-            for(var i = 0; i < this.moutedCorusePath.length - 1; i++){
-              this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
-            }
-          }else{
-            for(var i = 0; i < this.moutedCorusePath.length; i++){
-              this.videoPath = this.videoPath + this.moutedCorusePath[i] + '/';
+        let returnedItem = []
+        for (let i = 0; i < this.data.length; i++) {
+          if (this.data[i].courseId == id) {
+            objNode = this.data[1]
+            videoPath1 = this.data[i].videoTitle[0].videoTitle
+            returnedItem.unshift(this.data[i].label)
+            returnedItem.push(this.data[i].teachingMaterial)
+            break
+          } else {
+            let obj1 = this.data[i]
+            if (obj1.children) {
+              for (let j = 0; j < obj1.children.length; j++) {
+                let obj2 = obj1.children[j]
+                if (obj2.courseId == id) {
+                  objNode = obj2
+                  videoPath1 = obj2.videoTitle[0].videoTitle
+                  returnedItem.unshift(obj2.label)
+                  returnedItem.unshift(this.data[i].label)
+                  returnedItem.push(obj2.teachingMaterial)
+                  break
+                } else {
+                  if (obj2.children) {
+                    for (let k = 0; k < obj2.children.length; k++) {
+                      let obj3 = obj2.children[k]
+                      if (obj3.courseId == id) {
+                        objNode = obj3
+                        videoPath1 = obj3.videoTitle[0].videoTitle
+                        returnedItem.unshift(obj3.label)
+                        returnedItem.unshift(obj2.label)
+                        returnedItem.unshift(this.data[i].label)
+                        returnedItem.push(obj3.teachingMaterial)
+                        break
+                      } else {
+                        if (obj3.children) {
+                          for (let l = 0; l < obj3.children.length; l++) {
+                            let obj4 = obj3.children[l]
+                            if (obj4.courseId == id) {
+                              objNode = obj4
+                              videoPath1 = obj4.videoTitle[0].videoTitle
+                              returnedItem.unshift(obj4.label)
+                              returnedItem.unshift(obj3.label)
+                              returnedItem.unshift(obj2.label)
+                              returnedItem.unshift(this.data[i].label)
+                              returnedItem.push(obj4.teachingMaterial)
+                              break
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
 
-        console.log(coursePath)
-        //console.log(this.videoPath + this.$store.state.noTree.videoTitle[0].videoTitle)
+        coursePath = returnedItem.join('/') + '/'
+        returnedItem[returnedItem.length - 1] = videoPath1
+        this.videoPath = returnedItem.join('/')
+        returnedItem.pop()
+        homeworkPath = returnedItem
+        this.moutedCorusePath = coursePath;
+        this.moutedHomeworkPath = homeworkPath;
+        this.currCourse = this.moutedHomeworkPath;
+        this.$store.state.noTree = objNode
         //请求PPT
         axios.post("/readResource/getPPT",{
           data:{
@@ -1036,11 +593,20 @@
             fileName: coursePath
           }
         }).then((res)=>{
-          //console.log(res.data.result.textBookList);
-          this.lists = res.data.result.courseList;
-          this.total = this.lists.length;
-          this.teachingBooklists = res.data.result.textBookList;
-          this.courseWorkPagelists = res.data.result.workPageList;
+          if (res.data.result) {
+            let resData = res.data.result
+            this.lists = resData.courseList;
+            this.total = this.lists.length;
+            this.teachingBooklists = resData.textBookList;
+            this.courseWorkPagelists = resData.workPageList;
+            if (resData.introList.length > 0) {
+              this.introList1 = resData.introList[0].img
+              this.introList2 = resData.introList[1].img
+              this.introList3 = resData.introList[2].img
+              this.introList4 = resData.introList[3].img
+              this.introList5 = resData.introList[4].img
+            }
+          }
         }).catch(function(error){
           console.log("error init." + error)
         });
@@ -1052,22 +618,14 @@
             checkArr:homeworkPath
           }
         }).then((res)=>{
-          //console.log(res.data.result)
           if(res.data.result){
-            //  console.log("111"+res.data.result)
             this.homeworkData = res.data.result
-            //  this.$store.commit('homework',res.data.result);
           }else{
-            //  console.log("222"+res.data.result)
-            //  this.$store.commit('homework',[]);
             this.homeworkData = []
           }
-          //console.log(this.homeworkData)
         }).catch(function(error){
           console.log("error init." + error)
         });
-        //console.log(homeworkPath)
-        //console.log(coursePath)
       },
       //监听scroll事件(没用到)
       handleScroll () {
@@ -1081,15 +639,12 @@
           document.msFullscreenElement  ||
           document.mozFullScreenElement ||
           document.webkitFullscreenElement
-        //console.log(isFull)
         this.currpage = val;
         if(isFull === null){
           document.removeEventListener('DOMMouseScroll',scrollFunc,false);
           window.onmousewheel = document.onmousewheel = null;
 
-          //console.log("buquanping");
         }else{
-          //console.log("quanping");
           document.addEventListener("keydown",function(){
             switch(event.keyCode){
               // ←
@@ -1171,61 +726,11 @@
       //PPT翻页
       pageFn(val){
         this.page=val;
-        //  console.log(val);
       },
-      //递归方法默认标红实验
-      refRecursion(key, time){
-        console.log(time)
-        if(time > 10){
-          throw new Error('没有找到VueTree')
-        }
-        var tree = this.$refs.vueTree;
-        if(tree){
-          tree.setCurrentKey(key)
-        }else{
-          this.refRecursion(key, time + 1)
-        }
-
-      },
-
 
       //从树形传值到tabs
       handleNodeClick(data,node) {
         // 点击获取树结构各节点组成路径
-//        let url_1 = []
-//        console.log(node)
-//        let videoPath = ''
-//        let pptPath = ''
-//        let bookPath = ''
-//        let workPath = ''
-//        let flashPath = ''
-//        if (node.parent.parent.parent.parent.label) {
-//          url_1.push(node.parent.parent.parent.parent.label)
-//        }
-//        if (node.parent.parent.parent.label) {
-//          url_1.push(node.parent.parent.parent.label)
-//        }
-//        if (node.parent.parent.label) {
-//          url_1.push(node.parent.parent.label)
-//        }
-//        if (node.parent.label) {
-//          url_1.push(node.parent.label)
-//        }
-//        if (node.label) {
-//          url_1.push(node.label)
-//        }
-//        videoPath = url_1.join('/') + '/' + data.videoTitle[0].videoTitle
-//        bookPath = url_1.join('/') + '/' + data.teachingBook
-//        pptPath = url_1.join('/') + '/' + data.teachingMaterial
-//        workPath = url_1.join('/') + '/' + data.workPage
-//        flashPath = url_1.join('/') + '/' + data.flash2d
-//        console.log(videoPath)
-//        console.log(bookPath)
-//        console.log(pptPath)
-//        console.log(workPath)
-//        console.log(flashPath)
-
-
         this.appAnswer = false;
         var video = document.querySelector('video');
         for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
@@ -1239,6 +744,34 @@
         if(data.children){
 
         }else{
+          let url_1 = []
+          let videoPath = ''
+          let pptPath = ''
+          let bookPath = ''
+          let workPath = ''
+          let flashPath = ''
+          if (node.label) {
+            url_1.push(node.label)
+            if (node.parent.label) {
+              url_1.push(node.parent.label)
+              if (node.parent.parent.label) {
+                url_1.push(node.parent.parent.label)
+                if (node.parent.parent.parent.label) {
+                  url_1.push(node.parent.parent.parent.label)
+                  if (node.parent.parent.parent.parent.label) {
+                    url_1.push(node.parent.parent.parent.parent.label)
+                  }
+                }
+              }
+            }
+          }
+          url_1.reverse()
+          videoPath = url_1.join('/') + '/' + data.videoTitle[0].videoTitle
+          pptPath = url_1.join('/') + '/' + data.teachingMaterial
+          flashPath = url_1.join('/') + '/' + data.flash2d
+          bookPath = url_1.join('/') + '/' + data.teachingBook
+          workPath = url_1.join('/') + '/' + data.workPage
+          this.videoPath = videoPath
 
           //点击新课程让课件跳转到第一页
           EventBus.$emit('newPageUp',this.pageFn(1));
@@ -1247,49 +780,19 @@
           //点击新课程tabs标签默认第一个
           this.activeName = this.descTab;
           this.$store.commit('activeName','');
-          console.log(this.activeName)
-          //请求课件和课后作业给后台发送的数组
-          this.checkArr = [];
-          if(node.parent.label == '汽车空调' || node.parent.label == '汽车维护'){
-            this.checkArr.push(node.parent.label)
-            this.checkArr.push(node.label)
-          }else if(node.parent.parent.parent.label == this.data[0].label){
-            this.checkArr.push(node.parent.parent.parent.label)
-            this.checkArr.push(node.parent.parent.label)
-            this.checkArr.push(node.parent.label)
-            this.checkArr.push(node.label)
-          }else if(node.parent.parent.parent){
-            this.checkArr.push(node.parent.parent.label)
-            this.checkArr.push(node.parent.label)
-            this.checkArr.push(node.label)
-          }
-
-          //console.log(this.checkArr);
           //点击新课程存本地的资源
           this.$store.commit('noTreeTitle',data);
           this.$store.commit('noTreeTitle1',data);
           //添加item至我的足迹请求
           this.myFootPrint(data)
           //请求课后作业
-          var checkArrHomeWork = this.checkArr;
-          if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
-            checkArrHomeWork = [];
-            checkArrHomeWork.push('我的课堂');
-            checkArrHomeWork.push(this.$store.state.username);
-            for(var i = 1; i < this.checkArr.length; i++){
-              checkArrHomeWork.push(this.checkArr[i]);
-            }
-            checkArrHomeWork.push(this.$store.state.noTree.teachingMaterial);
-          }else{
-
-          }
           axios.get("/readTestQuestion/getHomeWork",{
             params:{
               userId:this.userId,
-              checkArr:checkArrHomeWork
+              checkArr:url_1
             }
           }).then((res)=>{
-            this.currCourse = checkArrHomeWork;
+            this.currCourse = url_1;
             this.appraiseContent.title = this.currCourse;
 
             if(res.data.result){
@@ -1301,48 +804,32 @@
             console.log("error init." + error)
           });
 
-          //拼接地址
-          let fileNamePath = '';
-          if(this.$store.state.noTree1.courseId > 1110 && this.$store.state.noTree1.courseId < 1200){
-            for(var i = 0; i < this.checkArr.length; i++){
-              fileNamePath = fileNamePath + this.checkArr[i] + '/';
-            }
-            this.videoPath = fileNamePath;
-            fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
-          }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId <= 800){
-            for(var i = 0; i < this.checkArr.length; i++){
-              if(i === 0){
-                fileNamePath = fileNamePath + '我的课堂' + '/' + this.$store.state.username + '/';
-              }else{
-                fileNamePath = fileNamePath + this.checkArr[i] + '/';
-              }
-            }
-            this.videoPath = fileNamePath;
-            fileNamePath = fileNamePath + this.$store.state.noTree.teachingMaterial;
-          }else{
-            for(var i = 0; i < this.checkArr.length; i++){
-              fileNamePath = fileNamePath + this.checkArr[i] + '/';
-            }
-            this.videoPath = fileNamePath;
-          }
-          console.log('1111')
-          console.log(this.videoPath)
           //请求课件
           axios.post("/readResource/getPPT",{
             data:{
               userId:this.userId,
-              fileName: fileNamePath
+              fileName: pptPath
             }
           }).then((res)=>{
-            //console.log(res.data.result.textBookList);
-            this.lists = res.data.result.courseList;
-            this.total = this.lists.length;
-            this.teachingBooklists = res.data.result.textBookList;
-            this.courseWorkPagelists = res.data.result.workPageList;
+            if (res.data.result) {
+              let resData = res.data.result
+              this.lists = resData.courseList;
+              this.total = this.lists.length;
+              this.teachingBooklists = resData.textBookList;
+              this.courseWorkPagelists = resData.workPageList;
+              if (resData.introList.length > 0) {
+                this.introList1 = resData.introList[0].img
+                this.introList2 = resData.introList[1].img
+                this.introList3 = resData.introList[2].img
+                this.introList4 = resData.introList[3].img
+                this.introList5 = resData.introList[4].img
+              }
+            }
+
           }).catch(function(error){
             console.log("error init." + error)
           });
-          this.getComment(checkArrHomeWork);
+          this.getComment(url_1);
         }
       },
       //点击显示回复
@@ -1370,7 +857,6 @@
             appraiseContent:this.appraiseContent
           }
         }).then(function (res) {
-          //  console.log(res.data.result)
         })
       },
       //提交回复
@@ -1386,13 +872,9 @@
           if (this.replyText === '') {
             alert('回复不能为空')
           } else {
-            //console.log(this.appraiseContent[index])
             this.appraiseContent.appraiseMsg[index].replyText = this.replyText;
             this.appraiseContent.appraiseMsg[index].replyName = this.userName;
             this.appraiseContent.appraiseMsg[index].replyDate = core.formatDate("yyyy-MM-dd hh:mm:ss", new Date());
-
-
-            //console.log(this.appraiseContent)
             this.appraiseUpdate();
             this.replyText = '';
           }
@@ -1414,7 +896,6 @@
           if (this.text === '') {
             alert('评论不能为空')
           } else {
-            //console.log(currCourse)
             if(this.appraiseStar.value1 == null){
               this.appraiseStar.value1 = 0;
             }else{
@@ -1433,12 +914,9 @@
             })
             this.appraiseContent.title = this.currCourse;
             this.appraiseContent.appraiseMsg = this.appraiseIndex;
-
             this.appraiseStar.value1 = null;
             this.appraiseStar.value2 = null;
             this.appraiseStar.value3 = null;
-
-            //console.log(this.appraiseContent)
             this.appraiseUpdate();
             this.text = '';
           }
@@ -1484,28 +962,19 @@
       //点击显示课件全屏
       appFullScreen(val){
         var elem = document.getElementById("courseppt");
-        console.log(elem);
         this.requestFullScreen(elem,val);
       },
       workPageFullScreen(){
         var elem = document.getElementById("courseWorkPage");
-        console.log(elem);
         this.requestFullScreen(elem);
       },
       teachingBookFullScreen(){
         var elem = document.getElementById("teachingBook");
-        console.log(elem);
         this.requestFullScreen(elem);
       },
       //类似F11的全屏
       requestFullScreen(element,val) {
 
-        //  console.log(document.getElementsByClassName("coursepptImg")[0])
-        //  console.log(val)
-        //  console.log(pptHeight)
-        //  console.log(pptWidth)
-        //  console.log(innerHeight)
-        //  console.log(innerWidth)
         var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
         if (requestMethod) {
           requestMethod.call(element);
@@ -1515,18 +984,15 @@
             wscript.SendKeys(122);
           }
         }
-        //console.log("2221")
         if(element == document.getElementById("courseppt")){
           var pptHeight = document.getElementsByClassName("coursepptImg")[val].offsetHeight;
           var pptWidth = document.getElementsByClassName("coursepptImg")[val].offsetWidth;
           var innerHeight = window.innerHeight;
           var innerWidth = window.innerWidth;
           if(1.7 < pptWidth / pptHeight){
-            //  console.log(pptWidth / pptHeight)
             element.style.width = '100%';
             element.style.height = "auto";
           }else if(this.$store.state.noTree1.courseId >= 700 && this.$store.state.noTree1.courseId < 800 && 1.7 >= pptWidth / pptHeight){
-            //  console.log(1.7)
             var realHeight = innerHeight + 50;
             for(var i = 0; i < document.getElementsByClassName("coursepptImg").length; i++){
               document.getElementsByClassName("coursepptImg")[i].style.height = realHeight + 'px';
@@ -1545,11 +1011,9 @@
             courseInfo: item
           }
         }).then((res) => {
-          console.log(res.data)
           if (res.data.code === 0){
-  //            this.addSuccess('更新成功');
+              this.addSuccess('myFootPrint更新成功');
           }else if (res.data.code === 1){
-  //          this.$message.error('更新失败');
           }
         });
         //为热门课程给每个课程计数
@@ -1558,7 +1022,6 @@
               courseInfo: item
             }
           }).then((res) => {
-            //  console.log(res.data)
 
           });
         axios.post('/teacherCMS/studentHot', {
@@ -1566,7 +1029,6 @@
             name: this.userName,
           }
         }).then((res) => {
-          console.log(res.data)
 
         });
       },
@@ -1607,7 +1069,6 @@
     width:100%;
     margin:0 auto;
     margin-top:6px;
-    margin-bottom:80px;
     display: flex;
   }
   .newCourse-content .completeLeft{
@@ -1841,9 +1302,10 @@
     color: #000;
   }
   .newCourse-content .homework-box{
-    width: 100%;
-    height:400px;
+    width: 70%;
+    height:500px;
     overflow:auto;
+    margin: 0 auto;
   }
   .newCourse-content .homework{
     margin:0 5%;
@@ -2157,5 +1619,12 @@
   }
   video::-webkit-media-controls-panel {
     width: calc(100% + 30px);
+  }
+  .newCourse-container .introImg {
+    width: 960px;
+    margin-bottom: 14px;
+  }
+  #oCourse .el-tabs__content{
+    padding-bottom: 0;
   }
 </style>
