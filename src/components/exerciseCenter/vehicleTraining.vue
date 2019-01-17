@@ -115,6 +115,8 @@
   import axios from 'axios'
   import moment from 'moment'
   import echarts from 'echarts/dist/echarts.common.min'
+
+
   export default {
     name: 'vehicleTraining',
     data () {
@@ -157,95 +159,238 @@
 //          {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],id:1,color:'black'},
 //          {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],id:1,color:'#f00'}
 //        ],
-        mLPoint:[[147,292],[423,289]],
+        mLPoint:[
+          [147,292],
+          [423,289],
+          [726,303],
+          [921,284],
+          [907,288],
+          [898,297],
+          [893,311],
+          [55,91],
+          [203,191],
+          [289,460],
+        ],
         mLcircles:[
           [
-            {x:0,y:0,id:0,color:'#ec851c',name:1},
-            {x:1,y:0,id:1,color:'#ec851c'},
-            {x:4,y:0,id:2,color:'#f00'},
-            {x:5,y:0,id:3,color:'#ec851c'},
-            {x:6,y:0,id:4,color:'#000'},
-            {x:7,y:0,id:5,color:'#000'},
-            {x:8,y:0,id:6,color:'#000'},
-            {x:9,y:0,id:7,color:'#000'},
-            {x:10,y:0,id:8,color:'#000'},
-            {x:11,y:0,id:9,color:'#000'},
-            {x:12,y:0,id:10,color:'#000'},
-            {x:13,y:0,id:11,color:'#000'},
-            {x:14,y:0,id:12,color:'#000'},
-            {x:15,y:0,id:13,color:'#000'},
-            {x:16,y:0,id:14,color:'#000'},
-            {x:17,y:0,id:15,color:'#000'},
-            {x:18,y:0,id:16,color:'#000'},
-            {x:19,y:0,id:17,color:'#000'},
-            {x:20,y:0,id:18,color:'#000'},
-            {x:21,y:0,id:19,color:'#000'},
-            {x:22,y:0,id:20,color:'#ec851c'},
-            {x:0.5,y:1.5,id:21,color:'#ec851c'},
-            {x:4,y:1,id:22,color:'#f00'},
-            {x:5,y:1,id:1,color:'#ec851c'},
-            {x:6,y:1,id:1,color:'#000'},
-            {x:7,y:1,id:1,color:'#000'},
-            {x:8,y:1,id:1,color:'#000'},
-            {x:9,y:1,id:1,color:'#000'},
-            {x:10,y:1,id:1,color:'#000'},
-            {x:11,y:1,id:1,color:'#000'},
-            {x:12,y:1,id:1,color:'#000'},
-            {x:13,y:1,id:1,color:'#000'},
-            {x:14,y:1,id:1,color:'#000'},
-            {x:15,y:1,id:1,color:'#f00'},
-            {x:16,y:1,id:1,color:'#f00'},
-            {x:17,y:1,id:1,color:'#000'},
-            {x:18,y:1,id:1,color:'#f00'},
-            {x:19,y:1,id:1,color:'#f00'},
-            {x:20,y:1,id:1,color:'#000'},
-            {x:21,y:1,id:1,color:'#f00'},
-            {x:22,y:1,id:1,color:'#000'},
-            {x:4,y:2,id:1,color:'#f00'},
-            {x:5,y:2,id:1,color:'#000'},
-            {x:6,y:2,id:1,color:'#000'},
-            {x:7,y:2,id:1,color:'#000'},
-            {x:8,y:2,id:1,color:'#000'},
-            {x:9,y:2,id:1,color:'#000'},
-            {x:10,y:2,id:1,color:'#000'},
-            {x:11,y:2,id:1,color:'#000'},
-            {x:12,y:2,id:1,color:'#000'},
-            {x:13,y:2,id:1,color:'#f00'},
-            {x:14,y:2,id:1,color:'#000'},
-            {x:15,y:2,id:1,color:'#000'},
-            {x:16,y:2,id:1,color:'#000'},
-            {x:17,y:2,id:1,color:'#000'},
-            {x:18,y:2,id:1,color:'#000'},
-            {x:19,y:2,id:1,color:'#000'},
-            {x:20,y:2,id:1,color:'#000'},
-            {x:21,y:2,id:1,color:'#000'},
-            {x:22,y:2,id:1,color:'#000'},
-            {x:0,y:3,id:1,color:'#ec851c'},
-            {x:1,y:3,id:1,color:'#ec851c'},
-            {x:4,y:3,id:1,color:'#f00'},
-            {x:5,y:3,id:1,color:'#000'},
-            {x:6,y:3,id:1,color:'#000'},
-            {x:7,y:3,id:1,color:'#ec851c'},
-            {x:8,y:3,id:1,color:'#000'},
-            {x:9,y:3,id:1,color:'#f00'},
-            {x:10,y:3,id:1,color:'#000'},
-            {x:11,y:3,id:1,color:'#ec851c'},
-            {x:12,y:3,id:1,color:'#000'},
-            {x:13,y:3,id:1,color:'#ec851c'},
-            {x:14,y:3,id:1,color:'#000'},
-            {x:15,y:3,id:1,color:'#000'},
-            {x:16,y:3,id:1,color:'#000'},
-            {x:17,y:3,id:1,color:'#000'},
-            {x:18,y:3,id:1,color:'#ec851c'},
-            {x:19,y:3,id:1,color:'#ec851c'},
-            {x:20,y:3,id:1,color:'#000'},
-            {x:21,y:3,id:1,color:'#f00'},
-            {x:22,y:3,id:1,color:'#f00'},
+            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+            {"x":1,"y":0,"id":1,"color":"#ec851c"},
+            {"x":0.5,"y":1.5,"id":2,"color":"#ec851c"},
+            {"x":0,"y":3,"id":3,"color":"#ec851c"},
+            {"x":1,"y":3,"id":4,"color":"#ec851c"},
+
+            {"x":4,"y":0,"id":5,"color":"#f00"},
+            {"x":5,"y":0,"id":6,"color":"#ec851c"},
+            {"x":6,"y":0,"id":7,"color":"#000"},
+            {"x":7,"y":0,"id":8,"color":"#000"},
+            {"x":8,"y":0,"id":9,"color":"#000"},
+            {"x":9,"y":0,"id":10,"color":"#000"},
+            {"x":10,"y":0,"id":11,"color":"#000"},
+            {"x":11,"y":0,"id":12,"color":"#000"},
+            {"x":12,"y":0,"id":13,"color":"#000"},
+            {"x":13,"y":0,"id":14,"color":"#000"},
+            {"x":14,"y":0,"id":15,"color":"#000"},
+            {"x":15,"y":0,"id":16,"color":"#000"},
+            {"x":16,"y":0,"id":17,"color":"#000"},
+            {"x":17,"y":0,"id":18,"color":"#000"},
+            {"x":18,"y":0,"id":19,"color":"#000"},
+            {"x":19,"y":0,"id":20,"color":"#000"},
+            {"x":20,"y":0,"id":21,"color":"#000"},
+            {"x":21,"y":0,"id":22,"color":"#000"},
+            {"x":22,"y":0,"id":23,"color":"#ec851c"},
+
+            {"x":4,"y":1,"id":24,"color":"#f00"},
+            {"x":5,"y":1,"id":1,"color":"#ec851c"},
+            {"x":6,"y":1,"id":1,"color":"#ec851c"},
+            {"x":7,"y":1,"id":1,"color":"#ec851c"},
+            {"x":8,"y":1,"id":1,"color":"#000"},
+            {"x":9,"y":1,"id":1,"color":"#000"},
+            {"x":10,"y":1,"id":1,"color":"#000"},
+            {"x":11,"y":1,"id":1,"color":"#000"},
+            {"x":12,"y":1,"id":1,"color":"#000"},
+            {"x":13,"y":1,"id":1,"color":"#ec851c"},
+            {"x":14,"y":1,"id":1,"color":"#ec851c"},
+            {"x":15,"y":1,"id":1,"color":"#ec851c"},
+            {"x":16,"y":1,"id":1,"color":"#ec851c"},
+            {"x":17,"y":1,"id":1,"color":"#000"},
+            {"x":18,"y":1,"id":1,"color":"#ec851c"},
+            {"x":19,"y":1,"id":1,"color":"#000"},
+            {"x":20,"y":1,"id":1,"color":"#000"},
+            {"x":21,"y":1,"id":1,"color":"#000"},
+            {"x":22,"y":1,"id":1,"color":"#000"},
+
+            {"x":4,"y":2,"id":1,"color":"#000"},
+            {"x":5,"y":2,"id":1,"color":"#000"},
+            {"x":6,"y":2,"id":1,"color":"#ec851c"},
+            {"x":7,"y":2,"id":1,"color":"#000"},
+            {"x":8,"y":2,"id":1,"color":"#000"},
+            {"x":9,"y":2,"id":1,"color":"#000"},
+            {"x":10,"y":2,"id":1,"color":"#ec851c"},
+            {"x":11,"y":2,"id":1,"color":"#ec851c"},
+            {"x":12,"y":2,"id":1,"color":"#000"},
+            {"x":13,"y":2,"id":1,"color":"#000"},
+            {"x":14,"y":2,"id":1,"color":"#000"},
+            {"x":15,"y":2,"id":1,"color":"#000"},
+            {"x":16,"y":2,"id":1,"color":"#ec851c"},
+            {"x":17,"y":2,"id":1,"color":"#000"},
+            {"x":18,"y":2,"id":1,"color":"#ec851c"},
+            {"x":19,"y":2,"id":1,"color":"#ec851c"},
+            {"x":20,"y":2,"id":1,"color":"#f00"},
+            {"x":21,"y":2,"id":1,"color":"#000"},
+            {"x":22,"y":2,"id":1,"color":"#ec851c"},
+
+            {"x":4,"y":3,"id":1,"color":"#000"},
+            {"x":5,"y":3,"id":1,"color":"#000"},
+            {"x":6,"y":3,"id":1,"color":"#ec851c"},
+            {"x":7,"y":3,"id":1,"color":"#ec851c"},
+            {"x":8,"y":3,"id":1,"color":"#000"},
+            {"x":9,"y":3,"id":1,"color":"#000"},
+            {"x":10,"y":3,"id":1,"color":"#000"},
+            {"x":11,"y":3,"id":1,"color":"#ec851c"},
+            {"x":12,"y":3,"id":1,"color":"#000"},
+            {"x":13,"y":3,"id":1,"color":"#000"},
+            {"x":14,"y":3,"id":1,"color":"#000"},
+            {"x":15,"y":3,"id":1,"color":"#f00"},
+            {"x":16,"y":3,"id":1,"color":"#000"},
+            {"x":17,"y":3,"id":1,"color":"#000"},
+            {"x":18,"y":3,"id":1,"color":"#000"},
+            {"x":19,"y":3,"id":1,"color":"#ec851c"},
+            {"x":20,"y":3,"id":1,"color":"#000"},
+            {"x":21,"y":3,"id":1,"color":"#000"},
+            {"x":22,"y":3,"id":1,"color":"#f00"}
           ],
           [
-            {x:0,y:0,id:1,color:'#ec851c'},
-            {x:1,y:0,id:1,color:'#ec851c'},
-            {x:2,y:0,id:1,color:'#ec851c'},
+            {"x":0,"y":0,"id":1,"color":"#f00"},
+            {"x":1,"y":0,"id":1,"color":"#ec851c"},
+            {"x":2,"y":0,"id":1,"color":"#000"},
+            {"x":0.5,"y":1.8,"id":1,"color":"#ec851c"},
+            {"x":1.5,"y":1.8,"id":1,"color":"#ec851c"},
+            {"x":0,"y":3.7,"id":1,"color":"#ec851c"},
+            {"x":1,"y":3.7,"id":1,"color":"#ec851c"},
+            {"x":2,"y":3.7,"id":1,"color":"#000"},
+
+            {"x":5.6,"y":0,"id":1,"color":"#f00"},
+            {"x":6.6,"y":0,"id":1,"color":"#000"},
+            {"x":7.6,"y":0,"id":1,"color":"#ec851c"},
+            {"x":8.6,"y":0,"id":1,"color":"#000"},
+            {"x":9.6,"y":0,"id":1,"color":"#000"},
+            {"x":10.6,"y":0,"id":1,"color":"#ec851c"},
+            {"x":11.6,"y":0,"id":1,"color":"#ec851c"},
+            {"x":12.6,"y":0,"id":1,"color":"#000"},
+
+            {"x":5.6,"y":1.1,"id":1,"color":"#ec851c"},
+            {"x":6.6,"y":1.1,"id":1,"color":"#ec851c"},
+            {"x":7.6,"y":1.1,"id":1,"color":"#000"},
+            {"x":8.6,"y":1.1,"id":1,"color":"#000"},
+            {"x":9.6,"y":1.1,"id":1,"color":"#ec851c"},
+            {"x":10.6,"y":1.1,"id":1,"color":"#ec851c"},
+            {"x":11.6,"y":1.1,"id":1,"color":"#000"},
+            {"x":12.6,"y":1.1,"id":1,"color":"#000"},
+
+            {"x":5.6,"y":2.6,"id":1,"color":"#f00"},
+            {"x":6.6,"y":2.6,"id":1,"color":"#ec851c"},
+            {"x":7.6,"y":2.6,"id":1,"color":"#000"},
+            {"x":8.6,"y":2.6,"id":1,"color":"#000"},
+            {"x":9.6,"y":2.6,"id":1,"color":"#000"},
+            {"x":10.6,"y":2.6,"id":1,"color":"#ec851c"},
+            {"x":11.6,"y":2.6,"id":1,"color":"#f00"},
+            {"x":12.6,"y":2.6,"id":1,"color":"#ec851c"},
+
+            {"x":5.6,"y":3.7,"id":1,"color":"#000"},
+            {"x":6.6,"y":3.7,"id":1,"color":"#ec851c"},
+            {"x":7.6,"y":3.7,"id":1,"color":"#000"},
+            {"x":8.6,"y":3.7,"id":1,"color":"#000"},
+            {"x":9.6,"y":3.7,"id":1,"color":"#ec851c"},
+            {"x":10.6,"y":3.7,"id":1,"color":"#ec851c"},
+            {"x":11.6,"y":3.7,"id":1,"color":"#ec851c"},
+            {"x":12.6,"y":3.7,"id":1,"color":"#ec851c"},
+          ],
+          [
+            {"x":0,"y":0,"id":0,"color":"#000"},
+            {"x":1,"y":0,"id":1,"color":"#000"},
+            {"x":2,"y":0,"id":2,"color":"#ec851c"},
+            {"x":3,"y":0,"id":3,"color":"#f00"},
+            {"x":4,"y":0,"id":4,"color":"#ec851c"},
+            {"x":5,"y":0,"id":0,"color":"#ec851c"},
+            {"x":6,"y":0,"id":1,"color":"#ec851c"},
+            {"x":7,"y":0,"id":2,"color":"#ec851c"},
+            {"x":8,"y":0,"id":3,"color":"#ec851c"},
+            {"x":9,"y":0,"id":4,"color":"#ec851c"},
+            {"x":10,"y":0,"id":0,"color":"#ec851c"},
+            {"x":11,"y":0,"id":1,"color":"#ec851c"},
+
+            {"x":0.5,"y":1.1,"id":0,"color":"#000"},
+            {"x":1.5,"y":1.1,"id":1,"color":"#ec851c"},
+            {"x":2.5,"y":1.1,"id":2,"color":"#ec851c"},
+            {"x":3.5,"y":1.1,"id":3,"color":"#ec851c"},
+            {"x":4.5,"y":1.1,"id":4,"color":"#ec851c"},
+            {"x":5.5,"y":1.1,"id":0,"color":"#000"},
+            {"x":6.5,"y":1.1,"id":1,"color":"#ec851c"},
+            {"x":7.5,"y":1.1,"id":2,"color":"#ec851c"},
+            {"x":8.5,"y":1.1,"id":3,"color":"#f00"},
+            {"x":9.5,"y":1.1,"id":4,"color":"#000"},
+            {"x":10.5,"y":1.1,"id":0,"color":"#ec851c"},
+
+            {"x":0,"y":2.2,"id":0,"color":"#f00"},
+            {"x":1,"y":2.2,"id":1,"color":"#ec851c"},
+            {"x":2,"y":2.2,"id":2,"color":"#ec851c"},
+            {"x":3,"y":2.2,"id":3,"color":"#ec851c"},
+            {"x":4,"y":2.2,"id":4,"color":"#000"},
+            {"x":5,"y":2.2,"id":0,"color":"#000"},
+            {"x":6,"y":2.2,"id":1,"color":"#ec851c"},
+            {"x":7,"y":2.2,"id":2,"color":"#ec851c"},
+            {"x":8,"y":2.2,"id":3,"color":"#ec851c"},
+            {"x":9,"y":2.2,"id":4,"color":"#ec851c"},
+            {"x":10,"y":2.2,"id":0,"color":"#ec851c"},
+            {"x":11,"y":2.2,"id":1,"color":"#ec851c"},
+          ],
+          [
+            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+            {"x":0,"y":5.4,"id":0,"color":"#ec851c"}
+          ],
+          [
+            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+            {"x":2.8,"y":0,"id":0,"color":"#000"},
+            {"x":0,"y":4.7,"id":0,"color":"#ec851c"},
+            {"x":2.8,"y":4.7,"id":0,"color":"#000"}
+          ],
+          [
+            {"x":0,"y":0,"id":0,"color":"#f00"},
+            {"x":1.6,"y":0,"id":0,"color":"#000"},
+            {"x":3.2,"y":0,"id":0,"color":"#000"},
+            {"x":4.6,"y":0,"id":0,"color":"#000"},
+            {"x":0,"y":2.8,"id":0,"color":"#ec851c"},
+            {"x":1.6,"y":2.8,"id":0,"color":"#000"},
+            {"x":3.2,"y":2.8,"id":0,"color":"#000"},
+            {"x":4.6,"y":2.8,"id":0,"color":"#000"},
+          ],
+          [
+            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+            {"x":1.4,"y":0,"id":0,"color":"#ec851c"},
+            {"x":2.9,"y":0,"id":0,"color":"#000"},
+            {"x":4.4,"y":0,"id":0,"color":"#000"},
+            {"x":5.8,"y":0,"id":0,"color":"#000"},
+          ],
+          [
+            {"x":-1.8,"y":0,"id":0,"color":"#ec851c"},
+            {"x":0,"y":0,"id":0,"color":"#f00"},
+            {"x":3.4,"y":0,"id":0,"color":"#f00"},
+            {"x":5.2,"y":0,"id":0,"color":"#f00"},
+          ],
+          [
+            {"x":-6.1,"y":-3.3,"id":0,"color":"#f00"},
+            {"x":0,"y":0,"id":0,"color":"#f00"},
+            {"x":15.7,"y":-1.2,"id":0,"color":"#f00"},
+            {"x":47.5,"y":-4,"id":0,"color":"#f00"},
+            {"x":60.5,"y":0,"id":0,"color":"#f00"},
+            {"x":70.3,"y":0,"id":0,"color":"#f00"},
+          ],
+          [
+            {"x":-22.7,"y":-0.8,"id":0,"color":"#f00"},
+            {"x":-10.9,"y":-0.8,"id":0,"color":"#f00"},
+            {"x":0,"y":0,"id":0,"color":"#f00"},
+            {"x":15.4,"y":0,"id":0,"color":"#f00"},
+            {"x":16.8,"y":0,"id":0,"color":"#f00"},
           ]
         ],
         clientHeight: 0,
@@ -547,8 +692,6 @@
       },
 //    监听鼠标位置
       detect(){
-
-        var stage = new createjs.Stage("canvas");
         var _this = this
         //鼠标点击canvas，获取的鼠标点击的位置(x,y)
         this.canvas.onmousemove = function (e){
@@ -559,16 +702,19 @@
       },
 //    画布显示balls数据
       draw(XYoptions){
-        var stage = new createjs.Stage("canvas");
-        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
-        imageB.scaleX= 0.3
-        imageB.scaleY= 0.3
-        stage.addChild(imageB);
+        this.stage.removeAllChildren()
+//        this.stage.setChildIndex(this.imageB, this.stage.getNumChildren() - 1);
 
-        imageR.scaleX= 0.3
-        imageR.scaleY= 0.3
-        stage.addChild(imageR);
+//        var stage = new createjs.Stage("canvas");
+//        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+//        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+        this.imageB.scaleX= 0.3
+        this.imageB.scaleY= 0.3
+        this.stage.addChild(this.imageB);
+
+        this.imageR.scaleX= 0.3
+        this.imageR.scaleY= 0.3
+        this.stage.addChild(this.imageR);
 
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
@@ -576,52 +722,40 @@
             var shape=new createjs.Shape();
             var graphics=shape.graphics;
             var circle = new createjs.Shape();
-            graphics.beginStroke("000");
-            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-            stage.addChild(shape);
-            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-            stage.addChild(circle);
+            var circleRect = new createjs.Shape();
+            if (i <= 2) {
+              graphics.beginStroke("000");
+              graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
+              this.stage.addChild(shape);
+              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
+              this.stage.addChild(circle);
+            } else if (i > 2 && i <= 6) {
+              circleRect.graphics.beginStroke("#000").drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius + 1.6);
+              this.stage.addChild(circleRect);
+              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
+              this.stage.addChild(circle);
+            } else {
+              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
+              this.stage.addChild(circle);
+            }
 //            红表笔检测
             if (circle.hitTest(XYoptions.preRedX+10, XYoptions.preRedY)) {
-//              createjs.Ticker.setFPS(30);
-//              createjs.Ticker.addEventListener("tick",stage);
-//                imageR.rotation = -40
-//                imageR.x=XYoptions.preRedX
-//                imageR.y=XYoptions.preRedY
-////                      circle.graphics.command.radius=10
-////                  stage.addChild(imageR);
+              this.imageR.rotation = -40
+              this.imageR.x=XYoptions.preRedX
+              this.imageR.y=XYoptions.preRedY
               console.log("yeye",currDraw[j].id)
               this.isRed = true
-//              console.log(this.isRed)
-//              console.log(currDraw[j].a[0], currDraw[j].a[1])
-//              console.log(circle.graphics.command.radius)
-
             } else {
-//              this.isRed = false
-//              console.log(this.isRed)
-//              var _this = this
-//              var oldX;
-//              var oldY;
-//
-//              imageR.addEventListener("mousedown",function(e){
-//                imageR.rotation = 0
-//                oldX= e.stageX;
-//                oldY= e.stageY;
-//              });
-//              imageR.addEventListener("pressmove", function (e) {
-//                e.target.x+= e.stageX-oldX;
-//                e.target.y+= e.stageY-oldY;
-//                oldX= e.stageX;
-//                oldY= e.stageY;
-//                _this.XYoption.preRedX = e.target.x
-//                _this.XYoption.preRedY = e.target.y
-//              });
             }
+
 //            黑表笔检测
             if (circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY)) {
               this.isBlack = true
 //              console.log(this.isBlack)
               console.log("yeye",currDraw[j].id)
+              this.imageB.rotation = -40
+              this.imageB.x=XYoptions.preBlackX
+              this.imageB.y=XYoptions.preBlackY
             }else{
 //              this.isBlack = false
 //              console.log(this.isBlack)
@@ -629,7 +763,7 @@
           }
         }
 
-        if(this.isBlack && this.isBlack){
+        if(this.isBlack && this.isRed){
           this.multimeterTruthDivData = 560
         }else{
           this.multimeterTruthDivData = 0
@@ -669,41 +803,59 @@
       },
       drawPoint(){
         var _this = this
-        var stage = new createjs.Stage("canvas");
-        var imageB = new createjs.Bitmap("src/assets/imgs/black.png");
-        var imageR = new createjs.Bitmap("src/assets/imgs/red.png");
+        _this.stage.removeAllChildren()
+//        var stage = new createjs.Stage("canvas");
+//        var imageB = new createjs.Bitmap("src/assets/imgs/black.png");
+//        var imageR = new createjs.Bitmap("src/assets/imgs/red.png");
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
           for(var j = 0 ; j < currDraw.length ; j ++){
             var shape=new createjs.Shape();
             var graphics=shape.graphics;
             var circle = new createjs.Shape();
-            graphics.beginStroke("000");
-            graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-            stage.addChild(shape);
-            circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-            stage.addChild(circle);
-            stage.update();
+            var circleRect = new createjs.Shape();
+            if (i <= 2) {
+              graphics.beginStroke("000");
+              graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
+              _this.stage.addChild(shape);
+              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
+              _this.stage.addChild(circle);
+            } else if (i > 2 && i <= 6) {
+              circleRect.graphics.beginStroke("#000").drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius + 1.6);
+              _this.stage.addChild(circleRect);
+              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
+              _this.stage.addChild(circle);
+            } else {
+              circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
+              _this.stage.addChild(circle);
+            }
+
+//            _this.stage.setChildIndex(circle, 0)
+//            _this.stage.update();
           }
         }
         if (this.clickMultimeterData === 1) {
+          _this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+          _this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+
 //              this.drawPen()
-          createjs.Ticker.setFPS(30);
-          createjs.Ticker.addEventListener("tick",stage);
+//          createjs.Ticker.setFPS(30);
+//          createjs.Ticker.addEventListener("tick",_this.stage);
 
 //        imageB.transform(0.5,0,0,0.5,0,0);
-          imageB.x = 850
-          imageB.y = 70
-          imageB.scaleX= 0.3
-          imageB.scaleY= 0.3
-          stage.addChild(imageB);
+          _this.imageB.x = 850
+          _this.imageB.y = 70
+          _this.imageB.scaleX= 0.3
+          _this.imageB.scaleY= 0.3
+          _this.stage.addChild(this.imageB);
           var oldX;
           var oldY;
-          imageB.addEventListener("mousedown",function(e){
+          _this.imageB.addEventListener("mousedown",function(e){
             oldX= e.stageX;
             oldY= e.stageY;
+            _this.imageB.rotation = 0
           });
-          imageB.addEventListener("pressmove", function (e) {
+          _this.imageB.addEventListener("pressmove", function (e) {
             e.target.x+= e.stageX-oldX;
             e.target.y+= e.stageY-oldY;
             oldX= e.stageX;
@@ -716,21 +868,24 @@
 //                console.log(_this.preBlackX)
           });
 
-          imageR.x = 900
-          imageR.y = 70
-          imageR.scaleX= 0.3
-          imageR.scaleY= 0.3
-          imageR.width = 25
-          imageR.height = 180
-          stage.addChild(imageR);
+          _this.imageR.x = 900
+          _this.imageR.y = 70
+          _this.imageR.scaleX= 0.3
+          _this.imageR.scaleY= 0.3
+          _this.imageR.width = 25
+          _this.imageR.height = 180
+          _this.stage.addChild(_this.imageR);
 //        stage.update();
           var oldX;
           var oldY;
-          imageR.addEventListener("mousedown",function(e){
+          _this.imageR.addEventListener("mousedown",function(e){
             oldX= e.stageX;
             oldY= e.stageY;
+            _this.imageR.rotation = 0
+//            _this.imageR.x=XYoptions.preRedX
+//            _this.imageR.y=XYoptions.preRedY
           });
-          imageR.addEventListener("pressmove", function (e) {
+          _this.imageR.addEventListener("pressmove", function (e) {
             e.target.x+= e.stageX-oldX;
             e.target.y+= e.stageY-oldY;
             oldX= e.stageX;
@@ -741,22 +896,22 @@
 //          console.log(stage)
 //          console.log(imageR)
         } else {
-          createjs.Ticker.setFPS(30);
-          createjs.Ticker.addEventListener("tick",stage);
-
-//        imageB.transform(0.5,0,0,0.5,0,0);
-          imageB.scaleX= 0.3
-          imageB.scaleY= 0.3
-          stage.addChild(imageB);
-          var oldX;
-          var oldY;
-          imageR.scaleX= 0.3
-          imageR.scaleY= 0.3
-          imageR.width = 25
-          imageR.height = 180
-          stage.addChild(imageR);
-          stage.removeChild(imageR,imageB);
-          stage.update();
+//          createjs.Ticker.setFPS(30);
+//          createjs.Ticker.addEventListener("tick",_this.stage);
+//
+////        imageB.transform(0.5,0,0,0.5,0,0);
+//          _this.imageB.scaleX= 0.3
+//          _this.imageB.scaleY= 0.3
+//          _this.stage.addChild(_this.imageB);
+//          var oldX;
+//          var oldY;
+//          _this.imageR.scaleX= 0.3
+//          _this.imageR.scaleY= 0.3
+//          _this.imageR.width = 25
+//          _this.imageR.height = 180
+//          _this.stage.addChild(_this.imageR);
+          _this.stage.removeChild(_this.imageR,_this.imageB);
+//          _this.stage.update();
         }
       },
 //    监听canvas宽高
@@ -819,6 +974,13 @@
       }
     },
     mounted(){
+//      axios.get("/point/point",{
+//        params:{
+//          user:123
+//        }
+//      }).then((res)=>{
+//console.log(res)
+//      })
       this.windowWidth = this.clientWidth
       this.windowHeight = window.innerHeight
       console.log(this.clientWidth)
@@ -826,6 +988,11 @@
       var canvas = document.getElementById("canvas");
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
+      this.stage = new createjs.Stage("canvas");
+
+
+      createjs.Ticker.setFPS(30);
+      createjs.Ticker.addEventListener("tick",this.stage);
 //      this.stage = new createjs.Stage("canvas");
 //      this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
 //      this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
