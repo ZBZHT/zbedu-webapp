@@ -1646,8 +1646,8 @@
     font-size: 20px;
   }
   .newCourse-content .animated {
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
   }

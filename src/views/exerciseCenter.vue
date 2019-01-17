@@ -8,7 +8,7 @@
     <div class="e-content-tree" id="e-content-tree">
       <div id="setHeight1">
         <div class="completeLeft" @mouseover="showTree" @mouseout="disTree">
-          <transition enter-active-class="fadeInLeft" leave-active-class="fadeOutLeft">
+          <transition>
             <div class="findTree" v-show="showTreeData !== 1">
               <span class="showTree" v-show="showTreeData === 0">
                 <i class="el-icon-d-arrow-right icon-right"></i>
@@ -757,10 +757,9 @@ export default {
     display: flex;
   }
   .e-content-tree .completeLeft{
-    width:1.5%;
-    height:155px;
-    margin-top: 100px;
-    /*border: 1px solid #000;*/
+    width: 35px;
+    height: 145px;
+    margin-top: 102px;
   }
   .e-content-tree .findTree{
     width:100%;
@@ -777,13 +776,13 @@ export default {
     max-height:668px;
   }
   .e-content-tree .icon-right{
-    line-height:155px;
+    line-height:145px;
     color:#9f5355;
     font-weight: bolder;
   }
   .e-content-tree .animated {
-    -webkit-animation-duration: 0.5s;
-    animation-duration: 0.5s;
+    -webkit-animation-duration: 0.2s;
+    animation-duration: 0.2s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
   }
