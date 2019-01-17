@@ -2,7 +2,7 @@
 <div class="testCenter">
   111
   <div id="testCenter">
-    <canvas id="canvas" width="500" height="400" style="border:1px solid #f00">
+    <canvas id="canvas" width="1000" height="900" style="border:1px solid #f00">
     </canvas>
   </div>
 
@@ -12,97 +12,120 @@
 
 <script>
 import axios from 'axios'
-import pptSlides from '@/components/courseTree/pptSlides'
-
-
-
 export default {
   name: 'testCenter',
   data () {
     return {
-      balls:[],
-      circles:[
-        {x:343.5,y:276.5,a:[340.5,273.5],b:[346.5,273.5],c:[346.5,279.5],d:[340.5,279.5],color:'red'},
-        {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],color:'black'},
-        {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],color:'red'}
-      ],
+
     }
   },
   created(){
 
   },
   mounted(){
-    this.first()
-    var canvas = document.getElementById("canvas");
-    this.canvas = canvas
-    this.ctx = this.canvas.getContext("2d")
-    canvas.addEventListener("mousemove",this.detect())
-  },
-  methods:{
-    detect(){
-      var _this = this
-      //鼠标点击canvas，获取的鼠标点击的位置(x,y)
-      this.canvas.onmousemove = function (e){
-        var x=e.clientX-_this.canvas.getBoundingClientRect().left;
-        var y=e.clientY-_this.canvas.getBoundingClientRect().top;
-        _this.draw(x,y);
-      }
-    },
-    draw(x,y){
-//      console.log(x)
-      this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height);
-      for( var i = 0 ; i < this.balls.length ; i ++ ){
-        this.ctx.beginPath();
-//        this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
-//        this.ctx.moveTo(this.balls[i].a[0],this.balls[i].a[1])
-//        this.ctx.lineTo(this.balls[i].b[0],this.balls[i].b[1])
-//        this.ctx.lineTo(this.balls[i].c[0],this.balls[i].c[1])
-//        this.ctx.lineTo(this.balls[i].d[0],this.balls[i].d[1])
-        this.ctx.strokeRect(this.balls[i].a[0], this.balls[i].a[1], 10, 10)
-//        this.ctx.closePath()
-//        this.ctx.beginPath();
-        this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius,0,2*Math.PI);
-        if(this.ctx.isPointInPath(x,y)){//isPointInPath() 方法返回 true，如果指定的点位于当前路径中；否则返回 false。
-          console.log('yes',this.balls[i].x,this.balls[i].y)
-//          this.ctx.clearRect(0, 0, 100, 100);
-          this.ctx.arc(this.balls[i].x,this.balls[i].y,this.balls[i].radius+2,0,2*Math.PI)
-//          this.ctx.moveTo(this.balls[i].a[0]-1,this.balls[i].a[1]-1)
-//          this.ctx.lineTo(this.balls[i].b[0]+1,this.balls[i].b[1]-1)
-//          this.ctx.lineTo(this.balls[i].c[0]+1,this.balls[i].c[1]+1)
-//          this.ctx.lineTo(this.balls[i].d[0]-1,this.balls[i].d[1]+1)
-//          this.ctx.closePath()
-//          this.ctx.stroke();
-        }else{
-//          console.log('bai')
-        }
-        this.ctx.fillStyle=this.balls[i].color
-        this.ctx.closePath()
-        this.ctx.fill();
-      }
-    },
-    first() {
-//      console.log(this.circles)
-//      console.log(this.circles[0].x)
-      for(var i = 0; i < this.circles.length; i++){
-        var radius = 5
-        this.aBall={
-          radius:radius,
-          x:this.circles[i].x,
-          y:this.circles[i].y,
-          a:[this.circles[i].a[0],this.circles[i].a[1]],
-          b:[this.circles[i].b[0],this.circles[i].b[1]],
-          c:[this.circles[i].c[0],this.circles[i].c[1]],
-          d:[this.circles[i].d[0],this.circles[i].d[1]],
-          color:this.circles[i].color
-        }
-        this.balls[i]=this.aBall;
+      var stage = new createjs.Stage("canvas");
+    var shapes = [];
+    var slots = [];
+    var score = 0;
+
+    function init() {
+      stage = new createjs.Stage("canvas");
+      buildShapes();
+      setShapes();
+      startGame();
+    }
+
+    function buildShapes() {
+      var colors = ['blue', 'red', 'green', 'yellow'];
+      var i, shape, slot;
+      for (i = 0; i < 84; i++) {
+        //slots
+        slot = new createjs.Shape();
+        slot.graphics.beginStroke(colors[0]);
+        slot.graphics.beginFill(createjs.Graphics.getRGB(255, 255, 255, 1));
+        slot.graphics.drawRect(0, 0, 100, 100);
+        slot.regX = slot.regY = 50;
+        slot.key = i;
+        slot.y = 80;
+        slot.x = (i * 130) + 100;
+        stage.addChild(slot);
+        slots.push(slot);
+        //shapes
+        shape = new createjs.Shape();
+        shape.graphics.beginFill(colors[0]);
+        shape.graphics.drawRect(0, 0, 100, 100);
+        shape.regX = shape.regY = 50;
+        shape.key = i;
+        shapes.push(shape);
       }
     }
+
+    function setShapes() {
+      var i, r, shape;
+      var l = shapes.length;
+      for (i = 0; i < l; i++) {
+        r = Math.floor(Math.random() * shapes.length);
+        shape = shapes[r];
+        shape.homeY = 320;
+        shape.homeX = (i * 130) + 100;
+        shape.y = shape.homeY;
+        shape.x = shape.homeX;
+        shape.addEventListener("mousedown", startDrag);
+        stage.addChild(shape);
+        shapes.splice(r, 1);
+      }
+    }
+
+    function startGame() {
+      createjs.Ticker.setFPS(60);
+      createjs.Ticker.addEventListener("tick", function(e) {
+        stage.update();
+      });
+    }
+
+    function startDrag(e) {
+      var shape = e.target;
+      var slot = slots[shape.key];
+      stage.setChildIndex(shape, stage.getNumChildren() - 1);
+      stage.addEventListener('stagemousemove', function(e) {
+        shape.x = e.stageX;
+        shape.y = e.stageY;
+      });
+      stage.addEventListener('stagemouseup', function(e) {
+        stage.removeAllEventListeners();
+        var pt = slot.globalToLocal(stage.mouseX, stage.mouseY);
+        if (slot.hitTest(pt.x, pt.y)) {
+          shape.removeEventListener("mousedown", startDrag);
+          score++;
+          createjs.Tween.get(shape).to({
+            x: slot.x,
+            y: slot.y
+          }, 200, createjs.Ease.quadOut).call(checkGame);
+          console.log('h');
+        } else {
+          createjs.Tween.get(shape).to({
+            x: shape.homeX,
+            y: shape.homeY
+          }, 200, createjs.Ease.quadOut);
+        }
+      });
+    }
+
+    function checkGame() {
+      if (score == 4) {
+        alert('You Win!');
+      }
+    }
+    init();
+  },
+  methods:{
+
+
   },
   watch:{
 
   },
-  components:{pptSlides}
+  components:{}
 }
 </script>
 
@@ -112,11 +135,5 @@ export default {
     margin:0;
     padding:0;
 }
-  #testCenter{
-    width:500px;
-    height:400px;
-    margin:0 auto;
-    border: 1px solid #000;
-    /*background: url(../assets/imgs/point.png) no-repeat;*/
-  }
+
 </style>
