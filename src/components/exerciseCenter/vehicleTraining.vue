@@ -421,7 +421,8 @@
         NewpreBlackY:0,
         showJoint: 0,
         isRed:false,
-        isBlack:false
+        isBlack:false,
+        mouseType:''
 
       }
     },
@@ -702,22 +703,18 @@
       },
 //    画布显示balls数据
       draw(XYoptions){
-        this.stage.removeAllChildren()
-//        this.stage.setChildIndex(this.imageB, this.stage.getNumChildren() - 1);
+        var _this = this
+        _this.stage.removeAllChildren()
+        _this.imageB.scaleX= 0.3
+        _this.imageB.scaleY= 0.3
+        _this.stage.addChild(_this.imageB);
 
-//        var stage = new createjs.Stage("canvas");
-//        var imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-//        var imageR=new createjs.Bitmap("src/assets/imgs/red.png");
-        this.imageB.scaleX= 0.3
-        this.imageB.scaleY= 0.3
-        this.stage.addChild(this.imageB);
+        _this.imageR.scaleX= 0.3
+        _this.imageR.scaleY= 0.3
+        _this.stage.addChild(_this.imageR);
 
-        this.imageR.scaleX= 0.3
-        this.imageR.scaleY= 0.3
-        this.stage.addChild(this.imageR);
-
-        for( var i = 0 ; i < this.balls.length ; i ++ ){
-          var currDraw = this.balls[i]
+        for( var i = 0 ; i < _this.balls.length ; i ++ ){
+          var currDraw = _this.balls[i]
           for(var j = 0 ; j < currDraw.length ; j ++){
             var shape=new createjs.Shape();
             var graphics=shape.graphics;
@@ -726,48 +723,70 @@
             if (i <= 2) {
               graphics.beginStroke("000");
               graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-              this.stage.addChild(shape);
+              _this.stage.addChild(shape);
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-              this.stage.addChild(circle);
+              _this.stage.addChild(circle);
             } else if (i > 2 && i <= 6) {
               circleRect.graphics.beginStroke("#000").drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius + 1.6);
-              this.stage.addChild(circleRect);
+              _this.stage.addChild(circleRect);
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
-              this.stage.addChild(circle);
+              _this.stage.addChild(circle);
             } else {
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
-              this.stage.addChild(circle);
+              _this.stage.addChild(circle);
             }
-//            红表笔检测
-            if (circle.hitTest(XYoptions.preRedX+10, XYoptions.preRedY)) {
-              this.imageR.rotation = -40
-              this.imageR.x=XYoptions.preRedX
-              this.imageR.y=XYoptions.preRedY
-              console.log("yeye",currDraw[j].id)
-              this.isRed = true
-            } else {
-            }
+
+//            _this.stage.enableMouseOver(20);
 
 //            黑表笔检测
-            if (circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY)) {
-              this.isBlack = true
-//              console.log(this.isBlack)
+              if (circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY)) {
+                _this.isBlack = true
+                console.log(this.isBlack)
+                console.log("yeye",currDraw[j].id)
+                if (i <= 2) {
+                  circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,4);
+                }else {
+                  circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],4);
+                }
+                _this.imageB.addEventListener("pressup",function(e){
+                  _this.imageB.rotation = -40
+                  _this.imageB.x=XYoptions.preBlackX
+                  _this.imageB.y=XYoptions.preBlackY+8
+                  e.remove();
+                })
+
+              }else{
+
+              }
+
+
+//            红表笔检测
+            if (circle.hitTest(XYoptions.preRedX+10, XYoptions.preRedY)) {
+              if (i <= 2) {
+                circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,4);
+              }else {
+                circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],4);
+              }
+              _this.imageR.addEventListener("pressup",function(e){
+                _this.imageR.rotation = -40
+                _this.imageR.x=XYoptions.preRedX
+                _this.imageR.y=XYoptions.preRedY+8
+                e.remove();
+              })
               console.log("yeye",currDraw[j].id)
-              this.imageB.rotation = -40
-              this.imageB.x=XYoptions.preBlackX
-              this.imageB.y=XYoptions.preBlackY
-            }else{
-//              this.isBlack = false
-//              console.log(this.isBlack)
+              _this.isRed = true
+            } else {
             }
+
           }
         }
-
-        if(this.isBlack && this.isRed){
-          this.multimeterTruthDivData = 560
+        if(_this.isBlack && _this.isRed){
+          _this.multimeterTruthDivData = 560
         }else{
-          this.multimeterTruthDivData = 0
+          _this.multimeterTruthDivData = 0
         }
+        _this.stage.setChildIndex(_this.imageB, _this.stage.getNumChildren() - 1);
+        _this.stage.setChildIndex(_this.imageR, _this.stage.getNumChildren() - 1);
       },
 //    计算完的数据给balls
       first() {
@@ -788,11 +807,6 @@
               color:currArrayCircles[j].color,
               id:currArrayCircles[j].id
             }
-//        console.log('this.mLcircles[i].x',this.mLcircles[i].x)
-//        console.log('clientWidth',this.clientWidth)
-//        console.log('this.mLcircles[i].y',this.mLcircles[i].y)
-//        console.log('clientHeight',this.clientHeight)
-//          console.log('11',this.aBall)
             drawOne.push(this.aBall);
 //            console.log('drawOne',drawOne)
           }
@@ -834,15 +848,12 @@
 //            _this.stage.update();
           }
         }
+        _this.stage.setChildIndex(_this.imageB, _this.stage.getNumChildren() - 1);
+        _this.stage.setChildIndex(_this.imageR, _this.stage.getNumChildren() - 1);
         if (this.clickMultimeterData === 1) {
-          _this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-          _this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+          _this.imageB.rotation = 0
+          _this.imageR.rotation = 0
 
-//              this.drawPen()
-//          createjs.Ticker.setFPS(30);
-//          createjs.Ticker.addEventListener("tick",_this.stage);
-
-//        imageB.transform(0.5,0,0,0.5,0,0);
           _this.imageB.x = 850
           _this.imageB.y = 70
           _this.imageB.scaleX= 0.3
@@ -854,19 +865,19 @@
             oldX= e.stageX;
             oldY= e.stageY;
             _this.imageB.rotation = 0
+            _this.isBlack = false
           });
           _this.imageB.addEventListener("pressmove", function (e) {
             e.target.x+= e.stageX-oldX;
             e.target.y+= e.stageY-oldY;
             oldX= e.stageX;
             oldY= e.stageY;
-//                console.log(e)
-//                console.log(e.target.x)
-//                console.log(e.target.y)
             _this.XYoption.preBlackX = e.target.x
             _this.XYoption.preBlackY = e.target.y
 //                console.log(_this.preBlackX)
           });
+
+          console.log(_this.mouseType)
 
           _this.imageR.x = 900
           _this.imageR.y = 70
@@ -882,6 +893,7 @@
             oldX= e.stageX;
             oldY= e.stageY;
             _this.imageR.rotation = 0
+            _this.isRed = false
 //            _this.imageR.x=XYoptions.preRedX
 //            _this.imageR.y=XYoptions.preRedY
           });
@@ -893,25 +905,8 @@
             _this.XYoption.preRedX = e.target.x
             _this.XYoption.preRedY = e.target.y
           });
-//          console.log(stage)
-//          console.log(imageR)
         } else {
-//          createjs.Ticker.setFPS(30);
-//          createjs.Ticker.addEventListener("tick",_this.stage);
-//
-////        imageB.transform(0.5,0,0,0.5,0,0);
-//          _this.imageB.scaleX= 0.3
-//          _this.imageB.scaleY= 0.3
-//          _this.stage.addChild(_this.imageB);
-//          var oldX;
-//          var oldY;
-//          _this.imageR.scaleX= 0.3
-//          _this.imageR.scaleY= 0.3
-//          _this.imageR.width = 25
-//          _this.imageR.height = 180
-//          _this.stage.addChild(_this.imageR);
           _this.stage.removeChild(_this.imageR,_this.imageB);
-//          _this.stage.update();
         }
       },
 //    监听canvas宽高
@@ -989,13 +984,14 @@
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
       this.stage = new createjs.Stage("canvas");
-
-
+      createjs.Touch.enable(this.stage);
       createjs.Ticker.setFPS(30);
       createjs.Ticker.addEventListener("tick",this.stage);
 //      this.stage = new createjs.Stage("canvas");
-//      this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-//      this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+      this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
+      this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
+
+
 //      canvas.addEventListener("mousemove",this.detect())
 //      this.clientWidth = this.clientWidth * 0.65
 //      this.clientHeight = this.clientWidth / 1.85
