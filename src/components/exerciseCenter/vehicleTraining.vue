@@ -32,6 +32,8 @@
       <el-tab-pane label="空调">
         <div class="courseImg">
           <img class="coursepptImg" src="../../assets/imgs/vehicleTraining01.jpg">
+          <canvas id="canvasKT">
+          </canvas>
         </div>
       </el-tab-pane>
 
@@ -107,7 +109,6 @@
       <!--<div class="electroprobeBlack" id="electroprobeBlack"></div>-->
       <!--<div class="electroprobeRed" id="electroprobeRed"></div>-->
     </div>
-    {{NewpreBlackX}}
   </div>
 </template>
 
@@ -154,11 +155,8 @@
           }]
         },
         balls:[],
-//        mLcircles:[
-//          {x:343.5,y:276.5,a:[340.5,273.5],b:[346.5,273.5],c:[346.5,279.5],d:[340.5,279.5],id:1,color:'#f00'},
-//          {x:353.5,y:276.5,a:[350.5,273.5],b:[356.5,273.5],c:[356.5,279.5],d:[350.5,279.5],id:1,color:'black'},
-//          {x:353.5,y:286.5,a:[350.5,283.5],b:[356.5,283.5],c:[356.5,289.5],d:[350.5,289.5],id:1,color:'#f00'}
-//        ],
+        drawPointData:[],
+        drawCricleData:[],
         mLPoint:[
           [147,292],
           [423,289],
@@ -167,7 +165,6 @@
           [907,288],
           [898,297],
           [893,311],
-          [55,91],
           [203,191],
           [289,460],
         ],
@@ -372,12 +369,6 @@
             {"x":5.8,"y":0,"id":0,"color":"#000"},
           ],
           [
-            {"x":-1.8,"y":0,"id":0,"color":"#ec851c"},
-            {"x":0,"y":0,"id":0,"color":"#f00"},
-            {"x":3.4,"y":0,"id":0,"color":"#f00"},
-            {"x":5.2,"y":0,"id":0,"color":"#f00"},
-          ],
-          [
             {"x":-6.1,"y":-3.3,"id":0,"color":"#f00"},
             {"x":0,"y":0,"id":0,"color":"#f00"},
             {"x":15.7,"y":-1.2,"id":0,"color":"#f00"},
@@ -393,19 +384,72 @@
             {"x":16.8,"y":0,"id":0,"color":"#f00"},
           ]
         ],
+        KTPoint:[
+          [432,313],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [113,442]
+        ],
+        KTcircles:[
+          [
+            {"x":0,"y":0,"id":0,"color":"#000"},
+            {"x":1,"y":0,"id":1,"color":"#ec851c"},
+            {"x":2,"y":0,"id":0,"color":"#ec851c"},
+            {"x":3,"y":0,"id":1,"color":"#ec851c"},
+            {"x":4,"y":0,"id":0,"color":"#ec851c"},
+            {"x":5,"y":0,"id":1,"color":"#ec851c"},
+            {"x":6,"y":0,"id":0,"color":"#000"},
+            {"x":7,"y":0,"id":1,"color":"#ec851c"},
+            {"x":8,"y":0,"id":0,"color":"#ec851c"},
+            {"x":9,"y":0,"id":1,"color":"#ec851c"},
+            {"x":10,"y":0,"id":0,"color":"#ec851c"},
+            {"x":11,"y":0,"id":1,"color":"#ec851c"},
+            {"x":12,"y":0,"id":0,"color":"#ec851c"},
+            {"x":13,"y":0,"id":1,"color":"#ec851c"},
+            {"x":14,"y":0,"id":0,"color":"#ec851c"},
+            {"x":15,"y":0,"id":1,"color":"#ec851c"},
+
+            {"x":0,"y":1.3,"id":0,"color":"#000"},
+            {"x":1,"y":1.3,"id":1,"color":"#ec851c"},
+            {"x":2,"y":1.3,"id":0,"color":"#ec851c"},
+            {"x":3,"y":1.3,"id":1,"color":"#000"},
+            {"x":4,"y":1.3,"id":0,"color":"#000"},
+            {"x":5,"y":1.3,"id":1,"color":"#000"},
+            {"x":6,"y":1.3,"id":0,"color":"#ec851c"},
+            {"x":7,"y":1.3,"id":1,"color":"#ec851c"},
+            {"x":8,"y":1.3,"id":0,"color":"#ec851c"},
+            {"x":9,"y":1.3,"id":1,"color":"#ec851c"},
+            {"x":10,"y":1.3,"id":0,"color":"#ec851c"},
+            {"x":11,"y":1.3,"id":1,"color":"#ec851c"},
+            {"x":12,"y":1.3,"id":0,"color":"#ec851c"},
+            {"x":13,"y":1.3,"id":1,"color":"#ec851c"},
+            {"x":14,"y":1.3,"id":0,"color":"#ec851c"},
+            {"x":15,"y":1.3,"id":1,"color":"#ec851c"},
+          ],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [],
+          [
+            {"x":-1.8,"y":-26.5,"id":0,"color":"#ec851c"},
+            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+            {"x":9.4,"y":-21.4,"id":0,"color":"#ec851c"},
+            {"x":9.6,"y":0,"id":0,"color":"#ec851c"},
+            {"x":26.4,"y":0,"id":0,"color":"#ec851c"},
+            {"x":45.2,"y":0,"id":0,"color":"#ec851c"},
+          ],
+        ],
         clientHeight: 0,
         clientWidth: window.innerWidth,
         isFull: 0,
         ratioX: 0,
         ratioY: 0,
-//        clientX: 0,
-//        clientY: 0,
-//        layerX: 0,
-//        layerY: 0,
-//        offsetX: 0,
-//        offsetY: 0,
-//        pageX: 0,
-//        pageY: 0,
         positionX: 0,
         positionY: 0,
         multimeterTruthDivData: 0,
@@ -417,8 +461,6 @@
           preBlackX:0,
           preBlackY:0,
         },
-        NewpreBlackX:0,
-        NewpreBlackY:0,
         showJoint: 0,
         isRed:false,
         isBlack:false,
@@ -597,6 +639,26 @@
         }
       },
       handleClickTabs(tab){
+
+        var index = tab.index
+        if (index == 0) {
+          this.stage = new createjs.Stage("canvas");
+          this.stage.removeAllChildren()
+          this.drawPointData = this.mLPoint
+          this.drawCricleData = this.mLcircles
+          console.log(this.stage)
+//
+        } else if (index == 1) {
+          this.stage = new createjs.Stage("canvasKT");
+          this.stage.removeAllChildren()
+          this.drawPointData = this.KTPoint
+          this.drawCricleData = this.KTcircles
+          console.log(this.stage)
+        }
+        console.log(this.drawPointData)
+        createjs.Ticker.setFPS(30);
+        createjs.Ticker.addEventListener("tick",this.stage);
+        this.first()
       },
 //    显示图标
       showGram (index) {
@@ -790,9 +852,10 @@
       },
 //    计算完的数据给balls
       first() {
-        for(var i = 0; i < this.mLcircles.length; i++){
-          var currArrayCircles = this.mLcircles[i]
-          var currPoint = this.mLPoint[i]
+        this.cleanStage()
+        for(var i = 0; i < this.drawCricleData.length; i++){
+          var currArrayCircles = this.drawCricleData[i]
+          var currPoint = this.drawPointData[i]
           var drawOne = []
           for(var j = 0; j < currArrayCircles.length; j++){
             var radius = 2.4
@@ -801,8 +864,6 @@
               diameter:radius * 3,
               x:currArrayCircles[j].x * 10.1 + currPoint[0] + (radius * 3) / 2 - 0.5,
               y:currArrayCircles[j].y * 10.1 + currPoint[1] + (radius * 3) / 2 - 0.5,
-//          x:this.mLcircles[i].x * this.clientWidth,
-//          y:this.mLcircles[i].y * this.clientHeight,
               a:[currArrayCircles[j].x * 10.1 + currPoint[0],currArrayCircles[j].y * 10.1 + currPoint[1]],
               color:currArrayCircles[j].color,
               id:currArrayCircles[j].id
@@ -816,6 +877,7 @@
         this.drawPoint()
       },
       drawPoint(){
+//        console.log(this.balls)
         var _this = this
         _this.stage.removeAllChildren()
 //        var stage = new createjs.Stage("canvas");
@@ -848,12 +910,12 @@
 //            _this.stage.update();
           }
         }
+
         _this.stage.setChildIndex(_this.imageB, _this.stage.getNumChildren() - 1);
         _this.stage.setChildIndex(_this.imageR, _this.stage.getNumChildren() - 1);
         if (this.clickMultimeterData === 1) {
           _this.imageB.rotation = 0
           _this.imageR.rotation = 0
-
           _this.imageB.x = 850
           _this.imageB.y = 70
           _this.imageB.scaleX= 0.3
@@ -909,6 +971,9 @@
           _this.stage.removeChild(_this.imageR,_this.imageB);
         }
       },
+      cleanStage(){
+        this.balls = []
+      },
 //    监听canvas宽高
       handleResize (event) {
         this.clientWidth = document.getElementById("tabsCenter1").offsetWidth
@@ -917,11 +982,10 @@
         this.canvas.height = this.clientHeight
         this.ratioX = this.clientWidth / 1024
         this.ratioY = this.clientHeight / 577
-        if (this.mLcircles.length) {
-          for(var i = 0; i < this.mLcircles.length; i++){
-//            console.log(this.mLcircles.length)
-            var currArrayCircles = this.mLcircles[i]
-            var currPoint = this.mLPoint[i]
+        if (this.drawCricleData.length) {
+          for(var i = 0; i < this.drawCricleData.length; i++){
+            var currArrayCircles = this.drawCricleData[i]
+            var currPoint = this.drawPointData[i]
             var drawOne = []
             if (this.isFull === 0){
               //          缩小
@@ -983,6 +1047,9 @@
       var canvas = document.getElementById("canvas");
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
+      var canvasKT = document.getElementById("canvasKT");
+      this.canvasKT = canvasKT
+      this.context = this.canvasKT.getContext("2d")
       this.stage = new createjs.Stage("canvas");
       createjs.Touch.enable(this.stage);
       createjs.Ticker.setFPS(30);
@@ -990,7 +1057,9 @@
 //      this.stage = new createjs.Stage("canvas");
       this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
       this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
-
+//      this.stageKT = new createjs.Stage("canvasKT");
+//      createjs.Touch.enable(this.stageKT);
+//      createjs.Ticker.addEventListener("tick",this.stageKT);
 
 //      canvas.addEventListener("mousemove",this.detect())
 //      this.clientWidth = this.clientWidth * 0.65
@@ -1003,9 +1072,14 @@
 //    console.log(this.clientHeight)
       canvas.width = this.clientWidth
       canvas.height = this.clientHeight
+      canvasKT.width = this.clientWidth
+      canvasKT.height = this.clientHeight
+      this.drawPointData = this.mLPoint
+      this.drawCricleData = this.mLcircles
       this.first()
       window.addEventListener('resize', this.handleResize)
-    }
+    },
+    components:{}
   }
 </script>
 
@@ -1053,6 +1127,11 @@
     background-color: #fff;
   }
   .vehicleTraining #canvas{
+    position:absolute;
+    top:0;
+    left:0;
+  }
+  .vehicleTraining #canvasKT{
     position:absolute;
     top:0;
     left:0;
