@@ -433,6 +433,8 @@
               if (obj.children[0].children) {
                 let obj1 = obj.children[0].children[0]
                 if (obj1.children) {
+                  id = obj1.children[0].courseId
+                  idItem = obj1.children[0]
                 } else {
                   id = obj1.courseId
                   idItem = obj1
