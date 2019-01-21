@@ -1033,13 +1033,15 @@
       }
     },
     mounted(){
-//      axios.get("/point/point",{
-//        params:{
-//          user:123
-//        }
-//      }).then((res)=>{
-//console.log(res)
-//      })
+      axios({
+        method: 'post',
+        url: '/testManagement/getCanvasTerminal',
+        data: {
+          username: 111
+        }
+      }).then((res)=>{
+        console.log(res)
+      })
       this.windowWidth = this.clientWidth
       this.windowHeight = window.innerHeight
       console.log(this.clientWidth)
