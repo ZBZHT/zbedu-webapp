@@ -75,7 +75,7 @@
          @mousedown="move"
          @touchmove="move"
          v-show="clickMultimeterData === 1">
-      <div v-if="showJoint === 1">
+      <div v-show="showJoint === 1">
         <div id="blackJoint">
           <!--<img class="blackJoint" src="../../assets/imgs/blackJoint.png">-->
         </div>
@@ -279,6 +279,18 @@
           this.showJoint = 0
         } else {
           this.showJoint = 1
+          if (this.isFull === 0){
+
+          }else{
+            document.getElementById('blackJoint').style.top = 237*this.ratioX + 'px';
+            document.getElementById('blackJoint').style.left = 93*this.ratioY + 'px';
+            document.getElementById('blackJoint').style.width = 14*this.ratioX + 'px';
+            document.getElementById('blackJoint').style.height = 55*this.ratioX + 'px';
+            document.getElementById('redJoint').style.top = 237*this.ratioX + 'px';
+            document.getElementById('redJoint').style.left = 119*this.ratioY + 'px';
+            document.getElementById('redJoint').style.width = 14*this.ratioX + 'px';
+            document.getElementById('redJoint').style.height = 55*this.ratioX + 'px';
+          }
         }
         this.currIndex = index
         document.getElementById("multimeterTruthTransform").style.transform = "rotate(" + 23 * index + "deg)"
@@ -747,14 +759,18 @@
 //              document.getElementById('multimeterTruthV8').style.left = 147 + 'px';
 //              document.getElementById('echarts').style.width = 340 + 'px';
 //              document.getElementById('echarts').style.height = 180 + 'px';
-              document.getElementById('blackJoint').style.top = 237 + 'px';
-              document.getElementById('blackJoint').style.left = 93 + 'px';
-              document.getElementById('blackJoint').style.width = 14 + 'px';
-              document.getElementById('blackJoint').style.height = 55 + 'px';
-              document.getElementById('redJoint').style.width = 14 + 'px';
-              document.getElementById('redJoint').style.top = 237 + 'px';
-              document.getElementById('redJoint').style.left = 119 + 'px';
-              document.getElementById('redJoint').style.height = 55 + 'px';
+              if(this.showJoint === 1){
+                document.getElementById('blackJoint').style.top = 237 + 'px';
+                document.getElementById('blackJoint').style.left = 93 + 'px';
+                document.getElementById('blackJoint').style.width = 14 + 'px';
+                document.getElementById('blackJoint').style.height = 55 + 'px';
+                document.getElementById('redJoint').style.width = 14 + 'px';
+                document.getElementById('redJoint').style.top = 237 + 'px';
+                document.getElementById('redJoint').style.left = 119 + 'px';
+                document.getElementById('redJoint').style.height = 55 + 'px';
+              }else{
+
+              }
             } else {
               //          放大
               for(var j = 0; j < currArrayCircles.length; j++){
@@ -801,14 +817,19 @@
 //              document.getElementById('echarts').style.height = 180*this.ratioY + 'px';
 //              document.getElementById('echartsB').style.width = 370*this.ratioX + 'px';
 //              document.getElementById('echartsB').style.height = 180*this.ratioY + 'px';
-              document.getElementById('blackJoint').style.top = 237*this.ratioX + 'px';
-              document.getElementById('blackJoint').style.left = 93*this.ratioY + 'px';
-              document.getElementById('blackJoint').style.width = 14*this.ratioX + 'px';
-              document.getElementById('blackJoint').style.height = 55*this.ratioX + 'px';
-              document.getElementById('redJoint').style.top = 237*this.ratioX + 'px';
-              document.getElementById('redJoint').style.left = 119*this.ratioY + 'px';
-              document.getElementById('redJoint').style.width = 14*this.ratioX + 'px';
-              document.getElementById('redJoint').style.height = 55*this.ratioX + 'px';
+              if(this.showJoint === 1){
+                document.getElementById('blackJoint').style.top = 237*this.ratioX + 'px';
+                document.getElementById('blackJoint').style.left = 93*this.ratioY + 'px';
+                document.getElementById('blackJoint').style.width = 14*this.ratioX + 'px';
+                document.getElementById('blackJoint').style.height = 55*this.ratioX + 'px';
+                document.getElementById('redJoint').style.top = 237*this.ratioX + 'px';
+                document.getElementById('redJoint').style.left = 119*this.ratioY + 'px';
+                document.getElementById('redJoint').style.width = 14*this.ratioX + 'px';
+                document.getElementById('redJoint').style.height = 55*this.ratioX + 'px';
+              }else{
+
+              }
+
             }
             this.balls[i] = drawOne;
           }
