@@ -122,7 +122,7 @@
     name: 'vehicleTraining',
     data () {
       return {
-        multimeterTruthV:['off','V','','','Ω','','','A'],
+        multimeterTruthV:['off','V-','V~','','Ω','','','A'],
         currIndex:0,
         windowWidth: 0,
         windowHeight: 0,
@@ -145,306 +145,313 @@
             data: []
           },
           yAxis: {
-            type: 'value'
+            type: 'value',
+            name: '电压',
+            min: 0,
+            minInterval: 1
           },
           series: [{
             type: 'line',
             data: [],
             smooth: true,
-            showSymbol: false
+            showSymbol: false,
+            markLine: {
+              silent: true,
+            }
           }]
         },
         balls:[],
         drawPointData:[],
         drawCricleData:[],
-        mLPoint:[
-          [147,292],
-          [423,289],
-          [726,303],
-          [921,284],
-          [907,288],
-          [898,297],
-          [893,311],
-          [203,191],
-          [289,460],
-        ],
-        mLcircles:[
-          [
-            {"x":0,"y":0,"id":0,"color":"#ec851c"},
-            {"x":1,"y":0,"id":1,"color":"#ec851c"},
-            {"x":0.5,"y":1.5,"id":2,"color":"#ec851c"},
-            {"x":0,"y":3,"id":3,"color":"#ec851c"},
-            {"x":1,"y":3,"id":4,"color":"#ec851c"},
-
-            {"x":4,"y":0,"id":5,"color":"#f00"},
-            {"x":5,"y":0,"id":6,"color":"#ec851c"},
-            {"x":6,"y":0,"id":7,"color":"#000"},
-            {"x":7,"y":0,"id":8,"color":"#000"},
-            {"x":8,"y":0,"id":9,"color":"#000"},
-            {"x":9,"y":0,"id":10,"color":"#000"},
-            {"x":10,"y":0,"id":11,"color":"#000"},
-            {"x":11,"y":0,"id":12,"color":"#000"},
-            {"x":12,"y":0,"id":13,"color":"#000"},
-            {"x":13,"y":0,"id":14,"color":"#000"},
-            {"x":14,"y":0,"id":15,"color":"#000"},
-            {"x":15,"y":0,"id":16,"color":"#000"},
-            {"x":16,"y":0,"id":17,"color":"#000"},
-            {"x":17,"y":0,"id":18,"color":"#000"},
-            {"x":18,"y":0,"id":19,"color":"#000"},
-            {"x":19,"y":0,"id":20,"color":"#000"},
-            {"x":20,"y":0,"id":21,"color":"#000"},
-            {"x":21,"y":0,"id":22,"color":"#000"},
-            {"x":22,"y":0,"id":23,"color":"#ec851c"},
-
-            {"x":4,"y":1,"id":24,"color":"#f00"},
-            {"x":5,"y":1,"id":1,"color":"#ec851c"},
-            {"x":6,"y":1,"id":1,"color":"#ec851c"},
-            {"x":7,"y":1,"id":1,"color":"#ec851c"},
-            {"x":8,"y":1,"id":1,"color":"#000"},
-            {"x":9,"y":1,"id":1,"color":"#000"},
-            {"x":10,"y":1,"id":1,"color":"#000"},
-            {"x":11,"y":1,"id":1,"color":"#000"},
-            {"x":12,"y":1,"id":1,"color":"#000"},
-            {"x":13,"y":1,"id":1,"color":"#ec851c"},
-            {"x":14,"y":1,"id":1,"color":"#ec851c"},
-            {"x":15,"y":1,"id":1,"color":"#ec851c"},
-            {"x":16,"y":1,"id":1,"color":"#ec851c"},
-            {"x":17,"y":1,"id":1,"color":"#000"},
-            {"x":18,"y":1,"id":1,"color":"#ec851c"},
-            {"x":19,"y":1,"id":1,"color":"#000"},
-            {"x":20,"y":1,"id":1,"color":"#000"},
-            {"x":21,"y":1,"id":1,"color":"#000"},
-            {"x":22,"y":1,"id":1,"color":"#000"},
-
-            {"x":4,"y":2,"id":1,"color":"#000"},
-            {"x":5,"y":2,"id":1,"color":"#000"},
-            {"x":6,"y":2,"id":1,"color":"#ec851c"},
-            {"x":7,"y":2,"id":1,"color":"#000"},
-            {"x":8,"y":2,"id":1,"color":"#000"},
-            {"x":9,"y":2,"id":1,"color":"#000"},
-            {"x":10,"y":2,"id":1,"color":"#ec851c"},
-            {"x":11,"y":2,"id":1,"color":"#ec851c"},
-            {"x":12,"y":2,"id":1,"color":"#000"},
-            {"x":13,"y":2,"id":1,"color":"#000"},
-            {"x":14,"y":2,"id":1,"color":"#000"},
-            {"x":15,"y":2,"id":1,"color":"#000"},
-            {"x":16,"y":2,"id":1,"color":"#ec851c"},
-            {"x":17,"y":2,"id":1,"color":"#000"},
-            {"x":18,"y":2,"id":1,"color":"#ec851c"},
-            {"x":19,"y":2,"id":1,"color":"#ec851c"},
-            {"x":20,"y":2,"id":1,"color":"#f00"},
-            {"x":21,"y":2,"id":1,"color":"#000"},
-            {"x":22,"y":2,"id":1,"color":"#ec851c"},
-
-            {"x":4,"y":3,"id":1,"color":"#000"},
-            {"x":5,"y":3,"id":1,"color":"#000"},
-            {"x":6,"y":3,"id":1,"color":"#ec851c"},
-            {"x":7,"y":3,"id":1,"color":"#ec851c"},
-            {"x":8,"y":3,"id":1,"color":"#000"},
-            {"x":9,"y":3,"id":1,"color":"#000"},
-            {"x":10,"y":3,"id":1,"color":"#000"},
-            {"x":11,"y":3,"id":1,"color":"#ec851c"},
-            {"x":12,"y":3,"id":1,"color":"#000"},
-            {"x":13,"y":3,"id":1,"color":"#000"},
-            {"x":14,"y":3,"id":1,"color":"#000"},
-            {"x":15,"y":3,"id":1,"color":"#f00"},
-            {"x":16,"y":3,"id":1,"color":"#000"},
-            {"x":17,"y":3,"id":1,"color":"#000"},
-            {"x":18,"y":3,"id":1,"color":"#000"},
-            {"x":19,"y":3,"id":1,"color":"#ec851c"},
-            {"x":20,"y":3,"id":1,"color":"#000"},
-            {"x":21,"y":3,"id":1,"color":"#000"},
-            {"x":22,"y":3,"id":1,"color":"#f00"}
-          ],
-          [
-            {"x":0,"y":0,"id":1,"color":"#f00"},
-            {"x":1,"y":0,"id":1,"color":"#ec851c"},
-            {"x":2,"y":0,"id":1,"color":"#000"},
-            {"x":0.5,"y":1.8,"id":1,"color":"#ec851c"},
-            {"x":1.5,"y":1.8,"id":1,"color":"#ec851c"},
-            {"x":0,"y":3.7,"id":1,"color":"#ec851c"},
-            {"x":1,"y":3.7,"id":1,"color":"#ec851c"},
-            {"x":2,"y":3.7,"id":1,"color":"#000"},
-
-            {"x":5.6,"y":0,"id":1,"color":"#f00"},
-            {"x":6.6,"y":0,"id":1,"color":"#000"},
-            {"x":7.6,"y":0,"id":1,"color":"#ec851c"},
-            {"x":8.6,"y":0,"id":1,"color":"#000"},
-            {"x":9.6,"y":0,"id":1,"color":"#000"},
-            {"x":10.6,"y":0,"id":1,"color":"#ec851c"},
-            {"x":11.6,"y":0,"id":1,"color":"#ec851c"},
-            {"x":12.6,"y":0,"id":1,"color":"#000"},
-
-            {"x":5.6,"y":1.1,"id":1,"color":"#ec851c"},
-            {"x":6.6,"y":1.1,"id":1,"color":"#ec851c"},
-            {"x":7.6,"y":1.1,"id":1,"color":"#000"},
-            {"x":8.6,"y":1.1,"id":1,"color":"#000"},
-            {"x":9.6,"y":1.1,"id":1,"color":"#ec851c"},
-            {"x":10.6,"y":1.1,"id":1,"color":"#ec851c"},
-            {"x":11.6,"y":1.1,"id":1,"color":"#000"},
-            {"x":12.6,"y":1.1,"id":1,"color":"#000"},
-
-            {"x":5.6,"y":2.6,"id":1,"color":"#f00"},
-            {"x":6.6,"y":2.6,"id":1,"color":"#ec851c"},
-            {"x":7.6,"y":2.6,"id":1,"color":"#000"},
-            {"x":8.6,"y":2.6,"id":1,"color":"#000"},
-            {"x":9.6,"y":2.6,"id":1,"color":"#000"},
-            {"x":10.6,"y":2.6,"id":1,"color":"#ec851c"},
-            {"x":11.6,"y":2.6,"id":1,"color":"#f00"},
-            {"x":12.6,"y":2.6,"id":1,"color":"#ec851c"},
-
-            {"x":5.6,"y":3.7,"id":1,"color":"#000"},
-            {"x":6.6,"y":3.7,"id":1,"color":"#ec851c"},
-            {"x":7.6,"y":3.7,"id":1,"color":"#000"},
-            {"x":8.6,"y":3.7,"id":1,"color":"#000"},
-            {"x":9.6,"y":3.7,"id":1,"color":"#ec851c"},
-            {"x":10.6,"y":3.7,"id":1,"color":"#ec851c"},
-            {"x":11.6,"y":3.7,"id":1,"color":"#ec851c"},
-            {"x":12.6,"y":3.7,"id":1,"color":"#ec851c"},
-          ],
-          [
-            {"x":0,"y":0,"id":0,"color":"#000"},
-            {"x":1,"y":0,"id":1,"color":"#000"},
-            {"x":2,"y":0,"id":2,"color":"#ec851c"},
-            {"x":3,"y":0,"id":3,"color":"#f00"},
-            {"x":4,"y":0,"id":4,"color":"#ec851c"},
-            {"x":5,"y":0,"id":0,"color":"#ec851c"},
-            {"x":6,"y":0,"id":1,"color":"#ec851c"},
-            {"x":7,"y":0,"id":2,"color":"#ec851c"},
-            {"x":8,"y":0,"id":3,"color":"#ec851c"},
-            {"x":9,"y":0,"id":4,"color":"#ec851c"},
-            {"x":10,"y":0,"id":0,"color":"#ec851c"},
-            {"x":11,"y":0,"id":1,"color":"#ec851c"},
-
-            {"x":0.5,"y":1.1,"id":0,"color":"#000"},
-            {"x":1.5,"y":1.1,"id":1,"color":"#ec851c"},
-            {"x":2.5,"y":1.1,"id":2,"color":"#ec851c"},
-            {"x":3.5,"y":1.1,"id":3,"color":"#ec851c"},
-            {"x":4.5,"y":1.1,"id":4,"color":"#ec851c"},
-            {"x":5.5,"y":1.1,"id":0,"color":"#000"},
-            {"x":6.5,"y":1.1,"id":1,"color":"#ec851c"},
-            {"x":7.5,"y":1.1,"id":2,"color":"#ec851c"},
-            {"x":8.5,"y":1.1,"id":3,"color":"#f00"},
-            {"x":9.5,"y":1.1,"id":4,"color":"#000"},
-            {"x":10.5,"y":1.1,"id":0,"color":"#ec851c"},
-
-            {"x":0,"y":2.2,"id":0,"color":"#f00"},
-            {"x":1,"y":2.2,"id":1,"color":"#ec851c"},
-            {"x":2,"y":2.2,"id":2,"color":"#ec851c"},
-            {"x":3,"y":2.2,"id":3,"color":"#ec851c"},
-            {"x":4,"y":2.2,"id":4,"color":"#000"},
-            {"x":5,"y":2.2,"id":0,"color":"#000"},
-            {"x":6,"y":2.2,"id":1,"color":"#ec851c"},
-            {"x":7,"y":2.2,"id":2,"color":"#ec851c"},
-            {"x":8,"y":2.2,"id":3,"color":"#ec851c"},
-            {"x":9,"y":2.2,"id":4,"color":"#ec851c"},
-            {"x":10,"y":2.2,"id":0,"color":"#ec851c"},
-            {"x":11,"y":2.2,"id":1,"color":"#ec851c"},
-          ],
-          [
-            {"x":0,"y":0,"id":0,"color":"#ec851c"},
-            {"x":0,"y":5.4,"id":0,"color":"#ec851c"}
-          ],
-          [
-            {"x":0,"y":0,"id":0,"color":"#ec851c"},
-            {"x":2.8,"y":0,"id":0,"color":"#000"},
-            {"x":0,"y":4.7,"id":0,"color":"#ec851c"},
-            {"x":2.8,"y":4.7,"id":0,"color":"#000"}
-          ],
-          [
-            {"x":0,"y":0,"id":0,"color":"#f00"},
-            {"x":1.6,"y":0,"id":0,"color":"#000"},
-            {"x":3.2,"y":0,"id":0,"color":"#000"},
-            {"x":4.6,"y":0,"id":0,"color":"#000"},
-            {"x":0,"y":2.8,"id":0,"color":"#ec851c"},
-            {"x":1.6,"y":2.8,"id":0,"color":"#000"},
-            {"x":3.2,"y":2.8,"id":0,"color":"#000"},
-            {"x":4.6,"y":2.8,"id":0,"color":"#000"},
-          ],
-          [
-            {"x":0,"y":0,"id":0,"color":"#ec851c"},
-            {"x":1.4,"y":0,"id":0,"color":"#ec851c"},
-            {"x":2.9,"y":0,"id":0,"color":"#000"},
-            {"x":4.4,"y":0,"id":0,"color":"#000"},
-            {"x":5.8,"y":0,"id":0,"color":"#000"},
-          ],
-          [
-            {"x":-6.1,"y":-3.3,"id":0,"color":"#f00"},
-            {"x":0,"y":0,"id":0,"color":"#f00"},
-            {"x":15.7,"y":-1.2,"id":0,"color":"#f00"},
-            {"x":47.5,"y":-4,"id":0,"color":"#f00"},
-            {"x":60.5,"y":0,"id":0,"color":"#f00"},
-            {"x":70.3,"y":0,"id":0,"color":"#f00"},
-          ],
-          [
-            {"x":-22.7,"y":-0.8,"id":0,"color":"#f00"},
-            {"x":-10.9,"y":-0.8,"id":0,"color":"#f00"},
-            {"x":0,"y":0,"id":0,"color":"#f00"},
-            {"x":15.4,"y":0,"id":0,"color":"#f00"},
-            {"x":16.8,"y":0,"id":0,"color":"#f00"},
-          ]
-        ],
-        KTPoint:[
-          [432,313],
-          [],
-          [],
-          [],
-          [],
-          [],
-          [],
-          [113,442]
-        ],
-        KTcircles:[
-          [
-            {"x":0,"y":0,"id":0,"color":"#000"},
-            {"x":1,"y":0,"id":1,"color":"#ec851c"},
-            {"x":2,"y":0,"id":0,"color":"#ec851c"},
-            {"x":3,"y":0,"id":1,"color":"#ec851c"},
-            {"x":4,"y":0,"id":0,"color":"#ec851c"},
-            {"x":5,"y":0,"id":1,"color":"#ec851c"},
-            {"x":6,"y":0,"id":0,"color":"#000"},
-            {"x":7,"y":0,"id":1,"color":"#ec851c"},
-            {"x":8,"y":0,"id":0,"color":"#ec851c"},
-            {"x":9,"y":0,"id":1,"color":"#ec851c"},
-            {"x":10,"y":0,"id":0,"color":"#ec851c"},
-            {"x":11,"y":0,"id":1,"color":"#ec851c"},
-            {"x":12,"y":0,"id":0,"color":"#ec851c"},
-            {"x":13,"y":0,"id":1,"color":"#ec851c"},
-            {"x":14,"y":0,"id":0,"color":"#ec851c"},
-            {"x":15,"y":0,"id":1,"color":"#ec851c"},
-
-            {"x":0,"y":1.3,"id":0,"color":"#000"},
-            {"x":1,"y":1.3,"id":1,"color":"#ec851c"},
-            {"x":2,"y":1.3,"id":0,"color":"#ec851c"},
-            {"x":3,"y":1.3,"id":1,"color":"#000"},
-            {"x":4,"y":1.3,"id":0,"color":"#000"},
-            {"x":5,"y":1.3,"id":1,"color":"#000"},
-            {"x":6,"y":1.3,"id":0,"color":"#ec851c"},
-            {"x":7,"y":1.3,"id":1,"color":"#ec851c"},
-            {"x":8,"y":1.3,"id":0,"color":"#ec851c"},
-            {"x":9,"y":1.3,"id":1,"color":"#ec851c"},
-            {"x":10,"y":1.3,"id":0,"color":"#ec851c"},
-            {"x":11,"y":1.3,"id":1,"color":"#ec851c"},
-            {"x":12,"y":1.3,"id":0,"color":"#ec851c"},
-            {"x":13,"y":1.3,"id":1,"color":"#ec851c"},
-            {"x":14,"y":1.3,"id":0,"color":"#ec851c"},
-            {"x":15,"y":1.3,"id":1,"color":"#ec851c"},
-          ],
-          [],
-          [],
-          [],
-          [],
-          [],
-          [],
-          [
-            {"x":-1.8,"y":-26.5,"id":0,"color":"#ec851c"},
-            {"x":0,"y":0,"id":0,"color":"#ec851c"},
-            {"x":9.4,"y":-21.4,"id":0,"color":"#ec851c"},
-            {"x":9.6,"y":0,"id":0,"color":"#ec851c"},
-            {"x":26.4,"y":0,"id":0,"color":"#ec851c"},
-            {"x":45.2,"y":0,"id":0,"color":"#ec851c"},
-          ],
-        ],
+        resData:[],
+//        mLPoint:[
+//          [147,292],
+//          [423,289],
+//          [726,303],
+//          [921,284],
+//          [907,288],
+//          [898,297],
+//          [893,311],
+//          [203,191],
+//          [289,460],
+//        ],
+//        mLcircles:[
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":1,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":0.5,"y":1.5,"id":2,"color":"#ec851c"},
+//            {"x":0,"y":3,"id":3,"color":"#ec851c"},
+//            {"x":1,"y":3,"id":4,"color":"#ec851c"},
+//
+//            {"x":4,"y":0,"id":5,"color":"#f00"},
+//            {"x":5,"y":0,"id":6,"color":"#ec851c"},
+//            {"x":6,"y":0,"id":7,"color":"#000"},
+//            {"x":7,"y":0,"id":8,"color":"#000"},
+//            {"x":8,"y":0,"id":9,"color":"#000"},
+//            {"x":9,"y":0,"id":10,"color":"#000"},
+//            {"x":10,"y":0,"id":11,"color":"#000"},
+//            {"x":11,"y":0,"id":12,"color":"#000"},
+//            {"x":12,"y":0,"id":13,"color":"#000"},
+//            {"x":13,"y":0,"id":14,"color":"#000"},
+//            {"x":14,"y":0,"id":15,"color":"#000"},
+//            {"x":15,"y":0,"id":16,"color":"#000"},
+//            {"x":16,"y":0,"id":17,"color":"#000"},
+//            {"x":17,"y":0,"id":18,"color":"#000"},
+//            {"x":18,"y":0,"id":19,"color":"#000"},
+//            {"x":19,"y":0,"id":20,"color":"#000"},
+//            {"x":20,"y":0,"id":21,"color":"#000"},
+//            {"x":21,"y":0,"id":22,"color":"#000"},
+//            {"x":22,"y":0,"id":23,"color":"#ec851c"},
+//
+//            {"x":4,"y":1,"id":24,"color":"#f00"},
+//            {"x":5,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":6,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":7,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":8,"y":1,"id":1,"color":"#000"},
+//            {"x":9,"y":1,"id":1,"color":"#000"},
+//            {"x":10,"y":1,"id":1,"color":"#000"},
+//            {"x":11,"y":1,"id":1,"color":"#000"},
+//            {"x":12,"y":1,"id":1,"color":"#000"},
+//            {"x":13,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":14,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":15,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":16,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":17,"y":1,"id":1,"color":"#000"},
+//            {"x":18,"y":1,"id":1,"color":"#ec851c"},
+//            {"x":19,"y":1,"id":1,"color":"#000"},
+//            {"x":20,"y":1,"id":1,"color":"#000"},
+//            {"x":21,"y":1,"id":1,"color":"#000"},
+//            {"x":22,"y":1,"id":1,"color":"#000"},
+//
+//            {"x":4,"y":2,"id":1,"color":"#000"},
+//            {"x":5,"y":2,"id":1,"color":"#000"},
+//            {"x":6,"y":2,"id":1,"color":"#ec851c"},
+//            {"x":7,"y":2,"id":1,"color":"#000"},
+//            {"x":8,"y":2,"id":1,"color":"#000"},
+//            {"x":9,"y":2,"id":1,"color":"#000"},
+//            {"x":10,"y":2,"id":1,"color":"#ec851c"},
+//            {"x":11,"y":2,"id":1,"color":"#ec851c"},
+//            {"x":12,"y":2,"id":1,"color":"#000"},
+//            {"x":13,"y":2,"id":1,"color":"#000"},
+//            {"x":14,"y":2,"id":1,"color":"#000"},
+//            {"x":15,"y":2,"id":1,"color":"#000"},
+//            {"x":16,"y":2,"id":1,"color":"#ec851c"},
+//            {"x":17,"y":2,"id":1,"color":"#000"},
+//            {"x":18,"y":2,"id":1,"color":"#ec851c"},
+//            {"x":19,"y":2,"id":1,"color":"#ec851c"},
+//            {"x":20,"y":2,"id":1,"color":"#f00"},
+//            {"x":21,"y":2,"id":1,"color":"#000"},
+//            {"x":22,"y":2,"id":1,"color":"#ec851c"},
+//
+//            {"x":4,"y":3,"id":1,"color":"#000"},
+//            {"x":5,"y":3,"id":1,"color":"#000"},
+//            {"x":6,"y":3,"id":1,"color":"#ec851c"},
+//            {"x":7,"y":3,"id":1,"color":"#ec851c"},
+//            {"x":8,"y":3,"id":1,"color":"#000"},
+//            {"x":9,"y":3,"id":1,"color":"#000"},
+//            {"x":10,"y":3,"id":1,"color":"#000"},
+//            {"x":11,"y":3,"id":1,"color":"#ec851c"},
+//            {"x":12,"y":3,"id":1,"color":"#000"},
+//            {"x":13,"y":3,"id":1,"color":"#000"},
+//            {"x":14,"y":3,"id":1,"color":"#000"},
+//            {"x":15,"y":3,"id":1,"color":"#f00"},
+//            {"x":16,"y":3,"id":1,"color":"#000"},
+//            {"x":17,"y":3,"id":1,"color":"#000"},
+//            {"x":18,"y":3,"id":1,"color":"#000"},
+//            {"x":19,"y":3,"id":1,"color":"#ec851c"},
+//            {"x":20,"y":3,"id":1,"color":"#000"},
+//            {"x":21,"y":3,"id":1,"color":"#000"},
+//            {"x":22,"y":3,"id":1,"color":"#f00"}
+//          ],
+//          [
+//            {"x":0,"y":0,"id":1,"color":"#f00"},
+//            {"x":1,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":2,"y":0,"id":1,"color":"#000"},
+//            {"x":0.5,"y":1.8,"id":1,"color":"#ec851c"},
+//            {"x":1.5,"y":1.8,"id":1,"color":"#ec851c"},
+//            {"x":0,"y":3.7,"id":1,"color":"#ec851c"},
+//            {"x":1,"y":3.7,"id":1,"color":"#ec851c"},
+//            {"x":2,"y":3.7,"id":1,"color":"#000"},
+//
+//            {"x":5.6,"y":0,"id":1,"color":"#f00"},
+//            {"x":6.6,"y":0,"id":1,"color":"#000"},
+//            {"x":7.6,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":8.6,"y":0,"id":1,"color":"#000"},
+//            {"x":9.6,"y":0,"id":1,"color":"#000"},
+//            {"x":10.6,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":11.6,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":12.6,"y":0,"id":1,"color":"#000"},
+//
+//            {"x":5.6,"y":1.1,"id":1,"color":"#ec851c"},
+//            {"x":6.6,"y":1.1,"id":1,"color":"#ec851c"},
+//            {"x":7.6,"y":1.1,"id":1,"color":"#000"},
+//            {"x":8.6,"y":1.1,"id":1,"color":"#000"},
+//            {"x":9.6,"y":1.1,"id":1,"color":"#ec851c"},
+//            {"x":10.6,"y":1.1,"id":1,"color":"#ec851c"},
+//            {"x":11.6,"y":1.1,"id":1,"color":"#000"},
+//            {"x":12.6,"y":1.1,"id":1,"color":"#000"},
+//
+//            {"x":5.6,"y":2.6,"id":1,"color":"#f00"},
+//            {"x":6.6,"y":2.6,"id":1,"color":"#ec851c"},
+//            {"x":7.6,"y":2.6,"id":1,"color":"#000"},
+//            {"x":8.6,"y":2.6,"id":1,"color":"#000"},
+//            {"x":9.6,"y":2.6,"id":1,"color":"#000"},
+//            {"x":10.6,"y":2.6,"id":1,"color":"#ec851c"},
+//            {"x":11.6,"y":2.6,"id":1,"color":"#f00"},
+//            {"x":12.6,"y":2.6,"id":1,"color":"#ec851c"},
+//
+//            {"x":5.6,"y":3.7,"id":1,"color":"#000"},
+//            {"x":6.6,"y":3.7,"id":1,"color":"#ec851c"},
+//            {"x":7.6,"y":3.7,"id":1,"color":"#000"},
+//            {"x":8.6,"y":3.7,"id":1,"color":"#000"},
+//            {"x":9.6,"y":3.7,"id":1,"color":"#ec851c"},
+//            {"x":10.6,"y":3.7,"id":1,"color":"#ec851c"},
+//            {"x":11.6,"y":3.7,"id":1,"color":"#ec851c"},
+//            {"x":12.6,"y":3.7,"id":1,"color":"#ec851c"},
+//          ],
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#000"},
+//            {"x":1,"y":0,"id":1,"color":"#000"},
+//            {"x":2,"y":0,"id":2,"color":"#ec851c"},
+//            {"x":3,"y":0,"id":3,"color":"#f00"},
+//            {"x":4,"y":0,"id":4,"color":"#ec851c"},
+//            {"x":5,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":6,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":7,"y":0,"id":2,"color":"#ec851c"},
+//            {"x":8,"y":0,"id":3,"color":"#ec851c"},
+//            {"x":9,"y":0,"id":4,"color":"#ec851c"},
+//            {"x":10,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":11,"y":0,"id":1,"color":"#ec851c"},
+//
+//            {"x":0.5,"y":1.1,"id":0,"color":"#000"},
+//            {"x":1.5,"y":1.1,"id":1,"color":"#ec851c"},
+//            {"x":2.5,"y":1.1,"id":2,"color":"#ec851c"},
+//            {"x":3.5,"y":1.1,"id":3,"color":"#ec851c"},
+//            {"x":4.5,"y":1.1,"id":4,"color":"#ec851c"},
+//            {"x":5.5,"y":1.1,"id":0,"color":"#000"},
+//            {"x":6.5,"y":1.1,"id":1,"color":"#ec851c"},
+//            {"x":7.5,"y":1.1,"id":2,"color":"#ec851c"},
+//            {"x":8.5,"y":1.1,"id":3,"color":"#f00"},
+//            {"x":9.5,"y":1.1,"id":4,"color":"#000"},
+//            {"x":10.5,"y":1.1,"id":0,"color":"#ec851c"},
+//
+//            {"x":0,"y":2.2,"id":0,"color":"#f00"},
+//            {"x":1,"y":2.2,"id":1,"color":"#ec851c"},
+//            {"x":2,"y":2.2,"id":2,"color":"#ec851c"},
+//            {"x":3,"y":2.2,"id":3,"color":"#ec851c"},
+//            {"x":4,"y":2.2,"id":4,"color":"#000"},
+//            {"x":5,"y":2.2,"id":0,"color":"#000"},
+//            {"x":6,"y":2.2,"id":1,"color":"#ec851c"},
+//            {"x":7,"y":2.2,"id":2,"color":"#ec851c"},
+//            {"x":8,"y":2.2,"id":3,"color":"#ec851c"},
+//            {"x":9,"y":2.2,"id":4,"color":"#ec851c"},
+//            {"x":10,"y":2.2,"id":0,"color":"#ec851c"},
+//            {"x":11,"y":2.2,"id":1,"color":"#ec851c"},
+//          ],
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":0,"y":5.4,"id":0,"color":"#ec851c"}
+//          ],
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":2.8,"y":0,"id":0,"color":"#000"},
+//            {"x":0,"y":4.7,"id":0,"color":"#ec851c"},
+//            {"x":2.8,"y":4.7,"id":0,"color":"#000"}
+//          ],
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#f00"},
+//            {"x":1.6,"y":0,"id":0,"color":"#000"},
+//            {"x":3.2,"y":0,"id":0,"color":"#000"},
+//            {"x":4.6,"y":0,"id":0,"color":"#000"},
+//            {"x":0,"y":2.8,"id":0,"color":"#ec851c"},
+//            {"x":1.6,"y":2.8,"id":0,"color":"#000"},
+//            {"x":3.2,"y":2.8,"id":0,"color":"#000"},
+//            {"x":4.6,"y":2.8,"id":0,"color":"#000"},
+//          ],
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":1.4,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":2.9,"y":0,"id":0,"color":"#000"},
+//            {"x":4.4,"y":0,"id":0,"color":"#000"},
+//            {"x":5.8,"y":0,"id":0,"color":"#000"},
+//          ],
+//          [
+//            {"x":-6.1,"y":-3.3,"id":0,"color":"#f00"},
+//            {"x":0,"y":0,"id":0,"color":"#f00"},
+//            {"x":15.7,"y":-1.2,"id":0,"color":"#f00"},
+//            {"x":47.5,"y":-4,"id":0,"color":"#f00"},
+//            {"x":60.5,"y":0,"id":0,"color":"#f00"},
+//            {"x":70.3,"y":0,"id":0,"color":"#f00"},
+//          ],
+//          [
+//            {"x":-22.7,"y":-0.8,"id":0,"color":"#f00"},
+//            {"x":-10.9,"y":-0.8,"id":0,"color":"#f00"},
+//            {"x":0,"y":0,"id":0,"color":"#f00"},
+//            {"x":15.4,"y":0,"id":0,"color":"#f00"},
+//            {"x":16.8,"y":0,"id":0,"color":"#f00"},
+//          ]
+//        ],
+//        KTPoint:[
+//          [432,313],
+//          [],
+//          [],
+//          [],
+//          [],
+//          [],
+//          [],
+//          [113,442]
+//        ],
+//        KTcircles:[
+//          [
+//            {"x":0,"y":0,"id":0,"color":"#000"},
+//            {"x":1,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":2,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":3,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":4,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":5,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":6,"y":0,"id":0,"color":"#000"},
+//            {"x":7,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":8,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":9,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":10,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":11,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":12,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":13,"y":0,"id":1,"color":"#ec851c"},
+//            {"x":14,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":15,"y":0,"id":1,"color":"#ec851c"},
+//
+//            {"x":0,"y":1.3,"id":0,"color":"#000"},
+//            {"x":1,"y":1.3,"id":1,"color":"#ec851c"},
+//            {"x":2,"y":1.3,"id":0,"color":"#ec851c"},
+//            {"x":3,"y":1.3,"id":1,"color":"#000"},
+//            {"x":4,"y":1.3,"id":0,"color":"#000"},
+//            {"x":5,"y":1.3,"id":1,"color":"#000"},
+//            {"x":6,"y":1.3,"id":0,"color":"#ec851c"},
+//            {"x":7,"y":1.3,"id":1,"color":"#ec851c"},
+//            {"x":8,"y":1.3,"id":0,"color":"#ec851c"},
+//            {"x":9,"y":1.3,"id":1,"color":"#ec851c"},
+//            {"x":10,"y":1.3,"id":0,"color":"#ec851c"},
+//            {"x":11,"y":1.3,"id":1,"color":"#ec851c"},
+//            {"x":12,"y":1.3,"id":0,"color":"#ec851c"},
+//            {"x":13,"y":1.3,"id":1,"color":"#ec851c"},
+//            {"x":14,"y":1.3,"id":0,"color":"#ec851c"},
+//            {"x":15,"y":1.3,"id":1,"color":"#ec851c"},
+//          ],
+//          [],
+//          [],
+//          [],
+//          [],
+//          [],
+//          [],
+//          [
+//            {"x":-1.8,"y":-26.5,"id":0,"color":"#ec851c"},
+//            {"x":0,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":9.4,"y":-21.4,"id":0,"color":"#ec851c"},
+//            {"x":9.6,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":26.4,"y":0,"id":0,"color":"#ec851c"},
+//            {"x":45.2,"y":0,"id":0,"color":"#ec851c"},
+//          ],
+//        ],
         clientHeight: 0,
         clientWidth: window.innerWidth,
         isFull: 0,
@@ -508,56 +515,52 @@
     },
     methods: {
       upEcharts() {
-        let that = this
-        clearInterval(that.setInterval)
-        let xAxisData = that.echartsOption.xAxis.data
-        let seriesData = that.echartsOption.series[0].data
+          if (this.clickGramData === 0) {
+            this.echartsOption.xAxis.data = []
+            this.echartsOption.series[0].data = []
+            clearInterval(this.setInterval)
+          } else {
+            let xAxisData = this.echartsOption.xAxis.data
+            let seriesData = this.echartsOption.series[0].data
 
-        function upEcharts1() {
-          let myChart = echarts.init(document.getElementById('echarts'))
-          let time = moment(new Date()).format('HH:mm:ss')
-          /*设置x、y坐标*/
-          let xAxisDataTime = moment(new Date()).format('mm:ss')
-          let num = Math.floor(Math.random() * 5 + 1)
-          num = Number('3.' + num)
-          let date1 = 59
-          let date2 = 58
-          that.multimeterTruthDivData = num
-          if (xAxisData.length < date1) {
-            if (xAxisData.length === 0) {
-              for (let i = 0; i < date2; i++) {
-                xAxisData.push('')
-                seriesData.push('')
+            let upEcharts1 = () => {
+              let myChart = echarts.init(document.getElementById('echarts'))
+              let time = moment(new Date()).format('HH:mm:ss')
+              /*设置x、y坐标*/
+              let xAxisDataTime = moment(new Date()).format('mm:ss')
+              let num = Math.floor(Math.random() * 9 + 1)
+              num = Number('3.' + num)
+              let num1 = parseInt(num)
+              this.echartsOption.yAxis.min = num1 - 1
+              let date1 = 59
+              let date2 = 58
+              this.multimeterTruthDivData = num
+              if (xAxisData.length < date1) {
+                if (xAxisData.length === 0) {
+                  for (let i = 0; i < date2; i++) {
+                    xAxisData.push('')
+                    seriesData.push('')
+                  }
+                }
+                xAxisData.push(xAxisDataTime)
+                seriesData.push(num)
+              } else if (xAxisData.length >= date1) {
+                xAxisData.shift()
+                xAxisData.push(xAxisDataTime)
+                seriesData.shift()
+                seriesData.push(num)
               }
+
+              /*设置title*/
+              this.echartsOption.title.text = time
+              myChart.setOption(this.echartsOption)
             }
-            xAxisData.push(xAxisDataTime)
-            seriesData.push(num)
-          } else if (xAxisData.length >= date1) {
-            xAxisData.shift()
-            xAxisData.push(xAxisDataTime)
-            seriesData.shift()
-            seriesData.push(num)
+            upEcharts1()
+            this.setInterval = setInterval(function () {
+              upEcharts1()
+            }, 1000)
           }
 
-          /*设置title*/
-          that.echartsOption.title.text = time
-          myChart.setOption(that.echartsOption)
-          /*if (whichGramShow === '') {
-           clearInterval(that.setInterval);
-           }*/
-        }
-
-        /*调用方法更新数据*/
-        upEcharts1()
-        that.setInterval = setInterval(function () {
-          upEcharts1()
-        }, 1000)
-        /*
-           xAxisData = []
-           seriesData = []
-           that.echartsOption.xAxis.data = []
-           that.echartsOption.series[0].data = []
-           */
       },
 //      生成电压符号ID
       multimeterTruthVId(index){
@@ -644,19 +647,19 @@
         if (index == 0) {
           this.stage = new createjs.Stage("canvas");
           this.stage.removeAllChildren()
-          this.drawPointData = this.mLPoint
-          this.drawCricleData = this.mLcircles
-          console.log(this.stage)
+          this.drawPointData = this.resData[0].mLPoint
+          this.drawCricleData = this.resData[0].mLcircles
+//          console.log(this.stage)
 //
         } else if (index == 1) {
           this.stage = new createjs.Stage("canvasKT");
           this.stage.removeAllChildren()
-          this.drawPointData = this.KTPoint
-          this.drawCricleData = this.KTcircles
-          console.log(this.stage)
+          this.drawPointData = this.resData[1].KTPoint
+          this.drawCricleData = this.resData[1].KTcircles
+//          console.log(this.stage)
         }
-        console.log(this.drawPointData)
-        createjs.Ticker.setFPS(30);
+//        console.log(this.drawPointData)
+        createjs.Ticker._setFPS(30);
         createjs.Ticker.addEventListener("tick",this.stage);
         this.first()
       },
@@ -694,15 +697,11 @@
       clickDatagram () {
         if (this.clickGramData === 0) {
           this.clickGramData = 1
-          this.upEcharts()
-          console.log()
         } else {
           this.clickGramData = 0
-          clearInterval(this.setInterval)
           this.multimeterTruthDivData = 0
-          this.echartsOption.xAxis.data = []
-          this.echartsOption.series[0].data = []
         }
+        this.upEcharts()
       },
 //    全屏显示
       appFullScreen () {
@@ -754,29 +753,29 @@
         }
       },
 //    监听鼠标位置
-      detect(){
-        var _this = this
-        //鼠标点击canvas，获取的鼠标点击的位置(x,y)
-        this.canvas.onmousemove = function (e){
-          var x=e.clientX-_this.canvas.getBoundingClientRect().left;
-          var y=e.clientY-_this.canvas.getBoundingClientRect().top;
-          _this.draw(x,y);
-        }
-      },
+//      detect(){
+//        var _this = this
+//        //鼠标点击canvas，获取的鼠标点击的位置(x,y)
+//        this.canvas.onmousemove = function (e){
+//          var x=e.clientX-_this.canvas.getBoundingClientRect().left;
+//          var y=e.clientY-_this.canvas.getBoundingClientRect().top;
+//          _this.draw(x,y);
+//        }
+//      },
 //    画布显示balls数据
       draw(XYoptions){
-        var _this = this
-        _this.stage.removeAllChildren()
-        _this.imageB.scaleX= 0.3
-        _this.imageB.scaleY= 0.3
-        _this.stage.addChild(_this.imageB);
+//        var _this = this
+        this.stage.removeAllChildren()
+        this.imageB.scaleX= 0.3
+        this.imageB.scaleY= 0.3
+        this.stage.addChild(this.imageB);
 
-        _this.imageR.scaleX= 0.3
-        _this.imageR.scaleY= 0.3
-        _this.stage.addChild(_this.imageR);
+        this.imageR.scaleX= 0.3
+        this.imageR.scaleY= 0.3
+        this.stage.addChild(this.imageR);
 
-        for( var i = 0 ; i < _this.balls.length ; i ++ ){
-          var currDraw = _this.balls[i]
+        for( var i = 0 ; i < this.balls.length ; i ++ ){
+          var currDraw = this.balls[i]
           for(var j = 0 ; j < currDraw.length ; j ++){
             var shape=new createjs.Shape();
             var graphics=shape.graphics;
@@ -785,24 +784,24 @@
             if (i <= 2) {
               graphics.beginStroke("000");
               graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-              _this.stage.addChild(shape);
+              this.stage.addChild(shape);
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-              _this.stage.addChild(circle);
+              this.stage.addChild(circle);
             } else if (i > 2 && i <= 6) {
               circleRect.graphics.beginStroke("#000").drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius + 1.6);
-              _this.stage.addChild(circleRect);
+              this.stage.addChild(circleRect);
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
-              _this.stage.addChild(circle);
+              this.stage.addChild(circle);
             } else {
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
-              _this.stage.addChild(circle);
+              this.stage.addChild(circle);
             }
 
 //            _this.stage.enableMouseOver(20);
 
 //            黑表笔检测
               if (circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY)) {
-                _this.isBlack = true
+                this.isBlack = true
                 console.log(this.isBlack)
                 console.log("yeye",currDraw[j].id)
                 if (i <= 2) {
@@ -810,15 +809,16 @@
                 }else {
                   circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],4);
                 }
-                _this.imageB.addEventListener("pressup",function(e){
-                  _this.imageB.rotation = -40
-                  _this.imageB.x=XYoptions.preBlackX
-                  _this.imageB.y=XYoptions.preBlackY+8
+                this.imageB.addEventListener("pressup",(e)=>{
+                  this.imageB.rotation = -40
+                  this.imageB.x=XYoptions.preBlackX
+                  this.imageB.y=XYoptions.preBlackY+8
+//                  console.log(circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY))
                   e.remove();
                 })
 
               }else{
-
+//                console.log(circle.hitTest(XYoptions.preBlackX+10, XYoptions.preBlackY))
               }
 
 
@@ -829,26 +829,26 @@
               }else {
                 circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],4);
               }
-              _this.imageR.addEventListener("pressup",function(e){
-                _this.imageR.rotation = -40
-                _this.imageR.x=XYoptions.preRedX
-                _this.imageR.y=XYoptions.preRedY+8
+              this.imageR.addEventListener("pressup",(e) => {
+                this.imageR.rotation = -40
+                this.imageR.x=XYoptions.preRedX
+                this.imageR.y=XYoptions.preRedY+8
                 e.remove();
               })
               console.log("yeye",currDraw[j].id)
-              _this.isRed = true
+              this.isRed = true
             } else {
             }
 
           }
         }
-        if(_this.isBlack && _this.isRed){
-          _this.multimeterTruthDivData = 560
+        if(this.isBlack && this.isRed){
+          this.multimeterTruthDivData = 560
         }else{
-          _this.multimeterTruthDivData = 0
+          this.multimeterTruthDivData = 0
         }
-        _this.stage.setChildIndex(_this.imageB, _this.stage.getNumChildren() - 1);
-        _this.stage.setChildIndex(_this.imageR, _this.stage.getNumChildren() - 1);
+        this.stage.setChildIndex(this.imageB, this.stage._getNumChildren() - 1);
+        this.stage.setChildIndex(this.imageR, this.stage._getNumChildren() - 1);
       },
 //    计算完的数据给balls
       first() {
@@ -877,12 +877,7 @@
         this.drawPoint()
       },
       drawPoint(){
-//        console.log(this.balls)
-        var _this = this
-        _this.stage.removeAllChildren()
-//        var stage = new createjs.Stage("canvas");
-//        var imageB = new createjs.Bitmap("src/assets/imgs/black.png");
-//        var imageR = new createjs.Bitmap("src/assets/imgs/red.png");
+        this.stage.removeAllChildren()
         for( var i = 0 ; i < this.balls.length ; i ++ ){
           var currDraw = this.balls[i]
           for(var j = 0 ; j < currDraw.length ; j ++){
@@ -893,82 +888,77 @@
             if (i <= 2) {
               graphics.beginStroke("000");
               graphics.drawRect(currDraw[j].a[0] - 0.5, currDraw[j].a[1] - 0.5, currDraw[j].diameter, currDraw[j].diameter);
-              _this.stage.addChild(shape);
+              this.stage.addChild(shape);
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].x,currDraw[j].y,currDraw[j].radius);
-              _this.stage.addChild(circle);
+              this.stage.addChild(circle);
             } else if (i > 2 && i <= 6) {
               circleRect.graphics.beginStroke("#000").drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius + 1.6);
-              _this.stage.addChild(circleRect);
+              this.stage.addChild(circleRect);
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
-              _this.stage.addChild(circle);
+              this.stage.addChild(circle);
             } else {
               circle.graphics.beginFill(currDraw[j].color).drawCircle(currDraw[j].a[0],currDraw[j].a[1],currDraw[j].radius);
-              _this.stage.addChild(circle);
+              this.stage.addChild(circle);
             }
-
-//            _this.stage.setChildIndex(circle, 0)
-//            _this.stage.update();
           }
         }
 
-        _this.stage.setChildIndex(_this.imageB, _this.stage.getNumChildren() - 1);
-        _this.stage.setChildIndex(_this.imageR, _this.stage.getNumChildren() - 1);
+        this.stage.setChildIndex(this.imageB, this.stage._getNumChildren() - 1);
+        this.stage.setChildIndex(this.imageR, this.stage._getNumChildren() - 1);
         if (this.clickMultimeterData === 1) {
-          _this.imageB.rotation = 0
-          _this.imageR.rotation = 0
-          _this.imageB.x = 850
-          _this.imageB.y = 70
-          _this.imageB.scaleX= 0.3
-          _this.imageB.scaleY= 0.3
-          _this.stage.addChild(this.imageB);
+          this.imageB.rotation = 0
+          this.imageR.rotation = 0
+          this.imageB.x = 850
+          this.imageB.y = 70
+          this.imageB.scaleX = 0.3
+          this.imageB.scaleY = 0.3
+          this.stage.addChild(this.imageB);
+          console.log(this.imageB)
           var oldX;
           var oldY;
-          _this.imageB.addEventListener("mousedown",function(e){
-            oldX= e.stageX;
-            oldY= e.stageY;
-            _this.imageB.rotation = 0
-            _this.isBlack = false
+          this.imageB.addEventListener("mousedown", (e) =>  {
+            oldX = e.stageX;
+            oldY = e.stageY;
+            this.imageB.rotation = 0
+            this.isBlack = false
           });
-          _this.imageB.addEventListener("pressmove", function (e) {
-            e.target.x+= e.stageX-oldX;
-            e.target.y+= e.stageY-oldY;
-            oldX= e.stageX;
-            oldY= e.stageY;
-            _this.XYoption.preBlackX = e.target.x
-            _this.XYoption.preBlackY = e.target.y
-//                console.log(_this.preBlackX)
+          this.imageB.addEventListener("pressmove", (e) =>  {
+            e.target.x += e.stageX - oldX;
+            e.target.y += e.stageY - oldY;
+            oldX = e.stageX;
+            oldY = e.stageY;
+            this.XYoption.preBlackX = e.target.x
+            this.XYoption.preBlackY = e.target.y
           });
 
-          console.log(_this.mouseType)
-
-          _this.imageR.x = 900
-          _this.imageR.y = 70
-          _this.imageR.scaleX= 0.3
-          _this.imageR.scaleY= 0.3
-          _this.imageR.width = 25
-          _this.imageR.height = 180
-          _this.stage.addChild(_this.imageR);
+          this.imageR.x = 900
+          this.imageR.y = 70
+          this.imageR.scaleX= 0.3
+          this.imageR.scaleY= 0.3
+          this.imageR.width = 25
+          this.imageR.height = 180
+          this.stage.addChild(this.imageR);
 //        stage.update();
           var oldX;
           var oldY;
-          _this.imageR.addEventListener("mousedown",function(e){
+          this.imageR.addEventListener("mousedown",(e)=>{
             oldX= e.stageX;
             oldY= e.stageY;
-            _this.imageR.rotation = 0
-            _this.isRed = false
+            this.imageR.rotation = 0
+            this.isRed = false
 //            _this.imageR.x=XYoptions.preRedX
 //            _this.imageR.y=XYoptions.preRedY
           });
-          _this.imageR.addEventListener("pressmove", function (e) {
+          this.imageR.addEventListener("pressmove",  (e)=> {
             e.target.x+= e.stageX-oldX;
             e.target.y+= e.stageY-oldY;
             oldX= e.stageX;
             oldY= e.stageY;
-            _this.XYoption.preRedX = e.target.x
-            _this.XYoption.preRedY = e.target.y
+            this.XYoption.preRedX = e.target.x
+            this.XYoption.preRedY = e.target.y
           });
         } else {
-          _this.stage.removeChild(_this.imageR,_this.imageB);
+          this.stage.removeChild(this.imageR,this.imageB);
         }
       },
       cleanStage(){
@@ -1030,22 +1020,29 @@
         }
 
         this.drawPoint()
+      },
+      getOriginData(){
+        axios({
+          method: 'post',
+          url: '/trainManager/getCanvasTerminal',
+          data: {
+            username: 111
+          }
+        }).then((res)=>{
+          console.log(res.data.result)
+          this.resData = res.data.result
+          console.log(this.resData[0].mLPoint)
+          this.drawPointData = this.resData[0].mLPoint
+          this.drawCricleData = this.resData[0].mLcircles
+          this.first()
+        })
       }
     },
     mounted(){
-      axios({
-        method: 'post',
-        url: '/testManagement/getCanvasTerminal',
-        data: {
-          username: 111
-        }
-      }).then((res)=>{
-        console.log(res)
-      })
+      this.getOriginData()
       this.windowWidth = this.clientWidth
       this.windowHeight = window.innerHeight
-      console.log(this.clientWidth)
-      console.log(this.windowHeight)
+
       var canvas = document.getElementById("canvas");
       this.canvas = canvas
       this.ctx = this.canvas.getContext("2d")
@@ -1054,9 +1051,8 @@
       this.context = this.canvasKT.getContext("2d")
       this.stage = new createjs.Stage("canvas");
       createjs.Touch.enable(this.stage);
-      createjs.Ticker.setFPS(30);
+      createjs.Ticker._setFPS(30);
       createjs.Ticker.addEventListener("tick",this.stage);
-//      this.stage = new createjs.Stage("canvas");
       this.imageR=new createjs.Bitmap("src/assets/imgs/red.png");
       this.imageB=new createjs.Bitmap("src/assets/imgs/black.png");
 //      this.stageKT = new createjs.Stage("canvasKT");
@@ -1070,15 +1066,12 @@
       this.clientHeight = 577
       this.ratioX = this.clientWidth / 1024
       this.ratioY = this.clientHeight / 577
-//    console.log(this.clientWidth)
-//    console.log(this.clientHeight)
+
       canvas.width = this.clientWidth
       canvas.height = this.clientHeight
       canvasKT.width = this.clientWidth
       canvasKT.height = this.clientHeight
-      this.drawPointData = this.mLPoint
-      this.drawCricleData = this.mLcircles
-      this.first()
+
       window.addEventListener('resize', this.handleResize)
     },
     components:{}
